@@ -1,0 +1,2021 @@
+ab_rum_muslim_first = {
+	slot = 1 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		religion_group = muslim
+		OR = {
+			tag = AKR
+			tag = AKG
+			tag = RUM
+		}
+		NOT = { tag = SEL }
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	rum_muslim_balance = {
+		icon = mission_reliable_allies
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			num_of_allies = 2
+		}
+		
+		effect = {
+			custom_tooltip = RUM_TRUST
+			add_country_modifier = {
+				name = "rum_c_achieve"
+				duration = 5475
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						alliance_with = ROOT
+					}
+					add_trust = { who = ROOT value = 10 mutual = yes }
+				}
+			}
+		}
+	}
+	
+	rum_muslim_legacy = {
+		icon = mission_seljuk
+		required_missions = { rum_muslim_balance rum_muslim_beyliks }
+		position = 3
+		
+		provinces_to_highlight = {
+			area = rum_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			rum_area = {
+				type = all
+				is_core = ROOT
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_zrum.3 }
+			anatolia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_nicaea = {
+	    icon = revenge_for_nicopolis
+		required_missions = { rum_muslim_legacy }
+		position = 5
+		
+		provinces_to_highlight = {
+			area = hudavendigar_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			NOT = {
+				exists = NCI
+			}
+			hudavendigar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = "rum_m_bulwark"
+				duration = 9125
+			}
+			thrace_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_bulgaria = {
+		icon = push_on_to_bulgaria
+		required_missions = { rum_muslim_city }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				area = bulgaria_area
+				area = silistria_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			NOT = {
+				exists = BUL
+			}
+		    bulgaria_area = {
+			    type = all
+				country_or_subject_holds = ROOT
+			}
+		    silistria_area = {
+			    type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			add_country_modifier = {
+				name = rum_c_balkan
+				duration = 9125
+			}
+			custom_tooltip = RUM_BALKAN_SER
+			custom_tooltip = RUM_BALKAN_WAL
+			custom_tooltip = RUM_BALKAN_MOL
+			rascia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			serbia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			wallachia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			moldavia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			bessarabia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						exists = SER
+					}
+					add_casus_belli = { 
+						target = SER
+						type = cb_vassalize_mission 
+					} 
+				}
+				if = {
+					limit = {
+						exists = WAL
+					}
+					add_casus_belli = { 
+						target = WAL
+						type = cb_vassalize_mission 
+					} 
+				}
+				if = {
+					limit = {
+						exists = MOL
+					}
+					add_casus_belli = { 
+						target = MOL
+						type = cb_vassalize_mission 
+					} 
+				}
+			}
+		}
+	}
+	
+	rum_muslim_balkans = {
+		icon = mission_unite_home_region
+		required_missions = { rum_muslim_bulgaria }
+		position = 9
+		
+		provinces_to_highlight = {
+			OR = {
+				area = serbia_area
+				area = rascia_area
+				area = wallachia_area
+				area = moldavia_area
+				area = bessarabia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    serbia_area = {
+			    type = all
+				country_or_subject_holds = ROOT
+			}
+		    rascia_area = {
+			    type = all
+				country_or_subject_holds = ROOT
+			}
+		    wallachia_area = {
+			    type = all
+				country_or_subject_holds = ROOT
+			}
+		    moldavia_area = {
+			    type = all
+				country_or_subject_holds = ROOT
+			}
+		    bessarabia_area = {
+			    type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_yearly_manpower = 2
+			add_country_modifier = {
+				name = rum_c_subjugate
+				duration = 5475
+			}
+			balkan_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = RUM_BALKAN_SUBJECTS
+			tooltip = {
+				add_country_modifier = {
+					name = rum_c_consolidate
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						num_of_subjects = 2
+					}
+					add_country_modifier = {
+						name = rum_c_consolidate
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_discipline = {
+	    icon = mission_integrate_the_purbias
+		required_missions = { rum_muslim_janissary }
+		position = 11
+		
+		trigger = {
+			army_professionalism = 0.5
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = barracks
+						has_building = training_fields
+					}
+				}
+				amount = 20
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = "seljuk_army"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+ab_rum_muslim_second = {
+	slot = 2 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		religion_group = muslim
+		OR = {
+			tag = AKR
+			tag = AKG
+			tag = RUM
+		}
+		NOT = { tag = SEL }
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	rum_muslim_beyliks = {
+		icon = mission_persian_soldiers
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			grown_by_development = 30
+		}
+		
+		effect = {
+			custom_tooltip = RUM_CLAIM
+			add_country_modifier = {
+				name = "rum_c_beyliks"
+				duration = 7300
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						culture = turkish
+						NOT = { is_permanent_claim = ROOT	}
+						NOT = { is_core = ROOT	}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	rum_muslim_crimea = {
+	    icon = mission_invade_island
+		required_missions = { rum_muslim_anatolia }
+		position = 5
+		
+		trigger = {
+		    crimea_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = crimea_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "rum_c_crimea"
+				duration = 7300
+			}
+			
+			2410 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = 9125
+					power = 15
+					key = rum_black_sea_trade
+				}
+			}
+		}
+	}
+	
+	rum_muslim_city = {
+	    icon = mission_city_of_the_world's_desire
+		required_missions = { rum_muslim_nicaea }
+		position = 6
+		
+		provinces_to_highlight = {
+			province_id = 151
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			owns = 151
+		}
+		
+		effect = {
+			country_event = { id = ab_seljuk.13 }
+			bulgaria_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			silistria_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			albania_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			macedonia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_greece_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			morea_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			apulia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			calabria_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			naples_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_kaiser = {
+	    icon = mission_restore_faith_in_the_throne
+		required_missions = { rum_muslim_city }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				area = morea_area
+				area = macedonia_area
+				area = northern_greece_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			tag = RUM
+			151 = {
+				is_capital_of = ROOT
+			}
+			morea_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			macedonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			northern_greece_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			set_government_rank = 3
+			151 = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+			}
+			add_country_modifier = {
+				name = "rum_m_kaiser"
+				duration = -1
+			}
+			custom_tooltip = RUM_BANISH
+			tooltip = {
+				add_devotion = 10
+				add_legitimacy = 20
+				add_country_modifier = {
+					name = "rum_latins"
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						aegean_archipelago_area = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+					add_devotion = 10
+					add_legitimacy = 20
+					add_country_modifier = {
+						name = "rum_latins"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_ottomans = {
+		icon = mission_dominate_trade_in_bengal
+		required_missions = { rum_muslim_kaiser }
+		position = 8
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = RUM_BAZAAR
+				OR = {
+					151 = {
+						has_great_project = {
+							type = ottoman_market
+							tier = 2
+						}
+					}
+					151 = {
+						has_great_project = {
+							type = ottoman_market
+							tier = 3
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_burghers
+				}
+				estate_loyalty = {
+					estate = estate_burghers
+					loyalty = 70
+				}
+			}
+			calc_true_if = {
+				all_owned_province = {
+					has_trade_building_trigger = yes
+				}
+				amount = 15
+			}
+			if = {
+				limit = {
+					has_estate = estate_burghers
+				}
+				num_of_estate_agendas_completed = {
+					estate = estate_burghers
+					value = 4
+				}
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 0.5
+			add_estate_loyalty = { estate = estate_burghers loyalty = 10 }
+			add_country_modifier = {
+				name = "rum_c_ottomans"
+				duration = -1
+			}
+		}
+	}
+	
+	rum_muslim_sophia = {
+		icon = end_the_schism
+		required_missions = { rum_muslim_ottomans }
+		position = 9
+		
+		provinces_to_highlight = {
+			province_id = 151
+		}
+		
+		trigger = {
+			151 = {
+				has_great_project = {
+					type = hagia_sophia
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = { estate = estate_church loyalty = 10 }
+			custom_tooltip = RUM_M_TRUST
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion_group = muslim
+					}
+					add_trust = { who = ROOT value = 10 mutual = yes }
+				}
+			}
+			151 = {
+				add_province_modifier = {
+					name = "rum_m_ayasofya"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	rum_muslim_janissary = {
+	    icon = mission_non-western_soldiers
+		required_missions = { rum_muslim_balkans }
+		position = 10
+		
+		trigger = {
+			num_of_infantry = 35
+			janissary_percentage = 0.25
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "seljuk_janissaries"
+				duration = 7300
+			}
+		}
+	}
+	
+	rum_muslim_pashas = {
+		icon = mission_defeat_mewar
+		required_missions = { rum_muslim_janissary }
+		position = 12
+
+		trigger = {
+            calc_true_if = {
+                all_owned_province = {
+                    has_pasha = yes
+                }
+                amount = 50
+            }
+		}
+		
+		effect = {
+			custom_tooltip = SEL_PASHA
+			add_country_modifier = {
+				name = "sel_pashas"
+				duration = -1
+			}
+			custom_tooltip = SEL_PASHA_REFORMED
+			hidden_effect = {
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								has_pasha = yes
+							}
+							add_base_manpower = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+	
+}
+
+ab_rum_muslim_third = {
+	slot = 3 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		religion_group = muslim
+		OR = {
+			tag = AKR
+			tag = AKG
+			tag = RUM
+		}
+		NOT = { tag = SEL }
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	rum_muslim_bridging = {
+		icon = mission_conquer_malwa_mer
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+				NOT = {
+					OR = { 
+						has_building = early_road
+						has_building = gravel_road
+						has_building = royal_road
+						has_building = macadam_road
+						has_building = rail_road
+					}
+				}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = { 
+						has_building = early_road
+						has_building = gravel_road
+						has_building = royal_road
+						has_building = macadam_road
+						has_building = rail_road
+					}
+				}
+				amount = 10
+			}
+		}
+	
+		effect = {
+			add_country_modifier = {
+				name = "seljuk_bridging"
+				duration = 7300
+			}
+		}
+	}
+	
+	rum_muslim_capital = {
+	    icon = mission_pacify_punjab
+		required_missions = { rum_muslim_caravan }
+		position = 3
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+			NOT = {
+				OR = {
+					development = 30
+					has_tax_building_trigger = yes
+					has_production_building_trigger = yes
+					has_trade_building_trigger = yes
+				}
+			}
+		}
+		
+		trigger = {
+			capital_scope = {
+				development = 30
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_province_modifier = {
+					name = rum_m_seat
+					duration = -1
+				}
+			}
+			
+			capital_scope = {
+				if = {
+					limit = {	
+						NOT = {
+							province_has_center_of_trade_of_level = 2
+						}
+					}
+					add_center_of_trade_level = 2
+				}
+				else_if = {
+					limit = {	
+						NOT = {
+							province_has_center_of_trade_of_level = 3
+						}
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	rum_muslim_anatolia = {
+	    icon = anatolian_frontier
+		required_missions = { rum_muslim_legacy }
+		position = 4
+		
+		trigger = {
+		    anatolia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = anatolia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			anatolia_region = {
+				add_nationalism = -5
+			}
+			add_country_modifier = {
+				name = rum_c_anatolia
+				duration = 7300
+			}
+			armenia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			crimea_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			aleppo_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			syria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			syrian_desert_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_armenia = {
+	    icon = alpine_fortifications
+		required_missions = { rum_muslim_anatolia }
+		position = 6
+		
+		trigger = {
+		    armenia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = armenia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = RUM_M_ARMENIA
+			tooltip = {
+				add_province_modifier = {
+					name = "seluk_displace"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = armenian
+					}
+					add_province_modifier = {
+						name = "seluk_displace"
+						duration = -1
+					}
+				}
+			}
+			caucasia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_landfall = {
+		icon = king_of_naples
+		required_missions = { rum_muslim_city }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				area = apulia_area
+				area = calabria_area
+				area = naples_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			apulia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			calabria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			naples_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 75 }
+			add_country_modifier = {
+				name = "rum_m_invasion"
+				duration = 7300
+			}
+			sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			western_sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_sicily = {
+		icon = mission_sicsultanate
+		required_missions = { rum_muslim_landfall }
+		position = 9
+		
+		provinces_to_highlight = {
+			OR = {
+				area = sicily_area
+				area = western_sicily_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			western_sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = RUM_CORE_SICILY
+			add_country_modifier = {
+				name = "rum_m_italiyyan"
+				duration = 7300
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						is_core = SIC
+					}
+					add_territorial_core = ROOT
+				}
+			}
+			central_italy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			corsica_sardinia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_rome = {
+		icon = mission_pope
+		required_missions = { rum_muslim_sicily }
+		position = 11
+		
+		provinces_to_highlight = {
+			province_id = 118
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			118 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_zrum.6 }
+			custom_tooltip = RUM_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = rum1_evolved_ideas
+				if = {
+					limit = {
+						tag = RUM
+						religion_group = muslim
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_rum_muslim_fourth = {
+	slot = 4 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		religion_group = muslim
+		OR = {
+			tag = AKR
+			tag = AKG
+			tag = RUM
+		}
+		NOT = { tag = SEL }
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	rum_muslim_caravan = {
+		icon = mission_conquer_malwa_bah
+		required_missions = { rum_muslim_bridging rum_muslim_convert }
+		position = 2
+		
+		provinces_to_highlight = {
+			province_id = 377
+		}
+		
+		trigger = {
+			num_of_centers_of_trade = 5
+			calc_true_if = {
+				all_owned_province = {
+					has_trade_building_trigger = yes
+				}
+				amount = 5
+			}
+			377 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+	
+		effect = {
+			add_estate_loyalty = { estate = estate_burghers loyalty = 10 }
+			add_country_modifier = {
+				name = "seljuk_caravans"
+				duration = -1
+			}
+			custom_tooltip = SEL_TRADE_MISSION
+			tooltip = {
+				define_advisor = {
+					type = trader
+					skill = 2
+					religion = ROOT
+					culture = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						trade_income_percentage = 0.35
+					}
+					define_advisor = {
+						type = trader
+						skill = 2
+						religion = ROOT
+						culture = ROOT
+						cost_multiplier = 0.5
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_acities = {
+	    icon = despot_stefans_legacy
+		required_missions = { rum_muslim_caravan }
+		position = 3
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = anatolia_region
+					development = 15
+				}
+				amount = 5
+			}
+		}
+		
+		provinces_to_highlight = {
+			NOT = {
+				development = 15
+			}
+			region = anatolia_region
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = rum_c_architecture
+				duration = 9125
+			}
+			
+			define_advisor = {
+				type = planner
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	rum_muslim_industry = {
+	    icon = mission_industrialize_bengal
+		required_missions = { rum_muslim_acities }
+		position = 4
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
+				}
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 30
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AB_15_MANUFCATORIES_PROD
+			add_country_modifier = {
+				name = seljuk_indus
+				duration = 9125
+			}
+			hidden_effect = {		
+                for = {
+                    amount = 15
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								has_manufactory_trigger = yes
+							}
+							add_base_production = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+	rum_muslim_syria = {
+		icon = mission_afghan_frontier
+		position = 5
+		required_missions = { rum_muslim_anatolia }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = aleppo_area
+				area = syria_area
+				area = syrian_desert_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			aleppo_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			syria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			syrian_desert_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			add_yearly_manpower = 3
+			add_country_modifier = {
+				name = "seljuk_levantine"
+				duration = 9125
+			}
+			palestine_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			trans_jordan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			al_jazira_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			iraq_arabi_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = SELJUK_NIZZARID
+			tooltip = {
+				add_ruler_modifier = {
+					name = "seljuk_breaker"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							NAZ = {
+								total_development = ROOT
+							}
+						}
+					}
+					add_ruler_modifier = {
+						name = "seljuk_breaker"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_palestine = {
+		icon = kingdom_of_heaven
+		position = 7
+		required_missions = { rum_muslim_syria }
+		
+		provinces_to_highlight = {
+			area = palestine_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			palestine_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					piety = 0
+				}
+				add_piety = 0.25
+			}
+			else_if = {
+				limit = {
+					NOT = { piety = 0 }
+				}
+				add_piety = -0.25
+			}
+			add_country_modifier = {
+				name = sel_jerusalem_custodian
+				duration = -1
+			}
+			
+			tabuk_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			medina_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			mecca_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_egypt = {
+		icon = mission_nizzarid
+		required_missions = { rum_muslim_palestine }
+		position = 8
+		
+		provinces_to_highlight = {
+			region = egypt_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			egypt_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 25
+			add_country_modifier = {
+				name = "seljuk_usurper"
+				duration = 9125
+			}
+		}
+	}
+	
+	rum_muslim_caliphate = {
+		icon = mission_fatimid_caliphate
+		required_missions = { rum_muslim_egypt }
+		position = 9
+		
+		provinces_to_highlight = {
+			region = egypt_region
+			local_autonomy_above_min = 10
+			nationalism = 1
+		}
+		
+		trigger = {
+			OR = {
+				legitimacy = 95
+				devotion = 95
+			}
+			egypt_region = {
+				type = all
+				country_or_subject_holds = ROOT
+				NOT = { local_autonomy_above_min = 10 }
+				NOT = { nationalism = 1 }
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_seljuk.15 }
+			maghreb_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_maghreb = {
+		icon = mission_reconquer_ceuta
+		required_missions = { rum_muslim_caliphate rum_muslim_sicily }
+		position = 10
+		
+		provinces_to_highlight = {
+			region = maghreb_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			maghreb_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 150
+			maghreb_region = {
+				add_nationalism = -5
+			}
+			add_country_modifier = {
+				name = "rum_m_berber"
+				duration = 9125
+			}
+			iberia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_andalusia = {
+		icon = mission_reclaim_andalucia
+		required_missions = { rum_muslim_maghreb }
+		position = 11
+		
+		provinces_to_highlight = {
+			region = iberia_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 25
+				region = iberia_region
+			}
+		}
+		
+		effect = {
+			add_accepted_culture = andalucian
+			add_country_modifier = {
+				name = rum_m_andalus
+				duration = -1
+			}
+			custom_tooltip = RUM_IBERIA
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = iberia_region
+						religion_group = muslim
+					}
+					add_base_tax = 1
+				}
+			}
+		}
+	}
+	
+}
+
+
+ab_rum_muslim_fifth = {
+	slot = 5 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		religion_group = muslim
+		OR = {
+			tag = AKR
+			tag = AKG
+			tag = RUM
+		}
+		NOT = { tag = SEL }
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	rum_muslim_convert = {
+		icon = mission_hands_praying
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			culture = turkish
+			NOT = {
+				religion = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				culture = turkish
+				religion = ROOT
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					piety = 0
+				}
+				add_piety = 0.1
+			}
+			else_if = {
+				limit = {
+					NOT = { piety = 0 }
+				}
+				add_piety = -0.1
+			}
+			define_advisor = {
+				type = theologian
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	rum_muslim_mosques = {
+		icon = mission_into_persia_2
+		required_missions = { rum_muslim_convert }
+		position = 2
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_tax_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 20
+				has_tax_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = { estate = estate_church loyalty = 10 }
+			custom_tooltip = RUM_MUSLIM_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = rum_c_muslim
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						religion_group = muslim
+					}
+					add_province_modifier = {
+						name = rum_c_muslim
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_fate = {
+		icon = mission_interfaith_relations
+		required_missions = { rum_muslim_mosques }
+		position = 3
+		
+		trigger = {
+			OR = {
+				AND = {
+					custom_trigger_tooltip = {
+						tooltip = seljuk_tolerance_heathen
+						has_global_modifier_value = {
+							which = tolerance_heathen
+							value = 2
+						}
+					}
+					num_of_estate_privileges = {
+						estate = estate_dhimmi
+						value = 4
+					}
+				}
+				AND = {
+					custom_trigger_tooltip = {
+						tooltip = seljuk_tolerance_own
+						has_global_modifier_value = {
+							which = tolerance_own
+							value = 4
+						}
+					}
+					religious_unity = 0.9
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SELJUK_REL_1
+			tooltip = {
+				add_country_modifier = {
+					name = seljuk_rights
+					duration = -1
+				}
+			}
+			custom_tooltip = SELJUK_REL_2
+			tooltip = {
+				add_country_modifier = {
+					name = seljuk_true
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						AND = {
+							has_global_modifier_value = {
+								which = tolerance_heathen
+								value = 2
+							}
+							num_of_estate_privileges = {
+								estate = estate_dhimmi
+								value = 4
+							}
+						}
+					}
+					add_country_modifier = {
+						name = seljuk_rights
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = {
+						AND = {
+							has_global_modifier_value = {
+								which = tolerance_own
+								value = 4
+							}
+							religious_unity = 0.9
+						}
+					}
+					add_country_modifier = {
+						name = seljuk_true
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	rum_muslim_sword = {
+		icon = mission_subdue_rajputana
+		required_missions = { rum_muslim_fate }
+		position = 5
+		
+		provinces_to_highlight = {
+			NOT = {
+				owned_by = ROOT
+			}
+			religion_group = muslim
+		}
+		
+		trigger = {
+			prestige = 95
+			is_defender_of_faith = yes
+			num_of_owned_provinces_with = {
+				value = 150
+				religion_group = muslim
+			}
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
+			}
+			add_country_modifier = {
+				name = rum_m_sword
+				duration = -1
+			}
+		}
+	}
+	
+	rum_muslim_baghdad = {
+	    icon = mission_into_persia_1
+		required_missions = { rum_muslim_syria }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = iraq_arabi_area
+				area = al_jazira_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			iraq_arabi_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			al_jazira_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_adm_power = 100
+			custom_tooltip = SEL_DEVASTATION
+			basra_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				al_jazira_area = {
+					add_devastation = -100
+				}
+				iraq_arabi_area = {
+					add_devastation = -100
+				}
+			}
+		}
+	}
+	
+	rum_muslim_house = {
+	    icon = mission_gawans_madrasar
+		required_missions = { rum_muslim_baghdad }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 410
+		}
+		trigger = {
+			DIP = 5
+			410 = {
+				development = 25
+				has_building = university
+			}
+		}
+		effect = {
+			change_innovativeness = 5
+			add_country_modifier = {
+				name = "sel_house"
+				duration = 9125
+			}
+		}
+	}
+	
+	rum_muslim_cities = {
+		icon = mission_into_arabia
+		position = 8
+		required_missions = { rum_muslim_palestine }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tabuk_area
+				area = mecca_area
+				area = medina_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			tabuk_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			mecca_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			medina_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			385 = {
+				add_province_modifier = {
+					name = rum_m_holy_city
+					duration = -1
+				}
+			}
+			tihama_al_yemen_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			asir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			yemen_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_yemen_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	rum_muslim_aden = {
+		icon = mission_arabian_sea_trade
+		position = 10
+		required_missions = { rum_muslim_cities }
+	
+		trigger = {
+			yemen_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			upper_yemen_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			asir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			tihama_al_yemen_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = yemen_area
+				area = upper_yemen_area
+				area = asir_area
+				area = tihama_al_yemen_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			create_explorer = { tradition = 50 }
+			add_country_modifier = {
+				name = rum_c_explore
+				duration = 9125
+			}
+			
+			388 = {
+				add_unit_construction = {
+					type = light_ship
+					amount = 5
+					speed = 0.25
+					cost = 0
+				}
+			}
+		}
+	}
+	
+	rum_muslim_fareast = {
+		icon = mission_dominate_persian_gulf
+		required_missions = { rum_muslim_aden }
+		position = 12
+		
+		provinces_to_highlight = {
+			superregion = east_indies_superregion
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			504 = {
+				owned_by = ROOT
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				superregion = east_indies_superregion
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = rum_spice_control
+				duration = 9125
+			}
+			johor_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			malaya_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			malacca_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			} 
+			central_sumatra_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			} 
+			jambi_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			} 
+		}
+	}
+}

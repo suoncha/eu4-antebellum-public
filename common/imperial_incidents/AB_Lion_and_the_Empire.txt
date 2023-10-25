@@ -1,0 +1,160 @@
+incident_lion_and_the_empire = {
+	event = lion_and_the_empire.1
+	default_option = 0
+
+	can_stop = {
+		if = {
+			limit = {
+				exists = SWE
+			}
+			OR = {
+				NOT = { exists = SWE }
+				SWE = { 
+					is_subject = yes
+					overlord = {
+						NOT = { is_part_of_hre = yes }
+					}
+				}
+				SWE = { is_part_of_hre = yes }
+			}
+		}
+		else_if = {
+			limit = {
+				exists = SCA
+			}
+			OR = {
+				NOT = { exists = SCA }
+				SCA = { 
+					is_subject = yes
+					overlord = {
+						NOT = { is_part_of_hre = yes }
+					}
+				}
+				SCA = { is_part_of_hre = yes }
+			}
+		}
+	}
+
+	0 = { # Allow entry
+		factor = 1
+		modifier = {
+			factor = 100
+			OR = {
+				religion = catholic
+				ai_attitude = {
+					who = SWE
+					attitude = attitude_friendly
+				}
+				ai_attitude = {
+					who = SWE
+					attitude = attitude_loyal
+				}
+				ai_attitude = {
+					who = SWE
+					attitude = attitude_allied
+				}
+			}
+		}
+		modifier = {
+			factor = 100
+			OR = {
+				religion = catholic
+				ai_attitude = {
+					who = SCA
+					attitude = attitude_friendly
+				}
+				ai_attitude = {
+					who = SCA
+					attitude = attitude_loyal
+				}
+				ai_attitude = {
+					who = SCA
+					attitude = attitude_allied
+				}
+			}
+		}
+	}
+	1 = { # Refuse entry
+		factor = 1
+		modifier = {
+			factor = 100
+			OR = {
+				NOT = {
+					religion = catholic
+				}
+				any_owned_province = {
+					OR = {
+						is_claim = SWE
+						is_permanent_claim = SWE
+						is_core = SWE
+					}
+				}
+				is_rival = SWE
+				ai_attitude = {
+					who = SWE
+					attitude = attitude_rivalry
+				}
+				ai_attitude = {
+					who = SWE
+					attitude = attitude_hostile
+				}
+				ai_attitude = {
+					who = SWE
+					attitude = attitude_threatened
+				}
+				ai_attitude = {
+					who = SWE
+					attitude = attitude_outraged
+				}
+				ai_attitude = {
+					who = SWE
+					attitude = attitude_disloyal
+				}
+				ai_attitude = {
+					who = SWE
+					attitude = attitude_rebellious
+				}
+			}
+		}
+		modifier = {
+			factor = 100
+			OR = {
+				NOT = {
+					religion = catholic
+				}
+				any_owned_province = {
+					OR = {
+						is_claim = SCA
+						is_permanent_claim = SCA
+						is_core = SCA
+					}
+				}
+				is_rival = SCA
+				ai_attitude = {
+					who = SCA
+					attitude = attitude_rivalry
+				}
+				ai_attitude = {
+					who = SCA
+					attitude = attitude_hostile
+				}
+				ai_attitude = {
+					who = SCA
+					attitude = attitude_threatened
+				}
+				ai_attitude = {
+					who = SCA
+					attitude = attitude_outraged
+				}
+				ai_attitude = {
+					who = SCA
+					attitude = attitude_disloyal
+				}
+				ai_attitude = {
+					who = SCA
+					attitude = attitude_rebellious
+				}
+			}
+		}
+	}
+}

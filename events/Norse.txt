@@ -1,0 +1,113 @@
+##############################
+# Norse Flavor Events
+#
+# written by Ogulcan Yildirim
+##############################
+
+namespace = norse_events
+
+country_event = {
+	id = norse_events.1
+	title = norse_events.1.t
+	desc = norse_events.1.desc
+	picture = NORSE_TEMPLE_eventPicture
+	is_triggered_only = yes
+
+	# Odin
+	option = {
+		name = norse_events.1.a
+		trigger = {
+			NOT = { has_personal_deity = odin }
+		}
+		change_personal_deity = odin
+	}
+
+	# Freya
+	option = {
+		name = norse_events.1.b
+		trigger = {
+			NOT = { has_personal_deity = freya }
+		}
+		change_personal_deity = freya
+	}
+
+	# Tor
+	option = {
+		name = norse_events.1.c
+		trigger = {
+			NOT = { has_personal_deity = tor }
+		}
+		change_personal_deity = tor
+	}
+
+	# Tyr
+	option = {
+		name = norse_events.1.d
+		trigger = {
+			NOT = { has_personal_deity = tyr }
+		}
+		change_personal_deity = tyr
+	}
+
+	# Njord
+	option = {
+		name = norse_events.1.e
+		trigger = {
+			NOT = { has_personal_deity = njord }
+		}
+		change_personal_deity = njord
+	}
+
+	# Snotra
+	option = {
+		name = norse_events.1.f
+		trigger = {
+			NOT = { has_personal_deity = snotra }
+		}
+		change_personal_deity = snotra
+	}
+}
+
+
+# Reconstruction of the Temple in Uppsala
+country_event = {
+	id = norse_events.6
+	title = norse_events.6.t
+	desc = norse_events.6.desc
+	picture = NORSE_TEMPLE_eventPicture
+	goto = 1
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			1 = {
+				set_province_flag = has_uppsala_temple_flag
+			}
+		}
+	}
+	
+	option = {
+		name = norse_events.6.a
+		1 = {
+			add_province_triggered_modifier = religious_center
+			add_province_triggered_modifier = temple_of_uppsala_modifier
+			add_building = cathedral
+		}
+		if = {
+			limit = {
+				NOT = { has_country_flag = has_norse_flexible_deities_permanent }
+			}
+			if = {
+				limit = { has_dlc = "Wealth of Nations" }
+				custom_tooltip = unlock_norse_free_deity_decision_tt
+			}
+			hidden_effect = {
+				set_country_flag = has_norse_flexible_deities_permanent
+			}
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+

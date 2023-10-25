@@ -1,0 +1,43 @@
+cb_make_satrapy = {
+	valid_for_subject = no
+
+	prerequisites_self = {
+		has_government_attribute = ab_has_satrapies
+	}
+
+	prerequisites = {
+		is_neighbor_of = FROM
+		FROM = {
+			is_free_or_tributary_trigger = yes
+			# Don't allow Regional governors over our culture
+			NOT = {
+				primary_culture = ROOT
+			}
+			NOT = {
+				total_development = 100
+			}
+			NOT = { has_reform = papacy_reform }
+			NOT = { has_reform = celestial_empire }
+			NOT = { has_reform = shogunate }
+		}
+	}
+
+	war_goal = take_capital_satrapy_war
+
+	attacker_disabled_po = {
+		po_become_vassal
+		po_subjugate_vassal
+		po_become_tributary_state
+		po_subjugate_tributary_state
+	}
+}
+
+# Satrapy that broke free
+cb_disloyal_satrapy = {
+	valid_for_subject = no
+
+	is_triggered_only = yes
+	months = 120
+
+	war_goal = take_capital_disloyal
+}

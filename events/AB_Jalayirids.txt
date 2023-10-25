@@ -1,0 +1,187 @@
+namespace = ab_jalayirid
+
+#Caliphate
+country_event = {
+	id = ab_jalayirid.1
+	title = ab_jalayirid.1.t
+	desc = ab_jalayirid.1.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_jalayirid.1.a
+		custom_tooltip = SEL_ADOPT_TITLE
+		add_country_modifier = {
+			name = jlr_caliphate
+			duration = -1
+		}
+		add_historical_rival = ADU
+		hidden_effect = {
+			ADU = {
+				add_historical_rival = ROOT
+			}
+		}
+	}
+	
+	option = {
+		name = ab_jalayirid.1.b
+		trigger = {
+			NOT = {
+				exists = ABS
+			}
+		}
+		change_tag = ABS
+		swap_free_idea_group = yes
+		custom_tooltip = SEL_ADOPT_TITLE
+		add_country_modifier = {
+			name = jlr_restoration
+			duration = -1
+		}
+		define_ruler = {
+			dynasty = "Abbas"
+			culture = al_misr_arabic
+			religion = ROOT
+			adm = 4
+			dip = 5
+			mil = 3
+		}
+		add_historical_rival = ADU
+		hidden_effect = {
+			ADU = {
+				add_historical_rival = ROOT
+			}
+			remove_heir = {}
+			# Fire the Mongol Traditions after a while
+			country_event = {
+				id = ab_jalayirid.6
+				days = 10
+				random = 5
+			}
+		}
+	}
+	
+}
+
+#Remove Center
+province_event = {
+	id = ab_jalayirid.2
+	title = none
+	desc = none
+	picture = none
+	hidden = yes	
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	immediate = {
+		remove_reform_center = sunni
+	}
+
+	option = { }
+}
+
+#Triumph of the Crescent
+country_event = {
+	id = ab_jalayirid.3
+	title = ab_jalayirid.3.t
+	desc = ab_jalayirid.3.d
+	picture = AB_PERSIA_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_jalayirid.3.a
+		custom_tooltip = JLR_PP
+		hidden_effect = {
+			add_power_projection = {
+				type = JLR_perma_pp
+				amount = 25
+			}
+		}
+		add_country_modifier = {
+			name = "jlr_triumph_cre"
+			duration = -1
+		}
+		define_advisor = {
+			type = islamic_advisor
+			skill = 3
+			religion = ROOT
+			culture = ROOT
+			cost_multiplier = 0.25
+		}
+	}
+	
+}
+
+#Paradise Gardens
+country_event = {
+	id = ab_jalayirid.4
+	title = ab_jalayirid.4.t
+	desc = ab_jalayirid.4.d
+	picture = GREAT_BUILDING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_jalayirid.4.a
+		410 = {
+			add_base_tax = 3
+			add_base_production = 3
+			add_base_manpower = 3
+		}
+		add_country_modifier = {
+			name = jlr_paradise
+			duration = -1
+		}
+	}
+	
+}
+
+#Golden Age
+country_event = {
+	id = ab_jalayirid.5
+	title = ab_jalayirid.5.t
+	desc = ab_jalayirid.5.d
+	picture = MUSLIM_SCHOLAR_WRITING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_jalayirid.5.a
+		change_innovativeness = 5
+		reset_golden_age = yes
+		add_ruler_modifier = {
+			name = jlr_patron
+			duration = -1
+		}
+	}
+	
+}
+
+#Mongol Traditions
+country_event = {
+	id = ab_jalayirid.6
+	title = ab_jalayirid.6.t
+	desc = ab_jalayirid.6.d
+	picture = MUSLIM_SCHOLAR_WRITING_eventPicture
+	
+	trigger = {
+		tag = ABS
+		was_tag = JLR
+	}
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_jalayirid.6.a
+		add_country_modifier = {
+			name = jlr_mongol_traditions
+			duration = -1
+		}
+	}
+	
+}

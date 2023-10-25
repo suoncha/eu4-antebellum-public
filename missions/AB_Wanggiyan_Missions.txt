@@ -1,0 +1,304 @@
+ab_wanggiyan_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = ODL
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	odl_expanding = {
+		icon = mission_unite_home_region
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = manchu_manchuria_decision.tooltip_new
+				num_of_owned_provinces_with = {
+					is_core = ROOT
+					OR = {
+						culture = manchu_new
+						culture = manchu
+					}
+					value = 12
+				}
+			}
+		}
+		
+		effect = {
+			add_adm_power = 50
+			add_country_modifier = {
+				name = odl_expand
+				duration = 5475
+			}
+			furdan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			4217 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			729 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4216 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	
+	odl_wild = {
+		icon = mission_non-western_cavalry_raid
+		required_missions = { odl_expanding }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4216
+				province_id = 729
+				province_id = 4217
+				area = furdan_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    4216 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    729 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    4217 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    furdan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 15
+			define_advisor = {
+				type = army_reformer
+				skill = 1
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			2111 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			726 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2112 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2113 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4652 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2744 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4232 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	odl_temugid = {
+		icon = mission_to_china
+		required_missions = { odl_wild }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2111
+				province_id = 726
+				province_id = 2112
+				province_id = 2113
+				province_id = 4652
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			NOT = {
+				exists = TMG
+			}
+		    2111 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    726 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    2112 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    2113 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    4652 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			add_country_modifier = {
+				name = odl_dominance
+				duration = 7300
+			}
+		}
+	}
+	
+}
+
+
+
+
+
+
+ab_wanggiyan_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ODL
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	odl_integrate = {
+		icon = mission_chinese_general_riding
+		required_missions = { }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2188
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    owns = 2188
+			NOT = {
+				exists = ASG
+			}
+		}
+		
+		effect = {
+			add_horde_unity = 10
+			central_heilongjiang_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	odl_nara = {
+		icon = mission_manchu_warrior
+		required_missions = { odl_integrate }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = central_heilongjiang_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    central_heilongjiang_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 75
+			add_country_modifier = {
+				name = odl_uniting
+				duration = 5475
+			}
+		}
+	}
+	
+	
+	
+	
+}

@@ -1,0 +1,399 @@
+namespace = ab_yuandisaster
+normal_or_historical_nations = yes
+
+#Pro-Prince Dongdin Uprising in Xuzhou
+country_event = {
+	id = ab_yuandisaster.1
+	title = ab_yuandisaster.1.t
+	desc = ab_yuandisaster.1.d
+	picture = FIREARMS_INCIDENT_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUA
+		has_disaster = yuan_crisis
+		NOT = {
+			has_country_flag = YUA_CHINESE
+		}
+		2141 = {
+			owned_by = ROOT
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 4
+	}
+	
+	option = {
+		name = ab_yuandisaster.1.a
+		2141 = {
+			if = {
+				limit = {
+					YUA = {
+						ai = yes
+					}
+				}
+				spawn_rebels = {
+					type = pretender_rebels
+					size = 1
+				}
+			}
+			else = {
+				spawn_rebels = {
+					type = pretender_rebels
+					size = 2
+				}
+			}
+		}
+	}
+}
+
+#Mongol Tribes come to help
+country_event = {
+	id = ab_yuandisaster.2
+	title = ab_yuandisaster.2.t
+	desc = ab_yuandisaster.2.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUA
+		has_disaster = yuan_crisis
+		has_country_flag = YUA_HORDE
+	}
+	
+	mean_time_to_happen = {
+		months = 22
+	}
+	
+	option = {
+		name = ab_yuandisaster.2.a
+			add_estate_loyalty = {
+				estate = estate_nomadic_tribes
+				loyalty = 10
+			}
+		add_manpower = 7.5
+	}
+}
+
+#Bureaucrat Protest
+country_event = {
+	id = ab_yuandisaster.3
+	title = ab_yuandisaster.3.t
+	desc = ab_yuandisaster.3.d
+	picture = NEO_CONFUCIANISM_INCIDENT_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUA
+		has_disaster = yuan_crisis
+		has_country_flag = YUA_HORDE
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = ab_yuandisaster.3.a
+		add_country_modifier = {
+			name = "yua_disaster_protest"
+			duration = 5475
+		}
+	}
+}
+
+#Mongol and Manchu recognition of Temur
+country_event = {
+	id = ab_yuandisaster.4
+	title = ab_yuandisaster.4.t
+	desc = ab_yuandisaster.4.d
+	picture = GIFTS_TO_EMPEROR_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUA
+		has_disaster = yuan_crisis
+		has_country_flag = YUA_HORDE
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+	}
+	
+	option = {
+		name = ab_yuandisaster.4.a
+		add_prestige = 5
+		add_country_modifier = {
+			name = "yua_disaster_recognition"
+			duration = 5475
+		}
+	}
+}
+
+#Duke of Shun rises in rebellion
+country_event = {
+	id = ab_yuandisaster.5
+	title = ab_yuandisaster.5.t
+	desc = ab_yuandisaster.5.d
+	picture = SENGOKU_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUA
+		has_disaster = yuan_crisis
+		NOT = {
+			has_country_flag = YUA_CHINESE
+		}
+		699 = {
+			owned_by = ROOT
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	option = {
+		name = ab_yuandisaster.5.a
+		699 = {
+			if = {
+				limit = {
+					YUA = {
+						ai = yes
+					}
+				}
+				spawn_rebels = {
+					type = nationalist_rebels
+					size = 1
+					friend = CSH
+				}
+			}
+			else = {
+				spawn_rebels = {
+					type = nationalist_rebels
+					size = 3
+					friend = CSH
+				}
+			}
+		}
+	}
+}
+
+#Peasant Uprising
+country_event = {
+	id = ab_yuandisaster.6
+	title = ab_yuandisaster.6.t
+	desc = ab_yuandisaster.6.d
+	picture = ANGRY_MOB_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUA
+		has_disaster = yuan_crisis
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+	}
+	
+	option = {
+		name = ab_yuandisaster.6.a
+		add_country_modifier = {
+			name = "yua_disaster_peasants"
+			duration = 5475
+		}
+		if = {
+				limit = {
+					YUA = {
+						ai = yes
+					}
+				}
+		random_owned_province = {
+			spawn_rebels = {
+				type = anti_tax_rebels
+				size = 1
+			}
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = anti_tax_rebels
+				size = 1
+			}
+		}
+		}
+		else = {
+		random_owned_province = {
+			spawn_rebels = {
+				type = anti_tax_rebels
+				size = 2
+			}
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = anti_tax_rebels
+				size = 1
+			}
+		}
+		}
+	}
+}
+
+#The Great Mongol Uprising
+country_event = {
+	id = ab_yuandisaster.7
+	title = ab_yuandisaster.7.t
+	desc = ab_yuandisaster.7.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUA
+		has_disaster = yuan_crisis
+		NOT = {
+			has_country_flag = YUA_HORDE
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	option = {
+		name = ab_yuandisaster.7.a
+		if = {
+				limit = {
+					YUA = {
+						ai = yes
+					}
+				}
+		random_owned_province = {
+			limit = { culture = mongol }
+			spawn_rebels = {
+				type = nationalist_rebels
+				size = 1
+				friend = KHA
+			}
+		}
+		}
+		else = {
+		random_owned_province = {
+			limit = { culture = mongol }
+			spawn_rebels = {
+				type = nationalist_rebels
+				size = 1
+				friend = KHA
+			}
+		}
+		}
+	}
+}
+
+#Nestorian Revolt
+country_event = {
+	id = ab_yuandisaster.8
+	title = ab_yuandisaster.8.t
+	desc = ab_yuandisaster.8.d
+	picture = ORTHODOX_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUA
+		has_disaster = yuan_crisis
+		NOT = {
+			OR = {
+				has_country_flag = YUA_HORDE
+				has_country_flag = YUA_CHINESE
+			}
+		}
+		not = { religion = nestorian }
+		any_owned_province = { religion = nestorian }
+	}
+	
+	mean_time_to_happen = {
+		months = 20
+	}
+	
+	option = {
+		name = ab_yuandisaster.8.a
+		random_owned_province = {
+			limit = { religion = nestorian }
+			spawn_rebels = {
+				type = nestorian_rebels
+				size = 2
+			}
+		}
+	}
+}
+
+#Temurs loyalists capture Qaraqorum
+country_event = {
+	id = ab_yuandisaster.9
+	title = ab_yuandisaster.9.t
+	desc = ab_yuandisaster.9.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUA
+		has_disaster = yuan_crisis
+		ai = no
+		NOT = {
+			has_country_flag = YUA_HORDE
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 20
+	}
+	
+	option = {
+		name = ab_yuandisaster.9.a
+		2190 = {
+			spawn_rebels = {
+				type = nationalist_rebels
+				size = 3
+				friend = KHA
+				win = yes
+			}
+		}
+	}
+}
+
+#The Chinese refuse to recognize a Christian Emperor
+country_event = {
+	id = ab_yuandisaster.10
+	title = ab_yuandisaster.10.t
+	desc = ab_yuandisaster.10.d
+	picture = IMPERIAL_SEAL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = YUA
+		has_disaster = yuan_crisis
+		religion = nestorian
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	option = {
+		name = ab_yuandisaster.10.a
+		add_mandate = -10
+		add_country_modifier = {
+			name = yua_disaster_mandate
+			duration = 7300
+		}
+	}
+}

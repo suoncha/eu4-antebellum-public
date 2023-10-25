@@ -1,0 +1,87 @@
+country_decisions = {
+	
+	restore_goguryeo = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			
+			NOT = { has_country_flag = formed_ggr_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = GGR }
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
+			OR = {
+				tag = GOR
+				tag = JSN
+			}
+			OR = {
+				ai = no
+				AND = {
+					ai = yes
+					num_of_cities = 3
+				}
+			}
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2745
+				province_id = 737
+				province_id = 735
+				province_id = 1845
+				province_id = 2743
+				province_id = 2113
+				province_id = 4201
+				province_id = 2188
+				province_id = 2108
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			owns_core_province = 2745
+			owns_core_province = 737
+			owns_core_province = 735
+			owns_core_province = 1845
+			owns_core_province = 2743
+			owns_core_province = 2113
+			owns_core_province = 4201
+			owns_core_province = 2188
+			owns_core_province = 2108
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = GGR
+			override_country_name = GGR
+			set_country_flag = formed_ggr_flag
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}	
+	
+}

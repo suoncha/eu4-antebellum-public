@@ -1,0 +1,150 @@
+namespace = ab_min
+normal_or_historical_nations = yes
+
+country_event = {
+	id = ab_min.1
+	title = ab_min.1.t
+	desc = ab_min.1.d
+	picture = GIFTS_TO_EMPEROR_eventPicture
+	
+	mean_time_to_happen = {
+		months = 600
+	}
+	
+	trigger = {
+		culture_group = east_asian
+		owns = 1829
+		OR = {
+			tag = MIN
+			was_tag = MIN
+		}
+	}
+	
+	option = {
+		name = ab_min.1.a
+		add_estate_loyalty = {
+			estate = estate_burghers
+			loyalty = -5
+		}
+		add_estate_influence_modifier = {
+		  estate = estate_burghers
+		  desc = MIN_HIRED_PERSIAN_TRADER
+		  influence = 10
+		  duration = 3650
+		}
+		define_advisor = {
+			type = trader
+			skill = 2
+			religion = zoroastrian
+			culture = persian
+			cost_multiplier = 0.5
+		}
+	}
+	
+	option = {
+		name = ab_min.1.b
+		add_estate_loyalty = {
+			estate = estate_burghers
+			loyalty = 10
+		}
+	}
+}
+
+country_event = {
+	id = ab_min.2
+	title = ab_min.2.t
+	desc = ab_min.2.d
+	picture = URBANISATION_INCIDENT_eventPicture
+	
+	mean_time_to_happen = {
+		months = 5
+	}
+	
+	trigger = {
+		culture_group = east_asian
+		OR = {
+			tag = MIN
+			was_tag = MIN
+		}
+		owns = 1829
+		NOT = {
+			stability = 1
+		}
+		employed_advisor = {
+			religion = zoroastrian
+			culture = persian
+		}
+		NOT = {
+			legitimacy_equivalent = 80
+		}
+		num_of_rebel_controlled_provinces = 5
+	}
+	
+	option = {
+		name = ab_min.2.a
+			set_country_flag = persian_admin
+			add_stability = 1
+			add_government_reform = min_persian_admin
+	}
+	
+	option = {
+		name = ab_min.2.b
+		add_stability = -1
+		remove_advisor_by_category = DIP
+		add_estate_loyalty = {
+			estate = estate_burghers
+			loyalty = -10
+		}
+	}
+}
+
+country_event = {
+	id = ab_min.3
+	title = ab_min.3.t
+	desc = ab_min.3.d
+	picture = URBANISATION_INCIDENT_eventPicture
+	
+	mean_time_to_happen = {
+		months = 200
+	}
+
+	fire_only_once = yes
+	
+	trigger = {
+		culture_group = east_asian
+		OR = {
+			tag = MIN
+			was_tag = MIN
+		}
+		owns = 1829
+		NOT = {
+			stability = 0
+		}
+		has_reform = min_persian_admin
+		NOT = {
+			legitimacy_equivalent = 50
+		}
+	}
+	
+	option = {
+		name = ab_min.3.a
+		kill_ruler = yes
+		change_primary_culture = persian
+		change_religion = zoroastrian
+		change_government = republic
+		set_country_flag = persian_admin_2
+		add_government_reform = min_persian_admin_republic
+	}
+	
+	option = {
+		name = ab_min.3.b
+		kill_ruler = yes
+		remove_government_reform = min_persian_admin
+		1829 = {
+			spawn_rebels = {
+				type = anti_tax_rebels
+				size = 3
+			}
+		}
+	}
+}

@@ -1,0 +1,181 @@
+ab_pagan_slavic_missions = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			religion = slavic_pagan
+			religion = reformed_slavic
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = no
+	
+	ab_slavic_warriors = {
+		icon = mission_wendia
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			mil_power = 100
+			mil = 4
+			OR = {
+				army_professionalism = 0.25
+				army_tradition = 50
+			}
+		}
+		
+		effect = {
+			add_mil_power = -100
+			custom_tooltip = SLAVIC_PERUN
+			add_country_modifier = {
+				name = slavic_wendish_mercs
+				duration = 5475
+			}
+			set_country_flag = wee_perun_unlocked
+		}
+	}
+	
+	ab_slavic_sites = {
+		icon = mission_passage
+		required_missions = {  }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4745
+				province_id = 4526
+				province_id = 262
+				province_id = 280
+				province_id = 4238
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						province_id = 4745
+						province_id = 4526
+						province_id = 4238
+						province_id = 262
+						province_id = 280
+					}
+				}
+				amount = 4
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = slavic_holy_sites
+				duration = 7300
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+
+	ab_slavic_arkona = {
+		icon = mission_celebrate
+		required_missions = { ab_slavic_sites }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4745
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			owns = 4745
+			custom_trigger_tooltip = {
+				tooltip = slavic_arkona_monument
+				OR = {
+					4745 = {
+						owned_by = ROOT
+						has_great_project = {
+							type = temple_of_arkona
+							tier = 1
+						}
+					}
+					4745 = {
+						owned_by = ROOT
+						has_great_project = {
+							type = temple_of_arkona
+							tier = 2
+						}
+					}
+					4745 = {
+						owned_by = ROOT
+						has_great_project = {
+							type = temple_of_arkona
+							tier = 3
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SLAVIC_ARKONA_TEMPLE
+			4745 = {
+				add_province_modifier = {
+					name = slavic_renovate_arkona
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						4745 = {
+							NOT = {
+								has_building = cathedral
+							}
+						}
+					}
+					4745 = {
+						remove_building = temple
+						add_building = cathedral
+					}
+				}
+			}
+		}
+	}
+	
+	ab_slavic_reform = {
+		icon = mission_perun
+		required_missions = { ab_slavic_arkona }
+		position = 5
+		
+		trigger = {
+			religion = reformed_slavic
+		}
+		
+		effect = {
+			custom_tooltip = SLAVIC_POWER_CHURCH
+			hidden_effect = {
+				add_church_power = 50
+			}
+			custom_tooltip = SLAVIC_CB_CONVERT
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion = slavic_pagan
+					}
+					reverse_add_casus_belli = {
+						type = cb_religious_conformance
+						months = 300
+						target = ROOT
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,2277 @@
+koj_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+	}
+	has_country_shield = yes
+	
+	koj_king_doge = {
+		icon = venture_captains
+		required_missions = { koj_crusader_alliances }
+		position = 2
+		
+		provinces_to_highlight = {
+			owned_by = VEN
+		}
+		
+		trigger = {
+			OR = {
+				alliance_with = VEN
+				OR = {
+					VEN = {
+						is_rival = ROOT
+					}
+					VEN = {
+						is_enemy = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					alliance_with = VEN
+				}
+				custom_tooltip = KOJ_VEN_ALLIANCE
+			}
+			else = {
+				custom_tooltip = KOJ_VEN_ALLIANCE_NO
+			}
+			if = {
+				limit = {
+					OR = {
+						VEN = {
+							is_rival = ROOT
+						}
+						VEN = {
+							is_enemy = ROOT
+						}
+					}
+				}
+				custom_tooltip = KOJ_VEN_RIVAL
+				tooltip = {
+					create_admiral = { tradition = 50 }
+					add_country_modifier = {
+						name = koj_contest_venetian
+						duration = 5475
+					}
+				}
+			}
+			else = {
+				custom_tooltip = KOJ_VEN_RIVAL_NO
+				tooltip = {
+					create_admiral = { tradition = 50 }
+					add_country_modifier = {
+						name = koj_contest_venetian
+						duration = 5475
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						alliance_with = VEN
+					}
+					add_historical_friend = VEN
+					VEN = {
+						add_historical_friend = ROOT
+					}
+					random_owned_province = {
+						limit = {
+							has_port = yes
+						}
+						add_unit_construction = {
+							type = galley
+							amount = 5
+							speed = 0.25
+							cost = 0
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						OR = {
+							VEN = {
+								is_rival = ROOT
+							}
+							VEN = {
+								is_enemy = ROOT
+							}
+						}
+					}
+					create_admiral = { tradition = 50 }
+					add_country_modifier = {
+						name = koj_contest_venetian
+						duration = 5475
+					}
+				}
+			}
+		}
+	}
+
+	koj_patriarchate_alexandria = {
+		icon = mission_conquer_alexandria
+		required_missions = { koj_land_of_moses }
+		position = 4
+		
+		provinces_to_highlight = {
+			province_id = 358
+		}
+		
+		trigger = {
+			owns = 358
+			358 = {
+				religion = catholic
+			}
+			358 = {
+				has_tax_building_trigger = yes
+			}
+			358 = {
+				NOT = {
+					nationalism = 1
+				}
+			}
+		}
+		
+		effect = {
+			set_country_flag = koj_advisor_scaling
+			custom_tooltip = KOJ_SCALING
+			custom_tooltip = AB_EMPTY
+			358 = {
+				upgrade_tax_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = koj_reclaiming_the_patriarchates
+				duration = 9125
+			}
+		}
+	}
+	
+	koj_granary = {
+		icon = mission_clear_the_delta
+		required_missions = { koj_patriarchate_alexandria }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 363
+				province_id = 362
+				province_id = 2316
+				province_id = 4316
+			}
+			NOT = { base_production = 7 }
+		}
+		
+		trigger = {
+			owns = 363
+			owns = 4316
+			owns = 362
+			owns = 2316
+			363 = {
+				base_production = 7
+			}
+			4316 = {
+				base_production = 7
+			}
+			362 = {
+				base_production = 7
+			}
+			2316 = {
+				base_production = 7
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NAZ_PROSPERITY
+			custom_tooltip = NAZ_BREAD
+			tooltip = {
+				add_province_modifier = {
+					name = "naz_delta"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				bahari_area = {
+					add_prosperity = 100
+				}
+				delta_area = {
+					add_prosperity = 100
+				}
+			}
+			hidden_effect = {
+				2316 = {
+					add_province_modifier = {
+						name = "naz_delta"
+						duration = -1
+					}
+				}
+				362 = {
+					add_province_modifier = {
+						name = "naz_delta"
+						duration = -1
+					}
+				}
+				4316 = {
+					add_province_modifier = {
+						name = "naz_delta"
+						duration = -1
+					}
+				}
+				363 = {
+					add_province_modifier = {
+						name = "naz_delta"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	koj_rebuild_the_fleet = {
+		icon = crusader_fleet
+		required_missions = { }
+		position = 5
+		
+		trigger = {
+			OR = {
+				num_of_galley = 10
+				num_of_light_ship = 10
+			}
+		}
+		
+		effect = {
+			add_navy_tradition = 10
+			add_country_modifier = {
+				name = koj_crusader_fleet
+				duration = 7300
+			}
+			320 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	koj_contol_trade = {
+		icon = reclaim_the_aegean
+		required_missions = { koj_rebuild_the_fleet }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 358
+				province_id = 377
+			}
+		}
+		
+		trigger = {
+			358 = {
+				trade_share = {
+					country = ROOT
+					share = 50
+				}
+			}
+			377 = {
+				trade_share = {
+					country = ROOT
+					share = 50
+				}
+			}
+		}
+		effect = {
+			add_years_of_trade_income = {
+				years = 2
+				custom_tooltip = koj_trade_income
+			}
+			add_country_modifier = {
+				name = koj_control_east
+				duration = 5475
+			}
+			define_advisor = {
+				type = trader
+				skill = 2
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					358 = {
+						trade_share = {
+							country = ROOT
+							share = 75
+						}
+					}
+				}
+				custom_tooltip = KOJ_JERUSALEM_COT
+				tooltip = {
+					379 = {
+						if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 1 }
+							}
+							center_of_trade = 1
+						}
+						else_if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 3 }
+							}
+							add_center_of_trade_level = 1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = KOJ_JERUSALEM_COT_NO
+				tooltip = {
+					379 = {
+						if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 1 }
+							}
+							center_of_trade = 1
+						}
+						else_if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 3 }
+							}
+							add_center_of_trade_level = 1
+						}
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						358 = {
+							trade_share = {
+								country = ROOT
+								share = 75
+							}
+						}
+					}
+					379 = {
+						if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 1 }
+							}
+							center_of_trade = 1
+						}
+						else_if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 3 }
+							}
+							add_center_of_trade_level = 1
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	koj_invite_western_scholars = {
+		icon = republican_yearnings
+		required_missions = { }
+		position = 10
+		
+		trigger = {
+			any_ally = {
+				has_opinion = {
+					who = ROOT
+					value = 190
+				}
+				has_institution = renaissance
+				technology_group = western
+			}
+		}
+		
+		effect = {
+			379 = {
+				add_institution_embracement = {
+					which = renaissance
+					value = 25
+				}
+			}
+			add_country_modifier = {
+				name = koj_western_scholars
+				duration = 7300
+			}
+		}
+	}
+	
+	koj_patronize_art = {
+		icon = mlo_renaissance_city
+		required_missions = { koj_invite_western_scholars }
+		position = 11
+		
+		trigger = {
+			has_institution = renaissance
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			OR = {
+				innovativeness = 10
+				prestige = 60
+			}
+		}
+		
+		effect = {
+			change_government_reform_progress = 100
+			add_country_modifier = {
+				name = koj_patron_of_christian_art
+				duration = -1
+			}
+		}
+	}
+	
+	koj_colleges = {
+		icon = pontifical_universities
+		required_missions = { koj_patronize_art koj_holy_alliance }
+		position = 12
+		
+		trigger = {
+			university = 10
+		}
+		
+		effect = {
+			set_country_flag = koj_scholar_chance
+			custom_tooltip = KOJ_SCHOLAR
+		}
+	}
+	
+}
+
+
+koj_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+	}
+	has_country_shield = yes
+	
+	koj_crusader_alliances = {
+		icon = mission_united_knight_order
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			OR = {
+				num_of_allies = 2
+				AND = {
+					num_of_allies = 1
+					OR = {
+						advisor = statesman
+						advisor = diplomat
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = KOJ_TRUST_FAVORS
+			add_country_modifier = {
+				name = koj_crusader_ally
+				duration = 3650
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						alliance_with = ROOT
+					}
+					add_trust = { who = ROOT value = 5 }
+					ROOT = {
+						add_favors = { who = PREV amount = 5 }
+					}
+				}
+			}
+			if = {
+				limit = {
+					calc_true_if = {
+						all_ally = {
+							religion = catholic
+						}
+						amount = 3
+					}
+				}
+				custom_tooltip = KOJ_3_ALLIES
+				tooltip = {
+					palestine_area = {
+						add_province_modifier = {
+							name = koj_bolstered_defences
+							duration = 3650
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = KOJ_3_ALLIES_NO
+				tooltip = {
+					palestine_area = {
+						add_province_modifier = {
+							name = koj_bolstered_defences
+							duration = 3650
+						}
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						calc_true_if = {
+							all_ally = {
+								religion = catholic
+							}
+							amount = 3
+						}
+					}
+					palestine_area = {
+						add_province_modifier = {
+							name = koj_bolstered_defences
+							duration = 3650
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	koj_land_of_moses = {
+		icon = the_land_of_moses
+		required_missions = { koj_young_lion }
+		position = 3
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 6
+				region = egypt_region
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = egypt_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 20
+			add_ruler_modifier = {
+				name = koj_breaker
+				duration = -1
+			}
+			red_sea_coast_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			dongola_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_nubia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	koj_nile = {
+		icon = sweep_the_po
+		required_missions = { koj_land_of_moses }
+		position = 4
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				OR = {
+					area = red_sea_coast_area
+					area = dongola_area
+					area = upper_nubia_area
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = red_sea_coast_area
+				area = dongola_area
+				area = upper_nubia_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "koj_expedition"
+				duration = 5475
+			}
+			1227 = {
+				add_permanent_claim = ROOT 
+			}
+			if = {
+				limit = {
+					4986 = {
+						is_empty = yes
+					}
+					4985 = {
+						is_empty = yes
+					}
+					4984 = {
+						is_empty = yes
+					}
+					4983 = {
+						is_empty = yes
+					}
+				}
+				custom_tooltip = KOJ_OASES
+			}
+			else = {
+				custom_tooltip = KOJ_OASES_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						4986 = {
+							is_empty = yes
+						}
+						4985 = {
+							is_empty = yes
+						}
+						4984 = {
+							is_empty = yes
+						}
+						4983 = {
+							is_empty = yes
+						}
+					}
+					4983 = {
+						add_siberian_construction = 1
+					}
+					4984 = {
+						add_siberian_construction = 1
+					}
+					4985 = {
+						add_siberian_construction = 1
+					}
+					4986 = {
+						add_siberian_construction = 1
+					}
+				}
+			}
+		}
+	}
+	
+	koj_ark = {
+		icon = ark_of_the_covenant
+		required_missions = { koj_nile }
+		position = 5
+		provinces_to_highlight = {
+			province_id = 1227
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			1227 = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			country_event = { id = knights_missions.4 }
+			custom_tooltip = AB_EMPTY
+			horn_of_africa_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+	
+	koj_sheba = {
+		icon = prester_john
+		required_missions = { koj_ark }
+		position = 6
+		
+		trigger = {
+			OR = {
+				alliance_with = ETH
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 20
+					region = horn_of_africa_region
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = ETH
+				AND = {
+					region = horn_of_africa_region
+					NOT = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NAZ_GAIN_CAWA
+			hidden_effect = {
+				capital_scope = {
+					cawa_infantry = ROOT
+					cawa_infantry = ROOT
+					cawa_infantry = ROOT
+					cawa_infantry = ROOT
+					cawa_infantry = ROOT
+					cawa_infantry = ROOT
+					cawa_infantry = ROOT
+					cawa_infantry = ROOT
+					cawa_infantry = ROOT
+					cawa_infantry = ROOT
+				}
+			}
+			add_country_modifier = {
+				name = naz_integrated_copts
+				duration = -1
+			}
+		}
+	}
+	
+	koj_rhodes = {
+		icon = restore_the_hospitallers
+		required_missions = { koj_rebuild_the_fleet }
+		position = 7
+		
+		trigger = {
+			owns = 320
+		}
+		
+		provinces_to_highlight = {
+			province_id = 320
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = koj_hospitaller_mercenary
+			set_country_flag = koj_hospitallers
+			add_country_modifier = {
+				name = koj_spread_orders
+				duration = 3650
+			}
+			aegean_archipelago_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	koj_holy_alliance = {
+		icon = sway_the_pope
+		required_missions = { }
+		position = 11
+		
+		trigger = {
+			OR = {
+				alliance_with = PAP
+				owns = 118
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = PAP
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					exists = PAP
+				}
+				add_historical_friend = PAP
+				add_country_modifier = {
+					name = koj_holy_alliance
+					desc = koj_papal_alliance
+					duration = -1
+				}
+				if = {
+					limit = {
+						379 = {
+							has_cardinal = no
+						}
+					}
+					custom_tooltip = KOJ_CARDINAL_YES
+				}
+				else = {
+					custom_tooltip = KOJ_CARDINAL_NO
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							379 = {
+								has_cardinal = no
+							}
+						}
+						379 = {
+							add_cardinal = yes
+						}
+					}
+				}
+			}
+			else = {
+				add_dip_power = 200
+			}
+		}
+	}
+}
+
+koj_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+	}
+	has_country_shield = yes
+
+	koj_young_lion = {
+	    icon = mission_nizzarid
+		required_missions = { koj_gather_army koj_crusader_alliances }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = NAZ
+				owned_by = EGY
+				owned_by = ABS
+			}
+		}
+	
+		trigger = {
+			if = {
+				limit = {
+					exists = NAZ
+				}
+				war_with = NAZ
+			}
+			else_if = {
+				limit = {
+					exists = ABS
+				}
+				war_with = ABS
+			}
+			else_if = {
+				limit = {
+					exists = EGY
+				}
+				war_with = EGY
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					region = mashriq_region
+					value = 10
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = koj_abdul
+				duration = -1
+				desc = koj_end_war
+			}
+			define_advisor = {
+				type = army_reformer
+				skill = 1
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+			custom_tooltip = AB_EMPTY
+			syria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			trans_jordan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			aleppo_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			delta_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bahari_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			gulf_of_arabia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						is_year = 1455
+					}
+				}
+				custom_tooltip = KOJ_TIMED_UNLOCK
+			}
+			else = {
+				custom_tooltip = KOJ_TIMED_UNLOCK_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							is_year = 1455
+						}
+					}
+					country_event = { id = ab_jerusalem.2 }
+				}
+			}
+		}
+	}
+	
+}
+
+ab_koj_third_locked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+		NOT = {
+			has_country_flag = koj_mission_unlocked
+		}
+		NOT = {
+			has_country_flag = koj_mission_failed
+		}
+	}
+	has_country_shield = yes
+	
+	koj_timed1 = {
+	    icon = mission_unknown_mission
+		required_missions = { koj_young_lion }
+		position = 3
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = KOJ_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = KOJ_UNLOCKABLE
+		}
+	}
+	
+}
+
+ab_koj_third_unlocked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+		has_country_flag = koj_mission_unlocked
+		NOT = {
+			has_country_flag = koj_mission_failed
+		}
+	}
+	has_country_shield = yes
+	
+	koj_triumph_cross = {
+	    icon = spread_piety
+		required_missions = { koj_young_lion }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = NAZ
+				owned_by = EGY
+				owned_by = ABS
+			}
+		}
+		
+		trigger = {
+			NOT = {
+				is_year = 1455 
+			}
+			if = {
+				limit = {
+					exists = NAZ
+				}
+				war_score_against = {
+					who = NAZ
+					value = 75
+				}
+			}
+			else_if = {
+				limit = {
+					exists = ABS
+				}
+				war_score_against = {
+					who = ABS
+					value = 75
+				}
+			}
+			else_if = {
+				limit = {
+					exists = EGY
+				}
+				war_score_against = {
+					who = EGY
+					value = 75
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = KOJ_TIMED_REWARD
+			add_country_modifier = {
+				name = koj_timed_reward
+				duration = -1
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						exists = CYP
+					}
+					add_historical_friend = CYP
+					vassalize = CYP
+				}
+				if = {
+					limit = {
+						exists = ATI
+					}
+					add_historical_friend = ATI
+					vassalize = ATI
+				}
+			}
+		}
+	}
+	
+}
+
+ab_koj_third_failed = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+		has_country_flag = koj_mission_failed
+	}
+	has_country_shield = yes
+	
+}
+
+koj_third_group_second = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+	}
+	has_country_shield = yes
+	
+	koj_fate_nonbelievers = {
+		icon = mission_fatimid_caliphate
+		required_missions = { koj_reclaim_holy_land }
+		position = 4
+		
+		trigger = {
+			OR = {
+				religious_unity = 1
+				has_global_modifier_value = {
+					which = tolerance_heathen
+					value = 0
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					religious_unity = 1
+				}
+				custom_tooltip = KOJ_OUTREMER_CULTURE
+				tooltip = {
+					add_country_modifier = {
+						name = koj_christ_might
+						duration = 5475
+					}
+				}
+			}
+			else = {
+				custom_tooltip = KOJ_OUTREMER_CULTURE_NO
+				tooltip = {
+					add_country_modifier = {
+						name = koj_christ_might
+						duration = 5475
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_global_modifier_value = {
+						which = tolerance_heathen
+						value = 0
+					}
+				}
+				tooltip = {
+					custom_tooltip = KOJ_TOLERANT_SOCIETY
+					add_country_modifier = {
+						name = koj_society
+						duration = 5475
+					}
+				}
+			}
+			else = {
+				tooltip = {
+					custom_tooltip = KOJ_TOLERANT_SOCIETY_NO
+					add_country_modifier = {
+						name = koj_society
+						duration = 5475
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						religious_unity = 1
+					}
+					set_country_flag = koj_unity_missions
+					swap_non_generic_missions = yes
+					add_country_modifier = {
+						name = koj_christ_might
+						duration = 5475
+					}
+				}
+				else_if = {
+					limit = {
+						has_global_modifier_value = {
+							which = tolerance_heathen
+							value = 0
+						}
+					}
+					set_country_flag = koj_tolerance_missions
+					swap_non_generic_missions = yes
+					add_country_modifier = {
+						name = koj_society
+						duration = 5475
+					}
+				}
+			}
+		}
+		
+	}
+	
+}
+
+ab_koj_third_locked_second = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+		NOT = {
+			OR = {
+				has_country_flag = koj_tolerance_missions
+				has_country_flag = koj_unity_missions
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	koj_branching1 = {
+	    icon = mission_unknown_mission
+		required_missions = { koj_fate_nonbelievers }
+		position = 5
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = KOJ_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = KOJ_UNLOCKABLE2
+		}
+	}
+	
+}
+
+ab_koj_third_unlocked_second = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+		has_country_flag = koj_unity_missions
+		NOT = {
+			has_country_flag = koj_tolerance_missions
+		}
+	}
+	has_country_shield = yes
+	
+	koj_outremer_nation = {
+	    icon = the_holy_league
+		required_missions = { koj_fate_nonbelievers }
+		position = 5
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				NOT = {
+					religion = ROOT
+				}
+				NOT = {
+					culture = ROOT
+				}
+				NOT = {
+					grown_by_development = 3
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				culture = ROOT
+				religion = ROOT
+				grown_by_development = 3
+				value = 10
+			}
+		}
+		
+		effect = {
+			change_primary_culture = Outremer
+			capital_scope = {
+				change_culture = Outremer
+			}
+			custom_tooltip = KOJ_CULTURE_SPREAD
+			custom_tooltip = OTR_TRUE_FAITH
+		}
+	}
+	
+	
+}
+
+ab_koj_third_unlocked_second_tolerance = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+		has_country_flag = koj_tolerance_missions
+		NOT = {
+			has_country_flag = koj_unity_missions
+		}
+	}
+	has_country_shield = yes
+	
+	koj_interfaith_unity = {
+	    icon = mission_diplomatic_relation
+		required_missions = { koj_fate_nonbelievers }
+		position = 5
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = KOJ_AT_LEAST_1_TOLERANCE_OF_HEATHENS
+				has_global_modifier_value = {
+					which = tolerance_heathen
+					value = 1
+				}
+			}
+			calc_true_if = {
+				desc = KOJ_THREE_LEVANTINE_CULTURES
+				accepted_culture = al_misr_arabic
+				accepted_culture = al_suryah_arabic 
+				accepted_culture = al_iraqiya_arabic 
+				accepted_culture = gulf_arabic 
+				accepted_culture = bedouin_arabic 
+				accepted_culture = mahri_culture 
+				accepted_culture = assyrian 
+				accepted_culture = hejazi_culture 
+				accepted_culture = omani_culture 
+				accepted_culture = yemeni_culture 
+				accepted_culture = turkish_new 
+				amount = 3
+			}
+		}
+		
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_church_interfaith_unity
+			}
+			custom_tooltip = OTR_TOLERANCE
+		}
+	}
+	
+	
+}
+
+koj_third_like_seventh_or_wtf = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+	}
+	has_country_shield = yes
+	
+	koj_avenge_fourth_crusade = {
+		icon = the_latin_empire
+		required_missions = { koj_seljuk koj_rhodes }
+		position = 8
+		
+		provinces_to_highlight = {
+			province_id = 151
+		}
+		
+		trigger = {
+			owns_core_province = 151
+		}
+		
+		effect = {
+			add_papal_influence = 50
+			add_country_modifier = {
+				name = koj_avenged_crusade
+				duration = -1
+			}
+			macedonia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_greece_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ionian_islands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			morea_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	koj_latin_empire = {
+		icon = end_the_schism
+		required_missions = { koj_avenge_fourth_crusade }
+		position = 9
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				culture = greek
+				religion = catholic
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			culture = greek
+			NOT = {
+				religion = catholic
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_jerusalem.5 }
+			custom_tooltip = AB_EMPTY
+			apulia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			calabria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			naples_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			western_sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			balkan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = OTR_EVOLVING_NI2
+			hidden_effect = {
+				set_country_flag = otr_evolved_ideas2
+				if = {
+					limit = {
+						tag = OTR
+					}
+					swap_free_idea_group = yes
+				}
+			}
+		}
+	}
+	
+	koj_markets_of_tyre = {
+		icon = mission_turkish_merchants
+		required_missions = { }
+		position = 10
+		
+		trigger = {
+			owns = 378
+			378 = {
+				province_has_center_of_trade_of_level = 2 
+			}
+			378 = {
+				has_trade_building_trigger = yes
+			}
+			378 = {
+				base_production = 8
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 378
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			378 = {
+				add_province_modifier = {
+					name = koj_markets_of_tyre
+					duration = -1
+				}
+			}
+			378 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			if = {
+				limit = {
+					378 = {
+						development = 30
+					}
+				}
+				custom_tooltip = KOJ_TYRE_YES
+			}
+			else = {
+				custom_tooltip = KOJ_TYRE_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						378 = {
+							development = 30
+						}
+					}
+					378 = {
+						change_trade_goods = silk
+					}
+				}
+			}
+		}
+	}
+	
+	koj_jewel_of_orient = {
+		icon = jerusalem
+		required_missions = { koj_markets_of_tyre koj_cultivate_the_holy_land }
+		position = 12
+		
+		trigger = {
+			owns = 379
+			379 = {
+				has_tax_building_trigger = yes
+			}
+			379 = {
+				has_trade_building_trigger = yes
+			}
+			379 = {
+				has_production_building_trigger = yes
+			}
+			379 = {
+				has_road_building_trigger = yes
+			}
+			379 = {
+				development = 40
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 379
+		}
+		
+		effect = {
+			379 = {
+				add_base_tax = 2
+			}
+			379 = {
+				add_base_production = 2
+			}
+			379 = {
+				add_base_manpower = 2
+			}
+			379 = {
+				add_province_modifier = {
+					name = koj_jewel_of_orient
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	koj_holy_sepulchre = {
+		icon = convert_the_holy_lands
+		required_missions = { koj_jewel_of_orient }
+		position = 13
+
+		trigger = {
+			owns = 379  
+			379 = {
+				has_great_project = {
+					type = holy_city_jerusalem
+					tier = 1
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 379
+		}
+		
+		effect = {
+			custom_tooltip = KOJ_MIL_DEV
+			hidden_effect = {
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
+							limit = {
+								religion = catholic
+							}
+							add_base_manpower = 1
+						}
+					"
+				}
+			}
+		}
+	}
+	
+}
+
+koj_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+	}
+	has_country_shield = yes
+	
+	koj_gather_army = {
+		icon = knights_of_the_new_world
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			OR = {
+				army_size_percentage = 1
+				manpower_percentage = 1
+			}
+		}
+		
+		effect = {
+			define_general = {
+				shock = 4
+				fire = 4
+				manuever = 4
+				siege = 2
+			}
+			add_country_modifier = {
+				name = koj_armies_jerusalem
+				duration = 3650
+			}
+			if = {
+				limit = {
+					has_spy_network_in = {
+						who = NAZ
+						value = 25
+					}
+				}
+				custom_tooltip = KOJ_SPY
+				tooltip = {
+					add_spy_network_in = {
+						who = NAZ
+						value = 25
+					}
+				}
+			}
+			else = {
+				custom_tooltip = KOJ_SPY_NO
+				tooltip = {
+					add_spy_network_in = {
+						who = NAZ
+						value = 25
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_spy_network_in = {
+							who = NAZ
+							value = 25
+						}
+					}
+					add_spy_network_in = {
+						who = NAZ
+						value = 25
+					}
+				}
+			}
+		}
+	}
+	
+	koj_reclaim_holy_land = {
+		icon = shield_of_christendom
+		required_missions = { koj_young_lion }
+		position = 3
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 7
+				OR = {
+					area = aleppo_area
+					area = syria_area
+					area = trans_jordan_area
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = aleppo_area
+				area = syria_area
+				area = trans_jordan_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			mashriq_region = {
+				discover_country = ROOT
+			}
+			add_country_modifier = {
+				name = koj_securing_holy_land
+				duration = 7300
+			}
+			tabuk_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			medina_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mecca_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mashriq_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	koj_levantine_domination = {
+		icon = mission_teutonic_lancer
+		required_missions = { koj_reclaim_holy_land }
+		position = 5
+
+		trigger = {
+			tag = OTR
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 20
+				region = mashriq_region
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = mashriq_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			persia_region = {
+				discover_country = ROOT
+			}
+			add_country_modifier = {
+				name = koj_levantine_hegemon
+				duration = 7300
+			}
+			cukurova_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			dulkadir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_kurdistan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			rum_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			erzurum_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = OTR_EVOLVING_NI
+			hidden_effect = {
+				set_country_flag = otr_evolved_ideas1
+				if = {
+					limit = {
+						tag = OTR
+					}
+					swap_free_idea_group = yes
+				}
+			}
+		}
+	}
+	
+	koj_seljuk = {
+		icon = mission_ottoman_early_army
+		required_missions = { koj_levantine_domination }
+		position = 7
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				region = anatolia_region
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = anatolia_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = koj_seljuks
+				duration = 5475
+			}
+			thrace_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			anatolia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					SEL = { humiliated_by = ROOT }
+				}
+				custom_tooltip = KOJ_SELJUKS_YES
+			}
+			else = {
+				custom_tooltip = KOJ_SELJUKS_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						SEL = { humiliated_by = ROOT }
+					}
+					remove_country_modifier = koj_seljuks
+					add_country_modifier = {
+						name = koj_seljuks
+						duration = 10950
+					}
+				}
+			}
+		}
+	}
+	
+	
+	koj_cultivate_the_holy_land = {
+		icon = mission_expel_the_moriscos
+		required_missions = { }
+		position = 11
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			region = mashriq_region
+			has_terrain = drylands
+			OR = {
+				has_production_building_trigger = no
+				NOT = { num_of_times_improved = 3 }
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					num_of_times_improved = 3
+					has_production_building_trigger = yes
+					region = mashriq_region
+					has_terrain = drylands
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_cultivate_the_drylands
+			}
+		}
+	}
+}
+
+koj_fifth_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+	}
+	has_country_shield = yes
+	
+	koj_fate_of_islam = {
+		icon = mission_into_arabia
+		required_missions = { koj_reclaim_holy_land }
+		position = 4
+
+		trigger = {
+			384 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			385 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 384
+				province_id = 385
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_jerusalem.6 }
+		}
+	}
+	
+	koj_seleucia = {
+		icon = mission_advance_to_kalyana
+		required_missions = { koj_levantine_domination }
+		position = 6
+
+		trigger = {
+			iraq_arabi_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = catholic
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = iraq_arabi_area
+			NOT = {
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					religion = catholic
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					410 = {
+						NOT = {
+							religion = catholic
+						}
+					}
+				}
+				410 = {
+					change_religion = catholic
+				}
+			}
+			custom_tooltip = KOJ_BAGHDAD_CENTER
+			hidden_effect = {
+				410 = {
+					add_reform_center = catholic
+				}
+				410 = {
+					province_event = {
+						id = ab_lithuania.11
+						days = 9125
+					}
+				}
+			}
+			persia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	koj_timur = {
+		icon = mission_timur
+		required_missions = { koj_seleucia }
+		position = 7
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 20
+				region = persia_region
+				religion = catholic
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = {
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					religion = catholic
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = KOJ_PROPAGATE_RELIGION
+			set_country_flag = can_use_propagate_religion
+		}
+	}
+	
+	koj_legions_of_christendom = {
+		icon = mission_teutonic_riders
+		required_missions = { }
+		position = 8
+
+		trigger = {
+			army_size = 40
+			army_tradition = 60
+			any_neighbor_country = {
+				NOT = {
+					religion_group = ROOT
+				}
+				NOT = {
+					army_size = ROOT
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			owner = {
+				NOT = {
+					religion_group = ROOT
+				}
+				is_neighbor_of = ROOT
+				army_size = ROOT
+			}
+		}
+		
+		effect = {
+			enable_grand_crusade = yes
+		}
+	}
+	
+	koj_global_crusade = {
+		icon = mission_sword_of_the_reformation
+		required_missions = { koj_legions_of_christendom }
+		position = 9
+
+		trigger = {
+			is_in_war = {
+				attacker_leader = ROOT
+				casus_belli = cb_grand_crusade
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = koj_wrath_christendom
+				duration = -1
+				desc = koj_end_war
+			}
+			define_advisor = {
+				type = commandant
+				skill = 3
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+	
+	koj_crusader_fortifications = {
+		icon = mission_break_sicily
+		required_missions = { }
+		position = 10
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_fort_building_trigger = no
+				NOT = { num_of_times_improved = 5 }
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					num_of_times_improved = 5
+					has_fort_building_trigger = yes
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			custom_tooltip = ZUN_FORTIFY
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						num_of_times_improved = 5
+						has_fort_building_trigger = yes
+					}
+					add_base_manpower = 1
+				}
+			}
+			add_country_modifier = {
+				name = "koj_fortifications"
+				duration = 7300
+			}
+			define_advisor = {
+				type = fortification_expert
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+	
+	koj_krak_des_chevaliers = {
+		icon = mission_conquer_50_development
+		required_missions = { koj_crusader_fortifications }
+		position = 12
+
+		trigger = {
+			owns = 378
+			378 = {
+				has_great_project = {
+					type = krak
+					tier = 1
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 378
+		}
+		
+		effect = {
+			378 = {
+				add_base_manpower = 3
+			}
+			378 = {
+				upgrade_fort_building = yes
+			}
+		}
+	}
+	
+}

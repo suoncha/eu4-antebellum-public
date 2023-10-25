@@ -1,0 +1,615 @@
+pom_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = POM
+	}
+	has_country_shield = yes
+	
+	pom_seize_lusatia = {
+		icon = moravian_arms
+		required_missions = { pom_rival_veleti }
+		position = 2
+		
+		trigger = {
+			owns = 60
+			owns = 1763
+			owns = 4778
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 60
+				province_id = 1763
+				province_id = 4778
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mil_power = 50
+			define_advisor = {
+				type = commandant
+				skill = 1
+				cost_multiplier = 0.5
+				culture = ROOT
+				religion = ROOT
+			}
+		}
+	}
+
+	pom_naval = {
+		icon = mission_galleys_in_port
+		required_missions = {  }
+		position = 4
+	
+		trigger = {
+			navy_size_percentage = 1
+		}
+		
+		effect = {
+			create_admiral = { tradition = 35 }
+			add_country_modifier = {
+				name = pom_navy
+				duration = 5475
+			}
+			1981 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			25 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	pom_centers = {
+		icon = mission_dominate_home_trade_node
+		required_missions = { pom_naval }
+		position = 5
+	
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					province_has_center_of_trade_of_level = 2
+				}
+				amount = 3
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = pom_trade
+				duration = 5475
+			}
+			custom_tooltip = POM_TRADE_SHARE
+			tooltip = {
+				define_advisor = {
+					type = trader
+					skill = 3
+					religion = ROOT
+					culture = ROOT
+					cost_multiplier = 0.35
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						45 = {
+							trade_share = {
+								country = ROOT
+								share = 30
+							}
+						}
+					}
+					define_advisor = {
+						type = trader
+						skill = 3
+						religion = ROOT
+						culture = ROOT
+						cost_multiplier = 0.35
+					}
+				}
+			}
+		}
+	}
+}
+
+pom_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = POM
+	}
+	has_country_shield = yes
+	
+	
+	pom_rival_veleti = {
+		icon = mission_landsknecht_soldier
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			VLT = {
+				NOT = {
+					army_size = ROOT
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = VLT
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = pom_army
+				duration = 7300
+			}
+			custom_tooltip = POM_VELETI_CLAIMS
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							owned_by = VLT
+							owned_by = SOR
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	pom_wendish_power = {
+		icon = mission_rb_unite_the_clans
+		required_missions = { pom_rival_veleti pom_seize_lusatia }
+		position = 3
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = wendia_region
+				}
+				amount = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = wendia_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_country_modifier = {
+				name = "pom_unification"
+				duration = 5475
+			}
+			custom_tooltip = POM_OBOTRITE_CLAIMS
+			hidden_effect = {
+				every_province = {
+					limit = {
+						owned_by = OBD
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	pom_wendish = {
+		icon = mission_unite_home_region
+		required_missions = { pom_wendish_power }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				region = wendia_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    wendia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = obd_empire
+				duration = 5475
+			}
+			45 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			44 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	pom_hansa = {
+		icon = defend_the_city
+		required_missions = { pom_wendish }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = HAS
+				owned_by = HSA
+			}
+		}
+		
+		trigger = {
+			OR = {
+				has_won_war_against = {
+					who = HSA
+					max_years_since = 10
+				}
+				has_won_war_against = {
+					who = HAS
+					max_years_since = 10
+				}
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 20
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = pom_claim
+				duration = 7300
+			}
+		}
+	}
+}
+
+pom_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = POM
+	}
+	has_country_shield = yes
+	
+	pom_polans = {
+	    icon = jageillonian_union
+		required_missions = {  }
+		position = 1
+		
+		trigger = {
+		    wielkopolska_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = wielkopolska_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_adm_power = 50
+			add_country_modifier = {
+				name = pom_lechia
+				duration = 5475
+			}
+			kuyavia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			central_poland_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			west_prussia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			east_prussia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	pom_pruthenia = {
+	    icon = mission_rb_conquer_the_highlands
+		required_missions = { pom_polans }
+		position = 2
+		
+		trigger = {
+		    east_prussia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = east_prussia_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 10
+			add_country_modifier = {
+				name = pom_blockade_danzig
+				duration = 5475
+			}
+		}
+	}
+	
+	pom_danzig = {
+	    icon = mission_teutonic_knights
+		required_missions = { pom_pruthenia }
+		position = 3
+		
+		trigger = {
+			NOT = {
+				OR = {
+					exists = TEU
+					exists = DNZ
+				}
+			}
+		    43 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = east_prussia_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_legitimacy = 10
+			add_country_modifier = {
+				name = pom_crusader_wars
+				duration = 9125
+			}
+			38 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	pom_bohemia = {
+	    icon = bohemian_commonwealth
+		required_missions = { pom_silesia }
+		position = 5
+		
+		trigger = {
+		    erzgebirge_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    bohemia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = erzgebirge_area
+				area = bohemia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = pom_imperial
+				duration = 9125
+			}
+		}
+	}
+	
+}
+
+pom_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = POM
+	}
+	has_country_shield = yes
+	
+	pom_domination = {
+		icon = polish_diplomacy
+		position = 2
+		required_missions = { pom_polans }
+		
+		provinces_to_highlight = {
+			region = poland_region
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = poland_region
+				}
+				amount = 12
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = pom_polish_campaign
+				duration = 9125
+			}
+			poland_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = POM_POLAND
+			tooltip = {
+				add_prestige = 20
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								capital_scope = { region = poland_region }
+								total_development = ROOT
+							}
+						}
+					}
+					add_prestige = 20
+				}
+			}
+		}
+	}
+	
+	pom_silesia = {
+	    icon = take_silesia
+		required_missions = { pom_domination }
+		position = 4
+		
+		trigger = {
+		    silesia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = silesia_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = pom_integrate_poland
+				duration = 5475
+			}
+			bohemia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			erzgebirge_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			moravia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			slovakia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	pom_moravia = {
+	    icon = restore_great_moravia
+		required_missions = { pom_silesia }
+		position = 6
+		
+		trigger = {
+		    moravia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    slovakia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = moravia_area
+				area = slovakia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_legitimacy = 20
+			add_country_modifier = {
+				name = pom_moravia
+				duration = 9125
+			}
+		}
+	}
+}

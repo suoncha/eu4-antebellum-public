@@ -1,0 +1,185 @@
+#############################
+#Designed and coded by LordVarangian :D
+#############################
+
+namespace = mnk_flavor
+
+country_event = {
+	id = mnk_flavor.1
+	title = mnk_flavor.1.t
+	desc = mnk_flavor.1.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = mnk_flavor.1.a
+		
+		define_ruler = {
+			adm = 3
+			dip = 3
+			mil = 3
+			age = 20
+			claim = 75
+		}
+
+		add_estate_loyalty = {
+			estate = estate_nomadic_tribes
+			loyalty = 30
+		}
+		custom_tooltip = ESTATES_SEIZE_LAND_DESC
+        take_estate_land_share_massive = { estate = all }
+	}
+
+    option = {
+		name = mnk_flavor.1.b
+        
+		change_monarch_points_or_power = {
+			power = mil
+			points = 2
+		}
+         set_ruler_flag = ab_chorasania_ruler_check
+		 define_ruler_to_general = {
+			fire = 3
+			shock = 4
+			manuever = 4
+			siege = 2
+		}
+		add_estate_loyalty = {
+			estate = estate_nomadic_tribes
+			loyalty = -20
+		}
+	}
+}
+
+country_event = {
+	id = mnk_flavor.2
+	title = mnk_flavor.2.t
+	desc = mnk_flavor.2.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = mnk_flavor.2.a
+		
+		create_alliance = event_target:khiva_tag
+		add_favors = {
+			who = event_target:khiva_tag
+			amount = 10
+		}
+		event_target:khiva_tag = {
+			add_favors = {
+				who = event_target:golden_horde_tag
+				amount = 10
+			}
+		}
+	}
+
+    option = {
+		name = mnk_flavor.2.b
+		
+        add_prestige_or_monarch_power = { amount = 5 }
+	}
+}
+
+country_event = {
+	id = mnk_flavor.3
+	title = mnk_flavor.3.t
+	desc = mnk_flavor.3.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = mnk_flavor.3.a
+		
+		custom_tooltip = ab_mzk_lose_seperatism_in_all_uzbehk_provinces
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					culture = uzbehk
+				}
+				add_nationalism = -15
+				add_local_autonomy = -50
+			}
+		}
+
+		custom_tooltip = ab_mzk_gain_5_adm_dev_in_uzbehk_provinces
+		hidden_effect = {
+			AB_distribute_development = {
+				type = tax
+				amount = 5
+				limit = " culture = uzbehk "
+			}
+		}
+	}
+
+    option = {
+		name = mnk_flavor.3.b
+		
+        add_years_of_income = 2
+		add_ruler_modifier = {
+			name = ab_mnk_harsh_leadership
+			duration = -1
+		}
+	}
+}
+
+province_event = {
+	id = mnk_flavor.4
+	title = mnk_flavor.4.t
+	desc = mnk_flavor.4.d
+	picture = HAJJ_eventPicture
+
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+
+	trigger = {
+		owner = {
+			has_country_flag = ab_manichean_conversions_flag
+		}
+		NOT = { religion = owner }
+		any_neighbor_province = {
+			owned_by = FROM
+			religion = owner
+		}
+	}
+	
+	option = {
+		name = mnk_flavor.4.a
+		change_religion = owner
+	}
+}
+
+country_event = {
+	id = mnk_flavor.5
+	title = mnk_flavor.5.t
+	desc = mnk_flavor.5.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = mnk_flavor.5.a
+		
+		add_country_modifier = {
+			name = ab_mnk_melee_fighters
+			duration = -1
+		}
+		add_army_tradition = 15
+	}
+
+    option = {
+		name = mnk_flavor.5.b
+		
+        add_country_modifier = {
+			name = ab_mnk_modern_guns
+			duration = -1
+		}
+		create_general = { tradition = 75 add_fire = 2 }
+	}
+}

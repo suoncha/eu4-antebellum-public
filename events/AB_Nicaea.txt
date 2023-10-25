@@ -1,0 +1,515 @@
+namespace = ab_nicaea
+normal_or_historical_nations = yes
+
+#Byzantine Refugees
+country_event = {
+	id = ab_nicaea.0
+	title = ab_nicaea.0.t
+	desc = ab_nicaea.0.d
+	picture = BORDER_TENSION_eventPicture
+	
+	trigger = {
+		tag = NCI
+		is_year = 1446
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	fire_only_once = yes
+
+	option = {
+		name = ab_nicaea.0.a
+		capital_scope = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 1
+		}
+		set_country_flag = accepted_byzantine_refugees
+	}
+	
+	option = {
+		name = ab_nicaea.0.b
+		add_country_modifier = {
+			name = nicene_influx
+			duration = 5475
+		}
+		set_country_flag = accepted_byzantine_refugees
+	}
+}
+
+#Sack of Constantinople
+country_event = {
+	id = ab_nicaea.1
+	title = ab_nicaea.1.t
+	desc = ab_nicaea.1.d
+	picture = AB_JUSTINIAN_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+
+	option = {
+		name = ab_nicaea.1.a
+		add_legitimacy = 25
+		151 = {
+			add_devastation = 75
+		}
+		custom_tooltip = NICENE_BYZANTIUM
+		hidden_effect = {
+			# prevents forming via decision
+			set_global_flag = byzantium_completely_destroyed
+			# remove all cores
+			every_owned_province = {
+				limit = {
+					is_core = BYZ
+				}
+				remove_core = BYZ
+			}
+		}
+		add_ruler_modifier = {
+			name = nicene_nicator
+			duration = -1
+		}
+	}
+}
+
+#Hellenic Empire
+country_event = {
+	id = ab_nicaea.2
+	title = ab_nicaea.2.t
+	desc = ab_nicaea.2.d
+	picture = BYZANTINE_EMPEROR_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+
+	option = {
+		name = ab_nicaea.2.a
+		add_prestige = 25
+		change_tag = HLE
+		set_government_rank = 3
+		custom_tooltip = NICENE_IDEAS
+		custom_tooltip = NICENE_MISSIONS
+		hidden_effect = {
+			swap_free_idea_group = yes
+		}
+	}
+}
+
+#Sack of Venice
+country_event = {
+	id = ab_nicaea.3
+	title = ab_nicaea.3.t
+	desc = ab_nicaea.3.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+
+	option = {
+		name = flavor_byz.1.a
+		112 = {
+			add_loot_from_rich_province_general_effect = {
+				LOOTER = controller #BYZ
+			}
+			add_province_modifier = {
+				name = "chastening_of_venice"
+				duration = -1
+			}
+		}
+		capital_scope = {
+			add_province_modifier = {
+				name = "byzantine_treasures_returned"
+				duration = 7300
+			}
+		}
+	}
+}
+
+#Manzikert
+country_event = {
+	id = ab_nicaea.4
+	title = ab_nicaea.4.t
+	desc = ab_nicaea.4.d
+	picture = AB_SELJUK_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+
+	option = {
+		name = ab_nicaea.4.a
+		add_army_tradition = 25
+		add_ruler_modifier = {
+			name = nicene_avenger_manzikert
+			duration = -1
+		}
+			anatolia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+	}
+}
+
+#Egypt
+country_event = {
+	id = ab_nicaea.5
+	title = ab_nicaea.5.t
+	desc = ab_nicaea.5.d
+	picture = AB_PYRAMIDS_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+	
+	option = {
+		name = ab_nicaea.5.a
+		358 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+	}
+
+	option = {
+		name = ab_nicaea.5.b
+		custom_tooltip = NICENE_EGYPT_1
+		hidden_effect = {
+		every_owned_province = {
+			limit = {
+				region = egypt_region
+			}
+			cede_province = AEG
+			if = {
+				limit = {
+					is_core = ROOT
+				}
+				add_core = AEG
+				remove_core = ROOT
+			}
+			else_if = {
+				limit = {
+					is_permanent_claim = ROOT
+				}
+				add_permanent_claim = AEG
+				remove_claim = ROOT
+			}
+			else_if = {
+				limit = {
+					is_claim = ROOT
+				}
+				add_claim = AEG
+				remove_claim = ROOT
+			}
+		}
+		vassalize = AEG
+			AEG = {
+				add_treasury = 200
+				add_manpower = 10
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					religion = hellenic
+				}
+				AEG = {
+					change_religion = hellenic
+				}
+			}
+			if = {
+				limit = {
+					religion = reformed_hellenic
+				}
+				AEG = {
+					change_religion = reformed_hellenic
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_nicaea.5.c
+		custom_tooltip = NICENE_EGYPT_2
+		hidden_effect = {
+		every_owned_province = {
+			limit = {
+				region = egypt_region
+			}
+			cede_province = AEG
+			if = {
+				limit = {
+					is_core = ROOT
+				}
+				add_core = AEG
+				remove_core = ROOT
+			}
+			else_if = {
+				limit = {
+					is_permanent_claim = ROOT
+				}
+				add_permanent_claim = AEG
+				remove_claim = ROOT
+			}
+			else_if = {
+				limit = {
+					is_claim = ROOT
+				}
+				add_claim = AEG
+				remove_claim = ROOT
+			}
+		}
+		create_union = AEG
+			AEG = {
+				add_treasury = 200
+				add_manpower = 10
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					religion = hellenic
+				}
+				AEG = {
+					change_religion = hellenic
+				}
+			}
+			if = {
+				limit = {
+					religion = reformed_hellenic
+				}
+				AEG = {
+					change_religion = reformed_hellenic
+				}
+			}
+		}
+	}
+}
+
+#Capital
+country_event = {
+	id = ab_nicaea.6
+	title = ab_nicaea.6.t
+	desc = ab_nicaea.6.d
+	picture = ATHENS_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_nicaea.6.a
+		add_adm_power = -100
+		set_country_flag = relocated_capital_greece
+		151 = {
+			move_capital_effect = yes
+		}
+		151 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+	}
+	
+	option = {
+		name = ab_nicaea.6.b
+		add_adm_power = -100
+		set_country_flag = relocated_capital_greece
+		148 = {
+			move_capital_effect = yes
+		}
+		148 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+	}
+	
+	option = {
+		name = ab_nicaea.6.c
+		add_adm_power = -100
+		set_country_flag = relocated_capital_greece
+		146 = {
+			move_capital_effect = yes
+		}
+		146 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+	}
+	
+	option = {
+		name = ab_nicaea.6.de
+		set_country_flag = relocated_capital_greece
+		317 = {
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
+		}
+	}
+	
+}
+
+#Capital
+country_event = {
+	id = ab_nicaea.7
+	title = ab_nicaea.7.t
+	desc = ab_nicaea.7.d
+	picture = ATHENS_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = HLE
+			tag = MAC
+		}
+		NOT = {
+			exists = BYZ
+		}
+		NOT = {
+			religion = hellenic
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = ab_nicaea.7.a
+		add_patriarch_authority = 0.1
+	}
+	
+	option = {
+		name = ab_nicaea.7.b
+		add_stability = -4
+		change_religion = hellenic
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+		set_country_flag = hellenic_conversion_events
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					religion = orthodox
+				}
+				orthodox_rebels = 3
+			}
+			random_owned_province = {
+				limit = {
+					religion = orthodox
+				}
+				orthodox_rebels = 3
+			}
+			random_owned_province = {
+				limit = {
+					religion = orthodox
+				}
+				orthodox_rebels = 3
+			}
+			random_owned_province = {
+				limit = {
+					religion = orthodox
+				}
+				orthodox_rebels = 3
+			}
+			random_owned_province = {
+				limit = {
+					religion = orthodox
+				}
+				orthodox_rebels = 3
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ab_nicaea.8
+	title = ab_nicaea.8.t
+	desc = ab_nicaea.8.d
+	picture = AB_BYZANTIUM_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_country_flag = greek_resettlement_flag
+	}
+	
+	option = {
+		name = ab_nicaea.8.a
+		every_owned_province = {
+			limit = {
+				region = anatolia_region
+				NOT = { culture = greek }
+			}
+			add_province_modifier = {
+				name = ab_nicene_resettle
+				duration = -1
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ab_nicaea.9
+	title = ab_nicaea.9.t
+	desc = ab_nicaea.9.d
+	picture = AB_BYZANTIUM_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_country_flag = greek_resettlement_flag
+	}
+	
+	option = {
+		name = ab_nicaea.9.d
+		every_owned_province = {
+			limit = {
+				culture = greek
+				has_province_modifier = ab_nicene_resettle
+			}
+			remove_province_modifier = ab_nicene_resettle
+		}
+	}
+}
+
+province_event = {
+	id = ab_nicaea.10
+	title = none
+	desc = none
+	picture = none
+	hidden = yes	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_reform_center = hellenic
+	}
+	
+	option = { }
+}
+
+province_event = {
+	id = ab_nicaea.11
+	title = none
+	desc = none
+	picture = none
+	hidden = yes	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_reform_center = reformed_hellenic
+	}
+	
+	option = { }
+}

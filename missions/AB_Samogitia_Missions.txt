@@ -1,0 +1,94 @@
+SMG_missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = SMG
+			tag = YOT
+			tag = CUR
+		}
+	}
+	has_country_shield = yes
+	
+	smg_army = {
+		icon = mission_assemble_an_army
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "smg_freedom"
+				duration = 5475
+			}
+		}
+	}
+
+	smg_independence = {
+		icon = mission_monarch_in_throne_room
+		required_missions = { smg_army }
+		position = 3
+		
+		trigger = {
+			is_subject = no
+			is_at_war = no
+			samogitia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = samogitia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_legitimacy = 10
+			lithuania_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_core = ROOT
+			}
+		}
+	}
+	
+	smg_lithuania = {
+		icon = mission_unite_home_region
+		required_missions = { smg_independence }
+		position = 5
+		
+		trigger = {
+			is_at_war = no
+			NOT = {
+				exists = LIT
+			}
+			lithuania_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = lithuania_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			change_tag = LIT
+			swap_non_generic_missions = yes
+			country_event = {
+				id = ideagroups.1
+			}
+			lose_reforms = 4
+			set_capital = 272
+		}
+	}
+}

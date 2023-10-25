@@ -1,0 +1,71 @@
+namespace = ab_cuman
+normal_or_historical_nations = yes
+
+
+#Fall of Sarai
+country_event = {
+	id = ab_cuman.1
+	title = ab_cuman.1.t
+	desc = ab_cuman.1.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_cuman.1.a
+		466 = {
+			move_capital_effect = yes
+		}
+		466 = {
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
+		}
+		466 = {
+			change_culture = ROOT
+		}
+		set_government_rank = 2
+	}
+	
+	option = {
+		name = ab_cuman.2.a
+		add_years_of_income = 3
+		466 = {
+			add_devastation = 100
+		}
+		set_government_rank = 2
+	}
+}
+
+#Fall of Sarai
+country_event = {
+	id = ab_cuman.2
+	title = ab_cuman.2.t
+	desc = ab_cuman.2.d
+	picture = AB_JUSTINIAN_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_cuman.2.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		add_country_modifier = {
+			name = cmn_destroyed
+			duration = -1
+		}
+		balkan_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}

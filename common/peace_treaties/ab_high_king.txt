@@ -1,0 +1,100 @@
+ab_high_king = {
+	category = 6
+	power_cost_base = 0.535 
+	prestige_base = 0.134 
+	ae_base = 0.269 
+	warscore_cost = {
+  	  all_provinces = 0.0 
+   	 no_provinces = 0.0 
+  	  owner_keeps = 0.8 
+  	  conquered = 0.0 
+ 	   returned_core = 0.0 
+  	  released_nation = 0.0 
+  	  cancelled_subject = 0.0 
+   	 concede_colonial_region = 0.0 
+	}
+	warscore_cap = -1
+	requires_demand_independence = yes
+	is_make_subject = yes
+	requires_is_allowed = no
+
+	is_visible = {
+		OR = {
+			primary_culture = irish
+			primary_culture = norse_gael
+		}
+		NOT = {
+			OR = {
+				tag = ENG
+				tag = GBR
+				tag = SCO
+				tag = WLS
+				tag = CRN
+			}
+		}
+		FROM = {
+			has_reform = irish_highking_opp
+		}
+	}
+	is_allowed = {
+		OR = {
+			primary_culture = irish
+			primary_culture = norse_gael
+		}
+		AND = {
+			OR = {
+				is_in_war = {
+					attacker_leader = FROM
+					defender_leader = ROOT
+					casus_belli = cb_ire_high_king_king
+				}
+				is_in_war = {
+					attacker_leader = ROOT
+					defender_leader = FROM
+					casus_belli = cb_ire_high_king_king
+				}
+				is_in_war = {
+					attacker_leader = ROOT
+					defender_leader = FROM
+					casus_belli = cb_ire_high_king
+				}
+				is_in_war = {
+					attacker_leader = FROM
+					defender_leader = ROOT
+					casus_belli = cb_ire_high_king
+				}
+			}
+		}
+		NOT = {
+			OR = {
+				tag = ENG
+				tag = GBR
+				tag = SCO
+				tag = WLS
+				tag = CRN
+			}
+		}
+		FROM = {
+			has_reform = irish_highking_opp
+			has_country_modifier = ire_high_king_opp
+		}
+	}
+	effect = {
+		ROOT = { save_event_target_as = new_hk_ire }
+		FROM = { save_event_target_as = old_hk_ire }
+		ROOT = {
+			country_event = { 
+				id = hk_ire.1 
+			} 
+		}
+	}
+	ai_weight = { # Defaults to always evaluate to 0
+		export_to_variable = {
+			variable_name = ai_value # Mandatory to have entry called "ai_value". Its value at the end of the ai_weight scope is what will be used
+			value = 50
+		}
+		limit = { # if limit evaluates false, ai_weight will evaluate to 0 regardless
+			owns_core_province = 1
+		}
+	}
+}

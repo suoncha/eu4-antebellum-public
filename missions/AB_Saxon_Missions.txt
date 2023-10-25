@@ -1,0 +1,570 @@
+sax_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = SAX
+	}
+	has_country_shield = yes
+	
+	sax_unite = {
+	    icon = avoid_fragmentation
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				area = braunschweig_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    braunschweig_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			define_advisor = {
+				type = army_reformer
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			lower_saxony_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			weser_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			westphalia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_westphalia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	sax_kingdom = {
+		icon = reclaim_our_ancestral_lands
+		position = 3
+		required_missions = { sax_unite }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lower_saxony_area
+				area = weser_area
+				area = westphalia_area
+				area = north_westphalia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = root }
+			ROOT = {
+				NOT = {
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						value = 10
+						OR = {
+							area = lower_saxony_area
+							area = weser_area
+							area = westphalia_area
+							area = north_westphalia_area
+						}
+					}
+				}
+			}
+		}
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				OR = {
+					area = lower_saxony_area
+					area = weser_area
+					area = westphalia_area
+					area = north_westphalia_area
+				}
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = sax_old_kingdom
+				duration = 9125
+			}
+		}
+	}
+	
+	sax_marklo = {
+		icon = reclaim_the_ducal_lands
+		required_missions = { sax_kingdom }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2971
+			}
+		}
+		
+		trigger = {
+			2971 = {
+				owned_by = ROOT
+				development = 20
+			}
+		}
+		
+		effect = {
+			2971 = {
+				add_province_modifier = {
+					name = sax_marklo
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+sax_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = SAX
+	}
+	has_country_shield = yes
+	
+	sax_dresden = {
+	    icon = avoid_fragmentation
+		required_missions = { sax_nordmark }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				area = south_saxony_area
+				area = thuringia_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    south_saxony_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    thuringia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 10
+			add_mil_power = 100
+		}
+	}
+	
+	sax_silesia = {
+	    icon = take_silesia
+		required_missions = { sax_lusatia }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = silesia_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    silesia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = sax_military
+				duration = 7300
+			}
+		}
+	}
+}
+
+sax_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = SAX
+	}
+	has_country_shield = yes
+	
+	sax_nordmark = {
+	    icon = electorate_of_brandenburg
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				area = northern_saxony_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    northern_saxony_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = sax_ambition
+				duration = 7300
+			}
+			mittelmark_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			thuringia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			south_saxony_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+		
+		
+	sax_veleti = {
+	    icon = mission_perun
+		required_missions = { sax_nordmark }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				area = mittelmark_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    mittelmark_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 50 }
+			lusatia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	sax_lusatia = {
+	    icon = mission_landsknecht_soldier
+		required_missions = { sax_veleti sax_dresden }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lusatia_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    lusatia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 75
+			silesia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			wendia_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	sax_wendish = {
+	    icon = mission_teutonic_knights
+		required_missions = { sax_lusatia }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				region = wendia_region
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    wendia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_country_modifier = {
+				name = sax_integrate
+				duration = 7300
+			}
+		}
+	}
+}
+
+sax_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = SAX
+	}
+	has_country_shield = yes
+	
+	sax_capital = {
+		icon = sway_cologne
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1758
+			}
+		}
+		
+		trigger = {
+			1758 = {
+				owned_by = ROOT
+				development = 20
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			1758 = {
+				add_province_modifier = {
+					name = sax_capital
+					duration = -1
+				}
+			}
+			1758 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	sax_manufactories = {
+		icon = saxon_manufacturing
+		required_missions = { sax_capital }
+		position = 2
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+						has_building = textile
+					}
+				}
+				amount = 3
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = sax_production
+				duration = 9125
+			}
+		}
+	}
+	
+	sax_porcelain = {
+		icon = porcelain_from_meissen
+		required_missions = { sax_manufactories }
+		position = 3
+		provinces_to_highlight = {
+			province_id = 1758
+			OR = {
+				NOT = { is_strongest_trade_power = root }
+				NOT = { owned_by = root }
+				has_production_building_trigger = no
+			}
+		}
+		trigger = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = emp_sax_meissen_porcelain_trigger_tooltip
+					has_global_flag = europeans_in_china_happened
+				}
+				is_year = 1700
+			}
+			1758 = {
+				owned_by = root
+				has_production_building_trigger = yes
+				development = 20
+			}
+			1758 = {
+				is_strongest_trade_power = root
+			}
+			share_of_starting_income = 3
+		}
+		
+		effect = {
+			1758 = {
+				change_trade_goods = chinaware
+				add_base_production = 4
+			}
+		}
+	}
+	
+	sax_university = {
+		icon = wittenberg_university
+		completed_by = 1502.10.18
+		position = 3
+		required_missions = {  }
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 1758
+					OR = {
+						NOT = { owned_by = root }
+						NOT = { development = 20 }
+						has_tax_building_trigger = no
+						has_courthouse_building_trigger = no
+					}
+				}
+				AND = {
+					is_capital_of = root
+					ROOT = { NOT = { has_institution = renaissance } }
+				}
+			}
+		}
+		trigger = {
+			has_institution = renaissance
+			1758 = {
+				owned_by = root
+				development = 20
+				has_tax_building_trigger = yes
+				has_courthouse_building_trigger = yes
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = sax_university
+				duration = 7300
+			}
+			1758 = {
+				if = {
+					limit = {
+						NOT = { has_building = university }
+					}
+					add_building = university
+				}
+			}
+		}
+	}
+	
+	sax_classicism = {
+		icon = weimar_classicism
+		position = 5
+		required_missions = { sax_university }
+		trigger = {
+			has_institution = enlightenment
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			has_mil_advisor_3 = yes
+			is_in_deficit = no
+		}
+		effect = {
+			add_prestige = 25
+			add_country_modifier = {
+				name = sax_saxon_classicism
+				duration = 7300
+			}
+		}
+	}
+}
+	
+	
+	
+	
+	

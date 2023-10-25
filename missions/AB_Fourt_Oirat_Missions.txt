@@ -1,0 +1,253 @@
+ab_four_oirat_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = CRS
+			tag = KHT
+			tag = TRG
+			tag = DRB
+		}
+	}
+	has_country_shield = yes
+	
+	oir_prepare = {
+		icon = mission_non-western_cavalry_raid
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "oir_war_prepare"
+				duration = 5475
+			}
+			altai_sayan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			turpan_kumul_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_zungaria = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			4683 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			713 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			715 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1066 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			716 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4679 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2189 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			719 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+			
+	oir_expand = {
+		icon = mission_unite_home_region
+		required_missions = { oir_prepare }
+		position = 3	
+		
+		trigger = { grown_by_development = 35 }
+		
+		effect = {
+			add_adm_power = 75
+			capital_scope = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+		}
+	}
+	
+	oir_confe = {
+		icon = mission_oirat
+		required_missions = { oir_expand }
+		position = 5	
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 719
+				province_id = 4222		
+				province_id = 4207
+				province_id = 4684
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			stability = 1
+			OR = {
+				horde_unity = 75
+				legitimacy = 75
+			}
+			719 = { owned_by = ROOT }
+			4222 = { owned_by = ROOT }
+			4207 = { owned_by = ROOT }
+			4684 = { owned_by = ROOT }
+		}
+	
+		effect = {
+			add_horde_unity = 25
+			change_tag = OIR
+			swap_non_generic_missions = yes
+			country_event = {
+				id = ideagroups.1
+			}
+		}
+	}
+}
+
+ab_four_oirat_group_2  = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = CRS
+			tag = KHT
+			tag = TRG
+			tag = DRB
+			tag = OIR
+			tag = MGL
+		}
+	}
+	has_country_shield = yes
+	
+	oir_loot = {
+		icon = mission_entrepot_of_india
+		required_missions = { }
+		position = 3
+		
+		trigger = {
+			treasury = 250
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "oir_mongol_raids"
+				duration = 5475
+			}
+		}
+	}
+	
+	oir_steppe = {
+		icon = mission_marwari_horses
+		required_missions = { }
+		position = 4
+		
+		trigger = {
+			num_of_cavalry = 15
+		}
+		
+		effect = {
+			add_army_tradition = 10
+			add_country_modifier = {
+				name = "oir_cavalry"
+				duration = 9125
+			}
+		}
+	}
+	
+	oir_dread = {
+		icon = mission_abu_saids_dream
+		required_missions = { oir_steppe }
+		position = 5
+		
+		trigger = {
+			num_of_cavalry = 30
+		}
+		
+		effect = {
+			create_general = { tradition = 75 }
+			add_country_modifier = {
+				name = "oir_cavalry_2"
+				duration = 5475
+			}
+		}
+	}
+}
+			
+			
+			
+			

@@ -1,0 +1,506 @@
+namespace = ab_capua
+normal_or_historical_nations = yes
+
+
+#Mad Duke
+country_event = {
+	id = ab_capua.1
+	title = ab_capua.1.t
+	desc = ab_capua.1.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		has_ruler = "Robert XI"
+	}
+
+	
+	option = {
+		name = ab_capua.1.a
+		add_ruler_modifier = {
+			name = "cap_rex_romanorum"
+			duration = -1
+		}
+	}
+}
+
+#Mad King of Rome
+country_event = {
+	id = ab_capua.2
+	title = ab_capua.2.t
+	desc = ab_capua.2.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		has_ruler = "Robert XI"
+		owns = 118
+	}
+
+	
+	option = {
+		name = ab_capua.2.a
+		add_prestige = 20
+		add_legitimacy = 20
+	}
+}
+
+#Lords of Rome
+country_event = {
+	id = ab_capua.3
+	title = ab_capua.3.t
+	desc = ab_capua.3.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		NOT = {
+			has_ruler = "Robert XI"
+		}
+		owns = 118
+	}
+
+	
+	option = {
+		name = ab_capua.3.a
+		add_prestige = 15
+		add_legitimacy = 15
+	}
+}
+
+#Crimson King
+country_event = {
+	id = ab_capua.4
+	title = ab_capua.4.t
+	desc = ab_capua.4.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 5
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		has_ruler = "Robert XI"
+		owns = 118
+	}
+
+	
+	option = {
+		name = ab_capua.4.a
+		add_ruler_modifier = {
+			name = "cap_crimson_king"
+			duration = -1
+		}
+	}
+}
+
+#Crimson King
+country_event = {
+	id = ab_capua.5
+	title = ab_capua.5.t
+	desc = ab_capua.5.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 10
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		has_institution = renaissance
+		owns = 118
+	}
+
+	
+	option = {
+		name = ab_capua.5.a
+		add_country_modifier = {
+			name = "cap_reborn"
+			duration = 7300
+		}
+	}
+}
+
+#Ship
+country_event = {
+	id = ab_capua.6
+	title = ab_capua.6.t
+	desc = ab_capua.6.d
+	picture = SHIP_SAILING_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 10
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		is_year = 1450
+	}
+
+	
+	option = {
+		name = ab_capua.6.a
+		add_navy_tradition = 10
+	}
+}
+
+#Gaston
+country_event = {
+	id = ab_capua.7
+	title = ab_capua.7.t
+	desc = ab_capua.7.d
+	picture = ADVISOR_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 10
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		is_year = 1450
+		dynasty = "de Hauteville"
+	}
+
+	
+	option = {
+		name = ab_capua.7.a
+			define_general = {
+				name = "Gaston de Hauteville"
+				fire = 4
+				shock = 5
+				manuever = 3
+				siege = 2
+			}
+	}
+	
+	option = {
+		name = ab_capua.7.b
+			define_admiral = {
+				name = "Gaston de Hauteville"
+				fire = 5
+				shock = 5
+				manuever = 3
+			}
+	}
+	
+	option = {
+		name = ab_capua.7.c
+		define_heir = {
+			claim = 100
+			dynasty = ROOT
+			name = "Gaston"
+			adm = 5
+			dip = 5
+			mil = 5
+		}
+	}
+}
+
+#Opera
+country_event = {
+	id = ab_capua.8
+	title = ab_capua.8.t
+	desc = ab_capua.8.d
+	picture = ARTWORK_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 10
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		any_owned_province = {  
+			is_institution_origin = renaissance
+		}
+	}
+
+	
+	option = {
+		name = ab_capua.8.a
+			add_country_modifier = {
+				name = "cap_opera"
+				duration = -1
+			}
+		set_country_flag = cap_turandot
+	}
+}
+
+#Turan
+country_event = {
+	id = ab_capua.9
+	title = ab_capua.9.t
+	desc = ab_capua.9.d
+	picture = ADVISOR_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 50
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		any_owned_province = {  
+			is_institution_origin = renaissance
+		}
+		has_country_flag = cap_turandot
+	}
+
+	
+	option = {
+		name = ab_capua.9.a
+		add_prestige = 15
+	}
+}
+
+country_event = {
+	id = ab_capua.10
+	title = ab_capua.10.t
+	desc = ab_capua.10.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		has_ruler = "Robert XI"
+		is_year = 1454
+	}
+
+	
+	option = {
+		name = ab_capua.10.a
+		add_legitimacy = -5
+		set_country_flag = cap_robert1
+	}
+}
+
+country_event = {
+	id = ab_capua.11
+	title = ab_capua.11.t
+	desc = ab_capua.11.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		has_ruler = "Robert XI"
+		is_year = 1456
+		has_country_flag = cap_robert1
+	}
+
+	
+	option = {
+		name = ab_capua.11.a
+		add_legitimacy = -5
+		set_country_flag = cap_robert2
+	}
+}
+
+country_event = {
+	id = ab_capua.12
+	title = ab_capua.12.t
+	desc = ab_capua.12.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		has_ruler = "Robert XI"
+		is_year = 1460
+		has_country_flag = cap_robert2
+	}
+
+	
+	option = {
+		name = ab_capua.12.a
+		add_legitimacy = -5
+		set_country_flag = cap_robert3
+	}
+}
+
+country_event = {
+	id = ab_capua.13
+	title = ab_capua.13.t
+	desc = ab_capua.13.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		has_ruler = "Robert XI"
+		is_year = 1461
+		has_country_flag = cap_robert3
+	}
+
+	
+	option = {
+		name = ab_capua.13.a
+		add_legitimacy = -10
+		set_country_flag = cap_robert4
+	}
+}
+
+country_event = {
+	id = ab_capua.14
+	title = ab_capua.14.t
+	desc = ab_capua.14.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		has_ruler = "Robert XI"
+		has_country_flag = cap_robert4
+	}
+
+	
+	option = {
+		name = ab_capua.14.a
+		add_ruler_personality = immortal_personality
+		set_country_flag = cap_robert5
+	}
+}
+
+country_event = {
+	id = ab_capua.15
+	title = ab_capua.15.t
+	desc = ab_capua.15.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	immediate = {
+		hidden_effect = {
+			kill_ruler = yes
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 36
+	}
+	
+	trigger = {
+		OR = {
+			tag = CAP
+			was_tag = CAP
+		}
+		has_ruler = "Robert XI"
+		has_country_flag = cap_robert5
+	}
+
+	
+	option = {
+		name = ab_capua.15.a
+	}
+}
+
+country_event = {
+	id = ab_capua.16
+	title = ab_capua.16.t
+	desc = ab_capua.16.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	major = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	trigger = {
+		tag = TRC
+		was_tag = CAP
+		dynasty = "de Hauteville"
+	}
+
+	
+	option = {
+		name = ab_capua.16.a
+		add_legitimacy = 20
+	}
+}

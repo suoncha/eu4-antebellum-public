@@ -1,0 +1,63 @@
+namespace = ab_sicily
+normal_or_historical_nations = yes
+
+
+#Fall of Rome
+country_event = {
+	id = ab_sicily.1
+	title = ab_sicily.1.t
+	desc = ab_sicily.1.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	is_triggered_only = yes 
+
+	major = yes
+	
+	option = {
+		name = ab_sicily.1.a
+		add_prestige = 20
+		add_legitimacy = 20
+		118 = {
+			change_religion = ROOT
+		}
+			if = {
+				limit = {
+					religion_group = muslim
+					piety = 1
+				}
+				add_piety = 1
+			}
+			else_if = {
+				limit = {
+					religion_group = muslim
+					NOT = { piety = 1 }
+				}
+				add_piety = 1
+			}
+			add_country_modifier = {
+				name = "itl_fall"
+				duration = 9125
+			}
+		}
+	}
+	
+#Fate of the Iron Crown
+country_event = {
+	id = ab_sicily.2
+	title = ab_sicily.2.t
+	desc = ab_sicily.2.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = ab_sicily.2.a
+		add_prestige = 15
+		add_legitimacy = 15
+			add_country_modifier = {
+				name = "itl_crown"
+				duration = 9125
+			}
+		}
+	}
+		

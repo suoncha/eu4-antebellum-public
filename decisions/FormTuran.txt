@@ -1,0 +1,69 @@
+country_decisions = {
+	
+	form_turan = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_turan_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = TRN }
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
+			OR = {
+				tag = TRK
+				tag = OGZ
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 441
+				province_id = 442
+				province_id = 454
+				province_id = 445
+				province_id = 476
+				province_id = 466
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+			owns_core_province = 441
+			owns_core_province = 442
+			owns_core_province = 454
+			owns_core_province = 445
+			owns_core_province = 476
+			owns_core_province = 466
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = TRN
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			set_country_flag = formed_turan_flag
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}	
+	
+}

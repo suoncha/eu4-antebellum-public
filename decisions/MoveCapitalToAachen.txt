@@ -1,0 +1,51 @@
+country_decisions = {
+
+	frc_move_capital = {
+		major = yes
+		potential = {
+			OR = {
+				tag = FRC
+				tag = FRK
+				tag = LOT
+			}
+			normal_or_historical_nations = yes
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			has_country_flag = aachen_capital_unlocked
+			NOT = { has_country_flag = relocated_capital_aachen }
+		}
+		allow = {
+			is_core = 1878
+			owns = 1878
+			NOT = { capital = 1878 }
+			is_at_war = no
+			adm_power = 100
+		}
+		effect = {
+			add_adm_power = -100
+			set_country_flag = relocated_capital_aachen
+			1878 = {
+				move_capital_effect = yes
+			}
+			1878 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

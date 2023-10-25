@@ -1,0 +1,18 @@
+tags={
+	"Alternative History"
+	"Expansion"
+	"Gameplay"
+	"Military"
+	"National Ideas"
+	"Religion"
+	"New Nations"
+	"Missions And Decisions"
+	"Map"
+	"Events"
+}
+name="Ante Bellum"
+replace_path="common/bookmarks"
+replace_path="gfx/loadingscreens"
+supported_version="1.35.6"
+path="C:/Users/pavel/Documents/Paradox Interactive/Europa Universalis IV/mod/paganfury"
+remote_file_id="1908400374"

@@ -1,0 +1,48 @@
+namespace = ab_rome
+
+#The Liberation of Rome
+country_event = {
+	id = ab_rome.1
+	title = ab_rome.1.t
+	desc = ab_rome.1.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	major = yes
+	
+	trigger = {
+		religion = catholic
+		owns = 118
+		118 = {
+			OR = {
+				is_core = SIC
+				is_core = ITL
+			}
+		}
+		118 = {
+			religion_group = muslim
+		}
+		NOT = {
+			has_global_flag = ab_rome_liberated
+		}
+	}
+
+	option = {
+		name = ab_rome.1.a
+		add_papal_influence = 50
+		118 = {
+			change_religion = catholic
+		}
+		118 = {
+			change_culture = umbrian
+		}
+		add_country_modifier = {
+			name = "ab_rome_liberation"
+			duration = -1
+		}
+		custom_tooltip = AB_LIBERATION_ROME
+		set_global_flag = ab_rome_liberated
+	}
+
+}

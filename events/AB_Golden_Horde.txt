@@ -1,0 +1,824 @@
+namespace = ab_ghorde
+normal_or_historical_nations = yes
+
+#Rivals
+country_event = {
+	id = ab_ghorde.0
+	title = ab_ghorde.0.t
+	desc = ab_ghorde.0.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	fire_only_once = yes
+	
+	hidden = yes
+	
+	trigger = {
+		tag = GLH
+	}
+	
+	immediate = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					culture_group = east_slavic
+				}
+				add_historical_rival = GLH
+			}
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.0.a
+	}
+}
+
+#First event
+country_event = {
+	id = ab_ghorde.1
+	title = ab_ghorde.1.t
+	desc = ab_ghorde.1.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	fire_only_once = yes
+	
+	immediate = {
+		hidden_effect = {
+			add_stability = -2
+			add_horde_unity = -25
+		}
+	}
+	
+	trigger = {
+		tag = GLH
+	}
+	
+	immediate = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = "gh_army"
+				duration = -1
+			}
+			add_country_modifier = {
+				name = "gh_authority"
+				duration = -1
+			}
+			add_country_modifier = {
+				name = "gh_court_turbulence"
+				duration = -1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.1.a
+		custom_tooltip = GH_EARLY_EVENT_CHAIN
+	}
+}
+
+#Pretender rebels on monarch death
+country_event = {
+	id = ab_ghorde.2
+	title = ab_ghorde.2.t
+	desc = ab_ghorde.2.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ghorde.2.a
+		add_horde_unity = -10
+		capital_scope = {
+			spawn_rebels = {
+				type = pretender_rebels
+				size = 3
+			}
+		}
+	}
+}
+
+#Crimea
+country_event = {
+	id = ab_ghorde.3
+	title = ab_ghorde.3.t
+	desc = ab_ghorde.3.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GLH
+	}
+	
+	mean_time_to_happen = {
+		months = 25
+	}
+	
+	immediate = {
+		set_country_flag = glh_crimea
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					culture = crimean
+				}
+				add_core = CRI
+			}
+			release = CRI
+			CRI = {
+				change_religion = orthodox
+				change_government = tribal
+				add_government_reform = steppe_horde
+				add_horde_unity = 100
+				add_manpower = 13
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 50 }
+			}
+			CRI = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}		
+	}
+	
+	option = {
+		name = ab_ghorde.3.a
+		ai_chance = { factor = 100 }
+		set_country_flag = glh_defeat_crimea
+		declare_war_with_cb = {
+			who = CRI
+			casus_belli = cb_core
+			war_goal_province = 284
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.3.b
+		ai_chance = { factor = 0 }
+		add_prestige = -25
+		every_province = {
+			limit = {
+				owned_by = CRI
+			}
+			remove_core = GLH
+		}
+	}
+	
+}
+
+#Nogai
+country_event = {
+	id = ab_ghorde.4
+	title = ab_ghorde.4.t
+	desc = ab_ghorde.4.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GLH
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	immediate = {
+		set_country_flag = glh_nogai
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						culture = nogaybak
+						culture = khazak
+					}
+				}
+				add_core = NOG
+			}
+			release = NOG
+			NOG = {
+				change_government = tribal
+				add_government_reform = steppe_horde
+				add_horde_unity = 100
+				add_manpower = 13
+				add_prestige = 30
+				add_treasury = 200
+				create_general = { tradition = 50 }
+			}
+			NOG = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}		
+	}
+	
+	option = {
+		name = ab_ghorde.4.a
+		ai_chance = { factor = 100 }
+		set_country_flag = glh_defeat_nogai
+		declare_war_with_cb = {
+			who = NOG
+			casus_belli = cb_core
+			war_goal_province = 465
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.4.b
+		ai_chance = { factor = 0 }
+		add_prestige = -25
+		every_province = {
+			limit = {
+				owned_by = NOG
+			}
+			remove_core = GLH
+		}
+	}
+	
+}
+
+#Kazan
+country_event = {
+	id = ab_ghorde.5
+	title = ab_ghorde.5.t
+	desc = ab_ghorde.5.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GLH
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	immediate = {
+		set_country_flag = glh_kazan
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					culture = kazani
+				}
+				add_core = KAZ
+			}
+			release = KAZ
+			KAZ = {
+				change_religion = sunni
+				change_government = tribal
+				add_government_reform = steppe_horde
+				add_horde_unity = 100
+				add_manpower = 13
+				add_prestige = 30
+				add_treasury = 200
+				create_general = { tradition = 50 }
+			}
+			KAZ = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+			}
+		}		
+	}
+	
+	option = {
+		name = ab_ghorde.5.a
+		ai_chance = { factor = 100 }
+		set_country_flag = glh_defeat_kazan
+		declare_war_with_cb = {
+			who = KAZ
+			casus_belli = cb_core
+			war_goal_province = 1082
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.5.b
+		ai_chance = { factor = 0 }
+		add_prestige = -25
+		every_province = {
+			limit = {
+				owned_by = KAZ
+			}
+			remove_core = GLH
+		}
+	}
+	
+}
+
+#Crimea Defated
+country_event = {
+	id = ab_ghorde.6
+	title = ab_ghorde.6.t
+	desc = ab_ghorde.6.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GLH
+		owns = 284
+		has_country_flag = glh_defeat_crimea
+		NOT = {
+			exists = CRI
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.6.a
+		add_horde_unity = 10
+	}
+}
+
+#Nogai Defated
+country_event = {
+	id = ab_ghorde.7
+	title = ab_ghorde.7.t
+	desc = ab_ghorde.7.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GLH
+		owns = 465
+		has_country_flag = glh_defeat_nogai
+		NOT = {
+			exists = NOG
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.7.a
+		add_horde_unity = 10
+	}
+}
+
+#Kazan Defated
+country_event = {
+	id = ab_ghorde.8
+	title = ab_ghorde.8.t
+	desc = ab_ghorde.8.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GLH
+		owns = 1082
+		has_country_flag = glh_defeat_kazan
+		NOT = {
+			exists = KAZ
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.8.a
+		add_horde_unity = 10
+	}
+}
+	
+#New Mission Tree
+country_event = {
+	id = ab_ghorde.9
+	title = ab_ghorde.9.t
+	desc = ab_ghorde.9.d
+	picture = NOMAD_ESTATE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ghorde.9.a
+		custom_tooltip = GLH_HORDE_TREE
+		set_country_flag = glh_horde_tree
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.9.b
+		override_country_name = TATARIA
+		custom_tooltip = GLH_EUROPEAN_TREE
+		hidden_effect = {
+			set_country_flag = glh_european_tree
+			change_government = monarchy
+			swap_non_generic_missions = yes
+		}
+		swap_free_idea_group = yes
+		add_government_reform = tataria_kingdom
+		hidden_effect = {
+			change_estate_land_share = {
+				estate = estate_nomadic_tribes
+				share = -50
+			}
+		}
+	}
+}
+
+#New Religion
+country_event = {
+	id = ab_ghorde.10
+	title = ab_ghorde.10.t
+	desc = ab_ghorde.10.d
+	picture = RELIGIOUS_MIGRANTS_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+	
+	major = yes
+	
+	trigger = {
+		tag = GLH
+		has_country_flag = glh_can_convert
+	}
+	
+	option = {
+		name = ab_ghorde.10.a
+		set_country_flag = glh_has_picked_religion
+		set_country_flag = glh_picked_christian
+		change_religion = orthodox
+		capital_scope = {
+			change_religion = orthodox
+		}
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.10.b
+		set_country_flag = glh_has_picked_religion
+		set_country_flag = glh_picked_sunni
+		change_religion = sunni
+		capital_scope = {
+			change_religion = sunni
+		}
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.10.c
+		set_country_flag = glh_has_picked_religion
+		set_country_flag = glh_picked_buddhist
+		change_religion = vajrayana
+		capital_scope = {
+			change_religion = vajrayana
+		}
+		hidden_effect = {
+			add_prestige = 100
+			add_stability = 1
+		}
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.10.de
+		set_country_flag = glh_has_picked_religion
+		set_country_flag = glh_picked_christian
+		change_religion = nestorian
+		capital_scope = {
+			change_religion = nestorian
+		}
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+
+	option = {
+		name = ab_ghorde.10.f
+		set_country_flag = glh_has_picked_religion
+		set_country_flag = glh_picked_judaism
+		change_religion = jewish
+		capital_scope = {
+			change_religion = jewish
+		}
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.10.e
+		set_country_flag = glh_has_picked_religion
+		set_country_flag = glh_picked_tengri
+		add_stability = 1
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+
+#AI HELP 1
+country_event = {
+	id = ab_ghorde.11
+	title = ab_ghorde.11.t
+	desc = ab_ghorde.11.d
+	picture = RELIGIOUS_MIGRANTS_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GLH
+		ai = yes
+		NOT = {
+			mission_completed = glh_branching_1
+		}
+		CRI = {
+			is_subject_of_type_with_overlord = { who = GLH type = tributary_state }
+		}
+		CRI = {
+			ai = yes
+		}
+		CRI = {
+			NOT = {
+				liberty_desire = 50
+			}
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.11.a
+		inherit = CRI
+	}
+}
+
+#AI HELP 2
+country_event = {
+	id = ab_ghorde.12
+	title = ab_ghorde.12.t
+	desc = ab_ghorde.12.d
+	picture = RELIGIOUS_MIGRANTS_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GLH
+		ai = yes
+		NOT = {
+			mission_completed = glh_branching_1
+		}
+		KAZ = {
+			is_subject_of_type_with_overlord = { who = GLH type = tributary_state }
+		}
+		KAZ = {
+			ai = yes
+		}
+		KAZ = {
+			NOT = {
+				liberty_desire = 50
+			}
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.12.a
+		inherit = KAZ
+	}
+}
+
+#AI HELP 3
+country_event = {
+	id = ab_ghorde.13
+	title = ab_ghorde.13.t
+	desc = ab_ghorde.13.d
+	picture = RELIGIOUS_MIGRANTS_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GLH
+		ai = yes
+		NOT = {
+			mission_completed = glh_branching_1
+		}
+		NOG = {
+			is_subject_of_type_with_overlord = { who = GLH type = tributary_state }
+		}
+		NOG = {
+			ai = yes
+		}
+		NOG = {
+			NOT = {
+				liberty_desire = 50
+			}
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.13.a
+		inherit = NOG
+	}
+}
+
+#AI HELP 4
+country_event = {
+	id = ab_ghorde.14
+	title = ab_ghorde.14.t
+	desc = ab_ghorde.14.d
+	picture = RELIGIOUS_MIGRANTS_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = GLH
+		ai = yes
+		mission_completed = glh_authority
+		NOT = {
+			mission_completed = glh_branching_1
+		}
+		NOT = {
+			OR = {
+				mission_completed = glh_army
+				mission_completed = glh_succession
+			}
+		}
+	}
+	
+	option = {
+		name = ab_ghorde.14.a
+		if = {
+			limit = {
+				NOT = {
+					mission_completed = glh_army
+				}
+			}
+			complete_mission = glh_army
+			remove_country_modifier = gh_army
+		}
+		if = {
+			limit = {
+				NOT = {
+					mission_completed =  glh_succession
+				}
+			}
+			complete_mission = glh_succession
+			remove_country_modifier = gh_court_turbulence
+		}
+	}
+}
+
+#AI Integrate 1
+country_event = {
+	id = ab_ghorde.15
+	title = ab_ghorde.15.t
+	desc = ab_ghorde.15.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	fire_only_once = yes
+	
+	hidden = yes
+	
+	trigger = {
+		tag = GLH
+		ai = yes
+		offensive_war_with = CRI
+		war_score_against = {
+			who = CRI
+			value = 90
+		}
+	}
+	
+	immediate = {
+		inherit = CRI
+	}
+	
+	option = {
+		name = ab_ghorde.0.a
+	}
+}
+
+#AI Integrate 2
+country_event = {
+	id = ab_ghorde.16
+	title = ab_ghorde.16.t
+	desc = ab_ghorde.16.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	fire_only_once = yes
+	
+	hidden = yes
+	
+	trigger = {
+		tag = GLH
+		ai = yes
+		offensive_war_with = NOG
+		war_score_against = {
+			who = NOG
+			value = 90
+		}
+	}
+	
+	immediate = {
+		inherit = NOG
+	}
+	
+	option = {
+		name = ab_ghorde.0.a
+	}
+}
+
+#AI Integrate 3
+country_event = {
+	id = ab_ghorde.17
+	title = ab_ghorde.17.t
+	desc = ab_ghorde.17.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	fire_only_once = yes
+	
+	hidden = yes
+	
+	trigger = {
+		tag = GLH
+		ai = yes
+		offensive_war_with = KAZ
+		war_score_against = {
+			who = KAZ
+			value = 90
+		}
+	}
+	
+	immediate = {
+		inherit = KAZ
+	}
+	
+	option = {
+		name = ab_ghorde.0.a
+	}
+}

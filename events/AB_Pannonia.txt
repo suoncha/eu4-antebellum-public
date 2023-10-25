@@ -1,0 +1,50 @@
+namespace = ab_pannonia
+
+
+#New Capital
+country_event = {
+	id = ab_pannonia.1
+	title = ab_pannonia.1.t
+	desc = ab_pannonia.1.d
+	picture = CITY_VIEW_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_pannonia.1.a
+		add_legitimacy = -25
+		153 = {
+			move_capital_effect = yes
+		}
+		153 = {
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
+		}
+		153 = {
+			if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 1 }
+				}
+				center_of_trade = 1
+			}
+			else_if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 3 }
+				}
+				add_center_of_trade_level = 1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_pannonia.1.b
+		add_legitimacy = 10
+		1864 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+	}
+	
+}

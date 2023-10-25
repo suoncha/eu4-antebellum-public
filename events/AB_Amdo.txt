@@ -1,0 +1,94 @@
+namespace = ab_amdo
+normal_or_historical_nations = yes
+
+#Tangut Remnants
+country_event = {
+	id = ab_amdo.1
+	title = ab_amdo.1.t
+	desc = ab_amdo.1.d
+	picture = IKKO_IKKI_INCIDENT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		ai_chance = { factor = 50 }
+		name = ab_amdo.1.a
+		add_adm_power = -50
+				add_country_modifier = {
+					name = "amdo_convert"
+					duration = 9125
+				}
+	}
+	
+	option = {
+		ai_chance = { factor = 50 }
+		name = ab_amdo.1.b
+		add_stability_or_adm_power = yes
+		    if = {
+				limit = {
+					NOT = { accepted_culture = Tangut }
+				}
+				add_accepted_culture = Tangut
+			}
+			else = {
+				add_dip_power = 100
+			}
+	}
+	
+}
+
+#Yuan Event
+country_event = {
+	id = ab_amdo.2
+	title = ab_amdo.2.t
+	desc = ab_amdo.2.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		ai_chance = { factor = 15 }
+		name = ab_amdo.2.a
+		add_prestige = -15
+		add_adm_power = 100
+		if = {
+			limit = {
+				exists = AMD
+			}
+			west_gansu_area = {
+				cede_province = AMD
+				add_core = AMD
+				remove_core = YUA
+			}
+			gansu_area = {
+				cede_province = AMD
+				add_core = AMD
+				remove_core = YUA
+			}
+		}
+		else_if = {
+			limit = {
+				exists = XUN
+			}
+			west_gansu_area = {
+				cede_province = XUN
+				add_core = XUN
+				remove_core = YUA
+			}
+			gansu_area = {
+				cede_province = XUN
+				add_core = XUN
+				remove_core = YUA
+			}
+		}
+	}
+	
+	option = {
+		ai_chance = { factor = 85 }
+		name = ab_amdo.2.b
+		add_prestige = 10
+	}
+	
+}

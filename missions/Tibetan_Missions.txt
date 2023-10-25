@@ -1,0 +1,1005 @@
+tib_slot_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = TIB
+			tag = GUG
+			tag = UTS
+			tag = KAM
+			tag = PHA
+			tag = LGG
+			tag = GNJ
+			tag = SKY
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tib_take_assam = {
+		icon = mission_a_million_rice_fields
+		required_missions = { tib_unite_west_tibet }
+		position = 2
+		
+		provinces_to_highlight = { 
+			OR = {
+				area = assam_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			assam_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = tibet_riches
+				duration = 9125
+			}
+		}
+	}
+	
+	tibet_capital = {
+		icon = mission_mnd_dai_imperial_citadel
+		required_missions = { }
+		position = 3
+	
+		trigger = {
+		    capital_scope = {
+				development = 20
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" }
+				capital_scope = {
+					add_prosperity = 50
+				}
+			}
+			capital_scope = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	tibet_fort = {
+		icon = alpine_fortifications
+		required_missions = { tibet_capital }
+		position = 4
+	
+		trigger = {
+			num_of_owned_provinces_with = {
+				OR = {
+					has_building = fort_15th
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+				value = 5
+			}
+		}
+		
+		effect = {
+			tibet_region = {
+				add_province_modifier = {
+					name = "tibet_fortress"
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+tib_slot_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = TIB
+			tag = GUG
+			tag = UTS
+			tag = KAM
+			tag = PHA
+			tag = LGG
+			tag = GNJ
+			tag = SKY
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	tib_unite_west_tibet = {
+		icon = mission_chinese_general_riding
+		required_missions = { 	}
+		provinces_to_highlight = {
+			OR = {
+				area = ngari_area
+				area = utsang_area
+				area = bhutan_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			ngari_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			utsang_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			bhutan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = tibet_west_tibet
+				duration = 5475
+			}
+			tibet_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			assam_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	tib_steppe_alliance = {
+		icon = mission_non-western_cavalry_raid
+		required_missions = { tib_unite_tibet }
+		position = 3
+		trigger = {
+			is_at_war = no
+			OR = {
+				has_reform = steppe_horde
+				custom_trigger_tooltip = {
+					tooltip = tib_steppe_alliance_tooltip_1
+					any_ally = {
+						culture_group = Mongolian
+						total_development = 100
+					}
+				}
+				num_of_owned_provinces_with = {
+					value = 10
+					culture_group = Mongolian
+				}
+			}
+		}
+		effect = {
+			add_dip_power = 50
+			country_event = { id = flavor_tib.2 }
+			kashmir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			gansu_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			west_gansu_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	tib_conquer_kashmir = {
+		icon = mission_hands_praying
+		required_missions = { tib_steppe_alliance  }
+		position = 4
+		provinces_to_highlight = {
+			area = kashmir_area
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				NOT = { religion = ROOT }
+			}			
+		}
+		trigger = {
+			kashmir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				religion = ROOT
+			}
+		}
+		effect = {
+				define_advisor = {
+					type = inquisitor
+					skill = 2
+					religion = ROOT
+					culture = ROOT
+					cost_multiplier = 0.5
+				}
+			shanshan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tarim_basin_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kashgaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			ferghana_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			turpan_kumul_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			zungaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			2125 = {
+				if = {
+					limit = {
+						NOT = {
+							is_permanent_claim = ROOT
+							is_core = ROOT
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			461 = {
+				if = {
+					limit = {
+						NOT = {
+							is_permanent_claim = ROOT
+							is_core = ROOT
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	tib_the_tarim_basin = {
+		icon = mission_central_asian_city
+		required_missions = { tib_conquer_kashmir }
+		provinces_to_highlight = {
+			OR = {
+				area = shanshan_area
+				area = tarim_basin_area
+				area = kashgaria_area
+				area = ferghana_area
+				area = turpan_kumul_area
+				area = zungaria_area
+				province_id = 2125
+				province_id = 461
+			}
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				NOT = { religion = ROOT }
+			}
+		}
+		trigger = {
+			shanshan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				religion = ROOT
+			}
+			tarim_basin_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				religion = ROOT
+			}
+			kashgaria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				religion = ROOT
+			}
+			ferghana_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				religion = ROOT
+			}
+			turpan_kumul_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				religion = ROOT
+			}
+			zungaria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				religion = ROOT
+			}
+			2125 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			461 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+		    add_accepted_culture_or_dip_power = {
+		    	culture = Khitan
+		    }
+			add_country_modifier = {
+				name = "tibet_coexistence"
+				duration = -1
+			}
+		}
+	}
+}
+
+tib_slot_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = TIB
+			tag = GUG
+			tag = UTS
+			tag = KAM
+			tag = PHA
+			tag = LGG
+			tag = GNJ
+			tag = SKY
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	tib_unite_tibet = {
+		icon = mission_kowtow
+		required_missions = { tib_unite_west_tibet tib_unite_east_tibet  }
+		position = 2
+		provinces_to_highlight = {
+			region = tibet_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			tibet_region = {
+				type = all
+				owned_by = ROOT	
+			}
+			has_institution = feudalism
+		}
+		effect = {
+			677 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			2133 = {
+				if = {
+					limit = {
+						province_has_center_of_trade_of_level = 1
+						NOT = {
+							province_has_center_of_trade_of_level = 2
+						}						
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	tib_chinese_reconquest = {
+		icon = mission_chinese_general_riding
+		required_missions = { tib_support_the_gelug_school tib_steppe_alliance  }
+		position = 4
+		provinces_to_highlight = {
+			OR = {
+				area = gansu_area
+				area = west_gansu_area
+				area = yun_gui_borderland_area
+				province_id = 2748
+				province_id = 675
+				province_id = 662
+				province_id = 663
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			gansu_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_gansu_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			yun_gui_borderland_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			2748 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			675 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			662 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			663 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_army_tradition = 25
+			xinan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	tib_emperor_of_china = {
+		icon = mission_asian_city
+		required_missions = { tib_chinese_reconquest  }
+		provinces_to_highlight = {
+			region = xinan_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			if = {
+				limit = {
+					has_dlc = "Mandate of Heaven"
+				}
+				OR = {
+					is_emperor_of_china = yes
+					NOT = {
+						any_country = {
+							is_emperor_of_china = yes
+						}
+					}
+				}
+			}
+			else = {
+				OR = {
+					NOT = {
+						exists = MNG
+					}
+					MNG = {
+						exists = yes
+						NOT = {
+							num_of_cities = 50
+						}
+					}
+				}
+				OR = {
+					NOT = {
+						exists 	= QNG
+					}
+					QNG = {
+						exists = yes
+						NOT = {
+							num_of_cities = 50
+						}
+					}
+				}
+			}
+			xinan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}			
+		}
+		effect = {
+			if = {
+				limit = {
+					is_emperor_of_china = yes
+				}
+				add_meritocracy = 20
+				add_mandate = 20
+			}
+			add_country_modifier = {
+				name = "tibet_china_defeated"
+				duration = 7300
+			}
+		}
+	}
+	tib_tebetan_empire_restored = {
+		icon = mission_scholar_officials
+		required_missions = { tib_emperor_of_china tib_restore_the_pala_kingdom tib_the_tarim_basin  }
+		trigger = {
+			stability = 2
+			religious_unity = 1
+		}
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			if = {
+				limit = {
+					NOT = {
+						government_rank = 3
+					}
+				}
+				set_government_rank = 3
+			}
+			add_country_modifier = {
+				name = tibet_restoration
+				duration = -1
+			}
+		}
+	}
+}
+
+tib_slot_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = TIB
+			tag = GUG
+			tag = UTS
+			tag = KAM
+			tag = PHA
+			tag = LGG
+			tag = GNJ
+			tag = SKY
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	tib_unite_east_tibet = {
+		icon = mission_market_place_with_asian_traders
+		required_missions = {  }
+		provinces_to_highlight = {
+			OR = {
+				area = amdo_area
+				area = kham_area
+				area = tsang_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			tsang_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			amdo_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			kham_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = tibet_east_tibet
+				duration = 5475
+			}
+			tibet_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	tib_support_the_gelug_school = {
+		icon = mission_buddhist_monk_praying
+		required_missions = { tib_unite_tibet  }
+		position = 3
+		provinces_to_highlight = {
+			region = tibet_region
+			OR = {
+				NOT = { religion = ROOT }
+				NOT = { owned_by = ROOT }
+			}
+		}
+		trigger = {
+			tibet_region = {
+				type = all
+				religion = vajrayana
+				owned_by = ROOT
+			}
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_church
+				}
+				estate_loyalty = {
+					estate = estate_church
+					loyalty = 60
+				}
+				estate_influence = {
+					estate = estate_church
+					influence = 60
+				}
+			}
+		}
+		effect = {
+			set_country_flag = dalai_lama_flag
+			country_event = { id = flavor_tib.1 }
+			yun_gui_borderland_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			2748 = {
+				if = {
+					limit = {
+						NOT = {
+							is_permanent_claim = ROOT
+							is_core = ROOT
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			675 = {
+				if = {
+					limit = {
+						NOT = {
+							is_permanent_claim = ROOT
+							is_core = ROOT
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			662 = {
+				if = {
+					limit = {
+						NOT = {
+							is_permanent_claim = ROOT
+							is_core = ROOT
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			663 = {
+				if = {
+					limit = {
+						NOT = {
+							is_permanent_claim = ROOT
+							is_core = ROOT
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			nepal_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			himalayan_hills_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			baisi_rajya_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	tib_conquer_nepal = {
+		icon = mission_che_the_cave_country
+		required_missions = { tib_support_the_gelug_school }
+		position = 4
+		provinces_to_highlight = {
+			OR = {
+				area = nepal_area
+				area = himalayan_hills_area
+				area = baisi_rajya_area
+			}
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				NOT = { religion = ROOT }
+			}
+		}
+		trigger = {
+			nepal_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				religion = ROOT
+			}
+			himalayan_hills_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				religion = ROOT
+			}
+			baisi_rajya_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+				religion = ROOT
+			}
+		}
+		effect = {
+			nepal_area = {
+			add_province_modifier = {
+				name = tibet_frontier
+				duration = -1
+			}
+			}
+			himalayan_hills_area = {
+			add_province_modifier = {
+				name = tibet_frontier
+				duration = -1
+			}
+			}
+			baisi_rajya_area = {
+			add_province_modifier = {
+				name = tibet_frontier
+				duration = -1
+			}
+			}
+			gaur_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			west_bengal_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			north_bengal_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			east_bengal_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	tib_restore_the_pala_kingdom = {
+		icon = mission_patronize_local_gods
+		required_missions = { tib_conquer_nepal }
+		provinces_to_highlight = {
+			OR = {
+				area = gaur_area
+				area = west_bengal_area
+				area = north_bengal_area
+				area = east_bengal_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			gaur_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			west_bengal_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			north_bengal_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			east_bengal_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "tibet_restored_pala"
+				duration = 7300
+			}
+			if = {
+				limit = {
+					BNG = {
+						is_subject_of = ROOT
+						NOT = { religion = ROOT }
+					}
+				}
+				BNG = {
+					add_liberty_desire = -50
+					change_religion = ROOT
+					define_ruler = {
+						dynasty= "Pala"
+						religion = ROOT
+					}
+				}
+			}
+			else = {
+				custom_tooltip = tib_restore_the_pala_kingdom.tooltip # to tell the player that this can happen
+			}
+		}
+	}
+}
+
+tib_slot_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = TIB
+			tag = GUG
+			tag = UTS
+			tag = KAM
+			tag = PHA
+			tag = LGG
+			tag = GNJ
+			tag = SKY
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tib_restore_kham = {
+		icon = mission_subdue_malwa
+		required_missions = { tib_unite_east_tibet }
+		position = 2
+		
+		trigger = {
+			stability = 2
+			prestige = 75
+		}
+		effect = {
+			custom_tooltip = tibet_restore
+			hidden_effect = {
+			if = {
+				limit = {
+					NOT = { tag = TIB }
+				}
+				change_tag = KAM
+			}
+			}
+			add_country_modifier = {
+				name = tibet_kham_restoration
+				duration = 9125
+			}
+		}
+	}
+	
+	tib_tanguts = {
+		icon = mission_protect_jain_communities
+		required_missions = { }
+		position = 3
+		
+		trigger = {
+			NOT = {
+				exists = TGU
+			}
+			num_of_owned_provinces_with = {
+				value = 4
+				culture = Tangut
+			}
+		}
+		effect = {
+			create_general = { tradition = 50 }
+			define_advisor = {
+				type = planner
+				skill = 2
+				culture = Tangut
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	tib_bonpo = {
+		icon = mission_asian_trader
+		required_missions = { tib_tanguts }
+		position = 4
+		
+		trigger = {
+			advisor = theologian
+			custom_trigger_tooltip = {
+				tooltip = tibet_tolerance
+			has_global_modifier_value = {
+				which = tolerance_heathen
+				value = 1
+			}
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = tibet_bonpo
+				duration = -1
+			}
+		}
+	}
+}
+			

@@ -1,0 +1,78 @@
+po_zun_change_religion = {
+	
+	# Show in treaties tab
+	category = 6
+	
+	# 0.1 prestige gain seems to be the default
+	prestige_base = 0.1 
+	
+	# Forcing religion shouldn't cause AE
+	ae_base = 0.0
+	
+	# Forcing religion on anyone other than the primary defender should cost full diplo power
+	power_cost_base = 1.0
+	
+	# Warscore cost scales directly according to the warscore cost of the provinces that the owner retains
+	# IE: If you take some provinces, the cost of forced conversion is reduced
+	warscore_cost = {
+		owner_keeps = 1.0 # The provinces that are not of any of the types below
+		conquered = 0.0 # Provinces that are selected by a Demand Province treaty
+		returned_core = 0.0 # Provinces that are selected by a Return Core treaty
+		released_nation = 0.0 # Provinces that will become a part of a selected released-to-be nation
+		cancelled_subject = 0.0 # This one should not be relevant here since Giver can't be a cancelled subject. Including anyway for completeness
+		concede_colonial_region = 0.0 # Ditto
+	}
+	
+	# No limit to the cost of forced conversion (ie. large nations cannot be forcibly converted)
+	warscore_cap = -1
+	
+	# Use custom criteria to decide whether this peace option is visible
+	# IE: This peace offer is visible by default, but in reality its visibility is highly restricted by the is_visible block below
+	requires_is_allowed = no
+	
+    # Only show this peace option if:
+    #  --- The recipient is a defender in a crusade-with-conversion war, and the offerer is the attacking war leader; and
+    #  --- The recipient is of a different religion to the offerer
+    is_visible = {
+		is_in_war = {
+			attacker_leader = ROOT
+			defenders = FROM
+			casus_belli = cb_zun_crusade
+		}
+		NOT = { religion = FROM }
+    }
+	
+	is_allowed = {
+		always = yes
+	}
+	
+	# Force the recipient to convert to the religion of the offerer
+	effect = {
+		FROM = {
+			change_religion = ROOT
+			force_converted = yes  # Don't know what this does, but it seems appropriate...
+			capital_scope = {
+				change_religion = ROOT
+			}
+		}
+		if = {
+			limit = {
+				has_government_mechanic = zunist_radiance_mechanic
+			}
+			add_government_power = {
+				mechanic_type = zunist_radiance_mechanic
+				power_type = zunist_radiance
+				value = 5
+			}
+		}
+	}
+	
+	# AI weight of 50 seems fairly standard for peace options which are good-to-have but not absolutely-essential
+	ai_weight = {
+		export_to_variable = {
+			variable_name = ai_value
+			value = 50
+		}
+	}
+	
+}

@@ -1,0 +1,89 @@
+namespace = ab_oirat
+normal_or_historical_nations = yes
+
+
+#Khitans
+country_event = {
+	id = ab_oirat.1
+	title = ab_oirat.1.t
+	desc = ab_oirat.1.d
+	picture = MONGOL_BANNERS_eventPicture
+	
+	is_triggered_only = yes
+	
+
+	option = {
+		name = ab_oirat.1.a
+		    if = {
+				limit = {
+					NOT = { accepted_culture = Khitan }
+				}
+				add_accepted_culture = Khitan
+			}
+			else = {
+				add_dip_power = 100
+			}
+		add_country_modifier = {
+			name = "oir_khitans"
+			duration = -1
+		}
+	}
+}
+
+#Fall of Beijing
+country_event = {
+	id = ab_oirat.2
+	title = ab_oirat.2.t
+	desc = ab_oirat.2.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	is_triggered_only = yes
+	
+
+	option = {
+		name = ab_oirat.2.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		add_horde_unity = 50
+		change_tag = MGL
+		swap_non_generic_missions = yes
+		swap_free_idea_group = yes
+		north_china_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT    }
+				NOT = { is_core = ROOT    }
+			}
+			add_permanent_claim = ROOT
+		}
+		south_china_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT    }
+				NOT = { is_core = ROOT    }
+			}
+			add_permanent_claim = ROOT
+		}
+		xinan_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT    }
+				NOT = { is_core = ROOT    }
+			}
+			add_permanent_claim = ROOT
+		}
+		manchuria_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT    }
+				NOT = { is_core = ROOT    }
+			}
+			add_permanent_claim = ROOT
+		}
+		central_asia_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT    }
+				NOT = { is_core = ROOT    }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}

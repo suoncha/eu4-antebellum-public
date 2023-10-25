@@ -1,0 +1,94 @@
+namespace = althismission_events
+normal_or_historical_nations = yes
+
+
+# Galicians offer aid
+
+country_event = {
+	id = althismission_events.1
+	title = althismission_events.1.t
+	desc = althismission_events.1.d
+	picture = LAND_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = althismission_events.1.a
+		add_manpower = 5
+	}
+}
+
+country_event = {
+	id = althismission_events.2
+	title = althismission_events.2.t
+	desc = althismission_events.2.d
+	picture = MILITARY_CAMP_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = althismission_events.2.a
+		    if = {
+				limit = { NOT = { accepted_culture = Pannonian } }
+				add_accepted_culture = Pannonian
+			    }
+		centralhungary_area = {
+			change_culture = Pannonian
+			change_religion = orthodox
+		}
+	}
+}
+
+country_event = {
+	id = althismission_events.3
+	title = althismission_events.3.t
+	desc = althismission_events.3.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = althismission_events.3.a
+		add_prestige = 20
+		add_legitimacy = 20
+			italy_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+	}
+}
+
+country_event = {
+	id = althismission_events.4
+	title = althismission_events.4.t
+	desc = althismission_events.4.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = althismission_events.4.a
+		add_manpower = 5
+	}
+}
+
+country_event = {
+	id = althismission_events.5
+	title = althismission_events.5.t
+	desc = althismission_events.5.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = althismission_events.5.a
+		create_general = { tradition = 75 }
+		add_manpower = 5
+			add_country_modifier = {
+				name = "pope_foreign_aid"
+				duration = 5475
+			}
+	}
+}

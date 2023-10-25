@@ -1,0 +1,50 @@
+andalusian_civil_war = {
+	potential = {
+		tag = ADU
+		NOT = {
+			has_country_flag = had_andalusian_civil_war
+		}
+		num_of_cities = 2
+		any_owned_province = {
+			is_capital = no
+			is_core = ROOT
+		}
+		government = monarchy
+		is_free_or_tributary_trigger = yes
+		uses_doom = no
+		normal_or_historical_nations = yes
+		NOT = {
+			is_year = 1455
+		}
+	}
+	
+	can_start = {
+		tag = ADU
+	}
+	
+	can_stop = {
+		has_any_disaster = yes
+	}
+	
+	progress = {
+		modifier = {
+			factor = 100
+			tag = ADU
+		} 
+	}
+	
+	modifier = {
+		global_unrest = 10
+		stability_cost_modifier = 0.25
+		manpower_recovery_speed = -0.25
+	}
+	
+	can_end = {
+		NOT = { num_of_rebel_controlled_provinces = 1 }
+		NOT = { num_of_rebel_armies = 1 }
+		stability = 1
+	}
+	
+	on_start = ab_andalusian_event.1
+	on_end = ab_andalusian_event.2
+}

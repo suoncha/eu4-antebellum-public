@@ -1,0 +1,402 @@
+namespace = ab_cornwall
+
+
+#Temporary Mission Unlock
+country_event = {
+	id = ab_cornwall.1
+	title = ab_cornwall.1.t
+	desc = ab_cornwall.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes 
+	
+	trigger = {
+		OR = {
+			tag = CRN
+			was_tag = CRN
+		}
+		mission_completed = crn_resurgence
+		is_at_war = no
+		truce_with = ENG
+	}
+	
+	option = {
+		name = ab_cornwall.1.a
+		set_country_flag = crn_mission_unlocked
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Flag Check
+country_event = {
+	id = ab_cornwall.2
+	title = ab_cornwall.2.t
+	desc = ab_cornwall.2.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes 
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = CRN
+			was_tag = CRN
+		}
+		has_country_flag = crn_mission_unlocked
+		mission_completed = crn_resurgence
+		offensive_war_with = ENG
+	}
+	
+	option = {
+		name = ab_cornwall.2.a
+		set_country_flag = crn_can_fail_mission
+	}
+}
+
+#Mission Failed
+country_event = {
+	id = ab_cornwall.3
+	title = ab_cornwall.3.t
+	desc = ab_cornwall.3.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes 
+	
+	trigger = {
+		OR = {
+			tag = CRN
+			was_tag = CRN
+		}
+		has_country_flag = crn_mission_unlocked
+		has_country_flag = crn_can_fail_mission
+		NOT = {
+			mission_completed = crn_shatter
+		}
+		is_at_war = no
+		truce_with = ENG
+	}
+	
+	option = {
+		name = ab_cornwall.3.a
+		clr_country_flag = crn_mission_unlocked
+		set_country_flag = crn_mission_failed
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Disintegration of England
+country_event = {
+	id = ab_cornwall.4
+	title = ab_cornwall.4.t
+	desc = ab_cornwall.4.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_cornwall.4.a
+		custom_tooltip = CRN_ENGLAND_DISINTEGRATE
+		hidden_effect = {
+			white_peace = CRN
+		}
+		hidden_effect = {
+			release = WSX
+			WSX = {
+				add_manpower = 5
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 30 }
+			}
+			WSX = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			release = MRC
+			MRC = {
+				add_manpower = 5
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 30 }
+			}
+			MRC = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			release = NOL
+			NOL = {
+				add_manpower = 5
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 30 }
+			}
+			NOL = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			release = EAN
+			EAN = {
+				add_manpower = 5
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 30 }
+			}
+			EAN = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			release = ESX
+			ESX = {
+				add_manpower = 5
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 30 }
+			}
+			ESX = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			release = KNT
+			KNT = {
+				add_manpower = 5
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 30 }
+			}
+			KNT = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			release = SSX
+			SSX = {
+				add_manpower = 5
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 30 }
+			}
+			SSX = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			release = PIC
+			PIC = {
+				add_manpower = 5
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 30 }
+			}
+			PIC = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}
+		hidden_effect = {
+			every_province = {
+				limit = {
+					is_core = ENG
+				}
+				remove_core = ENG
+			}
+		}
+	}
+}
+
+#Unification of the Isles
+country_event = {
+	id = ab_cornwall.5
+	title = ab_cornwall.5.t
+	desc = ab_cornwall.5.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_cornwall.5.a
+		add_prestige = 25
+		set_government_rank = 3
+		custom_tooltip = ENG_CENTRALIZED
+		tooltip = {
+			add_province_modifier = {
+				name = eng_union_act
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			british_isles_region = {
+				add_province_modifier = {
+					name = eng_union_act
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+#The Birth of the Celtic Union
+country_event = {
+	id = ab_cornwall.6
+	title = ab_cornwall.6.t
+	desc = ab_cornwall.6.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_cornwall.6.a
+		add_stability = 1
+		add_ruler_modifier = {
+			name = crn_union
+			duration = -1
+		}
+		france_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		low_countries_region  = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}

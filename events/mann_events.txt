@@ -1,0 +1,328 @@
+namespace = mann_events
+
+
+country_event = { #Release Mann from Norway
+	id = mann_events.1
+	
+	title = mann_events.1.t
+	
+	desc = mann_events.1.d
+	
+	picture = DIPLOMACY_eventPicture
+	
+	trigger = {
+		tag = NOR
+		is_at_war = no
+		ai = no
+	}
+	
+	mean_time_to_happen = { months = 60 }
+	
+    fire_only_once = yes
+	
+	option = {
+		name = mann_events.1.a #Attack to reintegrate
+		ai_chance = { factor = 3 }
+		hidden_effect = { 
+			release = KOI
+			kingdom_of_the_isles_area = { add_permanent_claim = KOI } 
+			
+		}
+		vassalize = KOI
+		KOI = { 
+			declare_war_with_cb = {
+				who = NOR
+				casus_belli = cb_independence_war
+			}
+			hidden_effect = { 
+				KOI = {
+					add_government_reform = feudalism_reform
+					change_estate_land_share = {
+						estate = estate_church
+						share = 10
+					}
+					change_estate_land_share = {
+						estate = estate_burghers
+						share = 10
+					}
+					change_estate_land_share = {
+						estate = estate_nobles
+						share = 10
+					}
+				}
+				4365 = { 
+					build_to_forcelimit = { infantry = 0.8 }
+					build_to_forcelimit = {
+						light_ship = 0.3
+						galley = 0.1
+						transport = 0.2
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = mann_events.1.b #Let them buy their independence
+		ai_chance = { 
+			factor = 1
+			modifier = {
+				factor = 3
+				num_of_loans = 1
+			}
+		}
+		release = KOI
+		add_treasury = 50
+		hidden_effect = { 
+			KOI = { 
+				add_government_reform = feudalism_reform 				
+				change_estate_land_share = {
+					estate = estate_church
+					share = 10
+				}
+				change_estate_land_share = {
+					estate = estate_burghers
+					share = 10
+				}
+				change_estate_land_share = {
+					estate = estate_nobles
+					share = 10
+				}
+			}
+			4365 = { 
+				build_to_forcelimit = { infantry = 0.8 }
+				build_to_forcelimit = {
+					light_ship = 0.3
+					galley = 0.1
+					transport = 0.2
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = mann_events.1.c #Play as them!
+		trigger = { ai = no }
+		highlight = yes
+		release = KOI
+		hidden_effect = { 
+			KOI = {
+				add_government_reform = feudalism_reform
+				change_estate_land_share = {
+					estate = estate_church
+					share = 10
+				}
+				change_estate_land_share = {
+					estate = estate_burghers
+					share = 10
+				}
+				change_estate_land_share = {
+					estate = estate_nobles
+					share = 10
+				}			
+			}
+			kingdom_of_the_isles_area = { add_permanent_claim = KOI } 
+			4365 = { 
+				build_to_forcelimit = { infantry = 0.8 }
+				build_to_forcelimit = {
+					light_ship = 0.4
+					galley = 0.2
+					transport = 0.3
+				}
+			}
+		}
+		switch_tag = KOI
+
+	}
+}
+
+
+country_event = { #Manx Silk Event VOYAGE
+	id = mann_events.201
+	
+	title = mann_events.201.t
+	
+	desc = mann_events.201.d
+	
+	picture = HARBOUR_eventPicture
+	
+	trigger = {
+		mission_completed = mann_shepherds_heritage
+		4368 = {
+			owned_by = ROOT
+			controlled_by = ROOT
+		}
+	}
+	
+	mean_time_to_happen = { months = 12 }
+	
+	fire_only_once = yes
+	
+	option = {
+		name = mann_events.201.a
+		add_treasury = -750
+		custom_tooltip = manx_silk_funded_tt
+		hidden_effect = {
+			country_event = { 
+				id = mann_events.2
+				days = 90
+				random = 45
+			}
+		}
+	}
+	option = {
+		name = mann_events.201.b
+		custom_tooltip = manx_silk_rejected_tt
+	}
+	
+}
+
+country_event = { #Manx Silk Event TRADE GOOD CHANGE
+	id = mann_events.2
+	
+	title = mann_events.2.t
+	
+	desc = mann_events.2.d
+	
+	picture = ECONOMY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = mann_events.2.a
+		add_dip_power = 100
+		custom_tooltip = blank
+		4368 = {
+			change_trade_goods = silk
+			add_base_production = 2
+			custom_tooltip = blank
+			add_permanent_province_modifier = { name = manx_silk_modifier duration = -1 }
+			add_province_modifier = { name = manx_silk_modifier_2 duration = 7300 }
+		}
+	}
+	
+}
+
+
+country_event = { #The Massacre of Strathclyde
+	id = mann_events.3
+	
+	title = mann_events.3.t
+	
+	desc = mann_events.3.d
+	
+	picture = BORDER_TENSION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = mann_events.3.a
+		add_stability = -1
+		every_owned_province = {
+			limit = { area = scottish_marches_area }
+			change_religion = ROOT
+			change_culture = manx
+			add_unrest = 6
+		}
+	}
+	
+}
+
+
+country_event = { #Imperium of Mann event
+	id = mann_events.4
+	
+	title = mann_events.4.t
+	
+	desc = mann_events.4.d
+	
+	picture = COURT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = mann_events.4.a
+		add_stability = 1
+		hidden_effect = {
+			if = { 
+				limit = {
+					NOT = { government = monarchy }
+				}
+				change_government = monarchy
+			}
+				
+		}
+		set_country_flag = imperium_mann_flag
+		override_country_name = imperium_of_mann
+		custom_tooltip = blank
+		add_government_reform = imperium_of_mann_reform
+		custom_tooltip = blank
+		swap_free_idea_group = yes
+		hidden_effect = {
+			if = {
+				limit = { has_reform = states_general_reform }
+				remove_government_reform = states_general_reform
+			}
+			if = {
+				limit = { has_reform = parliamentary_reform }
+				remove_government_reform = parliamentary_reform
+			}
+		}
+	}
+	
+}
+
+
+country_event = { #Religion Event to Convert to Norse or Stay Catholic
+	id = mann_events.5
+	
+	title = mann_events.5.t
+	
+	desc = mann_events.5.d
+	
+	picture = PRAYING_eventPicture
+	
+	trigger = {
+		tag = KOI
+		religion = catholic
+		mission_completed = mann_unity_in_faith
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = mann_events.5.a
+		add_stability = 1
+		set_country_flag = christian_mann_decision
+		custom_tooltip = blank
+		add_papal_influence = 20
+		add_opinion = {
+			who = PAP
+			modifier = catholic_mann_opinion
+		}
+		reverse_add_opinion = {
+			who = PAP
+			modifier = catholic_mann_opinion
+		}
+	}
+	
+	option = {
+		name = mann_events.5.b
+		set_country_flag = norse_mann_decision
+		change_religion = norse_pagan_reformed
+		capital_scope = { change_religion = norse_pagan_reformed }
+		custom_tooltip = blank
+		add_country_modifier = { name = manx_norse_conversions_modifier duration = 7300 }
+		if = {
+			limit = {
+				capital_scope = { has_port = yes }
+			}
+			capital_scope = { galley = ROOT galley = ROOT galley = ROOT }
+		}
+	}
+	
+}

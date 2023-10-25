@@ -1,0 +1,221 @@
+namespace = ab_colonial
+normal_or_historical_nations = yes
+
+
+#Plantations
+country_event = {
+	id = ab_colonial.1
+	title = "ab_colonial.1.t"
+	desc = "ab_colonial.1.d"
+	picture = AB_PLANTATIONS_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	trigger = {
+		colonial_parent = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						trade_goods = slaves
+					}
+				}
+				amount = 1
+			}
+		}
+		is_colonial_nation = yes
+		owns = 498
+		owns = 496
+	}
+	
+	option = {
+		name = ab_colonial.1.a
+		498 = {
+			add_base_production = 2
+			change_trade_goods = sugar
+		}
+		496 = {
+			add_base_production = 2
+			change_trade_goods = sugar
+		}
+	}
+}
+
+#Pearl of the Antilles
+province_event = {
+	id = ab_colonial.2
+	title = "ab_colonial.2.t"
+	desc = "ab_colonial.2.d"
+	picture = CITY_VIEW_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	trigger = {
+		owner = {
+			is_colonial_nation = yes
+		}
+		is_capital = no
+		base_production = 7
+		trade_goods = sugar
+		OR = {
+			area = dominica_area
+			area = hispaniola_area
+		}
+	}
+	
+	option = {
+		name = ab_colonial.2.a
+			center_of_trade = 1 
+			add_province_modifier = {
+				name = "colonial_pearl_antilles"
+				duration = -1
+			}
+	}
+}
+
+#Gold Mine Discovery
+country_event = {
+	id = ab_colonial.3
+	title = "ab_colonial.3.t"
+	desc = "ab_colonial.3.d"
+	picture = EXPLORERS_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	trigger = {
+		is_colonial_nation = yes
+		owns = 4620
+	}
+	
+	option = {
+		name = ab_colonial.3.a
+		4620 = {
+			add_base_production = 2
+			change_trade_goods = gold
+		}
+	}
+}
+
+#Gold Mine Depleted
+country_event = {
+	id = ab_colonial.4
+	title = "ab_colonial.4.t"
+	desc = "ab_colonial.4.d"
+	picture = TRADE_GOODS_METALS_AND_MINING_EQUIPENT_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 400
+	}
+	
+	trigger = {
+		is_colonial_nation = yes
+		owns = 4620
+		4620 = {
+			trade_goods = gold
+		}
+	}
+	
+	option = {
+		name = ab_colonial.4.a
+		4620 = {
+			add_base_production = -3
+			change_trade_goods = sugar
+		}
+	}
+}
+
+#Taino Uprising
+country_event = {
+	id = ab_colonial.5
+	title = "ab_colonial.5.t"
+	desc = "ab_colonial.5.d"
+	picture = AB_TAINO_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 200
+	}
+	
+	trigger = {
+		is_colonial_nation = yes
+		num_of_owned_provinces_with = {
+			value = 1
+			culture = arawak
+			area = hispaniola_area
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					is_capital = no
+					culture = arawak
+					NOT = { has_province_flag = colonial_taino_uprising }
+				}
+				set_province_flag = colonial_taino_uprising
+			}
+		}
+	}
+	
+	option = {
+		name = ab_colonial.5.a
+		random_owned_province = {
+			limit = {
+				has_province_flag = colonial_taino_uprising
+			}
+			spawn_rebels = {
+				type = nationalist_rebels
+				size = 1
+				friend = TII
+			}
+			clr_province_flag = colonial_taino_uprising
+		}
+	}
+}
+
+#Orinoco Delta Trade
+country_event = {
+	id = ab_colonial.6
+	title = "ab_colonial.6.t"
+	desc = "ab_colonial.6.d"
+	picture = AB_ORINOCO_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 1000
+	}
+	
+	trigger = {
+		2803 = {
+			owned_by = ROOT
+		}
+		num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+			value = 15
+			colonial_region = colonial_colombia
+			is_city = yes
+		}
+	}
+	
+	option = {
+		name = ab_colonial.6.a
+			2803 = {
+				center_of_trade = 1
+			}
+	}
+}

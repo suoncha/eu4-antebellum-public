@@ -1,0 +1,537 @@
+namespace = ab_norway
+normal_or_historical_nations = yes
+
+#Avenging Stamford Bridge
+country_event = {
+	id = ab_norway.1
+	title = ab_norway.1.t
+	desc = ab_norway.1.d
+	picture = BATTLE_eventPicture
+
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_norway.1.a
+			add_prestige = 20
+			245 = {
+				add_devastation = 100
+			}
+			add_country_modifier = {
+				name = norway_sack_eoforwic
+				duration = 9125
+			}
+			lowlands_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			highlands_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = NORWAY_ENGLAND_CLAIM
+			hidden_effect = {
+			every_province = {
+				limit = { 
+						owned_by = ENG
+						NOT = { is_permanent_claim = ROOT	}
+						NOT = { is_core = ROOT	}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+	}
+}
+
+#Raid on Paris
+country_event = {
+	id = ab_norway.2
+	title = ab_norway.2.t
+	desc = ab_norway.2.d
+	picture = BATTLE_eventPicture
+
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_norway.2.a
+			add_prestige = 25
+			add_treasury = 1000
+			183 = {
+				add_devastation = 100
+			}
+			add_country_modifier = {
+				name = norway_sack_paris
+				duration = 9125
+			}
+			random_country = {
+				limit = {
+					owns = 183
+				}
+				add_stability = -1
+			}
+	}
+}
+
+#NSE
+country_event = {
+	id = ab_norway.3
+	title = ab_norway.3.t
+	desc = ab_norway.3.d
+	picture = BATTLE_eventPicture
+
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_norway.3.a
+			add_legitimacy = 25
+			change_monarch_points_or_power = {
+				points = 2
+				power = mil
+			}
+			add_ruler_modifier = {
+				name = norway_scourge
+				duration = -1
+			}
+			if = {
+				limit = { NOT = { government_rank = 3 } }
+				set_government_rank = 3
+			}
+	}
+}
+
+#Miklagard
+country_event = {
+	id = ab_norway.4
+	title = ab_norway.4.t
+	desc = ab_norway.4.d
+	picture = BATTLE_eventPicture
+
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_norway.4.a
+			add_treasury = 1000
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			151 = {
+				change_province_name = "Miklagard"
+				rename_capital = "Miklagard"
+			}
+			151 = {
+				add_province_modifier = {
+					name = "norway_gate"
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					exists = BYZ
+				}
+				BYZ = {
+					add_stability = -1
+				add_country_modifier = {
+					name = "norway_fall"
+					duration = 9125
+				}
+				}
+			}
+	}
+}
+
+#Jomsborg
+country_event = {
+	id = ab_norway.6
+	title = ab_norway.6.t
+	desc = ab_norway.6.d
+	picture = GREAT_BUILDING_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+	trigger = {
+		OR = {
+			tag = NOR
+			was_tag = NOR
+		}
+		owns = 1858
+		mission_completed = nor_dismantle_hansa
+	}
+	
+	option = {
+		name = ab_norway.6.a
+			add_years_of_income = -1.5
+			1858 = {
+				change_province_name = "Jomsborg"
+				rename_capital = "Jomsborg"
+			}
+			1858 = {
+				change_culture = norwegian
+				change_religion = ROOT
+			}
+			1858 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			1858 = {
+				add_province_modifier = {
+					name = "norway_jomsborg"
+					duration = -1
+				}
+			}
+			set_country_flag = norway_restored_jomsborg
+			custom_tooltip = nor_unlocked_jvikings
+	}
+	
+	option = {
+		name = ab_norway.6.b
+		add_adm_power = 50
+	}
+}
+
+#Walrus Ivory
+country_event = {
+	id = ab_norway.7
+	title = ab_norway.7.t
+	desc = ab_norway.7.d
+	picture = TRADEGOODS_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = {
+		name = ab_norway.7.a
+		1104 = {
+			add_base_production = 2
+			change_trade_goods = ivory
+		}
+		1105 = {
+			add_base_production = 2
+			change_trade_goods = ivory
+		}
+	 }
+
+}
+
+#High King of Ireland
+country_event = {
+	id = ab_norway.8
+	title = ab_norway.8.t
+	desc = ab_norway.8.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	
+	option = {
+		name = ab_norway.8.a
+			custom_tooltip = NORWAY_IRISH
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = irish
+					}
+				add_base_manpower = 1
+				}
+			}
+			add_country_modifier = {
+				name = norway_high
+				duration = 7300
+			}
+	 }
+
+}
+
+#Jomsborg Jewel
+country_event = {
+	id = ab_norway.9
+	title = ab_norway.9.t
+	desc = ab_norway.9.d
+	picture = HARBOUR_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = NOR
+			was_tag = NOR
+		}
+		owns = 1858
+		has_country_flag = norway_restored_jomsborg
+		1858 = {
+			development = 20
+		}
+		45 = {
+			trade_share = {
+				country = ROOT
+				share = 50
+			}
+		}
+	}
+	
+	option = {
+		name = ab_norway.9.a
+		1858 = {
+			add_base_production = 3
+		}
+		1858 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+		}
+	 }
+
+}
+
+#Raid on Alexandria
+country_event = {
+	id = ab_norway.10
+	title = ab_norway.10.t
+	desc = ab_norway.10.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = NOR
+			tag = NSE
+		}
+		FROM = {
+			province_id = 1315
+		}
+	}
+	
+	option = {
+		name = ab_norway.10.a
+		358 = {
+			add_claim = ROOT
+		}
+		set_country_flag = nor_raid_alexandria
+	}
+}
+
+#Raid on Venice
+country_event = {
+	id = ab_norway.11
+	title = ab_norway.11.t
+	desc = ab_norway.11.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = NOR
+			tag = NSE
+		}
+		FROM = {
+			province_id = 1308
+		}
+	}
+	
+	option = {
+		name = ab_norway.11.a
+		112 = {
+			add_claim = ROOT
+		}
+		set_country_flag = nor_raid_venice
+	}
+}
+
+#Raid on Palermo
+country_event = {
+	id = ab_norway.12
+	title = ab_norway.12.t
+	desc = ab_norway.12.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = NOR
+			tag = NSE
+		}
+		FROM = {
+			province_id = 1304
+		}
+	}
+	
+	option = {
+		name = ab_norway.12.a
+		125 = {
+			add_claim = ROOT
+		}
+		set_country_flag = nor_raid_palermo
+	}
+}
+
+#Raid on Rome
+country_event = {
+	id = ab_norway.13
+	title = ab_norway.13.t
+	desc = ab_norway.13.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = NOR
+			tag = NSE
+		}
+		FROM = {
+			province_id = 1303
+		}
+	}
+	
+	option = {
+		name = ab_norway.13.a
+		118 = {
+			add_claim = ROOT
+		}
+		set_country_flag = nor_raid_rome
+	}
+}
+
+#Raid on Malacca
+country_event = {
+	id = ab_norway.14
+	title = ab_norway.14.t
+	desc = ab_norway.14.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = NOR
+			tag = NSE
+		}
+		FROM = {
+			province_id = 1361
+		}
+	}
+	
+	option = {
+		name = ab_norway.14.a
+			malacca_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_claim = ROOT
+			}
+			custom_tooltip = NOR_UNLOCK_PROPAGATE
+		set_country_flag = nor_raid_malacca
+	}
+}
+
+#Raid on Canton
+country_event = {
+	id = ab_norway.15
+	title = ab_norway.15.t
+	desc = ab_norway.15.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = NOR
+			tag = NSE
+		}
+		FROM = {
+			province_id = 1371
+		}
+	}
+	
+	option = {
+		name = ab_norway.15.a
+		add_mercantilism = 5
+		667 = {
+			add_claim = ROOT
+		}
+		set_country_flag = nor_raid_canton
+	}
+}
+
+#Raid on Settsu
+country_event = {
+	id = ab_norway.16
+	title = ab_norway.16.t
+	desc = ab_norway.16.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = NOR
+			tag = NSE
+		}
+		FROM = {
+			province_id = 1391
+		}
+	}
+	
+	option = {
+		name = ab_norway.16.a
+			add_country_modifier = {
+				name = norway_samurai
+				duration = -1
+			}
+			1021 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_claim = ROOT
+				}
+			}
+		set_country_flag = nor_raid_edo
+	}
+}

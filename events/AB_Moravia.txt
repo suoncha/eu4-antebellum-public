@@ -1,0 +1,737 @@
+namespace = ab_moravia
+normal_or_historical_nations = yes
+
+#Magyar Threat
+country_event = {
+	id = ab_moravia.1
+	title = ab_moravia.1.t
+	desc = ab_moravia.1.d
+	picture = BATTLE_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 48
+	}
+	
+	trigger = {
+		OR = {
+			tag = MVA
+			tag = GMA
+		}
+		is_year = 1447
+		MGY = {
+			army_size = ROOT
+		}
+	}
+	
+	option = {
+		name = ab_moravia.1.a
+		add_mil_power = -150
+		set_country_flag = mva_morale
+		custom_tooltip = mva_magyar_morale
+
+	}
+	
+	option = {
+		name = ab_moravia.1.b
+	}
+}
+
+
+#Canonization of Rastislav
+country_event = {
+	id = ab_moravia.2
+	title = ab_moravia.2.t
+	desc = ab_moravia.2.d
+	picture = ORTHODOX_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_moravia.2.a
+		add_patriarch_authority = 0.1
+		add_country_modifier = {
+			name = mva_rastislav
+			duration = -1
+		}
+		custom_tooltip = MVA_UNLOCKS_ICON
+		hidden_effect = {
+			set_country_flag = has_unlocked_rostislav_icon
+		}
+	}
+
+}
+
+#Nitran Uprising
+country_event = {
+	id = ab_moravia.3
+	title = ab_moravia.3.t
+	desc = ab_moravia.3.d
+	picture = BATTLE_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	trigger = {
+		OR = {
+			tag = MVA
+			tag = GMA
+		}
+		has_reform = mvanitra
+		owns = 154
+		NOT = {
+			adm = 3
+			dip = 3
+			mil = 3
+		}
+	}
+	
+	option = {
+		name = ab_moravia.3.a
+		add_stability = -1
+		154 = {
+			spawn_rebels = {
+				type = nationalist_rebels
+				size = 3
+				win = yes
+			}
+		}
+
+	}
+
+}
+
+#Settlement of Zemplin
+country_event = {
+	id = ab_moravia.4
+	title = ab_moravia.4.t
+	desc = ab_moravia.4.d
+	picture = FARMING_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 200
+	}
+	
+	trigger = {
+		OR = {
+			tag = MVA
+			tag = GMA
+		}
+		owns = 162
+		162 = {
+			culture = hungarian
+		}
+	}
+	
+	option = {
+		name = ab_moravia.4.a
+		if = {
+			limit = {
+				primary_culture = Slovien
+			}
+			162 = {
+				change_culture = Slovien
+				change_religion = orthodox
+			}
+			162 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+		}
+		else = {
+			162 = {
+				change_culture = slovak
+				change_religion = orthodox
+			}
+			162 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+		}
+	}
+
+}
+
+#Restoration of Great Moravia
+country_event = {
+	id = ab_moravia.5
+	title = ab_moravia.5.t
+	desc = ab_moravia.5.d
+	picture = AB_MORAVIA_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_moravia.5.a
+		add_legitimacy = 20
+		set_government_rank = 3
+		hidden_effect = {
+			set_country_flag = mva_formed_great_moravia
+		}
+		swap_non_generic_missions = yes
+		add_ruler_modifier = {
+			name = gma_conqueror
+		}
+	}
+
+}
+
+#Magyars driven out of Carpathia
+country_event = {
+	id = ab_moravia.6
+	title = ab_moravia.6.t
+	desc = ab_moravia.6.d
+	picture = HORDE_ON_HORSEBACK_eventPicture
+	
+	fire_only_once = yes
+	
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+	trigger = {
+		OR = {
+			tag = MVA
+			tag = GMA
+		}
+		carpathia_region = { type = all NOT = { owned_by = MGY }}
+		carpathia_region = { type = all NOT = { owned_by = BCS }}
+		carpathia_region = { type = all NOT = { owned_by = SZK }}
+		carpathia_region = { type = all NOT = { owned_by = UNG }}
+		carpathia_region = { type = all NOT = { owned_by = HUN }}
+	}
+	
+	option = {
+		name = ab_moravia.6.a
+		add_army_tradition = 25
+	}
+
+}
+
+#Prince of Nitra takes over Moravia
+country_event = {
+	id = ab_moravia.7
+	title = ab_moravia.7.t
+	desc = ab_moravia.7.d
+	picture = REVOLUTION_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+	trigger = {
+		tag = MVA
+		is_at_war = no
+		NOT = {
+			owns = 4726
+			owns = 265
+			owns = 4237
+		}
+		owns = 1772
+		owns = 154
+		owns = 4944
+		owns = 4236
+	}
+	
+	option = {
+		name = ab_moravia.7.a
+		change_tag = SLO
+		swap_free_idea_group = yes
+		1772 = {
+			move_capital_effect = yes
+		}
+		change_primary_culture = slovak
+			add_country_modifier = {
+				name = "mva_disintegration"
+				duration = 7300
+			}
+		hidden_effect = {
+			kill_ruler = yes
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				kill_heir = {}
+			}
+		}
+	}
+
+}
+
+#Morale bonus 1
+country_event = {
+	id = ab_moravia.8
+	title = ab_moravia.8.t
+	desc = ab_moravia.8.d
+	picture = REVOLUTION_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = MVA
+			tag = GMA
+		}
+		has_country_flag = mva_morale
+		war_with = MGY
+	}
+	
+	option = {
+		name = ab_moravia.8.a
+		add_country_modifier = {
+			name = mva_conquer
+			duration = -1
+		}
+	}
+
+}
+
+#Morale bonus 2
+country_event = {
+	id = ab_moravia.9
+	title = ab_moravia.9.t
+	desc = ab_moravia.9.d
+	picture = REVOLUTION_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = MVA
+			tag = GMA
+		}
+		has_country_flag = mva_morale
+		NOT = {
+			war_with = MGY
+		}
+	}
+	
+	option = {
+		name = ab_moravia.9.a
+		remove_country_modifier = mva_conquer
+	}
+
+}
+
+#Panslavism 1
+province_event = {
+	id = ab_moravia.13
+	title = ab_moravia.13.t
+	desc = ab_moravia.13.d
+	picture = CITY_VIEW_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		owner = {
+			has_country_flag = slo_panslavism_flag
+		}
+		OR = {
+			culture_group = west_slavic
+			culture_group = east_slavic
+			culture_group = south_slavic
+		}
+		NOT = {
+			has_owner_accepted_culture = yes
+		}
+		NOT = {
+			has_province_modifier = slo_panslavism_modifier
+		}
+	}
+	
+	option = {
+		name = ab_moravia.13.a
+		add_province_modifier = {
+			name = "slo_panslavism_modifier"
+			duration = -1
+		}
+	}
+	
+}
+
+#Panslavism 2
+province_event = {
+	id = ab_moravia.14
+	title = ab_moravia.14.t
+	desc = ab_moravia.14.d
+	picture = CITY_VIEW_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		owner = {
+			has_country_flag = slo_panslavism_flag
+		}
+		OR = {
+			culture_group = west_slavic
+			culture_group = east_slavic
+			culture_group = south_slavic
+		}
+		has_owner_accepted_culture = yes
+		has_province_modifier = slo_panslavism_modifier
+	}
+	
+	option = {
+		name = ab_moravia.14.a
+		remove_province_modifier = slo_panslavism_modifier
+	}
+	
+}
+
+#The Third Rome
+country_event = {
+	id = ab_moravia.15
+	title = ab_moravia.15.t
+	desc = ab_moravia.15.d
+	picture = ORTHODOX_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_moravia.15.a
+		custom_tooltip = MVA_TSARDOM
+		hidden_effect = {
+			set_country_flag = mva_become_tsardom
+		}
+		hidden_effect = {
+			add_government_reform = tsardom
+		}
+		add_country_modifier = {
+			name = mva_third_rome
+			duration = -1
+		}
+		custom_tooltip = BUL_ORTHO_CLAIM
+		hidden_effect = {
+			every_province = {
+				limit = {
+					NOT = {
+						owned_by = ROOT
+					}
+					religion = orthodox
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+}
+
+#Tsar of the Romans
+country_event = {
+	id = ab_moravia.16
+	title = ab_moravia.16.t
+	desc = ab_moravia.16.d
+	picture = AB_JUSTINIAN_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_moravia.16.a
+		add_patriarch_authority = 0.2
+		add_country_modifier = {
+			name = mva_byzantine
+			duration = 9125
+		}
+		custom_tooltip = MVA_GREEK_CORE
+		hidden_effect = {
+			every_province = {
+				limit = {
+					culture = greek
+					NOT = {
+						is_core = ROOT
+					}
+				}
+				add_territorial_core = ROOT
+			}
+		}
+	}
+	
+}
+
+#The Birth of Pan-Slavism
+country_event = {
+	id = ab_moravia.17
+	title = ab_moravia.17.t
+	desc = ab_moravia.17.d
+	picture = STREET_SPEECH_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_moravia.17.a
+		custom_tooltip = MVA_PANSLAVISM
+		set_country_flag = slo_panslavism_flag
+		add_country_modifier = {
+			name = "mva_blood_faith"
+			duration = -1
+		}
+	}
+	
+}
+
+#Local Patriarchate Bonus
+country_event = {
+	id = ab_moravia.18
+	title = ab_moravia.18.t
+	desc = ab_moravia.18.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = MVA
+			tag = GMA
+		}
+		mission_completed = mva_patriarchate
+		any_owned_province = {
+			has_state_patriach = yes
+			NOT = {
+				has_province_modifier = mva_local_patriarch
+			}
+		}
+	}
+	
+	option = {
+		name = ab_moravia.18.a
+		every_owned_province = {
+			limit = {
+				has_state_patriach = yes
+				NOT = {
+					has_province_modifier = mva_local_patriarch
+				}
+			}
+			add_province_modifier = {
+				name = "mva_local_patriarch"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+#AI Help 1
+country_event = {
+	id = ab_moravia.19
+	title = ab_moravia.19.t
+	desc = ab_moravia.19.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = MVA
+		ai = yes
+		is_year = 1446
+	}
+	
+	option = {
+		name = ab_moravia.19.a
+		silesia_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT }
+				NOT = { is_core = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		if = {
+			limit = {
+				SIL = {
+					ai = yes
+				}
+			}
+			set_ai_attitude = {
+				attitude = attitude_hostile
+				who = SIL
+			}
+			SIL = {
+				add_opinion = {
+					who = ROOT
+					modifier = ab_expansion_target
+				}
+				reverse_add_opinion = {
+					who = ROOT
+					modifier = ab_expansion_target
+				}
+			}
+		}
+	}
+	
+}
+
+#AI Help 2
+country_event = {
+	id = ab_moravia.20
+	title = ab_moravia.20.t
+	desc = ab_moravia.20.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = MVA
+		ai = yes
+		is_year = 1446
+	}
+	
+	option = {
+		name = ab_moravia.20.a
+		transdanubia_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT }
+				NOT = { is_core = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		if = {
+			limit = {
+				PNN = {
+					ai = yes
+				}
+				PNN = {
+					NOT = {
+						OR = {
+							is_subject_of = ROOT
+							junior_union_with = ROOT
+						}
+					}
+				}
+			}
+			set_ai_attitude = {
+				attitude = attitude_hostile
+				who = PNN
+			}
+			PNN = {
+				add_opinion = {
+					who = ROOT
+					modifier = ab_expansion_target
+				}
+				reverse_add_opinion = {
+					who = ROOT
+					modifier = ab_expansion_target
+				}
+			}
+		}
+	}
+	
+}
+
+#AI Help 3
+country_event = {
+	id = ab_moravia.21
+	title = ab_moravia.21.t
+	desc = ab_moravia.21.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = MVA
+		ai = yes
+		is_year = 1446
+	}
+	
+	option = {
+		name = ab_moravia.21.a
+		2960 = {
+			add_claim = ROOT
+		}
+		if = {
+			limit = {
+				263 = {
+					owned_by = ROOT
+				}
+			}
+			262 = {
+				add_claim = ROOT
+			}
+		}
+		if = {
+			limit = {
+				VIS = {
+					ai = yes
+				}
+			}
+			set_ai_attitude = {
+				attitude = attitude_hostile
+				who = VIS
+			}
+			VIS = {
+				add_opinion = {
+					who = ROOT
+					modifier = ab_expansion_target
+				}
+				reverse_add_opinion = {
+					who = ROOT
+					modifier = ab_expansion_target
+				}
+			}
+		}
+	}
+	
+}
+
+#AI Help 4
+country_event = {
+	id = ab_moravia.22
+	title = ab_moravia.22.t
+	desc = ab_moravia.22.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = MVA
+		ai = yes
+		is_year = 1445
+		PNN = {
+			ai = yes
+			has_heir = no
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_list = { 
+				30 = { 
+					PNN = {
+						kill_ruler = yes
+					}
+				}
+				70 = { 
+				}
+			}
+		}
+	}
+	
+	option = {
+	}
+	
+}

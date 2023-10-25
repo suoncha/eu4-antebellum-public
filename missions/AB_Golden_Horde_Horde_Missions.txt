@@ -1,0 +1,2036 @@
+glh_horde_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+	}
+	has_country_shield = yes
+	
+	glh_horde_faith_question = {
+		icon = mission_hands_praying
+		position = 2
+		required_missions = { }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = GLH_PICKED_FAITH
+				has_country_flag = glh_has_picked_religion
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GLH_BRANCHING_MISSIONS
+			custom_tooltip = GLH_NO_TENGRI
+			tooltip = {
+				add_country_modifier = {
+					name = "gh_finish_conversion"
+					duration = 3650
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							religion = tengri_pagan_reformed
+						}
+					}
+					add_country_modifier = {
+						name = "gh_finish_conversion"
+						duration = 3650
+					}
+				}
+			}
+		}
+	}
+}
+
+glh_horde_first_group_branching = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+		NOT = {
+			OR = {
+				has_country_flag = glh_picked_christian
+				has_country_flag = glh_picked_sunni
+				has_country_flag = glh_picked_buddhist
+				has_country_flag = glh_picked_tengri
+				has_country_flag = glh_picked_judaism
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	glh_horde_placeholder1 = {
+		icon = mission_unknown_mission
+		position = 4
+		required_missions = { glh_horde_faith_question }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = GLH_PICKED_FAITH_2
+				has_country_flag = glh_you_wont_complete_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GLH_PICKED_FAITH_2
+		}
+	}
+	
+	glh_horde_placeholder2 = {
+		icon = mission_unknown_mission
+		position = 5
+		required_missions = { glh_horde_placeholder1 }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = GLH_PICKED_FAITH_2
+				has_country_flag = glh_you_wont_complete_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GLH_PICKED_FAITH_2
+		}
+	}
+	
+	glh_horde_placeholder3 = {
+		icon = mission_unknown_mission
+		position = 6
+		required_missions = { glh_horde_placeholder2 }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = GLH_PICKED_FAITH_2
+				has_country_flag = glh_you_wont_complete_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GLH_PICKED_FAITH_2
+		}
+	}
+}
+
+glh_eu_horde_first_tengri_branching = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+		has_country_flag = glh_picked_tengri
+		NOT = {
+			OR = {
+				has_country_flag = glh_picked_christian
+				has_country_flag = glh_picked_sunni
+				has_country_flag = glh_picked_buddhist
+				has_country_flag = glh_picked_judaism
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	glh_horde_tengri_temples = {
+		icon = mission_mnd_dai_examination_system
+		position = 4
+		required_missions = { glh_horde_faith_question }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}	
+		
+		trigger = {
+			OR = {
+				has_estate_privilege = estate_church_karma_temples
+				num_of_owned_provinces_with = {
+					value = 10
+					OR = {
+						has_building = temple
+						has_building = cathedral
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gh_strengthen_faith"
+				duration = 5475
+			}
+		}
+	}
+	
+	glh_horde_tengri_heathens = {
+		icon = mission_mnd_siam_subjugate_vietnam
+		position = 5
+		required_missions = { glh_horde_tengri_temples }
+		
+		trigger = {
+			OR = {
+				religious_unity = 0.8
+				has_estate_privilege = estate_burghers_enforced_interfaith_dialogue
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				religion = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gh_tengri_tolerance"
+				duration = 9125
+			}
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	glh_horde_blue_sky = {
+		icon = mission_plain
+		position = 6
+		required_missions = { glh_horde_tengri_heathens }
+		
+		trigger = {
+			stability = 3
+			legitimacy = 95
+			prestige = 50
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gh_blue_heaven"
+				duration = -1
+			}
+		}
+	}	
+}
+
+glh_horde_first_buddhist_branching = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+		has_country_flag = glh_picked_buddhist
+		NOT = {
+			OR = {
+				has_country_flag = glh_picked_christian
+				has_country_flag = glh_picked_sunni
+				has_country_flag = glh_picked_tengri
+				has_country_flag = glh_picked_judaism
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	glh_horde_teachings_budhda = {
+		icon = mission_vedic_education
+		position = 4
+		required_missions = { glh_horde_faith_question }
+		
+		trigger = {
+			religious_unity = 0.7
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				religion = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gh_teachings_buddha"
+				duration = 5475
+			}
+		}
+	}
+	
+	glh_horde_monastic = {
+		icon = mission_buddhist_monk_praying
+		position = 5
+		required_missions = { glh_horde_teachings_budhda }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}	
+		
+		trigger = {
+			has_estate_privilege = estate_church_karma_temples
+			num_of_owned_provinces_with = {
+				value = 15
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gh_monastic_orders"
+				duration = 9125
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	glh_horde_evaluate = {
+		icon = mission_scholar_officials
+		position = 6
+		required_missions = { glh_horde_monastic }
+		
+		trigger = {
+			OR = {
+				religious_unity = 1
+				has_estate_privilege = estate_burghers_enforced_interfaith_dialogue
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gh_dharma"
+				duration = -1
+			}
+		}
+	}	
+}
+
+glh_horde_first_sunni_branching = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+		has_country_flag = glh_picked_sunni
+		NOT = {
+			OR = {
+				has_country_flag = glh_picked_christian
+				has_country_flag = glh_picked_tengri
+				has_country_flag = glh_picked_buddhist
+				has_country_flag = glh_picked_judaism
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	glh_horde_value = {
+		icon = mission_kowtow
+		position = 4
+		required_missions = { glh_horde_faith_question }
+		
+		trigger = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = obj_convert_10_provinces_tooltip
+					check_variable = { which = num_converted_religion value = 10 }
+				}
+				has_estate_privilege = estate_dhimmi_guaranteed_autonomy
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				religion = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GLH_MUSLIM_1
+			tooltip = {
+				add_country_modifier = {
+					name = "gh_tolerant"
+					duration = 5475
+				}
+			}
+			custom_tooltip = GLH_MUSLIM_2
+			tooltip = {
+				add_country_modifier = {
+					name = "gh_teachings"
+					duration = 5475
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_estate_privilege = estate_dhimmi_guaranteed_autonomy
+					}
+					add_country_modifier = {
+						name = "gh_tolerant"
+						duration = 5475
+					}
+				}
+				else = {
+					add_country_modifier = {
+						name = "gh_teachings"
+						duration = 5475
+					}
+				}
+			}
+		}
+	}
+	
+	glh_horde_mosques = {
+		icon = mission_into_persia_1
+		position = 5
+		required_missions = { glh_horde_value }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}	
+		
+		trigger = {
+			OR = {
+				piety = 0.5
+				NOT = { piety = -0.5 }
+			}
+			num_of_owned_provinces_with = {
+				value = 15
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					piety = 0
+				}
+				add_piety = 0.2
+			}
+			else_if = {
+				limit = {
+					NOT = { piety = 0 }
+				}
+				add_piety = -0.2
+			}
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	glh_horde_sponsor = {
+		icon = mission_fatimid_caliphate
+		position = 6
+		required_missions = { glh_horde_mosques }
+		
+		trigger = {
+			OR = {
+				piety = 0.75
+				NOT = { piety = -0.75 }
+			}
+			has_estate_privilege = estate_church_integrated_school
+			has_adm_advisor = yes
+			has_dip_advisor = yes
+			has_mil_advisor = yes
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gh_golden_age"
+				duration = -1
+			}
+		}
+	}	
+}
+
+glh_horde_first_christian_branching = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+		has_country_flag = glh_picked_christian
+		NOT = {
+			OR = {
+				has_country_flag = glh_picked_tengri
+				has_country_flag = glh_picked_sunni
+				has_country_flag = glh_picked_buddhist
+				has_country_flag = glh_picked_judaism
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	glh_horde_gospel = {
+		icon = reform_the_nomocanon
+		position = 4
+		required_missions = { glh_horde_faith_question }
+		
+		trigger = {
+			religious_unity = 0.8
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				religion = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gh_spread"
+				duration = 5475
+			}
+		}
+	}
+	
+	glh_horde_churches = {
+		icon = mission_cathedral_cities
+		position = 5
+		required_missions = { glh_horde_gospel }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}	
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 10
+			}
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	glh_horde_metropolitans = {
+		icon = mission_autocephalous_archbishopric
+		position = 6
+		required_missions = { glh_horde_churches }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_state_patriach = yes
+			}
+		}
+		
+		trigger = {
+			patriarch_authority = 0.75
+            calc_true_if = {
+                all_owned_province = {
+                    has_state_patriach = yes
+                }
+                amount = 50
+            }
+        }
+		
+		effect = {
+			add_patriarch_authority = 0.15
+			add_country_modifier = {
+				name = "gh_church_tartaria"
+				duration = -1
+			}
+		}
+	}
+}
+
+glh_horde_first_jewish_branching = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+		has_country_flag = glh_picked_judaism
+		NOT = {
+			OR = {
+				has_country_flag = glh_picked_tengri
+				has_country_flag = glh_picked_sunni
+				has_country_flag = glh_picked_buddhist
+				has_country_flag = glh_picked_christian
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	glh_horde_judaization = {
+		icon = mission_mal_subjugate_zaf
+		position = 4
+		required_missions = { glh_horde_faith_question }
+		
+		trigger = {
+			religious_unity = 0.5
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				religion = ROOT
+			}
+		}
+		
+		effect = {
+			add_church_power = 50
+			add_country_modifier = {
+				name = "gh_spread"
+				duration = 5475
+			}
+		}
+	}
+	
+	glh_horde_synagogues = {
+		icon = mission_cathedral_cities
+		position = 5
+		required_missions = { glh_horde_judaization }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}	
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 10
+			}
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	glh_horde_khazars = {
+		icon = mission_empire
+		position = 6
+		required_missions = { glh_horde_synagogues }
+		
+		trigger = {
+			religious_unity = 0.9
+			church_power = 200
+			OR = {
+				has_church_aspect = judaism_rosh_hashanah_aspect
+				has_church_aspect = judaism_simchat_torah_aspect
+				has_church_aspect = judaism_sukkot_aspect
+			}
+			OR = {
+				has_church_aspect = judaism_communities_aspect
+				has_church_aspect = jewish_abrahamic_aspect
+				has_church_aspect = judaism_diplomatic_rabbi_aspect
+			}
+			OR = {
+				has_church_aspect = judaism_yom_kippur_aspect
+				has_church_aspect = judaism_remember_passover_aspect
+				has_church_aspect = judaism_purim_teachings_aspect
+			}
+        }
+		
+		effect = {
+			custom_tooltip = UNLOCK_KHAZARIA_RENAME
+			add_country_modifier = {
+				name = "gh_khazar_legacy"
+				duration = -1
+			}
+		}
+	}
+}
+
+glh_horde_first2_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+	}
+	has_country_shield = yes
+
+	glh_horde_invade_india = {
+	    icon = mission_conquer_siam
+		required_missions = { glh_horde_khorasan }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				area = sind_sagar_area
+				area = lahore_area
+				area = multan_area
+				area = sindh_area
+				area = northern_sindh_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			sind_sagar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lahore_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			multan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			northern_sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = ilk_invade_india
+				duration = 9125
+			}
+			west_india_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			} 
+			hindusthan_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT 
+			} 
+		}
+	}
+	
+	glh_horde_maharajas = {
+	    icon = mission_maharajas
+		required_missions = { glh_horde_invade_india }
+		position = 9
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				superregion = india_superregion
+				value = 100
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				superregion = india_superregion
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = yua_horde_claim_india
+				duration = 9125
+			}
+			india_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = YUA_INDIA
+			set_country_flag = YUA_HORDE
+			tooltip = {
+				country_event = { id = ab_yuanhorde.5 }
+			}
+		}
+	}
+	
+	glh_horde_festival = {
+		icon = mission_mnd_dai_universities
+		required_missions = { glh_horde_qaraqorum }
+		position = 11
+	
+		trigger = {
+			years_of_income = 1.5
+		}
+		
+		effect = {
+			add_years_of_income = -1.5
+			custom_tooltip = YUA_FESTIVAL
+			custom_tooltip = YUA_FESTIVAL_2
+			set_country_flag = yua_can_earn_festival_bonus
+		}
+	}
+	
+}
+
+glh_horde_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+	}
+	has_country_shield = yes
+	
+	glh_horde_own_cores = {
+		icon = mission_unite_home_region
+		position = 1
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			is_core = GLH
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = GLH_ALL_CORES
+				all_core_province = { 
+					owned_by = ROOT
+				}
+			}
+        }
+		
+		effect = {
+			add_dip_power = 50
+			add_country_modifier = {
+				name = "gh_restore_order"
+				duration = 5475
+			}
+		}
+	}
+	
+	glh_horde_crimea = {
+	    icon = mission_invade_island
+		required_missions = { glh_horde_own_cores }
+		position = 2
+		
+		provinces_to_highlight = {
+			area = crimea_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			crimea_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = glh_black_sea_trade
+				duration = 7300
+			}
+		}
+	}
+	
+	glh_horde_dread = {
+		icon = mission_abu_saids_dream
+		required_missions = { glh_horde_faith_question }
+		position = 3
+		
+		trigger = {
+			num_of_cavalry = 30
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "oir_cavalry_2"
+				duration = 9125
+			}
+			define_advisor = {
+				type = dragoon
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+
+	glh_horde_guard = {
+		icon = mission_khitan
+		required_missions = { glh_horde_dread }
+		position = 4
+	
+		trigger = {
+		    num_of_infantry = 50
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.15
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 75 }
+			define_advisor = {
+				type = commandant
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = GLH_GUARD
+			tooltip = {
+				add_country_modifier = {
+					name = "gh_khagan_guard"
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						religion = tengri_pagan_reformed
+					}
+					add_country_modifier = {
+						name = "gh_khagan_guard"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	glh_horde_khorasan = {
+		icon = mission_conquer_persia
+		position = 7
+		required_missions = { glh_horde_persia }
+		
+		provinces_to_highlight = {
+			region = khorasan_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			NOT = {
+				exists = ILK
+			}
+			khorasan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = flavor_cri.8 }
+			custom_tooltip = GLH_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = glh1_evolved_ideas
+				if = {
+					limit = {
+						tag = GLH
+						has_country_flag = glh_horde_tree
+					}
+					swap_free_idea_group = yes
+				}
+			}
+			northern_sindh_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			sindh_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			multan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			lahore_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			sind_sagar_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	glh_horde_qaraqorum = {
+		icon = mission_nah_hogan_construction
+		required_missions = { glh_horde_capital }
+		position = 10
+	
+		trigger = {
+			2190 = {
+				development = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 2190
+		}
+		
+		effect = {
+			2190 = {
+				add_province_modifier = {
+					name = "yua_horde_mongol_center"
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					NOT = { has_country_flag = upgraded_qaraqorum }
+				}
+				2190 = {
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					else_if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 3 }
+						}
+						add_center_of_trade_level = 1
+					}
+				}
+			}
+			custom_tooltip = YUA_CAPITAL_DECISION
+		}
+	}
+	
+	glh_horde_yam = {
+		icon = mission_conquer_malwa_bah
+		required_missions = { glh_horde_qaraqorum glh_horde_festival }
+		position = 12
+		
+		provinces_to_highlight = {
+			NOT = {
+				OR = {
+					has_building = early_road
+					has_building = gravel_road
+					has_building = royal_road
+					has_building = macadam_road
+					has_building = rail_road
+				}
+			}
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = { 
+						has_building = early_road
+						has_building = gravel_road
+						has_building = royal_road
+						has_building = macadam_road
+						has_building = rail_road
+					}
+				}
+				amount = 30
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "yua_china_yam"
+				duration = -1
+			}
+		}
+	}
+}
+
+glh_horde_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+	}
+	has_country_shield = yes
+	
+	glh_horde_ciscaucasia = {
+		icon = prosper_in_piedmont
+		position = 2
+		required_missions = { glh_horde_own_cores }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = dagestan_area
+				area = circassia_area
+			}
+		}
+		
+		trigger = {
+			OR = {
+				AND = {
+					dagestan_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					circassia_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				AND = {
+					dagestan_area = {
+						type = all
+						country_or_subject_holds = ROOT
+					}
+					circassia_area = {
+						type = all
+						country_or_subject_holds = ROOT
+					}
+					if = {
+						limit = {
+							exists = ALN
+							ALN = {
+								is_subject_of = GLH
+								is_subject_of_type = tributary_state
+							}
+						}
+						ALN = {
+							has_opinion = { who = GLH value = 200 } 
+						}
+					}
+					if = {
+						limit = {
+							exists = CMN
+							CMN = {
+								is_subject_of = GLH
+								is_subject_of_type = tributary_state
+							}
+						}
+						CMN = {
+							has_opinion = { who = GLH value = 200 } 
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GLH_VASSALIZE_ALN
+			custom_tooltip = GLH_VASSALIZE_CMN
+			add_country_modifier = {
+				name = "glh_centralize_tribal"
+				duration = 5475
+			}
+			kartli_kakheti_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			imereti_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			samtskhe_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						exists = ALN
+						ALN = {
+							is_subject_of = GLH
+							is_subject_of_type = tributary_state
+							has_opinion = { who = GLH value = 200 }
+						}
+					}
+					vassalize = ALN
+				}
+				if = {
+					limit = {
+						exists = CMN
+						CMN = {
+							is_subject_of = GLH
+							is_subject_of_type = tributary_state
+							has_opinion = { who = GLH value = 200 }
+						}
+					}
+					vassalize = CMN
+				}
+			}
+		}
+	}
+	
+	glh_horde_anatolian = {
+		icon = anatolian_frontier
+		position = 4
+		required_missions = { glh_horde_georgia }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = erzurum_area
+				area = north_kurdistan_area
+				area = dulkadir_area
+				area = rum_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			erzurum_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			north_kurdistan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			dulkadir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			rum_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = "glh_incursion"
+				duration = 9125
+			}
+			anatolia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = NICENE_RUM
+			tooltip = {
+				add_army_tradition = 25
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							AND = {
+								exists = RUM
+								exists = SEL
+							}
+						}
+					}
+					add_army_tradition = 25
+				}
+			}
+		}
+	}
+	
+	glh_horde_persia = {
+		icon = mission_persianate_empire
+		position = 6
+		required_missions = { glh_horde_ilkhanate }
+		
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			persia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GLH_RANDOM_MIL
+			add_country_modifier = {
+				name = ilk_persian
+				duration = 9125
+			}
+			khorasan_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = GLH_AVENGE_PERSIA
+			tooltip = {
+				add_country_modifier = {
+					name = glh_avenge_horde
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						religion = sunni
+					}
+					add_country_modifier = {
+						name = glh_avenge_horde
+						duration = 9125
+					}
+				}
+			}
+			hidden_effect = {		
+                for = {
+                    amount = 15
+                    effect = "
+                        random_owned_province = {
+							add_base_manpower = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+
+	glh_horde_capital = {
+		icon = mission_noble_council
+		required_missions = { glh_horde_steppe }
+		position = 9
+		provinces_to_highlight = {
+			region = mongolia_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				region = mongolia_region
+				value = 25
+			}
+			2190 = { owned_by = ROOT }
+		}
+		effect = {
+			custom_tooltip = ILK_UPGRADE_MONUMENT
+			hidden_effect = {
+				2190 = {
+					add_great_project_tier = {
+						type = erdene_zuu
+						tier = 1 
+					}
+				}
+			}
+			mongolia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+				}
+				add_core = ROOT
+			}
+		}
+	}
+	
+	glh_horde_korea = {
+		icon = mission_twokingdoms
+		required_missions = { glh_horde_unite_mongolia }
+		position = 10
+		provinces_to_highlight = { 
+			OR = {
+				region = korea_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			korea_region = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_dip_power = 100
+			5123 = {
+				add_unit_construction = {
+					type = heavy_ship
+					amount = 5
+					speed = 0.25
+					cost = 0
+				}
+			}
+			add_country_modifier = {
+				name = yua_korea
+				duration = 9125
+			}
+		}
+	}
+
+}
+
+glh_horde_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+	}
+	has_country_shield = yes
+	
+	glh_horde_georgia = {
+		icon = mission_georgia
+		position = 3
+		required_missions = { glh_horde_ciscaucasia glh_horde_recover }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = kartli_kakheti_area
+				area = samtskhe_area
+				area = imereti_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			kartli_kakheti_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			samtskhe_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			imereti_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 0.25
+			add_country_modifier = {
+				name = "glh_destruction_georgia"
+				duration = 5475
+			}
+			erzurum_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			rum_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			dulkadir_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_kurdistan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			caucasia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	glh_horde_ilkhanate = {
+		icon = mission_ilkhanate
+		position = 5
+		required_missions = { glh_horde_georgia }
+		
+		provinces_to_highlight = {
+			OR = {
+				region = caucasia_region
+				owned_by = ILK
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			NOT = {
+				exists = ILK
+			}
+			caucasia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_horde_unity = 10
+			caucasia_region = {
+				add_nationalism = -5
+			}
+			add_country_modifier = {
+				name = "glh_ilkhanid_recruit"
+				duration = 7300
+			}
+			persia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	glh_horde_steppe = {
+		icon = mission_mal_subjugate_zaf
+		position = 8
+		required_missions = { glh_horde_central_asia glh_horde_khorasan }
+		
+		provinces_to_highlight = {
+			region = central_asia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			central_asia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 25
+			add_country_modifier = {
+				name = "glh_tribesmen_central"
+				duration = -1
+			}
+			mongolia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			tibet_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	glh_horde_unite_mongolia = {
+		icon = mission_non-western_cavalry_raid
+		position = 9
+		required_missions = { glh_horde_steppe }
+		
+		provinces_to_highlight = {
+			region = mongolia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			mongolia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GLH_REFORM_UNLOCK
+			add_country_modifier = {
+				name = "glh_prepare_china"
+				duration = 9125
+			}
+			korea_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			manchuria_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_china_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = GLH_BUDDHIST
+			tooltip = {
+				add_country_modifier = {
+					name = "glh_mongol_reunification"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						religion = vajrayana
+					}
+					add_country_modifier = {
+						name = "glh_mongol_reunification"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	glh_horde_nchina = {
+		icon = mission_great_wall
+		required_missions = { glh_horde_unite_mongolia  }
+		position = 11
+		provinces_to_highlight = {
+			region = north_china_region
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}			
+		}
+		trigger = {
+			north_china_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			create_general = { tradition = 100 }
+			add_country_modifier = {
+				name = "glh_horde_chine"
+				duration = 5475
+			}
+			south_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			xinan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	glh_horde_mongol_empire = {
+		icon = mission_warring
+		required_missions = { glh_horde_nchina  }
+		position = 13
+		provinces_to_highlight = {
+			OR = {
+				region = south_china_region
+				region = xinan_region
+			}
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}			
+		}
+		trigger = {
+			tag = MGE
+			south_china_region = {
+                type = all
+                OR = {
+                    country_or_non_sovereign_subject_holds = ROOT
+                    is_empty = yes
+                }
+            }
+			xinan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			country_event = { id = ab_yuanhorde.6 }
+		}
+	}
+}
+
+glh_horde_fifth_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		has_country_flag = glh_horde_tree
+	}
+	has_country_shield = yes
+	
+	glh_horde_recover = {
+		icon = mission_forthehorde
+		position = 2
+		required_missions = {  }
+		
+		trigger = {
+			manpower_percentage = 0.35
+			NOT = {
+				average_unrest = 1
+			}
+		}
+		
+		effect = {
+			add_yearly_manpower = 0.5
+			add_country_modifier = {
+				name = "glh_rcover"
+				duration = 5475
+			}
+		}
+	}
+	
+	glh_horde_rus = {
+		icon = mission_rule_ruthenia
+		position = 4
+		required_missions = { glh_horde_recover }
+		
+		provinces_to_highlight = {
+			OR = {
+				region = ruthenia_region
+				region = russia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = ruthenia_region
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = russia_region
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = "gh_east_slavic"
+				duration = 9125
+			}
+			ruthenia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			russia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	glh_horde_russia = {
+		icon = mission_the_third_rome
+		required_missions = { glh_horde_rus }
+		position = 5
+		provinces_to_highlight = {
+			OR = {
+				region = ruthenia_region
+				region = russia_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				OR = {
+					region = ruthenia_region
+					region = russia_region
+				}
+				value = 30
+			}
+			280 = { owned_by = ROOT }
+			310 = { owned_by = ROOT }
+		}
+		effect = {
+			country_event = { id = ab_yuan.15 }
+		}
+	}
+	
+	glh_horde_europe = {
+		icon = peace_in_europe
+		required_missions = { glh_horde_russia }
+		position = 6
+		provinces_to_highlight = {
+			OR = {
+				region = poland_region
+				region = baltic_region
+				region = ruthenia_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				region = poland_region
+				value = 15
+			}
+			num_of_owned_provinces_with = {
+				region = baltic_region
+				value = 15
+			}
+			ruthenia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "mon_europe"
+				duration = -1
+			}
+			custom_tooltip = GLH_CLAIM_EUROPE
+			hidden_effect = {
+				eastern_europe_superregion = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			custom_tooltip = GLH_ORTHODOX_EUROPE
+			add_country_modifier = {
+				name = "glh_orthodox_e"
+				duration = 9125
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							religion = orthodox
+							religion = nestorian
+						}
+					}
+					add_country_modifier = {
+						name = "glh_orthodox_e"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	glh_horde_central_asia = {
+		icon = mission_yuanmanpower
+		required_missions = { }
+		position = 7
+		provinces_to_highlight = {
+			region = central_asia_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				region = central_asia_region
+				value = 20
+			}
+		}
+		effect = {
+			custom_tooltip = GLH_UNLOCKS_REFORM
+			add_country_modifier = {
+				name = "glh_restore_authority"
+				duration = 5475
+			}
+			central_asia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	glh_horde_tibet = {
+		icon = mission_buddhist_monk_praying
+		required_missions = { glh_horde_steppe  }
+		position = 9
+		provinces_to_highlight = {
+			region = tibet_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}	
+		}
+		trigger = {
+			tibet_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			country_event = { id = mch_missions.6 }
+		}
+	}
+	
+	glh_horde_manchuria = {
+		icon = mission_manchu_warrior
+		required_missions = { glh_horde_unite_mongolia }
+		position = 10
+		provinces_to_highlight = { 
+			OR = {
+				area = ningguta_area
+				area = jilin_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			ningguta_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			jilin_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_yearly_manpower = 2
+			add_country_modifier = {
+				name = yua_horde_incursion
+				duration = 5475
+			}
+			manchuria_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+}

@@ -1,0 +1,489 @@
+namespace = ab_rus
+normal_or_historical_nations = yes
+
+#Tatar Yoke
+country_event = {
+	id = ab_rus.1
+	title = ab_rus.1.t
+	desc = ab_rus.1.d
+	picture = ABAD7_eventPicture
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = {
+			has_country_modifier = rus_tatar_yoke
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = rus_tatar_yoke
+				duration = -1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_rus.1.a
+		tooltip = {
+			add_country_modifier = {
+				name = rus_tatar_yoke
+				duration = -1
+				desc = rus_mission_yoke
+			}
+		}
+	}
+}
+
+#Rename
+country_event = {
+	id = ab_rus.2
+	title = ab_rus.2.t
+	desc = ab_rus.2.d
+	picture = ABAD7_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_rus.2.a
+		override_country_name = RUS_RUTHENIA
+		country_event = { id = ab_rus.11 }
+	}
+	
+	option = {
+		name = ab_rus.2.b
+		override_country_name = RUS_RUSSIA
+		country_event = { id = ab_rus.11 }
+	}
+	
+	option = {
+		name = ab_rus.2.c
+		override_country_name = RUS_KIEVANRUS
+		country_event = { id = ab_rus.11 }
+	}
+	
+	option = {
+		name = ab_rus.2.de
+		country_event = { id = ab_rus.11 }
+	}
+}
+
+#Restoration of Rus
+country_event = {
+	id = ab_rus.5
+	title = ab_rus.5.t
+	desc = ab_rus.5.d
+	picture = AB_RUS_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_rus.5.a
+		change_mil = 1
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		add_country_modifier = {
+			name = rus_kievan_rus
+			duration = 9125
+		}
+	}
+}
+
+#The Birth of Pan-Slavism
+country_event = {
+	id = ab_rus.6
+	title = ab_rus.6.t
+	desc = ab_rus.6.d
+	picture = STREET_SPEECH_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_rus.6.a
+		unlock_estate_privilege = {
+			estate_privilege = estate_burghers_panslavism
+		}
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = rus_blood_faith
+			duration = -1
+		}
+	}
+	
+}
+
+#The Destruction of Sarai
+country_event = {
+	id = ab_rus.7
+	title = ab_rus.7.t
+	desc = ab_rus.7.d
+	picture = ORTHODOX_ICON_FLAG_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+
+	after = {
+		every_province = {
+			limit = {
+				has_province_flag = was_golden_horde_core
+			}
+			clr_province_flag = was_golden_horde_core
+		}
+	}
+	
+	option = {
+		name = ab_rus.7.a
+		add_army_tradition = 25
+		466 = {
+			add_devastation = 100
+		}
+		466 = {
+			change_culture = ROOT
+		}
+		466 = {
+			change_religion = ROOT
+		}
+		custom_tooltip = RUS_RELCLAIMING_STEPPE
+		tooltip = {
+			add_province_modifier = {
+				name = rus_reclaiming
+				duration = 9125
+			}
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						is_core = GLH
+						has_province_flag = was_golden_horde_core
+					}
+				}
+				add_province_modifier = {
+					name = rus_reclaiming
+					duration = 9125
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_rus.7.b
+		add_stability_or_adm_power = yes
+		add_country_modifier = {
+			name = rus_bloodshed
+			duration = 9125
+		}
+	}
+	
+}
+
+#The Patriarchate of All Rus'
+country_event = {
+	id = ab_rus.8
+	title = ab_rus.8.t
+	desc = ab_rus.8.d
+	picture = ORTHODOX_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_rus.8.a
+		add_patriarch_authority = 0.25
+		add_papal_influence = 25
+		add_country_modifier = {
+			name = rus_independent_patriarchate
+			duration = -1
+		}
+		if = {
+			limit = {
+				religion = orthodox
+			}
+			custom_tooltip = RUS_METROPOLITAN
+		}
+	}
+	
+}
+
+
+#The Seat of the Tsar
+country_event = {
+	id = ab_rus.9
+	title = ab_rus.9.t
+	desc = ab_rus.9.d
+	picture = ENTERING_MOSCOW_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_rus.9.a
+		trigger = {
+			NOT = {
+				capital = 280
+			}
+		}
+		280 = {
+			move_capital_effect = yes
+		}
+		set_country_flag = rus_moved_capital
+	}
+	
+	option = {
+		name = ab_rus.9.b
+		trigger = {
+			NOT = {
+				capital = 310
+			}
+		}
+		310 = {
+			move_capital_effect = yes
+		}
+		set_country_flag = rus_moved_capital
+	}
+	
+	option = {
+		name = ab_rus.9.c
+	}
+	
+}
+
+country_event = {
+	id = ab_rus.10
+	title = ab_rus.10.t
+	desc = ab_rus.10.d
+	picture = AB_RUS_eventPicture
+	hidden = yes
+
+	trigger = {
+		has_government_attribute = metropolitans_spread_institution
+		any_owned_province = {
+			has_state_patriach = no
+			has_province_modifier = rus_metropolitan_institution_spread
+		}
+	}
+
+	option = {
+		name = ab_rus.10.a
+		
+		every_owned_province = {
+			limit = {
+				has_state_patriach = no
+				has_province_modifier = rus_metropolitan_institution_spread
+			}
+			remove_province_modifier = rus_metropolitan_institution_spread
+		}
+	}
+}
+
+#Color
+country_event = {
+	id = ab_rus.11
+	title = ab_rus.11.t
+	desc = ab_rus.11.d
+	picture = ABAD7_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_rus.11.a
+		change_country_color = { 
+			color = { 124  183  151 }
+		}
+		set_country_flag = has_overriden_color_flag
+		ai_chance = { 
+			factor = 100
+			modifier = {
+				factor = 0
+				was_tag = NOV
+			}
+		}
+	}
+	
+	option = {
+		name = ab_rus.11.b
+		change_country_color = { 
+			color = { 96  131  80 }
+		}
+		set_country_flag = has_overriden_color_flag
+		ai_chance = { 
+			factor = 100
+			modifier = {
+				factor = 0
+				NOT = {
+					was_tag = NOV
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_rus.11.c
+		trigger = {
+			ai = no
+			OR = {
+				was_tag = VOL
+				was_tag = PDL
+				was_tag = KIE
+				was_tag = CHR
+				was_tag = WRT
+				was_tag = PLT
+				was_tag = SMO
+				was_tag = PSK
+				was_tag = NOV 
+				was_tag = BLO
+				was_tag = TVE
+				was_tag = MOS
+				was_tag = OKA
+				was_tag = RYA
+				was_tag = RSO
+				was_tag = YAR
+				was_tag = VLD
+				was_tag = NZH
+				was_tag = VLG
+			}
+		}
+			if = { 
+				limit = { was_tag = VOL }
+				change_country_color = { 
+					color = { 75 36 101 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = PDL }
+				change_country_color = { 
+					color = { 255 214 0 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = KIE }
+				change_country_color = { 
+					color = { 81 123 210 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = CHR }
+				change_country_color = { 
+					color = { 190 190 190 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = WRT }
+				change_country_color = { 
+					color = { 236 236 236 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = PLT }
+				change_country_color = { 
+					color = { 16  113  155 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = SMO }
+				change_country_color = { 
+					color = { 106  160  43 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = PSK }
+				change_country_color = { 
+					color = { 82  123  95 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = NOV }
+				change_country_color = { 
+					color = { 97  126  37 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = BLO }
+				change_country_color = { 
+					color = { 66 32 81 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = TVE }
+				change_country_color = { 
+					color = { 136  158  183 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = MOS }
+				change_country_color = { 
+					color = { 206  181  97 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = OKA }
+				change_country_color = { 
+					color = { 43 136 207 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = RYA }
+				change_country_color = { 
+					color = { 146  134  77 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = RSO }
+				change_country_color = { 
+					color = { 227 221 77 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = YAR }
+				change_country_color = { 
+					color = { 131  141  142 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = VLD }
+				change_country_color = { 
+					color = { 238  28  37 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = NZH }
+				change_country_color = { 
+					color = { 176  72  77 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+			if = { 
+				limit = { was_tag = VLG }
+				change_country_color = { 
+					color = { 81 196 140 }
+				}
+				set_country_flag = has_overriden_color_flag
+			}
+		ai_chance = { factor = 0 }
+	}
+
+}

@@ -1,0 +1,142 @@
+khiva_gain_rebellion_support = {
+	category = relation
+
+	require_acceptance = yes
+
+	is_visible = {
+		has_country_flag = ab_mnk_unlocks_plant_rebellion
+        FROM = {
+            OR = {
+                tag = QQT
+                culture = oirats
+            }
+        }
+	}
+
+	is_allowed = {
+		FROM = {
+            OR = {
+                tag = QQT
+                culture = oirats
+            }
+        }
+		custom_trigger_tooltip = {
+			tooltip = ab_mnk_already_in_rebellion
+			FROM = {
+				NOT = {
+					has_country_flag = ab_mnk_will_join_rebellion
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		FROM = {
+            set_country_flag = ab_mnk_will_join_rebellion
+        }
+	}
+
+	ai_will_do = {
+		always = no
+	}
+	
+	ai_acceptance = {
+		add_entry = {
+			name = MNK_FROM_ATTITUDE_TOWARDS_ROOT
+			limit = {
+				FROM = {
+					OR = {
+						ai_attitude = { who = ROOT attitude = attitude_allied }
+						ai_attitude = { who = ROOT attitude = attitude_friendly }
+					}
+				}
+			}
+			export_to_variable = {
+				which = ai_value
+				value = 50
+			}
+		}
+		add_entry = {
+			name = BASE_VALUE
+
+			export_to_variable = {
+				which = ai_value
+				value = 50
+			}
+			multiply_variable = { which = ai_value value = -1 }
+		}
+		add_entry = {
+			name = MNK_FROM_ATTITUDE_TOWARDS_ROOT
+			limit = {
+				FROM = {
+					ai_attitude = { who = ROOT attitude = attitude_threatened }
+				}
+			}
+			export_to_variable = {
+				which = ai_value
+				value = 60
+			}
+		}
+		add_entry = {
+			name = MNK_FROM_ATTITUDE_TOWARDS_ROOT
+			limit = {
+				FROM = {
+					OR = {
+						ai_attitude = { who = ROOT attitude = attitude_hostile }
+						ai_attitude = { who = ROOT attitude = attitude_rivalry }
+						ai_attitude = { who = ROOT attitude = attitude_outraged }
+					}
+				}
+			}
+			export_to_variable = {
+				which = ai_value
+				value = 1000
+			}
+			multiply_variable = { which = ai_value value = -1 }
+		}
+		add_entry = {
+			name = MNK_FROM_ROOT_ARE_RIVALS
+			limit = {
+				OR = {
+					is_rival = FROM
+					is_enemy = FROM
+				}
+			}
+			export_to_variable = {
+				which = ai_value
+				value = 1000
+			}
+			divide_variable = { which = ai_value value = -1 }
+		}
+		add_entry = {
+			name = MNK_FROM_HAS_MARRIAGE_WITH_ROOT
+			limit = {
+				marriage_with = FROM
+			}
+			export_to_variable = {
+				which = ai_value
+				value = 10
+			}
+		}
+		add_entry = {
+			name = MNK_ROOT_FROM_NOT_SAME_RELIGION
+			limit = {
+				NOT = { religion = FROM }
+			}
+			export_to_variable = {
+				which = ai_value
+				value = 10
+			}
+			multiply_variable = { which = ai_value value = -1 }
+		}
+		add_entry = {
+			name = OPINION
+			export_to_variable = {
+				which = ai_value
+				value = opinion
+				who = FROM
+				with = ROOT
+			}
+		}
+	}
+}

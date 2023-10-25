@@ -1,0 +1,216 @@
+namespace = ab_brapru
+
+#Purchase of Qingdao - For owner 
+country_event = {
+	id = ab_brapru.1 
+	title = ab_brapru.1.t
+	desc = ab_brapru.1.d 
+	picture = PORTUGUESE_MERCHANTS_eventPicture
+	
+	fire_only_once = yes 
+	is_triggered_only = yes 
+	
+	option = {
+		name = ab_brapru.1.a
+		ai_chance = { factor = 1 }
+		trigger = {
+			5083 = {
+				is_capital = no
+			}
+		}
+		tooltip = {
+			5083 = {
+				cede_province = FROM
+				add_core = FROM
+			}
+		}
+		hidden_effect = {
+			FROM = {
+				country_event = { id = ab_brapru.2 }
+			}
+		}
+	}
+	option = {
+		name = ab_brapru.1.b
+		ai_chance = { factor = 0 }
+		add_prestige = 5
+	}
+}
+
+#Purchase of Qingdao - For Receiver
+country_event = {
+	id = ab_brapru.2
+	title = ab_brapru.2.t
+	desc = ab_brapru.2.d
+	picture = PORTUGUESE_MERCHANTS_eventPicture
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = ab_brapru.2.a
+		5083 = {
+			cede_province = ROOT
+			add_core = ROOT
+		}
+	}
+}
+
+# The Confederation of Germany - sending invitation 
+country_event = {
+	id = ab_brapru.3
+	title = ab_brapru.3.t 
+	desc = ab_brapru.3.d 
+	picture = AB_GERCON_eventPicture
+
+	major = yes
+
+	is_triggered_only = yes 
+	
+	option = {
+		name = ab_brapru.3.a
+		custom_tooltip = ab_brapru.3.join_tt
+		hidden_effect = {
+			every_country = {
+				limit = {
+					capital_scope = {
+						OR = {
+							region = north_german_region
+							region = south_german_region
+						}
+					}
+					is_subject = no
+					is_lesser_in_union = no
+					NOT = { tag = PRU }
+					culture_group = germanic 
+				}
+				country_event = { id = ab_brapru.4 }
+			}
+		}
+	}
+}
+# The Confederation of Germany - invitation
+country_event = {
+	id = ab_brapru.4
+	title = ab_brapru.4.t
+	desc = ab_brapru.4.d
+	picture = AB_GERCON_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_brapru.4.b 
+		ai_chance = { 
+			factor = 25
+			modifier = {
+				factor = 0
+				tag = STY
+			}
+			modifier = {
+				factor = 0
+				tag = SWI
+			}
+			modifier = {
+				factor = 0
+				tag = HAS
+			}
+			modifier = {
+				factor = 0
+				total_development = 75
+			}
+			modifier = {
+				factor = 0
+				has_reform = free_city
+			}
+			modifier = {
+				factor = 0
+				tag = BOH
+			}
+			modifier = {
+				factor = 0
+				tag = HAB
+			}
+			modifier = {
+				factor = 0
+				is_rival = PRU
+			}
+			modifier = {
+				factor = 0
+				is_elector = yes
+			}
+			modifier = {
+				factor = 0
+				primary_culture = austrian
+			}
+		}
+		FROM = {
+			country_event = { id = ab_brapru.6 }
+		}
+	}
+	
+	option = {
+		name = ab_brapru.4.c
+		ai_chance = { 
+			factor = 25
+		}
+		FROM = {
+			country_event = { id = ab_brapru.7 }
+		}		
+	}
+}
+
+# German states join the confederation - member
+country_event = {
+	id = ab_brapru.6
+	title = ab_brapru.6.t
+	desc = ab_brapru.6.d
+	picture = AB_GERCON_eventPicture
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_brapru.6.a
+		inherit = FROM
+	}
+}
+
+# German state refuses to join
+country_event = {
+	id = ab_brapru.7
+	title = ab_brapru.7.t
+	desc = ab_brapru.7.d
+	picture = AB_GERCON_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_brapru.7.a
+		add_casus_belli = {
+			target = FROM
+			type = cb_vassalize_mission
+			months = 120
+		}
+	}
+}
+
+country_event = {
+	id = ab_brapru.8
+	title = ab_brapru.8.t
+	desc = ab_brapru.8.d
+	picture = VILLAGE_BURNING_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_brapru.8.a
+		add_prestige = 25
+		4745 = {
+			add_devastation = 100
+			change_religion = ROOT
+		}
+		destroy_great_project = {
+			type = temple_of_arkona
+		}
+	}
+}

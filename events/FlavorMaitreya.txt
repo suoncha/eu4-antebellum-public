@@ -1,0 +1,381 @@
+namespace = ab_maitreya
+
+
+#Fate of the White Lotus
+country_event = {
+	id = ab_maitreya.1
+	title = ab_maitreya.1.t
+	desc = ab_maitreya.1.d
+	picture = BUDDHA_eventPicture
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = HNN
+		not = { religion = maitreya }
+	}
+	
+	option = {
+		name = ab_maitreya.1.a
+		set_country_flag = white_lotus_advisors
+		add_stability = 1
+		add_legitimacy = 10
+		add_harmonized_religion = maitreya
+		define_advisor = {
+			type = magistrate
+			skill = 2
+			discount = yes
+		}
+		ai_chance = { factor = 70 }
+	}	
+	
+	option = {
+		name = ab_maitreya.1.b
+		change_religion = maitreya
+		set_ruler_religion = maitreya
+		tooltip = {
+			add_stability = -1
+			add_prestige = -100
+		}
+		define_advisor = {
+			type = inquisitor
+			skill = 2
+			discount = yes
+		}
+		random_core_province = { 
+			change_religion = maitreya 
+		}
+		random_core_province = {
+			change_religion = maitreya
+		}
+		ai_chance = { factor = 30 }
+	}
+}
+
+##Era of Chaos
+country_event = {
+	id = ab_maitreya.2
+	title = ab_maitreya.2.t
+	desc = ab_maitreya.2.d
+	picture = FIREARMS_INCIDENT_eventPicture
+	
+	trigger = {
+		uses_karma = yes
+		religion = maitreya
+		has_dlc = "Common Sense"
+		NOT = { karma = -30 }
+	}
+	
+	mean_time_to_happen = {
+		months = 360
+		modifier = {
+			factor = 0.9
+			NOT = {  karma = -75 }
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { karma = -80 }
+		}
+	}
+	
+	option = {
+		name = ab_maitreya.2.a 
+		add_karma = 15
+		add_years_of_income = -0.5
+		add_prestige = -10
+	}
+	
+	option = {
+		name = ab_maitreya.2.b
+		add_karma = 5
+		add_corruption = 2
+		kill_advisor = random
+	}
+	
+	option = {
+		name = ab_maitreya.2.c 
+		add_karma = -10
+		random_core_province = {
+			limit = {
+				religion = maitreya
+			}
+			spawn_rebels = {
+				type = maitreya_rebels
+				size = 2
+			}
+		}
+	}
+}
+
+#Chaos in the Court
+country_event = {
+	id = ab_maitreya.3
+	title = ab_maitreya.3.t
+	desc = ab_maitreya.3.d
+	picture = ASSASSINATION_eventPicture
+	
+	trigger = {
+		uses_karma = yes
+		religion = maitreya
+		has_dlc = "Common Sense"
+		NOT = { karma = -50 }
+	}
+	
+	mean_time_to_happen = {
+		months = 500
+		modifier = {
+			factor = 0.9
+			NOT = { karma = -75 }
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { karma = -80 }
+		}
+	}
+	
+	option = {
+		name = ab_maitreya.3.a
+		random_list = {
+			50 = {
+				add_prestige = 10
+				add_karma = 20
+			}
+			50 = {
+				exile_ruler_as = { name = my_exiled_ruler }
+			}
+		}
+	}
+	
+	option = {
+		name = ab_maitreya.3.b
+		random_list = {
+			25 = {
+				add_prestige = 10
+				add_legitimacy = 20
+				add_karma = 5
+			}
+			75 = {
+				kill_ruler = yes
+				add_karma = -15
+			}
+		}
+	}
+}
+##Millenary Violence
+province_event = {
+	id = ab_maitreya.4
+	title = ab_maitreya.4.t
+	desc = ab_maitreya.4.d
+	picture = BUDDHISM_BAD_eventPicture		
+	
+	trigger = {
+		has_dlc = "Common Sense"
+		religion = maitreya
+		NOT = {
+			OR = {
+				has_province_modifier = maitreya_suppression
+				has_province_modifier = maitreya_violence
+			}
+		}
+		owner = {
+			religion = maitreya
+			karma = -30 
+			not = { karma = 30 }
+		}
+	}
+
+	is_mtth_scaled_to_size = 1
+	mean_time_to_happen = {
+		months = 420
+		
+	}
+	
+	option = {
+        name = ab_maitreya.4.a
+        add_devastation = 5
+        add_province_modifier = {
+            name = maitreya_violence
+            duration = 1825
+        }
+    }
+    
+    option = {
+        name = ab_maitreya.4.b
+        add_devastation = 5
+        owner = {
+            add_yearly_manpower = -0.10
+            add_estate_loyalty = {
+                estate = estate_church
+                loyalty = -5
+            }
+            add_karma = 10
+        }
+        hidden_effect = {
+            add_province_modifier = {
+                duration = 3650
+                hidden = yes
+                name = maitreya_suppression
+            }
+        }
+    }
+}
+#Flocking to the Banners
+country_event = {
+	id = ab_maitreya.5
+	title = ab_maitreya.5.t
+	desc = ab_maitreya.5.d
+	picture = MILITARY_CAMP_eventPicture
+	
+	trigger = {
+		uses_karma = yes
+		religion = maitreya
+		has_dlc = "Common Sense"
+		karma = 20
+		NOT = {
+			OR = {
+				has_country_modifier = ab_maitreya_diplomacy
+				has_country_modifier = ab_maitreya_soldier
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 500
+		modifier = {
+			factor = 0.9
+			karma = 25
+		}
+		modifier = {
+			factor = 0.8
+			karma = 30
+		}
+	}
+	
+	option = {
+		name = ab_maitreya.5.a
+		add_country_modifier = {
+			name = ab_maitreya_soldier
+			duration = 5475
+		}
+		add_karma = -5
+	}
+	
+	option = {
+		name = ab_maitreya.5.b
+		add_prestige = 10
+		add_country_modifier = {
+			name = ab_maitreya_diplomacy
+			duration = 5475
+		}
+		add_karma = 5
+	}
+}
+#Proclaim the Era of Maitreya!
+country_event = {
+	id = ab_maitreya.6
+	title = ab_maitreya.6.t
+	desc = ab_maitreya.6.d
+	picture = MIRACLE_MONK_eventPicture
+	
+	trigger = {
+		uses_karma = yes
+		religion = maitreya
+		has_dlc = "Common Sense"
+		NOT = {
+			has_country_flag = ab_maitreya_future
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 500
+		modifier = {
+			factor = 0.6
+			OR = {
+				karma = 25
+				NOT = { karma = -25 }
+			}
+		}
+	}
+	
+	
+	option = {
+		name = ab_maitreya.6.a
+		grant_all_mana = {
+			mana = 100
+		}
+		hidden_effect = {
+			country_event = {
+					id = ab_maitreya.7
+					days = 9125
+			}
+		}
+	}
+	
+	option = {
+		name = ab_maitreya.6.b
+		define_advisor = {
+			type = philosopher 
+			skill = 3
+			discount = yes
+		}
+		add_karma = 10
+	}
+}
+#Death of Maitreya...now what?
+country_event = {
+	id = ab_maitreya.7
+	title = ab_maitreya.7.t
+	desc = ab_maitreya.7.d 
+	picture = BUDDHISM_MONASTERY_eventPicture
+		
+	is_triggered_only = yes
+		
+	option = {
+		name = ab_maitreya.7.a
+		add_stability = -1
+		add_legitimacy = -10
+		add_karma = -30
+	}
+}
+#Praises for Wusheng Laomu
+country_event = {
+	id = ab_maitreya.8
+	title = ab_maitreya.8.t
+	desc = ab_maitreya.8.d 
+	picture = GIFTS_TO_EMPEROR_eventPicture
+	
+	trigger = {
+		uses_karma = yes
+		religion = maitreya
+		has_dlc = "Common Sense"
+		NOT = {
+			has_country_modifier = ab_maitreya_mother
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 1200
+	}
+	
+	option = {
+		name = ab_maitreya.8.a
+		add_country_modifier = {
+			name = ab_maitreya_mother
+			duration = 5475
+		}
+		add_karma = -10
+	}
+	
+	option = {
+		name = ab_maitreya.8.b
+		add_country_modifier = {
+			name = ab_maitreya_mother
+			duration = 3600
+		}
+	}
+}
+		

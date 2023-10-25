@@ -1,0 +1,1874 @@
+namespace = ab_byzantium
+normal_or_historical_nations = yes
+
+
+#Rediscovery of the Classical Works
+country_event = {
+	id = ab_byzantium.1
+	title = ab_byzantium.1.t
+	desc = ab_byzantium.1.d
+	picture = AB_ADVISOR_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		is_year = 1448
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = ab_byzantium.1.a
+		change_innovativeness = 3
+		add_country_modifier = {
+			name = "byz_rediscovery"
+			duration = 7300
+		}
+		set_country_flag = ab_byzantium_classical
+	}
+}
+
+#Church Opposition
+country_event = {
+	id = ab_byzantium.2
+	title = ab_byzantium.2.t
+	desc = ab_byzantium.2.d
+	picture = AB_COURT_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		has_country_flag = ab_byzantium_classical
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = ab_byzantium.2.a
+		ai_chance = {
+			factor = 0
+		}
+		add_legitimacy = 10
+		add_patriarch_authority = 0.1
+		remove_country_modifier = byz_rediscovery
+		add_ruler_modifier = {
+			name = "byz_iconoclasm"
+			duration = -1
+		}
+		custom_tooltip = ab_byzantium_renaissance_away
+		set_global_flag = ab_byz_spooked_renaissance
+	}
+	
+	option = {
+		name = ab_byzantium.2.b
+		ai_chance = {
+			factor = 100
+		}
+		add_prestige = 10
+		add_patriarch_authority = -0.1
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -20
+		}
+		random_owned_province = {
+			orthodox_rebels = 3
+		}
+		add_country_modifier = {
+			name = "byz_ignored"
+			duration = 7300
+		}
+		add_ruler_modifier = {
+			name = "byz_scholar"
+			duration = -1
+		}
+		custom_tooltip = ab_byzantium_renaissance_home
+		hidden_effect = {
+			set_country_flag = ab_can_spawn_renaissance
+		}
+	}
+}
+
+#The Osman & Sons Trading Company 
+country_event = {
+	id = ab_byzantium.4
+	title = ab_byzantium.4.t
+	desc = ab_byzantium.4.d
+	picture = TRADEGOODS_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = ab_byzantium.1.a
+		custom_tooltip = BYZ_MURAD_OSMAN
+		tooltip = {
+			151 = {
+				add_province_modifier = {
+					name = "byz_murad_ottoman"
+					duration = -1
+				}
+			}
+		}
+		hidden_effect = {
+			151 = {
+				add_province_modifier = {
+				name = "byz_murad_ottoman"
+					duration = -1
+				}
+			}
+		}
+	}
+}
+	
+#Mehmet
+country_event = {
+	id = ab_byzantium.5
+	title = ab_byzantium.5.t
+	desc = ab_byzantium.5.d
+	picture = 3_SONS_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		is_year = 1453
+	}
+	
+	mean_time_to_happen = {
+		months = 5
+	}
+	
+	option = {
+		name = ab_byzantium.5.a
+		151 = {
+			remove_province_modifier = byz_murad_ottoman
+		}
+			define_advisor = {
+				type = trader
+				name = "Mehmet 'Fatih' Osmanoglu"
+				skill = 2
+				religion = sunni
+				culture = turkish
+				cost_multiplier = 0.5
+			}
+	}
+}
+
+#Skanderbeg
+country_event = {
+	id = ab_byzantium.6
+	title = ab_byzantium.6.t
+	desc = ab_byzantium.6.d
+	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+	}
+	
+	mean_time_to_happen = {
+		months = 36
+	}
+	
+	option = {
+		name = ab_byzantium.6.a
+		define_general = {
+			name = "Gjergj 'Skanderbeg' Kastrioti"
+			fire = 3
+			shock = 3
+			manuever = 2
+			siege = 2
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.6.b
+		define_advisor = {
+			type = commandant
+			name = "Gjergj 'Skanderbeg' Kastrioti"
+			skill = 2
+			religion = orthodox
+			culture = albanian
+			cost_multiplier = 0.5
+		}
+	}
+}
+
+#Suleiman
+country_event = {
+	id = ab_byzantium.7
+	title = ab_byzantium.7.t
+	desc = ab_byzantium.7.d
+	picture = 3_SONS_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		is_year = 1520
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	
+	option = {
+		name = ab_byzantium.7.a
+			define_advisor = {
+				type = trader
+				name = "Suleiman the Magnificent"
+				skill = 3
+				religion = sunni
+				culture = turkish
+				cost_multiplier = 0.5
+			}
+	}
+	
+	option = {
+		name = ab_byzantium.7.b
+		define_general = {
+			name = "Suleiman the Magnificent"
+			fire = 4
+			shock = 4
+			manuever = 3
+			siege = 2
+		}
+	}
+}
+
+#Novgorod
+country_event = {
+	id = ab_byzantium.8
+	title = ab_byzantium.8.t
+	desc = ab_byzantium.8.d
+	picture = CORRUPTION_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		33 = {
+			is_strongest_trade_power = ROOT
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	
+	option = {
+		name = ab_byzantium.8.a
+		add_country_modifier = {
+			name = "byz_novgorod_trade"
+			duration = -1
+		}
+	}
+	
+}
+
+#Angelid Crisis
+country_event = {
+	id = ab_byzantium.9
+	title = ab_byzantium.9.t
+	desc = ab_byzantium.9.d
+	picture = BYZANTINE_EAGLE_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	immediate = {
+		hidden_effect = {
+			add_corruption = 4
+			add_stability = -1
+			add_government_power = { 
+				mechanic_type = byzantine_decadence_mechanic
+				power_type = byzantine_decadence
+				value = 100
+			}	
+		}
+	}
+	
+	trigger = {
+		tag = BYZ
+	}
+
+	option = {
+		name = ab_byzantium.9.a
+		custom_tooltip = BYZ_MODIFIERS_STARTUP
+	}
+}
+
+#Spoils of War
+country_event = {
+	id = ab_byzantium.10
+	title = ab_byzantium.10.t
+	desc = ab_byzantium.10.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		is_year = 1446
+		NOT = {
+			war_with = BUL
+		}
+		NOT = {
+			truce_with = BUL
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 5
+	}
+
+	option = {
+		name = ab_byzantium.10.a
+		ai_chance = { 
+			factor = 50
+			modifier = {
+				factor = 100
+				treasury = 100
+			}
+		}
+		custom_tooltip = BYZ_PAY
+		hidden_effect = {
+			add_treasury = -100
+		}
+		BUL = {
+			country_event = { id = ab_byzantium.11 }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.10.b
+		custom_tooltip = BYZ_REFUSE
+		ai_chance = { 
+			factor = 50
+		}
+		BUL = {
+			country_event = { id = ab_byzantium.12 }
+		}
+	}
+}
+
+#Spoils of War 2
+country_event = {
+	id = ab_byzantium.11
+	title = ab_byzantium.11.t
+	desc = ab_byzantium.11.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.11.a
+		add_treasury = 100
+		set_country_flag = bul_event_flag
+		set_country_flag = bul_byzantium_paid
+	}
+	
+}
+
+#Spoils of War 3
+country_event = {
+	id = ab_byzantium.12
+	title = ab_byzantium.12.t
+	desc = ab_byzantium.12.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	immediate = {
+		hidden_effect = {
+			add_casus_belli = {
+				target = BYZ
+				type = cb_insult
+				months = 12
+			}
+		}
+	}
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_byzantium.12.a
+		ai_chance = { 
+			factor = 90
+			modifier = {
+				factor = 0
+				is_at_war = yes
+			}
+		}
+		set_country_flag = bul_byzantium_refused
+		set_country_flag = bul_event_flag
+		declare_war_with_cb = {
+			who = BYZ
+			casus_belli = cb_insult
+		}
+		add_country_modifier = {
+			name = bul_byzantine_treachery
+			duration = 3650
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					alliance_with = BUL
+				}
+				set_country_flag = bul_ally_join_war
+			}
+		}
+		BYZ = {
+			country_event = { id = ab_byzantium.26 }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.10.b
+		ai_chance = { factor = 10 }
+		set_country_flag = bul_event_flag
+		set_country_flag = bul_byzantium_refused
+	}
+}
+
+#Warriors
+country_event = {
+	id = ab_byzantium.13
+	title = ab_byzantium.13.t
+	desc = ab_byzantium.13.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = BYZ
+			was_tag = BYZ
+		}
+		patriarch_authority = 0.75
+		NOT = {
+			has_country_modifier = byzantium_warrior_faith
+		}
+		mission_completed = byzantium_patriarchate
+	}
+	
+	option = {
+		name = ab_byzantium.13.a
+			add_country_modifier = {
+				name = "byzantium_warrior_faith"
+				duration = -1
+			}
+	}
+	
+}
+
+#Warriors 2
+country_event = {
+	id = ab_byzantium.14
+	title = ab_byzantium.14.t
+	desc = ab_byzantium.14.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = BYZ
+			was_tag = BYZ
+		}
+		NOT = {
+			patriarch_authority = 0.75
+		}
+		has_country_modifier = byzantium_warrior_faith
+		mission_completed = byzantium_patriarchate
+	}
+
+	option = {
+		name = ab_byzantium.13.a
+		remove_country_modifier = byzantium_warrior_faith
+	}
+	
+}
+
+#Phoenix Rises
+country_event = {
+	id = ab_byzantium.15
+	title = ab_byzantium.15.t
+	desc = ab_byzantium.15.d
+	picture = AB_JUSTINIAN_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+
+	option = {
+		name = ab_byzantium.15.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = adm
+		}
+		change_monarch_points_or_power = {
+			points = 1
+			power = dip
+		}
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.15.b
+		hidden_effect = {
+			define_heir = {
+				change_adm = 0
+				change_dip = 0
+				change_mil = 0
+				dynasty = "Laskaris"
+				claim = 50
+			}
+		}
+		custom_tooltip = BYZ_TOOLTIP_LASKARIS
+	}
+	
+	option = {
+		name = ab_byzantium.15.c
+		hidden_effect = {
+			define_heir = {
+				change_adm = 0
+				change_dip = 0
+				change_mil = 0
+				dynasty = "Doukas"
+				claim = 50
+			}
+		}
+		custom_tooltip = BYZ_TOOLTIP_DOUKAS
+	}
+	
+	option = {
+		name =  ab_byzantium.15.de
+		hidden_effect = {
+			define_heir = {
+				change_adm = 0
+				change_dip = 0
+				change_mil = 0
+				dynasty = "Komnenos"
+				claim = 50
+			}
+		}
+		custom_tooltip = BYZ_TOOLTIP_KOMNENOS
+	}
+	
+	option = {
+		name =  ab_byzantium.15.e
+		hidden_effect = {
+			define_heir = {
+				change_adm = 0
+				change_dip = 0
+				change_mil = 0
+				claim = 50
+			}
+		}
+		custom_tooltip = BYZ_TOOLTIP_RANDOM
+	}
+}
+
+#Avenging Manzikert
+country_event = {
+	id = ab_byzantium.16
+	title = ab_byzantium.16.t
+	desc = ab_byzantium.16.d
+	picture = AB_SELJUK_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+
+	option = {
+		name = ab_byzantium.16.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		add_ruler_modifier = {
+			name = byz_avenger
+			duration = -1
+		}
+		custom_tooltip = BYZ_CONVERT
+		set_country_flag = byz_can_convert_turks
+		custom_tooltip = BYZ_EAST_ROME_RENAME
+	}
+	
+}
+
+#CC1
+country_event = {
+	id = ab_byzantium.17
+	title = ab_byzantium.17.t
+	desc = ab_byzantium.17.d
+	picture = AB_BYZANTIUM_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_country_flag = byz_can_convert_turks
+	}
+	
+	option = {
+		name = ab_byzantium.17.a
+		every_owned_province = {
+			limit = {
+				region = anatolia_region
+				NOT = {
+					culture = greek
+				}
+			}
+			add_province_modifier = {
+				name = byz_cc
+				duration = -1
+			}
+		}
+	}
+}
+
+#CC2
+country_event = {
+	id = ab_byzantium.18
+	title = ab_byzantium.18.t
+	desc = ab_byzantium.18.d
+	picture = AB_BYZANTIUM_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_country_flag = byz_can_convert_turks
+	}
+	
+	option = {
+		name = ab_byzantium.18.a
+		every_owned_province = {
+			limit = {
+				region = anatolia_region
+				culture_group = byzantine
+				has_province_modifier = byz_cc
+			}
+			remove_province_modifier = byz_cc
+		}
+	}
+}
+
+#CC2
+country_event = {
+	id = ab_byzantium.19
+	title = ab_byzantium.19.t
+	desc = ab_byzantium.19.d
+	picture = JERUSALEM_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.19.a
+		add_patriarch_authority = 0.1
+		379 = {
+			add_province_modifier = {
+				name = byz_holyland
+				duration = -1
+			}
+		}
+	}
+}
+
+#Sicily
+country_event = {
+	id = ab_byzantium.20
+	title = ab_byzantium.20.t
+	desc = ab_byzantium.20.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.20.a
+		add_adm_power = -100
+		custom_tooltip = BYZ_SICILY_BONUSES
+		tooltip = {
+			add_province_modifier = {
+				name = byz_sicilian
+				duration = 9125
+			}
+		}
+		hidden_effect = {
+			sicily_area = {
+				add_province_modifier = {
+					name = byz_sicilian
+					duration = 9125
+				}
+			}
+			western_sicily_area = {
+				add_province_modifier = {
+					name = byz_sicilian
+					duration = 9125
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.20.b
+		add_dip_power = 100
+		custom_tooltip = BYZ_SICILY_BONUSES
+		tooltip = {
+			add_province_modifier = {
+				name = byz_sicilian2
+				duration = 9125
+			}
+		}
+		hidden_effect = {
+			sicily_area = {
+				add_province_modifier = {
+					name = byz_sicilian2
+					duration = 9125
+				}
+			}
+			western_sicily_area = {
+				add_province_modifier = {
+					name = byz_sicilian2
+					duration = 9125
+				}
+			}
+		}
+	}
+}
+
+#Rome
+country_event = {
+	id = ab_byzantium.21
+	title = ab_byzantium.21.t
+	desc = ab_byzantium.21.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.21.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = dip
+		}
+			custom_tooltip = BYZ_TRUST
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion = orthodox
+					}
+					add_trust = { who = ROOT value = 10 mutual = yes }
+				}
+			}
+		add_ruler_modifier = {
+			name = byz_rome_conqueror
+			duration = -1
+		}
+	}
+}
+
+#Spoils of War 4
+country_event = {
+	id = ab_byzantium.22
+	title = ab_byzantium.22.t
+	desc = ab_byzantium.22.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	trigger = {
+		has_country_flag = bul_ally_join_war
+	}
+	
+	mean_time_to_happen = {
+		days = 10
+	}
+	
+	fire_only_once = yes
+	
+	hidden = yes
+
+	option = {
+		name = ab_byzantium.22.a
+		join_all_offensive_wars_of = BUL
+	}
+
+}
+
+#Antioch
+country_event = {
+	id = ab_byzantium.23
+	title = ab_byzantium.23.t
+	desc = ab_byzantium.23.d
+	picture = ORTHODOX_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.23.a
+		add_patriarch_authority = 0.1
+		2313 = {
+			add_province_modifier = {
+				name = "byzantium_levantine"
+				duration = 7300
+			}
+		}
+		321 = {
+			if = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+		palestine_area  = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		trans_jordan_area  = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+#Alexandria
+country_event = {
+	id = ab_byzantium.24
+	title = ab_byzantium.24.t
+	desc = ab_byzantium.24.d
+	picture = ORTHODOX_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.24.a
+			add_patriarch_authority = 0.1
+			358 = {
+				change_culture = greek
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.35
+			}
+			egypt_region = {
+				add_province_modifier = {
+					name = "byzantium_reclaiming_egypt"
+					duration = 7300
+				}
+			}
+	}
+}
+
+#Jerusalem
+country_event = {
+	id = ab_byzantium.25
+	title = ab_byzantium.25.t
+	desc = ab_byzantium.25.d
+	picture = JERUSALEM_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.25.a
+		379 = {
+			add_prosperity = 100
+		}
+		add_country_modifier = {
+			name = "byzantium_greek_patriarchate"
+			duration = -1
+		}
+	}
+}
+
+#Spoils Info
+country_event = {
+	id = ab_byzantium.26
+	title = ab_byzantium.26.t
+	desc = ab_byzantium.26.d
+	picture = HORDE_ON_HORSEBACK_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.26.a
+	}
+}
+
+#Venice 1
+country_event = {
+	id = ab_byzantium.27
+	title = ab_byzantium.27.t
+	desc = ab_byzantium.27.d
+	picture = BANKRUPTCY_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		is_year = 1447
+		is_at_war = no
+		NOT = {
+			mission_completed = byzantium_crisis
+		}
+		2348 = {
+			owned_by = BYZ
+		}
+		4700 = {
+			owned_by = BYZ
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.27.a
+		ai_chance = { factor = 70 }
+		add_prestige = -10
+		custom_tooltip = BYZ_VEN_DEAL
+		hidden_effect = {
+			VEN = { country_event = { id = ab_byzantium.28 days = 10 } }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.27.b
+		ai_chance = { factor = 30 }
+		add_prestige = 5
+	}
+}
+
+#Venice 2
+country_event = {
+	id = ab_byzantium.28
+	title = ab_byzantium.28.t
+	desc = ab_byzantium.28.d
+	picture = BANKRUPTCY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.28.a
+		ai_chance = { factor = 100 }
+		add_treasury = -150
+		custom_tooltip = BYZ_VEN_CONTROL
+		hidden_effect = {
+			2348 = {
+				cede_province = VEN
+				add_core = VEN
+			}
+			4700 = {
+				cede_province = VEN
+				add_core = VEN
+			}
+		}
+		hidden_effect = {
+			BYZ = { country_event = { id = ab_byzantium.29 } }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.28.b
+		ai_chance = { factor = 0 }
+		hidden_effect = {
+			BYZ = { country_event = { id = ab_byzantium.30 } }
+		}
+	}
+}
+
+#Venice 3
+country_event = {
+	id = ab_byzantium.29
+	title = ab_byzantium.29.t
+	desc = ab_byzantium.29.d
+	picture = BANKRUPTCY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.28.a
+		add_treasury = 150
+		2348 = {
+			remove_core = ROOT
+		}
+		4700 = {
+			remove_core = ROOT
+		}
+	}
+	
+}
+
+#Venice 4
+country_event = {
+	id = ab_byzantium.30
+	title = ab_byzantium.30.t
+	desc = ab_byzantium.30.d
+	picture = BANKRUPTCY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.30.a
+	}
+	
+}
+
+#Canal
+country_event = {
+	id = ab_byzantium.31
+	title = ab_byzantium.31.t
+	desc = ab_byzantium.31.d
+	picture = BANKRUPTCY_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			AND = {
+				tag = BYZ
+				mission_completed = byzantium_suez
+			}
+			AND = {
+				tag = NAZ
+				mission_completed = naz_suez
+			}
+		}
+		4316 = {
+			has_great_project = {
+				type = suez_canal
+				tier = 3
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.30.a
+		every_owned_province = {
+			limit = {
+				region = egypt_region
+				NOT = {
+					has_province_modifier = byz_canal
+				}
+			}
+			add_province_modifier = {
+				name = "byz_canal"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+#Morea declares independence
+country_event = {
+	id = ab_byzantium.32
+	title = ab_byzantium.32.t
+	desc = ab_byzantium.32.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		NOT = {
+			mission_completed = byzantium_crisis
+		}
+		owns = 145
+		owns = 4701
+		owns = 1773
+		145 = {
+			controlled_by = BYZ
+		}
+		4701 = {
+			controlled_by = BYZ
+		}
+		1773 = {
+			controlled_by = BYZ
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 50
+	}
+	
+	immediate = {
+		hidden_effect = {
+			release = MOE
+			MOE = {
+				create_general = { tradition = 50 }
+			}
+			MOE = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.8
+						cavalry = 0.2
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}		
+	}
+	
+	option = {
+		name = ab_byzantium.32.a
+		ai_chance = { factor = 90 }
+		declare_war_with_cb = {
+			who = MOE
+			casus_belli = cb_core
+			war_goal_province = 145
+		}
+		EPI = {
+			add_country_modifier = {
+				name = "byz_weakness2"
+				duration = 7300
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.32.b
+		ai_chance = { factor = 10 }
+		add_prestige = -25
+		every_province = {
+			limit = {
+				area = morea_area
+				owned_by = MOE
+			}
+			remove_core = BYZ
+		}
+		EPI = {
+			add_country_modifier = {
+				name = "byz_weakness"
+				duration = 7300
+			}
+		}
+	}
+	
+}
+
+#Nicaea demands Smyrna 1 - Nicaea threatens war
+country_event = {
+	id = ab_byzantium.33
+	title = ab_byzantium.33.t
+	desc = ab_byzantium.33.d
+	picture = BATTLE_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = NCI
+		BYZ = {
+			NOT = {
+				mission_completed = byzantium_crisis
+			}
+			owns = 318
+		}
+		is_at_war = no
+		NOT = {
+			truce_with = BYZ
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+	}
+	
+	option = {
+		name = ab_byzantium.33.a
+		ai_chance = { factor = 90 }
+		BYZ = {
+			country_event = { id = ab_byzantium.34 }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.33.b
+		ai_chance = { factor = 10 }
+		add_prestige = -10
+	}
+	
+}
+
+#Nicaea demands Smyrna 2 - Byzantium receives Nicene threat
+country_event = {
+	id = ab_byzantium.34
+	title = ab_byzantium.34.t
+	desc = ab_byzantium.34.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.34.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				NOT = {
+					NCI = {
+						army_size = ROOT
+					}
+				}
+			}
+		}
+		add_prestige = -10
+		add_truce_with = NCI
+		318 = {
+			cede_province = NCI
+			add_core = NCI
+			remove_core = BYZ
+		}
+		NCI = {
+			country_event = { id = ab_byzantium.35 }
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.34.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				BYZ = {
+					alliance_with = SIC
+				}
+			}
+			modifier = {
+				factor = 0
+				BYZ = {
+					army_size = ROOT
+				}
+			}
+		}
+		add_legitimacy = 10
+		custom_tooltip = BYZ_NCI_WAR
+		NCI = {
+			country_event = { id = ab_byzantium.36 }
+		}
+	}
+	
+}
+
+#Nicaea demands Smyrna 3 - Nicaea - Byzantium cedes Smyrna
+country_event = {
+	id = ab_byzantium.35
+	title = ab_byzantium.35.t
+	desc = ab_byzantium.35.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.35.a
+		add_prestige = 10
+		custom_tooltip = NCI_SMYRNA_1
+	}
+	
+}
+
+#Nicaea demands Smyrna 4 - Nicaea - Byzantium refuses
+country_event = {
+	id = ab_byzantium.36
+	title = ab_byzantium.36.t
+	desc = ab_byzantium.36.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_byzantium.36.a
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 3
+				NOT = {
+					BYZ = {
+						army_size = ROOT
+					}
+				}
+			}
+			modifier = {
+				factor = 5
+				BYZ = {
+					is_at_war = yes
+				}
+			}
+		}
+		hidden_effect = {
+			318 = {
+				add_claim = NCI
+			}
+		}
+		declare_war_with_cb = {
+			who = BYZ
+			casus_belli = cb_conquest
+			war_goal_province = 318
+		}
+		custom_tooltip = BYZ_NCI_CALL_ALLIES
+		hidden_effect = {
+			every_country = {
+				limit = {
+					alliance_with = NCI
+				}
+				set_country_flag = nci_ally_join_war
+			}
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.36.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 3
+				BYZ = {
+					army_size = ROOT
+				}
+			}
+			modifier = {
+				factor = 5
+				BYZ = {
+					alliance_with = SIC
+				}
+			}
+		}
+		add_prestige = -10
+	}
+	
+}
+
+#Nicaea demands Smyrna 5 - Nicene allies receive call to arms
+country_event = {
+	id = ab_byzantium.37
+	title = ab_byzantium.37.t
+	desc = ab_byzantium.37.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	trigger = {
+		has_country_flag = nci_ally_join_war
+	}
+	
+	mean_time_to_happen = {
+		days = 2
+	}
+	
+	fire_only_once = yes
+	
+
+	option = {
+		name = ab_byzantium.37.a
+		ai_chance = {
+			factor = 100
+		}
+		join_all_offensive_wars_of = NCI
+	}
+	
+	option = {
+		name = ab_byzantium.37.b
+		add_trust = {
+			who = NCI
+			value = -20
+			mutual = yes
+		}
+	}
+
+}
+
+#Loan Remove
+country_event = {
+	id = ab_byzantium.38
+	title = ab_byzantium.38.t
+	desc = ab_byzantium.38.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	immediate = {
+		remove_estate_privilege = estate_burghers_ottoman_loans
+	}
+	
+	hidden = yes
+	
+	trigger = {
+		has_estate_privilege = estate_burghers_ottoman_loans
+		has_estate_loan = no
+	}
+
+	option = {
+		name = ab_byzantium.38.a
+	}
+
+}
+
+#Guns of Urban
+country_event = {
+	id = ab_byzantium.39
+	title = ab_byzantium.39.t
+	desc = ab_byzantium.39.d
+	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		treasury = 100
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = ab_byzantium.39.a
+		add_treasury = -100
+		add_mil_power = 50
+		define_advisor = {
+			type = siegeengineer
+			name = "Viktor Orbán"
+			skill = 2
+			religion = tengri_pagan_reformed
+			culture = hungarian
+			cost_multiplier = 0.35
+		}
+		set_country_flag = had_orban
+	}
+	
+	option = {
+		name = ab_byzantium.39.b
+		add_treasury = -100
+		add_mil_power = 50
+		define_advisor = {
+			type = fortification_expert
+			name = "Viktor Orbán"
+			skill = 2
+			religion = tengri_pagan_reformed
+			culture = hungarian
+			cost_multiplier = 0.35
+		}
+		set_country_flag = had_orban
+	}
+	
+	option = {
+		name = ab_byzantium.39.c
+		custom_tooltip = BYZ_ORBAN
+		BUL = {
+			set_country_flag = can_receive_orban
+		}
+	}
+}
+
+#Guns of Urban
+country_event = {
+	id = ab_byzantium.40
+	title = ab_byzantium.40.t
+	desc = ab_byzantium.40.d
+	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BUL
+		treasury = 100
+		has_country_flag = can_receive_orban
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = ab_byzantium.40.a
+		add_treasury = -100
+		add_mil_power = 50
+		define_advisor = {
+			type = siegeengineer
+			name = "Viktor Orbán"
+			skill = 2
+			religion = tengri_pagan_reformed
+			culture = hungarian
+			cost_multiplier = 0.35
+		}
+		set_country_flag = had_orban
+		BUL = {
+			clr_country_flag = can_receive_orban
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.40.b
+		add_treasury = -100
+		add_mil_power = 50
+		define_advisor = {
+			type = fortification_expert
+			name = "Viktor Orbán"
+			skill = 2
+			religion = tengri_pagan_reformed
+			culture = hungarian
+			cost_multiplier = 0.35
+		}
+		set_country_flag = had_orban
+		BUL = {
+			clr_country_flag = can_receive_orban
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.40.c
+		BUL = {
+			clr_country_flag = can_receive_orban
+		}
+	}
+}
+
+#AI Crisis Removal
+country_event = {
+	id = ab_byzantium.41
+	title = ab_byzantium.41.t
+	desc = ab_byzantium.41.d
+	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+	
+	trigger = {
+		is_year = 1450
+		tag = BYZ
+		ai = yes
+	}
+	
+	fire_only_once = yes
+	
+	hidden = yes
+
+	option = {
+		name = ab_byzantium.41.a
+		if = {
+			limit = {
+				NOT = {
+					mission_completed = byzantium_court
+				}
+			}
+			complete_mission = byzantium_court
+		}
+		if = {
+			limit = {
+				NOT = {
+					mission_completed = byzantium_economy
+				}
+			}
+			complete_mission = byzantium_economy
+		}
+		if = {
+			limit = {
+				NOT = {
+					mission_completed = byzantium_imperial_army
+				}
+			}
+			complete_mission = byzantium_imperial_army
+		}
+		remove_country_modifier = byz_disorganized_army
+		remove_country_modifier = byz_court_shambles
+		remove_country_modifier = byz_strained_economy
+	}
+}
+
+#Distrustful Military
+#country_event = {
+#	id = ab_byzantium.42
+#	title = ab_byzantium.42.t
+#	desc = ab_byzantium.42.d
+#	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+#	
+#	trigger = {
+#		tag = BYZ
+#		ai = no
+#		NOT = {
+#			mission_completed = byzantium_imperial_army
+#		}
+#		NOT = {
+#			mission_completed = byzantium_crisis
+#		}
+#	}
+#	
+#	fire_only_once = yes
+#	
+#	mean_time_to_happen = {
+#		months = 40
+#	}
+#
+#	option = {
+#		name = ab_byzantium.42.a
+#		add_country_modifier = {
+#			name = "byz_distrust1"
+#			duration = 5475
+#		}
+#		custom_tooltip = BYZ_DISTRUST
+#	}
+#	
+#	option = {
+#		name = ab_byzantium.42.b
+#		add_country_modifier = {
+#			name = "byz_distrust2"
+#			duration = 7300
+#		}
+#		custom_tooltip = BYZ_DISTRUST
+#	}
+#}
+
+#Noble Uprising
+country_event = {
+	id = ab_byzantium.43
+	title = ab_byzantium.43.t
+	desc = ab_byzantium.43.d
+	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+	
+	trigger = {
+		tag = BYZ
+		ai = no
+		NOT = {
+			mission_completed = byzantium_crisis
+		}
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 50
+	}
+
+	option = {
+		name = ab_byzantium.43.a
+		give_estate_land_share_massive = { estate = estate_nobles }
+		add_estate_influence_modifier = {
+			estate = estate_nobles
+			desc = BYZ_SUPREMACY
+			influence = 20
+			duration = 5475
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.43.b
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = -20
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = noble_rebels
+				size = 3
+				leader = "Ioannes Maotzaris"
+			}
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = noble_rebels
+				size = 2
+			}
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = noble_rebels
+				size = 1
+			}
+		}
+	}
+}
+
+#Orbans Cannon
+country_event = {
+	id = ab_byzantium.44
+	title = ab_byzantium.44.t
+	desc = ab_byzantium.44.d
+	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+	
+	trigger = {
+		OR = {
+			tag = BYZ
+			tag = BUL
+		}
+		has_country_flag = had_orban
+		OR = {
+			has_won_war_against = {
+				who = BUL
+				max_years_since = 5
+			}
+			has_won_war_against = {
+				who = BYZ
+				max_years_since = 5
+			}
+		}
+		OR = {
+			employed_advisor = {
+				category = MIL
+				is_male = yes
+				religion = tengri_pagan_reformed
+				culture = hungarian
+				type = fortification_expert
+			}
+			employed_advisor = {
+				category = MIL
+				is_male = yes
+				religion = tengri_pagan_reformed
+				culture = hungarian
+				type = siegeengineer
+			}
+		}
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+
+	option = {
+		name = ab_byzantium.44.a
+		add_years_of_income = -0.5
+		capital_scope = {
+			large_cast_bronze_mortar = ROOT
+		}
+	}
+	
+	option = {
+		name = ab_byzantium.44.b
+		remove_advisor_by_category = MIL
+	}
+	
+}
+
+#Refugees Fleeing to Nicaea
+country_event = {
+	id = ab_byzantium.45
+	title = ab_byzantium.45.t
+	desc = ab_byzantium.45.d
+	picture = BORDER_TENSION_eventPicture
+	
+	trigger = {
+		tag = BYZ
+		ai = no
+		NOT = {
+			mission_completed = byzantium_traitors
+		}
+		NOT = {
+			has_country_modifier = byz_nicene_refugees
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = ab_byzantium.45.a
+		add_adm_power = -75
+	}
+	
+	option = {
+		name = ab_byzantium.45.b
+		random_list = {
+			33 = {
+				random_owned_province = {
+					add_base_tax = -1
+				}
+				random_owned_province = {
+					add_base_manpower = -1
+				}
+				random_owned_province = {
+					add_base_manpower = -1
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = "byz_nicene_refugees"
+					duration = 1095
+				}
+			}
+			33 = {
+				random_owned_province = {
+					anti_tax_rebels = 1
+				}
+			}
+		}
+	}
+}
+
+#Advisors Leaving
+country_event = {
+	id = ab_byzantium.46
+	title = ab_byzantium.46.t
+	desc = ab_byzantium.46.d
+	picture = DEBATE_REPUBLICAN_eventPicture
+	
+	trigger = {
+		tag = BYZ
+		ai = no
+		has_advisor = yes
+	}
+	
+	mean_time_to_happen = {
+		months = 45
+	}
+	
+	fire_only_once = yes
+
+	option = {
+		name = ab_byzantium.46.b
+		add_years_of_income = -0.5
+	}
+	
+	option = {
+		name = ab_byzantium.46.a
+		custom_tooltip = BYZ_ADVISOR_LEAVE_COURT
+		hidden_effect = {
+			remove_advisor_by_category = ADM
+			remove_advisor_by_category = DIP
+			remove_advisor_by_category = MIL
+		}
+		add_country_modifier = {
+			name = "byz_scholars_fleeing"
+			duration = 3650
+		}
+	}
+}

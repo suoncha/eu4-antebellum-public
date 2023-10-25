@@ -1,0 +1,78 @@
+country_decisions = {
+	
+	form_carantania = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_carantania_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = SLC }
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
+			tag = SLV
+			OR = {
+				ai = no
+				AND = {
+					ai = yes
+					num_of_cities = 3
+				}
+			}
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 129
+				province_id = 130
+				province_id = 4738
+				province_id = 4759
+				province_id = 1863
+				province_id = 4761
+				province_id = 134
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			adm_tech = 10
+			owns_core_province = 129
+			owns_core_province = 130
+			owns_core_province = 4738
+			owns_core_province = 4759
+			owns_core_province = 1863
+			owns_core_province = 4761
+			owns_core_province = 134
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = SLC
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			custom_tooltip = cosmetic_tag_info
+			set_country_flag = formed_carantania_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}	
+	
+}

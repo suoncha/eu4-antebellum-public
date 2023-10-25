@@ -1,0 +1,109 @@
+country_decisions = {
+
+	split_the_roman_empire = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = released_rome_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			tag = ROM
+			was_tag = BYZ
+			NOT = { exists = WRE }
+			OR = {
+				religion_group = christian
+				religion_group = pagan
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				region = italy_region
+				region = france_region
+				region = iberia_region
+				region = balkan_region
+				region = anatolia_region
+				region = mashriq_region
+				region = maghreb_region
+				region = british_isles_region
+				region = north_german_region
+				region = south_german_region
+				region = low_countries_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		allow = {
+			italy_region = {
+				type = all
+				owned_by = ROOT
+			}
+			france_region = {
+				type = all
+				owned_by = ROOT
+			}
+			iberia_region = {
+				type = all
+				owned_by = ROOT
+			}
+			mashriq_region = {
+				type = all
+				owned_by = ROOT
+			}
+			owns = 343 # Fez
+			owns = 341 # Tunis
+			owns = 361 # Cairo
+			owns = 236 # London
+			owns = 245 # Yorkshire
+			owns = 96 # Zeeland
+			owns = 134 # Vienna
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+		effect = {
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+							superregion = europe_superregion
+						}
+						remove_core = ROOT
+						add_core = WRE
+					}
+				every_owned_province = {
+					limit = {
+							region = maghreb_region
+						}
+						remove_core = ROOT
+						add_core = WRE
+					}
+			release = WRE
+			WRE = {
+				change_government = monarchy
+				#set_legacy_government = despotic_monarchy
+				change_primary_culture = ROOT
+				change_religion = ROOT
+				set_government_rank = 3
+				define_ruler = {
+					dynasty = ROOT
+					culture = ROOT
+					religion = ROOT
+				}
+				add_manpower = 100
+				add_treasury = 5000
+				118 = {
+					move_capital_effect = yes
+				}
+				add_historical_friend = BYZ
+			}
+			}
+			change_tag = BYZ
+			override_country_name = EROME
+			set_country_flag = released_rome_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+}

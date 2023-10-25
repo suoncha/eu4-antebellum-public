@@ -1,0 +1,129 @@
+namespace = ab_ghor
+
+
+#Timed Mission Unlock
+country_event = {
+	id = ab_ghor.1
+	title = ab_ghor.1.t
+	desc = ab_ghor.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_cornwall.1.a
+		set_country_flag = ghu_mission_unlocked
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Timed Mission Fail
+country_event = {
+	id = ab_ghor.2
+	title = ab_ghor.2.t
+	desc = ab_ghor.2.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = GHU
+			was_tag = GHU
+		}
+		has_country_flag = ghu_mission_unlocked
+		NOT = {
+			mission_completed = ghu_conquest
+		}
+		NOT = {
+			has_country_modifier = ghu_right
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = ghu_mission_unlocked
+			set_country_flag = ghu_mission_failed
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_ghor.2.a
+	}
+}
+
+#Rise of the Ghurids
+country_event = {
+	id = ab_ghor.3
+	title = ab_ghor.3.t
+	desc = ab_ghor.3.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_ghor.3.a
+		override_country_name = GHURIDS
+		set_government_rank = 3
+		custom_tooltip = GHU_EMPOWER_IDEAS
+		add_country_modifier = {
+			name = grg_dynasty
+			duration = -1
+		}
+		hidden_effect = {
+			set_country_flag = ghu_empower_nis
+			swap_free_idea_group = yes
+		}
+	}
+}
+
+#Persianate Empire
+country_event = {
+	id = ab_ghor.4
+	title = ab_ghor.4.t
+	desc = ab_ghor.4.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ghor.4.a
+		custom_tooltip = GHU_PP
+		hidden_effect = {
+			add_power_projection = {
+				type = GHU_perma_pp
+				amount = 25
+			}
+		}
+		add_country_modifier = {
+			name = ghu_persianate
+			duration = -1
+		}
+		custom_tooltip = GHU_DEVELOPING
+		add_government_reform = ghuridempire
+	}
+}
+
+#Indo Iranian Union
+country_event = {
+	id = ab_ghor.5
+	title = ab_ghor.5.t
+	desc = ab_ghor.5.d
+	picture = 1_Brahmin_Estate__eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ghor.5.a
+		unlock_estate_privilege = {
+			estate_privilege = estate_nobles_ghurid_hindu_integration
+		}
+		custom_tooltip = GHU_REFORMSHH
+		set_country_flag = unlocked_shhdharmic
+	}
+}

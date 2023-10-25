@@ -1,0 +1,67 @@
+# Fuck lots of code
+
+has_good_relations_with_yuan_or_owner_of_beijing = {
+	if = {
+		limit = {
+			exists = YUA
+		}
+		YUA = {
+			has_opinion = {
+				who = ROOT
+				value = 75
+			}
+		}
+	}
+	else = {
+		1816 = {
+			owner = {
+				has_opinion = {
+					who = ROOT
+					value = 75
+				}
+			}
+		}
+	}
+}
+
+has_insulted_yuan_or_owner_of_beijing = {
+	if = {
+		limit = {
+			exists = YUA
+		}
+		YUA = {
+			custom_trigger_tooltip = {
+				tooltip = has_been_insulted_by_root
+				OR = {
+					has_opinion_modifier = {
+						who = ROOT
+						modifier = insulted
+					}
+					has_opinion_modifier = {
+						who = ROOT
+						modifier = scornfully_insulted
+					}
+				}
+			}
+		}
+	}
+	else = {
+		1816 = {
+			owner = {
+				custom_trigger_tooltip = {
+					tooltip = has_been_insulted_by_root
+					OR = {
+						has_opinion_modifier = {
+							who = ROOT
+							modifier = insulted
+						}
+						has_opinion_modifier = {
+							who = ROOT
+							modifier = scornfully_insulted
+						}
+					}
+				}
+			}
+		}
+	}
+}

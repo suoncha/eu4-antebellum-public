@@ -1,0 +1,172 @@
+namespace = ab_turkestan
+normal_or_historical_nations = yes
+
+#Turanian Spread
+province_event = {
+	id = ab_turkestan.1
+	title = ab_turkestan.1.t
+	desc = ab_turkestan.1.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+	}
+	
+	trigger = {
+		owner = {
+			mission_completed = trk_turan
+		}
+		NOT = {
+			culture = turanian_culture
+		}
+		religion = tengri_pagan_reformed
+		any_neighbor_province = {
+			culture = turanian_culture
+		}
+	}
+	
+	option = {
+		name = ab_turkestan.1.a
+		change_culture = turanian_culture
+		change_original_culture = turanian_culture
+	}
+}
+
+#Conquest of the Golden Horde 
+country_event = {
+	id = ab_turkestan.2
+	title = ab_turkestan.2.t
+	desc = ab_turkestan.2.d
+	picture = AB_CHARGE_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_turkestan.2.a
+		add_mil_power = 150
+		add_country_modifier = {
+			name = "trk_legacy_gokturks"
+			duration = -1
+		}
+		custom_tooltip = TRK_CORES
+		hidden_effect = {
+			every_province = {
+				limit = {
+					is_core = GLH
+				}
+				add_territorial_core = ROOT
+			}
+		}
+	}
+}
+
+#Conquest of the Grey Horde 
+country_event = {
+	id = ab_turkestan.3
+	title = ab_turkestan.3.t
+	desc = ab_turkestan.3.d
+	picture = AB_CHARGE_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_turkestan.3.a
+		add_adm_power = 150
+		476 = {
+			add_devastation = 100
+		}
+		custom_tooltip = TRK_EXECUTE
+		add_country_modifier = {
+			name = "trk_ended"
+			duration = -1
+		}
+		custom_tooltip = TRK_CORESGRH
+		hidden_effect = {
+			every_province = {
+				limit = {
+					is_core = GRH
+				}
+				add_territorial_core = ROOT
+			}
+			GRH = {
+				kill_ruler = yes
+				kill_heir = {}
+			}
+		}
+	}
+}
+
+#Conquest of Persia 
+country_event = {
+	id = ab_turkestan.4
+	title = ab_turkestan.4.t
+	desc = ab_turkestan.4.d
+	picture = AB_SELJUK_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_turkestan.4.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		custom_tooltip = TRK_PERSIA
+		add_country_modifier = {
+			name = "trk_consolidate"
+			duration = 9125
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					superregion = persia_superregion
+				}
+				add_local_autonomy = -25
+				add_nationalism = -5
+			}
+			every_province = {
+				limit = {
+					culture = turkish
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+		custom_tooltip = TRK_CLAIM_TURK
+	}
+}
+
+#Conquest of China
+country_event = {
+	id = ab_turkestan.5
+	title = ab_turkestan.5.t
+	desc = ab_turkestan.5.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_turkestan.5.a
+		custom_tooltip = TRK_CONQUEROR
+		add_country_modifier = {
+			name = "trk_avenged"
+			duration = -1
+		}
+		china_superregion = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}

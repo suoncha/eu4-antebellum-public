@@ -1,0 +1,84 @@
+country_decisions = {
+
+	form_brandenburg = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_brandenburg_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = BRA }
+			NOT = { tag = HLR }
+			NOT = { tag = GER }
+			NOT = { tag = PAP }
+			NOT = { tag = HAB }
+			# AI Prussia would like to form Brandenburg
+			# while the natural evolution is for
+			# Brandenburg to form Prussia
+			NOT = { tag = PRU }
+			culture_group = germanic
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1759
+				province_id = 50
+				province_id = 51
+				province_id = 2969
+				province_id = 49
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+				AND = {
+					# Only berlin needs to be the state religion
+					province_id = 50
+					NOT = { religion = ROOT }
+				}
+			}
+		}
+		allow = {
+			owns_core_province = 1759
+			owns_core_province = 50
+			owns_core_province = 51
+			owns_core_province = 2969
+			owns_core_province = 49
+			50 = {
+				religion = ROOT
+			}
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			NOT = { exists = BRA }
+		}
+		effect = {
+			change_tag = BRA
+			50 = {
+				move_capital_effect = yes
+			}
+			50 = {
+				change_culture = ROOT
+			}
+			50 = {
+				change_province_name = "Berlin"
+				rename_capital = "Berlin"
+			}
+			swap_non_generic_missions = yes
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			add_prestige = 10
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			set_country_flag = formed_brandenburg_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+}

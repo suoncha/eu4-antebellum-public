@@ -1,0 +1,41 @@
+country_decisions = {
+
+	rename_lechia = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_lechia }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			OR = {
+				tag = POL
+				tag = PLC
+			}
+			OR = {
+    				religion = slavic_pagan
+   				religion = reformed_slavic
+			}	
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+		}
+		effect = {
+			override_country_name = PROCLAIM_LECHIA
+			set_country_flag = formed_lechia
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

@@ -1,0 +1,278 @@
+
+swabian_group_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = WUR
+			tag = BAD
+			tag = ALS
+			tag = MLH
+			tag = KNZ
+			tag = MEM
+			tag = ULM
+			tag = AUG
+			tag = DWT
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	swa_expand_a_bit = {
+		icon = mission_assemble_an_army
+		required_missions = { }
+
+		provinces_to_highlight = {
+			owner = {
+				primary_culture = swabian
+				total_development = root
+				NOT = { tag = root }
+			}
+		}
+		
+		trigger = {
+			num_of_cities = 5
+			custom_trigger_tooltip = {
+				tooltip = no_swabians_with_more_dev_tooltip
+				NOT = {
+					any_country = {
+						primary_culture = swabian
+						total_development = root
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = swa_new_diplomatic_relevance_mod
+				duration = 7300
+			}
+		}
+	}
+	
+	swa_swabian_league_mission = {
+		icon = mission_alliances
+		required_missions = { swa_expand_a_bit }
+
+		provinces_to_highlight = {
+			culture = swabian
+			region = south_german_region
+			NOT = { country_or_non_sovereign_subject_holds = root }
+			NOT = {
+				owner = {
+					primary_culture = swabian
+					alliance_with = root
+				}
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				desc = swa_swabian_league_mission_trigger_tooltip
+				south_german_region = {
+					type = all
+					culture = swabian
+					OR = {
+						country_or_non_sovereign_subject_holds = ROOT
+						owner = {
+							primary_culture = swabian
+							alliance_with = ROOT
+						}
+					}
+				}
+				amount = 8
+			}
+		}
+		
+		effect = {
+			every_province = {
+				limit = {
+					region = south_german_region
+					culture = swabian
+					NOT = { owner = { primary_culture = swabian } }
+				}
+				add_permanent_claim = root
+				hidden_effect = {
+					add_named_unrest = {
+						name = swabian_unification_unrest
+						value = 5
+					}
+				}
+				custom_tooltip = swa_swabian_league_mission_effect_tooltip
+			}
+			every_country = {
+				limit = {
+					alliance_with = root
+					primary_culture = swabian
+				}
+				add_opinion = {
+					who = root
+					modifier = opinion_swabian_league
+				}
+				hidden_effect = {
+					reverse_add_opinion = {
+						who = root
+						modifier = opinion_swabian_league
+					}
+				}
+			}
+		}
+	}
+	
+	swa_swabian_liberty = {
+		icon = mission_noble_council
+		required_missions = { swa_swabian_league_mission }
+
+		provinces_to_highlight = {
+			OR = {
+				area = lower_swabia_area
+				area = upper_swabia_area
+				area = upper_rhineland_area
+				area = alsace_area
+			}
+			NOT = { owner = { primary_culture = swabian } }
+		}
+		
+		trigger = {
+			lower_swabia_area = {
+				type = all
+				owner = { primary_culture = swabian }
+			}
+			upper_swabia_area = {
+				type = all
+				owner = { primary_culture = swabian }
+			}
+			upper_rhineland_area = {
+				type = all
+				owner = { primary_culture = swabian }
+			}
+			alsace_area = {
+				type = all
+				owner = { primary_culture = swabian }
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							alliance_with = root
+							primary_culture = swabian
+						}
+					}
+				}
+				custom_tooltip = swa_swabian_liberty_effect_tooltip
+			}
+			else = {
+				every_country = {
+					limit = {
+						alliance_with = root
+						primary_culture = swabian
+					}
+					country_event = { id = emp_mission_events.11 days = 5 }
+				}
+			}
+			switzerland_area = {
+				limit = {
+					NOT = { owned_by = root }
+					NOT = { is_permanent_claim = root }
+				}
+				add_permanent_claim = root
+			}
+			romandie_area = {
+				limit = {
+					NOT = { owned_by = root }
+					NOT = { is_permanent_claim = root }
+				}
+				add_permanent_claim = root
+			}
+			4710 = {
+				if = {
+					limit = {
+						NOT = { owned_by = root }
+						NOT = { is_permanent_claim = root }
+					}
+					add_permanent_claim = root
+				}
+			}
+		}
+	}
+	
+	swa_stem_duchy = {
+		icon = mission_unite_home_region
+		required_missions = { swa_swabian_liberty }
+
+		provinces_to_highlight = {
+			OR = {
+				area = upper_swabia_area
+				area = lower_swabia_area
+				area = upper_rhineland_area
+				area = alsace_area
+				AND = {
+					OR = {
+						area = switzerland_area
+						area = romandie_area
+						province_id = 4710
+					}
+					NOT = {
+						ROOT = {
+							num_of_owned_provinces_with = {
+								value = 8 #of 11
+								OR = {
+									area = switzerland_area
+									area = romandie_area
+									province_id = 4710
+								}
+							}
+						}
+					}
+				}
+			}
+			NOT = { owned_by = root }
+		}
+		
+		trigger = {
+			upper_swabia_area = {
+				type = all
+				owned_by = root
+			}
+			lower_swabia_area = {
+				type = all
+				owned_by = root
+			}
+			upper_rhineland_area = {
+				type = all
+				owned_by = root
+			}
+			alsace_area = {
+				type = all
+				owned_by = root
+			}
+			num_of_owned_provinces_with = {
+				value = 8 #of 11
+				OR = {
+					area = switzerland_area
+					area = romandie_area
+					province_id = 4710
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = swa_restored_stem_duchy
+				duration = 7300
+			}
+			tirol_area = {
+				limit = {
+					NOT = { owned_by = root }
+					NOT = { is_permanent_claim = root }
+				}
+				add_permanent_claim = root
+			}
+		}
+	}
+}

@@ -1,0 +1,268 @@
+saxon_england = {
+	icon = "english_monarchy"
+	allow_normal_conversion = no
+	potential = {
+		has_reform = saxon_england
+	}
+	lock_level_when_selected = yes
+	valid_for_nation_designer = yes
+	nation_designer_cost = 15
+	nation_designer_trigger = {
+		has_dlc = "Common Sense"
+	}
+	legacy_equivalent = english_monarchy_legacy
+	start_territory_to_estates = 0.3
+	modifiers = {
+		yearly_corruption = 0.1
+		min_autonomy = 10
+		max_absolutism = -50
+		nobles_influence_modifier = 0.2
+	}
+
+	conditional = {
+		allow = { has_dlc = "Common Sense" }
+		has_parliament = yes
+	}
+
+	custom_attributes = {
+		locked_government_type = yes
+	}
+}
+
+witenred = {
+	icon = "english_monarchy"
+	allow_normal_conversion = no
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+	}
+	lock_level_when_selected = yes
+	valid_for_nation_designer = yes
+	nation_designer_cost = 15
+	nation_designer_trigger = {
+		has_dlc = "Common Sense"
+	}
+	legacy_equivalent = english_monarchy_legacy
+	start_territory_to_estates = 0.3
+	modifiers = {
+		min_autonomy = -10
+		max_absolutism = -30
+		nobles_influence_modifier = -0.1
+		parliament_backing_chance = 0.10
+		parliament_effect_duration = 3
+	}
+
+	conditional = {
+		allow = { has_dlc = "Common Sense" }
+		has_parliament = yes
+	}
+}
+
+engheptarch = {
+	icon = "engheptarch"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+	}
+	modifiers = {
+		global_manpower_modifier = 0.10
+		global_autonomy = -0.05
+	}
+	ai = {
+		factor = 500
+	}
+}
+
+engenglisc = {
+	icon = "bulliterary"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+	}
+	modifiers = {
+		same_culture_advisor_cost = -0.1
+		global_institution_spread = 0.1
+	}
+	ai = {
+		factor = 3
+	}
+}
+
+engchronicle = {
+	icon = "bohmining"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+	}
+	modifiers = {
+		prestige_from_land = 0.5
+		church_loyalty_modifier = 0.1
+	}
+	ai = {
+		factor = 3
+	}
+}
+
+engcyning = {
+	icon = "bohelection"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+	}
+	modifiers = {
+		legitimacy = 0.5
+		yearly_absolutism = 0.5
+	}
+	conditional = {
+		allow = { has_dlc = "Common Sense" }
+		has_parliament = no
+	}
+	ai = {
+		factor = 3
+	}
+}
+
+enghereditary = {
+	icon = "nazcaliph"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+	}
+	modifiers = {
+		heir_chance = 1
+		diplomatic_reputation = 1
+		global_unrest = -1
+	}
+	custom_attributes = {
+		disables_witenagemot_elections = yes
+	}
+	ai = {
+		factor = 3
+	}
+}
+
+enghousecarls = {
+	icon = "enghousecarls"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+	}
+	modifiers = {
+		infantry_power = 0.1
+		army_tradition = 0.15
+	}
+	ai = {
+		factor = 500
+	}
+}
+
+engwarships = {
+	icon = "engwarships"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+	}
+	modifiers = {
+		heavy_ship_power = 0.1
+		heavy_ship_cost = -0.1
+	}
+	ai = {
+		factor = 300
+	}
+}
+
+engoak = {
+	icon = "engoak"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+	}
+	modifiers = {
+		naval_morale = 0.1
+		ship_durability = 0.05
+	}
+	ai = {
+		factor = 3
+	}
+}
+
+engcompany = {
+	icon = "engcompany"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+			tag = ANG
+			was_tag = ANG
+		}
+	}
+	modifiers = {
+		global_colonial_growth = 10
+		global_trade_power = 0.05
+	}
+	ai = {
+		factor = 300
+	}
+}
+
+eng_marine_reform = {
+	icon = "compass"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+			tag = ANG
+			was_tag = ANG
+			tag = DAN
+			was_tag = DAN
+		}
+	}
+	modifiers = {
+		global_sailors_modifier = 0.33
+	}
+	effect = {
+		custom_tooltip = eng_marine_reform_negate
+		hidden_effect = {
+			add_country_modifier = {
+				name = eng_commando_training
+				duration = -1
+			}	
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			remove_country_modifier = eng_commando_training
+		}
+	}
+	ai = {
+		factor = 3
+	}
+}

@@ -1,0 +1,79 @@
+country_decisions = {
+
+	ita_move_capital = {
+		major = yes
+		potential = {
+			tag = ITA
+			normal_or_historical_nations = yes
+			has_country_flag = ita_move_capital
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { has_country_flag = relocated_capital_rome }
+		}
+		allow = {
+			is_core = 118
+			owns = 118
+			NOT = { capital = 118 }
+			is_at_war = no
+			adm_power = 100
+			has_country_flag = ita_move_capital
+		}
+		effect = {
+			add_adm_power = -100
+			set_country_flag = relocated_capital_rome
+			118 = {
+				move_capital_effect = yes
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}			
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	itl_move_capital = {
+		major = yes
+		potential = {
+			OR = {
+				tag = SIC
+				tag = ITL
+			}
+			normal_or_historical_nations = yes
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { has_country_flag = itl_relocated_capital_rome }
+		}
+		allow = {
+			is_core = 118
+			owns = 118
+			NOT = { capital = 118 }
+			is_at_war = no
+			adm_power = 100
+		}
+		effect = {
+			add_adm_power = -100
+			set_country_flag = itl_relocated_capital_rome
+			118 = {
+				move_capital_effect = yes
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}	
+			118 = {
+				change_culture = ROOT
+			}
+			118 = {
+				change_religion = ROOT
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

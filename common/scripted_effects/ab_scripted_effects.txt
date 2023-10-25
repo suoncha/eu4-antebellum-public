@@ -1,0 +1,173 @@
+# country scope
+for_privilege_given_to_estate = {
+	set_variable = {
+		which = max_privileges
+		value = $max_privileges$
+	}
+	if = {
+		limit = {
+			check_variable = {
+				which = max_privileges
+				value = 1
+			}
+			num_of_estate_privileges = {
+				estate = estate_$estate$
+				value = 1
+			}
+		}
+		if = {
+			limit = {
+				check_variable = {
+					which = max_privileges
+					value = 2
+				}
+				num_of_estate_privileges = {
+					estate = estate_$estate$
+					value = 2
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = max_privileges
+						value = 3
+					}
+					num_of_estate_privileges = {
+						estate = estate_$estate$
+						value = 3
+					}
+				}
+				if = {
+					limit = {
+						check_variable = {
+							which = max_privileges
+							value = 4
+						}
+						num_of_estate_privileges = {
+							estate = estate_$estate$
+							value = 4
+						}
+					}
+					if = {
+						limit = {
+							check_variable = {
+								which = max_privileges
+								value = 5
+							}
+							num_of_estate_privileges = {
+								estate = estate_$estate$
+								value = 5
+							}
+						}
+						if = {
+							limit = {
+								check_variable = {
+									which = max_privileges
+									value = 6
+								}
+								num_of_estate_privileges = {
+									estate = estate_$estate$
+									value = 6
+								}
+							}
+							$effect$
+						}
+						$effect$
+					}
+					$effect$
+				}
+				$effect$
+			}
+			$effect$
+		}
+		$effect$
+	}
+}
+
+# Country scope
+clr_gaelic_aspects_buffs = {
+	clr_country_flag = clan_loyalty_aspect_election
+	remove_country_modifier = arc_chosen_1
+	remove_country_modifier = arc_chosen_2
+	remove_country_modifier = arc_chosen_3
+}
+
+# Change the monarch power, unless he already has 6, in which case
+# we give the player 200 of the power specified.
+change_monarch_points_or_power = {
+	custom_tooltip = AB_ADD_$points$_$power$_EFFECT
+	hidden_effect = {
+		set_variable = {
+			which = pointsChange
+			value = $points$
+		}
+		if = {
+			limit = {
+				check_variable = {
+					which = pointsChange
+					value = 0
+				}
+			}
+			# If we are over 0 then we were given a positive
+			# value, and we should ADD
+			while = {
+				limit = {
+					check_variable = {
+						which = pointsChange
+						value = 1
+					}
+				}
+				if = {
+					limit = {
+						$power$ = 6
+					}
+					add_$power$_power = 100
+				}
+				else = {
+					change_$power$ = 1
+				}
+				subtract_variable = {
+					which = pointsChange
+					value = 1
+				}
+			}
+		}
+		else = {
+			while = {
+				limit = {
+					NOT = {
+						check_variable = {
+							which = pointsChange
+							value = 0
+						}
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							$power$ = 1
+						}
+					}
+					add_$power$_power = -100
+				}
+				else = {
+					change_$power$ = -1
+				}
+				change_variable = {
+					which = pointsChange
+					value = 1
+				}
+			}
+		}
+	}
+}
+
+# Grants X of all mana
+grant_all_mana = {
+	custom_tooltip = AB_GRANT_$mana$_ALL_POWERS
+	hidden_effect = {
+		add_adm_power = $mana$
+		add_dip_power = $mana$
+		add_mil_power = $mana$
+	}
+}

@@ -1,0 +1,724 @@
+namespace = ab_ottoman
+normal_or_historical_nations = yes
+
+#Ottoman Coup
+country_event = {
+	id = ab_ottoman.1
+	title = ab_ottoman.1.t
+	desc = ab_ottoman.1.d
+	picture = SWORD_OF_OSMAN_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		NOT = {
+			mission_completed = byzantium_crisis
+		}
+		corruption = 1
+		num_of_loans = 1
+		owns = 4779
+		owns = 149
+		owns = 4705
+		owns = 151
+		4779 = {
+			controlled_by = BYZ
+		}
+		149 = {
+			controlled_by = BYZ
+		}
+		4705 = {
+			controlled_by = BYZ
+		}
+		151 = {
+			controlled_by = BYZ
+		}
+		NOT = {
+			estate_loyalty = {
+				estate = estate_burghers
+				loyalty = 30
+			}
+		}
+		ai = no
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = ab_ottoman.1.a
+		ai_chance = { factor = 100 }
+		add_estate_loyalty = {
+			estate = estate_burghers
+			loyalty = -20
+		}
+		151 = {
+			spawn_rebels = {
+				type = particularist_rebels
+				size = 3
+				leader = "Murad II Osmanoglu"
+			}
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.1.b
+		ai_chance = { factor = 0 }
+		highlight = yes
+		custom_tooltip = TUR_REVOLT
+		hidden_effect = {
+			4779 = {
+				add_core = TUR
+			}
+			149 = {
+				add_core = TUR
+			}
+			4705 = {
+				add_core = TUR
+			}
+			release = TUR
+			TUR = {
+				add_republican_tradition = 100
+				add_manpower = 10
+				add_sailors = 600
+				add_prestige = 30
+				add_treasury = 150
+				add_adm_power = 30
+				add_dip_power = 40
+				add_mil_power = 30
+				create_general = { tradition = 35 }
+			}
+			TUR = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+			TUR = {
+				add_government_reform = ottoman_corporation
+				define_ruler = {
+					name = "Murad Osmanoglu"
+					adm = 3
+					dip = 4
+					mil = 3
+					age = 46
+				}
+			}
+			switch_tag = TUR
+		}
+		hidden_effect = {
+			TUR = {
+				set_country_flag = tur_was_released
+			} 
+			BYZ = {
+				declare_war_with_cb = {
+					who = TUR
+					casus_belli = cb_core
+					war_goal_province = 149
+				}
+			}
+		}
+	}	
+}
+
+#Rise of the Ottomans
+country_event = {
+	id = ab_ottoman.2
+	title = ab_ottoman.2.t
+	desc = ab_ottoman.2.d
+	picture = AB_MEHMET_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ottoman.2.a
+		151 = {
+			move_capital_effect = yes
+		}
+		151 = {
+			change_culture = turkish
+		}
+		151 = {
+			change_religion = sunni
+		}
+		151 = {
+			rename_capital = Kostantiniyye
+		}
+		151 = {
+			add_great_project_tier = {
+				type = ottoman_market
+				tier = 1
+			}
+		}
+	}
+}
+
+#Skanderbeg
+country_event = {
+	id = ab_ottoman.3
+	title = ab_ottoman.3.t
+	desc = ab_ottoman.3.d
+	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ottoman.3.a
+		define_general = {
+			name = "Skanderbeg"
+			shock = 5
+			fire = 5
+			manuever = 5
+			siege = 0
+		}
+		add_country_modifier = {
+			name = tur_skanderbegs
+			duration = 7300
+		}
+	}
+}
+
+#Offer to Venice
+country_event = {
+	id = ab_ottoman.4
+	title = ab_ottoman.4.t
+	desc = ab_ottoman.4.d
+	picture = 3_SONS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ottoman.4.a
+		set_global_flag = tur_offered_100
+		VEN = {
+			country_event = { id = ab_ottoman.5 days = 20 }
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.4.b
+		set_global_flag = tur_offered_250
+		VEN = {
+			country_event = { id = ab_ottoman.5 days = 20 }
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.4.c
+		set_global_flag = tur_offered_500
+		VEN = {
+			country_event = { id = ab_ottoman.5 days = 20 }
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.4.de
+	}
+}
+
+#Venice receives offer
+country_event = {
+	id = ab_ottoman.5
+	title = ab_ottoman.5.t
+	desc = ab_ottoman.5.d
+	picture = 3_SONS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ottoman.5.a
+		ai_chance = { factor = 25 }
+		trigger = {
+			has_global_flag = tur_offered_100
+		}
+		add_treasury = 100
+		tooltip = {
+			aegean_archipelago_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				cede_province = TUR
+				add_core = TUR
+				remove_core = ROOT
+			}
+		}
+		set_global_flag = tur_ven_accepted_100
+		TUR = {
+			country_event = { id = ab_ottoman.6 days = 20 }
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.5.b
+		ai_chance = { factor = 75 }
+		trigger = {
+			has_global_flag = tur_offered_100
+		}
+		TUR = {
+			country_event = { id = ab_ottoman.7 days = 20 }
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.5.c
+		ai_chance = { factor = 50 }
+		trigger = {
+			has_global_flag = tur_offered_250
+		}
+		add_treasury = 250
+		tooltip = {
+			aegean_archipelago_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				cede_province = TUR
+				add_core = TUR
+				remove_core = ROOT
+			}
+		}
+		set_global_flag = tur_ven_accepted_250
+		TUR = {
+			country_event = { id = ab_ottoman.6 days = 20 }
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.5.de
+		ai_chance = { factor = 50 }
+		trigger = {
+			has_global_flag = tur_offered_250
+		}
+		TUR = {
+			country_event = { id = ab_ottoman.7 days = 20 }
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.5.e
+		ai_chance = { factor = 75 }
+		trigger = {
+			has_global_flag = tur_offered_500
+		}
+		add_treasury = 500
+		tooltip = {
+			aegean_archipelago_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				cede_province = TUR
+				add_core = TUR
+				remove_core = ROOT
+			}
+		}
+		set_global_flag = tur_ven_accepted_500
+		TUR = {
+			country_event = { id = ab_ottoman.6 days = 20 }
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.5.f
+		ai_chance = { factor = 25 }
+		trigger = {
+			has_global_flag = tur_offered_500
+		}
+		TUR = {
+			country_event = { id = ab_ottoman.7 days = 20 }
+		}
+	}
+
+}
+
+#Venice accepts the offer
+country_event = {
+	id = ab_ottoman.6
+	title = ab_ottoman.6.t
+	desc = ab_ottoman.6.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ottoman.6.a
+		trigger = {
+			has_global_flag = tur_offered_100
+		}
+		add_treasury = -100
+		aegean_archipelago_area = {
+			limit = {
+				country_or_non_sovereign_subject_holds = VEN
+			}
+			cede_province = TUR
+			add_core = TUR
+			remove_core = VEN
+		}
+		clr_global_flag = tur_ven_accepted_100
+		clr_global_flag = tur_offered_100
+	}
+	
+	option = {
+		name = ab_ottoman.6.a
+		trigger = {
+			has_global_flag = tur_offered_250
+		}
+		add_treasury = -250
+		aegean_archipelago_area = {
+			limit = {
+				country_or_non_sovereign_subject_holds = VEN
+			}
+			cede_province = TUR
+			add_core = TUR
+			remove_core = VEN
+		}
+		clr_global_flag = tur_ven_accepted_250
+		clr_global_flag = tur_offered_250
+	}
+	
+	option = {
+		name = ab_ottoman.6.a
+		trigger = {
+			has_global_flag = tur_offered_500
+		}
+		add_treasury = -500
+		aegean_archipelago_area = {
+			limit = {
+				country_or_non_sovereign_subject_holds = VEN
+			}
+			cede_province = TUR
+			add_core = TUR
+			remove_core = VEN
+		}
+		clr_global_flag = tur_ven_accepted_500
+		clr_global_flag = tur_offered_500
+	}
+	
+}
+
+#Venice declines the offer
+country_event = {
+	id = ab_ottoman.7
+	title = ab_ottoman.7.t
+	desc = ab_ottoman.7.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ottoman.7.a
+		clr_global_flag = tur_ven_accepted_500
+		clr_global_flag = tur_offered_500
+		clr_global_flag = tur_ven_accepted_250
+		clr_global_flag = tur_offered_250
+		clr_global_flag = tur_ven_accepted_100
+		clr_global_flag = tur_offered_100
+		add_country_modifier = {
+			name = tur_banish_latins
+			duration = 5475
+		}
+		aegean_archipelago_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+#Bogdanoff
+country_event = {
+	id = ab_ottoman.8
+	title = ab_ottoman.8.t
+	desc = ab_ottoman.8.d
+	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_ottoman.8.a
+		add_country_modifier = {
+			name = "byz_novgorod_trade"
+			duration = -1
+		}
+	}
+}
+
+#Mehmed
+country_event = {
+	id = ab_ottoman.9
+	title = ab_ottoman.9.t
+	desc = ab_ottoman.9.d
+	picture = 3_SONS_eventPicture
+	
+	trigger = {
+		tag = TUR
+		NOT = {
+			has_ruler = "Murad Osmanoglu"
+		}
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = ab_ottoman.9.a
+		define_ruler = {
+			name = "Mehmed Osmanoglu"
+			adm = 6
+			dip = 4
+			mil = 6
+			age = 20
+			claim = 95
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.9.b
+	}
+}
+
+#Suleiman
+country_event = {
+	id = ab_ottoman.10
+	title = ab_ottoman.10.t
+	desc = ab_ottoman.10.d
+	picture = MILITARISTICALLY_TALENTED_RULER_eventPicture
+	
+	trigger = {
+		tag = TUR
+		is_year = 1520
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = ab_ottoman.10.a
+		define_ruler = {
+			name = "Suleiman Osmanoglu"
+			adm = 5
+			dip = 4
+			mil = 5
+			age = 26
+			claim = 95
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.10.b
+		define_general = {
+			name = "Suleiman Osmanoglu"
+			shock = 5
+			fire = 5
+			manuever = 3
+			siege = 3
+		}
+	}
+}
+
+#Idea Add
+country_event = {
+	id = ab_ottoman.13
+	title = ab_ottoman.13.t
+	desc = ab_ottoman.13.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = TUR
+			was_tag = TUR
+		}
+		has_idea = tur_fourth
+		NOT = {
+			has_country_modifier = tur_janissary_idea
+		}
+	}
+	
+	option = {
+		name = ab_ottoman.13.a
+		add_country_modifier = {
+			name = "tur_janissary_idea"
+			duration = -1
+		}
+	}
+	
+}
+
+#Idea Remove
+country_event = {
+	id = ab_ottoman.14
+	title = ab_ottoman.14.t
+	desc = ab_ottoman.14.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = TUR
+			was_tag = TUR
+		}
+		NOT = {
+			has_idea = tur_fourth
+		}
+		has_country_modifier = tur_janissary_idea
+	}
+	
+	option = {
+		name = ab_ottoman.14.a
+		remove_country_modifier = tur_janissary_idea
+	}
+	
+}
+
+#Funni
+country_event = {
+	id = ab_ottoman.15
+	title = ab_ottoman.15.t
+	desc = ab_ottoman.15.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		ai = yes
+		is_year = 1448
+		BYZ = {
+			owns = 4779
+		}
+		BYZ = {
+			owns = 149
+		}
+		BYZ = {
+			owns = 4705
+		}
+		BYZ = {
+			controls = 4779
+		}
+		BYZ = {
+			controls = 149
+		}
+		BYZ = {
+			controls = 4705
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_list = { 
+				5 = { 
+					hidden_effect = {
+						4779 = {
+							add_core = TUR
+						}
+						149 = {
+							add_core = TUR
+						}
+						4705 = {
+							add_core = TUR
+						}
+						release = TUR
+						TUR = {
+							add_country_modifier = {
+								name = tur_ai_buff
+								duration = 3650 
+							}
+							add_republican_tradition = 100
+							add_manpower = 10
+							add_sailors = 600
+							add_prestige = 30
+							add_treasury = 300
+							add_adm_power = 30
+							add_dip_power = 40
+							add_mil_power = 30
+							create_general = { tradition = 50 }
+						}
+						TUR = {
+							capital_scope = {
+								build_to_forcelimit = {
+									infantry = 0.7
+									cavalry = 0.3
+								}
+								janissary_infantry = TUR
+								janissary_infantry = TUR
+								janissary_infantry = TUR
+								janissary_infantry = TUR
+								janissary_infantry = TUR
+								janissary_infantry = TUR
+								janissary_infantry = TUR
+								janissary_infantry = TUR
+							}
+							random_owned_province = {
+								limit = {
+									has_port = yes
+								}
+								build_to_forcelimit = {
+									galley = 0.8
+									light_ship = 0.2
+								}
+							}
+						}
+						TUR = {
+							add_government_reform = ottoman_corporation
+							define_ruler = {
+								name = "Murad Osmanoglu"
+								adm = 3
+								dip = 4
+								mil = 3
+								age = 46
+							}
+						}
+					}
+					hidden_effect = {
+						TUR = {
+							set_country_flag = tur_was_released
+						} 
+						BYZ = {
+							declare_war_with_cb = {
+								who = TUR
+								casus_belli = cb_core
+								war_goal_province = 149
+							}
+						}
+					}
+				}
+				95 = { 
+				}
+			}
+		}
+	}
+	
+	option = {
+	}
+	
+}

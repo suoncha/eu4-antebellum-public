@@ -1,0 +1,53 @@
+frankish_succession_crisis = {
+	potential = {
+		tag = FRC
+		NOT = {
+			has_country_flag = had_frankish_succession_crisis
+		}
+		num_of_cities = 2
+		any_owned_province = {
+			is_capital = no
+			is_core = ROOT
+		}
+		government = monarchy
+		is_free_or_tributary_trigger = yes
+		uses_doom = no
+		normal_or_historical_nations = yes
+		NOT = {
+			is_year = 1455
+		}
+	}
+	
+	can_start = {
+		tag = FRC
+	}
+	
+	can_stop = {
+		has_any_disaster = yes
+	}
+	
+	progress = {
+		modifier = {
+			factor = 33
+			tag = FRC
+		} 
+	}
+	
+	modifier = {
+		global_unrest = 10
+		stability_cost_modifier = 0.25
+		manpower_recovery_speed = -0.25
+		reduced_liberty_desire = -10
+	}
+	
+	can_end = {
+		NOT = { num_of_rebel_controlled_provinces = 1 }
+		NOT = { num_of_rebel_armies = 1 }
+		has_heir = yes
+		stability = 1
+		dynasty = "Carolingian"
+	}
+	
+	on_start = ab_frc_disaster_event.1
+	on_end = ab_frc_disaster_event.2
+}

@@ -1,0 +1,706 @@
+namespace = ab_halal_japan
+
+#Muhammads Men
+country_event = {
+	id = ab_halal_japan.1
+	title = ab_halal_japan.1.t
+	desc = ab_halal_japan.1.d
+	picture = MERITOCRACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_halal_japan.1.a
+		custom_tooltip = shinto_events.isolation.tt
+		custom_tooltip = shinto_incident_islam_start.tt
+		add_prestige = 5
+		add_country_modifier = {
+			name = "japan_islam_1"
+			duration = 1095
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = -1
+		}
+		hidden_effect = {
+			country_event = {
+				id = ab_halal_japan.2
+				days = 1095
+			}
+		}
+	}
+	
+	option = {
+		name = ab_halal_japan.1.b
+		custom_tooltip = shinto_incident_islam_start.tt
+		custom_tooltip = shinto_events.open.tt
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = 1
+		}
+		hidden_effect = {
+			country_event = {
+				id = ab_halal_japan.2
+				days = 1095
+			}
+		}
+	}
+	
+	option = {
+		name = ab_halal_japan.1.c
+		custom_tooltip = shinto_incident_islam_start.tt
+		custom_tooltip = shinto_events.open.tt
+		add_country_modifier = {
+			name = "japan_islam_2"
+			duration = 1095
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = 1
+		}
+		hidden_effect = {
+			country_event = {
+				id = ab_halal_japan.2
+				days = 1095
+			}
+		}
+	}
+}
+
+#Muslims in Kyushu
+country_event = {
+	id = ab_halal_japan.2
+	title = ab_halal_japan.2.t
+	desc = ab_halal_japan.2.d
+	picture = IKKO_IKKI_INCIDENT_eventPicture
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			if = { 
+				limit = {
+					1012 = { owned_by = ROOT }
+					4182 = { owned_by = ROOT }
+				}
+				1012 = {
+					change_religion = sunni
+					add_province_modifier = {
+						name = "japan_islam_3"
+						duration = 1095
+					}
+					set_province_flag = japan_islamic_hub
+				}
+				4182 = {
+					change_religion = sunni
+					add_province_modifier = {
+						name = "japan_islam_3"
+						duration = 1095
+					}
+					set_province_flag = japan_islamic_hub
+				}
+			}
+			else = {
+				random_owned_province = {
+					change_religion = sunni
+					add_province_modifier = {
+						name = "japan_islam_3"
+						duration = 1095
+					}
+					set_province_flag = japan_islamic_hub
+				}		
+			}
+		}
+	}
+	
+	option = {
+		name = ab_halal_japan.2.a
+		custom_tooltip = shinto_events.open.tt
+		add_legitimacy = 10
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = 1
+		}
+		hidden_effect = {
+			country_event = {
+				id = ab_halal_japan.3
+				days = 1095
+			}
+		}
+	}
+	
+	option = {
+		name = ab_halal_japan.2.b
+		custom_tooltip = shinto_events.isolation.tt
+		add_legitimacy = 5
+		add_prestige = 10
+		add_country_modifier = {
+			name = "japan_islam_4"
+			duration = 1095
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = -1
+		}
+		hidden_effect = {
+			country_event = {
+				id = ab_halal_japan.3
+				days = 1095
+			}
+		}
+	}
+	
+	option = {
+		name = ab_halal_japan.2.c
+		custom_tooltip = shinto_events.isolation.tt
+		add_stability = -1
+		every_province = {
+			limit = {
+				region = japan_region
+				religion = sunni
+			}
+			add_province_modifier = {
+				name = "japan_islam_5"
+				duration = 1095
+			}
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = -3
+		}
+		hidden_effect = {
+			country_event = {
+				id = ab_halal_japan.3
+				days = 1095
+			}
+		}
+	}
+	
+}
+	
+	
+#Muslim Daimyo
+country_event = {
+	id = ab_halal_japan.3
+	title = ab_halal_japan.3.t
+	desc = ab_halal_japan.3.d
+	picture = SHOGUNATE_AUTHORITY_INCIDENT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_halal_japan.3.a
+		custom_tooltip = shinto_events.open.tt
+		add_prestige = -15
+		add_legitimacy = -15
+		add_country_modifier = {
+			name = "japan_islam_6"
+			duration = 1095
+		}
+		define_advisor = {
+			type = trader
+			skill = 2
+			religion = sunni
+			cost_multiplier = 0.5
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = 3
+		}
+		set_country_flag = japan_sunni_interest
+	}
+	
+	option = {
+		name = ab_halal_japan.3.b
+		custom_tooltip = shinto_events.open.tt
+		add_prestige = 10
+		hidden_effect = {
+			random_list = {
+				50 = {
+					country_event = {
+						id = ab_halal_japan.7
+						days = 1095
+					}
+				}
+				50 = {
+					country_event = {
+						id = ab_halal_japan.8
+						days = 1095
+					}
+				}
+			}
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = 1
+		}
+	}
+	
+	option = {
+		name = ab_halal_japan.3.c
+		custom_tooltip = shinto_events.isolation.tt
+		add_legitimacy = 10
+		add_stability = -1
+		hidden_effect = {
+			country_event = {
+				id = ab_halal_japan.6
+				days = 1095
+			}
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = -3
+		}
+	}
+	
+}
+
+#Anti Muslim Violence
+country_event = {
+	id = ab_halal_japan.4
+	title = ab_halal_japan.4.t
+	desc = ab_halal_japan.4.d
+	picture = ANGRY_MOB_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	trigger = {
+		any_province = {
+			has_province_flag = japan_islamic_hub
+		}
+	}
+	
+	option = {
+		name = ab_halal_japan.4.a
+		custom_tooltip = shinto_events.open.tt
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = 1
+		}
+		add_adm_power = -50
+	}
+	
+	option = {
+		name = ab_halal_japan.4.b
+		custom_tooltip = shinto_events.isolation.tt
+		every_province = {
+			limit = {
+				region = japan_region
+				religion = sunni
+			}
+			add_devastation = 15
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = -1
+		}
+	}
+}
+	
+#Islam Spreads
+province_event = {
+	id = ab_halal_japan.5
+	title = ab_halal_japan.5.t
+	desc = ab_halal_japan.5.d
+	picture = RAMADAN_eventPicture
+	
+	mean_time_to_happen = {
+		months = 120
+	}
+	
+	is_mtth_scaled_to_size = 1
+	
+	trigger = {
+		any_neighbor_province = { 
+			has_province_flag = japan_islamic_hub
+		}
+		NOT = {
+			has_province_flag = japan_blocked_islam
+		}
+		owner = { is_incident_active = incident_spread_of_islam }
+	}
+	
+	immediate = {
+		hidden_effect = {
+			change_religion = sunni
+			add_province_modifier = {
+				name = "japan_islam_3"
+				duration = 1095
+			}
+			set_province_flag = japan_islamic_hub
+		}
+	}
+	
+	option = {
+		name = ab_halal_japan.5.a
+		custom_tooltip = shinto_events.open.tt
+		owner = {
+			add_incident_variable_value = {
+				incident = incident_spread_of_islam
+				value = 1
+			}
+			add_legitimacy = 10
+		}
+	}
+	
+	option = {
+		name = ab_halal_japan.5.b
+		custom_tooltip = shinto_events.isolation.tt
+		owner = {
+			add_incident_variable_value = {
+				incident = incident_spread_of_islam
+				value = -1
+			}
+		}
+		every_neighbor_province = {
+			limit = {
+				NOT = {
+					religion = sunni
+				}
+			}
+			set_province_flag = japan_blocked_islam
+		}
+	}
+}
+
+#Islamic Uprising
+country_event = {
+	id = ab_halal_japan.6
+	title = ab_halal_japan.6.t
+	desc = ab_halal_japan.6.d
+	picture = ANGRY_MOB_eventPicture	
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_halal_japan.6.a
+		custom_tooltip = shinto_events.isolation.tt
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = -3
+		}
+		every_province = {
+			limit = {
+				region = japan_region
+				religion = sunni
+			}
+			sunni_rebels = 3
+		}
+		set_country_flag = japan_rejection_islam
+	}
+}
+	
+#Legality of Islam
+country_event = {
+	id = ab_halal_japan.7
+	title = ab_halal_japan.7.t
+	desc = ab_halal_japan.7.d
+	picture = IMPERIAL_SEAL_eventPicture
+
+	is_triggered_only = yes	
+	
+	option = {
+		name = ab_halal_japan.7.a
+		custom_tooltip = shinto_events.open.tt
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = 1
+		}
+		add_legitimacy = 10
+		add_prestige = -10
+		set_country_flag = japan_sunni_interest
+	}
+	
+	option = {
+		name = ab_halal_japan.7.b
+		custom_tooltip = shinto_events.open.tt
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = 1
+		}
+		add_legitimacy = -10
+		add_prestige = -15
+		set_ruler_religion = sunni
+		set_country_flag = japan_sunni_interest
+	}
+	
+	option = {
+		name = ab_halal_japan.7.c
+		custom_tooltip = shinto_events.isolation.tt
+		add_stability = -2
+		add_prestige = -15
+		hidden_effect = {
+			country_event = {
+				id = ab_halal_japan.6
+				days = 1095
+			}
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = -3
+		}
+	}
+}
+	
+#Rejection of Allah
+country_event = {
+	id = ab_halal_japan.8
+	title = ab_halal_japan.8.t
+	desc = ab_halal_japan.8.d
+	picture = HAJJ_eventPicture
+
+	is_triggered_only = yes	
+
+	immediate = {
+		set_country_flag = ab_japan_court_finds_islam_haram
+	}
+	
+	option = {
+		name = ab_halal_japan.8.a
+		custom_tooltip = shinto_events.isolation.tt
+		random_list = {
+			75 = {
+				country_event = {
+					id = ab_halal_japan.12
+					days = 1095
+				}
+			}
+			25 = {
+				country_event = {
+					id = ab_halal_japan.6
+					days = 1095
+				}
+			}
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = 2
+		}
+	}
+	
+	option = {
+		name = ab_halal_japan.8.b
+		custom_tooltip = shinto_events.isolation.tt
+		add_legitimacy = 10
+		random_list = {
+			50 = {
+				country_event = {
+					id = ab_halal_japan.12
+					days = 1095
+				}
+			}
+			50 = {
+				country_event = {
+					id = ab_halal_japan.6
+					days = 1095
+				}
+			}
+		}
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = -2
+		}
+	}
+	
+}
+
+#Court Converts
+country_event = {
+	id = ab_halal_japan.9
+	title = ab_halal_japan.9.t
+	desc = ab_halal_japan.9.d
+	picture = HAJJ_eventPicture
+
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 50
+	}
+	
+	trigger = {
+		has_country_flag = japan_sunni_interest
+	}
+	
+	option = {
+		name = ab_halal_japan.9.a
+		custom_tooltip = shinto_events.open.tt
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = 1
+		}
+		add_country_modifier = {
+			name = "ab_islam_7"
+			duration = -1
+		}
+		set_country_flag = sunni_realm
+	}
+}
+
+#Shingon Rebellion
+country_event = {
+	id = ab_halal_japan.10
+	title = ab_halal_japan.10.t
+	desc = ab_halal_japan.10.d
+	picture = HAJJ_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					religion = shinto
+				}
+				shinto_rebels = 3
+			}
+			random_owned_province = {
+				limit = {
+					religion = shinto
+				}
+				shinto_rebels = 3
+			}
+			random_owned_province = {
+				limit = {
+					religion = shinto
+				}
+				shinto_rebels = 3
+			}
+		}
+	}
+	
+	trigger = {
+		has_country_flag = japan_sunni_interest
+	}
+	
+	option = {
+		name = ab_halal_japan.10.a
+		custom_tooltip = shinto_events.open.tt
+		add_incident_variable_value = {
+			incident = incident_spread_of_islam
+			value = -3
+		}
+		set_country_flag = sunni_dominance
+	}
+	
+}
+	
+#A Sunni Realm
+country_event = {
+	id = ab_halal_japan.11
+	title = ab_halal_japan.11.t
+	desc = ab_halal_japan.11.d
+	picture = HAJJ_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+	
+	trigger = {
+		has_country_flag = sunni_dominance
+		has_country_flag = japan_sunni_interest
+		num_of_rebel_armies = 0
+		num_of_rebel_controlled_provinces = 0
+	}
+	
+	option = {
+		name = ab_halal_japan.11.a
+		custom_tooltip = JAPAN_UNLOCK_ISLAM
+		set_country_flag = japan_can_convert_to_islam
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						has_province_flag = japan_blocked_islam
+						has_province_flag = japan_islamic_hub
+					}
+				}
+				clr_province_flag = japan_blocked_islam
+				clr_province_flag = japan_islamic_hub
+			}
+		}
+		set_country_flag = shinto_incident_recent
+		clr_country_flag = active_incident_flag
+		end_incident = incident_spread_of_islam
+	}
+}
+
+#A Shinto
+country_event = {
+	id = ab_halal_japan.12
+	title = ab_halal_japan.12.t
+	desc = ab_halal_japan.12.d
+	picture = MERITOCRACY_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+	
+	trigger = {
+		OR = {
+			had_country_flag = {
+				flag = ab_japan_court_finds_islam_haram
+				days = 1095
+			}
+			has_country_flag = japan_rejection_islam
+		}
+		num_of_rebel_armies = 0
+		num_of_rebel_controlled_provinces = 0
+	}
+	
+	option = {
+		name = ab_halal_japan.12.a
+		add_country_modifier = {
+			name = "japan_shinto_empire"
+			duration = 9125
+		}
+		if = {
+			limit = {
+				incident_variable_value = {
+					incident = incident_spread_of_islam
+					value = 10
+				}
+			}
+			add_isolationism = -1
+		}
+		else = {
+			add_isolationism = 1
+		}
+		set_country_flag = shinto_incident_recent
+		clr_country_flag = active_incident_flag
+		end_incident = incident_spread_of_islam
+		clr_country_flag = japan_rejection_islam
+		clr_country_flag = ab_japan_court_finds_islam_haram
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						has_province_flag = japan_blocked_islam
+						has_province_flag = japan_islamic_hub
+					}
+				}
+				clr_province_flag = japan_blocked_islam
+				clr_province_flag = japan_islamic_hub
+			}
+		}
+	}
+}	
+	
+	
+	
+	
+	
+	
+	
+	

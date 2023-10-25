@@ -1,0 +1,1324 @@
+ab_on_province_owner_change_update_modifiers_effect = {
+	# Add the "Shipbuilding Tradition" province modifier
+	# when the owner has completed the mission "Shipbuilding Tradition"
+	# and the province has a shipyard-type buildings
+	if = {
+		limit = {
+			owner = { mission_completed = ned_shipbuilding }
+			has_shipyard_building_trigger = yes
+		}
+		add_province_modifier = {
+			name = ned_dutch_mission_shipyard
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_government_attribute = negate_unaccepted_iranian_culture }
+			culture_group = iranian
+			has_owner_accepted_culture = no
+		}
+		add_province_modifier = {
+			name = jlr_persian_trappings
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = german_wendia_flag }
+			OR = {
+				culture = Wendish
+				culture = pommeranian
+				culture = sorbian
+			}
+		}
+		add_province_modifier = {
+			name = ab_germanize
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = german_prussia_flag }
+			culture = pruthenian
+		}
+		add_province_modifier = {
+			name = ab_germanize
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = lit_negate_cultures }
+			OR = {
+				culture_group = scandinavian
+				culture_group = Finnic
+			}
+			has_owner_accepted_culture = no
+		}
+		add_province_modifier = {
+			name = lit_culture_modifier
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = wee_slavicization_flag }
+			culture_group = germanic
+		}
+		add_province_modifier = {
+			name = wee_slavicization
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = wee_union_flag }
+			culture_group = baltic
+			has_owner_accepted_culture = no
+		}
+		add_province_modifier = {
+			name = wee_union_modifier
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_reform = ottoman_millet }
+			NOT = { religion = ROOT }
+		}
+		add_province_modifier = {
+			name = tur_millet_system
+			duration = -1
+		}
+	}
+}
+
+ab_on_trade_good_changed_government_effect = {
+}
+
+ab_on_province_culture_converted_effect = {
+}
+
+ab_on_province_culture_changed_effect = {
+	if = {
+		limit = {
+			owner = {
+				has_government_attribute = negate_unaccepted_iranian_culture
+			}
+		}
+		if = {
+			limit = {
+				culture_group = iranian
+				NOT = { has_owner_accepted_culture = yes }
+				NOT = { has_province_modifier = jlr_persian_trappings }
+			}
+			add_province_modifier = {
+				name = jlr_persian_trappings
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					NOT = { culture_group = iranian }
+					has_owner_accepted_culture = yes
+				}
+				has_province_modifier = jlr_persian_trappings
+			}
+			remove_province_modifier = jlr_persian_trappings
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = german_wendia_flag }
+		}
+		if = {
+			limit = {
+				OR = {
+					culture = Wendish
+					culture = pommeranian
+					culture = sorbian
+				}
+				NOT = { has_province_modifier = ab_germanize }
+			}
+			add_province_modifier = {
+				name = ab_germanize
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				culture_group = germanic
+				has_province_modifier = ab_germanize
+			}
+			remove_province_modifier = ab_germanize
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = german_prussia_flag }
+		}
+		if = {
+			limit = {
+				culture = pruthenian
+				NOT = { has_province_modifier = ab_germanize }
+			}
+			add_province_modifier = {
+				name = ab_germanize
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				culture_group = germanic
+				has_province_modifier = ab_germanize
+			}
+			remove_province_modifier = ab_germanize
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = lit_negate_cultures }
+		}
+		if = {
+			limit = {
+				OR = {
+					culture_group = scandinavian
+					culture_group = Finnic
+				}
+				has_owner_accepted_culture = no
+				NOT = { has_province_modifier = lit_culture_modifier }
+			}
+			add_province_modifier = {
+				name = lit_culture_modifier
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					NOT = { 
+						OR = {
+							culture_group = scandinavian
+							culture_group = Finnic
+						}
+					}
+					has_owner_accepted_culture = yes
+				}
+				has_province_modifier = lit_culture_modifier
+			}
+			remove_province_modifier = lit_culture_modifier
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = wee_slavicization_flag }
+		}
+		if = {
+			limit = {
+				culture_group = germanic
+			}
+			add_province_modifier = {
+				name = wee_slavicization
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = wee_slavicization
+				NOT = { culture_group = germanic }
+			}
+			remove_province_modifier = wee_slavicization
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = wee_union_flag }
+		}
+		if = {
+			limit = {
+				culture_group = baltic
+				has_owner_accepted_culture = no
+			}
+			add_province_modifier = {
+				name = wee_union_modifier
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = wee_union_modifier
+				OR = {
+					has_owner_accepted_culture = yes
+					NOT = { culture_group = baltic }
+				}
+			}
+			remove_province_modifier = wee_union_modifier
+		}
+	}
+	# For the Estate Privileges, while usage of on_granted_province and on_revoked_province
+	# seem to work for Conquest and Religion change, it does not affect culture changes.
+	if = {
+		limit = {
+			owner = { has_estate_privilege = estate_nobles_tataria_slavicization }
+			culture_group = east_slavic
+		}
+		if = {
+			limit = {
+				has_owner_accepted_culture = no
+			}
+			add_province_modifier = {
+				name = glh_slavicization
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = glh_slavicization
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_estate_privilege = estate_nobles_hindu_integration }
+			OR = {
+				culture_group = eastern_aryan
+				culture_group = hindusthani
+				culture_group = western_aryan
+				culture_group = dravidian
+				culture_group = central_indic
+			}
+		}
+		if = {
+			limit = {
+				has_owner_accepted_culture = no
+			}
+			add_province_modifier = {
+				name = zun_hindu_integrate
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = zun_hindu_integrate
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_estate_privilege = estate_nobles_ghurid_hindu_integration }
+			OR = {
+				culture_group = eastern_aryan
+				culture_group = hindusthani
+				culture_group = western_aryan
+				culture_group = dravidian
+				culture_group = central_indic
+			}
+			# We don't need to check religion change because that is covered by
+			# on_granted_province
+			religion = mahayana
+		}
+		if = {
+			limit = {
+				has_owner_accepted_culture = no
+			}
+			add_province_modifier = {
+				name = zun_hindu_integrate
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = zun_hindu_integrate
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_estate_privilege = estate_burghers_panslavism }
+			OR = {
+				culture_group = east_slavic
+				culture_group = west_slavic
+				culture_group = south_slavic
+			}
+		}
+		if = {
+			limit = {
+				has_owner_accepted_culture = no
+			}
+			add_province_modifier = {
+				name = rus_panslavism
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = rus_panslavism
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_estate_privilege = estate_nomadic_tribes_blood_before_faith }
+		}
+		if = {
+			limit = {
+				culture_group = altaic
+				NOT = { religion = ROOT }
+			}
+			add_province_modifier = {
+				name = blood_before_faith_mod
+				duration = -1
+			}
+		}
+		else = {
+			remove_province_modifier = blood_before_faith_mod
+		}
+	}
+}
+
+# Runs when a province is religion converted
+# ROOT = province, FROM = ??? (PDX doesn't tell us)
+ab_on_province_religion_converted_government_reforms_effect = {
+	if = {
+		limit = {
+			owner = {
+				has_government_mechanic = zunist_radiance_mechanic
+			}
+			religion = zunist
+		}
+		owner = {
+			add_government_power = { 
+				mechanic_type = zunist_radiance_mechanic
+				power_type = zunist_radiance
+				value = 0.25
+			}
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_government_mechanic = latin_zealotry_mechanic
+			}
+			religion = catholic
+		}
+		owner = {
+			add_government_power = { 
+				mechanic_type = latin_zealotry_mechanic
+				power_type = latin_zealotry
+				value = 0.25
+			}
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_government_attribute = on_province_converted_gain_papal_influence
+			}
+			religion = catholic
+		}
+		# Get all the development of a province
+		export_to_variable = {
+			which = provinceDevelopment
+			value = development
+		}
+		# Give 0.1 papal influence per development
+		for_variable_amount = {
+			variable = provinceDevelopment
+			effect = "owner = { add_papal_influence = 0.1 }"
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = ab_mnk_church_power_conversion
+			}
+		}
+		owner = {
+			add_church_power = 5
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = mnk_triumph
+			}
+		}
+		random_list = {
+			33 = {
+				add_base_manpower = 1
+			}
+			33 = {
+				add_base_production = 1
+			}
+			33 = {
+				add_base_tax = 1
+			}
+		}
+	}
+}
+
+ab_on_province_religion_changed_effect = {
+	if = {
+		limit = {
+			has_province_modifier = ibe_finish_reconquista_convert
+			religion = catholic
+		}
+		remove_province_modifier = ibe_finish_reconquista_convert
+	}
+	if = {
+		limit = {
+			owner = { has_reform = ottoman_millet }
+		}
+		if = {
+			limit = {
+				NOT = { religion = owner }
+				NOT = { has_province_modifier = tur_millet_system }
+			}
+			add_province_modifier = {
+				name = tur_millet_system
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = tur_millet_system
+				religion = owner
+			}
+			remove_province_modifier = tur_millet_system
+		}
+	}
+}
+
+ab_on_culture_promoted_effect = {
+    if = {
+        limit = {
+            has_government_attribute = negate_unaccepted_iranian_culture
+        }
+        every_owned_province = {
+            limit = {
+                culture_group = iranian
+                has_owner_accepted_culture = yes
+                has_province_modifier = jlr_persian_trappings
+            }
+            remove_province_modifier = jlr_persian_trappings
+        }
+    }
+
+	if = {
+		limit = {
+			has_country_flag = lit_negate_cultures
+		}
+		every_owned_province = {
+			limit = {
+				OR = {
+					culture_group = scandinavian
+					culture_group = Finnic
+				}
+				has_owner_accepted_culture = yes
+				has_province_modifier = lit_culture_modifier
+			}
+			remove_province_modifier = lit_culture_modifier
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = wee_union_flag
+		}
+		every_owned_province = {
+			limit = {
+				culture_group = baltic
+				has_owner_accepted_culture = yes
+				has_province_modifier = wee_union_modifier
+			}
+			remove_province_modifier = wee_union_modifier
+		}
+	}
+}
+
+ab_on_culture_demoted_effect = {
+	if = {
+		limit = {
+			has_government_attribute = negate_unaccepted_iranian_culture
+		}
+		every_owned_province = {
+			limit = {
+				culture_group = iranian
+				has_owner_accepted_culture = no
+				NOT = { has_province_modifier = jlr_persian_trappings }
+			}
+			add_province_modifier = {
+				name = jlr_persian_trappings
+				duration = -1
+			}
+		}
+	}
+
+	if = {
+		limit = {
+			has_country_flag = lit_negate_cultures
+		}
+		every_owned_province = {
+			limit = {
+				OR = {
+					culture_group = scandinavian
+					culture_group = Finnic
+				}
+				has_owner_accepted_culture = no
+				NOT = { has_province_modifier = lit_culture_modifier }
+			}
+			add_province_modifier = {
+				name = lit_culture_modifier
+				duration = -1
+			}
+		}
+	}
+
+	if = {
+		limit = {
+			has_country_flag = wee_union_flag
+		}
+		every_owned_province = {
+			limit = {
+				culture_group = baltic
+				has_owner_accepted_culture = no
+				NOT = { has_province_modifier = wee_union_modifier }
+			}
+			add_province_modifier = {
+				name = wee_union_modifier
+				duration = -1
+			}
+		}
+	}
+}
+
+ab_on_alliance_created_effect = {
+	if = {
+		limit = {
+			tag = IBE
+			mission_completed = ibe_protect_holy_see
+			alliance_with = PAP
+		}
+		add_country_modifier = {
+			name = "ibe_papal_alliance"
+			duration = -1
+		}
+	}
+	FROM = {
+		if = {
+			limit = {
+				tag = IBE
+				mission_completed = ibe_protect_holy_see
+				alliance_with = PAP
+			}
+			add_country_modifier = {
+				name = "ibe_papal_alliance"
+				duration = -1
+			}
+		}
+	}
+}
+
+ab_on_alliance_broken_effect = {
+	if = {
+		limit = {
+			OR = {
+				has_country_modifier = koj_holy_alliance
+				FROM = { has_country_modifier = koj_holy_alliance }
+			}
+			NOT = { alliance_with = PAP }
+		}
+		FROM = { remove_country_modifier = koj_holy_alliance }
+		remove_country_modifier = koj_holy_alliance
+	}
+	if = {
+		limit = {
+			has_country_modifier = ibe_papal_alliance
+			OR = {
+				AND = {
+					tag = IBE
+					NOT = { alliance_with = PAP }
+				}
+				FROM = {
+					tag = IBE
+					NOT = { alliance_with = PAP }
+				}
+			}
+		}
+		remove_country_modifier = ibe_papal_alliance
+	}
+}
+
+ab_on_battle_won_country_effect = {
+	if = {
+		limit = {
+			has_country_flag = ab_mnk_professionalism_vs_heretics
+			FROM = {
+				NOT = { religion = ROOT }
+			}
+		}
+		# Units are in hundreths, so this is 0.0005 * 100 = 0.05 
+		add_army_professionalism = 0.0005
+	}
+	if = {
+		limit = {
+			has_country_modifier = swe_northern_crusade
+		}
+		add_army_tradition = 1
+	}
+	if = {
+		limit = {
+			has_reform = sweholyfury
+			FROM = {
+				NOT = { religion = ROOT }
+			}
+		}
+		add_army_tradition = 0.1
+	}
+	if = {
+		limit = { 
+			has_government_mechanic = zunist_radiance_mechanic
+			FROM = {
+				NOT = { religion = ROOT }
+			}
+		}
+		add_government_power = { 
+			mechanic_type = zunist_radiance_mechanic
+			power_type = zunist_radiance
+			value = 0.5
+		}
+	}
+	if = {
+		limit = { 
+			has_government_mechanic = latin_zealotry_mechanic
+			FROM = {
+				NOT = { religion = ROOT }
+			}
+		}
+		add_government_power = { 
+			mechanic_type = latin_zealotry_mechanic
+			power_type = latin_zealotry
+			value = 0.5
+		}
+	}
+}
+
+ab_on_battle_lost_country_effect = {
+	if = {
+		limit = {
+			has_government_mechanic = zunist_radiance_mechanic
+			FROM = {
+				NOT = { religion = ROOT }
+			}
+		}
+		add_government_power = { 
+			mechanic_type = zunist_radiance_mechanic
+			power_type = zunist_radiance
+			value = -1
+		}
+	}
+	if = {
+		limit = { 
+			has_government_mechanic = latin_zealotry_mechanic
+			FROM = {
+				NOT = { religion = ROOT }
+			}
+		}
+		add_government_power = { 
+			mechanic_type = latin_zealotry_mechanic
+			power_type = latin_zealotry
+			value = -1
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				tag = LAT
+				was_tag = LAT
+			}
+		}
+		set_country_flag = lat_hasnt_lost_battle
+	}
+}
+
+ab_on_raze_effect = {
+	if = {
+		limit = {
+			OR = {
+				region = persia_region
+				region = khorasan_region
+			}
+			owner = {
+				has_country_modifier = trk_looting
+			}
+		}
+		add_treasury = 10
+	}
+	if = {
+		limit = { 
+			owner = {
+				has_country_modifier = mgs_legacy_hulagu
+			}
+		}
+		owner = {
+			add_army_tradition = 0.5
+		}
+	}
+	if = {
+		limit = {
+			NOT = {
+				religion = nestorian
+			}
+			owner = {
+				mission_completed = mgs_tomb
+			}
+		}
+		owner = {
+			add_patriarch_authority = 0.005
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_modifier = grg_downfall
+			}
+		}
+		owner = {
+			add_adm_power = 5
+		}
+	}
+	if = { 
+		limit = { 
+			owner = { has_country_flag = ab_stronger_razing_flag } 
+		}
+		owner = {
+			add_adm_power = 5 
+			add_dip_power = 5 
+			add_mil_power = 5 
+		}
+	}
+	if = {
+		limit = { 
+			province_id = 151
+			owner = { 
+				has_country_flag = grh_raze_frenzy_flag
+				NOT = { has_country_modifier = grh_raze_constantinople_modifier }
+			}
+		}
+		owner = {
+			set_country_flag = grh_achiev_const
+			add_country_modifier = {
+				name = grh_raze_constantinople_modifier
+				duration = -1 
+			}
+		}
+	}
+	if = {
+		limit = { 
+			province_id = 1878
+			owner = { 
+				has_country_flag = grh_raze_frenzy_flag
+				NOT = { has_country_modifier = grh_raze_aachen_modifier }
+			}
+		}
+		owner = {
+			set_country_flag = grh_achiev_aachen
+			add_country_modifier = {
+				name = grh_raze_aachen_modifier
+				duration = -1 
+			}
+		}
+	}
+	if = {
+		limit = { 
+			province_id = 118
+			owner = { 
+				has_country_flag = grh_raze_frenzy_flag
+				NOT = { has_country_modifier = grh_raze_rome_modifier }
+			}
+		}
+		owner = {
+			set_country_flag = grh_achiev_rome
+			add_country_modifier = {
+				name = grh_raze_rome_modifier
+				duration = -1 
+			}
+		}
+	}
+	if = {
+		limit = { 
+			province_id = 280
+			owner = { 
+				has_country_flag = grh_raze_frenzy_flag
+				NOT = { has_country_modifier = grh_raze_kiev_modifier }
+			}
+		}
+		owner = {
+			set_country_flag = grh_achiev_kiev
+			add_country_modifier = {
+				name = grh_raze_kiev_modifier
+				duration = -1 
+			}
+		}
+	}
+	
+	owner = {
+		if = { 
+			limit = { has_country_flag = grh_lifeforce_of_khan_flag }
+			random_list = {
+				5 = {
+					if = { 
+						limit = { 
+							NOT = { has_country_modifier = khan_blood_modifier_4 }
+							NOT = { has_country_modifier = khan_blood_modifier_3 }
+							NOT = { has_country_modifier = khan_blood_modifier_2 }
+							NOT = { has_country_modifier = khan_blood_modifier_1 }
+						}
+						add_country_modifier = {
+							name = khan_blood_modifier_1 
+							duration = 	1095 
+						}
+					}
+					else_if = {
+						limit = { has_country_modifier = khan_blood_modifier_1 }
+						add_country_modifier = {
+							name = khan_blood_modifier_2 
+							duration = 1095
+						}	
+					}
+					else_if = {
+						limit = { has_country_modifier = khan_blood_modifier_2 }
+						add_country_modifier = {
+							name = khan_blood_modifier_3 
+							duration = 1095
+						}	
+					}
+					else_if = {
+						limit = { has_country_modifier = khan_blood_modifier_3 }
+						add_country_modifier = {
+							name = khan_blood_modifier_4
+							duration = 1095
+						}	
+					}
+				}
+				1 = {
+					change_monarch_points_or_power = {
+						power = adm
+						points = 1
+					}
+				}
+				2 = {
+					change_monarch_points_or_power = {
+						power = dip
+						points = 1
+					}
+				}
+				2 = {
+					change_monarch_points_or_power = {
+						power = mil
+						points = 1
+					}
+				}
+				1 = {
+					if = {
+						limit = {
+							NOT = { num_of_ruler_traits = { amount = 3 } }
+						}
+						add_ruler_personality = tolerant_personality
+					}
+				}
+				1 = {
+					if = {
+						limit = {
+							NOT = { num_of_ruler_traits = { amount = 3 } }
+						}
+						add_ruler_personality = architectural_visionary_personality
+					}
+				}
+				1 = {
+					if = {
+						limit = {
+							NOT = { num_of_ruler_traits = { amount = 3 } }
+						}
+						add_ruler_personality = entrepreneur_personality
+					}
+				}
+				1 = {
+					if = {
+						limit = {
+							NOT = { num_of_ruler_traits = { amount = 3 } }
+						}
+						add_ruler_personality = strict_personality
+					}
+				}
+				1 = {
+					if = {
+						limit = {
+							NOT = { num_of_ruler_traits = { amount = 3 } }
+						}
+						add_ruler_personality = free_thinker_personality
+					}
+				}
+				# 85% chance of doing nothing, so the other values add up to
+				# their correct percentages.
+				85 = { }
+			}
+		}
+	}
+}
+
+ab_on_holy_order_established = {
+	if = {
+		limit = {
+			ROOT = {
+				has_reform = otr_orders
+			}
+		}
+		if = {
+			limit = {
+				holy_order = latin_sepulchre
+			}
+			random_list = {
+				20 = { add_base_tax = 1 }
+				80 = { }
+			}
+		}
+		if = {
+			limit = {
+				holy_order = latin_lazarus
+			}
+			random_list = {
+				20 = { add_base_production = 1 }
+				80 = { }
+			}
+		}
+		if = {
+			limit = {
+				holy_order = latin_templars
+			}
+			random_list = {
+				20 = { add_base_manpower = 1 }
+				80 = { }
+			}
+		}
+	}
+}
+
+ab_on_force_conversion_effect = {
+	FROM = {
+		if = {
+			limit = { has_reform = zunradiant }
+			add_prestige = 10
+			add_church_power = 10
+		}
+	}
+}
+
+ab_on_integrate_effect = {
+	if = {
+		limit = {
+			is_part_of_hre = yes
+			FROM = {
+				is_elector = yes
+			}
+		}
+		FROM = {
+			elector = no
+		}
+		elector = yes
+		country_event = {
+			id = hre_elector_inherit.001
+		}
+	}
+}
+
+ab_on_monarch_death_effect = {
+	if = {
+		limit = {
+			has_reform = japanempire
+			legitimacy = 90
+		}
+		add_stability = 1
+	}
+	if = {
+		limit = {
+			has_reform = bultsardom
+		}
+		country_event = { id = ab_bulgaria.4 }
+	}
+	if = {
+		limit = {
+			has_ruler_flag = eng_heir_in_waiting
+		}
+		clr_ruler_flag = eng_heir_in_waiting
+	}
+	else = {
+		country_event = { id = antebellum_england.1 }
+	}
+	if = {
+		limit = {
+			tag = GLH
+			NOT = {
+				mission_completed = glh_succession
+			}
+		}
+		country_event = { id = ab_ghorde.2 }
+	}
+	if = {
+		limit = {
+			tag = NAZ
+		}
+		country_event = { id = ab_abbasid.2 days = 5 }
+	}
+}
+
+ab_on_annexed_effect = {
+	if = {
+		limit = {
+			is_part_of_hre = yes
+			FROM = {
+				is_subject_of = ROOT
+				is_elector = yes
+			}
+		}
+		FROM = {
+			elector = no
+		}
+		elector = yes
+		country_event = {
+			id = hre_elector_inherit.001
+		}
+	}
+	if = {
+		limit = {
+			has_reform = shogunate
+			FROM = { has_reform = daimyo }
+		}
+		set_country_flag = tjj_annexed_daimyo
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_reform = irish_highking_opp
+			}
+		}
+		FROM = { save_event_target_as = hk_ire }
+		# howard: it is possible to annex a country via a subject
+		# so we need to redirect the event to the overlord.
+		if = {
+			limit = {
+				is_subject = yes
+			}
+			overlord = {
+				country_event = { id = hk_ire.11 } # Foreign power annexes HK
+				country_event = { id = hk_ire.15 } # Irish minor annexes HK
+			}
+		}
+		else = {
+			country_event = { id = hk_ire.11 } # Foreign power annexes HK
+			country_event = { id = hk_ire.15 } # Irish minor annexes HK
+		}
+	}
+	if = {
+		limit = {
+			FROM = { tag = TEU }
+			has_country_modifier = swe_teuton_slot
+		}
+		remove_country_modifier = swe_teuton_slot
+	}
+	if = {
+		limit = {
+			FROM = { tag = LIV }
+			has_country_modifier = swe_livonia_slot
+		}
+		remove_country_modifier = swe_livonia_slot
+	}
+}
+
+ab_on_war_won_effect = {
+	if = {
+		limit = {
+			ROOT = {
+				has_idea = domination_third
+			}
+		}
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 10
+		}
+	}
+	if = {
+		limit = {
+			ROOT = {
+				OR = {
+					tag = SWE
+					was_tag = SWE
+				}
+				has_reform = swekingdom
+			}
+			FROM = { 
+				NOT = {
+					religion = catholic
+				}
+			}
+		}
+		add_papal_influence = 5
+	}
+	if = {
+		limit = {
+			has_country_modifier = koj_wrath_christendom
+		}
+		remove_country_modifier = koj_wrath_christendom
+	}
+	if = {
+		limit = {
+			has_country_modifier = koj_abdul
+		}
+		remove_country_modifier = koj_abdul
+	}
+	if = {
+		limit = {
+			has_country_modifier = inward_war
+		}
+		remove_country_modifier = inward_war
+	}
+}
+
+ab_on_war_lost_effect = {
+	if = {
+		limit = {
+			has_country_modifier = ire_high_king_opp
+		}
+		save_event_target_as = hk_ire
+		FROM = { country_event = { id = hk_ire.4 } } # High King collapse
+	}
+	if = {
+		limit = {
+			has_idea_group = globaldomination_ideas
+		}
+		country_event = { id = ab_domination.2 }
+	}
+	if = {
+		limit = {
+			ROOT = {
+				OR = {
+					tag = FRC
+					tag = ADU
+				}
+			}
+			FROM = {
+				OR = {
+					tag = FRC
+					tag = ADU
+				}
+			}
+			FRC = {
+				has_country_modifier = frc_valencia_avenge
+			}
+		}
+		FRC = {
+			remove_country_modifier = frc_valencia_avenge
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = koj_wrath_christendom
+		}
+		remove_country_modifier = koj_wrath_christendom
+	}
+	if = {
+		limit = {
+			has_country_modifier = koj_abdul
+		}
+		remove_country_modifier = koj_abdul
+	}
+	if = {
+		limit = {
+			has_country_modifier = inward_war
+		}
+		remove_country_modifier = inward_war
+	}
+}
+
+# Runs when an admiral is recruited
+ab_on_admiral_recruited_effect = {
+	if = {
+		limit = {
+			has_country_flag = ab_admiral_gives_naval_tradition
+		}
+		add_navy_tradition = 1
+	}
+
+}
+
+# Runs when a country switches religion
+ab_on_religion_change_effect = {
+	if = {
+		limit = {
+			ai = yes
+			OR = {
+				AND = {
+					tag = PER #Zoro
+					NOT = { religion = zoroastrian }
+				}
+				AND = {
+					tag = PRC #Nest
+					NOT = { religion_group = christian }
+				}
+				AND = {
+					tag = PRZ #Muslims
+					NOT = { religion_group = muslim }
+				}
+				AND = {
+					tag = PMN #Manichaean
+					NOT = { religion = manichaean }
+				}
+			}
+		}
+		ab_persia_check_completed_missions = yes
+		# Switch the tag and Mission Tree
+		if = {
+			limit = {
+				religion = zoroastrian
+			}
+			change_tag = PER
+		}
+		else_if = {
+			limit = {
+				religion_group = christian
+			}
+			change_tag = PRC
+		}
+		else_if = {
+			limit = {
+				religion_group = muslim
+			}
+			change_tag = PRZ
+		}
+		else_if = {
+			limit = {
+				religion = manichaean
+			}
+			change_tag = PMN
+		}
+		swap_non_generic_missions = yes
+		swap_free_idea_group = yes
+		if = {
+			limit = {
+				OR = {
+					has_country_flag = has_reverted_to_starting_tag_color_flag_PER
+					has_country_flag = has_reverted_to_starting_tag_color_flag_PRC
+					has_country_flag = has_reverted_to_starting_tag_color_flag_PRZ
+					has_country_flag = has_reverted_to_starting_tag_color_flag_PMN
+				}
+			}
+			ab_persia_revert_to_starting_prince_color = yes
+		}
+		else = {
+			restore_country_color = yes
+		}
+		# Switch the color of every satrapy too
+		every_subject_country = {
+			limit = {
+				has_country_flag = has_eyalet_color
+			}
+			change_country_color = {
+				country = ROOT
+			}
+		}
+		ab_persia_complete_checked_missions = yes
+	}
+}

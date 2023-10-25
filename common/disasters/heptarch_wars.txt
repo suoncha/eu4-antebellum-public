@@ -1,0 +1,83 @@
+heptarch_wars = {
+	potential = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+		NOT = {
+			was_tag = SCO
+		}
+		NOT = {
+			has_country_flag = had_heptarch_wars
+		}
+		num_of_cities = 2
+		any_owned_province = {
+			is_capital = no
+			is_core = ROOT
+		}
+		government = monarchy
+		is_free_or_tributary_trigger = yes
+		uses_doom = no
+		normal_or_historical_nations = yes
+	}
+	
+	can_start = {
+		NOT = {
+			has_reform = saxon_england
+		}
+	}
+	
+	can_stop = {
+		has_any_disaster = yes
+	}
+	
+	progress = {
+		modifier = {
+			factor = 1
+			tag = ENG
+		}
+		modifier = {
+			factor = 1
+			tag = GBR
+		}
+		modifier = {
+			factor = 1
+			NOT = { stability = 1 }
+		}
+		modifier = {
+			factor = 1
+			NOT = { legitimacy = 75 }
+		}
+	}
+	
+	modifier = {
+		global_unrest = 10
+		stability_cost_modifier = 0.25
+		manpower_recovery_speed = -0.25
+	}
+	
+	can_end = {
+		is_at_war = no
+		NOT = { num_of_rebel_controlled_provinces = 1 }
+		NOT = { num_of_rebel_armies = 1 }
+		stability = 1
+		legitimacy = 75
+		custom_trigger_tooltip = {
+			tooltip = ENG_NO_HEPTARCHS
+			NOT = {
+				OR = {
+					exists = MRC
+					exists = KNT
+					exists = ESX
+					exists = WSX
+					exists = EAN
+					exists = SSX
+					exists = NOL
+				}
+			}
+		}
+	}
+	
+	on_start = ab_heptarch_wars.1
+	on_end = ab_heptarch_wars.2
+}

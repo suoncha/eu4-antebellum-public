@@ -1,0 +1,71 @@
+namespace = ab_bohemia
+normal_or_historical_nations = yes
+
+# Bohemian Electorate 
+country_event = {
+	id = ab_bohemia.1
+	title = "ab_bohemia.1.t"
+	desc = "ab_bohemia.1.d"
+	picture = HRE_eventPicture
+
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	trigger = {
+		is_emperor = yes
+		BOH = {
+			religion = hussite
+		}
+	}
+	
+	option = {
+		name = "ab_bohemia.1.a"
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 0
+				NOT = {
+					army_size = BOH
+				}
+			}
+		}
+		add_prestige = 10
+		add_legitimacy = 10
+		BOH = {
+			country_event = {
+				id = ab_bohemia.2
+			}
+		}
+	}
+	
+	option = {
+		name = "ab_bohemia.1.b"
+		ai_chance = {
+			factor = 10
+		}
+		add_prestige = -10
+		add_legitimacy = -10
+	}
+}
+
+# Bohemian Electorate Revoked
+country_event = {
+	id = ab_bohemia.2
+	title = "ab_bohemia.2.t"
+	desc = "ab_bohemia.2.d"
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = "ab_bohemia.2.a"
+		BOH = {
+			elector = no
+		}
+	}
+}

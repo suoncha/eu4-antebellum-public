@@ -1,0 +1,542 @@
+namespace = ab_latin
+normal_or_historical_nations = yes
+
+#Fall of Constantinople
+country_event = {
+	id = ab_latin.1
+	title = ab_latin.1.t
+	desc = ab_latin.1.d
+	picture = AB_BYZFALL_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BYZ
+		151 = {
+			owned_by = LAT
+		}
+		NOT = {
+			LAT = {
+				has_country_flag = lat_cant_trigger_events
+			}
+		}
+	}
+	
+	option = {
+		name = ab_latin.1.a
+		add_stability = -1
+		add_prestige = -25
+		add_legitimacy = -25
+			add_country_modifier = {
+				name = "byz_fallofcapital"
+				duration = 5475
+			}
+	}
+}
+
+#Proclamation of the Latin Empire
+country_event = {
+	id = ab_latin.2
+	title = ab_latin.2.t
+	desc = ab_latin.2.d
+	picture = AB_BYZFALL_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = LAT
+		151 = {
+			owned_by = LAT
+		}
+		NOT = {
+			LAT = {
+				has_country_flag = lat_cant_trigger_events
+			}
+		}
+	}
+	
+	option = {
+		name = ab_latin.2.a
+		add_prestige = 25
+		set_government_rank = 3
+		set_country_flag = lat_can_pick_emperor
+	}
+}
+
+#Latin Patriarchate of Alexandria
+country_event = {
+	id = ab_latin.3
+	title = ab_latin.3.t
+	desc = ab_latin.3.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.3.a
+		add_papal_influence = 25
+			add_country_modifier = {
+				name = "lat_patriarchate"
+				duration = -1
+			}
+		egypt_region = {
+			add_province_modifier = {
+				name = "lat_egypt"
+				duration = 9125
+			}
+		}
+	}
+}
+
+#Podesta
+country_event = {
+	id = ab_latin.4
+	title = ab_latin.4.t
+	desc = ab_latin.4.d
+	picture = AB_COURT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_latin.4.a
+		add_dip_power = -150
+		give_estate_land_share_gigantic = { estate = estate_burghers }
+		add_historical_friend = VEN
+		VEN = {
+		add_trust = { who = LAT value = 15 }
+		}
+			add_country_modifier = {
+				name = "lat_podesta"
+				duration = -1
+			}
+		151 = {
+			add_base_production = 2
+		}
+		custom_tooltip = ab_lat_unlock_podesta
+		set_country_flag = lat_established_podesta
+		
+	}
+	
+	option = {
+		name = ab_latin.4.b
+		custom_tooltip = lat_podesta_decision
+	}
+}
+
+#Jerusalem
+country_event = {
+	id = ab_latin.5
+	title = ab_latin.5.t
+	desc = ab_latin.5.d
+	picture = AB_JERUSALEM_eventPicture
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.5.a
+			add_country_modifier = {
+				name = "lat_jerusalem"
+				duration = 9125
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tabuk_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			mecca_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			medina_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+	}
+}
+
+#Alexandrian Restoration
+country_event = {
+	id = ab_latin.6
+	title = ab_latin.6.t
+	desc = ab_latin.6.d
+	picture = RELIGIOUS_WARS_eventPicture
+	
+	trigger = {
+		tag = LAT
+		358 = {
+			owned_by = LAT
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.6.a
+		add_prestige = 25
+		add_legitimacy = 25
+		add_treasury = 500
+	}
+}
+
+#The Last Crusade
+country_event = {
+	id = ab_latin.7
+	title = ab_latin.7.t
+	desc = ab_latin.7.d
+	picture = POPE_PREACHING_eventPicture
+	
+	trigger = {
+		tag = LAT
+		NOT = {
+			exists = BYZ
+		}
+		NOT = {
+			LAT = {
+				has_country_flag = lat_cant_trigger_events
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.7.a
+			add_country_modifier = {
+				name = lat_last_crusade
+				duration = 36500
+			}
+	}
+}
+
+#Emperor of the Latins
+country_event = {
+	id = ab_latin.8
+	title = ab_latin.8.t
+	desc = ab_latin.8.d
+	picture = AB_BYZANTIUM_eventPicture
+	
+	trigger = {
+		tag = LAT
+		has_country_flag = lat_can_pick_emperor
+		NOT = {
+			LAT = {
+				has_country_flag = lat_cant_trigger_events
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.8.a
+		define_ruler = {
+			adm = 3
+			dip = 3
+			mil = 3
+			dynasty = "de Anjou"
+			claim = 50
+		}
+		hidden_effect = {
+			remove_heir = {}
+		}
+	}
+	
+	option = {
+		name = ab_latin.8.b
+		define_ruler = {
+			adm = 3
+			dip = 3
+			mil = 3
+			dynasty = "de Lusignan"
+			claim = 50
+		}
+		hidden_effect = {
+			remove_heir = {}
+		}
+	}
+	
+	option = {
+		name = ab_latin.8.c
+		define_ruler = {
+			adm = 3
+			dip = 3
+			mil = 3
+			dynasty = "de Chatillon"
+			claim = 50
+		}
+		hidden_effect = {
+			remove_heir = {}
+		}
+	}
+	
+	option = {
+		name = ab_latin.8.de
+		define_ruler = {
+			adm = 3
+			dip = 3
+			mil = 3
+			dynasty = "de Courtenay"
+			claim = 50
+		}
+		hidden_effect = {
+			remove_heir = {}
+		}
+	}
+	
+	option = {
+		name = ab_latin.8.e
+		define_ruler = {
+			adm = 3
+			dip = 3
+			mil = 3
+			dynasty = "de Flandre"
+			claim = 50
+		}
+		hidden_effect = {
+			remove_heir = {}
+		}
+	}
+	
+}
+
+#The Fate of Mecca
+country_event = {
+	id = ab_latin.9
+	title = ab_latin.9.t
+	desc = ab_latin.9.d
+	picture = AB_HAJJ_eventPicture
+	
+	is_triggered_only = yes 
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.9.a
+		add_prestige = 50
+		add_legitimacy = 50
+		add_papal_influence = 50
+		385 = {
+			add_devastation = 35
+			change_religion = catholic
+		}
+		385 = {
+			add_province_modifier = {
+				name = "lat_baldwin"
+				duration = -1
+			}
+		}
+	}
+}
+
+#The False Empire
+country_event = {
+	id = ab_latin.10
+	title = ab_latin.10.t
+	desc = ab_latin.10.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes 
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.10.a
+		custom_tooltip = lat_hre_claim
+		hidden_effect = {
+			every_province = {
+				limit = {
+					is_part_of_hre = yes
+				}
+				add_permanent_claim = ROOT
+			}
+			italy_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+#Medina
+country_event = {
+	id = ab_latin.11
+	title = ab_latin.11.t
+	desc = ab_latin.11.d
+	picture = ABAD5_eventPicture
+	
+	trigger = {
+		tag = LAT
+		owns = 384
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.11.a
+		add_treasury = 500
+		384 = {
+			add_devastation = 100
+		}
+			add_country_modifier = {
+				name = "lat_medina"
+				duration = 9125
+			}
+	}
+}
+
+#Cordoba
+country_event = {
+	id = ab_latin.12
+	title = ab_latin.12.t
+	desc = ab_latin.12.d
+	picture = ABAD5_eventPicture
+	
+	trigger = {
+		tag = LAT
+		owns = 225
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.12.a
+		225 = {
+			add_base_tax = -4
+			add_base_production = -4
+			add_base_manpower = -4
+			add_devastation = 100
+			remove_province_modifier = nm_cordoba
+		}
+		379 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+		
+	}
+}
+
+#Court Traditions
+country_event = {
+	id = ab_latin.13
+	title = ab_latin.13.t
+	desc = ab_latin.13.d
+	picture = AB_COURT_eventPicture
+	
+	trigger = {
+		tag = LAT
+		religion = catholic
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.13.a
+		add_legitimacy = 10
+		add_adm_power = -100
+			add_country_modifier = {
+				name = "lat_traditions"
+				duration = -1
+			}
+		
+	}
+	
+	option = {
+		name = ab_latin.13.b
+		add_prestige = 10
+	}
+}
+	
+#Baldwin
+country_event = {
+	id = ab_latin.14
+	title = ab_latin.14.t
+	desc = ab_latin.14.d
+	picture = POPE_PREACHING_eventPicture
+	
+	trigger = {
+		tag = LAT
+		owns = 118
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_latin.14.a
+			add_country_modifier = {
+				name = "lat_baldwins"
+				duration = -1
+			}
+		
+	}
+}	
+
+province_event = {
+	id = ab_latin.15
+	title = none
+	desc = none
+	picture = none
+	hidden = yes	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_reform_center = catholic
+	}
+	
+	option = { }
+}

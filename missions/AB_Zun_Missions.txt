@@ -1,0 +1,1529 @@
+ab_zun_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = ROB
+			was_tag = ROB
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	zun_fortify = {
+	    icon = mission_fortify_mandu
+		required_missions = { }
+		position = 2
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_fort_building_trigger = no
+				NOT = { num_of_times_improved = 5 }
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					num_of_times_improved = 5
+					has_fort_building_trigger = yes
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			custom_tooltip = ZUN_FORTIFY
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						num_of_times_improved = 5
+						has_fort_building_trigger = yes
+					}
+					add_base_manpower = 1
+				}
+			}
+			add_country_modifier = {
+				name = "zun_safeguard2"
+				duration = -1
+			}
+		}
+	}
+
+	zun_graveyard = {
+	    icon = mission_prepare_an_invasion_force
+		required_missions = { zun_fortify }
+		position = 3
+		
+		provinces_to_highlight = {
+			has_fort_building_trigger = no
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			OR = {
+				MIL = 6
+				full_idea_group = defensive_ideas
+			}
+			army_tradition = 75
+			calc_true_if = {
+				all_owned_province = {
+					num_of_times_improved = 5
+					has_fort_building_trigger = yes
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			custom_tooltip = ZUN_GRAVEYARD
+			tooltip = {
+				add_province_modifier = {
+					name = "zun_graveyard"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = kabulistan_area
+							area = balkh_area
+							area = ghor_area
+						}
+					}
+					add_province_modifier = {
+						name = "zun_graveyard"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	zun_cloth = {
+	    icon = mission_gujarati_textiles
+		required_missions = { zun_rebuild }
+		position = 4
+		
+		provinces_to_highlight = {
+			trade_goods = wool
+			NOT = {
+				num_of_times_improved = 3
+			}
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					num_of_times_improved = 3
+					trade_goods = wool
+				}
+				amount = 8
+			}
+		}
+		
+		effect = {
+			custom_tooltip = ZUN_CLOTH
+			hidden_effect = {
+                for = {
+                    amount = 3
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								trade_goods = wool
+							}
+							change_trade_goods = cloth
+                        }
+                    "
+                }
+			}
+			add_country_modifier = {
+				name = "zun_growing"
+				duration = 7300
+			}
+			define_advisor = {
+				type = natural_scientist
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	zun_industrialize = {
+		icon = mission_industrialize_bengal
+		required_missions = { zun_silk_road zun_cloth }
+		position = 6
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_production_building_trigger = yes
+				}
+				amount = 10
+			}
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 5
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				NOT = {
+					has_production_building_trigger = yes
+				}
+				NOT = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 0.5
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = zun_industrialized
+				duration = -1
+			}
+		}
+	}
+	
+	zun_shrines = {
+		icon = mission_patronize_local_gods
+		required_missions = { }
+		position = 7
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_tax_building_trigger = yes
+				}
+				amount = 7
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_tax_building_trigger = yes }
+		}
+		
+		effect = {
+			add_church_power = 25
+			add_country_modifier = {
+				name = zun_faith
+				duration = 5475
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	zun_wrath = {
+		icon = mission_hands_praying
+		required_missions = { zun_shrines }
+		position = 8
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					religion = zunist
+				}
+				amount = 20
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { religion = zunist }
+		}
+		
+		effect = {
+			custom_tooltip = ZUN_UNLOCK
+			if = {
+				limit = {
+					calc_true_if = {
+						all_country = {
+							religion = zunist
+						}
+						amount = 5
+					}
+				}
+				custom_tooltip = ZUN_5_TAGS
+			}
+			else = {
+				custom_tooltip = ZUN_5_TAGS_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						calc_true_if = {
+							all_country = {
+								religion = zunist
+							}
+							amount = 5
+						}
+					}
+					add_government_power = { 
+						mechanic_type = zunist_radiance_mechanic
+						power_type = zunist_radiance
+						value = 10
+					}
+				}
+			}
+		}
+	}
+
+}
+
+ab_zun_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = ROB
+			was_tag = ROB
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	zun_zunbils = {
+		icon = mission_unite_rajputana
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			448 = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			447 = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 448
+				province_id = 447
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_country_modifier = {
+				name = "zun_resurgent"
+				duration = 5475
+			}
+			custom_tooltip = ZUN_CLAIMS
+			hidden_effect = {
+				every_province = {
+					limit = {
+						NOT = {
+							owned_by = ROOT
+						}
+						NOT = {
+							is_core = ROOT
+						}
+						OR = {
+							owned_by = SHH
+							owned_by = GHU
+							owned_by = SRN
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	zun_rebuild = {
+		icon = mission_conquer_rewakantha
+		required_missions = { zun_zunbils }
+		position = 3
+		
+		trigger = {
+			448 = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			448 = {
+				development = 12
+			}
+			448 = {
+				has_trade_building_trigger = yes
+			}
+			448 = {
+				has_tax_building_trigger = yes
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 448
+		}
+		
+		effect = {
+			448 = {
+				move_capital_effect = yes
+			}
+			448 = {
+				change_trade_goods = cloth
+			}
+			448 = {
+				add_province_modifier = {
+					name = "zun_ghazni"
+					duration = -1
+				}
+			}
+			448 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	zun_court = {
+		icon = mission_gharbianss
+		required_missions = { zun_rebuild }
+		position = 4
+		
+		trigger = {
+			has_institution = renaissance
+			custom_trigger_tooltip = {
+			tooltip = ZUN_TWO_INDIAN_CULTURES
+				calc_true_if = {
+					accepted_culture = assamese
+					accepted_culture = bengali
+					accepted_culture = kochi
+					accepted_culture = bihari
+					accepted_culture = pahari
+					accepted_culture = nepali
+					accepted_culture = oriya
+					accepted_culture = sinhala
+					accepted_culture = avadhi
+					accepted_culture = kanauji
+					accepted_culture = vindhyan
+					accepted_culture = panjabi
+					accepted_culture = kashmiri
+					accepted_culture = gujarati
+					accepted_culture = parsi
+					accepted_culture = saurashtri
+					accepted_culture = marathi
+					accepted_culture = sindhi
+					accepted_culture = rajput
+					accepted_culture = malvi
+					accepted_culture = kannada
+					accepted_culture = malayalam
+					accepted_culture = tamil
+					accepted_culture = telegu
+					accepted_culture = gondi
+					accepted_culture = garjati
+					accepted_culture = jharkhandi
+					amount = 2
+				}
+			}
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			has_mil_advisor_3 = yes
+		}
+		
+		effect = {
+			custom_tooltip = ZUN_CONNECTED
+			add_country_modifier = {
+				name = "zun_seat"
+				duration = -1
+			}
+		}
+	}
+	
+	zun_silk_road = {
+		icon = mission_dominate_trade_in_bengal
+		required_missions = { zun_cloth zun_merv }
+		position = 5
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_trade_building_trigger = yes
+				}
+				amount = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_trade_building_trigger = yes }
+		}
+		
+		effect = {
+			custom_tooltip = TUR_MARKETPLACE
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_building = marketplace
+							}
+							remove_building = marketplace
+							add_building = trade_depot
+						}
+					"
+				}
+			}
+			add_country_modifier = {
+				name = "tur_trading_cities"
+				duration = 9125
+			}
+			custom_tooltip = TUR_DEV_CENTER
+		}
+	}
+	
+	zun_cities = {
+		icon = mission_the_chola_campaigns
+		required_missions = { zun_silk_road }
+		position = 7
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					province_has_center_of_trade_of_level = 3
+				}
+				amount = 3
+			}
+			507 = {
+				trade_share = {
+					country = ROOT
+					share = 75
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					owned_by = ROOT
+					OR = {
+						province_has_center_of_trade_of_level = 1
+						province_has_center_of_trade_of_level = 2
+					}
+					NOT = { province_has_center_of_trade_of_level = 3 }
+				}
+				province_id = 507
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				change_trade_goods = silk
+			}
+			add_country_modifier = {
+				name = "zun_silk_road"
+				duration = -1
+			}
+			if = {
+				limit = {
+					num_of_trading_bonuses = 2
+				}
+				custom_tooltip = ZUN_TRADING
+				tooltip = {
+					add_years_of_income = 1.5
+				}
+			}
+			else = {
+				custom_tooltip = ZUN_TRADING_NO
+				tooltip = {
+					add_years_of_income = 1.5
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						num_of_trading_bonuses = 2
+					}
+					add_years_of_income = 1.5
+				}
+			}
+		}
+	}
+}
+	
+ab_zun_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = ROB
+			was_tag = ROB
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	zun_unite = {
+		icon = mission_unite_home_region
+		required_missions = { zun_overpower zun_zunbils }
+		position = 2
+		
+		provinces_to_highlight = {
+			culture = afghani
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+	
+		trigger = {
+			num_of_owned_provinces_with = {
+			  value = 8
+			  culture = afghani
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = "zun_power"
+				duration = 7300
+			}
+			446 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT	}
+						NOT = { is_core = ROOT	}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			445 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT	}
+						NOT = { is_core = ROOT	}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4325 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT	}
+						NOT = { is_core = ROOT	}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			kalat_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			makran_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kashmir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			sind_sagar_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					owns_all_provinces = {
+						culture = afghani
+					}
+				}
+				custom_tooltip = ZUN_STABILITY
+			}
+			else = {
+				custom_tooltip = ZUN_STABILITY_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						owns_all_provinces = {
+							culture = afghani
+						}
+					}
+					add_stability = 1
+				}
+			}
+		}
+	}
+	
+	zun_merv = {
+		icon = mission_restore_rule_over_mysore
+		required_missions = { zun_unite }
+		position = 4
+		
+		trigger = {
+			445 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				NOT = {
+					has_construction = great_project
+				}
+			}
+			446 = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			4325 = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 445
+				province_id = 446
+				province_id = 4325
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			445 = {
+				add_great_project_tier = {
+					type = merv
+					tier = 1
+				}
+			}
+			add_country_modifier = {
+				name = "zun_splendor"
+				duration = 7300
+			}
+			sistan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			birjand_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			mashhad_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			herat_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kerman_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	zun_persia = {
+		icon = mission_princespersia
+		required_missions = { zun_merv }
+		position = 5
+		
+		trigger = {
+			sistan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			birjand_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			mashhad_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			herat_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			kerman_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = sistan_area
+				area = birjand_area
+				area = mashhad_area
+				area = herat_area
+				area = kerman_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = ZUN_CRUSADE
+			add_country_modifier = {
+				name = zun_persian_conquest
+				duration = 9125
+			}
+			khorasan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			persia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = ZNN_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = znn_evolved_ideas
+				if = {
+					limit = {
+						tag = ZNN
+					}
+					swap_free_idea_group = yes
+				}
+			}
+		}
+	}
+	
+	zun_sunset = {
+		icon = mission_conquer_persia
+		required_missions = { zun_persia }
+		position = 6
+		
+		trigger = {
+			khorasan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			persia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = khorasan_region
+				region = persia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = { id = ab_zun.2 }
+		}
+	}
+	
+	zun_deccan = {
+		icon = mission_order_in_the_domain
+		required_missions = { zun_north }
+		position = 7
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = deccan_region
+				}
+				amount = 20
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = deccan_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_adm_power = 150
+			add_country_modifier = {
+				name = zun_lands
+				duration = 5475
+			}
+			define_advisor = {
+				type = army_reformer
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+}
+	
+ab_zun_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = ROB
+			was_tag = ROB
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	zun_overpower = {
+		icon = mission_defeat_mewar
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			OR = {
+				all_neighbor_country = {
+				  NOT = { army_size = ROOT }
+				}
+				army_size = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			owner = {
+				is_neighbor_of = ROOT
+				army_size = ROOT
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 40 }
+			add_country_modifier = {
+				name = "zun_exploit"
+				duration = 5475
+			}
+		}
+	}
+	
+	zun_kashmir = {
+		icon = mission_che_the_cave_country
+		required_missions = { zun_unite }
+		position = 3
+		
+		trigger = {
+			kashmir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			sind_sagar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = kashmir_area
+				area = sind_sagar_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_estate_loyalty = {
+				estate = estate_burghers
+				loyalty = 10
+			}
+			add_country_modifier = {
+				name = "zun_gateway"
+				duration = 7300
+			}
+			lahore_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			multan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			sindh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_sindh_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	zun_gujarat = {
+		icon = mission_shipyards_of_gujarat
+		required_missions = { zun_valley }
+		position = 5
+		
+		trigger = {
+			ahmedabad_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			tapti_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			saurashtra_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			patan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = ahmedabad_area
+				area = tapti_area
+				area = saurashtra_area
+				area = patan_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_sailors = 500
+			add_country_modifier = {
+				name = "zun_trade_fleet"
+				duration = 9125
+			}
+			hindusthan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	zun_north = {
+		icon = mission_prepare_an_invasion_force
+		required_missions = { zun_gujarat }
+		position = 6
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = hindusthan_region
+				}
+				amount = 20
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = hindusthan_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 25
+			add_country_modifier = {
+				name = "zun_indian_conquest"
+				duration = 7300
+			}
+			india_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							capital_scope = { 
+								superregion = india_superregion
+							}
+							army_size = ROOT
+						}
+					}
+				}
+				custom_tooltip = ZUN_INDIA_ARMY
+				tooltip = {
+					add_country_modifier = {
+						name = zun_maharajas
+						duration = 9125
+					}
+				}
+			}
+			else = {
+				custom_tooltip = ZUN_INDIA_ARMY_NO
+				tooltip = {
+					add_country_modifier = {
+						name = zun_maharajas
+						duration = 9125
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								capital_scope = { 
+									superregion = india_superregion
+								}
+								army_size = ROOT
+							}
+						}
+					}
+					add_country_modifier = {
+						name = zun_maharajas
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	zun_integrate = {
+		icon = mission_prosperity_in_bengal
+		required_missions = { zun_north }
+		position = 7
+		
+		trigger = {
+			calc_true_if = {
+				OR = {
+					owns_all_provinces = {
+						culture_group = eastern_aryan
+					}
+				}
+				OR = {
+					owns_all_provinces = {
+						culture_group = hindusthani
+					}
+				}
+				OR = {
+					owns_all_provinces = {
+						culture_group = western_aryan
+					}
+				}
+				OR = {
+					owns_all_provinces = { 
+						culture_group = dravidian
+					}
+				}
+				OR = {
+					owns_all_provinces = {
+						culture_group = central_indic
+					}
+				}
+				amount = 2
+			}
+			calc_true_if = {
+				all_owned_province = {
+					superregion = india_superregion
+					NOT = { local_autonomy = 25 }
+				}
+				amount = 50
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						culture_group = eastern_aryan
+						culture_group = hindusthani
+						culture_group = western_aryan
+						culture_group = dravidian
+						culture_group = central_indic
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				AND = {
+					superregion = india_superregion
+					owned_by = ROOT
+					local_autonomy = 25
+				}
+			}
+		}
+
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_nobles_hindu_integration
+			}
+			custom_tooltip = GHU_REFORMSHH
+			set_country_flag = unlocked_shhdharmic
+		}
+	}
+	
+	zun_master = {
+		icon = mission_indian_empire
+		required_missions = { zun_bengali zun_deccan }
+		position = 8
+		
+		trigger = {
+			india_superregion = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			superregion = india_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = { id = ab_zun.3 }
+		}
+	}
+	
+}
+
+ab_zun_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = ROB
+			was_tag = ROB
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	zun_coast = {
+		icon = mission_conquer_andhra_bah
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			makran_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = makran_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_admiral = { tradition = 35 }
+			add_country_modifier = {
+				name = zun_naval_buildup
+				duration = 3650
+			}
+			pirate_coast_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			mascat_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			mogostan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	zun_valley = {
+		icon = mission_conquer_siam
+		required_missions = { zun_coast zun_kashmir }
+		position = 4
+		
+		trigger = {
+			lahore_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			multan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			northern_sindh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lahore_area
+				area = multan_area
+				area = sindh_area
+				area = northern_sindh_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = zun_wealth_indus
+				duration = 7300
+			}
+			504 = {
+				add_trade_modifier = {
+					who = root
+					duration = -1
+					power = 20
+					key = zun_indus
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			west_india_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	zun_rajputana = {
+	    icon = mission_unite_west_india
+		required_missions = { zun_valley }
+		position = 5
+		
+		provinces_to_highlight = {
+			culture = rajput
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					culture = rajput
+				}
+				amount = 15
+			}
+		}
+		
+		effect = {
+			custom_tooltip = RUM_UNLOCK_RAJPUTS
+			hidden_effect = {
+				set_country_flag = enables_estate_rajput_flag
+			}
+			add_country_modifier = {
+				name = zun_rajputs
+				duration = -1
+			}
+			gird_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			bundelkhand_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			sirhind_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_doab_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	zun_accommodate = {
+	    icon = mission_accomodate_the_rajputs
+		required_missions = { zun_rajputana }
+		position = 6
+		
+		trigger = {
+			estate_loyalty = {
+				estate = estate_rajput
+				loyalty = 60
+			}
+			num_of_estate_privileges = {
+				estate = estate_rajput
+				value = 4
+			}
+			num_of_estate_agendas_completed = {
+				estate = estate_rajput
+				value = 2
+			}
+		}
+		
+		effect = {
+			custom_tooltip = ZUN_RAJPUTS
+			add_country_modifier = {
+				name = zun_rajputs2
+				duration = 5475
+			}
+			hidden_effect = {
+				capital_scope = {
+					rajput_infantry = ROOT
+				}
+				capital_scope = {
+					rajput_infantry = ROOT
+				}
+				capital_scope = {
+					rajput_infantry = ROOT
+				}
+				capital_scope = {
+					rajput_infantry = ROOT
+				}
+				capital_scope = {
+					rajput_infantry = ROOT
+				}
+			}
+		}
+	}
+	
+	zun_bengali = {
+		icon = mission_bengal_campaign
+		required_missions = { zun_north }
+		position = 7
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = bengal_region
+				}
+				amount = 20
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = bengal_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_years_of_trade_income = {
+				years = 1
+				custom_tooltip = tur_trade_income
+			}
+			add_country_modifier = {
+				name = zun_indian_trade
+				duration = 5475
+			}
+			define_advisor = {
+				type = trader
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+	
+}

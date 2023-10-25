@@ -1,0 +1,578 @@
+ab_indep_daimyo_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		has_reform = indep_daimyo
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	id_coalition = {
+		icon = mission_katana
+		position = 1
+		required_missions = { }
+		
+		trigger = {
+			num_of_allies = 2
+			all_ally = {
+				has_opinion = {
+					who = ROOT
+					value = 150
+				}
+			}
+		}
+		
+		effect = {
+			add_dip_power = 50
+			add_country_modifier = {
+				name = dai_shogun
+				duration = 5475
+			}
+			custom_tooltip = id_trust
+			hidden_effect = {
+				every_ally = {
+					add_trust = { who = ROOT value = 10 mutual = yes }
+				}
+			}
+			add_country_modifier = {
+				name = id_unite_north
+				duration = 5475
+			}
+		}
+	}
+	
+	id_dethrone = {
+		icon = mng_end_sengoku_jidai
+		position = 3
+		required_missions = { id_supremacy }
+		
+		trigger = {
+			owns = 1020
+		}
+		
+		provinces_to_highlight = {
+			province_id = 1020
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_legitimacy = 25
+			add_country_modifier = {
+				name = id_reclaimed_kyoto
+				duration = 5475
+			}
+			japan_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	
+}
+
+
+ab_indep_daimyo_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		has_reform = indep_daimyo
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	id_supremacy = {
+		icon = jap_train_samurai
+		position = 2
+		required_missions = { id_warring id_coalition }
+		
+		trigger = {
+			grown_by_development = 30 
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = id_supremacy
+				duration = 7300
+			}
+			1020 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT	}
+					}
+					add_core = ROOT
+				}
+			}
+			chubu_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hokuriku_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_chubu_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kanto_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_kanto_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			thohoku_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = id_largest_army
+			tooltip = {
+				add_country_modifier = {
+					name = id_discipline
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								capital_scope = { region = japan_region }
+								army_size = ROOT
+							}
+						}
+					}
+				add_country_modifier = {
+					name = id_discipline
+					duration = 9125
+				}
+				}
+			}
+		}
+	}
+	
+	id_south = {
+		icon = jap_restoration
+		required_missions = { id_dethrone id_north }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = kinai_area
+				area = saigoku_area
+				area = sanindo_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    kinai_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    saigoku_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    sanindo_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			define_advisor = {
+				type = army_reformer
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	
+	id_unite = {
+		icon = mission_japanseal
+		required_missions = { id_south }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				region = japan_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = japan_region
+				value = 25
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			add_country_modifier = {
+				name = tjj_unified
+				duration = 9125
+			}
+		}
+	}
+}
+
+
+
+
+ab_indep_daimyo_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		has_reform = indep_daimyo
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	id_warring = {
+		icon = mission_japanese_samurai
+		position = 1
+		required_missions = { }
+		
+		trigger = {
+			army_size_percentage = 0.85
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = id_sengoku
+				duration = 9125
+			}
+		}
+	}
+	
+	id_north = {
+		icon = mission_eronin
+		required_missions = { id_supremacy }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = eastern_chubu_area
+				area = hokuriku_area
+				area = chubu_area
+				area = kanto_area
+				area = eastern_kanto_area
+				area = thohoku_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    thohoku_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    eastern_kanto_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    chubu_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    kanto_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    hokuriku_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    chubu_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
+			}
+			add_adm_power = 100
+			add_country_modifier = {
+				name = id_north
+				duration = 9125
+			}
+		}
+	}
+	
+	
+}
+
+ab_indep_daimyo_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		has_reform = indep_daimyo
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	id_balance_the_four_divisions = {
+		icon = jap_balance_shinokosho
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = JAP_balance_the_four_divisions_tt
+				OR = {
+					AND = {
+						if = {
+							limit = {
+								has_estate = estate_burghers
+							}
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 60
+							}
+						}
+						if = {
+							limit = {
+								has_estate = estate_church
+							}
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 60
+							}
+						}
+					}
+					AND = {
+						if = {
+							limit = {
+								has_estate = estate_burghers
+							}
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 60
+							}
+						}
+						if = {
+							limit = {
+								has_estate = estate_nobles
+							}
+							estate_loyalty = {
+								estate = estate_nobles
+								loyalty = 60
+							}
+						}
+					}
+					AND = {
+						if = {
+							limit = {
+								has_estate = estate_church
+							}
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 60
+							}
+						}
+						if = {
+							limit = {
+								has_estate = estate_nobles
+							}
+							estate_loyalty = {
+								estate = estate_nobles
+								loyalty = 60
+							}
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = { NOT = { stability = 3 } }
+				add_stability = 1
+			add_country_modifier = {
+				name = "tjj_factions"
+				duration = 7300
+			}
+			}
+			else = {
+				add_adm_power = 100
+			add_country_modifier = {
+				name = "tjj_factions"
+				duration = 7300
+			}
+			}
+		}
+	}
+	
+	id_naval = {
+		icon = mission_trade_with_japan
+		position = 3
+		required_missions = { id_balance_the_four_divisions }
+		
+		trigger = {
+			navy_size_percentage = 1
+		}
+		
+		effect = {
+			create_admiral = { tradition = 50 }
+			add_country_modifier = {
+				name = "id_fleet"
+				duration = 7300
+			}
+		}
+	}
+	
+	
+	id_protect = {
+		icon = mission_to_the_south_china_sea
+		position = 5
+		required_missions = { id_naval }
+		
+		trigger = {
+			num_of_light_ship = 10
+			1376 = {
+				trade_share = {
+					country = ROOT
+					share = 20
+				}
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "tjj_trade"
+				duration = 9125
+			}
+		}
+	}
+	
+	
+}
+
+ab_indep_daimyo_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		has_reform = indep_daimyo
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	id_develop = {
+	    icon = mission_mnd_dai_temples
+		required_missions = { }
+		position = 1
+	
+		trigger = {
+			capital_scope = {
+				num_of_times_improved = 7
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_prosperity = 50
+			}
+			add_country_modifier = {
+				name = "tjj_projects"
+				duration = 7300
+			}
+		}
+	}
+	
+	id_fortify = {
+	    icon = mission_japanese_fort
+		required_missions = { id_develop }
+		position = 3
+	
+		trigger = {
+			capital_scope = {
+				OR = {
+					has_building = fort_15th
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 10
+			define_advisor = {
+				type = fortification_expert
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+
+	id_rival = {
+		icon = mission_open_up_china
+		position = 4
+		required_missions = { id_naval }
+
+		trigger = {
+			OR = {
+				1020 = {
+					owner = {
+						NOT = {
+							navy_size = ROOT
+						}
+					}
+				}
+				navy_size = 25
+			}
+		}
+		
+		effect = {
+			add_navy_tradition = 20
+			add_country_modifier = {
+				name = "id_eclipsed"
+				duration = 9125
+			}
+		}
+	}
+}

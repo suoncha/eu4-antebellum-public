@@ -1,0 +1,1137 @@
+clc_first = {
+	slot = 1 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = CLC
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	clc_antioch = {
+	    icon = convert_the_holy_lands
+		required_missions = { clc_alliances }
+		position = 2
+		
+		trigger = {
+		    5132 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    2313 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 5132
+				province_id = 2313
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_general = { tradition = 50 }
+			add_country_modifier = {
+				name = clc_crusaders
+				duration = 5475
+			}
+			palestine_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			syria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			aleppo_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			syrian_desert_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	clc_palestine = {
+	    icon = kingdom_of_heaven
+		required_missions = { clc_antioch }
+		position = 4
+		
+		trigger = {
+		    palestine_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = palestine_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 100
+			palestine_area = {
+				add_devastation = -50
+			}
+			palestine_area = {
+				add_province_modifier = {
+					name = clc_convert
+					duration = 9125
+				}
+			}
+		}
+	}
+
+	clc_jerusalem = {
+	    icon = jerusalem
+		required_missions = { clc_palestine }
+		position = 5
+		
+		trigger = {
+			379 = {
+				development = 20
+			}
+			379 = {
+				religion = coptic
+			}
+			379 = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 379
+		}
+		
+		effect = {
+			379 = {
+				add_prosperity = 100
+			}
+			379 = {
+				add_province_modifier = {
+					name = "clc_holy"
+					duration = -1
+				}
+			}
+			custom_tooltip = CLC_JERUSALEM
+			tooltip = {
+				add_country_modifier = {
+					name = clc_expand
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							379 = {
+								has_great_project = {
+									type = holy_city_jerusalem
+									tier = 2
+								}
+							}
+							379 = {
+								has_great_project = {
+									type = holy_city_jerusalem
+									tier = 3
+								}
+							}
+						}
+					}
+					add_country_modifier = {
+						name = clc_expand
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	clc_coptic = {
+		icon = prester_john
+		position = 6
+		required_missions = { clc_egypt }
+	
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				region = egypt_region
+				religion = coptic
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = egypt_region
+			NOT = { religion = coptic }
+		}
+		
+		effect = {
+			country_event = { id = ab_cilicia.3 }
+		}
+	}
+
+}
+
+clc_second = {
+	slot = 2 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = CLC
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	clc_alliances = {
+		icon = hungarian_union
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			num_of_allies = 2
+		}
+		
+		effect = {
+			custom_tooltip = frc_scaled_dip_per_alliance 
+			add_country_modifier = {
+				name = clc_secure_alliances
+				duration = 5475
+			}
+			hidden_effect = {
+				if = {
+					limit = { num_of_allies = 4 }
+					add_dip_power = 100 
+				}
+				else_if = {
+					limit = { num_of_allies = 3 }
+					add_dip_power = 75
+				}
+				else_if = {
+					limit = { num_of_allies = 2 }
+					add_dip_power = 50
+				}
+				else_if = {
+					limit = { num_of_allies = 1 }
+					add_dip_power = 25
+				}
+			}
+			5132 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2313 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	clc_phoenix = {
+		icon = end_the_schism
+		required_missions = { clc_alliances }
+		position = 2
+		
+		trigger = {
+			OR = {
+				alliance_with = BYZ
+				owns = 151
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = BYZ
+		}
+		
+		effect = {
+			custom_tooltip = CLC_TRUST
+			add_country_modifier = {
+				name = clc_roman
+				duration = 9125
+			}
+			hidden_effect = {
+				add_trust = {
+					who = BYZ
+					value = 10
+					mutual = yes
+				}
+			}
+		}
+	}
+	
+	clc_syria = {
+	    icon = mission_tear_down_spanish_strongholds
+		required_missions = { clc_antioch }
+		position = 3
+		
+		trigger = {
+		    aleppo_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    syria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    syrian_desert_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = aleppo_area
+				area = syria_area
+				area = syrian_desert_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "clc_levantine"
+				duration = 9125
+			}
+			trans_jordan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			egypt_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	clc_egypt = {
+	    icon = mission_nizzarid
+		required_missions = { clc_syria clc_palestine }
+		position = 5
+		
+		trigger = {
+		    egypt_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = egypt_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 25
+			add_country_modifier = {
+				name = "clc_triumph"
+				duration = -1
+			}
+			red_sea_coast_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			dongola_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_nubia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = CLC_NIZZARIDS
+			tooltip = {
+				add_army_professionalism = 0.05
+				add_country_modifier = {
+					name = "clc_sword"
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							exists = NAZ
+						}
+					}
+					add_army_professionalism = 0.05
+					add_country_modifier = {
+						name = "clc_sword"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	clc_nile = {
+	    icon = sweep_the_po
+		required_missions = { clc_egypt }
+		position = 7
+		
+		trigger = {
+		    red_sea_coast_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    dongola_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    upper_nubia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = red_sea_coast_area
+				area = dongola_area
+				area = upper_nubia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "clc_expedition"
+				duration = 9125
+			}
+			1227 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}	
+	
+	clc_ark = {
+	    icon = ark_of_the_covenant
+		required_missions = { clc_nile }
+		position = 8
+		
+		trigger = {
+		    1227 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 1227
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = { id = knights_missions.4 }
+		}
+	}
+	
+}
+
+clc_third = {
+	slot = 3 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = CLC
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	clc_west = {
+		icon = anatolian_frontier
+		position = 3
+		required_missions = { clc_ascendant }
+	
+		trigger = {
+			karaman_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			germiyan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			ankara_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = karaman_area
+				area = germiyan_area
+				area = ankara_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			define_advisor = {
+				type = commandant
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			add_country_modifier = {
+				name = clc_conversion
+				duration = 9125
+			}
+		}
+	}
+	
+	clc_encroach = {
+		icon = a_real_roman_empire
+		position = 4
+		required_missions = { clc_west }
+	
+		trigger = {
+			hudavendigar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			aydin_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = hudavendigar_area
+				area = aydin_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+		    add_accepted_culture_or_dip_power = {
+		    	culture = greek
+		    }
+			add_country_modifier = {
+				name = clc_reconciliation
+				duration = 9125
+			}
+			151 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	clc_constantinople = {
+		icon = mission_city_of_the_world's_desire
+		position = 5
+		required_missions = { clc_encroach }
+	
+		trigger = {
+			151 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			151 = {
+				NOT = {
+					has_construction = great_project
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 151
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+		    country_event = { id = ab_cilicia.2 }
+		}
+	}
+	
+	clc_alexandria = {
+		icon = mission_conquer_alexandria
+		position = 6
+		required_missions = { clc_egypt }
+	
+		trigger = {
+			358 = {
+				development = 30
+			}
+			358 = {
+				religion = coptic
+			}
+			358 = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 358
+		}
+		
+		effect = {
+			country_event = { id = ab_cilicia.4 }
+		}
+	}
+	
+	clc_legacy = {
+		icon = empower_the_junkers
+		position = 7
+		required_missions = { clc_resettle }
+	
+		trigger = {
+			prestige = 95
+			legitimacy = 95
+			absolutism = 50
+			stability = 3
+			is_great_power = yes
+		}
+		
+		effect = {
+			add_ruler_modifier = {
+				name = clc_heir
+				duration = -1
+			}
+			custom_tooltip = CLC_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = clc_evolved_ideas
+				if = {
+					limit = {
+						OR = {
+							tag = ARM
+							tag = AME
+						}
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+			custom_tooltip = CLC_AGE
+			tooltip = {
+				grant_all_mana = {
+					mana = 150
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						in_golden_age = yes
+					}
+				grant_all_mana = {
+					mana = 150
+				}
+				}
+			}
+		}
+	}
+}
+
+clc_fourth = {
+	slot = 4 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = CLC
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	clc_destroy = {
+		icon = mission_persian_soldiers
+		position = 1
+		required_missions = {  }
+	
+		trigger = {
+			war_score_against = {
+				who = SEL
+				value = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = SEL
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "clc_seljuks"
+				duration = 5475
+			}
+			custom_tooltip = CLC_SEL_CLAIM
+			hidden_effect = {
+			every_province = {
+				limit = { 
+						owned_by = SEL
+						NOT = { is_permanent_claim = ROOT	}
+						NOT = { is_core = ROOT	}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	clc_ascendant = {
+		icon = mission_empire
+		position = 2
+		required_missions = { clc_destroy }
+	
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = anatolia_region
+				value = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = anatolia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "clc_ascendant"
+				duration = 9125
+			}
+			armenia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			anatolia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	clc_homeland = {
+		icon = mission_unite_home_region
+		position = 4
+		required_missions = { clc_ascendant }
+	
+		trigger = {
+			armenia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = armenia_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_cilicia.1 }
+			hidden_effect = {
+				complete_mission = clc_homeland
+			}
+		}
+	}
+	
+	clc_tigran = {
+		icon = appease_the_estates
+		position = 5
+		required_missions = { clc_homeland }
+	
+		trigger = {
+			418 = {
+				development = 25
+			}
+			418 = {
+				religion = coptic
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 418
+		}
+		
+		effect = {
+			418 = {
+				move_capital_effect = yes
+				change_culture = armenian
+				change_province_name = "Tigranakert"
+				rename_capital = "Tigranakert"
+			}
+			418 = {
+				add_province_modifier = {
+					name = "clc_tigranakert"
+					duration = -1
+				}
+			}
+			418 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			custom_tooltip = CLC_SILK
+		}
+	}
+	
+	clc_resettle = {
+		icon = mission_conquer_malwa_bah
+		position = 6
+		required_missions = { clc_tigran }
+	
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				culture = armenian
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 1
+			}
+			add_country_modifier = {
+				name = "clc_diaspora"
+				duration = 18250
+			}
+		}
+	}
+	
+	clc_apostolic = {
+		icon = mission_autocephalous_archbishopric
+		required_missions = { clc_resettle }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 358
+				province_id = 2313
+				province_id = 1227
+				province_id = 1234
+				province_id = 419
+			}
+		}
+		
+		trigger = {
+			owns = 358
+			owns = 2313
+			owns = 1227
+			owns = 1234
+			owns = 419
+			num_of_owned_provinces_with = {
+				value = 25
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = { estate = estate_church loyalty = 20 }
+			add_country_modifier = {
+				name = "clc_blessing"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+clc_fifth = {
+	slot = 5 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = CLC
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	clc_coastline = {
+		icon = crusader_fleet
+		position = 2
+		required_missions = { }
+	
+		trigger = {
+			OR = {
+				navy_size_percentage = 1
+				num_of_galley = 8
+			}
+		}
+		
+		effect = {
+			create_admiral = { tradition = 50 }
+			add_country_modifier = {
+				name = "clc_gulf"
+				duration = 5475
+			}
+			321 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	clc_cyprus = {
+		icon = kingdom_of_cyprus
+		position = 3
+		required_missions = { clc_coastline }
+	
+		trigger = {
+			321 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 321
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_navy_tradition = 15
+			add_yearly_sailors = 3
+			377 = {
+				add_trade_modifier = {
+					who = root
+					duration = 5475
+					power = 15
+					key = clc_cypriot
+				}
+			}
+			163 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			5153 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			320 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	clc_trade = {
+		icon = mission_mare_nostrum
+		position = 4
+		required_missions = { clc_cyprus }
+	
+		trigger = {
+			321 = {
+				is_strongest_trade_power = ROOT
+			}
+			358 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 321
+				province_id = 358
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "clc_control"
+				duration = -1
+			}
+			custom_tooltip = CLC_TRADE_INCOME
+			tooltip = {
+				add_years_of_income = 1.5
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						trade_income_percentage = 0.35
+					}
+					add_years_of_income = 1.5
+				}
+			}
+		}
+	}
+	
+	clc_caucasia = {
+		icon = prosper_in_piedmont
+		position = 5
+		required_missions = { clc_homeland }
+	
+		trigger = {
+			caucasia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = caucasia_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			caucasia_region = {
+				add_devastation = -50
+				add_base_manpower = 1
+			}
+			mashriq_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	clc_greater = {
+		icon = mission_armenia
+		position = 7
+		required_missions = { clc_caucasia }
+	
+		trigger = {
+			mashriq_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = mashriq_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = CLC_EMPIRE
+			add_country_modifier = {
+				name = "clc_empire"
+				duration = -1
+			}
+			persia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+}
+	

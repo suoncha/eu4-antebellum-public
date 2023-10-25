@@ -1,0 +1,780 @@
+sty_first = {
+	slot = 1 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = STY
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	sty_slovenes = {
+		icon = prosper_in_piedmont
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 128
+				province_id = 4751
+				province_id = 4759
+				province_id = 129
+				province_id = 1769
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			owns_or_non_sovereign_subject_of = 128
+			owns_or_non_sovereign_subject_of = 4751
+			owns_or_non_sovereign_subject_of = 4759
+			owns_or_non_sovereign_subject_of = 129
+			owns_or_non_sovereign_subject_of = 1769
+		}
+		
+		effect = {
+		    add_accepted_culture_or_dip_power = {
+		    	culture = slovene
+		    }
+			tirol_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	sty_tyrol = {
+	    icon = claim_tirol
+		required_missions = { sty_slovenes sty_salz}
+		position = 3
+		
+		trigger = {
+		    tirol_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tirol_area
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			tirol_area = {
+				add_province_modifier = {
+					name = "sty_tirol"
+					duration = 5475
+				}
+			}
+		}
+	}
+	
+	sty_austria = {
+	    icon = mission_the_austrian_succession
+		required_missions = { sty_tyrol }
+		position = 5
+		
+		trigger = {
+		    stability = 1
+			legitimacy = 90
+		}
+		
+		effect = {
+			change_tag = HAB
+			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_country_modifier = {
+				name = "tir_united"
+				duration = 5475
+			}
+		}
+	}
+	
+	sty_triest = {
+		icon = dalmatian_conquest
+		required_missions = { sty_graz }
+		position = 6
+		
+		provinces_to_highlight = {
+			province_id = 4738
+		}
+		
+		trigger = {
+			owns_core_province = 4738
+			4738 = {
+				has_trade_building_trigger = yes
+			}
+			4738 = {
+				has_dock_building_trigger = yes
+			}
+			4738 = {
+				has_shipyard_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			4738 = {
+				add_province_modifier = {
+					name = "sty_triest"
+					duration = -1
+				}
+			}
+			4738 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+}
+
+sty_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = STY
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	sty_salz = {
+		icon = mission_religious
+		required_missions = { }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 76
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			owns_or_non_sovereign_subject_of = 76
+		}
+		effect = {
+			76 = {
+				change_culture = austrian
+			}
+			add_papal_influence = 15
+			define_advisor = {
+				type = theologian
+				skill = 3
+				culture = austrian
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	sty_cathedral = {
+		icon = connect_further_austria
+		required_missions = { sty_salz }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 76
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			76 = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "sty_cathedral"
+				duration = -1
+			}
+		}
+	}
+	
+	sty_gold = {
+		icon = dominant_economy
+		required_missions = { sty_tyrol }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 73
+			}
+		}
+		
+		trigger = {
+			owns = 73
+			73 = {
+				base_production = 10
+			}
+		}
+		
+		effect = {
+			add_treasury = 200
+		}
+	}
+	
+	sty_graz = {
+	    icon = imperial_capitals
+		required_missions = { }
+		position = 5
+
+		trigger = {
+			owns_core_province = 1863
+			1863 = {
+				development = 20
+			}
+			1863 = {
+				has_production_building_trigger = yes
+			}
+			1863 = {
+				has_tax_building_trigger = yes
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 1863
+		}
+		
+		effect = {
+			1863 = {
+				add_province_modifier = {
+					name = "sty_graz"
+					duration = -1
+				}
+			}
+			1863 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	sty_vienna = {
+	    icon = austria_prospers
+		required_missions = { sty_graz }
+		position = 6
+		
+		trigger = {
+			owns = 134
+			is_emperor = yes
+			adm_power = 100
+			134 = {
+				development = 20
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 134
+			}
+		}
+		
+		effect = {
+			add_adm_power = -100
+			set_capital = 134
+			134 = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+			}
+		}
+	}
+	
+	sty_palace = {
+	    icon = appease_the_estates
+		required_missions = { sty_vienna }
+		position = 7
+		
+		trigger = {
+			treasury = 350
+			owns = 134
+			dynasty = "von Babenberg"
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 134
+			}
+		}
+		
+		effect = {
+			add_treasury = -350
+			add_legitimacy = 25
+			134 = {
+				add_base_tax = 2
+			add_province_modifier = {
+				name = "sty_palace"
+				duration = -1
+			}
+			}
+		}
+	}
+}
+
+sty_third = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = STY
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	sty_protectors = {
+	    icon = lead_the_empire
+		required_missions = {  }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 0.8
+			num_of_generals = 1
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = "sty_army"
+				duration = 7300
+			}
+			transdanubia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			carinthia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			76 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			128 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4759 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	sty_army = {
+	    icon = league_of_the_public_weal
+		required_missions = { sty_protectors }
+		position = 2
+		
+		trigger = {
+			OR = {
+				army_tradition = 45
+				army_professionalism = 0.45
+			}
+		}
+		
+		effect = {
+			add_mil_power = 75
+			create_general = { tradition = 75 }
+		}
+	}
+	
+	sty_moravia = {
+		icon = despot_stefans_legacy
+		required_missions = { sty_march }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 265
+				province_id = 4726
+				province_id = 4237
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			owns_or_non_sovereign_subject_of = 265
+			owns_or_non_sovereign_subject_of = 4726
+			owns_or_non_sovereign_subject_of = 4237
+		}
+		
+		effect = {
+		    moravia_area = {
+                add_province_modifier = {
+                    name = "sty_moravian_heresy"
+					duration = 7300
+				}
+			}
+			bohemia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			erzgebirge_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	sty_bohemia = {
+		icon = reform_bergordnung
+		required_missions = { sty_moravia }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = bohemia_area
+				area = erzgebirge_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			bohemia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			erzgebirge_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+		    bohemia_area = {
+                add_province_modifier = {
+                    name = "sty_bohemian_integration"
+					duration = 1825
+				}
+			}
+		    erzgebirge_area = {
+                add_province_modifier = {
+                    name = "sty_bohemian_integration"
+					duration = 1825
+				}
+			}
+			silesia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	sty_wine = {
+		icon = mission_farm
+		required_missions = { sty_graz }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4762
+			}
+		}
+		
+		trigger = {
+			owns = 4762
+			4762 = {
+				base_production = 7
+			}
+		}
+		
+		effect = {
+            add_country_modifier = {
+                name = "sty_wine"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+sty_fourth = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = STY
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	sty_march = {
+	    icon = mission_conquer_romania
+		required_missions = { sty_protectors }
+		position = 2
+		
+		trigger = {
+		    transdanubia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = transdanubia_area
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			transdanubia_area = {
+			add_province_modifier = {
+				name = "sty_march"
+				duration = -1
+			}
+			}
+			moravia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			slovakia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			1770 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	sty_nitra = {
+	    icon = protect_against_the_turks
+		required_missions = { sty_march }
+		position = 3
+		
+		trigger = {
+		    slovakia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = slovakia_area
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_adm_power = 100
+			define_advisor = {
+				type = army_reformer
+				skill = 3
+				culture = austrian
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			centralhungary_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			alfold_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			eastslovakia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			transylvania_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			southern_transylvania_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	sty_magyar = {
+	    icon = mission_non-western_cavalry_raid
+		required_missions = { sty_nitra }
+		position = 5
+		
+		trigger = {
+		    eastslovakia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    centralhungary_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    alfold_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    transylvania_area= {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    southern_transylvania_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = eastslovakia_area
+				area = centralhungary_area
+				area = transylvania_area
+				area = southern_transylvania_area
+				area = alfold_area
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+		    eastslovakia_area = {
+                add_province_modifier = {
+                    name = "sty_basin"
+					duration = 7300
+				}
+			}
+		    centralhungary_area = {
+                add_province_modifier = {
+                    name = "sty_basin"
+					duration = 7300
+				}
+			}
+		    alfold_area = {
+                add_province_modifier = {
+                    name = "sty_basin"
+					duration = 7300
+				}
+			}
+		    transylvania_area = {
+                add_province_modifier = {
+                    name = "sty_basin"
+					duration = 7300
+				}
+			}
+		    southern_transylvania_area = {
+                add_province_modifier = {
+                    name = "sty_basin"
+					duration = 7300
+				}
+			}
+		}
+	}
+	
+	sty_production = {
+		icon = mission_have_manufactories
+		required_missions = { sty_wine }
+		position = 7
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_production_building_trigger = yes
+				}
+				amount = 5
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "slv_production"
+				duration = 9125
+			}
+		}
+	}
+}

@@ -1,0 +1,85 @@
+namespace = gaelic_ab_flav
+country_event = {
+	id = gaelic_ab_flav.1
+	title = gaelic_ab_flav.1.t
+	desc = gaelic_ab_flav.1.d
+	picture = CULTURE_eventPicture
+	
+	is_triggered_only = yes
+	trigger = {
+		has_church_aspect = clan_loyalty_aspect
+		OR = {
+			has_country_flag = clan_loyalty_fired_via_picking
+			has_country_flag = clan_loyalty_aspect_election
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = clan_loyalty_fired_via_picking
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			set_country_flag = clan_loyalty_aspect_election
+			country_event = {
+				id = gaelic_ab_flav.1
+				days = 9125
+			}
+		}
+	}
+		
+	option = {
+		name = gaelic_ab_flav.1.a
+		add_country_modifier = {
+			name = arc_chosen_1
+			duration = 9125
+		}
+		add_adm_power = -150
+	}
+		
+	option = {
+		name = gaelic_ab_flav.1.b
+		add_country_modifier = {
+			name = arc_chosen_2
+			duration = 9125
+		}
+		add_years_of_income = -0.50
+	}
+		
+	option = {
+		name = gaelic_ab_flav.1.c
+		add_country_modifier = {
+			name = arc_chosen_3
+			duration = 9125
+		}
+		add_legitimacy = -20
+	}
+		
+	option = {
+		name = gaelic_ab_flav.1.e
+		random_list = {
+			33 = {
+				add_country_modifier = {
+					name = arc_chosen_1
+					duration = 9125
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = arc_chosen_2
+					duration = 9125
+				}
+			}
+			33 = {
+				add_country_modifier = {
+					name = arc_chosen_3
+					duration = 9125
+				}
+			}
+		}
+	}
+}
+			
+			

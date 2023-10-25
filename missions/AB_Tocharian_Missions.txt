@@ -1,0 +1,1607 @@
+tcr_first = {
+	slot = 1
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = SLH
+			tag = KUC
+			tag = TCR
+			tag = KRR
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	tcr_war = {
+	    icon = mission_empire
+		required_missions =  { tcr_forces }
+		position = 2
+		
+		trigger = {
+			OR = {
+				war_score_against = {
+					who = SLH
+					value = 50
+				}
+				war_score_against = {
+					who = KUC
+					value = 50
+				}
+				war_score_against = {
+					who = KRR
+					value = 50
+				}
+			}
+		}
+		
+		effect = {
+			add_mil_power = 50
+			add_country_modifier = {
+				name = tcr_war
+				duration = 7300
+			}
+		}
+	}
+
+	tcr_khitan = {
+	    icon = mission_unite_rajputana
+		required_missions = { tcr_unite }
+		position = 4
+		
+		trigger = {
+		    jetysuu_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    2364 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    460 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    2120 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    4208 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = jetysuu_area
+				province_id = 2364
+				province_id = 460
+				province_id = 2120
+				province_id = 4208
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			add_country_modifier = {
+				name = "tcr_opression"
+				duration = 7300
+			}
+			zungaria_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			north_zungaria = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			turpan_kumul_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			ferghana_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			termez_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			transoxiana_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	tcr_oirat = {
+	    icon = mission_oirat
+		required_missions = { tcr_khitan }
+		position = 5
+		
+		trigger = {
+		    turpan_kumul_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    north_zungaria = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    zungaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = turpan_kumul_area
+				area = north_zungaria
+				area = zungaria_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_general = { tradition = 50 }
+			add_mil_power = 100
+			mongolia_region = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_mongolia = {
+	    icon = mission_non-western_cavalry_raid
+		required_missions = { tcr_oirat }
+		position = 6
+		
+		trigger = {
+		    mongolia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = mongolia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+		custom_tooltip = unite_mongol_culture_tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						culture = chahar
+						culture = khalkha
+						culture = oirats
+					}
+				}
+				change_culture = mongol
+			}
+		}
+		if = {
+			limit = {
+				NOT = { accepted_culture = mongol }
+				NOT = { primary_culture = mongol }
+			}
+			add_accepted_culture = mongol
+		}
+			add_country_modifier = {
+				name = "tcr_cutting"
+				duration = 5475
+			}
+		}
+	}
+	
+	tcr_rival = {
+	    icon = mission_dethrone
+		required_missions = { tcr_mongolia }
+		position = 7
+		
+		trigger = {
+			OR = {
+			is_rival = YUA
+			custom_trigger_tooltip = {
+				tooltip = TCR_MORE_ARMY
+				NOT = {
+					YUA = {
+						army_size = ROOT
+					}
+				}
+			}
+			}
+			
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "tcr_bane"
+				duration = 9125
+			}
+			north_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_nchina = {
+	    icon = mission_seize_the_dragon_throne
+		required_missions = { tcr_rival }
+		position = 8
+		
+		trigger = {
+			NOT = {
+				exists = YUA
+			}
+		    north_china_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = north_china_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "tcr_throne"
+				duration = -1
+			}
+			south_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			xinan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_schina = {
+	    icon = mission_defy_the_dragon
+		required_missions = { tcr_nchina }
+		position = 9
+		
+		trigger = {
+		    south_china_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    xinan_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = south_china_region
+				region = xinan_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = tcr_dragon
+				duration = 9125
+			}
+		}
+	}
+
+
+}
+
+tcr_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = SLH
+			tag = KUC
+			tag = TCR
+			tag = KRR
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	tcr_forces = {
+	    icon = mission_subdue_rajputana
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			kashgaria_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			shanshan_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			tarim_basin_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_unite = {
+	    icon = mission_unite_home_region
+		required_missions = { tcr_forces tcr_war }
+		position = 3
+		
+		trigger = {
+		    tarim_basin_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    shanshan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    kashgaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tarim_basin_area
+				area = shanshan_area
+				area = kashgaria_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_country_modifier = {
+				name = tcr_unified
+				duration = 9125
+			}
+			2364 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			460 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2120 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4208 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			jetysuu_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tibet_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_guard = {
+	    icon = mission_central_asian_city
+		required_missions = { tcr_khitan }
+		position = 5
+		
+		trigger = {
+		    transoxiana_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    termez_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    ferghana_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = transoxiana_area
+				area = termez_area
+				area = ferghana_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = tcr_trade
+				duration = 7300
+			}
+			kyzylkum_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			syr_darya_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			balchasj_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_steppe = {
+	    icon = mission_chinese_general_riding
+		required_missions = { tcr_guard }
+		position = 6
+		
+		trigger = {
+		    balchasj_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    syr_darya_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    kyzylkum_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = balchasj_area
+				area = syr_darya_area
+				area = kyzylkum_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			define_advisor = {
+				type = army_reformer
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			central_asia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_khorasan = {
+	    icon = mission_reclaim_lost_territory
+		required_missions = { tcr_kashmir }
+		position = 7
+		
+		trigger = {
+		    kabulistan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    ghor_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    balkh_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = kabulistan_area
+				area = ghor_area
+				area = balkh_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			khorasan_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kerman_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			farsistan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_persepolis = {
+	    icon = mission_advance_to_kalyana
+		required_missions = { tcr_khorasan }
+		position = 8
+		
+		trigger = {
+		    khorasan_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    farsistan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    kerman_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = khorasan_region
+				area = farsistan_area
+				area = kerman_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_legitimacy = 25
+			add_country_modifier = {
+				name = tcr_persia_fall
+				duration = 5475
+			}
+			persia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_persia = {
+	    icon = mission_persianate_empire
+		required_missions = { tcr_persepolis }
+		position = 9
+		
+		trigger = {
+			persia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = persia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_adm_power = 150
+			add_country_modifier = {
+				name = tcr_persia
+				duration = -1
+			}
+			mashriq_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			anatolia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_silk = {
+	    icon = mission_coromandel_expansion
+		required_missions = { tcr_persia }
+		position = 10
+		
+		trigger = {
+			mercantilism = 15
+			trade_income_percentage = 0.35
+			tag = KUS
+			mashriq_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			anatolia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = mashriq_region
+				region = anatolia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_treasury = 1500
+			add_country_modifier = {
+				name = tcr_silk
+				duration = -1
+			}
+			custom_tooltip = KUS_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = kus_evolved_ideas
+				if = {
+					limit = {
+						tag = KUS
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+		}
+	}
+	
+}
+
+tcr_third = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = SLH
+			tag = KUC
+			tag = TCR
+			tag = KRR
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	tcr_roads = {
+	    icon = mission_pue_chaco_roads
+		required_missions = { tcr_irrigation }
+		position = 2
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = { 
+						has_building = early_road
+						has_building = gravel_road
+						has_building = royal_road
+						has_building = macadam_road
+						has_building = rail_road
+					}
+				}
+				amount = 7
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "tcr_roads"
+				duration = 7300
+			}
+		}
+	}
+	
+	tcr_kuci = {
+	    icon = mission_renovate_kannauj
+		required_missions = { tcr_roads }
+		position = 3
+		
+		trigger = {
+			owns = 2121
+			2121 = {
+				development = 20
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 2121
+
+		}
+		
+		effect = {
+			add_prestige = 20
+			2121 = {
+				add_province_modifier = {
+					name = "tcr_kuci"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	
+	tcr_tibet = {
+	    icon = mission_buddhist_monk_praying
+		required_missions = { tcr_unite }
+		position = 4
+		
+		trigger = {
+		    tibet_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = tibet_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			tibet_region = {
+			add_province_modifier = {
+				name = tcr_tibet
+				duration = -1
+			}
+			}
+			kashmir_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			nepal_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_kashmir = {
+	    icon = mission_che_the_cave_country
+		required_missions = { tcr_tibet }
+		position = 6
+		
+		trigger = {
+		    kashmir_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = kashmir_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = tcr_second_invasion
+				duration = 9125
+			}
+			kabulistan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			ghor_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			balkh_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			sind_sagar_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			lahore_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			multan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_india = {
+	    icon = mission_abu_saids_dream
+		required_missions = { tcr_kashmir }
+		position = 7
+		
+		trigger = {
+		    multan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    lahore_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    sind_sagar_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = multan_area
+				area = lahore_area
+				area = sind_sagar_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = tcr_legacy
+				duration = 7300
+			}
+			northern_sindh_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			sindh_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_indus = {
+	    icon = mission_magadna_and_varanasi
+		required_missions = { tcr_india }
+		position = 8
+		
+		trigger = {
+		    sindh_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    northern_sindh_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = sindh_area
+				area = northern_sindh_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		effect = {
+			define_advisor = {
+				type = commandant
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			west_india_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	tcr_windia = {
+	    icon = mission_control_the_ganges_delta
+		required_missions = { tcr_indus }
+		position = 9
+		
+		trigger = {
+		    west_india_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = west_india_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		effect = {
+			change_monarch_points_or_power = {
+				points = 2
+				power = mil
+			}
+			add_country_modifier = {
+				name = tcr_empire
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+tcr_fourth = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = SLH
+			tag = KUC
+			tag = TCR
+			tag = KRR
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	tcr_irrigation = {
+		icon = mission_pue_irrigation_cannals
+		required_missions = { }
+		position = 1
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				base_production = 5
+			}
+		}
+		effect = {
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" }
+				capital_scope = {
+					add_prosperity = 25
+				}
+			}
+			add_country_modifier = {
+				name = "tcr_irrigation"
+				duration = 9125
+			}
+		}
+	}
+	
+	tcr_tax = {
+		icon = mission_market_place_with_asian_traders
+		required_missions = { tcr_irrigation }
+		position = 2
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				base_tax = 5
+			}
+		}
+		effect = {
+			add_years_of_income = 1
+			define_advisor = {
+				type = treasurer
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	tcr_trade = {
+	    icon = mission_conquer_central_deccan
+		required_missions = { tcr_roads tcr_tax }
+		position = 3
+		
+		trigger = {
+			454 = {
+				trade_share = {
+					country = ROOT
+					share = 35
+				}
+			}
+			calc_true_if = {
+				all_owned_province = {
+					has_trade_building_trigger = yes
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			739 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			2124 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	tcr_fund = {
+		icon = mission_patronize_sufi_scholars
+		required_missions = { tcr_kuci }
+		position = 4
+	
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_building = university
+				}
+				amount = 7
+			}
+		}
+		effect = {
+			change_government_reform_progress = 25
+			add_country_modifier = {
+				name = tcr_universities
+				duration = 5475
+			}
+		}
+	}
+	
+	tcr_nepal = {
+	    icon = mission_kowtow
+		required_missions = { tcr_tibet }
+		position = 5
+		
+		trigger = {
+		    nepal_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = nepal_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tcr_buddhist
+				duration = 5475
+			}
+			north_bengal_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			gaur_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			east_bengal_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			west_bengal_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_bengal = {
+	    icon = mission_unite_bengal
+		required_missions = { tcr_nepal }
+		position = 7
+		
+		trigger = {
+		    west_bengal_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    east_bengal_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    gaur_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    north_bengal_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = west_bengal_area
+				area = east_bengal_area
+				area = gaur_area
+				area = north_bengal_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = tcr_bengal
+				duration = 5475
+			}
+			hindusthan_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			bengal_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_north = {
+	    icon = mission_unite_the_deccan
+		required_missions = { tcr_bengal }
+		position = 8
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = hindusthan_region
+				value = 30
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = hindusthan_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = tcr_uniting
+				duration = 9125
+			}
+			india_superregion  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tcr_rekindle = {
+	    icon = mission_conquer_persia
+		required_missions = { tcr_indian_empire tcr_windia }
+		position = 10
+		
+		trigger = {
+			NOT = {
+				unrest = 1
+			}
+			india_superregion = {
+				type = all
+				owned_by = ROOT
+				NOT = { local_autonomy_above_min = 20 }
+			}
+			persia_region = {
+				type = all
+				owned_by = ROOT
+				NOT = { local_autonomy_above_min = 20 }
+			}
+			khorasan_region = {
+				type = all
+				owned_by = ROOT
+				NOT = { local_autonomy_above_min = 20 }
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				superregion = india_superregion
+				region = persia_region
+				region = khorasan_region
+			}
+		}
+		
+		effect = {
+			add_stability = 1
+			add_country_modifier = {
+				name = tcr_bonds
+				duration = -1
+			}
+		}
+	}
+	
+	
+}
+
+tcr_fifth = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = SLH
+			tag = KUC
+			tag = TCR
+			tag = KRR
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	tcr_levy = {
+		icon = mission_conquer_maharashtra
+		required_missions = { tcr_irrigation }
+		position = 2
+
+		trigger = {
+			OR = {
+				army_reformer = 1
+				army_reformer = 2
+				army_reformer = 3
+			}
+			OR = {
+				mil = 4
+				monthly_mil = 8
+			}
+		}
+		
+		effect = {
+			custom_tooltip = TCR_CULTURE
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = Tocharian
+					}
+					add_base_manpower = 1
+				}
+			}
+			add_country_modifier = {
+				name = "tcr_levy"
+				duration = -1
+			}
+		}
+	}
+	
+	tcr_oasis = {
+		icon = mission_gwalior_and_rathambore
+		required_missions = { tcr_levy }
+		position = 3
+	
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				OR = {
+					has_building = fort_15th
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		effect = {
+			add_army_tradition = 10
+			add_country_modifier = {
+				name = tcr_forts
+				duration = -1
+			}
+		}
+	}
+	
+	tcr_invest = {
+		icon = mission_industrialize_bengal
+		required_missions = { tcr_kuci }
+		position = 4
+	
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 15
+			}
+		}
+		effect = {
+			add_years_of_income = 1.5
+			add_country_modifier = {
+				name = tcr_industry
+				duration = 9125
+			}
+		}
+	}
+	
+	tcr_temples = {
+		icon = mission_patronize_local_gods
+		required_missions = { tcr_nepal }
+		position = 6
+	
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = temple
+						has_building = cathedral
+					}
+				}
+				amount = 10
+			}
+		}
+		effect = {
+			define_advisor = {
+				type = inquisitor
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			add_country_modifier = {
+				name = tcr_secure
+				duration = 5475
+			}
+		}
+	}
+	
+	tcr_faith = {
+		icon = mission_hands_praying
+		required_missions = { tcr_temples }
+		position = 8
+	
+		trigger = {
+			religious_unity = 0.85
+		}
+		effect = {
+			add_stability = 1
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	
+	tcr_indian_empire = {
+	    icon = mission_indian_empire
+		required_missions = { tcr_north }
+		position = 9
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				superregion = india_superregion
+				value = 150
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				superregion = india_superregion
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 2
+				power = adm
+			}
+			add_country_modifier = {
+				name = tcr_hegemony
+				duration = 9125
+			}
+		}
+	}
+	
+	
+	
+	
+}
+			

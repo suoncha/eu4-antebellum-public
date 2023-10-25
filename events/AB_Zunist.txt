@@ -1,0 +1,189 @@
+namespace = ab_zunist
+
+#Solar Eclipse
+country_event = {
+	id = ab_zunist.1
+	title = ab_zunist.1.t
+	desc = ab_zunist.1.d
+	picture = AB_ECLIPSE_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		religion = zunist
+		NOT = { has_country_flag = no_more_comet_sighted_event }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+		
+		modifier = {
+			factor = 0.1
+			OR = {
+				has_idea = comets
+				ruler_has_personality_ancestor = { key = scholar }
+			}
+		}
+		
+		modifier = {
+			factor = 0.5
+			natural_scientist = 1
+		}
+		modifier = {
+			factor = 0.5
+			luck = yes
+		}
+		modifier = {
+			factor = 1.1
+			stability = 2
+		}
+		modifier = {
+			factor = 1.1
+			stability = 3
+		}
+	}
+	
+	option = {
+		name = ab_zunist.1.a
+		add_stability = -1
+	}
+	
+}
+
+#Festival of the Sun
+country_event = {
+	id = ab_zunist.2
+	title = ab_zunist.2.t
+	desc = ab_zunist.2.d
+	picture = SOUTH_AMERICAN_FESTIVAL_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		religion = zunist
+	}
+	
+	option = {
+		name = ab_zunist.2.a
+		add_years_of_income = -0.5
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+		add_country_modifier = {
+			name = "zunist_festival1"
+			duration = 3650
+		}
+	}
+	
+	option = {
+		name = ab_zunist.2.b
+		add_years_of_income = -0.25
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 5
+		}
+		add_country_modifier = {
+			name = "zunist_festival2"
+			duration = 3650
+		}
+	}
+	
+	option = {
+		name = ab_zunist.2.c
+		add_legitimacy = -5
+	}
+	
+}
+
+#The Scorching Sun
+country_event = {
+	id = ab_zunist.3
+	title = ab_zunist.3.t
+	desc = ab_zunist.3.d
+	picture = muslimgfx_FAMINE_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		religion = zunist
+		is_at_war = yes
+	}
+	
+	option = {
+		name = ab_zunist.3.a
+		add_country_modifier = {
+			name = "zunist_scorching"
+			duration = 3650
+		}
+	}
+	
+}
+
+#Warriors of the Sun
+country_event = {
+	id = ab_zunist.4
+	title = ab_zunist.4.t
+	desc = ab_zunist.4.d
+	picture = muslimgfx_BATTLE_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		religion = zunist
+	}
+	
+	mean_time_to_happen = {
+		months = 100
+	}
+	
+	option = {
+		name = ab_zunist.4.a
+		add_yearly_manpower = 1.5
+		add_country_modifier = {
+			name = "warriors_of_zun"
+			duration = 3650
+		}
+	}
+	
+}
+
+#Zun's Trials
+country_event = {
+	id = ab_zunist.5
+	title = ab_zunist.5.t
+	desc = ab_zunist.5.d
+	picture = muslimgfx_BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		religion = zunist
+		has_heir = yes
+	}
+	
+	mean_time_to_happen = {
+		months = 300
+	}
+	
+	option = {
+		name = ab_zunist.5.a
+		random_list = { 
+			33 = { 
+				kill_heir = {}
+			}
+			33 = { 
+				change_heir_adm = 1
+			}
+			33 = { 
+				change_heir_dip = 1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_zunist.5.b
+		add_prestige = -5
+	}
+	
+}

@@ -1,0 +1,965 @@
+hsn1_conquest_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = HSN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	hsn_eagle = {
+		icon = encroach_on_the_germans
+		position = 2
+		required_missions = { hsn_buildforces }
+		
+		trigger = {
+			grown_by_development = 30
+		}
+		
+		effect = {
+			add_manpower = 5
+			syria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			syrian_desert_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = HSN_HUMILIATE
+			tooltip = {
+				add_ruler_modifier = {
+					name = hsn_islam
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = humiliated_rival
+					}
+					add_ruler_modifier = {
+						name = hsn_islam
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	hsn_purge = {
+		icon = kingdom_of_heaven
+		required_missions = { hsn_eagle hsn_conquer_syria }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = palestine_area
+				province_id = 2313
+				province_id = 5132
+				province_id = 377
+				province_id = 378
+				province_id = 4297
+				province_id = 382
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			palestine_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			2313 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			5132 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_ayyubids.1 }
+			321 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			delta_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bahari_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	hsn_cyprus = {
+		icon = kingdom_of_cyprus
+		required_missions = { hsn_purge }
+		position = 6
+		
+		provinces_to_highlight = {
+			province_id = 321
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			321 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_navy_tradition = 10
+			add_country_modifier = {
+				name = hsn_secure
+				duration = 18250
+			}
+			163 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			126 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+}
+
+hsn2_conquest_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = HSN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	hsn_buildforces = {
+		icon = mission_reconquer_ceuta
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			create_general = {
+				tradition = 75
+			}
+			add_country_modifier = {
+				name = "oma_buildforces_mod"
+				duration = 5475
+			}
+			al_jazira_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			iraq_arabi_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			basra_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			aleppo_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_kurdistan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	hsn_cataphract = {
+		icon = mission_abu_saids_dream
+		required_missions = { hsn_buildforces }
+		position = 2
+		
+		trigger = {
+			num_of_cavalry = 10
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "hsn_cavalry"
+				duration = 5475
+			}
+		}
+	}
+	
+	hsn_conquer_syria = {
+		icon = mission_arabian_fort
+		required_missions = { hsn_eagle }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = syrian_desert_area
+				province_id = 407
+				province_id = 1849
+				province_id = 377
+				province_id = 378
+				province_id = 4297
+				province_id = 382
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			syrian_desert_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			407 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			1849 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			377 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			378 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			4297 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			382 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = "hsn_reclamation"
+				duration = 9125
+			}
+			palestine_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			trans_jordan_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = HSN_NAZ_EXIST
+			hidden_effect = {
+			if = {
+				limit = {
+					exists = NAZ
+				}
+				NAZ = {
+					add_stability = -1
+				}
+			}
+			}
+		}
+	}
+	
+	hsn_egyptian = {
+		icon = mission_turning_the_tables
+		required_missions = { hsn_purge hsn_conquer_syria }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = bahari_area
+				area = delta_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			bahari_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			delta_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_legitimacy = 20
+			add_country_modifier = {
+				name = "hsn_dethroning"
+				duration = 9125
+			}
+			tabuk_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			medina_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mecca_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			egypt_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	hsn_destroy = {
+		icon = mission_nizzarid
+		required_missions = { hsn_egyptian }
+		position = 7
+		
+		provinces_to_highlight = {
+			region = egypt_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			NOT = {
+				exists = NAZ
+			}
+			egypt_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_ayyubids.2 }
+			custom_tooltip = HSN_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = hsn_evolved_ideas
+				if = {
+					limit = {
+						tag = HSN
+					}
+					swap_free_idea_group = yes
+				}
+			}
+		}
+	}
+	
+}
+
+hsn_conquest_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = HSN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	
+	hsn_kurdistan = {
+		icon = mission_unite_home_region
+		required_missions = { hsn_buildforces }
+		position = 2
+		
+		provinces_to_highlight = {
+			area = north_kurdistan_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			north_kurdistan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			north_kurdistan_area = {
+				add_base_manpower = 1
+			}
+			erzurum_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			dulkadir_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			rum_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	hsn_anatolia = {
+		icon = anatolian_frontier
+		required_missions = { hsn_kurdistan }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = erzurum_area
+				area = dulkadir_area
+				area = rum_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			erzurum_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			dulkadir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			rum_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			add_country_modifier = {
+				name = hsn_seljuk
+				duration = 9125
+			}
+			anatolia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	hsn_damascus = {
+		icon = mission_into_persia_1
+		required_missions = { hsn_conquer_syria }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 382
+			}
+		}
+		
+		trigger = {
+			382 = {
+				owned_by = ROOT
+				development = 35
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			382 = {
+				move_capital_effect = yes
+			}
+			382 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			382 = {
+				add_province_modifier = {
+					name = "hsn_restor"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	hsn_tomb = {
+		icon = mission_saladin
+		required_missions = { hsn_damascus }
+		position = 5
+		
+		provinces_to_highlight = {
+			province_id = 382
+		}
+		
+		trigger = {
+			382 = {
+				has_great_project = {
+					type = saladin
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			382 = {
+				add_base_manpower = 3
+			}
+			382 = {
+			add_province_modifier = {
+				name = "hsn_protectors"
+				duration = -1
+			}
+			}
+		}
+	}
+	
+	hsn_haj = {
+		icon = mission_into_arabia
+		required_missions = { hsn_egyptian }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tabuk_area
+				area = medina_area
+				area = mecca_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			mecca_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			medina_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			tabuk_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "hsn_hajj"
+				duration = -1
+			}
+			arabia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+hsn4_conquest_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = HSN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	hsn_mesopotamia = {
+		icon = mission_bengal_campaign
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				area = iraq_arabi_area
+				area = basra_area
+				area = al_jazira_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			iraq_arabi_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			basra_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			al_jazira_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			410 = {
+			add_province_modifier = {
+				name = hsn_restoring
+				duration = 9125
+			}
+			}
+		}
+	}
+	
+	hsn_baghdad = {
+		icon = mission_into_persia_2
+		required_missions = { hsn_mesopotamia }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 410
+			}
+		}
+		
+		trigger = {
+			410 = {
+				owned_by = ROOT
+				development = 25
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			410 = {
+				add_prosperity = 100
+			}
+			410 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			bahrain_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	hsn_bahrain = {
+		icon = mission_bedouins
+		required_missions = { hsn_baghdad }
+		position = 4
+		
+		provinces_to_highlight = {
+			area = bahrain_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    bahrain_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = hsn_trading
+				duration = 7300
+			}
+			pirate_coast_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			mascat_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			oman_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	hsn_oman = {
+		icon = mission_dominate_trade_in_bengal
+		required_missions = { hsn_bahrain }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = oman_area
+				area = mascat_area
+				area = pirate_coast_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			oman_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			mascat_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			pirate_coast_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_navy_tradition = 10
+			add_years_of_income = 1.5
+			400 = {
+				add_unit_construction = {
+					type = light_ship
+					amount = 5
+					speed = 1
+					cost = 0
+				}
+			}
+			2999 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	hsn_arabia = {
+		icon = mission_mosque
+		required_missions = { hsn_oman hsn_haj }
+		position = 7
+		
+		provinces_to_highlight = {
+			region = arabia_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			arabia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_country_modifier = {
+				name = hsn_birth
+				duration = 7300
+			}
+		}
+	}
+
+}
+
+hsn5_conquest_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = HSN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	hsn_wisdom = {
+		icon = mission_court_education
+		required_missions = { hsn_baghdad }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 410
+			}
+		}
+		
+		trigger = {
+			dip = 5
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			has_mil_advisor_3 = yes
+			410 = {
+				owned_by = ROOT
+				has_building = university
+			}
+		}
+		
+		effect = {
+			change_innovativeness = 3
+			define_advisor = {
+				type = visionary
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			add_country_modifier = {
+				name = hsn_wisdom
+				duration = -1
+			} 
+		}
+	}
+	
+	hsn_trade = {
+		icon = mission_arabian_ports
+		required_missions = { hsn_bahrain }
+		position = 5
+	
+		trigger = { 
+			1335 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 1335
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "hsn_gulf"
+				duration = 9125
+			}
+		}
+	}
+	
+	hsn_aden = {
+		icon = mission_secure_hajj_ports
+		required_missions = { hsn_trade }
+		position = 6
+	
+		trigger = { 
+			1331 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 1331
+		}
+		
+		effect = {
+			create_explorer = { tradition = 50 }
+			add_country_modifier = {
+				name = "hsn_explore"
+				duration = 9125
+			}
+		}
+	}
+	
+}

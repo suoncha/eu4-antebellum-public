@@ -1,0 +1,530 @@
+vlt_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = VLT
+	}
+	has_country_shield = yes
+	
+	vlt_obotrites = {
+		icon = mission_rb_unite_the_clans
+		required_missions = { vlt_army }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 46
+				province_id = 4786
+				province_id = 2996
+				province_id = 53
+				province_id = 1857
+				province_id = 1775
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			owns = 46
+			owns = 4786
+			owns = 2996
+			owns = 53
+			owns = 1857
+			owns = 1775
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = vlt_war
+				duration = 7300
+			}
+			wendia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			44 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			45 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+		
+		ai_weight = {
+			factor = 500
+		}
+	}
+	
+	vlt_hansa = {
+		icon = mission_rb_control_the_hansa
+		required_missions = { vlt_obotrites }
+		position = 4
+	
+		provinces_to_highlight = {
+			OR = {
+				province_id = 44
+				province_id = 45
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			owns = 45
+			owns = 44
+		}
+		
+		effect = {
+			add_treasury = 150
+			lower_saxony_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			weser_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			holstein_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			jutland_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+vlt_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = VLT
+	}
+	has_country_shield = yes
+	
+	vlt_army = {
+		icon = mission_landsknecht_soldier
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 0.85
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = vlt_army
+				duration = 7300
+			}
+			custom_tooltip = VLT_CLAIMS
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							owned_by = POM
+							owned_by = OBD
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+		
+		ai_weight = {
+			factor = 500
+		}
+	}
+	
+	vlt_lusatia = {
+		icon = mission_have_two_subjects
+		required_missions = { vlt_army }
+		position = 2
+		
+		trigger = {
+			owns = 1763
+			owns = 4778
+			owns = 60
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1763
+				province_id = 4778
+				province_id = 60
+			}
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = VLT_INTEGRATE
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_modifier = annexers_legacy
+					}
+					remove_country_modifier = annexers_legacy
+				}
+				else = {
+					add_dip_power = 50
+				}
+			}
+		}
+		
+		ai_weight = {
+			factor = 500
+		}
+	}
+	
+	
+	vlt_wendish = {
+		icon = mission_empire
+		required_missions = { vlt_obotrites vlt_lusatia }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				region = wendia_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    wendia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = obd_empire
+				duration = 9125
+			}
+			silesia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			wielkopolska_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+		
+		ai_weight = {
+			factor = 500
+		}
+	}
+	
+	vlt_polans = {
+		icon = polish_diplomacy
+		required_missions = { vlt_wendish }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = wielkopolska_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    wielkopolska_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			wielkopolska_area = {
+				add_province_modifier = {
+				name = vlt_polans
+				duration = 9125
+			}
+			kuyavia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			west_prussia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			poland_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+		}
+	}
+
+
+}
+
+vlt_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = VLT
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	vlt_trade = {
+		icon = mission_dominate_home_trade_node
+		required_missions = { vlt_capital }
+		position = 3
+
+		provinces_to_highlight = {
+			province_id = 50
+		}
+	
+		trigger = {
+			50 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = vlt_hometrade
+				duration = 9125
+			}
+		}
+	}
+
+	vlt_silesia = {
+		icon = take_silesia
+		required_missions = { vlt_wendish }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = silesia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    silesia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = pom_integrate_poland
+				duration = 5475
+			}
+			erzgebirge_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			bohemia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			moravia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			slovakia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+vlt_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = VLT
+	}
+	has_country_shield = yes
+	
+	vlt_expand = {
+		icon = mission_unite_home_region
+		required_missions = { }	
+
+		trigger = { grown_by_development = 50 }
+		
+		effect = {
+			add_country_modifier = {
+				name = vlt_expansion
+				duration = 9125
+			}
+		}
+	}
+	
+	vlt_capital = {
+		icon = mission_eastern_european_city
+		required_missions = { vlt_expand }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 50
+			}
+		}
+		
+		trigger = {
+			50 = {
+				owned_by = ROOT
+				development = 25
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_prosperity = 100
+			}
+			capital_scope = {
+				add_province_modifier = {
+					name = wee_capital_development
+					duration = 5475
+				}
+			}
+		}
+	}
+
+	vlt_fortify = {
+	    icon = mission_barlin
+		required_missions = { vlt_capital }
+		position = 3
+		
+		trigger = {
+			50 = {
+				country_or_non_sovereign_subject_holds = ROOT
+				OR = {
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 50
+		}
+		
+		effect = {
+			50 = {
+				add_province_modifier = {
+					name = "vlt_barlin"
+					duration = 9125
+				}
+			}
+			define_advisor = {
+				type = fortification_expert
+				skill = 2
+				cost_multiplier = 0.5
+				culture = ROOT
+				religion = ROOT
+			}
+		}
+	}
+	
+	vlt_baltic = {
+		icon = mission_galleys_in_port
+		required_missions = { vlt_trade }
+		position = 4
+
+		provinces_to_highlight = {
+			province_id = 45
+		}
+	
+		trigger = {
+			num_of_galley = 15
+			45 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		effect = {
+			add_navy_tradition = 15
+			add_country_modifier = {
+				name = vlt_baltic
+				duration = 7300
+			}
+		}
+	}
+	
+	
+}

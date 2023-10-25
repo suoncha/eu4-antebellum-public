@@ -1,0 +1,151 @@
+namespace = ab_bogdanoff
+
+country_event = {
+	id = ab_bogdanoff.1
+	title = ab_bogdanoff.1.t
+	desc = ab_bogdanoff.1.d
+	picture = ADVISOR_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		ai = no
+
+		culture_group = french
+
+		any_country = {
+			culture_group = east_slavic
+			has_opinion = {
+				who = ROOT
+				value = 100
+			}
+			OR = {
+				any_owned_province = {
+					has_building = university
+				}
+				capital_scope = {
+					development = 35
+				}
+			}
+		}
+	}
+
+	immediate = {
+		# This is part of the triggers, so it is guaranteed
+		# to happen
+		random_country = {
+			limit = {
+				culture_group = east_slavic
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+				OR = {
+					any_owned_province = {
+						has_building = university
+					}
+					capital_scope = {
+						development = 35
+					}
+				}
+			}
+			save_global_event_target_as = bogdanoff_host_country
+		}
+	}
+
+	mean_time_to_happen = {
+		years = 5
+
+		modifier = {
+			factor = 0.5
+			OR = {
+				# Major regional powers
+				tag = FRC
+				tag = FRK
+				tag = LOT
+				tag = MFC
+			}
+		}
+	}
+	
+	option = {
+		name = ab_bogdanoff.1.a
+
+		define_advisor = {
+			type = in_advisor
+			skill = 2
+			name = "Igor Bogdanoff"
+			religion = orthodox
+			culture = novgorodian
+			cost_multiplier = 0.25 # 75% cheaper
+		}
+
+		# Show that fraud
+		hidden_effect = {
+			country_event = {
+				id = ab_bogdanoff.2
+				days = 1095
+			}
+		}
+	}
+
+	option = {
+		name = ab_bogdanoff.1.b
+
+		add_prestige = 10
+	}
+}
+
+country_event = {
+	id = ab_bogdanoff.2
+	title = ab_bogdanoff.2.t
+	desc = ab_bogdanoff.2.d
+	picture = ADVISOR_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		employed_advisor = {
+			category = ADM
+			is_male = yes
+			religion = event_target:bogdanoff_host_country
+			culture = event_target:bogdanoff_host_country
+			type = in_advisor
+		}
+	}
+
+	option = {
+		name = ab_bogdanoff.2.a
+
+		add_prestige = -5
+		remove_advisor = in_advisor
+		reverse_add_opinion = {
+			who = event_target:bogdanoff_host_country
+			modifier = opinion_exiled_bogdanoff
+		}
+	}
+
+	option = {
+		name = ab_bogdanoff.2.b
+
+		# Pay off people
+		add_treasury = -300
+
+		hidden_effect = {
+			remove_advisor = in_advisor
+		}
+
+		define_advisor = {
+			type = ae_advisor
+			skill = 3
+			name = "Igor Bogdanoff"
+			religion = event_target:bogdanoff_host_country
+			culture = event_target:bogdanoff_host_country
+			cost_multiplier = 0.25 # 75% cheaper
+		}
+	}
+
+	after = {
+		clear_global_event_target = bogdanoff_host_country
+	}
+}

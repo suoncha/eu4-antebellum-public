@@ -1,0 +1,125 @@
+rig_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = RIG
+	}
+	has_country_shield = yes
+	
+	
+	rig_crusader = {
+		icon = mission_landsknecht_soldier
+		required_missions = { }
+		position = 1
+	
+		trigger = {
+			land_forcelimit = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "dnz_crusade"
+				duration = 7300
+			}
+			39 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1935 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4241 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			273 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			37 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	rig_livonia = {
+		icon = mission_unite_home_region
+		required_missions = { rig_crusader }
+		position = 3
+		
+		trigger = {
+			owns = 39
+			owns = 1935
+			owns = 4241
+			owns = 37
+			owns = 273
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 39
+				province_id = 1935
+				province_id = 4241
+				province_id = 37
+				province_id = 273
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_adm_power = 50
+		}
+	}
+	
+	rig_order = {
+		icon = mission_teutonic_knights
+		required_missions = { rig_livonia }
+		position = 5
+		
+		trigger = {
+			stability = 1
+			PAP = {
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+		}
+		
+		effect = {
+			RIG = {
+				country_event = { id = teuton_event.4 }
+			}
+		}
+	}
+}

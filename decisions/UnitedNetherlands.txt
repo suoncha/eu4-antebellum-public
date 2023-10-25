@@ -1,0 +1,79 @@
+country_decisions = {
+
+	form_united_netherlands = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_united_netherlands_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = UNN }
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
+			tag = NED
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+			has_country_flag = can_form_unl
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 97
+				province_id = 4383
+				province_id = 99
+				province_id = 100
+				province_id = 90
+				province_id = 92
+				province_id = 94
+				
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+			owns_core_province = 97
+			owns_core_province = 4383
+			owns_core_province = 99
+			owns_core_province = 100
+			owns_core_province = 90
+			owns_core_province = 92
+			owns_core_province = 94
+		}
+		effect = {
+			if = {
+				limit = {
+					is_part_of_hre = yes
+					is_elector = no
+					is_emperor = no
+				}
+				emperor = {
+					add_opinion = {
+						who = root
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
+				}
+			}
+			change_tag = UNN
+			set_country_flag = formed_united_netherlands_flag
+			custom_tooltip = cosmetic_tag_info
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

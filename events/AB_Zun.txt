@@ -1,0 +1,105 @@
+namespace = ab_zun
+
+#Rename
+country_event = {
+	id = ab_zun.1
+	title = ab_zun.1.t
+	desc = ab_zun.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_zun.1.a
+		override_country_name = ZUNEMPIRE
+		set_country_flag = zun_unlocked_rename
+	}
+	
+	option = {
+		name = ab_zun.1.b
+		override_country_name = ZUNZABUL
+		set_country_flag = zun_unlocked_rename
+	}
+	
+	option = {
+		name = ab_zun.1.c
+	}
+	
+}
+
+#Sunset
+country_event = {
+	id = ab_zun.2
+	title = ab_zun.2.t
+	desc = ab_zun.2.d
+	picture = AB_PERSIA_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_zun.2.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		set_government_rank = 3
+		custom_tooltip = ZUN_RENAME_UNLOCK
+		set_country_flag = zun_rename_unlock
+		add_ruler_modifier = {
+			name = zun_conqueror
+			duration = -1
+		}
+		custom_tooltip = ZUN_CONSOLIDATE
+		tooltip = {
+			add_province_modifier = {
+				name = zun_consolidate
+				duration = 9125
+			}
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						region = persia_region
+						region = khorasan_region
+					}
+				}
+				add_province_modifier = {
+					name = zun_consolidate
+					duration = 9125
+				}
+			}
+		}
+	}
+	
+}
+
+#Sunset
+country_event = {
+	id = ab_zun.3
+	title = ab_zun.3.t
+	desc = ab_zun.3.d
+	picture = AB_MAHAL_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_zun.3.a
+		custom_tooltip = ZUN_PP
+		hidden_effect = {
+			add_power_projection = {
+				type = ZUN_perma_pp
+				amount = 50
+			}
+		}
+		add_country_modifier = {
+			name = "zun_master_india"
+			duration = -1
+		}
+	}
+	
+}

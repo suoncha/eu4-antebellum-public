@@ -1,0 +1,1422 @@
+ab_tangut_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = TGU
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	tgu_build_forces = {
+		icon = mission_unite_rajputana
+		required_missions = { }
+		position = 1
+		provinces_to_highlight = { }
+		
+		trigger = {
+			army_size_percentage = 1
+			employed_advisor = {
+				category = MIL
+			}
+		}
+		
+		effect = {
+			add_manpower = 5
+			kham_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			amdo_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	tgu_kham = {
+		icon = mission_patronize_local_gods
+		required_missions = { tgu_build_forces }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				area = kham_area
+				area = amdo_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    kham_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    amdo_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 50
+			tsang_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			utsang_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_tsang = {
+		icon = mission_buddhist_monk_praying
+		required_missions = { tgu_kham }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = utsang_area
+				area = tsang_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    utsang_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    tsang_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			define_advisor = {
+				type = army_reformer
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+			gansu_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			west_gansu_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_gansu = {
+		icon = mission_unite_home_region
+		required_missions = { tgu_tsang }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = west_gansu_area
+				area = gansu_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    west_gansu_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    gansu_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			shanshan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			shaanxi_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			add_country_modifier = {
+				name = tgu_restore_rule
+				duration = 7300
+			}
+			custom_tooltip = QQT_SACK
+			tooltip = {
+				gansu_area = {
+					add_core = ROOT
+				}
+				west_gansu_area = {
+					add_core = ROOT
+				}
+				shaanxi_area = {
+					add_core = ROOT
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							NOT = {
+								YUA = {
+									army_size = ROOT
+								}
+							}
+							NOT = {
+								exists = YUA
+							}
+						}
+					}
+					shaanxi_area = {
+						limit = {
+							NOT = { owned_by = ROOT }
+							NOT = { is_core = ROOT }
+						}
+						add_core = ROOT
+					}
+					gansu_area = {
+						limit = {
+							NOT = { owned_by = ROOT }
+							NOT = { is_core = ROOT }
+						}
+						add_core = ROOT
+					}
+					west_gansu_area = {
+						limit = {
+							NOT = { owned_by = ROOT }
+							NOT = { is_core = ROOT }
+						}
+						add_core = ROOT
+					}
+				}
+			}
+		}
+	}
+	tgu_shanxi = {
+		icon = mission_chinese_general_riding
+		required_missions = { tgu_gansu }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				area = shaanxi_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    shaanxi_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			add_country_modifier = {
+				name = tgu_invade_china
+				duration = 9125
+			}
+			shanxi_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_xia = {
+		icon = mission_xia
+		required_missions = { tgu_shanxi }
+		position = 8
+		
+		provinces_to_highlight = {
+			or = {
+				area = shanxi_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    legitimacy = 90
+			shanxi_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			custom_trigger_tooltip = {
+				tooltip = TANGUT_MORE_ARMY_YUAN
+				NOT = {
+					YUA = {
+						army_size = ROOT
+					}
+				}
+			}
+			
+		}
+		
+		effect = {
+			country_event = { 
+				id = ab_xia.1
+			}
+			turpan_kumul_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			ordos_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			chahar_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			inner_mongolia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			zungaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			north_zungaria = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tannu_uriankhai_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			altai_sayan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_legacy = {
+		icon = mission_yuanmanpower
+		required_missions = { tgu_xia }
+		position = 9
+		
+		provinces_to_highlight = {
+			OR = {
+				area = ordos_area
+				area = inner_mongolia_area
+				area = chahar_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    ordos_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    inner_mongolia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    chahar_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = tgu_ascendant
+				duration = -1
+			}
+			manchuria_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_eastern_xia = {
+		icon = mission_manchu_warrior
+		required_missions = { tgu_legacy }
+		position = 10
+		
+		provinces_to_highlight = {
+			OR = {
+				region = manchuria_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    manchuria_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = tgu_manchus
+				duration = 9125
+			}
+			north_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+ab_tangut_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = TGU
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tgu_dali = {
+		icon = mission_che_the_cave_country
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 661
+				province_id = 662
+				province_id = 675
+				province_id = 674
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    661 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			662 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			675 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			674 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			define_advisor = {
+				type = ae_advisor
+				skill = 1
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			sichuan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			chuanbei_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			bhutan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			assam_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			nepal_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_yarlung = {
+		icon = mission_advance_to_the_dnieper
+		required_missions = { tgu_dali }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = bhutan_area
+				area = nepal_area
+				area = assam_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    bhutan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    nepal_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    assam_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 75
+			add_country_modifier = {
+				name = tgu_uniting_tibet
+				duration = 5475
+			}
+		}
+	}
+	
+	tgu_way = {
+		icon = mission_hands_praying
+		required_missions = { tgu_yarlung }
+		position = 4
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = tibet_tolerance_2
+			has_global_modifier_value = {
+				which = tolerance_own
+				value = 4
+			}
+			}
+		}
+		
+		effect = {
+			add_stability_or_adm_power = yes
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	tgu_nirvana = {
+		icon = mission_protect_jain_communities
+		required_missions = { tgu_way  }
+		position = 5
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = obj_convert_10_provinces_tooltip
+				check_variable = { which = num_converted_religion value = 10 }
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					religion = vajrayana
+				}
+				custom_tooltip = AB_NIRVANA_MODIFIER
+				tooltip = {
+					add_province_modifier = {
+						name = "ab_nirvana_tangut"
+						duration = -1
+					}
+				}
+				set_country_flag = tgu_nirvana_flag
+				hidden_effect = {
+					every_owned_province = {
+						limit = { religion = vajrayana }
+						add_province_modifier = {
+							name = "ab_nirvana_tangut"
+							duration = -1
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					religion = maitreya
+				}
+				custom_tooltip = AB_NIRVANA_MODIFIER1
+				tooltip = {
+					add_province_modifier = {
+						name = "ab_nirvana_tangut"
+						duration = -1
+					}
+				}
+				set_country_flag = tgu_nirvana_flag
+				hidden_effect = {
+					every_owned_province = {
+						limit = { religion = maitreya }
+						add_province_modifier = {
+							name = "ab_nirvana_tangut"
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				add_adm_power = 150
+			}
+		}
+	}
+	
+	tgu_tocharian = {
+		icon = mission_sw_against_the_desert
+		required_missions = { tgu_gansu }
+		position = 6
+		
+		provinces_to_highlight = {
+			area = shanshan_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    shanshan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 15
+			kashgaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tarim_basin_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_basin = {
+		icon = mission_unite_rajputana
+		required_missions = { tgu_tocharian }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tarim_basin_area
+				area = kashgaria_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    tarim_basin_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    kashgaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = tgu_merchant
+				duration = 7300
+			}
+		}
+	}
+	
+	tgu_dominate_oirat = {
+		icon = mission_oirat
+		required_missions = { tgu_xia }
+		position = 9
+		
+		provinces_to_highlight = {
+			OR = {
+				area = turpan_kumul_area
+				area = zungaria_area
+				area = north_zungaria
+				area = tannu_uriankhai_area
+				area = altai_sayan_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    turpan_kumul_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    zungaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    north_zungaria = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    tannu_uriankhai_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    altai_sayan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = tgu_oirat
+				duration = -1
+			}
+			mongolia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_skies = {
+		icon = mission_mnd_maj_end_disaster
+		required_missions = { tgu_eastern_xia tgu_sea }
+		position = 11
+		
+		provinces_to_highlight = {
+			OR = {
+				superregion = china_superregion
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				superregion = china_superregion
+				value = 50
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = tgu_xia
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+ab_tangut_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = TGU
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tgu_test = {
+		icon = mission_mnd_siam_subjugate_vietnam
+		required_missions = { tgu_dali }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				area = sichuan_area
+				area = chuanbei_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    sichuan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    chuanbei_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "tgu_converting"
+				duration = 7300
+			}
+			hunan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_hunan = {
+		icon = mission_mnd_dai_control_the_army
+		required_missions = { tgu_test }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = hunan_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    hunan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 75
+			huguang_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_wuchang = {
+		icon = mission_khitan
+		required_missions = { tgu_hunan }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = huguang_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    huguang_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 50 }
+			henan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			north_henan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = TGU_TIP
+			tooltip = {
+				country_event = {
+					id = ab_xia.2
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_owned_province = { 
+							religion = maitreya
+						}
+					}
+					country_event = {
+						id = ab_xia.2	
+					}
+				}
+			}
+		}
+	}
+	
+	tgu_river = {
+		icon = mission_se_along_the_river
+		required_missions = { tgu_wuchang }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = north_henan_area
+				area = henan_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    north_henan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    henan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_treasury = 350
+			add_country_modifier = {
+				name = "tgu_yellow"
+				duration = 9125
+			}
+			south_hebei_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hebei_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_beijing = {
+		icon = mission_dethrone
+		required_missions = { tgu_river tgu_shanxi }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				area = hebei_area
+				area = south_hebei_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    hebei_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    south_hebei_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_legitimacy = 25
+			add_country_modifier = {
+				name = "tgu_fall"
+				duration = 7300
+			}
+			shandong_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			liaoning_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	tgu_sea = {
+		icon = mission_junk_boat
+		required_missions = { tgu_beijing }
+		position = 10
+		
+		provinces_to_highlight = {
+			OR = {
+				area = shandong_area
+				area = liaoning_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    shandong_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    liaoning_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "tgu_fleet_mission"
+				duration = 7300
+			}
+			south_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+}
+
+ab_tangut_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = TGU
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	tgu_silk = {
+		icon = mission_the_chola_campaigns
+		required_missions = { tgu_court }
+		position = 2
+		
+		trigger = {
+			mercantilism = 15
+			trade_income_percentage = 0.35 
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = tgu_silk
+				duration = 7300
+			}
+		}
+	}
+	
+	tgu_supply = {
+		icon = porcelain_from_meissen
+		required_missions = { tgu_silk }
+		position = 4
+		
+		trigger = {
+			OR = {
+				trading_bonus = {
+					trade_goods = chinaware
+					value = yes
+				}
+				trading_bonus = {
+					trade_goods = silk
+					value = yes
+				}
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_base_production = 3
+			}
+			add_country_modifier = {
+				name = tgu_supply
+				duration = -1
+			}
+			custom_tooltip = TGU_TIP1
+			tooltip = {
+				set_country_flag = xxi_evolved_ideas
+			}
+			hidden_effect = {
+				set_country_flag = xxi_evolved_ideas
+				if = {
+					limit = {
+						tag = XXI
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+		}
+	}	
+	
+	tgu_shining = {
+		icon = mission_mnd_dai_universities
+		required_missions = { tgu_future }
+		position = 6
+		
+		trigger = {
+			prestige = 50
+			has_institution = renaissance
+		}
+		
+		effect = {
+			change_government_reform_progress = 25
+			add_country_modifier = {
+				name = tgu_embracing
+				duration = 9125
+			}
+		}
+	}
+	
+	tgu_capital = {
+		icon = mission_mnd_dai_imperial_citadel
+		required_missions = { tgu_shining }
+		position = 9
+		
+		trigger = {
+			698 = {
+				development = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 698
+		}
+		
+		effect = {
+			698 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			698 = {
+			add_province_modifier = {
+				name = tgu_pearl
+				duration = -1
+			}
+			}
+			698 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+}
+
+
+ab_tangut_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = TGU
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	tgu_court = {
+		icon = mission_scholar_officials
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			estate_loyalty = { 
+				estate = estate_church 
+				loyalty = 60 
+			} 
+			estate_loyalty = { 
+				estate = estate_nobles
+				loyalty = 60 
+			} 
+			estate_loyalty = { 
+				estate = estate_burghers
+				loyalty = 60 
+			} 
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "tgu_court_mission"
+				duration = 9125
+			}
+		}
+	}
+	
+	tgu_roads = {
+		icon = mission_grand_trunk_road_mug
+		required_missions = { tgu_court }
+		position = 2
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = { 
+						has_building = early_road
+						has_building = gravel_road
+						has_building = royal_road
+						has_building = macadam_road
+						has_building = rail_road
+					}
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "tgu_road_network"
+				duration = -1
+			}
+		}
+	}
+	
+	tgu_production = {
+		icon = mission_rice_field
+		required_missions = { tgu_roads }
+		position = 3
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					base_production = 10
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = "tgu_production"
+				duration = 18250
+			}
+		}
+	}
+	
+	tgu_income = {
+		icon = mission_war_chest
+		required_missions = { tgu_production }
+		position = 4
+		
+		trigger = {
+			monthly_income = 50
+		}
+		
+		effect = {
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" }
+				capital_scope = {
+					add_prosperity = 100
+				}
+			}
+			define_advisor = {
+				type = planner
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	tgu_future = {
+		icon = mission_market_place_with_asian_traders
+		required_missions = { }
+		position = 5
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					culture = Tangut
+				}
+				amount = 7
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "tgu_restoration"
+				duration = 7300
+			}
+		}
+	}
+	
+	tgu_tradition = {
+		icon = mission_crusade_for_varna
+		required_missions = { tgu_future }
+		position = 7
+		
+		trigger = {
+			army_tradition = 50
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.1
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = "tgu_military"
+				duration = 9125
+			}
+		}
+	}
+	
+	tgu_cannon = {
+		icon = mission_mnd_siam_revolution
+		required_missions = { tgu_tradition }
+		position = 8
+		
+		trigger = {
+			num_of_artillery = 20
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "tgu_modernizing"
+				duration = 7300
+			}
+		}
+	}
+	
+	tgu_return = {
+		icon = mission_asian_trader
+		required_missions = { tgu_cannon tgu_capital }
+		position = 10
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					culture = Tangut
+				}
+				amount = 20
+			}
+		}
+		
+		effect = {
+			add_dip_power = 250
+			add_country_modifier = {
+				name = tgu_reborn
+				duration = -1
+			}
+			custom_tooltip = TGU_TIP2
+			tooltip = {
+				set_country_flag = xxi_evolved_ideas2
+			}
+			hidden_effect = {
+				set_country_flag = xxi_evolved_ideas2
+				if = {
+					limit = {
+						tag = XXI
+						has_country_flag = xxi_evolved_ideas
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,83 @@
+country_decisions = {
+
+	abandon_inward = {
+		major = yes
+		potential = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			NOT = { has_country_flag = abandoned_inward }
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+           	government_reform_progress = 250
+			stability = 1
+			if = {
+				limit = {
+					has_mission = yua_china_tiger
+				}
+				mission_completed = yua_china_tiger
+			}
+			else_if = {
+				limit = {
+					has_mission = yua_nest_tiger
+				}
+				mission_completed = yua_nest_tiger
+			}
+			else_if = {
+				limit = {
+					has_mission = mch_china_great_wall
+					has_mission = mch_china_metropolis
+					has_mission = mch_china_tiger
+				}
+				mission_completed = mch_china_great_wall
+				mission_completed = mch_china_metropolis
+				mission_completed = mch_china_tiger
+			}
+			else_if = {
+				limit = {
+					has_mission = lio_china_great_wall
+					has_mission = lio_china_metropolis
+					has_mission = lio_china_tiger
+				}
+				mission_completed = lio_china_great_wall
+				mission_completed = lio_china_metropolis
+				mission_completed = lio_china_tiger
+			}
+			else_if = {
+				limit = {
+					has_mission = jsn_seoul
+					has_mission = jsn_industry
+					has_mission = jsn_koreana
+				}
+				mission_completed = jsn_seoul
+				mission_completed = jsn_industry
+				mission_completed = jsn_koreana
+			}
+			else_if = {
+				limit = {
+					has_mission = china_dragon
+					has_mission = china_tiger
+				}
+				mission_completed = china_dragon
+				mission_completed = china_tiger
+			}
+		}
+		effect = {
+			set_country_flag = abandoned_inward
+			add_stability = -2
+			change_government_reform_progress = -250
+			remove_government_reform = yuainward
+			add_country_modifier = {
+				name = "abandoned_inward_modifier"
+				duration = 18250
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+}

@@ -1,0 +1,217 @@
+italian_south_group_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NAP
+			tag = BNV
+			tag = SLR
+			tag = API
+			tag = CAP
+			tag = SPL
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	itl_claim_independence = {
+		icon = a_real_roman_empire
+		position = 1
+		
+		trigger = {
+			is_subject = no
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "itl_claim_independence"
+				duration = 7300
+			}
+			naples_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			calabria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			apulia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	itl_liberate_south_italy = {
+		icon = king_of_naples
+		position = 3
+		required_missions = { itl_claim_independence itl_raise_army }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = apulia_area
+				area = calabria_area
+				area = naples_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			calabria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			apulia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			naples_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}	
+		
+		effect = {
+			add_adm_power = 100
+			sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			western_sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	itl_kingdom_trinacria = {
+		icon = unite_the_two_sicilies
+		position = 5
+		required_missions = { itl_liberate_south_italy }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = sicily_area
+				area = western_sicily_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			western_sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_country_modifier = {
+				name = "itl_italy_liberated"
+				duration = 9125
+			}
+		}
+	}
+
+}
+
+italian_south_group_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NAP
+			tag = BNV
+			tag = SLR
+			tag = API
+			tag = CAP
+			tag = SPL
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	itl_raise_army = {
+		icon = mission_italian_condottiere
+		required_missions = { itl_claim_independence }
+		position = 2
+		
+		trigger = {
+			army_size_percentage = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "itl_liberate"
+				duration = 5475
+			}
+		}
+	}
+	
+	itl_papal = {
+		icon = mission_religious
+		required_missions = { }
+		position = 3
+		
+		trigger = {
+				PAP = {
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+				}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "itl_convert_south"
+				duration = 5475
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	itl_hre = {
+	    icon = switzerland_and_the_empire
+		required_missions = { itl_papal }
+		position = 4
+		
+		trigger = {
+		    is_part_of_hre = yes
+		}
+		
+		effect = {
+			add_dip_power = 75
+			add_country_modifier = {
+				name = "itl_hre"
+				duration = 7300
+			}
+		}
+	}
+}

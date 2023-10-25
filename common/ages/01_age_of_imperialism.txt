@@ -1,0 +1,329 @@
+age_of_imperialism = {
+	start = 1800
+	
+	can_start = {
+		is_institution_enabled = industrialization
+	}
+	
+	absolutism = {
+		harsh_treatment = 1
+		stability = 1
+		decrease_autonomy_command = 1
+		strengthen_government = 2
+		
+		increase_autonomy_command = -2
+		debase_currency = -1
+		execute_rebel_acceptance_command = -10
+		automatic_seat_in_parliament = -2
+		manual_seat_in_parliament = -2
+		war_exhaustion = -1
+	}	
+	
+	
+	objectives = {
+		obj_africa = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				OR = {
+					continent = africa
+				}
+			}
+		}
+		
+		obj_industry = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 50
+			}
+		}
+		obj_army = {
+			army_size = 200
+		}
+		obj_tearwalls = {
+			custom_trigger_tooltip = {
+				tooltip = AB_DESTROY_WALLS
+				has_country_flag = destroyed_city_walls
+			}
+		}
+		obj_world_metropolis = {
+			capital_scope = {
+				development = 70
+			}
+		}
+		obj_production = {
+			OR = {
+				trading_bonus = {
+					trade_goods = iron
+					value = yes
+				}
+				trading_bonus = {
+					trade_goods = copper
+					value = yes
+				}
+			}
+		}
+	
+		obj_worldtrade = {
+			hidden_trigger = {
+				OR = {
+					AND = {
+						always = yes
+						exclude_from_progress = {
+							home_trade_node = {
+								highest_value_trade_node = yes
+							}
+						}
+					}
+					AND = {
+						always = no
+						exclude_from_progress = {
+							home_trade_node = {
+								highest_value_trade_node = yes
+							}
+						}
+					}
+				}
+			}
+			exclude_from_progress = {
+				home_trade_node = {
+					highest_value_trade_node = yes
+				}
+			}
+		}
+	}
+
+	abilities = {
+
+		ab_rail_movement = {
+			modifier = {
+				movement_speed = 0.2
+			}
+			ai_will_do = {
+				factor = 10
+			}
+		}
+
+		ab_imperial_ambition = {
+			modifier = {
+				global_colonial_growth = 25
+			}
+			ai_will_do = {
+				factor = 10
+			}
+		}
+		
+		ab_army_academy = {
+			modifier = {
+				free_leader_pool = 2
+			}
+			ai_will_do = {
+				factor = 10
+			}
+		}
+		ab_artillery = {
+			modifier = {
+				artillery_fire = 1
+			}
+			ai_will_do = {
+				factor = 500
+			}
+		}
+		ab_urbanization = {
+			modifier = {
+				build_cost = -0.25
+				build_time = -0.25
+			}
+			ai_will_do = {
+				factor = 10
+			}
+		}
+		
+		ab_minority_rights = {
+			modifier = {
+				global_unrest = -1
+				num_accepted_cultures = 2
+			}
+			ai_will_do = {
+				factor = 10
+			}
+		}
+		ab_conscription = {
+			modifier = {
+				global_manpower_modifier = 0.2
+			}
+			ai_will_do = {
+				factor = 10
+			}
+		}
+		ab_force_march2 = {
+			modifier = {
+				force_march_free = yes
+			}
+			effect = {
+				custom_tooltip = ability_past_age_force_march
+				hidden_effect = {
+					if = {
+						limit = {
+							has_country_flag = has_had_force_march
+						}
+						add_splendor = 400
+					}
+				}
+			}
+			ai_will_do = {
+				factor = 10
+			}
+		}
+		ab_no_distance_for_core2 = {
+			modifier = {
+				ignore_coring_distance = yes
+			}
+			effect = {
+				custom_tooltip = ability_past_age_conquest
+				hidden_effect = {
+					if = {
+						limit = {
+							has_country_flag = has_had_conquest
+						}
+						add_splendor = 400
+					}
+				}
+			}
+			ai_will_do = {
+				factor = 10
+			}
+		}
+		ab_itaunity = {
+			allow = {
+				tag = ITA
+			}
+			modifier = {
+				discipline = 0.075
+			}
+			ai_will_do = {
+				factor = 100
+			}
+		}
+		ab_japan = {
+			allow = {
+				OR = {
+					tag = JAP
+					tag = JPE
+					has_reform = reformed_shogunate
+				}
+			}
+			modifier = {
+				global_trade_goods_size_modifier = 0.25
+			}
+			ai_will_do = {
+				factor = 100
+			}
+		}
+		ab_austrianculture = {
+			allow = {
+				OR = {
+					culture_group = south_slavic
+					culture_group = west_slavic
+					culture_group = east_slavic
+				}
+			}
+			modifier = {
+				improve_relation_modifier = 0.3
+				years_of_nationalism = -5
+			}
+			ai_will_do = {
+				factor = 100
+			}
+		}
+		ab_germanscience = {
+			allow = {
+				OR = {
+					tag = GER
+					tag = EFC
+				}
+			}
+			modifier = {
+				technology_cost = -0.075
+				idea_cost = -0.075
+			}
+			ai_will_do = {
+				factor = 100
+			}
+		}
+		ab_empire_rus = {
+			allow = {
+				tag = UKR
+			}
+			modifier = {
+				governing_capacity_modifier = 0.33
+			}
+			ai_will_do = {
+				factor = 100
+			}
+		}
+		ab_chinese_revolution = {
+			allow = {
+				tag = ROC
+			}
+			modifier = {
+				republican_tradition = 1.5
+			}
+			ai_will_do = {
+				factor = 100
+			}
+		}
+		ab_bohemian_howitzers = {
+			allow = {
+				OR = {
+					tag = BOH
+					was_tag = BOH
+				}
+			}
+			modifier = {
+				artillery_shock = 1
+			}
+			ai_will_do = {
+				factor = 100
+			}
+		}
+		ab_hellenic_military = {
+			allow = {
+				OR = {
+					tag = HLE
+					was_tag = HLE
+				}
+			}
+			modifier = {
+				military_tactics = 0.25
+			}
+			ai_will_do = {
+				factor = 100
+			}
+		}
+		ab_assyrian_revival = {
+			allow = {
+				OR = {
+					tag = ASR
+					was_tag = ASR
+				}
+			}
+			modifier = {
+				manpower_in_own_culture_provinces = 0.25
+			}
+			ai_will_do = {
+				factor = 100
+			}
+		}
+	}
+}

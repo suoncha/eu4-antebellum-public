@@ -1,0 +1,167 @@
+namespace = ab_yuanhorde
+normal_or_historical_nations = yes
+
+#Essen Temugid
+country_event = {
+	id = ab_yuanhorde.1
+	title = ab_yuanhorde.1.t
+	desc = ab_yuanhorde.1.d
+	picture = NOMAD_ESTATE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_yuanhorde.1.a
+		add_horde_unity = 15
+		custom_tooltip = YUA_ESSEN
+		add_country_modifier = {
+			name = "yua_horde_pretenders"
+			duration = 9125
+		}
+	}
+}
+
+#China
+country_event = {
+	id = ab_yuanhorde.2
+	title = ab_yuanhorde.2.t
+	desc = ab_yuanhorde.2.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_yuanhorde.2.a
+		if = {
+			limit = {
+				NOT = {
+					MIL = 6
+				}
+			}
+			change_mil = 1
+		}
+		add_army_tradition = 25
+		add_country_modifier = {
+			name = "yua_horde_china_retaken"
+			duration = -1
+		}
+		china_superregion = {
+			add_province_modifier = {
+				name = "yua_horde_china_consolidate"
+				duration = 9125
+			}
+		}
+	}
+}
+
+#Japan
+country_event = {
+	id = ab_yuanhorde.3
+	title = ab_yuanhorde.3.t
+	desc = ab_yuanhorde.3.d
+	picture = GIFTS_TO_EMPEROR_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_yuanhorde.3.a
+			add_dip_power = 150
+			add_country_modifier = {
+				name = yua_horde_new_base
+				duration = -1
+			}
+	}
+}
+
+#Dongdin
+country_event = {
+	id = ab_yuanhorde.4
+	title = ab_yuanhorde.4.t
+	desc = ab_yuanhorde.4.d
+	picture = NOMAD_ESTATE_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_country_flag = YUA_HORDE
+		owns = 1821
+	}
+	
+	
+	option = {
+		name = ab_yuanhorde.4.a
+		custom_tooltip = YUA_DONGDIN
+			add_country_modifier = {
+				name = yua_horde_op
+				duration = 7300
+			}
+	}
+}
+
+#India
+country_event = {
+	id = ab_yuanhorde.5
+	title = ab_yuanhorde.5.t
+	desc = ab_yuanhorde.5.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	fire_only_once = yes
+	
+	major = yes
+	
+	trigger = {
+		has_country_flag = YUA_HORDE
+		india_superregion = {
+			type = all
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+	}
+	
+	
+	option = {
+		name = ab_yuanhorde.5.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = adm
+		}
+		add_adm_power = 250
+			india_superregion = {
+				add_province_modifier = {
+					name = yuan_india_rule
+					duration = -1
+				}
+			}
+	}
+}
+
+#Mongol Empire
+country_event = {
+	id = ab_yuanhorde.6
+	title = ab_yuanhorde.6.t
+	desc = ab_yuanhorde.6.d
+	picture = AB_YUAN_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	
+	option = {
+		name = ab_yuanhorde.6.a
+			grant_all_mana = {
+				mana = 250
+			}
+			add_country_modifier = {
+				name = "yuan_horde_empire"
+				duration = 9125
+			}
+			add_ruler_modifier = {
+    				name = yua_great_khans
+   				duration = -1
+				}
+	}
+}

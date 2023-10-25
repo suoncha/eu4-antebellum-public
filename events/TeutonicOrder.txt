@@ -1,0 +1,183 @@
+namespace = teuton_event
+normal_or_historical_nations = yes
+
+#Order of the Cross
+country_event = {
+	id = teuton_event.1
+	title = "teuton_event.1.t"
+	desc = "teuton_event.1.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.1.a
+		PAP = {
+			set_country_flag = teutonic_request
+		}
+	}
+}
+
+#Order of the Cross - Papal State
+country_event = {
+	id = teuton_event.2
+	title = "teuton_event.2.t"
+	desc = "teuton_event.2.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PAP 
+		has_country_flag = teutonic_request
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = teuton_event.2.a
+		add_prestige = 5
+		add_reform_desire = -0.02
+		clr_country_flag = teutonic_request
+		DNZ = {
+			set_country_flag = papal_approval
+		}
+	}
+}
+
+#Papal Approval
+country_event = {
+	id = teuton_event.3
+	title = "teuton_event.3.t"
+	desc = "teuton_event.3.d"
+	picture = POPE_PREACHING_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = DNZ
+		has_country_flag = papal_approval
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = teuton_event.3.a
+		add_prestige = 10
+		change_tag = TEU
+		change_primary_culture = prussian
+		swap_free_idea_group = yes
+		swap_non_generic_missions = yes
+		change_government = theocracy
+		add_government_reform = monastic_order_reform
+		lose_reforms = 4
+		clr_country_flag = papal_approval
+		
+		43 = {
+			change_culture = prussian
+		}
+	}
+	
+}
+
+#Order of the Cross
+country_event = {
+	id = teuton_event.4
+	title = "teuton_event.4.t"
+	desc = "teuton_event.4.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.4.a
+		PAP = {
+			set_country_flag = livonian_request
+		}
+	}
+}
+
+#Order of the Cross - Papal State
+country_event = {
+	id = teuton_event.5
+	title = "teuton_event.5.t"
+	desc = "teuton_event.5.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PAP 
+		has_country_flag = livonian_request
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = teuton_event.5.a
+		add_prestige = 5
+		add_reform_desire = -0.02
+		clr_country_flag = livonian_request
+		RIG = {
+			set_country_flag = liv_papal_approval
+		}
+	}
+}
+
+#Papal Approval
+country_event = {
+	id = teuton_event.6
+	title = "teuton_event.6.t"
+	desc = "teuton_event.6.d"
+	picture = POPE_PREACHING_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = RIG
+		has_country_flag = liv_papal_approval
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = teuton_event.6.a
+		add_prestige = 10
+		change_tag = LIV
+		swap_free_idea_group = yes
+		swap_non_generic_missions = yes
+		change_government = theocracy
+		add_government_reform = monastic_order_reform
+		lose_reforms = 4
+		clr_country_flag = papal_approval
+		
+		43 = {
+			change_culture = prussian
+		}
+	}
+	
+}

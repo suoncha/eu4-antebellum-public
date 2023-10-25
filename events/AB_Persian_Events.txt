@@ -1,0 +1,1045 @@
+namespace = ab_persia
+normal_or_historical_nations = yes
+
+#Rise of the XY
+country_event = {
+	id = ab_persia.1
+	title = ab_persia.1.t
+	desc = ab_persia.1.d
+	picture = AB_PERSIA_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_persia.1.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 10
+		}
+		add_country_modifier = {
+			name = per_restoring_eranshahr
+			duration = 7300
+		}
+		custom_tooltip = PER_UNITE_REGION
+		hidden_effect = {
+			if = {
+				limit = {
+					ai = yes
+				}
+				every_province = {
+					limit = {
+						NOT = {
+							OR = {
+								owned_by = ROOT
+								is_core = ROOT
+							}
+						}
+						OR = {
+							region = persia_region
+							region = khorasan_region
+						}
+						OR = {
+							culture = persian
+							culture = khorasani
+							culture = luri
+							culture = mazandarani
+						}
+					}
+					add_core = ROOT
+				}
+			}
+			else = {
+				every_province = {
+					limit = {
+						NOT = {
+							OR = {
+								owned_by = ROOT
+								is_core = ROOT
+							}
+						}
+						OR = {
+							region = persia_region
+							region = khorasan_region
+						}
+						OR = {
+							culture = persian
+							culture = khorasani
+							culture = luri
+							culture = mazandarani
+						}
+					}
+					add_territorial_core = ROOT
+				}
+			}
+		}
+	}
+}
+
+#Idea Add
+country_event = {
+	id = ab_persia.2
+	title = ab_persia.2.t
+	desc = ab_persia.2.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = PER
+			was_tag = PER
+		}
+		has_idea = perz_fourth
+		NOT = {
+			has_country_modifier = per_revive_immortals
+		}
+	}
+	
+	option = {
+		name = ab_persia.2.a
+		add_country_modifier = {
+			name = per_revive_immortals
+			duration = -1
+		}
+	}
+	
+}
+
+#Idea Remove
+country_event = {
+	id = ab_persia.3
+	title = ab_persia.3.t
+	desc = ab_persia.3.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = PER
+			was_tag = PER
+		}
+		NOT = {
+			has_idea = perz_fourth
+		}
+		has_country_modifier = per_revive_immortals
+	}
+	
+	option = {
+		name = ab_persia.3.a
+		remove_country_modifier = per_revive_immortals
+	}
+	
+}
+
+#Ilkhan
+country_event = {
+	id = ab_persia.4
+	title = ab_persia.4.t
+	desc = ab_persia.4.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_persia.4.a
+		add_prestige = 25
+		custom_tooltip = PER_ILK_EXECUTE
+		add_ruler_modifier = {
+			name = "per_bane_ilkhan"
+			duration = -1
+		}
+	}
+	
+}
+
+#Resurgent Eranshahr
+country_event = {
+	id = ab_persia.5
+	title = ab_persia.5.t
+	desc = ab_persia.5.d
+	picture = AB_PERSIA_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_persia.5.a
+		custom_tooltip = PER_PP_PERMA
+		custom_tooltip = PER_AUTONOMY
+		add_country_modifier = {
+			name = per_persian_empire
+			duration = 9125
+		}
+		hidden_effect = {
+			add_power_projection = {
+				type = PER_perma_pp
+				amount = 15
+			}
+			every_owned_province = {
+				limit = {
+					OR = {
+						region = persia_region
+						region = khorasan_region
+					}
+				}
+				add_local_autonomy = -25
+			}
+		}
+	}
+	
+}
+
+#Sack of Constantinople
+country_event = {
+	id = ab_persia.6
+	title = ab_persia.6.t
+	desc = ab_persia.6.d
+	picture = AB_JUSTINIAN_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_persia.6.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		151 = {
+			add_devastation = 100
+		}
+		add_country_modifier = {
+			name = "per_nightmare"
+			duration = -1
+		}
+	}
+	
+}
+
+#Jerusalem
+country_event = {
+	id = ab_persia.7
+	title = ab_persia.7.t
+	desc = ab_persia.7.d
+	picture = JERUSALEM_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_persia.7.a
+		add_prestige = 25
+		379 = {
+			add_devastation = 100
+		}
+		custom_tooltip = PER_DISABLE_JERUSALEM
+		set_global_flag = per_destroyed_jerusalem
+		add_country_modifier = {
+			name = per_wrathv
+			duration = 9125
+		}
+		hidden_effect = {
+			379 = {
+				destroy_great_project = {
+					type = holy_city_jerusalem
+				}
+			}
+		}
+	}
+	
+}
+
+#Mecca
+country_event = {
+	id = ab_persia.8
+	title = ab_persia.8.t
+	desc = ab_persia.8.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_persia.8.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		385 = {
+			add_devastation = 100
+		}
+		custom_tooltip = PER_KAABA
+		add_country_modifier = {
+			name = per_avenged_rashidun
+			duration = -1
+		}
+		set_global_flag = per_destroyed_mecca
+		hidden_effect = {
+			385 = {
+				destroy_great_project = {
+					type = kaaba
+				}
+			}
+		}
+	}
+	
+}
+
+#Hindustan
+country_event = {
+	id = ab_persia.9
+	title = ab_persia.9.t
+	desc = ab_persia.9.d
+	picture = AB_MAHAL_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_persia.9.a
+		custom_tooltip = ZUN_PP
+		hidden_effect = {
+			add_power_projection = {
+				type = ZUN_perma_pp
+				amount = 50
+			}
+		}
+		add_country_modifier = {
+			name = "zun_master_india"
+			duration = -1
+		}
+	}
+	
+}
+
+#Idea Add
+country_event = {
+	id = ab_persia.10
+	title = ab_persia.10.t
+	desc = ab_persia.10.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = PRZ
+			was_tag = PRZ
+		}
+		has_idea = perm_first
+		NOT = {
+			has_country_modifier = per_javidan_guard
+		}
+	}
+	
+	option = {
+		name = ab_persia.2.a
+		add_country_modifier = {
+			name = per_javidan_guard
+			duration = -1
+		}
+	}
+	
+}
+
+#Idea Remove
+country_event = {
+	id = ab_persia.11
+	title = ab_persia.11.t
+	desc = ab_persia.11.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = PRZ
+			was_tag = PRZ
+		}
+		NOT = {
+			has_idea = perm_first
+		}
+		has_country_modifier = per_javidan_guard
+	}
+	
+	option = {
+		name = ab_persia.3.a
+		remove_country_modifier = per_javidan_guard
+	}
+	
+}
+
+#Idea Add
+country_event = {
+	id = ab_persia.12
+	title = ab_persia.12.t
+	desc = ab_persia.12.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = PRC
+			was_tag = PRC
+		}
+		has_idea = perc_seventh
+		NOT = {
+			has_country_modifier = per_immortals_god
+		}
+	}
+	
+	option = {
+		name = ab_persia.2.a
+		add_country_modifier = {
+			name = per_immortals_god
+			duration = -1
+		}
+	}
+	
+}
+
+#Idea Remove
+country_event = {
+	id = ab_persia.13
+	title = ab_persia.13.t
+	desc = ab_persia.13.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = PRC
+			was_tag = PRC
+		}
+		NOT = {
+			has_idea = perc_seventh
+		}
+		has_country_modifier = per_immortals_god
+	}
+	
+	option = {
+		name = ab_persia.3.a
+		remove_country_modifier = per_immortals_god
+	}
+	
+}
+
+#AI Help 1
+country_event = {
+	id = ab_persia.14
+	title = ab_persia.14.t
+	desc = ab_persia.14.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PER
+		ai = yes
+		NOT = {
+			mission_completed = per_mongoltactic
+		}
+		is_year = 1480
+	}
+	
+	option = {
+		name = ab_persia.14.a
+		complete_mission = per_mongoltactic
+		add_country_modifier = {
+			name = "per_mongol_tactics"
+			duration = 7300
+		}
+		create_general = { tradition = 50 }
+	}
+	
+}
+
+#AI Help 2
+country_event = {
+	id = ab_persia.15
+	title = ab_persia.15.t
+	desc = ab_persia.15.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PER
+		ai = yes
+		mission_completed = per_mongoltactic
+		NOT = {
+			mission_completed = per_cataphracts
+		}
+		is_year = 1500
+	}
+	
+	option = {
+		name = ab_persia.15.a
+		complete_mission = per_cataphracts
+		add_country_modifier = {
+			name = "per_modernized_cataphracts"
+			duration = -1
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					num_of_cavalry = 10
+					NOT = {
+						num_of_cavalry = 11
+					}
+				}
+				add_mil_power = 50
+			}
+			else_if = {
+				limit = {
+					num_of_cavalry = 11
+					NOT = {
+						num_of_cavalry = 12
+					}
+				}
+				add_mil_power = 55
+			}
+			else_if = {
+				limit = {
+					num_of_cavalry = 12
+					NOT = {
+						num_of_cavalry = 13
+					}
+				}
+				add_mil_power = 60
+			}
+			else_if = {
+				limit = {
+					num_of_cavalry = 13
+					NOT = {
+						num_of_cavalry = 14
+					}
+				}
+				add_mil_power = 65
+			}
+			else_if = {
+				limit = {
+					num_of_cavalry = 14
+					NOT = {
+						num_of_cavalry = 15
+					}
+				}
+				add_mil_power = 70
+			}
+			else_if = {
+				limit = {
+					num_of_cavalry = 15
+					NOT = {
+						num_of_cavalry = 16
+					}
+				}
+				add_mil_power = 75
+			}
+			else_if = {
+				limit = {
+					num_of_cavalry = 16
+					NOT = {
+						num_of_cavalry = 17
+					}
+				}
+				add_mil_power = 80
+			}
+			else_if = {
+				limit = {
+					num_of_cavalry = 17
+					NOT = {
+						num_of_cavalry = 18
+					}
+				}
+				add_mil_power = 85
+			}
+			else_if = {
+				limit = {
+					num_of_cavalry = 18
+					NOT = {
+						num_of_cavalry = 19
+					}
+				}
+				add_mil_power = 90
+			}
+			else_if = {
+				limit = {
+					num_of_cavalry = 19
+					NOT = {
+						num_of_cavalry = 20
+					}
+				}
+				add_mil_power = 95
+			}
+			else_if = {
+				limit = {
+					num_of_cavalry = 20
+				}
+				add_mil_power = 100
+			}
+		}
+	}
+	
+}
+
+#AI Help 3
+country_event = {
+	id = ab_persia.16
+	title = ab_persia.16.t
+	desc = ab_persia.16.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PER
+		ai = yes
+		mission_completed = per_cataphracts
+		NOT = {
+			mission_completed = per_elephants
+		}
+		is_year = 1520
+	}
+	
+	option = {
+		name = ab_persia.16.a
+		complete_mission = per_elephants
+		add_army_professionalism = 0.05
+		add_country_modifier = {
+			name = "per_war_elephants"
+			duration = -1
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					has_dlc = "Dharma"
+				}
+				apply_sprite_pack = ab_persia_elephants
+			}
+		}
+	}
+	
+}
+
+#AI Help 4
+country_event = {
+	id = ab_persia.17
+	title = ab_persia.17.t
+	desc = ab_persia.17.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PER
+		ai = yes
+		mission_completed = per_elephants
+		NOT = {
+			mission_completed = per_immortals
+		}
+		is_year = 1550
+	}
+	
+	option = {
+		name = ab_persia.17.a
+		complete_mission = per_immortals
+	}
+	
+}
+
+#Idea Add
+country_event = {
+	id = ab_persia.18
+	title = ab_persia.18.t
+	desc = ab_persia.18.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = PMN
+			was_tag = PMN
+		}
+		has_idea = pmn_third
+		NOT = {
+			has_country_modifier = per_immortal_hearers
+		}
+	}
+	
+	option = {
+		name = ab_persia.18.a
+		add_country_modifier = {
+			name = per_immortal_hearers
+			duration = -1
+		}
+	}
+	
+}
+
+#Idea Remove
+country_event = {
+	id = ab_persia.19
+	title = ab_persia.19.t
+	desc = ab_persia.19.d
+	picture = STREET_SPEECH_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = PMN
+			was_tag = PMN
+		}
+		NOT = {
+			has_idea = pmn_third
+		}
+		has_country_modifier = per_immortal_hearers
+	}
+	
+	option = {
+		name = ab_persia.19.a
+		remove_country_modifier = per_immortal_hearers
+	}
+	
+}
+
+#Islam
+country_event = {
+	id = ab_persia.20
+	title = ab_persia.20.t
+	desc = ab_persia.20.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_persia.20.a
+		add_country_modifier = {
+			name = per_sunni_reinforce
+			duration = 5475
+		}
+	}
+
+	option = {
+		name = ab_persia.20.b
+		add_stability = -2
+		change_religion = shiite
+		capital_scope = {
+			change_religion = shiite
+		}
+		add_country_modifier = {
+			name = per_embrace_shia
+			duration = 7300
+		}
+		random_owned_province = {
+			sunni_rebels = 3
+		}
+		random_owned_province = {
+			sunni_rebels = 3
+		}
+		random_owned_province = {
+			sunni_rebels = 3
+		}
+	}
+	
+}
+
+#Mecca Muslim
+country_event = {
+	id = ab_persia.21
+	title = ab_persia.21.t
+	desc = ab_persia.21.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_persia.21.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		385 = {
+			add_great_project_tier = {
+				type = kaaba
+				tier = 1
+			}
+		}
+		add_country_modifier = {
+			name = per_protector_pilgrim
+			duration = -1
+		}
+	}
+}
+
+#The Reign of Tishtar the Wise
+country_event = {
+	id = ab_persia.22
+	title = ab_persia.22.t
+	desc = ab_persia.22.d
+	picture = wihgfx_FEMALES_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = MRH
+		has_ruler = "Tishtar I Farzana"
+	}
+	
+	option = {
+		name = ab_persia.22.a
+		add_ruler_modifier = {
+			name = per_tishtar_wise
+			duration = -1
+		}
+	}
+}
+
+#The Reign of Shapur the Great
+country_event = {
+	id = ab_persia.23
+	title = ab_persia.23.t
+	desc = ab_persia.23.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SHP
+		has_ruler = "Shapur I Bozorg"
+	}
+	
+	option = {
+		name = ab_persia.23.a
+		add_ruler_modifier = {
+			name = per_shapur_great
+			duration = -1
+		}
+	}
+}
+
+#Founding Tishtarshahr
+country_event = {
+	id = ab_persia.24
+	title = ab_persia.24.t
+	desc = ab_persia.24.d
+	picture = CITY_VIEW_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	trigger = {
+		OR = {
+			tag = MRH
+			was_tag = MRH
+		}
+		NOT = {
+			has_ruler = "Tishtar I Farzana"
+		}
+	}
+	
+	option = {
+		name = ab_persia.24.a
+		add_years_of_income = -0.5
+		add_adm_power = -100
+		capital_scope = {
+			change_province_name = "Tishtarshahr"
+			rename_capital = "Tishtarshahr"
+		}
+		capital_scope = {
+			add_province_modifier = {
+				name = per_tishtarshahr
+				duration = -1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_persia.24.b
+		add_years_of_income = 0.25
+	}
+}
+
+#Manichaeans in Persia
+country_event = {
+	id = ab_persia.25
+	title = ab_persia.25.t
+	desc = ab_persia.25.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = PER
+			tag = PRC
+			tag = PRZ
+		}
+		current_age = age_of_reformation
+		NOT = {
+			religion = manichaean
+		}
+		any_owned_province = {
+			region = persia_region
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+	
+	option = {
+		name = ab_persia.25.a
+		random_owned_province = {
+			limit = {
+				region = persia_region
+				NOT = {
+					is_capital_of = ROOT
+				}
+				NOT = {
+					religion = manichaean
+				}
+			}
+			change_religion = manichaean
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+				NOT = {
+					is_capital_of = ROOT
+				}
+				NOT = {
+					religion = manichaean
+				}
+			}
+			change_religion = manichaean
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+				NOT = {
+					is_capital_of = ROOT
+				}
+				NOT = {
+					religion = manichaean
+				}
+			}
+			change_religion = manichaean
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+				NOT = {
+					is_capital_of = ROOT
+				}
+				NOT = {
+					religion = manichaean
+				}
+			}
+			change_religion = manichaean
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+				NOT = {
+					is_capital_of = ROOT
+				}
+				NOT = {
+					religion = manichaean
+				}
+			}
+			change_religion = manichaean
+		}
+		add_country_modifier = {
+			name = per_manichaean_resurgence
+			duration = 3650
+		}
+	}
+}
+
+#Imperial Pelt
+country_event = {
+	id = ab_persia.26
+	title = ab_persia.26.t
+	desc = ab_persia.26.d
+	picture = BYZANTINE_EAGLE_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = PER
+			tag = PRC
+			tag = PRZ
+			tag = PMN
+		}
+		war_score_against = {
+			who = BYZ
+			value = 100
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = ab_persia.26.a
+		tooltip = {
+			BYZ = {
+				add_stability = -1
+				custom_tooltip = PER_SKIN_BYZANTINE
+			}
+		}
+		hidden_effect = {
+			BYZ = {
+				add_stability = -1
+				kill_ruler = yes
+			}
+		}
+	}
+}
+
+# Liberated Satrapy
+# Copy of flavor_tur.1000, made it hidden.
+country_event = {
+	id = ab_persia.27
+	title = ab_persia.27.t
+	desc = ab_persia.27.desc
+	picture = EYALET_eventPicture
+	is_triggered_only = yes
+	hidden = yes
+	
+	option = {	# We are free from the Persians!
+		name = ab_persia.27.a
+		clr_country_flag = has_eyalet_country_name
+		clr_country_flag = has_eyalet_color
+		restore_country_name = yes
+		restore_country_color = yes
+		add_prestige = 20
+		
+		ai_chance = {
+			factor = 1
+		}
+	}
+}

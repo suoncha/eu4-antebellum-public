@@ -1,0 +1,1538 @@
+lot_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = LOT
+	}
+	has_country_shield = yes
+	
+	lot_trade = {
+		icon = sources_of_trade
+		required_missions = { lot_calais }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 1269
+					NOT = { is_strongest_trade_power = root }
+				}
+				AND = {
+					ROOT = { has_dlc = "Dharma" }
+					OR = {
+						culture = dutch
+						culture = flemish
+						culture = wallonian
+					}
+					province_has_center_of_trade_of_level = 1
+					OR = {
+						NOT = { owned_by = root }
+						NOT = { province_has_center_of_trade_of_level = 2 }
+					}
+					ROOT = {
+						NOT = {
+							num_of_owned_provinces_with = {
+								value = 3
+								province_has_center_of_trade_of_level = 2
+								region = low_countries_region
+							}
+						}
+					}
+				}
+				AND = {
+					ROOT = { NOT = { has_dlc = "Dharma" } }
+					OR = {
+						culture = dutch
+						culture = flemish
+						culture = wallonian
+					}
+					province_has_center_of_trade_of_level = 1
+					OR = {
+						NOT = { owned_by = root }
+						AND = {
+							NOT = { has_building = trade_depot }
+							NOT = { has_building = stock_exchange }
+						}
+					}
+					ROOT = {
+						NOT = {
+							num_of_owned_provinces_with = {
+								value = 3
+								province_has_center_of_trade_of_level = 1
+								region = low_countries_region
+								OR = {
+									has_building = trade_depot
+									has_building = stock_exchange
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		trigger = {
+			1269 = {
+				is_strongest_trade_power = root
+			}
+			if = {
+				limit = {
+					has_dlc = "Dharma"
+				}
+				num_of_owned_provinces_with = {
+					value = 3
+					province_has_center_of_trade_of_level = 2
+					region = low_countries_region
+				}
+			}
+			else = {
+				num_of_owned_provinces_with = {
+					value = 3
+					province_has_center_of_trade_of_level = 2
+					region = low_countries_region
+					OR = {
+						has_building = trade_depot
+						has_building = stock_exchange
+					}
+				}
+			}
+		}
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = bur_channel_trading
+				duration = -1
+			}
+			custom_tooltip = LOT_75_SHARE
+			tooltip = {
+				add_years_of_income = 1
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						1269 = {
+							trade_share = {
+								country = ROOT
+								share = 50
+							}
+						}
+					}
+					add_years_of_income = 1
+				}
+			}
+		}
+	}
+		
+	lot_rivalry = {
+		icon = overshadow_venice
+		required_missions = { lot_trade }
+		position = 4
+		
+		trigger = {
+			owns = 87
+			custom_trigger_tooltip = {
+				tooltip = LOT_MORE_SHIPS
+				NOT = {
+					OR = {
+						ENG = {
+							navy_size = ROOT
+						}
+						GBR = {
+							navy_size = ROOT
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_navy_tradition = 20
+			add_country_modifier = {
+				name = lot_naval
+				duration = 7300
+			}
+			87 = {
+				add_unit_construction = {
+					type = heavy_ship
+					amount = 5
+					speed = 1
+					cost = 0
+				}
+			}
+		}
+	}
+		
+		
+	lot_aachen = {
+		icon = eastern_catholicization
+		required_missions = { }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lower_rhineland_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    lower_rhineland_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_legitimacy = 10
+			1878 = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+				add_province_modifier = {
+					name = "charlemagne_city"
+					duration = -1
+				}
+			}
+			set_country_flag = aachen_capital_unlocked
+			custom_tooltip = "FRC_AACHEN"
+			
+			
+			north_rhine_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lot_rhineland = {
+		icon = claim_the_borderlands
+		required_missions = { lot_aachen }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				area = north_rhine_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    north_rhine_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_war_exhaustion = -3
+			add_country_modifier = {
+				name = "lot_rhine"
+				duration = 7300
+			}
+			lower_swabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_swabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_rhineland_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}	
+		
+lot_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = LOT
+	}
+	has_country_shield = yes
+	
+	lot_calais = {
+		icon = reclaim_the_aegean
+		required_missions = { }
+		position = 1
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 87
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    87 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			87 = {
+				change_culture = wallonian
+			}
+			87 = {
+				change_trade_goods = cloth
+			}
+			87 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			wallonia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			brabant_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lot_lowlands = {
+		icon = mission_spanish_netherlands
+		required_missions = { lot_calais }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				area = brabant_area
+				area = wallonia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    brabant_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    wallonia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			add_mil_power = 100
+			add_country_modifier = {
+				name = lot_middle
+				duration = 7300
+			}
+			holland_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			north_brabant_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+		
+	lot_holland = {
+		icon = bavarian_netherlands
+		required_missions = { lot_lowlands }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				area = north_brabant_area
+				area = holland_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    north_brabant_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    holland_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = TUR_MARKETPLACE
+			add_country_modifier = {
+				name = lot_nether
+				duration = 7300
+			}
+			low_countries_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_building = marketplace
+							}
+							remove_building = marketplace
+							add_building = trade_depot
+						}
+					"
+				}
+			}
+		}
+	}
+		
+		
+	lot_swabia = {
+		icon = control_swabia
+		required_missions = { lot_czech_throne lot_rhineland }
+		position = 8
+
+		provinces_to_highlight = {
+			OR = {
+				area = lower_swabia_area
+				area = upper_swabia_area
+				area = upper_rhineland_area
+			}
+		}
+		
+		trigger = {
+		    lower_swabia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    upper_swabia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    upper_rhineland_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = lot_hohenstaufen
+				duration = 7300
+			}
+		}
+	}
+	
+	lot_century = {
+		icon = spread_the_von_wettins
+		required_missions = { lot_swabia }
+		position = 9
+		
+		trigger = {
+			dynasty = "Hohenstaufen"
+			prestige = 90
+			legitimacy = 90
+			stability = 1
+			is_great_power = yes
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = hohenstaufen_century
+				duration = 36500
+			}
+			custom_tooltip = LOT_DYNASTY
+			tooltip = {
+				change_monarch_points_or_power = {
+					points = 1
+					power = dip
+				}
+				add_country_modifier = {
+					name = hohenstaufen_ambition
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						calc_true_if = {
+							all_country = {
+								dynasty = root
+								is_client_nation = no
+							}
+							amount = 5
+						}
+					}
+					change_monarch_points_or_power = {
+						points = 1
+						power = dip
+					}
+					add_country_modifier = {
+						name = hohenstaufen_ambition
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+}
+
+lot_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = LOT
+	}
+	has_country_shield = yes
+	
+	lot_tide = {
+		icon = king_of_the_franks
+		required_missions = { lot_paris }
+		position = 4
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOT_MORE_DEV
+				NOT = {
+					OR = {
+					FRC = {
+						total_development = ROOT
+					}
+					FRA = {
+						total_development = ROOT
+					}
+				}
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					exists = FRC
+				}
+				custom_tooltip = emp_bur_league_of_public_weal_effect_tooltip
+				hidden_effect = {
+					france_region = {
+						limit = {
+							owned_by = FRC
+							NOT = { is_core = root }
+							NOT = { is_permanent_claim = root }
+						}
+						add_permanent_claim = root
+					}
+				}	
+			}
+
+			if = {
+				limit = {
+					NOT = {
+						FRC = {
+							any_subject_country = {
+								capital_scope = {
+									region = france_region
+								}
+								liberty_desire = 50
+							}
+						}
+					}
+				}
+				custom_tooltip = francia_vassal_release
+			}
+			if = {
+				limit = {
+					FRC = {
+						any_subject_country = {
+							capital_scope = {
+								region = france_region
+							}
+							liberty_desire = 50
+						}
+					}
+				}
+				FRC = { country_event = { id = new_flavour_bur.7 } }
+			}
+			tooltip = {
+				every_country = {
+					limit = {
+						is_subject_of = FRC
+						capital_scope = {
+							region = france_region
+						}
+						liberty_desire = 50
+					}
+					hidden_effect = { FRC = { free_vassal = prev } }
+					ROOT = { vassalize = prev }
+				}
+			}
+			france_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lot_bohemia = {
+		icon = hussite_regency
+		required_missions = { }
+		position = 6
+
+		provinces_to_highlight = {
+			OR = {
+				area = bohemia_area
+				area = erzgebirge_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			OR = {
+		    BOH = {
+				religion = hussite
+			}
+			BOH = {
+				NOT = {
+					dynasty = "Hohenstaufen"
+				}
+			}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOT_BOHEMIA_HUSSITE
+			custom_tooltip = LOT_BOHEMIA_CATHOLIC
+
+			hidden_effect = {
+				if = {
+					limit = { 
+						BOH = { religion = catholic }
+					}
+					bohemia_area = {
+				        limit = {
+						    NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+						add_permanent_claim = ROOT
+					}
+					erzgebirge_area = {
+				        limit = {
+						    NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+				else = {
+		    		add_casus_belli = {
+						type = cb_restore_personal_union
+						months = 300
+						target = BOH
+					}
+				}
+			}
+		}
+	}
+	
+	lot_czech_throne = {
+		icon = reform_bergordnung
+		required_missions = { lot_bohemia }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				area = bohemia_area
+				area = erzgebirge_area
+			}
+		}
+		
+		trigger = {
+		    bohemia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    erzgebirge_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}	
+		
+		effect = {
+			add_country_modifier = {
+				name = "lot_lion"
+				duration = 9125
+			}
+			lower_swabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_swabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_rhineland_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lot_quest = {
+	    icon = mission_consulate_of_the_sea
+		required_missions = { lot_dock }
+		position = 9
+		
+		trigger = {
+		    OR = {
+				exploration_ideas = 1
+				num_of_explorers = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ibe_quest
+				duration = 7300
+			}
+		}
+	}
+	
+	lot_caribbean = {
+		icon = mission_colonize_the_caribbean
+		required_missions = { lot_quest }
+		position = 11
+		completed_by = 1493.1.1
+
+		# free mission
+
+		provinces_to_highlight = {
+			colonial_region = colonial_the_carribean
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_colonize_caribbean
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 1
+					colonial_region = colonial_the_carribean
+					is_city = yes
+				}
+			}
+		}
+
+		effect = {
+			add_prestige = 15
+			add_country_modifier = {
+				name = "the_unknown_frontier"
+				duration = 5475
+			}
+		}
+	}
+}
+			
+
+lot_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = LOT
+	}
+	has_country_shield = yes
+	
+	lot_prepare = {
+		icon = protect_against_austria
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 0.85
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = lot_war
+				duration = 7300
+			}
+			champagne_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			ile_de_france_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			west_burgundy_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			bourgogne_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lot_paris = {
+		icon = unite_the_realm
+		required_missions = { lot_prepare }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				area = ile_de_france_area
+				area = champagne_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    ile_de_france_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    champagne_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AB_LOT_1
+			tooltip = {
+					country_event = {
+						id = ab_lot.1
+					}
+			}
+			custom_tooltip = AB_LOT_2
+			tooltip = {
+				add_mil_power = 250
+			}
+			hidden_effect = {
+				if = { limit = { hre_size = 1 }
+					country_event = {
+						id = ab_lot.1
+					}
+				}
+				else = {
+					add_mil_power = 250
+				}
+			}
+		}
+	}
+	
+	lot_emperor = {
+		icon = switzerland_and_the_empire
+		required_missions = { lot_paris }
+		position = 4
+		
+		trigger = {
+		    is_emperor = yes
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "lot_emperorship"
+				duration = 9125
+			}
+			define_advisor = {
+				type = statesman
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	
+	lot_francia = {
+		icon = centralize_france
+		required_missions = { lot_tide }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				region = france_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = france_region
+				value = 35
+			}
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
+			}
+			add_ruler_modifier = {
+				name = "lot_ascendant"
+				duration = -1
+			}
+			france_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_core = ROOT
+			}
+			custom_tooltip = LOT_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = lot_evolved_ideas
+				if = {
+					limit = {
+						tag = LOT
+					}
+					swap_free_idea_group = yes
+				}
+				else_if = {
+					limit = {
+						OR = {
+							tag = FRK
+							tag = MFC
+						}
+					}
+					add_country_modifier = {
+						name = lot_evolving_modifier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	lot_dock = {
+		icon = toulon_dockyards
+		required_missions = { lot_metz }
+		position = 8
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = dock
+						has_building = drydock
+
+					}
+					OR = {
+						has_building = shipyard
+						has_building = grand_shipyard
+
+					}
+				}
+				amount = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "lot_expand"
+				duration = 9125
+			}
+		}
+	}
+	
+	lot_eastcoast = {
+		icon = mission_rb_the_thirteen_colonies
+		required_missions = { lot_quest }
+		position = 10
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_eastern_america
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = eng_rb_own_thirteen_colonies.tooltip
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 15
+					colonial_region = colonial_eastern_america
+					is_city = yes
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "lot_colonial"
+				duration = -1
+			}
+		}
+	}
+}
+
+lot_fifth_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = LOT
+	}
+	has_country_shield = yes
+	
+	lot_upb = {
+		icon = alpine_defenses
+		required_missions = { lot_prepare }
+		position = 2
+	
+		provinces_to_highlight = {
+			OR = {
+				area = bourgogne_area
+				area = west_burgundy_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    bourgogne_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    west_burgundy_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = lot_ae
+				duration = 7300
+			}
+			define_advisor = {
+				type = commandant
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			savoy_dauphine_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			provence_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lot_lwb = {
+		icon = develop_provence
+		required_missions = { lot_upb }
+		position = 4
+	
+		provinces_to_highlight = {
+			OR = {
+				area = savoy_dauphine_area
+				area = provence_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    savoy_dauphine_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    provence_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = lot_arelat
+				duration = 7300
+			}
+			piedmont_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			liguria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			lombardy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			venetia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			emilia_romagna_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lot_italy = {
+		icon = kingdom_of_lombardy
+		required_missions = { lot_lwb }
+		position = 6
+	
+		provinces_to_highlight = {
+			OR = {
+				area = piedmont_area
+				area = liguria_area
+				area = lombardy_area
+				area = po_valley_area
+				area = venetia_area
+				area = emilia_romagna_area
+				area = tuscany_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    piedmont_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    liguria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    lombardy_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    po_valley_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    venetia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    emilia_romagna_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    tuscany_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_legitimacy = 25
+			add_country_modifier = {
+				name = "frc_italiae"
+				duration = -1
+			}
+			italy_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lot_metz = {
+		icon = develop_konigsberg
+		required_missions = { }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 188
+			}
+		}
+		
+		trigger = {
+			188 = {
+				owned_by = ROOT
+			}
+			188 = {
+				development = 30
+			}
+			188 = {
+				has_tax_building_trigger = yes
+			}
+			188 = {
+				has_production_building_trigger = yes
+			}
+			188 = {
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			188 = {
+				add_province_modifier = {
+					name = lot_metz
+					duration = -1
+				}
+			}
+			188 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	emp_bur_appease_the_estates = {
+		icon = appease_the_estates
+		required_missions = { lot_metz  }
+		trigger = {
+			crown_land_share = 30
+			if = {
+				limit = {
+					has_estate = estate_nobles
+				}
+				estate_loyalty = {
+					estate = estate_nobles
+					loyalty = 60
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_burghers
+				}
+				estate_loyalty = {
+					estate = estate_burghers
+					loyalty = 60
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_church
+				}
+				estate_loyalty = {
+					estate = estate_church
+					loyalty = 60
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					NOT = { has_estate = estate_nobles }
+					NOT = { has_estate = estate_burghers }
+					NOT = { has_estate = estate_church }
+				}
+				add_stability_or_adm_power = yes
+			}
+			else = {
+				if = {
+					limit = {
+						NOT = { crown_land_share = 60 }
+					}
+					custom_tooltip = add_5_crown_land_share
+					hidden_effect = {
+						change_estate_land_share = {
+							estate = all
+							share = -5
+						}
+					}
+				}
+				if = {
+					limit = {
+						has_estate = estate_nobles
+					}
+					add_estate_loyalty_modifier = {
+						estate = estate_nobles
+						desc = VAL_BUR_APPEASED_ESTATES
+						loyalty = 10
+						duration = 7300
+					}
+				}
+				if = {
+					limit = {
+						has_estate = estate_church
+					}
+					add_estate_loyalty_modifier = {
+						estate = estate_church
+						desc = VAL_BUR_APPEASED_ESTATES
+						loyalty = 10
+						duration = 7300
+					}
+				}
+				if = {
+					limit = {
+						has_estate = estate_burghers
+					}
+					add_estate_loyalty_modifier = {
+						estate = estate_burghers
+						desc = VAL_BUR_APPEASED_ESTATES
+						loyalty = 10
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	lot_university = {
+		icon = mission_rb_college_of_justice
+		required_missions = { emp_bur_appease_the_estates }
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = university
+					}
+				}
+				amount = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_building = university
+			}
+		}
+		
+		effect = {
+			add_reform_progress_medium_effect = yes
+			add_country_modifier = {
+				name = "lot_scholar"
+				duration = 9125
+			}
+			define_advisor = {
+				type = in_advisor
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	lot_industry = {
+		icon = saxon_manufacturing
+		required_missions = { lot_university }
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_production_building_trigger = yes
+				}
+				amount = 15
+			}
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
+					has_building = workshop
+					has_building = counting_house
+				}
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 0.5
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = lot_industry
+				duration = 9125
+			}
+		}
+	}
+	
+	lot_north = {
+		icon = mission_rb_colonise_canada
+		required_missions = { lot_eastcoast }
+		position = 11
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_canada
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_discover_canada
+				colonial_canada = {
+					has_discovered = ROOT
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = miss_colonize_canada
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 1
+					colonial_region = colonial_canada
+					is_city = yes
+				}
+			}
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 75 }
+			define_advisor = {
+				type = colonist
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	
+	}
+}

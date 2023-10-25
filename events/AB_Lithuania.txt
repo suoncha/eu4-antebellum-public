@@ -1,0 +1,448 @@
+namespace = ab_lithuania
+normal_or_historical_nations = yes
+
+#Future of our Nation
+country_event = {
+	id = ab_lithuania.1
+	title = ab_lithuania.1.t
+	desc = ab_lithuania.1.d
+	picture = COURT_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_lithuania.1.a
+		set_country_flag = lithuania_pagan_path
+		custom_tooltip = LIT_PAGAN_PATH
+		swap_non_generic_missions = yes
+	}
+	
+	option = {
+		name = ab_lithuania.1.b
+		set_country_flag = lithuania_orthodox_path
+		custom_tooltip = LIT_ORTHODOX_PATH
+		change_tag = LTV
+		change_religion = orthodox
+		swap_free_idea_group = yes
+		swap_non_generic_missions = yes
+		capital_scope = { change_religion = orthodox }
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+	}
+	
+	option = {
+		name = ab_lithuania.1.c
+		set_country_flag = lithuania_catholic_path
+		custom_tooltip = LIT_CATHOLIC_PATH
+		change_tag = LTV
+		override_country_name = LIT
+		change_religion = catholic
+		swap_free_idea_group = yes
+		swap_non_generic_missions = yes
+		capital_scope = { change_religion = catholic }
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+	}
+}
+
+#Baltoscandia
+country_event = {
+	id = ab_lithuania.2
+	title = ab_lithuania.2.t
+	desc = ab_lithuania.2.d
+	picture = NORTH_SEA_MAPS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_lithuania.2.a
+		custom_tooltip = LIT_PP_PERMA
+		hidden_effect = {
+			add_power_projection = {
+				type = LIT_perma_pp
+				amount = 25
+			}
+		}
+		override_country_name = BLTSC
+		set_government_rank = 3
+		custom_tooltip = LIT_CULTURE
+		set_country_flag = lit_negate_cultures
+
+		# Set the modifier
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						culture_group = scandinavian
+						culture_group = Finnic
+					}
+					has_owner_accepted_culture = no
+				}
+				add_province_modifier = {
+					name = lit_culture_modifier
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+#Litvin Culture
+province_event = {
+	id = ab_lithuania.5
+	title = ab_lithuania.5.t
+	desc = ab_lithuania.5.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+	}
+	
+	trigger = {
+		owner = {
+			OR = {
+				mission_completed = lit_cultural
+				mission_completed = litc_cultural
+			}
+		}
+		culture_group = baltic
+		any_neighbor_province = {
+			culture = Litvin
+		}
+	}
+	
+	option = {
+		name = ab_lithuania.5.a
+		change_culture = Litvin
+		change_original_culture = Litvin
+	}
+}
+
+#Poland Modifier 1
+country_event = {
+	id = ab_lithuania.6
+	title = ab_lithuania.6.t
+	desc = ab_lithuania.6.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = LTV
+			was_tag = LTV
+		}
+		mission_completed = lit_baptize_poland
+		senior_union_with = POL
+		NOT = {
+			has_country_modifier = lit_crown
+		}
+	}
+	
+	immediate = {
+		add_country_modifier = {
+			name = "lit_crown"
+			duration = -1
+			desc = lit_crown
+		}
+	}
+	
+	option = {
+		name = ab_lithuania.6.a
+	}
+}
+
+#Poland Modifier 2
+country_event = {
+	id = ab_lithuania.7
+	title = ab_lithuania.7.t
+	desc = ab_lithuania.7.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = LTV
+			was_tag = LTV
+		}
+		mission_completed = lit_baptize_poland
+		NOT = {
+			senior_union_with = POL
+		}
+		has_country_modifier = lit_crown
+	}
+	
+	immediate = {
+		remove_country_modifier = lit_crown
+	}
+	
+	option = {
+		name = ab_lithuania.7.a
+	}
+}
+
+#Mission 1
+country_event = {
+	id = ab_lithuania.8
+	title = ab_lithuania.8.t
+	desc = ab_lithuania.8.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = LIT
+		ai = yes
+		is_year = 1446
+		NOT = {
+			mission_completed = lit_infiltrate
+		}
+	}
+	
+	immediate = {
+		complete_mission = lit_infiltrate
+		add_country_modifier = {
+			name = lit_justified
+			duration = 5475
+		}
+		livonia_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+	
+	option = {
+		name = ab_lithuania.7.a
+	}
+}
+
+#Mission 2
+country_event = {
+	id = ab_lithuania.9
+	title = ab_lithuania.9.t
+	desc = ab_lithuania.9.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = LIT
+		ai = yes
+		is_year = 1460
+		NOT = {
+			mission_completed = lit_marshes
+		}
+		mission_completed = lit_countryside
+		calc_true_if = {
+			all_owned_province = {
+				has_terrain = marsh
+			}
+			amount = 5
+		}
+	}
+	
+	immediate = {
+		complete_mission = lit_marshes
+		add_country_modifier = {
+			name = lit_draining
+			duration = 5475
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					has_terrain = marsh
+				}
+				add_province_modifier = {
+					name = lit_marsh_negate
+					duration = -1
+				}
+			}
+		}
+		define_advisor = {
+			type = architect
+			skill = 2
+			religion = ROOT
+			culture = ROOT
+			cost_multiplier = 0.5
+		}
+	}
+	
+	option = {
+		name = ab_lithuania.7.a
+	}
+}
+
+#Help 1
+country_event = {
+	id = ab_lithuania.10
+	title = ab_lithuania.10.t
+	desc = ab_lithuania.10.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = LIT
+		ai = yes
+		is_year = 1446
+	}
+	
+	immediate = {
+		east_prussia_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_claim = ROOT
+		}
+	}
+	
+	option = {
+		name = ab_lithuania.7.a
+	}
+}
+
+#Remove Center
+province_event = {
+	id = ab_lithuania.11
+	title = none
+	desc = none
+	picture = none
+	hidden = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_reform_center = catholic
+	}
+	
+	option = { }
+}
+
+#Orthodox Tsardom
+country_event = {
+	id = ab_lithuania.12
+	title = ab_lithuania.12.t
+	desc = ab_lithuania.12.d
+	picture = KREMLIN_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_lithuania.12.a
+		set_country_flag = lit_can_have_tsardom
+		add_government_reform = tsardom
+		custom_tooltip = LTV_EVOLVING_IDEA_1
+		hidden_effect = {
+			set_country_flag = ltv_evolved_ideas
+			if = {
+				limit = {
+					tag = LTV
+				}
+				swap_free_idea_group = yes
+			}
+		}
+	}
+}
+
+#Catholic Tsardom
+country_event = {
+	id = ab_lithuania.13
+	title = ab_lithuania.13.t
+	desc = ab_lithuania.13.d
+	picture = KREMLIN_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_lithuania.13.a
+		set_country_flag = lit_can_have_tsardom
+		add_government_reform = tsardom
+		custom_tooltip = LTV_EVOLVING_IDEA_2
+		hidden_effect = {
+			set_country_flag = ltvc_evolved_ideas
+			if = {
+				limit = {
+					tag = LTV
+					religion = catholic
+				}
+				swap_free_idea_group = yes
+			}
+		}
+	}
+}
+
+#Help 2
+country_event = {
+	id = ab_lithuania.14
+	title = ab_lithuania.14.t
+	desc = ab_lithuania.14.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = LIT
+		ai = yes
+		is_year = 1455
+		is_at_war = no
+	}
+	
+	immediate = {
+		if = {
+			limit = {
+				YOT = {
+					is_subject_of = ROOT
+				}
+				YOT = {
+					NOT = {
+						liberty_desire = 50
+					}
+				}
+			}
+			ROOT = {
+				inherit = YOT
+			}
+		}
+		if = {
+			limit = {
+				CUR = {
+					is_subject_of = ROOT
+				}
+				CUR = {
+					NOT = {
+						liberty_desire = 50
+					}
+				}
+			}
+			ROOT = {
+				inherit = CUR
+			}
+		}
+	}
+	
+	option = {
+		name = ab_lithuania.14.a
+	}
+}

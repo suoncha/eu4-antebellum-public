@@ -1,0 +1,106 @@
+namespace = ab_domination
+normal_or_historical_nations = yes
+
+#AB Enable
+country_event = {
+	id = ab_domination.1
+	title = ab_domination.1.t
+	desc = ab_domination.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	major = yes
+	
+	trigger = {
+		current_age = age_of_revolutions
+		NOT = {
+			great_power_rank = 2
+		}
+		NOT = {
+			has_global_flag = domination_ideas_enabled
+		}
+	}
+
+	fire_only_once = yes
+	
+	option = {
+		name = ab_domination.1.a
+		set_global_flag = domination_ideas_enabled
+		custom_tooltip = AB_DOMINATION_ENABLED
+	}
+}
+
+#AB Remove
+country_event = {
+	id = ab_domination.2
+	title = ab_domination.2.t
+	desc = ab_domination.2.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_domination.2.a
+		remove_idea_group = globaldomination_ideas
+		set_country_flag = ab_cant_pick_domination
+	}
+}
+
+#AB Remove 2
+country_event = {
+	id = ab_domination.3
+	title = ab_domination.3.t
+	desc = ab_domination.3.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_domination.3.a
+		remove_idea_group = globaldomination_ideas
+		set_country_flag = ab_cant_pick_domination
+	}
+}
+
+#Cheese Protection
+country_event = {
+	id = ab_domination.4
+	title = ab_domination.4.t
+	desc = ab_domination.4.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+
+	trigger = {
+		has_idea_group = globaldomination_ideas
+		NOT = {
+			has_country_flag = ab_has_had_domination_ideas
+		}
+	}
+	
+	option = {
+		name = ab_domination.4.a
+		set_country_flag = ab_has_had_domination_ideas
+	}
+}
+
+#Cheese Protection 2
+country_event = { 
+	id = ab_domination.5
+	title = ab_domination.5.t
+	desc = ab_domination.5.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	hidden = yes
+
+	trigger = {
+		NOT = {
+			has_idea_group = globaldomination_ideas
+		}
+		has_country_flag = ab_has_had_domination_ideas
+	}
+	
+	option = {
+		name = ab_domination.5.a
+		set_country_flag = ab_cant_pick_domination
+	}
+}

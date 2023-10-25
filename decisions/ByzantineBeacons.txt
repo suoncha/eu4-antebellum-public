@@ -1,0 +1,44 @@
+country_decisions = {
+	
+	lit_the_beacons = {
+		major = yes
+		potential = {
+			OR = {
+				tag = BYZ
+				was_tag = BYZ
+			}
+			mission_completed = byzantium_beacons
+			NOT = {
+				has_country_modifier = byzantine_beacons_are_lit
+			}
+		}
+		allow = {
+			is_at_war = yes
+		}
+		effect = {
+			add_country_modifier = {
+				name = byzantine_beacons_are_lit
+				duration = -1
+			}
+		}
+	}
+	
+	extinguish_the_beacons = {
+		major = yes
+		potential = {
+			OR = {
+				tag = BYZ
+				was_tag = BYZ
+			}
+			mission_completed = byzantium_beacons
+			has_country_modifier = byzantine_beacons_are_lit
+		}
+		allow = {
+			has_country_modifier = byzantine_beacons_are_lit
+		}
+		effect = {
+			remove_country_modifier = byzantine_beacons_are_lit
+		}
+	}
+	
+}

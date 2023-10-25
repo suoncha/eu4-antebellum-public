@@ -1,0 +1,118 @@
+namespace = ab_temugids
+normal_or_historical_nations = yes
+
+
+#Capture of Khanbaliq
+country_event = {
+	id = ab_temugids.1
+	title = ab_temugids.1.t
+	desc = ab_temugids.1.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes 
+
+	major = yes
+	
+	option = {
+		name = ab_temugids.1.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		add_prestige = 25
+		add_horde_unity = 25
+		add_country_modifier = {
+			name = "temugid_china_conquest"
+			duration = 9125
+		}
+	}
+}
+
+#A New Mandate of Heaven
+country_event = {
+	id = ab_temugids.2
+	title = ab_temugids.2.t
+	desc = ab_temugids.2.d
+	picture = GIFTS_TO_EMPEROR_eventPicture
+	
+	is_triggered_only = yes 
+
+	major = yes
+	
+	option = {
+		name = ab_temugids.2.a
+		add_mandate = 20
+		add_patriarch_authority = 0.2
+		add_country_modifier = {
+			name = "temugid_redefined_mandate"
+			duration = -1
+		}
+	}
+}
+
+#The Light of the East
+country_event = {
+	id = ab_temugids.3
+	title = ab_temugids.3.t
+	desc = ab_temugids.3.d
+	picture = ORTHODOX_eventPicture
+	
+	is_triggered_only = yes 
+
+	major = yes
+	
+	option = {
+		name = ab_temugids.3.a
+		custom_tooltip = YUA_PATRIARCH
+		hidden_effect = {
+			for = {
+				amount = 15
+				effect = "
+					random_owned_province = {
+						limit = {
+							has_state_patriach = yes
+						}
+						add_base_manpower = 1
+					}
+				"
+			}
+		}
+		add_country_modifier = {
+			name = tmg_light
+			duration = -1
+		}
+	}
+}
+
+#Holy and Celestial
+country_event = {
+	id = ab_temugids.4
+	title = ab_temugids.4.t
+	desc = ab_temugids.4.d
+	picture = ORTHODOX_eventPicture
+
+	trigger = {
+		tag = TMG
+		china_superregion = {
+			type = all
+			is_core = ROOT
+			religion = nestorian
+		}
+	}
+
+	fire_only_once = yes
+	
+	option = {
+		name = ab_temugids.4.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = dip
+		}
+		add_patriarch_authority = 0.5
+		add_country_modifier = {
+			name = tmg_crusade
+			duration = -1
+		}
+
+	}
+}

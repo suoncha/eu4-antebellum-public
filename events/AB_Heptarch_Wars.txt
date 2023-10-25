@@ -1,0 +1,880 @@
+namespace = ab_heptarch_wars
+normal_or_historical_nations = yes
+
+#Heptarch Wars Start
+country_event = {
+	id = ab_heptarch_wars.1
+	title = ab_heptarch_wars.1.t
+	desc = ab_heptarch_wars.1.d
+	picture = AB_HEPTARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					ai = yes
+				}
+				add_stability = -2
+				add_legitimacy = -50
+			}
+			else = {
+				add_stability = -4
+				add_legitimacy = -100
+			}
+			if = {
+				limit = {
+					ai = yes
+				}
+				random_owned_province = {
+					limit = { region = british_isles_region }
+					pretender_rebels = 2
+				}
+				random_owned_province = {
+					limit = { region = british_isles_region }
+					pretender_rebels = 2
+				}
+				random_owned_province = {
+					limit = { region = british_isles_region }
+					pretender_rebels = 1
+				}
+			}
+			else = {
+				random_owned_province = {
+					limit = { region = british_isles_region }
+					pretender_rebels = 3
+				}
+				random_owned_province = {
+					limit = { region = british_isles_region }
+					pretender_rebels = 3
+				}
+				random_owned_province = {
+					limit = { region = british_isles_region }
+					pretender_rebels = 3
+				}
+			}
+		}
+	}	
+	
+	option = {
+		name = ab_heptarch_wars.1.a
+		tooltip = {
+			add_stability = -4
+			add_legitimacy = -100
+			random_owned_province = {
+				limit = { region = british_isles_region }
+				pretender_rebels = 3
+			}
+			random_owned_province = {
+				limit = { region = british_isles_region }
+				pretender_rebels = 3
+			}
+			random_owned_province = {
+				limit = { region = british_isles_region }
+				pretender_rebels = 3
+			}
+		}
+		custom_tooltip = ENG_HEPTARCH_RIVAL
+	}
+	
+}
+
+#Heptarch Wars End
+country_event = {
+	id = ab_heptarch_wars.2
+	title = ab_heptarch_wars.2.t
+	desc = ab_heptarch_wars.2.d
+	picture = AB_HEPTARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_heptarch_wars.2.a
+		add_stability = 1
+		set_country_flag = had_heptarch_wars
+	}
+	
+}
+
+#Heptarch Wars England Rival Support
+country_event = {
+	id = ab_heptarch_wars.3
+	title = ab_heptarch_wars.3.t
+	desc = ab_heptarch_wars.3.d
+	picture = AB_HEPTARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			ENG = {
+				has_disaster = heptarch_wars
+			}
+			GBR = {
+				has_disaster = heptarch_wars
+			}
+		}
+		OR = {
+			is_rival = ENG
+			is_enemy = ENG
+			is_rival = GBR
+			is_enemy = GBR
+		}
+	}
+	
+	option = {
+		name = ab_heptarch_wars.3.a
+		add_mil_power = -100
+		custom_tooltip = SUPPORTED_HEPTARCH
+		set_global_flag = rival_supported_heptarch
+	}
+	
+	option = {
+		name = ab_heptarch_wars.3.b
+		add_yearly_manpower = -1
+		custom_tooltip = SUPPORTED_HEPTARCH
+		set_global_flag = rival_supported_heptarch
+	}
+	
+	option = {
+		name = ab_heptarch_wars.3.c
+		add_years_of_income = -0.5
+		custom_tooltip = SUPPORTED_HEPTARCH
+		set_global_flag = rival_supported_heptarch
+	}
+	
+	option = {
+		name = ab_heptarch_wars.3.de
+	}
+	
+}
+
+#Mercia secedes
+country_event = {
+	id = ab_heptarch_wars.4
+	title = ab_heptarch_wars.4.t
+	desc = ab_heptarch_wars.4.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		ai = no
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+		has_disaster = heptarch_wars
+		NOT = {
+			exists = MRC
+		}
+		west_midlands_area = {
+			type = all
+			owned_by = ROOT
+		}
+		east_midlands_area = {
+			type = all
+			owned_by = ROOT
+		}
+		NOT = {
+			dynasty = "Hwicce"
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = west_midlands_area 
+						area = east_midlands_area 
+					}
+				}
+				add_core = MRC
+			}
+			release = MRC
+			MRC = {
+				change_religion = PREV
+				change_government = monarchy
+				add_government_reform = feudalism_reform
+				add_legitimacy = 100
+				add_manpower = 13
+				add_army_tradition = 50
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 60 }
+				set_dynasty = "Hwicce"
+			}
+			MRC = {
+				add_country_modifier = {
+					name = "rebel_heptarch_war"
+					duration = 9125
+				}
+			}
+			MRC = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.8
+						cavalry = 0.2
+					}
+				}
+				capital_scope = {
+					infantry = MRC
+					infantry = MRC
+					infantry = MRC
+					infantry = MRC
+					infantry = MRC
+					infantry = MRC
+					infantry = MRC
+					infantry = MRC
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}		
+	}
+	
+	option = {
+		name = ab_heptarch_wars.4.a
+		ai_chance = { factor = 100 }
+		declare_war_with_cb = {
+			who = MRC
+			casus_belli = cb_core
+			war_goal_province = 4372
+		}
+		if = {
+			limit = {
+				has_global_flag = rival_supported_heptarch
+			}
+			custom_tooltip = heptarch_bonus_effect_mercia
+			hidden_effect = {
+				MRC = {
+					capital_scope = {
+						infantry = MRC
+						infantry = MRC
+						infantry = MRC
+						infantry = MRC
+						infantry = MRC
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_heptarch_wars.4.b
+		ai_chance = { factor = 0 }
+		add_prestige = -25
+		every_province = {
+			limit = {
+				owned_by = MRC
+			}
+			remove_core = ROOT
+		}
+	}
+	
+}
+
+#Wessex secedes
+country_event = {
+	id = ab_heptarch_wars.5
+	title = ab_heptarch_wars.5.t
+	desc = ab_heptarch_wars.5.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+		has_disaster = heptarch_wars
+		NOT = {
+			exists = WSX
+		}
+		cornwall_area = {
+			type = all
+			owned_by = ROOT
+		}
+		wessex_area = {
+			type = all
+			owned_by = ROOT
+		}
+		NOT = {
+			dynasty = "Westseaxe"
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+	
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = cornwall_area
+						area = wessex_area 
+					}
+					NOT = {
+						province_id = 234
+					}
+				}
+				add_core = WSX
+			}
+			234 = {
+				remove_core = WSX
+			}
+			release = WSX
+			WSX = {
+				change_religion = PREV
+				change_government = monarchy
+				add_government_reform = feudalism_reform
+				add_legitimacy = 100
+				add_manpower = 13
+				add_army_tradition = 50
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 60 }
+				set_dynasty = "Westseaxe"
+			}
+			WSX = {
+				add_country_modifier = {
+					name = "rebel_heptarch_war"
+					duration = 9125
+				}
+			}
+			WSX = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.8
+						cavalry = 0.2
+					}
+				}
+				capital_scope = {
+					infantry = WSX
+					infantry = WSX
+					infantry = WSX
+					infantry = WSX
+					infantry = WSX
+					infantry = WSX
+					infantry = WSX
+					infantry = WSX
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}		
+	}
+	
+	option = {
+		name = ab_heptarch_wars.5.a
+		ai_chance = { factor = 100 }
+		declare_war_with_cb = {
+			who = WSX
+			casus_belli = cb_core
+			war_goal_province = 4374
+		}
+		if = {
+			limit = {
+				has_global_flag = rival_supported_heptarch
+				ai = no
+			}
+			custom_tooltip = heptarch_bonus_effect_wessex
+			hidden_effect = {
+				WSX = {
+					capital_scope = {
+						infantry = WSX
+						infantry = WSX
+						infantry = WSX
+						infantry = WSX
+						infantry = WSX
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_heptarch_wars.5.b
+		ai_chance = { factor = 0 }
+		add_prestige = -25
+		every_province = {
+			limit = {
+				owned_by = WSX
+			}
+			remove_core = ROOT
+		}
+	}
+	
+}
+
+#Northumbria secedes
+country_event = {
+	id = ab_heptarch_wars.6
+	title = ab_heptarch_wars.6.t
+	desc = ab_heptarch_wars.6.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		ai = no
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+		has_disaster = heptarch_wars
+		NOT = {
+			exists = NOL
+		}
+		yorkshire_area = {
+			type = all
+			owned_by = ROOT
+		}
+		scottish_marches_area = {
+			type = all
+			owned_by = ROOT
+		}
+		NOT = {
+			dynasty = "Bamburgh"
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = yorkshire_area
+						area = scottish_marches_area 
+					}
+				}
+				add_core = NOL
+			}
+			release = NOL
+			NOL = {
+				change_religion = PREV
+				change_government = monarchy
+				add_government_reform = feudalism_reform
+				add_legitimacy = 100
+				add_manpower = 13
+				add_army_tradition = 50
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 60 }
+				set_dynasty = "Bamburgh"
+			}
+			NOL = {
+				add_country_modifier = {
+					name = "rebel_heptarch_war"
+					duration = 9125
+				}
+			}
+			NOL = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.8
+						cavalry = 0.2
+					}
+				}
+				capital_scope = {
+					infantry = NOL
+					infantry = NOL
+					infantry = NOL
+					infantry = NOL
+					infantry = NOL
+					infantry = NOL
+					infantry = NOL
+					infantry = NOL
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}		
+	}
+	
+	option = {
+		name = ab_heptarch_wars.6.a
+		ai_chance = { factor = 100 }
+		declare_war_with_cb = {
+			who = NOL
+			casus_belli = cb_core
+			war_goal_province = 246
+		}
+		if = {
+			limit = {
+				has_global_flag = rival_supported_heptarch
+			}
+			custom_tooltip = heptarch_bonus_effect_north
+			hidden_effect = {
+				NOL = {
+					capital_scope = {
+						infantry = NOL
+						infantry = NOL
+						infantry = NOL
+						infantry = NOL
+						infantry = NOL
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_heptarch_wars.6.b
+		ai_chance = { factor = 0 }
+		add_prestige = -25
+		every_province = {
+			limit = {
+				owned_by = NOL
+			}
+			remove_core = ROOT
+		}
+	}
+	
+}
+
+#East Anglia secedes
+country_event = {
+	id = ab_heptarch_wars.7
+	title = ab_heptarch_wars.7.t
+	desc = ab_heptarch_wars.7.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+		has_disaster = heptarch_wars
+		NOT = {
+			exists = EAN
+		}
+		east_anglia_area = {
+			type = all
+			owned_by = ROOT
+		}
+		NOT = {
+			dynasty = "Godwin"
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					area = east_anglia_area
+				}
+				add_core = EAN
+			}
+			release = EAN
+			EAN = {
+				change_religion = PREV
+				change_government = monarchy
+				add_government_reform = feudalism_reform
+				add_legitimacy = 100
+				add_manpower = 13
+				add_army_tradition = 50
+				add_prestige = 30
+				add_treasury = 150
+				create_general = { tradition = 60 }
+				set_dynasty = "Godwin"
+			}
+			EAN = {
+				add_country_modifier = {
+					name = "rebel_heptarch_war"
+					duration = 9125
+				}
+			}
+			EAN = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.8
+						cavalry = 0.2
+					}
+				}
+				capital_scope = {
+					infantry = EAN
+					infantry = EAN
+					infantry = EAN
+					infantry = EAN
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+		}		
+	}
+	
+	option = {
+		name = ab_heptarch_wars.7.a
+		ai_chance = { factor = 100 }
+		declare_war_with_cb = {
+			who = EAN
+			casus_belli = cb_core
+			war_goal_province = 238
+		}
+		if = {
+			limit = {
+				has_global_flag = rival_supported_heptarch
+				ai = no
+			}
+			custom_tooltip = heptarch_bonus_effect_ean
+			hidden_effect = {
+				EAN = {
+					capital_scope = {
+						infantry = EAN
+						infantry = EAN
+						infantry = EAN
+						infantry = EAN
+						infantry = EAN
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_heptarch_wars.7.b
+		ai_chance = { factor = 0 }
+		add_prestige = -25
+		every_province = {
+			limit = {
+				owned_by = EAN
+			}
+			remove_core = ROOT
+		}
+	}
+	
+}
+
+#The Great Scottish Rebellion
+country_event = {
+	id = ab_heptarch_wars.8
+	title = ab_heptarch_wars.8.t
+	desc = ab_heptarch_wars.8.d
+	picture = BATTLE_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+		has_disaster = heptarch_wars
+		lowlands_area = {
+			type = all
+			owned_by = ROOT
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 16
+	}
+	
+	option = {
+		name = ab_heptarch_wars.8.a
+		if = {
+			limit = {
+				ai = yes
+			}
+			random_owned_province = {
+				limit = {
+					area = lowlands_area
+				}
+				nationalist_rebels = 2
+			}
+			random_owned_province = {
+				limit = {
+					area = lowlands_area
+				}
+				nationalist_rebels = 1
+			}
+		}
+		else = {
+			random_owned_province = {
+				limit = {
+					area = lowlands_area
+				}
+				nationalist_rebels = 3
+			}
+			random_owned_province = {
+				limit = {
+					area = lowlands_area
+				}
+				nationalist_rebels = 2
+			}
+		}
+		if = {
+			limit = {
+				has_global_flag = rival_supported_heptarch
+			}
+			custom_tooltip = heptarch_bonus_effect_rebels
+			hidden_effect = {
+				random_owned_province = {
+					limit = {
+						area = lowlands_area
+					}
+					nationalist_rebels = 1
+				}
+			}
+		}
+	}
+}
+
+#Unrest in Wales
+country_event = {
+	id = ab_heptarch_wars.9
+	title = ab_heptarch_wars.9.t
+	desc = ab_heptarch_wars.9.d
+	picture = BATTLE_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+		has_disaster = heptarch_wars
+		wales_area = {
+			type = all
+			owned_by = ROOT
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 80
+	}
+	
+	option = {
+		name = ab_heptarch_wars.9.a
+		random_owned_province = {
+			limit = {
+				area = wales_area
+			}
+			nationalist_rebels = 2
+		}
+		if = {
+			limit = {
+				has_global_flag = rival_supported_heptarch
+			}
+			custom_tooltip = heptarch_bonus_effect_rebels
+			hidden_effect = {
+				random_owned_province = {
+					limit = {
+						area = wales_area
+					}
+					nationalist_rebels = 1
+				}
+			}
+		}
+	}
+}
+
+#The Clans Rise
+country_event = {
+	id = ab_heptarch_wars.10
+	title = ab_heptarch_wars.10.t
+	desc = ab_heptarch_wars.10.d
+	picture = BATTLE_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = ENG
+			tag = GBR
+		}
+		has_disaster = heptarch_wars
+		any_owned_province = {
+			culture = irish
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 45
+	}
+	
+	option = {
+		name = ab_heptarch_wars.9.a
+		random_owned_province = {
+			limit = {
+				culture = irish
+			}
+			nationalist_rebels = 1
+		}
+		if = {
+			limit = {
+				has_global_flag = rival_supported_heptarch
+			}
+			custom_tooltip = heptarch_bonus_effect_rebels
+			hidden_effect = {
+				random_owned_province = {
+					limit = {
+						culture = irish
+					}
+					nationalist_rebels = 1
+				}
+			}
+		}
+	}
+}

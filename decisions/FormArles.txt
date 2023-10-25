@@ -1,0 +1,182 @@
+country_decisions = {
+	
+	arles_diplomatically = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_arles_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			is_tutorial_active = no
+			OR = {
+				tag = LWB
+				tag = UPB
+			}
+			OR = {
+				ai = no
+				AND = {
+					ai = yes
+					OR = {
+						AND = {
+							tag = LWB
+							UPB = {	is_subject_of = LWB	}
+						}
+						AND = {
+							tag = UPB
+							LWB = {	is_subject_of = UPB	}
+						}
+					}
+				}
+			}
+
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			legitimacy = 100
+			custom_trigger_tooltip = {
+				tooltip = forming_arles_diplomatically
+				OR = {
+					AND = {
+						tag = LWB
+						UPB = {	is_subject_of = LWB	}
+					}
+					AND = {
+						tag = UPB
+						LWB = {	is_subject_of = UPB	}
+					}
+				}
+			}
+
+		}
+		effect = {
+			if = {
+				limit = { NOT = { government_rank = 2 } }
+				set_government_rank = 2
+			}
+			if = {
+				limit = {
+					tag = LWB
+					UPB = {
+						ai = yes
+					}
+				}
+				inherit = UPB
+			}
+			if = {
+				limit = {
+					tag = UPB
+					LWB = {
+						ai = yes
+					}
+				}
+				inherit = LWB
+			}
+			change_tag = ARS
+			swap_non_generic_missions = yes
+			set_country_flag = formed_arles_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 200
+	}
+
+	arles_by_force = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_arles_flag }
+			
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = ARS }
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
+			NOT = { tag = FRA }
+			NOT = { tag = FRC }
+			NOT = { tag = LOT }
+			OR = {
+				tag = LWB
+				tag = UPB
+			}
+			OR = {
+				ai = no
+				AND = {
+					ai = yes
+					num_of_cities = 3
+				}
+			}
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 201
+				province_id = 4696
+				province_id = 202
+				province_id = 2991
+				province_id = 204
+				province_id = 203
+				province_id = 4719
+				province_id = 4764
+				province_id = 1867
+				province_id = 4721
+				province_id = 193
+				province_id = 192
+				province_id = 4392
+				province_id = 1877
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			owns_core_province = 201
+			owns_core_province = 4696
+			owns_core_province = 202
+			owns_core_province = 2991
+			owns_core_province = 204
+			owns_core_province = 203
+			owns_core_province = 4719
+			owns_core_province = 4764
+			owns_core_province = 1867
+			owns_core_province = 4721
+			owns_core_province = 193
+			owns_core_province = 192
+			owns_core_province = 4392
+			owns_core_province = 1877
+		}
+		effect = {
+			change_tag = ARS
+			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			set_country_flag = formed_arles_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}	
+	
+}

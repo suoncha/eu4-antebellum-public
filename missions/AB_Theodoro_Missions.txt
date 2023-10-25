@@ -1,0 +1,1335 @@
+feo_mission_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = FEO
+			tag = GTH
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	feo_rival_roman = {
+		icon = crusader_fleet
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			NOT = {
+				BYZ = {
+					navy_size = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "feo_rival"
+				duration = 7300
+			}
+			151 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			custom_tooltip = FEO_SHIPS
+			tooltip = {
+				create_admiral = { tradition = 50 }
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						navy_size = 20
+					}
+					create_admiral = { tradition = 50 }
+				}
+			}
+		}
+	}
+	
+	feo_constantinople = {
+		icon = mission_justinian
+		required_missions = { feo_rival_roman }
+		position = 3
+		provinces_to_highlight = {
+			province_id = 151
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			151 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			country_event = { id = ab_theodoro.2 }
+			thrace_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hudavendigar_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	feo_bosphorus = {
+		icon = end_genoese_competition
+		required_missions = { feo_constantinople }
+		position = 3
+		provinces_to_highlight = {
+			OR = {
+				area = thrace_area
+				area = hudavendigar_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			thrace_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			hudavendigar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "feo_hele"
+				duration = -1
+			}
+			custom_tooltip = FEO_GREEK
+			hidden_effect = {
+				every_province = {
+					limit = {
+						culture = greek
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	feo_caucasia = {
+		icon = alpine_fortifications
+		required_missions = { feo_sarai }
+		position = 4
+		provinces_to_highlight = {
+			OR = {
+				area = circassia_area
+				area = dagestan_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			circassia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			dagestan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			custom_tooltip = FEO_CAUCASIA
+			tooltip = {
+				add_province_modifier = {
+					name = "feo_fortif"
+					duration = -1
+				}
+			}
+			caucasia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = { region = caucasia_region }
+					add_province_modifier = {
+						name = "feo_fortif"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	feo_adriatic = {
+		icon = dalmatian_conquest
+		required_missions = { feo_carpathian }
+		position = 7
+		provinces_to_highlight = {
+			OR = {
+				area = bosnia_area
+				area = croatia_area
+				area = east_adriatic_coast_area
+				area = slavonia_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			bosnia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			croatia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_adriatic_coast_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			slavonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "feo_arsenal"
+				duration = -1
+			}
+		
+			4752 = {
+				add_unit_construction = {
+					type = galley
+					amount = 10
+					speed = 0.25
+					cost = 0
+				}
+			}
+			custom_tooltip = FEO_NAVY_SIZE
+			tooltip = {
+				add_country_modifier = {
+					name = "feo_adriatic_domination"
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								capital_scope = { 
+									region = italy_region
+								}
+								navy_size = ROOT
+							}
+						}
+					}
+					add_country_modifier = {
+						name = "feo_adriatic_domination"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	feo_italy = {
+		icon = kingdom_of_lombardy
+		required_missions = { feo_adriatic feo_empire }
+		position = 9
+	
+		provinces_to_highlight = {
+			OR = {
+				area = piedmont_area
+				area = liguria_area
+				area = lombardy_area
+				area = po_valley_area
+				area = venetia_area
+				area = emilia_romagna_area
+				area = tuscany_area
+				
+			}
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+		
+		trigger = {
+		    piedmont_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    liguria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    lombardy_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    po_valley_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    venetia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    emilia_romagna_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    tuscany_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = FEO_UNLOCK_REFORM
+			country_event = { id = ab_theodoro.4 }
+		}
+	}
+}
+
+feo_mission_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = FEO
+			tag = GTH
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	feo_humiliate = {
+		icon = mission_non-western_cavalry_raid
+		required_missions = { feo_crimea }
+		position = 2
+		provinces_to_highlight = {
+			OR = {
+				area = crimea_area
+				province_id = 1974
+				province_id = 2412
+				province_id = 5014
+				province_id = 2411
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			crimea_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			owns = 1974
+			owns = 2412
+			owns = 5014
+			owns = 2411
+		}
+		effect = {
+			create_general = { tradition = 50 }
+			add_country_modifier = {
+				name = "feo_wars"
+				duration = 5475
+			}
+			283 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			lower_don_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			astrakhan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			yedisan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			podolia_volhynia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			west_dniepr_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = FEO_VASSAL
+			tooltip = {
+				add_power_projection = {
+					type = mission_rewards_power_projection
+					amount = 25
+				}
+				add_country_modifier = {
+					name = feo_might
+					duration = 5475
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_country_flag = feo_was_vassalized
+						}
+					}
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 25
+					}
+					add_country_modifier = {
+						name = feo_might
+						duration = 5475
+					}
+				}
+			}
+		}
+	}
+	
+	feo_sarai = {
+		icon = mission_steppe_warriors
+		required_missions = { feo_humiliate }
+		position = 4
+		provinces_to_highlight = {
+			area = astrakhan_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			astrakhan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_army_tradition = 20
+			466 = {
+				add_devastation = 100
+			}
+			custom_tooltip = FEO_CLAIM
+			hidden_effect = {
+				every_province = {
+					limit = {
+						owned_by = GLH
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			custom_tooltip = FEO_CB_CMN
+			custom_tooltip = FEO_CB_ALN
+			hidden_effect = {
+				if = { 
+					limit = { 
+						exists = CMN
+						CMN = {
+							is_subject = no
+						}
+					} 
+					add_casus_belli = { 
+						target = CMN 
+						type = cb_vassalize_mission 
+					} 
+				} 
+				else = {
+					dagestan_area = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+				if = { 
+					limit = { 
+						exists = ALN
+						ALN = {
+							is_subject = no
+						}
+					} 
+					add_casus_belli = { 
+						target = ALN
+						type = cb_vassalize_mission 
+					} 
+				} 
+				else = {
+					circassia_area = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+	feo_carpathian = {
+		icon = mission_crusade_for_varna
+		required_missions = { feo_rus }
+		position = 6
+		provinces_to_highlight = {
+			region = carpathia_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				region = carpathia_region
+			}
+		}
+		effect = {
+		add_country_modifier = {
+			name = gth_empire
+			duration = -1
+		}
+			define_advisor = {
+				type = commandant
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.35
+			}
+			slavonia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			croatia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_adriatic_coast_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bosnia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+feo_mission_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = FEO
+			tag = GTH
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	feo_crimea = {
+		icon = mission_unite_home_region
+		required_missions = { }
+		position = 1
+		provinces_to_highlight = {
+			province_id = 284
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			284 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			284 = {
+				change_culture = goths
+				change_religion = ROOT
+			}
+			add_country_modifier = {
+				name = "feo_defeated_horde"
+				duration = 9125
+			}
+			azov_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			2411 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			5014 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2412 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1974 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	feo_restoration = {
+		icon = mission_empire
+		required_missions = { feo_crimea }
+		position = 2
+		
+		trigger = {
+			legitimacy = 95
+			prestige = 95
+			total_development = 500
+		}
+		
+		effect = {
+			country_event = { id = ab_theodoro.3 }
+		}
+	}
+	
+	feo_ruthenia = {
+		icon = mission_sovereign_principality
+		required_missions = { feo_humiliate }
+		position = 3
+		provinces_to_highlight = {
+			OR = {
+				area = yedisan_area
+				area = podolia_volhynia_area
+				area = west_dniepr_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			yedisan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			podolia_volhynia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_dniepr_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = "feo_cossacks"
+				duration = 5475
+			}
+			bessarabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			moldavia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ruthenia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	feo_rus = {
+		icon = mission_rule_ruthenia
+		required_missions = { feo_ruthenia feo_sarai }
+		position = 5
+		provinces_to_highlight = {
+			region = ruthenia_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 25
+				region = ruthenia_region
+			}
+		}
+		effect = {
+			add_accepted_culture = ruthenian
+			add_country_modifier = {
+				name = feo_heir
+				duration = -1
+			}
+			pskov_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			tver_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			novgorod_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			carpathia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			baltic_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			poland_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	feo_boii = {
+		icon = revenge_for_nicopolis
+		required_missions = { feo_rus feo_poland }
+		position = 7
+		provinces_to_highlight = {
+			OR = {
+				area = moravia_area
+				area = bohemia_area
+				area = erzgebirge_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			moravia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			bohemia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			erzgebirge_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			custom_tooltip = FEO_CULTURE
+			hidden_effect = {
+				change_primary_culture = gothic_new
+				set_ruler_culture = gothic_new
+				set_heir_culture = gothic_new
+				set_consort_culture = gothic_new
+				every_owned_province = {
+					limit = { culture = goths }
+					change_culture = gothic_new
+				}
+			}
+			add_ruler_modifier = {
+				name = feo_invade
+				duration = 9125
+			}
+			south_german_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	feo_empire = {
+		icon = humiliate_austria
+		required_missions = { feo_boii }
+		position = 8
+		provinces_to_highlight = {
+			region = south_german_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 25
+				region = south_german_region
+			}
+		}
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = feo_gothic
+				duration = 9125
+			}
+
+			piedmont_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			liguria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			lombardy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			venetia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			emilia_romagna_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			france_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	feo_francia = {
+		icon = centralize_france
+		required_missions = { feo_empire }
+		position = 9
+		provinces_to_highlight = {
+			region = france_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 25
+				region = france_region
+			}
+		}
+		effect = {
+			custom_tooltip = GTH_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = gth_evolved_ideas
+				if = {
+					limit = {
+						tag = GTH
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+			iberia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	feo_iberia = {
+		icon = mission_reclaim_andalucia
+		required_missions = { feo_francia }
+		position = 10
+		provinces_to_highlight = {
+			region = iberia_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			total_development = ADU
+			num_of_owned_provinces_with = {
+				value = 30
+				region = iberia_region
+			}
+		}
+		effect = {
+			country_event = { id = ab_theodoro.5 }
+		}
+	}
+}
+
+feo_mission_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = FEO
+			tag = GTH
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	feo_theodosia = {
+		icon = secure_the_republic
+		required_missions = { feo_crimea feo_fleet }
+		position = 2
+		provinces_to_highlight = {
+			province_id = 285
+			NOT = {
+				OR = {
+					base_production = 8
+					has_trade_building_trigger = yes
+				}
+			}
+		}
+		trigger = {
+			285 = {
+				base_production = 8
+				has_trade_building_trigger = yes
+			}
+		}
+		effect = {
+			285 = {
+				add_base_production = 2
+				add_province_modifier = {
+					name = "feo_theodosia"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	feo_delta = {
+		icon = mission_conquer_andhra_bah
+		required_missions = { feo_theodosia }
+		position = 4
+		provinces_to_highlight = {
+			province_id = 286
+			NOT = {
+				development = 20
+			}
+		}
+		trigger = {
+			286 = {
+				owned_by = ROOT
+				development = 20
+			}
+		}
+		effect = {
+			286 = {
+				change_province_name = "Tanais"
+				rename_capital = "Tanais"
+			}
+			286 = {
+				add_province_modifier = {
+					name = "feo_emporium"
+					duration = -1
+				}
+			}
+			286 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	feo_poland = {
+		icon = jageillonian_union
+		required_missions = { feo_rus }
+		position = 6
+		provinces_to_highlight = {
+			region = poland_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 20
+				region = poland_region
+			}
+		}
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = feo_lechitic
+				duration = 9125
+			}
+			wendia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			moravia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bohemia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			erzgebirge_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+}
+
+feo_mission_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = FEO
+			tag = GTH
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	feo_fleet = {
+		icon = mission_arabian_sea_trade
+		required_missions = { }
+		position = 1
+		trigger = {
+			navy_size_percentage = 1
+		}
+		effect = {
+			add_country_modifier = {
+				name = "feo_blacksea"
+				duration = 7300
+			}
+			330 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			5147 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	feo_trebizond = {
+		icon = mission_invade_island
+		required_missions = { feo_fleet }
+		position = 2
+		provinces_to_highlight = {
+			OR = {
+				province_id = 330
+				province_id = 5147
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			330 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			5147 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = "feo_liberated"
+				duration = 9125
+			}
+			kastamonu_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	feo_black = {
+		icon = mission_market_place_with_asian_traders
+		required_missions = { feo_theodosia }
+		position = 3
+		provinces_to_highlight = {
+			province_id = 2410
+		}
+		trigger = {
+			num_of_light_ship = 10
+			2410 = {
+				trade_share = {
+					country = ROOT
+					share = 50
+				}
+			}
+		}
+		effect = {
+			add_years_of_income = 1
+			2410 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 10
+					key = feo_black_sea
+				}
+			}
+		}
+	}
+	
+	feo_terror = {
+		icon = reclaim_the_aegean
+		required_missions = { feo_black }
+		position = 5
+		trigger = {
+			navy_tradition = 50
+			OR = {
+				num_of_galley = 20
+				num_of_heavy_ship = 5
+			}
+		    all_neighbor_country = { 
+				NOT = {
+					navy_size = ROOT
+				}
+			}
+		}
+		effect = {
+			create_admiral = { tradition = 100 }
+			
+			add_country_modifier = {
+				name = "feo_terror"
+				duration = -1
+			}
+		}
+	}
+	
+	feo_pagan = {
+		icon = mission_rb_unite_the_clans
+		required_missions = { feo_poland }
+		position = 7
+		provinces_to_highlight = {
+			OR = {
+				region = baltic_region
+				region = wendia_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				region = wendia_region
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				region = baltic_region
+			}
+		}
+		effect = {
+			add_patriarch_authority = 0.15
+			add_country_modifier = {
+				name = "feo_pagans"
+				duration = 18250
+			}
+			north_german_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	feo_imperium = {
+		icon = the_imperial_border
+		required_missions = { feo_pagan feo_empire }
+		position = 9
+		provinces_to_highlight = {
+			OR = {
+				region = north_german_region
+				region = south_german_region
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			north_german_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			south_german_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_adm_power = 250
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_ruler_modifier = {
+				name = feo_gothic_emperor
+				duration = -1
+			}
+		}
+	}
+	
+}

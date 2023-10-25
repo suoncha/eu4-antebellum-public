@@ -1,0 +1,227 @@
+defined_text = {
+	name = ABConfucius
+	random = no
+
+	text = {
+		localisation_key = AB_yes
+		trigger = {
+			2140 = {
+                owned_by = ROOT
+            }
+        }
+	}
+	text = {
+		localisation_key = AB_no
+	}
+}
+
+defined_text = {
+	name = ABGLHInsulted
+	random = no
+
+	text = {
+		localisation_key = AB_yes
+        trigger = {
+            OR = {
+                GLH = {
+                    has_opinion_modifier = {
+                        who = ROOT
+                        modifier = scornfully_insulted
+                    }
+                }
+                GLH = {
+                    has_opinion_modifier = {
+                        who = ROOT
+                        modifier = insulted
+                    }
+                }
+                NOT = {
+                    exists = GLH
+                }
+            }
+        }
+	}
+	text = {
+		localisation_key = AB_no
+	}
+}
+
+defined_text = {
+	name = ABGLHOpinion
+	random = no
+
+	text = {
+		localisation_key = AB_yes
+        trigger = {
+            GLH = {
+                has_opinion = {
+                    who = ROOT
+                    value = 100
+                }
+            }
+        }
+	}
+	text = {
+		localisation_key = AB_no
+	}
+}
+
+defined_text = {
+    name = YUAorOwnerOf1816
+    random = no
+
+    text = {
+        localisation_key = YUA_TAG
+        trigger = {
+            OR = {
+                exists = YUA
+                ROOT = {
+                    owns_core_province = 1816
+                }
+            }
+        }
+    }
+    text = {
+        localisation_key = OWNER_OF_1816
+        trigger = {
+            NOT = { exists = YUA }
+        }
+    }
+}
+
+defined_text = {
+	name = ABuyghurConquest
+	random = no
+
+	text = {
+		localisation_key = AB_yes
+        trigger = {
+            num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                OR = {
+                    region = mongolia_region
+                    area = jetysuu_area
+                }
+                value = 10
+            }
+        }
+	}
+	text = {
+		localisation_key = AB_no
+	}
+}
+
+defined_text = {
+	name = ABuyghurOpinion
+	random = no
+
+	text = {
+		localisation_key = AB_yes
+        trigger = {
+            any_country = {
+                OR = {
+                    tag = QQT
+                    culture = oirats
+                }
+                is_subject_of_type_with_overlord = {
+                    who = YUA
+                    type = tributary_state
+                }
+                has_opinion = {
+                    who = ROOT
+                    value = 100
+                }
+            }
+        }
+	}
+	text = {
+		localisation_key = AB_no
+	}
+}
+
+defined_text = {
+	name = ABRebellionSupport
+	random = no
+
+	text = {
+		localisation_key = AB_yes
+        trigger = {
+            calc_true_if = { 
+                all_country = {
+                    custom_trigger_tooltip = { 
+                        tooltip = AB_MNK_JOINED_REBELLION_TT
+                        has_country_flag = ab_mnk_will_join_rebellion
+                    }
+                }
+                amount = 4
+            }
+        }
+	}
+	text = {
+		localisation_key = AB_no
+	}
+}
+
+defined_text = {
+	name = ABRebellionConquest
+	random = no
+
+	text = {
+		localisation_key = AB_yes
+        trigger = {
+            num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                region = mongolia_region
+                value = 15
+            }
+        }
+	}
+	text = {
+		localisation_key = AB_no
+	}
+}
+
+defined_text = {
+	name = ABOiratVassal
+	random = no
+
+	text = {
+		localisation_key = AB_yes
+        trigger = {
+            OIR = {
+                is_subject_of = ROOT
+            }
+        }
+	}
+	text = {
+		localisation_key = AB_no
+	}
+}
+
+defined_text = {
+    name = AB_Confucius_extra_conditions
+    random = no
+
+    text = {
+        localisation_key = MANI_UNLOCK_CONFUNCIAN_VIA_MISSION
+        trigger = {
+            has_mission = mnk_confusius
+        }
+    }
+    text = {
+        localisation_key = AB_EMPTY
+    }
+}
+
+defined_text = {
+    name = AB_Islam_extra_conditions
+    random = no
+
+    text = {
+        localisation_key = MANI_UNLOCK_ISLAM_VIA_MISSION
+        trigger = {
+            has_mission = mnk_islam
+        }
+    }
+    text = {
+        localisation_key = AB_EMPTY
+    }
+}

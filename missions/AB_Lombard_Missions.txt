@@ -1,0 +1,686 @@
+lom_first = {
+	slot = 1
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = LOM
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	lom_army = {
+		icon = mission_italian_condottiere
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+		    army_size_percentage = 0.8
+		}
+		
+		
+		effect = {
+			add_country_modifier = {
+				name = "lom_army"
+				duration = 7300
+			}
+		}
+	}
+	
+	lom_eclipse = {
+		icon = mission_rule_italy
+		required_missions = { lom_army }
+		position = 3
+		
+		provinces_to_highlight = {
+			is_capital = yes
+			owner = {
+				OR = {
+					overlord_of = ROOT
+					AND = {
+						is_neighbor_of = ROOT
+						army_size = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			is_subject = NO
+			all_neighbor_country = {
+				NOT = { army_size = ROOT }
+			}
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_country_modifier = {
+				name = "lom_eclipsed"
+				duration = 7300
+			}	
+		}
+	}
+
+	lom_savoy = {
+		icon = unify_piedmont
+		required_missions = { lom_po }
+		position = 4
+		
+		trigger = {
+		    piedmont_area = {
+			    type = all
+				owned_by = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = piedmont_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			add_mil_power = 100
+		}
+	}
+	
+	lom_fleet = {
+		icon = mission_aragonese_navy
+		required_missions = { }
+		position = 5
+		
+		trigger = {
+			num_of_galley = 10
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = lom_royal_fleet
+				duration = 7300
+			}
+			liguria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			venetia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lom_genoa = {
+		icon = mission_dominate_genoa
+		required_missions = { lom_fleet }
+		position = 6
+		
+		trigger = {
+		    liguria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+			area = liguria_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = lom_control_genoa
+				duration = 7300
+			}
+			corsica_sardinia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	
+	lom_isles = {
+		icon = mission_seize_the_isles
+		required_missions = { lom_genoa }
+		position = 7
+		
+		trigger = {
+		    corsica_sardinia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+			area = corsica_sardinia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_navy_tradition = 20
+		}
+	}
+
+}
+
+lom_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = LOM
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	lom_lombardy = {
+		icon = develop_the_po_valley
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+		    po_valley_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = po_valley_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "lom_po_valley"
+				duration = 5475
+			}
+			emilia_romagna_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}			
+		}
+	}
+	
+	lom_po = {
+		icon = sweep_the_po
+		required_missions = { lom_lombardy lom_army }
+		position = 3
+		
+		trigger = {
+		    emilia_romagna_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = emilia_romagna_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "lom_expansionism"
+				duration = 7300
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			piedmont_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lom_tuscany = {
+		icon = conquer_tuscany
+		required_missions = { lom_po }
+		position = 5
+		
+		trigger = {
+		    tuscany_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tuscany_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			grant_all_mana = {
+				mana = 50
+			}
+			add_country_modifier = {
+				name = "lom_renai"
+				duration = 5475
+			}
+		}
+	}
+	
+	lom_venice = {
+		icon = mission_control_venice
+		required_missions = { lom_fleet }
+		position = 6
+		
+		trigger = {
+		    venetia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+			area = venetia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_treasury = 300
+			add_country_modifier = {
+				name = lom_control_venice
+				duration = 7300
+			}
+		}
+	}
+	
+}
+
+lom_third = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = LOM
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	lom_patronize = {
+		icon = found_the_vatican_library
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			has_institution = renaissance
+		}
+		
+		
+		effect = {
+			add_country_modifier = {
+				name = "lom_renaissance"
+				duration = 7300
+			}
+		}
+	}
+	
+	lom_capital = {
+		icon = italian_riches
+		required_missions = { lom_patronize }
+		position = 2
+		
+		provinces_to_highlight = {
+			province_id = 4728
+		}
+		
+		trigger = {
+			4728 = {
+				owned_by = ROOT
+			}
+			4728 = {
+				development = 30
+			}
+			4728 = {
+				has_tax_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			4728 = {
+				add_province_modifier = {
+					name = "lom_capital"
+					duration = -1
+				}
+			}
+			4728 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	lom_cities = {
+		icon = reclaim_the_ducal_lands
+		required_missions = { lom_capital }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					culture = lombard
+					ROOT = {
+						NOT = {
+							development_in_provinces = {
+								value = 150 #starts at 90 (of which 20 owned by Venice)
+								culture = lombard
+							}
+						}
+					}
+				}
+				AND = {
+					province_id = 4740
+					NOT = { owned_by = root }
+				}
+			}
+		}
+		trigger = {
+			development_in_provinces = {
+				value = 150 #starts at 90 (of which 20 owned by Venice)
+				culture = lombard
+			}
+			owns = 4740
+		}
+		
+		effect = {
+			4740 = {
+				change_trade_goods = silk
+				add_base_production = 2
+			}
+			add_country_modifier = {
+				name = "lom_development"
+				duration = -1
+			}
+		}
+	}
+	
+	lom_fortify = {
+		icon = alpine_fortifications
+		required_missions = { lom_alps }
+		position = 4
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+								has_building = fort_15th
+								has_building = fort_16th
+								has_building = fort_17th
+								has_building = fort_18th
+								has_building = fort_19th
+
+					}
+				}
+				amount = 6
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "lom_forts"
+				duration = -1
+			}
+			define_advisor = {
+				type = fortification_expert
+				skill = 3
+				culture = bulgarian
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	lom_farm = {
+		icon = sources_of_trade
+		required_missions = { }
+		position = 5
+		
+		trigger = {
+			share_of_starting_income = 2.0
+			num_of_owned_provinces_with = {
+				value = 10
+				development = 15
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "lom_prosperity"
+				duration = 7300
+			}
+		}
+	}
+	
+	lom_manufactory = {
+		icon = saxon_manufacturing
+		required_missions = { lom_farm }
+		position = 6
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 7
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "lom_industry"
+				duration = 7300
+			}
+		}
+	}
+}
+
+
+
+lom_fourth = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = LOM
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	lom_alliances = {
+		icon = the_italian_league
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = emp_lan_italian_league_tt
+				calc_true_if = {
+					all_ally = {
+						capital_scope = {
+							region = italy_region
+						}
+					}
+					amount = 2
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			is_capital = yes
+			owner = {
+				is_subject = no
+				capital_scope = {
+					region = italy_region
+				}
+				NOT = { tag = ROOT }
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "lom_diplomacy"
+				duration = 5475
+			}
+		    205 = {
+		    	if = {
+		    		limit = {
+		    			NOT = { is_core = ROOT }
+		    			NOT = { is_permanent_claim = ROOT }
+		    		}
+		    		add_permanent_claim = ROOT
+		    	}
+		    }
+		}
+	}
+	
+	lom_alps = {
+		icon = prosper_in_piedmont
+		required_missions = { lom_alliances }
+		position = 3
+		
+		trigger = {
+		    owns = 205
+		}
+		
+		provinces_to_highlight = {
+			province_id = 205
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			205 = {
+				change_culture = piedmontese
+			}
+		    switzerland_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    romandie_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	lom_border = {
+		icon = consolidate_switzerland
+		required_missions = { lom_alps }
+		position = 5
+		
+		trigger = {
+		    switzerland_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    romandie_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = switzerland_area
+				area = romandie_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_accepted_culture_or_dip_power = {
+				culture = swiss
+			}
+		}
+	}
+}
+
+lom_fifth = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = LOM
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	lom_throne = {
+		icon = switzerland_and_the_empire
+		required_missions = { lom_alliances }
+		position = 2
+		
+		trigger = {
+			is_emperor = yes
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ars_emperor"
+				duration = 7300
+			}
+		}
+	}
+	
+	
+}

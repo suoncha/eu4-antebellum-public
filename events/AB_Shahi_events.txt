@@ -1,0 +1,331 @@
+namespace = AB_Shahi_Event
+
+#Indian Sweep
+country_event = {
+	id = AB_Shahi_Event.1
+	title = AB_Shahi_Event.1.T
+	desc = AB_Shahi_Event.1.D
+	picture = CITY_DEVELOPMENT_eventPicture
+	is_triggered_only = yes
+	option = {
+		name = AB_Shahi_Event.1.OPT1
+		ai_chance = { factor = 50 }
+		change_technology_group = indian
+		custom_tooltip = AB_SHH_CB_tt
+		hidden_effect = { set_country_flag = AB_SHH_activate_CB }
+	}
+	option = {
+		name = AB_Shahi_Event.1.OPT2
+		ai_chance = { factor = 50 }
+		custom_tooltip = AB_SHH_decision_available_tt
+		custom_tooltip = AB_SHH_decision_explanation_tt
+		hidden_effect = { set_country_flag = AB_SHH_activate_rajput_decision }
+		add_country_modifier = {
+			name = AB_SHH_empowered_indian_warriors
+			duration = -1
+		}
+	}
+}
+
+#The Tarim Basin
+country_event = {
+	id = AB_Shahi_Event.2
+	title = AB_Shahi_Event.2.T
+	desc = AB_Shahi_Event.2.D
+	picture = CITY_DEVELOPMENT_eventPicture
+	is_triggered_only = yes
+	option = {
+		name = AB_Shahi_Event.2.OPT1
+		set_country_flag = AB_SHH_annual_income
+		custom_tooltip = AB_RELEASE_TCR_FOR_SHAHI
+		hidden_effect = {	
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = kashgaria_area
+						area = tarim_basin_area
+						area = shanshan_area
+					}
+				}
+				cede_province = TCR
+				if = {
+					limit = {
+						is_core = ROOT 
+					}
+					add_core = TCR
+				}
+			}
+			create_vassal = TCR
+			TCR = {
+				add_idea_group = trade_ideas
+				add_idea_group = economic_ideas
+				add_government_reform = plutocratic_reform
+				add_country_modifier = {
+					name = AB_SHH_monopolize_tarim_basin_country
+					duration = -1
+				}
+			}
+		}
+	}
+	option = {
+		name = AB_Shahi_Event.2.OPT2
+		ai_chance = { factor = 100 }
+		if = {
+			limit = {
+				710 = {
+					NOT = { province_has_center_of_trade_of_level = 3 }
+				}
+			}
+			710 = { add_center_of_trade_level = 1 }
+		}
+		else = {
+			710 = { add_base_production = 2 }
+		}
+		if = {
+			limit = {
+				710 = {
+					NOT = { has_building = stock_exchange }
+				}
+			}
+			710 = { upgrade_trade_building = yes }
+		}
+		else = {
+			710 = { add_base_production = 1 }
+		}
+		710 = {
+			add_province_modifier = {
+				name = AB_SHH_monopolize_tarim_basin_province
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				2124 = {
+					NOT = { province_has_center_of_trade_of_level = 3 }
+				}
+			}
+			2124 = { add_center_of_trade_level = 1 }
+		}
+		else = {
+			2124 = { add_base_production = 2 }
+		}
+		if = {
+			limit = {
+				2124 = {
+					NOT = { has_building = stock_exchange }
+				}
+			}
+			2124 = { upgrade_trade_building = yes }
+		}
+		else = {
+			2124 = { add_base_production = 1 }
+		}
+		2124 = {
+			add_province_modifier = {
+				name = AB_SHH_monopolize_tarim_basin_province
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				739 = {
+					NOT = { province_has_center_of_trade_of_level = 3 }
+				}
+			}
+			739 = { add_center_of_trade_level = 1 }
+		}
+		else = {
+			739 = { add_base_production = 2 }
+		}
+		if = {
+			limit = {
+				739 = {
+					NOT = { has_building = stock_exchange }
+				}
+			}
+			739 = { upgrade_trade_building = yes }
+		}
+		else = {
+			739 = { add_base_production = 1 }
+		}
+		739 = {
+			add_province_modifier = {
+				name = AB_SHH_monopolize_tarim_basin_province
+				duration = -1
+			}
+		}
+	}
+}
+
+#Commercial Benefits
+country_event = {
+	id = AB_Shahi_Event.3
+	title = AB_Shahi_Event.3.T
+	desc = AB_Shahi_Event.3.D
+	picture = CITY_DEVELOPMENT_eventPicture
+	trigger = {
+		had_country_flag = {
+			flag = AB_SHH_annual_income
+			days = 365
+		}
+	}
+	immediate = {
+		clr_country_flag = AB_SHH_annual_income
+		set_country_flag = AB_SHH_annual_income
+	}
+	option = {
+		name = AB_Shahi_Event.3.OPT1
+		custom_tooltip = AB_SHH_gain_annual_trade_revenue_tt
+		hidden_effect = {
+			export_to_variable = {
+				which = AB_SHH_TCR_trade_income
+				value = monthly_income
+				who = TCR
+			}
+			export_to_variable = {
+				which = AB_SHH_TCR_trade_income_percent
+				value = trigger_value:trade_income_percentage
+				who = TCR
+			}
+			multiply_variable = { 
+				which = AB_SHH_TCR_trade_income 
+				which = AB_SHH_TCR_trade_income_percent 
+			}
+			set_variable = { 
+				which = AB_SHH_TCR_trade_income_percent 
+				value = 0 
+			}
+			multiply_variable = {
+				which = AB_SHH_TCR_trade_income 
+				value = 12
+			}
+			while = {
+				limit = {
+					check_variable = { 
+						which = AB_SHH_TCR_trade_income 
+						value = 1 
+					}
+				}
+				change_variable = { 
+					which = AB_SHH_TCR_trade_income 
+					value = -1 
+				}
+				add_treasury = 1
+			}
+		}
+	}
+}
+
+#Afghan Silk
+country_event = {
+	id = AB_Shahi_Event.4
+	title = AB_Shahi_Event.4.T
+	desc = AB_Shahi_Event.4.D
+	picture = CITY_DEVELOPMENT_eventPicture
+	is_triggered_only = yes
+	option = {
+		name = AB_Shahi_Event.4.OPT1
+		2226 = {
+			change_trade_goods = silk
+			add_base_production = 1
+			add_province_modifier = {
+				name = AB_SHH_silk_investment
+				duration = -1
+			}
+		}
+		578 = {
+			change_trade_goods = silk
+			add_base_production = 1
+			add_province_modifier = {
+				name = AB_SHH_silk_investment
+				duration = -1
+			}
+		}
+		448 = {
+			change_trade_goods = silk
+			add_base_production = 1
+			add_province_modifier = {
+				name = AB_SHH_silk_investment
+				duration = -1
+			}
+		}
+	}
+	option = {
+		name = AB_Shahi_Event.4.OPT2
+		2226 = {
+			add_base_production = 1
+			add_province_modifier = {
+				name = AB_SHH_silk_investment
+				duration = -1
+			}
+		}
+		578 = {
+			add_base_production = 1
+			add_province_modifier = {
+				name = AB_SHH_silk_investment
+				duration = -1
+			}
+		}
+		448 = {
+			add_base_production = 1
+			add_province_modifier = {
+				name = AB_SHH_silk_investment
+				duration = -1
+			}
+		}
+	}
+}
+#Right to Rule
+country_event = {
+	id = AB_Shahi_Event.5
+	title = AB_Shahi_Event.5.T
+	desc = AB_Shahi_Event.5.D
+	picture = CITY_DEVELOPMENT_eventPicture
+	is_triggered_only = yes
+	option = {
+		name = AB_Shahi_Event.5.OPT1
+		change_government = monarchy
+		grant_all_mana = {
+			mana = 50
+		}
+	}
+	option = {
+		name = AB_Shahi_Event.5.OPT2
+		unlock_government_reform = {
+			government_reform = AB_SHH_Modernize_Tribal_Values
+		}
+		custom_tooltip = AB_SHH_Modernize_Tribal_Values_tt
+	}
+}
+
+#Commercial Giants of the East
+country_event = {
+	id = AB_Shahi_Event.7
+	title = AB_Shahi_Event.7.T
+	desc = AB_Shahi_Event.7.D
+	picture = CITY_DEVELOPMENT_eventPicture
+	is_triggered_only = yes
+	trigger = {
+		# Double-check here just to be sure
+		has_country_flag = AB_SHH_discover_global_trade
+	}
+	option = {
+		name = AB_Shahi_Event.7.OPT1
+		grant_all_mana = {
+			mana = 100
+		}
+		add_prestige = 20
+		if = {
+			limit = {
+				NOT = { has_completed_all_reforms_trigger = yes }
+			}
+			add_reform_progress_medium_effect = yes
+		}
+		capital_scope = {
+			add_institution_embracement = {
+				which = global_trade
+				value = 100
+			}
+		}
+	}
+}

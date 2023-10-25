@@ -1,0 +1,501 @@
+# Usage:
+#
+# Simple mapping: 1 to 1
+# replace_culture_with_effect = {
+# 	old_culture_1 = <culture>
+#   new_culture = <culture>
+# }
+#
+# complex mapping: 2 (or more) to 1
+# replace_culture_with_effect = {
+# 	old_culture_1 = <culture>
+#   old_culture_2 = <culture>
+#	old_culture_3 = <culture>
+#   old_culture_4 = <culture>
+# 	new_culture = <culture>
+# }
+#
+replace_culture_with_effect = {
+	hidden_effect = {
+		# Replace every province of up to 3 cultures into the new culture
+		every_province = {
+			limit = {
+				OR = {
+					[[old_culture_1]
+					culture = $old_culture_1$
+					]
+					[[old_culture_2]
+					culture = $old_culture_2$
+					]
+					[[old_culture_3]
+					culture = $old_culture_3$
+					]
+					[[old_culture_4]
+					culture = $old_culture_4$
+					]
+				}
+			}
+			change_culture = $new_culture$
+		}
+
+		every_country = {
+			# Check for what we care about
+			limit = {
+				OR = {
+					[[old_culture_1]
+					primary_culture = $old_culture_1$
+					accepted_culture = $old_culture_1$
+					ruler_culture = $old_culture_1$
+					heir_culture = $old_culture_1$
+					consort_culture = $old_culture_1$
+					]
+					[[old_culture_2]
+					primary_culture = $old_culture_2$
+					accepted_culture = $old_culture_2$
+					ruler_culture = $old_culture_2$
+					heir_culture = $old_culture_2$
+					consort_culture = $old_culture_2$
+					]
+					[[old_culture_3]
+					primary_culture = $old_culture_3$
+					accepted_culture = $old_culture_3$
+					ruler_culture = $old_culture_3$
+					heir_culture = $old_culture_3$
+					consort_culture = $old_culture_3$
+					]
+					[[old_culture_4]
+					primary_culture = $old_culture_4$
+					accepted_culture = $old_culture_4$
+					ruler_culture = $old_culture_4$
+					heir_culture = $old_culture_4$
+					consort_culture = $old_culture_4$
+					]
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						[[old_culture_1]
+						primary_culture = $old_culture_1$
+						]
+						[[old_culture_2]
+						primary_culture = $old_culture_2$
+						]
+						[[old_culture_3]
+						primary_culture = $old_culture_3$
+						]
+						[[old_culture_4]
+						primary_culture = $old_culture_4$
+						]
+					}
+				}
+				change_primary_culture = $new_culture$
+			}
+			[[old_culture_1]
+			if = {
+				limit = {
+					accepted_culture = $old_culture_1$
+				}
+				remove_accepted_culture = $old_culture_1$
+				add_accepted_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					ruler_culture = $old_culture_1$
+				}
+				set_ruler_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					heir_culture = $old_culture_1$
+				}
+				set_heir_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					consort_culture = $old_culture_1$
+				}
+				set_consort_culture = $new_culture$
+			}
+			]
+			[[old_culture_2]
+			if = {
+				limit = {
+					accepted_culture = $old_culture_2$
+				}
+				remove_accepted_culture = $old_culture_2$
+				add_accepted_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					ruler_culture = $old_culture_2$
+				}
+				set_ruler_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					heir_culture = $old_culture_2$
+				}
+				set_heir_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					consort_culture = $old_culture_2$
+				}
+				set_consort_culture = $new_culture$
+			}
+			]
+			[[old_culture_3]
+			if = {
+				limit = {
+					accepted_culture = $old_culture_3$
+				}
+				remove_accepted_culture = $old_culture_3$
+				add_accepted_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					ruler_culture = $old_culture_3$
+				}
+				set_ruler_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					heir_culture = $old_culture_3$
+				}
+				set_heir_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					consort_culture = $old_culture_3$
+				}
+				set_consort_culture = $new_culture$
+			}
+			]
+			[[old_culture_4]
+			if = {
+				limit = {
+					accepted_culture = $old_culture_4$
+				}
+				remove_accepted_culture = $old_culture_4$
+				add_accepted_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					ruler_culture = $old_culture_4$
+				}
+				set_ruler_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					heir_culture = $old_culture_4$
+				}
+				set_heir_culture = $new_culture$
+			}
+			if = {
+				limit = {
+					consort_culture = $old_culture_4$
+				}
+				set_consort_culture = $new_culture$
+			}
+			]
+			# Bug: the primary culture also ends up being accepted
+			if = {
+				limit = {
+					primary_culture = $new_culture$ 
+				}
+				remove_accepted_culture = $new_culture$
+			}
+		}
+	}
+}
+
+# Unify all the polish cultures,
+#  then make all countries with a polish subculture polish
+#  then make all countries that accept a polish subculture accept polish
+#  then replace the original culture of all countries with 
+unify_polish_cultures_effect = {
+	custom_tooltip = UNIFY_POLAND_TT
+	replace_culture_with_effect = {
+		new_culture = polish
+		old_culture_1 = Mazovian
+		old_culture_2 = Lendian
+		old_culture_3 = Vistulan
+		old_culture_4 = Polan
+	}
+	# Ideally in the future we will replace this with
+	# 
+	# every_province = {
+	#	limit = {
+	# 		original_culture = $old_culture$
+	# 	}
+	#	change_original_culture = $new_culture$
+	# }
+	#
+	# When a 'original_culture' trigger is added
+	#
+	hidden_effect = {
+		4533 = {
+			change_original_culture = polish
+		}
+		4538 = {
+			change_original_culture = polish
+		}
+		4528 = {
+			change_original_culture = polish
+		}
+		4527 = {
+			change_original_culture = polish
+		}
+		4526 = {
+			change_original_culture = polish
+		}
+		4525 = {
+			change_original_culture = polish
+		}
+		4524 = {
+			change_original_culture = polish
+		}
+		4523 = {
+			change_original_culture = polish
+		}
+		4972 = {
+			change_original_culture = polish
+		}
+		5007 = {
+			change_original_culture = polish
+		}
+		4973 = {
+			change_original_culture = polish
+		}
+		2963 = {
+			change_original_culture = polish
+		}
+		2960 = {
+			change_original_culture = polish
+		}
+		262 = {
+			change_original_culture = polish
+		}
+		260 = {
+			change_original_culture = polish
+		}
+		259 = {
+			change_original_culture = polish
+		}
+		258 = {
+			change_original_culture = polish
+		}
+		256 = {
+			change_original_culture = polish
+		}
+		255 = {
+			change_original_culture = polish
+		}
+		254 = {
+			change_original_culture = polish
+		}
+		2424 = {
+			change_original_culture = polish
+		}
+		257 = {
+			change_original_culture = polish
+		}
+		2959 = {
+			change_original_culture = polish
+		}
+		1940 = {
+			change_original_culture = polish
+		}
+		1939 = {
+			change_original_culture = polish
+		}
+		1938 = {
+			change_original_culture = polish
+		}		
+	}
+}
+
+# Move Turkish into Turko-arabic
+move_turkish_into_levantine_group = {
+	replace_culture_with_effect = {
+		old_culture_1 = turkish
+		new_culture = turkish_new
+	}
+	323 = {
+		change_original_culture = turkish_new
+	}
+	324 = {
+		change_original_culture = turkish_new
+	}
+	325 = {
+		change_original_culture = turkish_new
+	}
+	326 = {
+		change_original_culture = turkish_new
+	}
+	328 = {
+		change_original_culture = turkish_new
+	}
+	329 = {
+		change_original_culture = turkish_new
+	}
+	331 = {
+		change_original_culture = turkish_new
+	}
+	1846 = {
+		change_original_culture = turkish_new
+	}
+	1848 = {
+		change_original_culture = turkish_new
+	}
+	2298 = {
+		change_original_culture = turkish_new
+	}
+	2299 = {
+		change_original_culture = turkish_new
+	}
+	2300 = {
+		change_original_culture = turkish_new
+	}
+	2301 = {
+		change_original_culture = turkish_new
+	}
+	2302 = {
+		change_original_culture = turkish_new
+	}
+	2303 = {
+		change_original_culture = turkish_new
+	}
+	2304 = {
+		change_original_culture = turkish_new
+	}
+	2305 = {
+		change_original_culture = turkish_new
+	}
+	4303 = {
+		change_original_culture = turkish_new
+	}
+	4307 = {
+		change_original_culture = turkish_new
+	}
+	4308 = {
+		change_original_culture = turkish_new
+	}
+	4310 = {
+		change_original_culture = turkish_new
+	}
+	4311 = {
+		change_original_culture = turkish_new
+	}
+	4312 = {
+		change_original_culture = turkish_new
+	}
+	4313 = {
+		change_original_culture = turkish_new
+	}
+	4314 = {
+		change_original_culture = turkish_new
+	}
+	4315 = {
+		change_original_culture = turkish_new
+	}
+	5146 = {
+		change_original_culture = turkish_new
+	}
+	5148 = {
+		change_original_culture = turkish_new
+	}
+}
+
+# Move Turkish into Turko-arabic
+move_turkish_into_iranian_group = {
+	replace_culture_with_effect = {
+		old_culture_1 = turkish
+		new_culture = turkish_iranian
+	}
+	323 = {
+		change_original_culture = turkish_iranian
+	}
+	324 = {
+		change_original_culture = turkish_iranian
+	}
+	325 = {
+		change_original_culture = turkish_iranian
+	}
+	326 = {
+		change_original_culture = turkish_iranian
+	}
+	328 = {
+		change_original_culture = turkish_iranian
+	}
+	329 = {
+		change_original_culture = turkish_iranian
+	}
+	331 = {
+		change_original_culture = turkish_iranian
+	}
+	1846 = {
+		change_original_culture = turkish_iranian
+	}
+	1848 = {
+		change_original_culture = turkish_iranian
+	}
+	2298 = {
+		change_original_culture = turkish_iranian
+	}
+	2299 = {
+		change_original_culture = turkish_iranian
+	}
+	2300 = {
+		change_original_culture = turkish_iranian
+	}
+	2301 = {
+		change_original_culture = turkish_iranian
+	}
+	2302 = {
+		change_original_culture = turkish_iranian
+	}
+	2303 = {
+		change_original_culture = turkish_iranian
+	}
+	2304 = {
+		change_original_culture = turkish_iranian
+	}
+	2305 = {
+		change_original_culture = turkish_iranian
+	}
+	4303 = {
+		change_original_culture = turkish_iranian
+	}
+	4307 = {
+		change_original_culture = turkish_iranian
+	}
+	4308 = {
+		change_original_culture = turkish_iranian
+	}
+	4310 = {
+		change_original_culture = turkish_iranian
+	}
+	4311 = {
+		change_original_culture = turkish_iranian
+	}
+	4312 = {
+		change_original_culture = turkish_iranian
+	}
+	4313 = {
+		change_original_culture = turkish_iranian
+	}
+	4314 = {
+		change_original_culture = turkish_iranian
+	}
+	4315 = {
+		change_original_culture = turkish_iranian
+	}
+	5146 = {
+		change_original_culture = turkish_iranian
+	}
+	5148 = {
+		change_original_culture = turkish_iranian
+	}
+}

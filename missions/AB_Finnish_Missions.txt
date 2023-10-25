@@ -1,0 +1,1219 @@
+FIN_missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = FIN
+	}
+	has_country_shield = yes
+	
+	fin_laponia = {
+		icon = mission_extent_yasak_to_the_east
+		position = 2
+		required_missions = { fin_unite }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = laponia_area
+				area = norrland_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			norrland_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			laponia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 75
+			add_country_modifier = {
+				name = "fin_sami"
+				duration = 7300
+			}
+		}
+	}
+	
+	fin_handle_the_sami = {
+		icon = mission_the_sami
+		position = 3
+		required_missions = { fin_laponia }
+		provinces_to_highlight = {
+			OR = {
+				area = laponia_area
+				area = norrland_area
+			}
+			OR = { 
+				unrest = 1 
+				nationalism = 1 
+				NOT = { owned_by = ROOT }
+			}
+		}
+		trigger = {
+			accepted_culture = sapmi
+			laponia_area = { 
+				owned_by = ROOT
+				type = all
+				NOT = { unrest = 1 }
+				NOT = { nationalism = 1 } 
+			}
+			norrland_area = { 
+				owned_by = ROOT
+				type = all
+				NOT = { unrest = 1 }
+				NOT = { nationalism = 1 } 
+			}
+		}
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_forest_expansion
+			}
+			laponia_area = {
+				add_local_autonomy = -100
+				add_base_manpower = 2
+			}
+			norrland_area = {
+				add_local_autonomy = -100
+				add_base_manpower = 2
+			}
+		}
+	}
+	
+	fin_break_rus = {
+		icon = mission_fall_of_third_rome
+		position = 4
+		required_missions = { fin_novgorod }
+		
+		provinces_to_highlight = {
+			region = russia_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = russia_region
+				}
+				amount = 20
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = "fin_hegemony"
+				duration = -1
+			}
+			russia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	fin_wendia = {
+		icon = mission_perun
+		position = 7
+		required_missions = { fin_baltics }
+		
+		provinces_to_highlight = {
+			region = wendia_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = wendia_region
+				}
+				amount = 12
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						DIP = 6
+					}
+				}
+				change_monarch_points_or_power = {
+					points = 1
+					power = dip
+				}
+			}
+			else = {
+				add_dip_power = 150
+			}
+			add_country_modifier = {
+				name = "fin_reconciliation"
+				duration = -1
+			}
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+
+}
+
+FIN_missions_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = FIN
+	}
+	has_country_shield = yes
+	
+	fin_unite = {
+		icon = mission_conquer_finland
+		position = 1
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			area = bothnia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			bothnia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			4152 = {
+				change_culture = finnish
+			}
+			4113 = {
+				change_culture = finnish
+			}
+			add_country_modifier = {
+				name = "fin_united"
+				duration = 5475
+			}
+			norrland_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			laponia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			karelia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_karelia = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	fin_greater_finland = {
+		icon = mission_collect_yasak
+		position = 2
+		required_missions = { fin_unite }
+		
+		provinces_to_highlight = {
+			region = scandinavia_region
+			OR = {
+				NOT = { owned_by = ROOT }
+				has_owner_culture = no
+			}
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				region = scandinavia_region
+				has_owner_culture = yes
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = fin_devcost
+				duration = -1
+			}
+			random_owned_province = {
+				limit = {
+					culture = finnish
+					is_capital = no
+				}
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			random_owned_province = {
+				limit = {
+					culture = finnish
+					is_capital = yes
+				}
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+			}
+				
+		}
+	}
+	
+	fin_novgorod = {
+		icon = mission_conquer_novgorod
+		position = 3
+		required_missions = { fin_karelia }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = pskov_area
+				area = novgorod_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			pskov_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			novgorod_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 20
+			add_country_modifier = {
+				name = "fin_invade_rus"
+				duration = 9125
+			}
+			estonia_ingria_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			4999 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			35 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			russia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+			custom_tooltip = FIN_RUS_BONUS
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								capital_scope = { 
+									region = russia_region
+								}
+								army_size = ROOT
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							capital_scope = {
+								region = russia_region
+							}
+						}
+						add_aggressive_expansion = {
+							who = FIN
+							value = -20
+							apply_calc = no
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	fin_estonia = {
+		icon = mission_rb_control_electors
+		position = 5
+		required_missions = { fin_novgorod }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = estonia_ingria_area
+				province_id = 4999
+				province_id = 35
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			estonia_ingria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			35 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			4999 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+		    add_accepted_culture_or_dip_power = {
+		    	culture = estonian
+		    }
+			add_country_modifier = {
+				name = "fin_baltic_invasion"
+				duration = 9125
+			}
+			define_advisor = {
+				type = commandant
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			baltic_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	fin_baltics = {
+		icon = mission_king_of_eastern_europe
+		position = 6
+		required_missions = { fin_estonia }
+		
+		provinces_to_highlight = {
+			region = baltic_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			baltic_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			baltic_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = "fin_amber_road"
+					duration = 9125
+				}
+			}
+			skaneland_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			denmark_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			wendia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	fin_sound_toll = {
+		icon = mission_end_the_sound_toll
+		position = 7
+		required_missions = { fin_baltics }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = denmark_area
+				area = skaneland_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			denmark_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			skaneland_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			12 = {
+				NOT = {
+					has_construction = great_project
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						MIL = 6
+					}
+				}
+				change_monarch_points_or_power = {
+					points = 1
+					power = mil
+				}
+			}
+			else = {
+				add_mil_power = 150
+			}
+			12 = {
+				add_great_project_tier = {
+					type = sound_toll
+					tier = 1 
+				}
+			}
+			define_advisor = {
+				type = trader
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+}
+
+FIN_missions_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = FIN
+	}
+	has_country_shield = yes
+	
+	fin_karelia = {
+		icon = mission_advance_to_the_dnieper
+		position = 2
+		required_missions = { fin_unite }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = karelia_area
+				area = north_karelia
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			karelia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			north_karelia = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 35 }
+			add_country_modifier = {
+				name = "fin_convert"
+				duration = 5475
+			}
+			novgorod_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			pskov_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	fin_neva = {
+		icon = mission_danzig_or_war
+		required_missions = { fin_karelia }
+		position = 4	
+		provinces_to_highlight = {
+			province_id = 33
+		}
+		trigger = {
+			owns = 33
+			33 = {
+				development = 15
+			}
+			33 = {
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			33 = {
+				change_province_name = "Nevanlinna"
+				rename_capital = "Nevanlinna"
+			}
+			33 = {
+				change_culture = finnish
+			}
+			33 = {
+				add_province_modifier = {
+					name = "fin_neva"
+					duration = -1
+				}
+			}
+			33 = {
+				add_trade_modifier = {
+					who = root
+					duration = -1
+					power = 15
+					key = swe_neva
+				}
+			}
+		}
+	}
+	
+	fin_war = {
+	    icon = mission_teutonic_knights
+		required_missions = { }
+		position = 5
+	
+		trigger = {
+			war_with = SWE
+			war_score_against = {
+				who = SWE
+				value = 50
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = SWE
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "dan_northern_war"
+				duration = 5475
+			}
+			custom_tooltip = DAN_SWEDEN_CLAIM
+			custom_tooltip = DAN_SWE_100
+			tooltip = {
+				add_army_tradition = 15
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						war_score_against = {
+							who = SWE
+							value = 100
+						}
+					}
+				add_army_tradition = 15
+				}
+			}
+			hidden_effect = {
+			every_province = {
+				limit = { 
+						culture = swedish
+						NOT = { is_permanent_claim = ROOT	}
+						NOT = { is_core = ROOT	}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	fin_sweden = {
+	    icon = mission_swedish_great_power
+		required_missions = { fin_war }
+		position = 6
+	
+		trigger = {
+			owns_all_provinces = {
+				culture = swedish
+			}
+		}
+		
+		provinces_to_highlight = {
+			culture = swedish
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			add_legitimacy = 25
+			add_country_modifier = {
+				name = "fin_crusaders"
+				duration = -1
+			}
+			scandinavia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	fin_baltoscandia = {
+		icon = mission_unite_scandinavia
+		position = 8
+		required_missions = { fin_sweden fin_sound_toll }
+		
+		provinces_to_highlight = {
+			OR = {
+				region = scandinavia_region
+				region = baltic_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			scandinavia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			baltic_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			set_government_rank = 3
+			custom_tooltip = FIN_PP_PERMA
+			hidden_effect = {
+				add_power_projection = {
+					type = FIN_perma_pp
+					amount = 25
+				}
+			}
+			add_country_modifier = {
+				name = "fin_lion"
+				duration = -1
+			}
+			custom_tooltip = FIN_BALTOSCANDIA
+		}
+	}
+	
+	fin_fourth_rome = {
+		icon = peace_in_europe
+		required_missions = { fin_baltoscandia }
+		position = 9
+		provinces_to_highlight = { is_capital_of = ROOT } 
+		trigger = { 
+			army_size = 100
+			stability = 3 
+			capital_scope = { development = 40 } 
+		}
+		effect = { 
+			add_country_modifier = { 
+				name = fin_white_death_descends_upon_europe
+				duration = -1 
+			}
+		}
+	}
+
+}
+
+FIN_missions_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = FIN
+	}
+	has_country_shield = yes
+	
+	fin_grow_farms = {
+		icon = prosperity_for_all
+		required_missions = { }
+		position = 1
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				trade_goods = fish
+				trade_goods = grain
+			}
+			NOT = { num_of_times_improved = 4 }
+			has_production_building_trigger = no
+		} 
+		trigger = { 
+			OR = { 
+				any_owned_province = {
+					trade_goods = fish 
+					OR = { 
+						num_of_times_improved = 4  
+						has_production_building_trigger = yes 
+					}
+				}
+				any_owned_province = {
+					trade_goods = grain 
+					OR = { 
+						num_of_times_improved = 4  
+						has_production_building_trigger = yes 
+					}
+				}
+			}
+			grown_by_development = 30 
+			stability = 0
+		}
+		effect = { 
+			add_country_modifier = {
+				name = fin_abundant_food_modifier
+				duration = 5475 
+			}
+			custom_tooltip = fin_every_province_with_workshop_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = { 
+						has_production_building_trigger = yes 
+						OR = { 
+							trade_goods = grain 
+							trade_goods = fish 
+						}
+					} 
+					add_base_production = 1 
+				}
+			}
+		}
+	}
+	
+	fin_high_income = {
+		icon = reform_the_state
+		required_missions = { fin_grow_farms }
+		position = 3
+		provinces_to_highlight = { } 
+		trigger = { 
+			share_of_starting_income = 5
+			has_adm_advisor_2 = yes 
+			is_in_deficit = no 
+			NOT = { num_of_loans = 1 }
+		}
+		effect = { 
+			custom_tooltip = fin_every_adm_advisor_grants_5_tax_per_level
+			set_country_flag = fin_fine_finances_flag
+			if = { 
+				limit = { 
+					NOT = { num_of_ruler_traits = { amount = 3 } }
+					has_dlc = "Rights of Man" 
+				}
+				add_ruler_personality = well_connected_personality
+			}
+			else = {				
+				change_ruler_stat = {
+					stat = adm
+					amount = 2
+				}
+			}
+		}
+	}
+	
+	fin_tar_trade = {
+		icon = toulon_dockyards
+		required_missions = { fin_neva }
+		position = 5
+		provinces_to_highlight = { province_id = 33 }
+		trigger = { 
+			33 = { 
+				trade_share = {
+					country = ROOT 
+					share = 50
+				}
+			}
+			33 = {
+				has_shipyard_building_trigger = yes 
+				has_trade_building_trigger = yes 
+			}
+		}
+		effect = { 
+			33 = { 
+				change_trade_goods = naval_supplies 
+				add_manufactory = yes 
+				add_province_modifier = {
+					name = fin_commercial_tar_modifier
+					duration = 9125 
+				}
+			}
+		}
+	}
+	
+	fin_dalaskrogen = {
+		icon = mission_dalaskogen
+		required_missions = { fin_sweden }
+		position = 7
+		provinces_to_highlight = { 
+			province_id = 8 
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = { 
+			8 = { country_or_non_sovereign_subject_holds = ROOT }
+			8 = {
+				NOT = {
+					has_construction = great_project
+				}
+			}
+		}
+		effect = { 
+			if = { 
+				limit = { 
+					has_dlc = "Leviathan" 
+					8 = { 
+						NOT = { 	
+							has_great_project = {
+								type = falun_copper_mine 
+								tier = 3 
+							}
+						}
+					}
+				}
+				8 = {
+					add_great_project_tier = {
+						type = falun_copper_mine
+						tier = 1 
+					}
+				}
+			}
+			else = { 
+				8 = { add_base_production = 3 }
+			}
+			add_years_of_owned_provinces_production_income = {
+				years = 10
+				trigger = {
+					OR = {
+						trade_goods = iron
+						trade_goods = copper
+					}
+				}
+				custom_tooltip = fin_iron_copper_prod_tt
+			}
+			if = { 
+				limit = { 
+					has_dlc = "Rights of Man" 
+					NOT = { num_of_ruler_traits = { amount = 3 } }
+				}				
+				add_ruler_personality = industrious_personality
+			}
+			else = { 
+				change_ruler_stat = {
+					stat = dip
+					amount = 1
+				}
+			}
+		}
+	}
+
+}
+
+FIN_missions_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = FIN
+	}
+	has_country_shield = yes
+	
+	fin_build_turku = {
+		icon = negotiate_for_avignon
+		required_missions = { }
+		position = 2
+		provinces_to_highlight = { province_id = 27 } 
+		trigger = { 
+			27 = { 
+				num_of_buildings_in_province = 3
+				num_of_times_improved = 5 
+				if = { 
+					limit = { has_dlc = "Mandate of Heaven" } 
+					NOT = { devastation = 1 }
+				}
+			}
+		}
+		effect = { 
+			27 = { 
+				rename_capital = "Turku"
+				change_province_name = "Turku"
+				add_base_tax = 2 
+				if = { 
+					limit = { has_dlc = "Mandate of Heaven" }
+					add_prosperity = 100
+				}
+				else = { add_base_production = 1 } 
+			}
+			
+		}
+	}
+	
+	fin_found_helsingfors = {
+		icon = take_the_bishoprics
+		required_missions = { fin_build_turku }
+		position = 3
+		provinces_to_highlight = { province_id = 28 } 
+		trigger = { 
+			28 = { 
+				owned_by = ROOT 
+				development = 30
+				has_manufactory_trigger = yes 
+				num_of_buildings_in_province = 4 
+			}
+			is_lacking_institutions = no 	
+		}
+		effect = { 
+			28 = { 
+				center_of_trade = 2 
+				if = { 
+					limit = { has_building = dock }
+					remove_building = dock 
+					add_building = drydock 
+				}
+				else = { add_building = dock }
+				if = { 
+					limit = { has_building = shipyard }
+					remove_building = shipyard
+					add_building = grand_shipyard
+				}
+				else = { add_building = shipyard }
+			} 
+			add_mercantilism = 3
+		}
+	}
+	
+	fin_abo_academy = {
+		icon = powerhouse_of_the_north
+		required_missions = { fin_found_helsingfors fin_high_income }
+		position = 4
+		provinces_to_highlight = { province_id = 27 } 
+		trigger = { 
+			stability = 2
+			27 = { 
+				owned_by = ROOT 
+				OR = { 
+					has_building = university 
+					num_of_times_improved = 12 
+				}
+				if = { 
+					limit = { has_dlc = "Mandate of Heaven" } 
+					NOT = { devastation = 1 }
+					prosperity = 50 
+				}
+			}
+		}
+		effect = { 
+			27 = { 
+				if = { 
+					limit = { 
+						NOT = { has_building = university } 
+					}
+					add_building = university 
+				}
+				else = { add_base_production = 2 } 
+				add_next_institution_embracement = 25 
+			}
+			if = {
+				limit = { has_dlc = "Rule Britannia" }
+				change_innovativeness = 2 
+			}
+			else = { add_adm_power = 50 } 
+			if = { 
+				limit = { 
+					has_dlc = "Rights of Man" 
+					NOT = { num_of_ruler_traits = { amount = 3 } }
+				} 
+				add_ruler_personality = scholar_personality
+			}
+			else = {
+				change_ruler_stat = {
+					stat = adm
+					amount = 2
+				}
+			} 
+		}
+	}
+	
+	fin_cavalry = {
+		icon = mission_the_hakkapeliitta
+		required_missions = { }
+		position = 6
+		
+		trigger = { 
+			army_tradition = 40
+			num_of_cavalry = 12
+			has_global_modifier_value = {
+				which = cavalry_power
+				value = 0.3
+			}
+		}
+		effect = { 
+			custom_tooltip = FIN_DRAGOON
+			add_country_modifier = {
+				name = fin_reformed_cavalry
+				duration = -1
+			}
+		}
+	}
+	
+	fin_talvisota = {
+	    icon = mission_pol_raise_noble_host
+		required_missions = { fin_cavalry }
+		position = 7
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_building = fort_15th
+				has_building = fort_16th
+				has_building = fort_17th
+				has_building = fort_18th
+				has_building = fort_19th
+			}
+			NOT = { num_of_times_improved = 5 }
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					num_of_times_improved = 5
+					OR = {
+						has_building = fort_15th
+						has_building = fort_16th
+						has_building = fort_17th
+						has_building = fort_18th
+						has_building = fort_19th
+					}
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = fin_border_fortifications
+				duration = -1
+			}
+		}
+	}
+	
+	fin_westernize = {
+		icon = mission_modern_knight_army
+		required_missions = { fin_talvisota }
+		position = 8
+
+		trigger = { 
+			army_tradition = 80
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.15
+			}
+			OR = {
+				full_idea_group = professional_ideas
+				full_idea_group = offensive_ideas
+				full_idea_group = quality_ideas
+			}
+		}
+		effect = { 
+			change_unit_type = western
+			add_country_modifier = {
+				name = fin_prof_army
+				duration = 7300
+			}
+			custom_tooltip = FIN_TRAD
+			tooltip = {
+				add_country_modifier = {
+					name = fin_supremacy
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						all_rival_country = {
+							NOT = {
+								army_tradition = ROOT
+							}
+						}
+					}
+					add_country_modifier = {
+						name = fin_supremacy
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+
+}

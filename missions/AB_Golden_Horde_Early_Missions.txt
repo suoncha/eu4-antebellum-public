@@ -1,0 +1,119 @@
+golden_missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLH
+		NOT = { map_setup = map_setup_random }
+		NOT = { has_country_flag = glh_european_tree }
+		NOT = { has_country_flag = glh_horde_tree }
+	}
+	has_country_shield = yes
+	
+	glh_succession = {
+		icon = mission_ottoman_harem
+		position = 1
+		required_missions = { }
+		
+		trigger = {
+			horde_unity = 75
+			stability = 1
+		}
+		
+		effect = {
+			custom_tooltip = GLH_REVOLT
+			remove_country_modifier = gh_court_turbulence
+		}
+	}
+	
+	glh_army = {
+		icon = mission_khitan
+		position = 2
+		required_missions = { }
+		
+		trigger = {
+			army_size_percentage = 0.8
+			num_of_generals = 1
+			manpower_percentage = 0.35
+		}
+		
+		effect = {
+			remove_country_modifier = gh_army
+		}
+	}
+	
+	glh_authority = {
+		icon = mission_unite_home_region
+		position = 3
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = CRI
+				owned_by = KAZ
+				owned_by = NOG
+				AND = {
+					province_id = 284
+					NOT = { owned_by = ROOT }
+				}
+				AND = {
+					province_id = 1082
+					NOT = { owned_by = ROOT }
+				}
+				AND = {
+					province_id = 465
+					NOT = { owned_by = ROOT }
+				}
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = GLH_REVOLTS
+				has_country_flag = glh_kazan
+				has_country_flag = glh_nogai
+				has_country_flag = glh_crimea
+			}
+			AND = {
+				NOT = {
+					exists = CRI
+				}
+				owns = 284
+			}
+			AND = {
+				NOT = {
+					exists = KAZ
+				}
+				owns = 1082
+			}
+			AND = {
+				NOT = {
+					exists = NOG
+				}
+				owns = 465
+			}
+		}
+		
+		effect = {
+			remove_country_modifier = gh_authority
+		}
+	}
+	
+	glh_branching_1 = {
+		icon = mission_unknown_mission
+		position = 5
+		required_missions = { }
+		
+		trigger = {
+			mission_completed = glh_succession
+			mission_completed = glh_army
+			mission_completed = glh_authority
+		}
+		
+		effect = {
+			set_country_flag = glh_can_convert
+			country_event = { id = ab_ghorde.9 }
+		}
+	}
+	
+}

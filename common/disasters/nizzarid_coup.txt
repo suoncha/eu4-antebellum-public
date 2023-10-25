@@ -1,0 +1,80 @@
+nizzarid_coup = {
+	potential = {
+		tag = NAZ
+		NOT = { mission_completed = naz_caliphate }
+		is_free_or_tributary_trigger = yes
+		uses_doom = no
+		normal_or_historical_nations = yes
+	}
+
+	can_start = {
+		dynasty = "Nizzarid"
+		has_any_disaster = no
+		has_regency = no
+		NOT = { stability = 3 }
+		NOT = { manpower_percentage = 0.35 }
+		NOT = { mil = 3 }
+		NOT = { legitimacy_or_horde_unity = 50 }
+		NOT = {
+			has_country_modifier = naz_dynasty
+		}
+	}
+
+	progress = {
+		modifier = {
+			factor = 1
+			war_exhaustion = 10
+		}
+		modifier = {
+			factor = 1
+			unrest = 1.5
+		}
+		modifier = {
+			factor = 1
+			NOT = { stability = 1 }
+		}
+		modifier = {
+			factor = -1
+			stability = 3
+		}
+		modifier = {
+			factor = -1
+			NOT = { unrest = 1 }
+		}
+	}
+
+	can_stop = {
+		OR = {
+			has_regency = yes
+		}
+	}
+
+	modifier = {
+		global_unrest = 5
+		land_morale = -0.1
+	}
+
+	can_end = {
+		NOT = { num_of_rebel_controlled_provinces = 1 }
+		NOT = { num_of_rebel_armies = 1 }
+		NOT = { unrest = 1 }
+		mil = 3
+		stability = 1
+	}
+
+	on_start = nizzarid_event.1
+	on_end = nizzarid_event.2
+	
+	on_monthly = {
+		events = {
+		}
+		random_events = {
+			1000 = 0
+			100 = nizzarid_event.11
+			100 = nizzarid_event.12
+			100 = nizzarid_event.13
+			50 = nizzarid_event.14
+			50 = nizzarid_event.15
+		}
+	}
+}

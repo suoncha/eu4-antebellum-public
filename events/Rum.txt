@@ -1,0 +1,190 @@
+namespace = rum_event
+normal_or_historical_nations = yes
+
+country_event = {
+	id = rum_event.1
+	title = "flavor_tur.EVTNAME3366"
+	desc = rum_event.1.d
+	picture = COURT_eventPicture
+
+
+	fire_only_once = yes
+	
+	trigger ={
+		tag = RUM
+		is_at_war = no
+		is_year = 1520
+		NOT = { is_year = 1566 }
+	}
+	
+	mean_time_to_happen = {
+		months = 25
+	}
+	
+	option = {		# Expand the Royal Bureaucracy
+		name = "flavor_tur.EVTOPTA3366"
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				NOT = { stability = 0 }
+			}
+		}
+		if = {
+			limit = {
+				NOT = { has_completed_all_reforms_trigger = yes }
+			}
+			add_reform_progress_small_effect = yes
+		}
+		add_stability = -2
+		add_country_modifier = {
+			name = expanded_royal_bureaucracy
+			duration = 14600
+		}
+	}
+	option = {		# Limited reforms
+		name = "flavor_tur.EVTOPTB3366"
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 4
+				NOT = { adm_power = 100 }
+			}
+		}
+		add_adm_power = 50
+	}
+	option = {		# Reduce the Royal Bureucracy
+		name = "flavor_tur.EVTOPTC3366"
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 0
+				stability = 3
+			}
+		}
+		add_stability_or_adm_power = yes
+	}
+}
+
+country_event = {
+	id = rum_event.2
+	title = "flavor_tur.EVTNAME3358"
+	desc = rum_event.2.d
+	picture = REFORM_eventPicture
+	
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = RUM
+		is_year = 1450
+		NOT = { is_year = 1500 }
+		religion_group = muslim
+	}
+	
+	mean_time_to_happen = {
+		months = 150
+	}
+	
+	
+	option = {		# Expand the Timar System.
+		name = "flavor_tur.EVTOPTA3358"
+		add_piety = -0.25
+		add_estate_nobles_loyalty_effect = yes
+		reduce_estate_church_loyalty_effect = yes
+	}
+	option = {		# Leave the Ulema alone.
+		name = "flavor_tur.EVTOPTB3358"
+		add_piety = 0.25
+		reduce_estate_nobles_loyalty_effect = yes
+		add_estate_church_loyalty_effect = yes
+	}
+}
+
+country_event = {
+	id = rum_event.3
+	title = "flavor_tur.EVTNAME3354"
+	desc = rum_event.3.d
+	picture = REFORM_eventPicture
+	
+	fire_only_once = yes
+
+	trigger ={
+		tag = RUM
+		is_year = 1450
+		NOT = { is_year = 1550 }
+		MIL = 3
+	}
+	
+	mean_time_to_happen = {
+		months = 300
+	}
+	
+	
+	option = {		# Great Army Reform
+		name = "flavor_tur.EVTOPTA3354"
+		ai_chance = { factor = 50 }
+		add_army_professionalism = 0.02
+		add_country_modifier = {
+			name = tur_army_reform
+			duration = 7300
+		}
+	}
+	option = {		# Reform Army and Navy
+		name = "flavor_tur.EVTOPTB3354"
+		ai_chance = { factor = 25 }
+		add_army_professionalism = 0.02
+		add_country_modifier = {
+			name = tur_army_and_navy_reform
+			duration = 7300
+		}
+	}
+	option = {		# Great Navy Reform
+		name = "flavor_tur.EVTOPTC3354"
+		ai_chance = { factor = 25 }
+		add_army_professionalism = 0.02
+		add_country_modifier = {
+			name = tur_navy_reform
+			duration = 7300
+		}
+	}
+}
+
+country_event = {
+	id = rum_event.4
+	title = "flavor_tur.EVTNAME3371"
+	desc = rum_event.4.d
+	picture = COURT_eventPicture
+	
+	
+	fire_only_once = yes
+
+	
+	trigger ={
+		tag = RUM
+		is_at_war = no
+		
+		owns = 361 # Cairo
+		owns = 358 # Alexandria
+		owns = 382 # Damascus
+		owns = 379 # Jerusalem
+		
+		religion_group = muslim
+		any_owned_province = {
+			province_id = 361		# Cairo
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 36
+	}
+	
+
+	option = {		# Assume the title of Khadim al-Haramayn.
+		name = "flavor_tur.EVTOPTA3371"
+		add_adm_power = 400
+		add_prestige = 25
+		add_legitimacy = 25
+		add_piety = 0.25
+	}
+}

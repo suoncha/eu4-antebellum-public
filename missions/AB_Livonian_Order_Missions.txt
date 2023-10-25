@@ -1,0 +1,534 @@
+liv_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = LIV
+	}
+	has_country_shield = yes
+	
+	liv_pskov = {
+		icon = mission_consolidate_the_state
+		position = 3
+		required_missions = { liv_estonia }
+		
+		provinces_to_highlight = {
+			OR = {
+			area = pskov_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			pskov_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = "liv_invasion"
+				duration = 7300
+			}
+			novgorod_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	liv_novogord = {
+		icon = mission_conquer_novgorod
+		position = 4
+		required_missions = { liv_pskov }
+		
+		provinces_to_highlight = {
+			OR = {
+			area = novgorod_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			novgorod_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_treasury = 500
+		}
+	}
+}
+	
+liv_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = LIV
+	}
+	has_country_shield = yes
+
+	liv_estonia = {
+		icon = mission_have_two_subjects
+		position = 2
+		required_missions = { liv_livonia }
+		
+		provinces_to_highlight = {
+			OR = {
+			area = estonia_ingria_area
+			area = curonia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			estonia_ingria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			curonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+	
+		effect = {
+			add_adm_power = 100
+			pskov_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			finland_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	liv_finland = {
+		icon = mission_conquer_finland
+		position = 3
+		required_missions = { liv_estonia }
+		
+		provinces_to_highlight = {
+			area = finland_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			finland_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "liv_north"
+				duration = 7300
+			}
+		}
+	}
+	
+	liv_poland = {
+		icon = mission_conquer_5_states
+		position = 5
+		required_missions = { liv_prussia }
+		
+		provinces_to_highlight = {
+			OR = {
+			region = poland_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			poland_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+		    add_accepted_culture_or_dip_power = {
+		    	culture = polish
+		    }
+		poland_region = {
+			add_province_modifier = {
+				name = "liv_poland"
+				duration = 7300
+			}
+		}
+		}
+	}
+}
+
+liv_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = LIV
+	}
+	has_country_shield = yes
+	
+	liv_livonia = {
+		icon = mission_unite_home_region
+		position = 1
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			area = livonia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			NOT = {
+				exists = LVA
+			}
+			livonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 10
+			estonia_ingria_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			curonia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lithuania_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			samogitia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	liv_lithuania = {
+		icon = mission_eastern_european_city
+		position = 3
+		required_missions = { liv_livonia }
+		
+		provinces_to_highlight = {
+			OR = {
+			area = lithuania_area
+			area = samogitia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			lithuania_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			samogitia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			lithuania_area = {
+				add_province_modifier = {
+					name = "liv_lithuania"
+					duration = 7300
+				}
+			}
+			samogitia_area = {
+				add_province_modifier = {
+					name = "liv_lithuania"
+					duration = 7300
+				}
+			}
+			east_prussia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			west_prussia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			poland_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	liv_prussia = {
+		icon = mission_rb_conquer_the_highlands
+		position = 4
+		required_missions = { liv_lithuania }
+		
+		provinces_to_highlight = {
+			OR = {
+			area = east_prussia_area
+			area = west_prussia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			east_prussia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_prussia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			add_mil_power = 100
+		}
+	}
+	
+	liv_convert = {
+		icon = mission_hands_praying
+		position = 5
+		required_missions = { liv_prussia }
+		
+		provinces_to_highlight = {
+			region = baltic_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			religious_unity = 1
+			stability = 1
+			baltic_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_papal_influence = 25
+		}
+	}
+}
+		
+liv_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = LIV
+	}
+	has_country_shield = yes
+	
+	liv_fleet = {
+		icon = mission_galleys_in_port
+		required_missions = { liv_riga }
+		position = 2
+	
+		trigger = {
+			navy_size_percentage = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "liv_fleet"
+				duration = 7300
+			}
+			1981 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			25 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+		
+	liv_isles = {
+	    icon = mission_invade_island
+		required_missions = { liv_fleet }
+		position = 3
+		
+		trigger = {
+			1981 = {
+				country_or_subject_holds = ROOT
+			}
+			25 = {
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1991
+				province_id = 25
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 10
+			add_navy_tradition = 10
+		}
+	}
+	
+	liv_baltic_trade = {
+	    icon = mission_dominate_home_trade_node
+		required_missions = { liv_isles }
+		position = 4
+		
+		trigger = { 
+			1926 = {
+				is_strongest_trade_power = LIV
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+		}
+	}
+}	
+	
+	
+liv_fifth_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = LIV
+	}
+	has_country_shield = yes
+	
+	liv_riga = {
+		icon = mission_conquer_riga
+		required_missions = { }
+		position = 1
+	
+		trigger = {
+			owns = 38
+			38 = {
+				owned_by = ROOT 
+				development = 20
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 38
+		}
+		
+		effect = {
+			38 = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+			}
+			38 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	liv_infrastructure = {
+		icon = mission_european_church
+		required_missions = { liv_riga }
+		position = 3
+		
+		trigger = {
+			OR = {
+				temple = 5
+				cathedral = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "liv_baptizers"
+				duration = -1
+			}
+		}
+	}
+	
+	liv_deffender = {
+		icon = mission_european_church
+		required_missions = { liv_infrastructure }
+		position = 5
+		
+		trigger = {
+			is_defender_of_faith = yes
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gen_eur_defender"
+				duration = 5475
+			}
+		}
+	}
+}

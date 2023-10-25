@@ -1,0 +1,1695 @@
+ab_nnv_first = {
+	slot = 1 
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NNV
+			was_tag = NNV
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	nnv_expand_state = {
+		icon = mission_persian_soldiers
+		required_missions = { nnv_secure_nineveh }
+		position = 2
+		
+		trigger = {
+			grown_by_development = 30
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = nnv_expanding
+				duration = 5475
+			}
+			north_kurdistan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			dulkadir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tabriz_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			al_jazira_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			shahrizor_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					HSN = {
+						is_subject_of = ROOT
+						NOT = {
+							liberty_desire = 50
+						}
+					}
+				}
+				custom_tooltip = NNV_HSN
+			}
+			else = {
+				custom_tooltip = NNV_HSN_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						HSN = {
+							is_subject_of = ROOT
+							NOT = {
+								liberty_desire = 50
+							}
+						}
+					}
+					inherit = HSN
+				}
+			}
+		}
+	}
+
+
+	nnv_anatolian = {
+		icon = mission_afghan_frontier
+		required_missions = { nnv_expand_state }
+		position = 5
+		
+		trigger = {
+			north_kurdistan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			dulkadir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = north_kurdistan_area
+				area = dulkadir_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 20
+			custom_tooltip = NNV_FRONTIER
+			tooltip = {
+				add_province_modifier = {
+					name = nnv_northern_frontier
+					duration = -1
+				}
+			}
+			rum_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			karaman_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			erzurum_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				north_kurdistan_area = {
+					add_province_modifier = {
+						name = nnv_northern_frontier
+						duration = -1
+					}
+				}
+				dulkadir_area = {
+					add_province_modifier = {
+						name = nnv_northern_frontier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	nnv_turks = {
+		icon = mission_non-western_soldiers
+		required_missions = { nnv_anatolian }
+		position = 6
+		
+		trigger = {
+			rum_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			karaman_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			erzurum_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = rum_area
+				area = karaman_area
+				area = erzurum_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = NNV_TURK_AUTONOMY
+			add_country_modifier = {
+				name = nnv_seljuk
+				duration = 9125
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = turkish
+					}
+					add_local_autonomy = -25
+				}
+			}
+			thrace_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			anatolia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	nnv_integrate = {
+		icon = anatolian_frontier
+		required_missions = { nnv_turks }
+		position = 7
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 25
+				religion = nestorian
+				region = anatolia_region
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = anatolia_region
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { religion = nestorian }
+			}
+		}
+		
+		effect = {
+			add_patriarch_authority = 0.2
+			add_country_modifier = {
+				name = nnv_inetegrate_anatolian
+				duration = -1
+			}
+			if = {
+				limit = {
+					owns = 151
+				}
+				custom_tooltip = NNV_CENTER
+			}
+			else = {
+				custom_tooltip = NNV_CENTER_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						owns = 151
+					}
+					151 = {
+						change_religion = nestorian
+						add_reform_center = nestorian
+					}
+					151 = {
+						province_event = {
+							id = ab_nineveh.6
+							days = 9125
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	nnv_patriarchs = {
+		icon = promote_the_patriarchate
+		required_missions = { nnv_spread }
+		position = 9
+		
+		trigger = {
+			OR = {
+				theologian = 1
+				missionary = 1
+				inquisitor = 1
+			}
+			if = {
+				limit = {
+					has_estate = estate_church
+				}
+				num_of_estate_agendas_completed = {
+					estate = estate_church
+					value = 2
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_church
+				}
+				num_of_estate_privileges = {
+					estate = estate_church
+					value = 4
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NNV_UPGRADE
+			add_country_modifier = {
+				name = nnv_empowered
+				duration = -1
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_building = temple
+								NOT = {
+									has_building = cathedral
+								}
+							}
+							remove_building = temple
+							add_building = cathedral
+						}
+					"
+				}
+			}
+		}
+	}
+
+}
+
+ab_nnv_second = {
+	slot = 2 
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NNV
+			was_tag = NNV
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	nnv_secure_nineveh = {
+		icon = mission_reconquer_ceuta
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			OR = {
+				army_size_percentage = 1
+				num_of_allies = 1
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 30 }
+			add_country_modifier = {
+				name = nnv_secured
+				duration = 5475
+			}
+			custom_tooltip = NNV_CLAIM_NEIGHBOUR
+			if = {
+				limit = {
+					NOT = {
+						is_year = 1455
+					}
+				}
+				custom_tooltip = NNV_TIMED_UNLOCK
+			}
+			else = {
+				custom_tooltip = NNV_TIMED_UNLOCK_NO
+			}
+			hidden_effect = {
+				iraq_arabi_area = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT	}
+						NOT = { is_core = ROOT	}
+					}
+					add_permanent_claim = ROOT
+				}
+				hidden_effect = {
+					if = {
+						limit = {
+							NOT = {
+								is_year = 1455
+							}
+						}
+						country_event = { id = ab_nineveh.1 }
+					}
+				}
+				every_owned_province = {
+					every_neighbor_province = {
+						limit = {
+							NOT = { owned_by = ROOT }
+							NOT = { is_permanent_claim = ROOT	}
+							NOT = { is_core = ROOT	}
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+}
+
+ab_nnv_second_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NNV
+			was_tag = NNV
+		}
+		NOT = {
+			has_country_flag = nnv_mission_unlocked
+		}
+		NOT = {
+			has_country_flag = nnv_mission_failed
+		}
+	}
+	has_country_shield = yes
+	
+	nnv_timed1 = {
+	    icon = mission_unknown_mission
+		required_missions = { nnv_secure_nineveh }
+		position = 2
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = NNV_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NNV_UNLOCKABLE
+		}
+	}
+	
+}
+
+ab_nnv_second_unlocked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NNV
+			was_tag = NNV
+		}
+		has_country_flag = nnv_mission_unlocked
+		NOT = {
+			has_country_flag = nnv_mission_failed
+		}
+	}
+	has_country_shield = yes
+	
+	nnv_brethren = {
+	    icon = mission_unite_home_region
+		required_missions = { nnv_secure_nineveh }
+		position = 2
+		
+		trigger = {
+			NOT = {
+				is_year = 1455 
+			}
+			5194 = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			4293 = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			5192 = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			5191 = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+			5193 = {
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 5194
+				province_id = 4293
+				province_id = 5192
+				province_id = 5191
+				province_id = 5193
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			set_country_flag = nnv_finished_timed_mission
+			custom_tooltip = NNV_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = NNV_perma_pp2
+					amount = 25
+				}
+			}
+			add_country_modifier = {
+				name = "nnv_resurgent_assyria"
+				duration = -1
+			}
+			custom_tooltip = NNV_BONUS
+		}
+	}
+	
+}
+
+ab_nnv_second_failed = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NNV
+			was_tag = NNV
+		}
+		has_country_flag = nnv_mission_failed
+	}
+	has_country_shield = yes
+	
+}
+
+ab_nnv_second_second = {
+	slot = 2 
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NNV
+			was_tag = NNV
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	nnv_ilkhan = {
+		icon = mission_ilkhanate
+		required_missions = { nnv_expand_state }
+		position = 3
+		
+		trigger = {
+			tabriz_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = tabriz_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "nnv_banish_mongols"
+				duration = 5475
+			}
+			define_advisor = {
+				type = commandant
+				skill = 1
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			armenia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			shirvan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nnv_armenia = {
+		icon = prosper_in_piedmont
+		required_missions = { nnv_ilkhan }
+		position = 4
+		
+		trigger = {
+			armenia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = armenia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = NNV_RELEASE_ARMENIA
+			add_country_modifier = {
+				name = "nnv_liberate_christians"
+				duration = 7300
+			}
+			caucasia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nnv_jerusalem = {
+		icon = jerusalem
+		required_missions = { nnv_syria }
+		position = 6
+		
+		trigger = { 
+			379 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			379 = {
+				has_great_project = {
+					type = holy_city_jerusalem
+					tier = 2
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 379
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						379 = {
+							has_great_project = {
+								type = holy_city_jerusalem
+								tier = 3
+							}
+						}
+					}
+				}
+				379 = {
+					add_great_project_tier = {
+						type = holy_city_jerusalem
+						tier = 1
+					}
+				}
+			}
+			else = {
+				add_patriarch_authority = 0.25
+			}
+		}
+	}
+	
+	nnv_church = {
+	  icon = spread_piety
+	  required_missions = { }
+	  position = 7
+	  
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+				has_tax_building_trigger = yes
+				}
+			amount = 8
+			}
+		}
+	  
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_tax_building_trigger = yes }
+		}
+	  
+		effect = {
+			add_legitimacy = 10
+			add_country_modifier = {
+			  name = "nnv_church_east"
+			  duration = 5475
+			}
+			if = {
+				limit = {
+					patriarch_authority = 0.5
+				}
+				custom_tooltip = NNV_PATRIARCH
+				tooltip = {
+					define_advisor = {
+						type = inquisitor
+						skill = 1
+						religion = ROOT
+						culture = ROOT
+						cost_multiplier = 0.5
+					}
+				}
+			}
+			else = {
+				custom_tooltip = NNV_PATRIARCH_NO
+				tooltip = {
+					define_advisor = {
+						type = inquisitor
+						skill = 1
+						religion = ROOT
+						culture = ROOT
+						cost_multiplier = 0.5
+					}
+				}
+			}
+		}
+	}
+	
+	nnv_spread = {
+		icon = mission_hands_praying
+		required_missions = { nnv_church }
+		position = 8
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					religion = nestorian
+				}
+				amount = 20
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { religion = nestorian }
+		}
+		
+		effect = {
+			add_patriarch_authority = 0.1
+			add_country_modifier = {
+				name = "nnv_spreading"
+				duration = 7300
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							religion = nestorian
+							is_defender_of_faith = yes
+						}
+					}
+				}
+				custom_tooltip = NNV_DEFENDER_FAITH
+			}
+			else = {
+				custom_tooltip = NNV_DEFENDER_FAITH_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								religion = nestorian
+								is_defender_of_faith = yes
+							}
+						}
+					}
+					set_defender_of_the_faith = { who = ROOT religion = ROOT }
+				}
+			}
+		}
+	}
+	
+	nnv_maphrian = {
+		icon = protectors_of_christendom
+		required_missions = { nnv_spread }
+		position = 10
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_state_patriach = yes
+			}
+		}
+		
+		trigger = {
+			stability = 3
+			patriarch_authority = 0.75
+            calc_true_if = {
+                all_owned_province = {
+                    has_state_patriach = yes
+                }
+                amount = 50
+            }
+        }
+		
+		effect = {
+			country_event = { id = ab_nineveh.4 }
+		}
+	}
+	
+}
+
+ab_nnv_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NNV
+			was_tag = NNV
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	nnv_jazira = {
+		icon = mission_arabian_fort
+		required_missions = { nnv_expand_state }
+		position = 3
+		
+		trigger = {
+			al_jazira_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = al_jazira_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = "nnv_challenge_nizzar"
+				duration = 5475
+			}
+			syria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			aleppo_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			syrian_desert_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nnv_turnabout = {
+		icon = mission_nizzarid
+		required_missions = { nnv_jazira }
+		position = 4
+		
+		trigger = {
+			if = {
+				limit = {
+					exists = NAZ
+				}
+				war_score_against = {
+					who = NAZ
+					value = 10
+				}
+			}
+			else_if = {
+				limit = {
+					exists = EGY
+				}
+				war_score_against = {
+					who = EGY
+					value = 10
+				}
+			}
+			else_if = {
+				limit = {
+					exists = ABS
+				}
+				war_score_against = {
+					who = ABS
+					value = 10
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = ABS
+				owned_by = EGY
+				owned_by = NAZ
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "nnv_turnabout"
+				duration = 3650
+			}
+			if = {
+				limit = {
+					OR = {
+						NAZ = {
+							war_exhaustion = 10
+						}
+						EGY = {
+							war_exhaustion = 10
+						}
+						ABS = {
+							war_exhaustion = 10
+						}
+					}
+				}
+				custom_tooltip = NAZ_EXHAUSTION
+			}
+			else = {
+				custom_tooltip = NAZ_EXHAUSTION_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							NAZ = {
+								war_exhaustion = 10
+							}
+							EGY = {
+								war_exhaustion = 10
+							}
+							ABS = {
+								war_exhaustion = 10
+							}
+						}
+					}
+					if = {
+						limit = {
+							exists = NAZ
+						}
+						NAZ = {
+							add_stability = -1
+						}
+					}
+					if = {
+						limit = {
+							exists = EGY
+						}
+						EGY = {
+							add_stability = -1
+						}
+					}
+					if = {
+						limit = {
+							exists = ABS
+						}
+						ABS = {
+							add_stability = -1
+						}
+					}
+				}
+			}
+		}
+	}
+
+	nnv_syria = {
+		icon = mission_into_persia_1
+		required_missions = { nnv_turnabout }
+		position = 5
+		
+		trigger = {
+			syria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			syrian_desert_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			aleppo_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = syria_area
+				area = syrian_desert_area
+				area = aleppo_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 100
+			custom_tooltip = NNV_AREAS
+			tooltip = {
+				add_province_modifier = {
+					name = "nnv_reclaim_syria"
+					duration = 9125
+				}
+			}
+			palestine_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			trans_jordan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			delta_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			bahari_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nnv_legacy = {
+		icon = mission_egyptian_mamluk_soldier
+		required_missions = { nnv_syria }
+		position = 7
+		
+		trigger = {
+			delta_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			bahari_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = delta_area
+				area = bahari_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = NNV_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = NNV_perma_pp
+					amount = 25
+				}
+			}
+			add_country_modifier = {
+				name = "nnv_egypt"
+				duration = -1
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nnv_script = {
+		icon = reform_the_nomocanon
+		required_missions = { nnv_church }
+		position = 8
+		
+		trigger = {
+			has_institution = renaissance
+			OR = {
+				advisor = in_advisor
+				advisor = artist
+				advisor = scholar
+			}
+			prestige = 50
+		}
+		
+		effect = {
+			change_government_reform_progress = 30
+			add_country_modifier = {
+				name = "nnv_renaissance"
+				duration = 9125
+			}
+		}
+	}
+	
+	nnv_codify = {
+		icon = mission_rb_monopolize_the_channel
+		required_missions = { nnv_script }
+		position = 8
+		
+		trigger = {
+			has_institution = printing_press
+			OR = {
+				innovativeness = 20
+				prestige = 75
+			}
+			development_in_provinces = {
+				value = 100
+				culture = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			culture = Assyrian
+		}
+		
+		effect = {
+			change_innovativeness = 3
+			add_country_modifier = {
+				name = "nnv_standardized"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+ab_nnv_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NNV
+			was_tag = NNV
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	nnv_asoristan = {
+		icon = mission_reclaim_lost_territory
+		required_missions = { nnv_secure_nineveh }
+		position = 2
+		
+		trigger = {
+			iraq_arabi_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = iraq_arabi_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			iraq_arabi_area = {
+				add_prosperity = 100
+			}
+			iraq_arabi_area = {
+				add_province_modifier = {
+					name = "nnv_recover_asoristan"
+					duration = 9125
+				}
+			}
+			basra_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			luristan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			khuzestan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nnv_basra = {
+		icon = mission_arabian_sea_trade
+		required_missions = { nnv_asoristan }
+		position = 4
+		
+		trigger = {
+			basra_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = basra_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			408 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			408 = {
+				add_unit_construction = {
+					type = light_ship
+					amount = 5
+					speed = 0.25
+					cost = 0
+				}
+			}
+		}
+	}
+	
+	nnv_step = {
+		icon = mission_interfaith_relations
+		required_missions = { }
+		position = 6
+		
+		trigger = {
+			share_of_starting_income = 2
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = nnv_revival
+				duration = 3650
+			}
+			define_advisor = {
+				type = architect
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	nnv_fertile = {
+		icon = mission_consume_the_baghels
+		required_missions = { nnv_step }
+		position = 8
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = mashriq_region
+					has_production_building_trigger = yes
+				}
+				amount = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = mashriq_region
+			NOT = { has_trade_building_trigger = yes }
+		}
+		
+		effect = {
+			custom_tooltip = NNV_SUGAR
+			mashriq_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = nnv_crescent
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+                for = {
+                    amount = 3
+                    effect = "
+                        random_owned_province = {
+							limit = { region = mashriq_region trade_goods = grain }
+							change_trade_goods = sugar
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+	nnv_educate = {
+		icon = mission_into_the_west
+		required_missions = { nnv_codify  nnv_fertile }
+		position = 10
+		
+		trigger = {
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			has_mil_advisor_3 = yes
+			university = 10
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_building = university
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NNV_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = nnv_evolved_ideas
+				if = {
+					limit = {
+						tag = ASR
+					}
+					country_event = { id = ideagroups.1 } #Swap Ideas
+				}
+			}
+		}
+	}
+}
+
+ab_nnv_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NNV
+			was_tag = NNV
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	nnv_zagros = {
+		icon = mission_abu_saids_dream
+		required_missions = { nnv_asoristan }
+		position = 3
+		
+		trigger = {
+			luristan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			khuzestan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = luristan_area
+				area = khuzestan_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = NNV_FRONTIERS
+			tooltip = {
+				add_province_modifier = {
+					name = "nnv_frontiers"
+					duration = -1
+				}
+			}
+			azerbaijan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			iraq_e_ajam_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tabarestan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			persian_gulf_coast = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			farsistan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							capital_scope = {
+								region = persia_region
+							}
+							army_size = ROOT
+						}
+					}
+				}
+				custom_tooltip = NNV_LARGER_ARMY
+				tooltip = {
+					define_advisor = {
+						type = army_reformer
+						skill = 3
+						religion = ROOT
+						culture = ROOT
+						cost_multiplier = 0.25
+					}
+				}
+			}
+			else = {
+				custom_tooltip = NNV_LARGER_ARMY_NO
+				tooltip = {
+					define_advisor = {
+						type = army_reformer
+						skill = 3
+						religion = ROOT
+						culture = ROOT
+						cost_multiplier = 0.25
+					}
+				}
+			}
+			hidden_effect = {
+				khuzestan_area = {
+					add_base_manpower = 1
+					add_province_modifier = {
+						name = "nnv_frontiers"
+						duration = -1
+					}
+				}
+				luristan_area = {
+					add_base_manpower = 1
+					add_province_modifier = {
+						name = "nnv_frontiers"
+						duration = -1
+					}
+				}
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								capital_scope = {
+									region = persia_region
+								}
+								army_size = ROOT
+							}
+						}
+					}
+					define_advisor = {
+						type = army_reformer
+						skill = 3
+						religion = ROOT
+						culture = ROOT
+						cost_multiplier = 0.25
+					}
+				}
+			}
+		}
+	}
+	
+	nnv_princes = {
+		icon = mission_princespersia
+		required_missions = { nnv_zagros }
+		position = 4
+		
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				region = persia_region
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = "nnv_persian_conquest"
+				duration = 7300
+			}
+			persia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nnv_empire = {
+		icon = mission_persianate_empire
+		required_missions = { nnv_princes }
+		position = 5
+		
+		trigger = {
+			persia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = { id = ab_nineveh.5 }
+			custom_tooltip = AB_EMPTY
+			khorasan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nnv_asur = {
+		icon = mission_conquer_mewar
+		required_missions = { nnv_step }
+		position = 7
+		
+		trigger = {
+			owns = 411
+			411 = {
+				development = 20
+			}
+			411 = {
+				religion = ROOT
+			}
+			411 = {
+				has_tax_building_trigger = yes
+			}
+			411 = {
+				has_trade_building_trigger = yes
+			}
+			411 = {
+				has_production_building_trigger = yes
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 411
+		}
+		
+		effect = {
+			411 = {
+				change_culture = ROOT
+			}
+			411 = {
+				change_province_name = "Ašur"
+			}
+			411 = {
+				rename_capital = "Ašur"
+			}
+			411 = {
+				move_capital_effect = yes
+			}
+			411 = {
+				add_province_modifier = {
+					name = "nnv_asur_restored"
+					duration = -1
+				}
+			}
+			411 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	nnv_nahrawan = {
+		icon = mission_coromandel_trade
+		required_missions = { nnv_fertile }
+		position = 9
+		
+		provinces_to_highlight = {
+			province_id = 410
+		}
+		
+		trigger = {
+			owns = 410
+			410 = {
+				has_great_project = {
+					type = nahrawan
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NNV_DEV
+			add_country_modifier = {
+				name = "nnv_wealth"
+				duration = 3650
+			}
+			hidden_effect = {
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = { region = mashriq_region }
+							add_base_production = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+	
+}

@@ -1,0 +1,1932 @@
+ab_joseon_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = JSN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	jsn_capture_capital = {
+		icon = mission_koreacapital
+		required_missions = { jsn_kingdoms }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2745
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    2745 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			add_country_modifier = {
+				name = jsn_defeated_goryeo
+				duration = 5475
+			}
+			korea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	jsn_fortify_korea = {
+		icon = mission_great_wall
+		position = 4
+		required_missions = { jsn_unite_korea }
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2744
+				province_id = 4232
+				province_id = 2743
+				province_id = 2742
+			}
+		}
+		
+		trigger = {
+			any_owned_province = {
+				OR = {
+					province_id = 2744
+					province_id = 4232
+					province_id = 2743
+					province_id = 2742
+				}
+				OR = {
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						any_owned_province = {
+							OR = {
+								province_id = 2744
+								province_id = 4232
+								province_id = 2743
+								province_id = 2742
+							}
+							OR = {
+								has_building = fort_16th
+								has_building = fort_17th
+								has_building = fort_18th
+								has_building = fort_19th
+							}
+						}
+					}
+				}
+				custom_tooltip = kor_fortify_korea_tooltip
+			}
+			else = {
+				random_owned_province = {
+					limit = {
+						OR = {
+							province_id = 2744
+							province_id = 4232
+							province_id = 2743
+							province_id = 2742
+						}
+						OR = {
+							has_building = fort_16th
+							has_building = fort_17th
+							has_building = fort_18th
+							has_building = fort_19th
+						}
+					}
+					add_province_modifier = {
+						name = kor_built_the_wall
+						duration = -1
+					}
+					add_base_manpower = 2
+				}
+			}
+		}
+	}
+
+	jsn_fortify_korea_2 = {
+		icon = mission_conquer_50_development
+		position = 5
+		required_missions = { jsn_fortify_korea }
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		effect = {
+			custom_tooltip = JSN_FORT_DEV
+			add_country_modifier = {
+				name = kor_built_the_wall_2
+				duration = -1
+			}
+			custom_tooltip = JSN_IDEAS_2
+			tooltip = {
+				add_country_modifier = {
+					name = jsn_protect_borders
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = { defensive_ideas = 7 }
+					add_country_modifier = {
+						name = jsn_protect_borders
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	jsn_feed = {
+		icon = mission_rice_field
+		position = 7
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1013
+				province_id = 1845
+			}
+		}
+		
+		trigger = {
+			1013 = {
+				owned_by = ROOT
+				base_production = 6
+			}
+			1845 = {
+				owned_by = ROOT
+				base_production = 6
+			}
+		}
+		
+		effect = {
+			custom_tooltip = JSN_5_MANPOWER
+			add_country_modifier = {
+				name = "gor_feed"
+				duration = -1
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								region = korea_region
+							}
+							add_base_manpower = 1
+						}
+					"
+				}
+			}
+		}
+	}
+	
+	jsn_university = {
+		icon = mission_vedic_education
+		position = 10
+		required_missions = { jsn_council }
+		
+		provinces_to_highlight = {
+			province_id = 735
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { has_building = university }
+			}
+		}
+		
+		trigger = {
+			owns = 735
+			735 = {
+				has_building = university
+			}
+		}
+		
+		effect = {
+			add_dip_power = 75
+			add_country_modifier = {
+				name = "jsn_university"
+				duration = 9125
+			}
+		}
+		
+	}
+	
+	jsn_hall = {
+	    icon = mission_rb_trinity_college_dublin
+		required_missions = { jsn_university }
+		position = 12
+		trigger = {
+		    OR = {
+				adm = 5
+				monthly_adm = 12
+			}
+		}
+		effect = {
+			change_innovativeness = 5
+			add_country_modifier = {
+				name = "jsn_hall"
+				duration = -1
+			}
+		}
+	}
+	
+	jsn_observatory = {
+	    icon = mission_reclaim_dehli
+		required_missions = { jsn_perfection }
+		position = 14
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			prestige = 100
+			OR = {
+				visionary = 3
+				natural_scientist = 3
+			}
+		    owns = 2745
+			2745 = {
+				development = 30
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2745
+			}
+		}
+		effect = {
+			change_monarch_points_or_power = {
+				points = 2
+				power = dip
+			}
+			add_country_modifier = {
+				name = "jsn_observatory"
+				duration = 18250
+			}
+			custom_tooltip = JSN_IDEAS
+			tooltip = {
+				add_country_modifier = {
+					name = jsn_scientist
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = { innovativeness_ideas = 7 }
+					add_country_modifier = {
+						name = jsn_scientist
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	jsn_seat = {
+		icon = mission_sinicization
+		required_missions = { jsn_observatory }
+		position = 15
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 735
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			735 = {
+				has_great_project = {
+					type = gyeongbok_palace
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			add_adm_power = 150
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			add_ruler_modifier = {
+				name = jsn_great_statesman
+				duration = -1
+			}
+		}
+	}
+	
+	jsn_koreana = {
+		icon = found_the_vatican_library
+		required_missions = { jsn_seat }
+		position = 16
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4227
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			4227 = {
+				has_great_project = {
+					type = koreana
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			add_splendor = 100
+			add_dip_tech = 1
+		}
+	}
+}
+
+ab_joseon_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = JSN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	jsn_kingdoms = {
+		icon = mission_twokingdoms
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+			custom_trigger_tooltip = {
+				tooltip = JOS_MORE_ARMY_GOR
+				NOT = {
+					GOR = {
+						army_size = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_war
+				duration = 7300
+			}
+		    add_casus_belli = {
+				type = cb_vassalize_mission
+				months = 300
+				target = GOR
+			}
+		}
+	}
+	
+	jsn_guard = {
+		icon = mission_naege
+		position = 2
+		required_missions = { jsn_kingdoms }
+
+		trigger = {
+			army_tradition = 75
+			has_global_modifier_value = {
+				which = infantry_power
+				value = 0.2
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = jsn_royal_guard
+				duration = -1
+			}
+		}
+	}
+	
+	jsn_unite_korea = {
+		icon = mission_unitekorea
+		required_missions = { jsn_capture_capital jsn_reconquer_northwest }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				region = korea_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    korea_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 75
+			add_country_modifier = {
+				name = jsn_reunification
+				duration = 7300
+			}
+			liaoning_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			jilin_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			ningguta_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = JSN_INTEGRATE_GOR
+			hidden_effect = {
+				if = {
+					limit = {
+						GOR = {
+							is_subject_of = ROOT
+							NOT = {
+								liberty_desire = 50
+							}
+						}
+					}
+					inherit = GOR
+				}
+			}
+		}
+	}
+	
+	jsn_jurchens = {
+	    icon = mission_manchu_warrior
+		required_missions = { jsn_unite_korea }
+		position = 4
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = manchuria_region
+				value = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = manchuria_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mil_power = 150
+			add_country_modifier = {
+				name = "gor_invasion_north"
+				duration = 9125
+			}
+			hebei_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			furdan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			central_jilin_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			central_heilongjiang_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	jsn_beijing = {
+		icon = mission_defy_the_dragon
+		required_missions = { jsn_jurchens }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = hebei_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    hebei_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_korea.1 }
+		}
+	}
+	
+	jsn_develop_capital = {
+		icon = mission_mnd_dai_imperial_citadel
+		required_missions = { jsn_development jsn_feed }
+		position = 8
+		
+		provinces_to_highlight = {
+			province_id = 735
+		}
+
+		trigger = {
+			735 = {
+				development = 25
+			}
+		}
+		
+		effect = {
+			735 = {
+				add_province_modifier = {
+					name = kor_developed_new_capital
+					duration = -1
+				}
+			}
+			custom_tooltip = JSN_DEV_CHINA
+			hidden_effect = {
+				if = {
+					limit = {
+						735 = {
+							NOT = {
+								any_province = {
+									superregion = china_superregion
+									higher_development_than = PREV
+								}
+							}
+						}
+					}
+					735 = {
+						add_base_production = 3
+					}
+				}
+			}
+		}
+	}
+	
+	jsn_council = {
+		icon = mission_asian_trader
+		required_missions = { jsn_develop_capital }
+		position = 9
+
+		trigger = {
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			has_mil_advisor_3 = yes
+		}
+		
+		effect = {
+			change_government_reform_progress = 25
+			add_country_modifier = {
+				name = jsn_yangban
+				duration = -1
+			}
+			custom_tooltip = JSN_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = jsn_evolved_ideas
+				if = {
+					limit = {
+						tag = JSN
+					}
+					swap_free_idea_group = yes
+				}
+				else = {
+					add_country_modifier = {
+						name = jsn_evolving_modifier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	jsn_end_factional_strife = {
+		icon = mission_scholar_officials
+		required_missions = { jsn_council }
+		position = 10
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = KOR_has_factional_upheaval_tooltip
+				has_country_modifier = kor_factional_upheaval
+			}
+			custom_trigger_tooltip = {
+				tooltip = KOR_has_factional_upheaval_tooltip2
+				has_country_flag = kor_third_literati_purge
+			}
+			OR = {
+				crown_land_share = 90
+				custom_trigger_tooltip = {
+					tooltip = KOR_two_pleased_estates_tooltip #Two §Yestates§! have at least §Y70 loyalty§!, the other has at least §Y50 loyalty§!.
+					OR = {
+						AND = {
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 60
+							}
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 40
+							}
+							estate_loyalty = {
+								estate = estate_nobles
+								loyalty = 40
+							}
+						}
+						AND = {
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 40
+							}
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 60
+							}
+							estate_loyalty = {
+								estate = estate_nobles
+								loyalty = 40
+							}
+						}
+						AND = {
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 40
+							}
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 40
+							}
+							estate_loyalty = {
+								estate = estate_nobles
+								loyalty = 60
+							}
+						}
+						AND = {
+							has_parliament = yes
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 60
+							}
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 40
+							}
+						}
+						AND = {
+							has_parliament = yes
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 40
+							}
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 60
+							}
+						}
+					}
+				}
+            }
+        }
+		
+		effect = {
+			if = {
+				limit = {
+					crown_land_share = 90
+				}
+				add_stability_or_adm_power = yes
+			}
+			else = {
+				hidden_effect = {
+					add_estate_loyalty_modifier = {
+						estate = estate_nobles
+						desc = EST_KOR_FACTIONAL_UNITY
+						loyalty = 15
+						duration = 7300
+					}
+					add_estate_loyalty_modifier = {
+						estate = estate_church
+						desc = EST_KOR_FACTIONAL_UNITY
+						loyalty = 15
+						duration = 7300
+					}
+					add_estate_loyalty_modifier = {
+						estate = estate_burghers
+						desc = EST_KOR_FACTIONAL_UNITY
+						loyalty = 15
+						duration = 7300
+					}
+				}
+				remove_country_modifier = kor_factional_upheaval
+				add_country_modifier = {
+					name = kor_factional_unity
+					duration = 7300
+					
+				}
+				custom_tooltip = kor_end_factional_strife_tt
+			}
+		}
+	}
+	
+	jsn_achieve_juche = {
+		icon = mission_asian_city
+		required_missions = { jsn_end_factional_strife }
+		
+		provinces_to_highlight = {
+			region = korea_region
+			OR = {
+				NOT = { owned_by = root }
+				NOT = { is_core = root }
+				NOT = { culture = korean }
+				NOT = { development = 8 }
+				has_manufactory_trigger = no
+			}
+		}
+		
+		trigger = {
+			is_subject = no
+			
+			korea_region = {
+				type = all
+				owned_by = root
+				is_core = root
+				OR = {
+					culture = korean
+					culture = korean_new
+				}
+				development = 8
+				has_manufactory_trigger = yes
+			}
+			OR = {
+				army_size = 100
+				AND = {
+					army_size_percentage = 1
+					army_size = 60
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = korea_in_balance
+				duration = -1
+			}
+		}
+	}
+	
+	jsn_perfection = {
+		icon = mission_seize_the_dragon_throne
+		required_missions = { }
+		position = 13
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+		}
+		
+		effect = {
+			custom_tooltip = INWARD_KOREA_DEVELOPMENT
+			tooltip = {
+				add_province_modifier = {
+					name = "ab_inward_development"
+					duration = -1
+				}
+			}
+			custom_tooltip = INWARD_REMOVE_25_DEV
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = korea_region
+						NOT = {
+							development = 25
+						}
+					}
+					add_province_modifier = {
+						name = "ab_inward_development"
+						duration = -1
+					}
+				}
+			}
+ 
+		}
+	}
+	
+	jsn_survey = {
+		icon = mission_zambezi_gold
+		required_missions = { jsn_perfection }
+		position = 15
+		
+		trigger = {
+			adm = 5
+			years_of_income = 5
+			has_institution = enlightenment
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+		}
+		
+		effect = {
+			add_years_of_income = -5
+			4232 = {
+				if = {
+					limit = {
+						has_dlc = "Rule Britannia"
+					}
+					change_trade_goods = coal
+					add_base_production = 3
+				}
+				else = {
+					change_trade_goods = iron
+					add_base_production = 3
+				}
+			}
+			2743 = {
+				change_trade_goods = iron
+				add_base_production = 3
+			}
+			732 = {
+				change_trade_goods = iron
+				add_base_production = 3
+			}
+			add_country_modifier = {
+				name = jsn_discovered_raw
+				duration = 18250
+			}
+		}
+	}
+	
+	jsn_industry = {
+	    icon = mission_rb_build_furnaces
+		required_missions = { jsn_survey }
+		position = 17
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 15
+			}
+		}
+		
+		effect = {
+			custom_tooltip = FRC_PRODUCTION
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+						}
+					}
+					add_base_production = 1
+				}
+			}
+			add_country_modifier = {
+				name = jsn_industry
+				duration = -1
+			}
+		}
+	}
+}
+
+
+ab_joseon_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = JSN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	jsn_reconquer_northwest = {
+		icon = mission_unite_home_region
+		required_missions = { jsn_kingdoms }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2744
+				province_id = 4232
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    2744 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    4232 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 50
+			define_advisor = {
+				type = commandant
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	jsn_support_bobusang = {
+		icon = mission_ne_agriculture
+		required_missions = { }
+		position = 3
+		
+		trigger = {
+			estate_influence = {
+				estate = estate_burghers
+				influence = 60
+			}
+			calc_true_if = {
+				all_owned_province = {
+					OR = { 
+						has_building = early_road
+						has_building = gravel_road
+						has_building = royal_road
+						has_building = macadam_road
+						has_building = rail_road
+					}
+				}
+				amount = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = { 
+					has_building = early_road
+					has_building = gravel_road
+					has_building = royal_road
+					has_building = macadam_road
+					has_building = rail_road
+				}	
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "jsn_bobusang"
+				duration = -1
+			}
+		}
+	}
+	
+	jsn_korean_trade_ports = {
+		icon = mission_dominate_home_trade_node
+		required_missions = { jsn_support_bobusang }
+		position = 4
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 2745
+					NOT = { owned_by = root }
+				}
+				AND = {
+					owned_by = ROOT
+					has_trade_building_trigger = no
+				}
+			}
+		}
+
+		trigger = {
+			mercantilism = 10
+			num_of_owned_provinces_with = {
+				value = 6
+				has_trade_building_trigger = yes
+			}
+			owns = 2745
+		}
+		effect = {
+			2745 = {
+				add_base_production = 2
+				add_trade_modifier = {
+					who = root
+					duration = 7300
+					power = 30
+					key = kor_traders_tm
+				}
+			}
+		}
+	}
+
+	jsn_amur = {
+		icon = mission_amur_acquisition
+		required_missions = { jsn_jurchens }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = central_heilongjiang_area
+				area = central_jilin_area
+				area = furdan_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    furdan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    central_jilin_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    central_heilongjiang_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_war_exhaustion = -3
+			add_country_modifier = {
+				name = "gor_expansionism"
+				duration = 9125
+			}
+			manchuria_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	jsn_development = {
+		icon = mission_mnd_dai_universities
+		position = 7
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			region = korea_region
+			NOT = { development = 6 }
+		}
+		
+		trigger = {
+			korea_region = {
+				type = all
+				development = 6
+			}
+		}
+		
+		effect = {
+			add_stability = 1
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = kor_peasant_struggles
+					}
+				}
+				custom_tooltip = kor_peasant_struggles_mission_tt1
+				hidden_effect = {
+					set_country_flag = kor_peasant_struggles_resolved
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = kor_peasant_struggles
+				}
+				remove_country_modifier = kor_peasant_struggles
+				custom_tooltip = kor_peasant_struggles_mission_tt2
+				hidden_effect = {
+					set_country_flag = kor_peasant_struggles_resolved
+				}
+			}
+			else = {
+				add_legitimacy = 15
+			}
+		}
+	}
+	
+	jsn_hainan = {
+	    icon = mission_unite_home_region
+		required_missions = { jsn_spices }
+		position = 9
+		
+		trigger = {
+			owns = 666
+			owns = 2160
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 666
+				province_id = 2160
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			666 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = 5475
+					power = 15
+					key = gor_china_sea
+				}
+			}
+			vietnam_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+			red_river_delta_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+			champa_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+		}
+	}
+	
+	jsn_prosperity = {
+		icon = mission_establish_mint_towns
+		position = 10
+		required_missions = { jsn_council }
+		
+		trigger = {
+			development_in_provinces = {
+				value = 200
+				region = korea_region
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" }
+				capital_scope = {
+					add_prosperity = 100
+				}
+			}
+			korea_region = {
+				limit = { owned_by = root }
+				add_province_modifier = {
+					name = kor_prosperous_korea
+					duration = 7300
+				}
+			}
+		}
+	}
+	
+	jsn_harmony = {
+	    icon = mission_mnd_siam_subjugate_vietnam
+		required_missions = { jsn_prosperity }
+		position = 12
+		trigger = {
+		    harmony = 100
+			courthouse = 5
+		}
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = adm
+			}
+			add_country_modifier = {
+				name = "jsn_harmony"
+				duration = 9125
+			}
+		}
+	}
+	
+	jsn_trade = {
+		icon = mission_trade_with_japan
+		required_missions = { jsn_perfection }
+		position = 14
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			mercantilism = 20
+			trade_income_percentage = 0.35
+			1376 = {
+				trade_share = {
+					country = ROOT
+					share = 51
+				}
+			}
+			owns = 1845
+			owns = 1013
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1376
+				province_id = 1845
+				province_id = 1013
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			1845 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			1013 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	jsn_urbanization = {
+	    icon = mission_colonial
+		required_missions = { jsn_trade }
+		position = 15
+
+		provinces_to_highlight = {
+			NOT = { development = 35 }
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			calc_true_if = {
+				all_owned_province = {
+					development = 35
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			korea_region = {
+			add_province_modifier = {
+				name = jsn_buildings
+				duration = -1
+			}
+			}
+			if = {
+				limit = {
+					has_dlc = "Cradle of Civilization" 
+				}
+				define_advisor = {
+					type = planner
+					skill = 5
+					religion = ROOT
+					cost_multiplier = 0.25
+				}
+			}
+			else = {
+				define_advisor = {
+					type = planner
+					skill = 3
+					religion = ROOT
+					cost_multiplier = 0.25
+				}
+			}
+		}
+	}
+	
+	jsn_seoul = {
+	    icon = mission_coromandel_trade
+		required_missions = { jsn_urbanization }
+		position = 16
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			735 = {
+				development = 70
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 735
+		}
+		
+		effect = {
+			735 = {
+				change_province_name = "Seoul"
+				rename_capital = "Seoul"
+			}
+			735 = {
+				change_trade_goods = silk
+			}
+			735 = {
+				add_province_modifier = {
+					name = jsn_seoul
+					duration = -1
+				}
+			}
+		}
+	}
+
+}
+
+ab_joseon_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = JSN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	jsn_fleet = {
+		icon = mission_junk_boat
+		required_missions = { jsn_inflitrate }
+		position = 3
+		
+		trigger = {
+			navy_size_percentage = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gor_fleet_mission"
+				duration = 7300
+			}
+		}
+	}
+	
+	
+	jsn_protect_waters = {
+		icon = mission_to_the_south_china_sea
+		required_missions = { jsn_fleet }
+		position = 5
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = JSN_MORE_NAVY
+				NOT = {
+					any_country = {
+						capital_scope = { 
+							OR = {
+								region = japan_region
+								region = north_china_region
+								region = south_china_region
+							}
+						}
+						navy_size = ROOT
+					}
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			owner = {
+				capital_scope = { 
+					OR = {
+						region = japan_region
+						region = north_china_region
+						region = south_china_region
+					}
+				}
+				navy_size = ROOT
+			}
+		}
+		
+		effect = {
+			create_admiral = { tradition = 75 }
+			add_country_modifier = {
+				name = "jsn_protected_waters"
+				duration = -1
+			}
+			kyushu_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_kyushu = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	jsn_spices = {
+	    icon = mission_las_islas_filipinas
+		required_missions = { jsn_taiwan }
+		position = 8
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = moluccas_region
+				value = 7
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = moluccas_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_spice_trade
+				duration = 9125
+			}
+			666 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2160 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	jsn_south = {
+	    icon = settle_austrialasia
+		required_missions = { jsn_spices }
+		position = 10
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_japan_australia
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 5
+					colonial_region = colonial_australia
+					is_city = yes
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = australia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			define_advisor = {
+				type = colonist
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	jsn_rival_europe = {
+	    icon = peace_in_europe
+		required_missions = { jsn_new_world }
+		position = 12
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = gor_rival_europe
+				any_country = {
+					capital_scope = { continent = europe }
+					is_rival = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			add_country_modifier = {
+				name = gor_rival_europe_mission
+				duration = 9125
+			}
+		}
+	}
+
+
+}
+
+ab_joseon_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = JSN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	jsn_inflitrate = {
+		icon = mission_demand_garjat_fealty
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			is_claim = 4651
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4651
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gor_combat_pirates"
+				duration = 5475
+			}
+			4651 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+						is_city = yes
+					}
+					add_permanent_claim = root
+				}
+			}
+		}
+	}
+	
+	jsn_ghost = {
+		icon = mission_entrepot_of_india
+		required_missions = { jsn_inflitrate }
+		position = 3
+		
+		trigger = {
+			4651 = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4651
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_treasury = 150
+			add_country_modifier = {
+				name = "gor_naval_trade"
+				duration = 9125
+			}
+			custom_tooltip = JSN_PIRATES
+			tooltip = {
+				add_country_modifier = {
+					name = "gor_wokou"
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						1376 = {
+							trade_share = {
+								country = ROOT
+								share = 25
+							}
+						}
+					}
+					add_country_modifier = {
+						name = "gor_wokou"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	jsn_capacity = {
+		icon = mission_grand_bengali_shipyards
+		required_missions = { jsn_fleet }
+		position = 4
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_building = shipyard
+					has_building = grand_shipyard
+				}
+			}
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_building = dock
+					has_building = drydock
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = dock
+					has_building = drydock
+					has_building = shipyard
+					has_building = grand_shipyard
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gor_naval_capacity_increased"
+				duration = -1
+			}
+			define_advisor = {
+				type = dockmaster 
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	jsn_exploration = {
+	    icon = mission_look_west
+		required_missions = { }
+		position = 6
+		
+		trigger = {
+		    OR = {
+				exploration_ideas = 1
+				num_of_explorers = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_exploration
+				duration = 7300
+			}
+			taiwan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+		}
+	}
+	
+	jsn_taiwan = {
+	    icon = mission_invade_island
+		required_missions = { jsn_exploration }
+		position = 7
+		
+		trigger = {
+		    taiwan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = taiwan_area
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_explorer = { tradition = 50 }
+			taiwan_area = {
+				change_culture = ROOT
+			}
+		}
+	}
+	
+	jsn_pacific = {
+	    icon = mission_oceania_royal_marriage
+		required_missions = { jsn_taiwan }
+		position = 9
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = oceanea_region
+				value = 5
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = oceanea_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_expedition
+				duration = 9125
+			}
+		}
+	}
+	
+	jsn_new_world = {
+	    icon = mission_colonize_california
+		required_missions = { jsn_pacific }
+		position = 11
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_japan_california
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 5
+					colonial_region = colonial_california
+					is_city = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = miss_japan_alaska
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 5
+					colonial_region = colonial_alaska
+					is_city = yes
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_eastern_america
+			colonial_region = colonial_alaska
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 75 }
+			add_country_modifier = {
+				name = gor_settlement
+				duration = 7300
+			}
+		}
+	}
+	
+	jsn_colonial_empire = {
+	    icon = mission_open_up_china
+		required_missions = { jsn_new_world }
+		position = 13
+		
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = have_5_colonial_nations
+				colony = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_colonial_empire
+				duration = -1
+			}
+		}
+	}
+	
+	
+}

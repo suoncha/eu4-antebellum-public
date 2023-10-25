@@ -1,0 +1,120 @@
+namespace = ab_theodoro
+
+#Sack of the Second Rome
+country_event = {
+	id = ab_theodoro.2
+	title = ab_theodoro.2.t
+	desc = ab_theodoro.2.d
+	picture = AB_JUSTINIAN_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_theodoro.2.a
+		add_treasury = 500
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		151 = {
+			add_devastation = 100
+		}
+		add_ruler_modifier = {
+			name = "feo_second_rome"
+			duration = -1
+		}
+	}
+}
+
+#Gothic Restoration
+country_event = {
+	id = ab_theodoro.3
+	title = ab_theodoro.3.t
+	desc = ab_theodoro.3.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_theodoro.3.a
+		change_tag = GTH
+		swap_free_idea_group = yes
+		custom_tooltip = GTH_MIL_DEV
+		add_country_modifier = {
+			name = gth_hegemony
+			duration = 9125
+		}
+		hidden_effect = {		
+			for = {
+				amount = 15
+				effect = "
+					random_owned_province = {
+						add_base_manpower = 1
+					}
+				"
+			}
+		}
+		hidden_effect = {
+			complete_mission = feo_restoration
+		}
+	}
+}
+
+#Legacy of Theoderic
+country_event = {
+	id = ab_theodoro.4
+	title = ab_theodoro.4.t
+	desc = ab_theodoro.4.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_theodoro.4.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		custom_tooltip = GTH_RAVENNA_CAPITAL
+		add_country_modifier = {
+			name = "feo_ostrogothic"
+			duration = -1
+		}
+		italy_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+#Avenging the Umayyad Invasion
+country_event = {
+	id = ab_theodoro.5
+	title = ab_theodoro.5.t
+	desc = ab_theodoro.5.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_theodoro.5.a
+		add_army_tradition = 25
+		add_country_modifier = {
+			name = feo_visigothic
+			duration = 9125
+		}
+		iberia_region = {
+			limit = {
+				NOT = { is_core = ROOT	}
+			}
+			add_territorial_core = ROOT
+		}
+	}
+}

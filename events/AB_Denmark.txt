@@ -1,0 +1,603 @@
+namespace = ab_denmark
+normal_or_historical_nations = yes
+
+#Scanian Catholic Uprising
+
+country_event = {
+	id = ab_denmark.1
+	title = ab_denmark.1.t
+	desc = ab_denmark.1.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+
+	fire_only_once = yes
+	
+	immediate = {
+		hidden_effect = {
+			SWE = {
+				set_country_flag = scanian_catholics_revolted
+			}
+		}
+	}
+
+	trigger = {
+		tag = DAN
+		is_year = 1445
+		NOT = { is_year = 1447 }
+		religion = norse_pagan_reformed
+		OR = {
+			26 = {
+				owned_by = ROOT
+				religion = catholic
+			}
+			4824 = {
+				owned_by = ROOT
+				religion = catholic
+			}
+			4165 = {
+				owned_by = ROOT
+				religion = catholic
+			}
+			1982 = {
+				owned_by = ROOT
+				religion = catholic
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 5
+	}
+	
+	option = {
+		name = ab_denmark.1.a
+		set_country_flag = denmark_had_revolt
+		random_owned_province = {
+			limit = { 
+				religion = catholic
+				culture = danish
+			}
+			spawn_rebels = {
+				type = catholic_rebels
+				size = 2
+			}
+		}
+	}
+}
+
+#Discovery of Vinland
+
+country_event = {
+	id = ab_denmark.2
+	title = ab_denmark.2.t
+	desc = ab_denmark.2.d
+	picture = NAVAL_MILITARY_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	trigger = {
+		tag = DAN
+		religion = norse_pagan_reformed
+					OR = {
+						north_america = { has_discovered = ROOT }
+						south_america = { has_discovered = ROOT }
+						new_world = { has_discovered = ROOT }
+					}
+	}
+	
+	option = {
+		name = ab_denmark.2.a
+		add_prestige = 10
+			add_country_modifier = {
+				name = "dan_vinland"
+				duration = 5475
+			}
+	}
+}
+
+#Unity by Faith
+
+country_event = {
+	id = ab_denmark.3
+	title = ab_denmark.3.t
+	desc = ab_denmark.3.d
+	picture = PRAYING_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	trigger = {
+		tag = DAN
+		religion = norse_pagan_reformed
+			26 = {
+				owned_by = ROOT
+				religion = norse_pagan_reformed
+			}
+			4824 = {
+				owned_by = ROOT
+				religion = norse_pagan_reformed
+			}
+			4165 = {
+				owned_by = ROOT
+				religion = norse_pagan_reformed
+			}
+			1982 = {
+				owned_by = ROOT
+				religion = norse_pagan_reformed
+			}
+	}
+	
+	option = {
+		name = ab_denmark.3.a
+		add_stability = 1
+	}
+}
+
+#Anti-Swedish Alliance
+
+country_event = {
+	id = ab_denmark.4
+	title = ab_denmark.4.t
+	desc = ab_denmark.4.d
+	picture = CONQUEST_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+	trigger = {
+		tag = DAN
+		alliance_with = NOR
+		DAN = {
+			is_rival = SWE
+		}
+		NOR = {
+			is_rival = SWE
+		}
+	}
+	
+	option = {
+		name = ab_denmark.4.a
+		add_trust = { who = NOR value = 5 mutual = yes }
+	}
+}
+
+#Naval Reform
+
+country_event = {
+	id = ab_denmark.5
+	title = ab_denmark.5.t
+	desc = ab_denmark.5.d
+	picture = SHIP_SAILING_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	trigger = {
+		tag = DAN
+		religion = norse_pagan_reformed
+		num_of_galley = 20
+	}
+	
+	option = {
+		name = ab_denmark.5.a
+		add_years_of_income = -2
+			add_country_modifier = {
+				name = "dan_reform"
+				duration = -1
+			}
+	}
+	
+	option = {
+		name = ab_denmark.5.b
+	}
+}
+
+#Faith
+country_event = {
+	id = ab_denmark.6
+	title = ab_denmark.6.t
+	desc = ab_denmark.6.d
+	picture = PRAYING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_denmark.6.a
+		ai_chance = { 
+			factor = 20
+		}
+		set_country_flag = dan_went_christian
+		add_stability = -4
+		change_religion = catholic
+		capital_scope = {
+			change_religion = catholic
+		}
+		add_country_modifier = {
+			name = "dan_zeal"
+			duration = 5475
+		}
+		custom_tooltip = AB_DENMARK_CATHOLIC_MISSIONS
+		hidden_effect = {
+			swap_non_generic_missions = yes
+			add_prestige = 100
+		}
+	}
+	
+	option = {
+		name = ab_denmark.6.b
+		ai_chance = { 
+			factor = 80
+		}
+		set_country_flag = dan_stayed_norse
+		add_prestige = 10
+		add_country_modifier = {
+			name = "dan_blessing"
+			duration = 5475
+		}
+		custom_tooltip = AB_DENMARK_NORSE_MISSIONS
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Westernization
+country_event = {
+	id = ab_denmark.7
+	title = ab_denmark.7.t
+	desc = ab_denmark.7.d
+	picture = HRE_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		had_country_flag = { flag = denmark_westernization days = 36500 }
+		is_part_of_hre = yes
+	}
+	
+	option = {
+		name = ab_denmark.7.a
+		add_dip_power = -200
+		change_technology_group = western
+		change_unit_type = western
+	}
+	
+	option = {
+		name = ab_denmark.7.b
+		add_dip_power = 50
+		custom_tooltip = DAN_REMAIN_EAST
+	}
+}
+
+#Culture Spread
+province_event = {
+	id = ab_denmark.8
+	title = ab_denmark.8.t
+	desc = ab_denmark.8.d
+	picture = HRE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+	}
+	
+	trigger = {
+		owner = {
+			mission_completed = dan_union
+		}
+		culture = english
+		any_neighbor_province = {
+			culture = anglodanish
+		}
+	}
+	
+	option = {
+		name = ab_norman_england.1.a
+		change_culture = anglodanish
+		change_original_culture = anglodanish
+	}
+}
+
+#AI HELP 1
+country_event = {
+	id = ab_denmark.9
+	title = ab_denmark.9.t
+	desc = ab_denmark.9.d
+	picture = HRE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = DAN
+			tag = DNK
+		}
+		ai = yes
+		is_year = 1447
+		NOT = {
+			mission_completed = dan_reinforce_hull
+		}
+
+	}
+	
+	option = {
+		name = ab_denmark.9.a
+		complete_mission = dan_reinforce_hull
+		create_general = { tradition = 35 }
+		add_country_modifier = {
+			name = dan_great_heathen
+			duration = 7300
+		}
+		yorkshire_area  = {
+				limit = {
+						NOT = { is_core = ROOT}
+						NOT = {owned_by = ROOT}
+					}
+			add_permanent_claim = ROOT
+		}
+		scottish_marches_area  = {
+				limit = {
+						NOT = { is_core = ROOT}
+						NOT = {owned_by = ROOT}
+					}
+			add_permanent_claim = ROOT
+		}
+		east_midlands_area  = {
+				limit = {
+						NOT = { is_core = ROOT}
+						NOT = {owned_by = ROOT}
+					}
+			add_permanent_claim = ROOT
+		}
+		if = {
+			limit = {
+				ENG = {
+					OR = {
+						is_enemy = ROOT
+						is_rival = ROOT
+					}
+				}
+			}
+			add_country_modifier = {
+				name = dan_behead
+				duration = 5475
+			}
+		}
+	}
+}
+
+#AI HELP 2
+country_event = {
+	id = ab_denmark.10
+	title = ab_denmark.10.t
+	desc = ab_denmark.10.d
+	picture = HRE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = DAN
+			tag = DNK
+		}
+		ai = yes
+		is_year = 1447
+		NOT = {
+			mission_completed = dan_rival_navy
+		}
+
+	}
+	
+	option = {
+		name = ab_denmark.10.a
+		complete_mission = dan_rival_navy
+		add_country_modifier = {
+			name = dan_rival_navy
+			duration = 5475
+		}
+		define_advisor = {
+			type = dockmaster 
+			skill = 2
+			religion = ROOT
+			culture = ROOT
+			cost_multiplier = 0.5
+		}
+	}
+}
+
+#HRE 1
+country_event = {
+	id = ab_denmark.11
+	title = ab_denmark.11.t
+	desc = ab_denmark.11.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_denmark.11.a
+		ai_chance = { 
+			factor = 100
+			modifier = {
+				factor = 0
+				any_ally = {
+					OR = {
+						is_rival = PREV
+						is_enemy = PREV
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					is_enemy = PREV
+					is_rival = PREV
+				}
+			}
+		}
+		FROM = {
+			country_event = { id = ab_denmark.12 days = 30 }
+		}
+	}
+	
+	option = {
+		name = ab_denmark.11.b
+		ai_chance = { 
+			factor = 1
+			modifier = {
+				factor = 100
+				any_ally = {
+					OR = {
+						is_rival = PREV
+						is_enemy = PREV
+					}
+				}
+			}
+			modifier = {
+				factor = 100
+				OR = {
+					is_enemy = PREV
+					is_rival = PREV
+				}
+			}
+		}
+		FROM = {
+			country_event = { id = ab_denmark.13 days = 30 }
+		}
+	}
+}
+
+#HRE 2
+country_event = {
+	id = ab_denmark.12
+	title = ab_denmark.12.t
+	desc = ab_denmark.12.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_denmark.12.a
+		set_in_empire = yes
+	}
+	
+}
+
+#HRE 3
+country_event = {
+	id = ab_denmark.13
+	title = ab_denmark.13.t
+	desc = ab_denmark.13.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_denmark.13.a
+	}
+	
+}
+	
+#Remove center
+province_event = {
+	id = ab_denmark.14
+	title = ab_denmark.14.t
+	desc = ab_denmark.14.d
+	picture = HRE_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_reform_center = catholic
+	}
+	
+	option = { }
+	
+}
+
+#Burning of Arkona
+country_event = {
+	id = ab_denmark.15
+	title = ab_denmark.15.t
+	desc = ab_denmark.15.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_denmark.15.a
+		add_papal_influence = 20
+		4745 = {
+			add_devastation = 100
+		}
+		4745 = {
+			change_religion = catholic
+		}
+		add_country_modifier = {
+			name = "dan_burning_arkona"
+			duration = 5475
+		}
+		set_global_flag = dan_destroyed_arkona
+		custom_tooltip = DAN_DESTROY
+	}
+	
+	option = {
+		name = ab_denmark.15.b
+		add_legitimacy = 20
+		add_ruler_modifier = {
+			name = "dan_merciful"
+			duration = -1
+		}
+	}
+	
+}
+
+#Fall of England
+country_event = {
+	id = ab_denmark.16
+	title = ab_denmark.16.t
+	desc = ab_denmark.16.d
+	picture = AB_HEPTARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_denmark.16.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		add_country_modifier = {
+			name = "dan_legacy_canute"
+			duration = -1
+		}
+		british_isles_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+	
+}

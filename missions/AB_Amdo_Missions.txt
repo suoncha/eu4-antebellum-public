@@ -1,0 +1,838 @@
+ab_amdo_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = AMD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	amdo_priests = {
+		icon = mission_kowtow
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			OR = {
+				estate_loyalty = {
+					estate = estate_church
+					loyalty = 60
+				}
+				has_reform = religious_societies_reform
+			}
+		}
+		effect = {
+			change_government_reform_progress = 25
+			add_country_modifier = {
+				name = amdo_priests
+				duration = 7300
+			}
+		}
+	}
+	
+	amdo_monasteries = {
+		icon = mission_protect_lankan_buddhism
+		required_missions = { amdo_priests }
+		position = 2
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_tax_building_trigger = no
+			ROOT = {
+				NOT = {
+					num_of_owned_provinces_with = {
+						value = 10
+						has_tax_building_trigger = yes
+					}
+				}
+			}
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				has_tax_building_trigger = yes
+			}
+		} 
+		
+		effect = {
+			add_country_modifier = {
+				name = amdo_support
+				duration = 9125
+			}
+		}
+	}
+	
+	amdo_script = {
+		icon = mission_vedic_education
+		required_missions = { amdo_monasteries }
+		position = 3
+		
+		trigger = {
+			has_institution = printing_press
+		} 
+		
+		effect = {
+			add_country_modifier = {
+				name = amdo_new_script
+				duration = 9125
+			}
+		}
+	}
+	
+	amdo_lamas = {
+		icon = mission_buddhist_monk_praying
+		required_missions = { amdo_script }
+		position = 4
+		
+		trigger = {
+			crown_land_share = 50
+			if = {
+				limit = {
+					has_estate = estate_burghers
+				}
+				estate_loyalty = {
+					estate = estate_burghers
+					loyalty = 50
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_church
+				}
+				estate_loyalty = {
+					estate = estate_church
+					loyalty = 50
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_nobles
+				}
+				estate_loyalty = {
+					estate = estate_nobles
+					loyalty = 50
+				}
+			}
+		} 
+		
+		effect = {
+			add_country_modifier = {
+				name = amdo_lamas
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+ab_amdo_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = AMD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	amdo_nestorian = {
+		icon = mission_to_china
+		required_missions = { amdo_priests }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4207
+				province_id = 2125
+				province_id = 739
+			}
+		}
+		trigger = {
+			4207 = {
+				owned_by = ROOT
+				religion = ROOT
+			}
+			2125 = {
+				owned_by = ROOT
+				religion = ROOT
+			}
+			739 = {
+				owned_by = ROOT
+				religion = ROOT
+			}
+		} 
+		
+		effect = {
+				define_advisor = {
+					type = inquisitor
+					skill = 2
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+		}
+	}
+	
+	amdo_hegemony = {
+		icon = mission_patronize_local_gods
+		required_missions = { amdo_nestorian }
+		position = 3
+		
+		trigger = {
+			religious_unity = 1
+			custom_trigger_tooltip = {
+				tooltip = obj_convert_10_provinces_tooltip
+				check_variable = { which = num_converted_religion value = 10 }
+			}
+		} 
+		
+		effect = {
+			add_country_modifier = {
+				name = amdo_hegemony
+				duration = -1
+			}
+		}
+	}
+	
+	amdo_tocharia = {
+		icon = mission_sw_against_the_desert
+		required_missions = { amdo_tibet }
+		position = 5
+		provinces_to_highlight = { 
+			OR = {
+				area = shanshan_area
+				area = kashgaria_area
+				area = tarim_basin_area
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			shanshan_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			kashgaria_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			tarim_basin_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_horde_unity = 15
+			add_country_modifier = {
+				name = "amdo_expansion"
+				duration = 7300
+			}
+			jetysuu_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			arys_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			transoxiana_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			ferghana_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	amdo_riches = {
+		icon = mission_conquer_malwa_bah
+		required_missions = { amdo_tocharia }
+		position = 6
+		provinces_to_highlight = { 
+			OR = {
+				area = ferghana_area
+				area = transoxiana_area
+				area = arys_area
+				area = jetysuu_area
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			ferghana_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			transoxiana_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			arys_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			jetysuu_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "amdo_silk"
+				duration = 7300
+			}
+			central_asia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+		
+	
+}
+
+ab_amdo_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = AMD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	amdo_banners = {
+		icon = mission_chinese_general_riding
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+		} 
+		
+		effect = {
+			705 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			kham_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	amdo_kham = {
+		icon = mission_subjugate_rajputana
+		required_missions = { amdo_banners }
+		position = 2
+		provinces_to_highlight = { 
+			OR = {
+				area = kham_area
+				province_id = 705
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			705 = {
+				country_or_subject_holds = ROOT
+			}
+			kham_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_adm_power = 75
+			2167 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2748 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			utsang_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tsang_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			bhutan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	amdo_central = {
+		icon = mission_unite_home_region
+		required_missions = { amdo_kham }
+		position = 3
+		provinces_to_highlight = { 
+			OR = {
+				area = bhutan_area
+				area = tsang_area
+				area = utsang_area
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			bhutan_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			tsang_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			utsang_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = amdo_tibet_uniting
+				duration = 5475
+			}
+			tibet_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	amdo_tibet = {
+		icon = mission_scholar_officials
+		required_missions = { amdo_central }
+		position = 4
+		provinces_to_highlight = { 
+			OR = {
+				region = tibet_region
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			tibet_region = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			change_tag = XUN
+			hidden_effect = {
+				complete_mission = amdo_tibet
+			}
+			country_event = {
+				id = ideagroups.1
+			}
+			set_government_rank = 2
+			if = {
+				limit = { 
+					west_gansu_area = {
+						owned_by = YUA
+					}
+					gansu_area = {
+						owned_by = YUA
+					}
+				}
+				YUA = {
+					country_event = { id = ab_amdo.2 }
+				}
+			}
+			gansu_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			west_gansu_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tarim_basin_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kashgaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			shanshan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	amdo_gansu = {
+		icon = mission_pue_sky_city
+		required_missions = { amdo_tibet }
+		position = 5
+		provinces_to_highlight = { 
+			OR = {
+				area = gansu_area
+				area = west_gansu_area
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			gansu_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			west_gansu_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			create_general = { tradition = 75 }
+			north_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	amdo_throne = {
+		icon = mission_seize_the_dragon_throne
+		required_missions = { amdo_gansu }
+		position = 7
+		provinces_to_highlight = { 
+			OR = {
+				region = north_china_region
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			OR = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = north_china_region
+				value = 30
+			}
+			AND = {
+			is_emperor_of_china = yes
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = north_china_region
+				value = 15
+			}
+			}
+			}
+		}
+		effect = {
+			grant_all_mana = {
+				mana = 100
+			}
+			add_country_modifier = {
+				name = amdo_conquest_china
+				duration = 9125
+			}
+			south_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			xinan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+ab_amdo_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = AMD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	amdo_tangut = {
+		icon = mission_khitan
+		required_missions = { amdo_kham }
+		position = 3
+		provinces_to_highlight = { 
+			OR = {
+				province_id = 2167
+				province_id = 2748
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			2167 = {
+				country_or_subject_holds = ROOT
+			}
+			2748 = {
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			country_event = { id = ab_amdo.1 }
+		}
+	}
+	
+	amdo_lhasa = {
+		icon = mission_lhasa
+		required_missions = { amdo_tibet }
+		position = 5
+		provinces_to_highlight = { 
+			province_id = 677
+		}
+	
+		trigger = {
+			677 = {
+				has_great_project = {
+					type = jokhang_temple
+					tier = 2
+				}
+			}
+		}
+		
+		effect = {
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			nepal_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kashmir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			himalayan_hills_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			baisi_rajya_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	amdo_himalaya = {
+		icon = mission_che_the_cave_country
+		required_missions = { amdo_lhasa }
+		position = 5
+		provinces_to_highlight = { 
+			OR = {
+				area = nepal_area
+				area = kashmir_area
+				area = himalayan_hills_area
+				area = baisi_rajya_area
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			nepal_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			kashmir_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			himalayan_hills_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			baisi_rajya_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = amdo_frontier
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+ab_amdo_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = AMD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	amdo_fortify = {
+		icon = mission_fortify_mandu
+		required_missions = { }
+		position = 3
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				OR = {
+					has_building = fort_15th
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+				value = 5
+			}
+		}
+		
+		effect = {
+			tibet_region = {
+				add_province_modifier = {
+					name = "amdo_construction"
+					duration = 9125
+				}
+			}
+		}
+	}
+	
+	amdo_economy = {
+	    icon = mission_colonial
+		required_missions = { amdo_fortify }
+		position = 4
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					development = 10
+				}
+				amount = 3
+			}
+		}
+		
+		effect = {
+			add_treasury = 150
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" }
+				capital_scope = {
+					add_prosperity = 50
+				}
+			}
+				add_country_modifier = {
+					name = "amdo_boom"
+					duration = 9125
+				}
+		}
+	}
+	
+	amdo_golden = {
+	    icon = mission_market_place_with_asian_traders
+		required_missions = { amdo_economy }
+		position = 5
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					development = 15
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			tibet_region = {
+				add_province_modifier = {
+					name = "amdo_development"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+}

@@ -1,0 +1,275 @@
+namespace = ab_papal
+normal_or_historical_nations = yes
+
+#Remove Center of Counter-Reformation
+province_event = {
+	id = ab_papal.0
+	title = none
+	desc = none
+	picture = none
+	hidden = yes	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_reform_center = catholic
+	}
+	
+	option = { }
+}
+
+#The Imperial Protection
+country_event = {
+	id = ab_papal.1
+	title = ab_papal.1.t
+	desc = ab_papal.1.d
+	picture = HRE_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		is_year = 1450
+		tag = PAP
+		exists = SIC
+		is_at_war = no
+		NOT = {
+			truce_with = SIC
+		}
+		is_part_of_hre = no
+	}
+
+	option = {
+		name = ab_papal.1.a
+		ai_chance = {
+			factor = 10
+		}
+		emperor = {
+			country_event = { id = ab_papal.2 days = 20 }
+		}
+		custom_tooltip = PAP_JOIN_EMPIRE
+		tooltip = {
+			add_country_modifier = {
+				name = "pap_bent_knee"
+				duration = -1
+			}
+		}
+		custom_tooltip = PAP_DISMANTLE_HRE_MODIFIER
+	}
+	
+	option = {
+		name = ab_papal.1.b
+		ai_chance = {
+			factor = 90
+		}
+		add_prestige = 10
+	}
+}
+
+#The Holy See Requests to Join the Empire
+country_event = {
+	id = ab_papal.2
+	title = ab_papal.2.t
+	desc = ab_papal.2.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+
+	option = {
+		name = ab_papal.2.a
+		add_prestige = 15
+		add_legitimacy = 15
+		ai_chance = {
+			factor = 100
+		}
+		PAP = {
+			country_event = { id = ab_papal.3 }
+		}
+		custom_tooltip = EMPEROR_ACCEPT_POPE
+		tooltip = {
+			PAP = {
+				add_country_modifier = {
+					name = "pap_bent_knee"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_papal.2.b
+		ai_chance = {
+			factor = 0
+		}
+		PAP = {
+			country_event = { id = ab_papal.4 }
+		}
+		custom_tooltip = EMPEROR_REJECT_POPE
+	}
+}
+
+#The Holy See Joins the HRE
+country_event = {
+	id = ab_papal.3
+	title = ab_papal.3.t
+	desc = ab_papal.3.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_papal.3.a
+		PAP = {
+			set_in_empire = yes
+		}
+		add_reform_desire = 0.1
+		add_country_modifier = {
+			name = "pap_bent_knee"
+			duration = -1
+		}
+		custom_tooltip = POPE_REMOVE_MODIFIER_HRE
+	}
+	
+
+}
+
+#The Emperor Rejects
+country_event = {
+	id = ab_papal.4
+	title = ab_papal.4.t
+	desc = ab_papal.4.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_papal.4.a
+	}
+	
+
+}
+
+#Fate of Constantinople
+country_event = {
+	id = ab_papal.7
+	title = ab_papal.7.t
+	desc = ab_papal.7.d
+	picture = BYZANTINE_EMPEROR_eventPicture
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = ab_papal.7.a
+	}
+	
+	option = {
+		name = ab_papal.7.b
+		custom_tooltip = PAP_LAT_CITY
+		hidden_effect = {
+		151 = {
+			cede_province = LAT
+		}
+		vassalize = LAT
+		151 = {
+			add_core = LAT
+		}
+		LAT = {
+			set_country_flag = lat_cant_trigger_events
+		}
+		}
+		custom_tooltip = PAP_ONLY_OWN_PROVINCE
+	}
+	
+	option = {
+		name = ab_papal.7.c
+		custom_tooltip = PAP_LAT_THRACE
+		hidden_effect = {
+		every_owned_province = {
+			limit = {
+				area = thrace_area
+			}
+			cede_province = LAT
+			add_core = LAT
+		}
+		vassalize = LAT
+		LAT = {
+			set_country_flag = lat_cant_trigger_events
+		}
+		}
+		custom_tooltip = PAP_ONLY_OWN_PROVINCE
+	}
+	
+	option = {
+		name = ab_papal.7.e
+		custom_tooltip = PAP_LAT_GREECE
+		hidden_effect = {
+		every_owned_province = {
+			limit = {
+				OR = {
+					area = thrace_area
+					area = macedonia_area 
+					area = morea_area
+					area = aegean_archipelago_area
+					area = northern_greece_area
+				}
+			}
+			cede_province = LAT
+			add_core = LAT
+		}
+		vassalize = LAT
+		LAT = {
+			set_country_flag = lat_cant_trigger_events
+		}
+		}
+		custom_tooltip = PAP_ONLY_OWN_PROVINCE
+	}
+	
+}
+
+# The Swiss Guard
+country_event = {
+	id = ab_papal.8
+	title = ab_papal.8.t
+	desc = ab_papal.8.d
+	picture = RELIGION_eventPicture
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = ab_papal.8.a
+		add_country_modifier = {
+			name = "pap_ab_swiss_guard"
+			duration = 7300
+		}
+	}
+}
+
+#The Return of Tiepolo
+country_event = {
+	id = ab_papal.10
+	title = ab_papal.10.t
+	desc = ab_papal.10.d
+	picture = AB_Tiepolo_eventPicture
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_papal.10.a
+			define_general = {
+				name = "Giordano Tiepolo"
+				fire = 3
+				shock = 5
+				manuever = 2
+				siege = 3
+				trait = master_of_arms_personality
+			}
+	}
+	
+}

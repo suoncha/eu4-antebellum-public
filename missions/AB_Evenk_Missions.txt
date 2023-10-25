@@ -1,0 +1,718 @@
+ab_evenk_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			primary_culture = evenk
+			primary_culture = nivkh
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	evenk_rule = {
+		icon = mission_che_the_council_house
+		required_missions = {  }
+		position = 1
+	
+		trigger = {
+			has_institution = feudalism
+			adm_tech = 5
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = evenk_reforming
+				duration = 9125
+			}
+		}
+	}
+	
+	evenk_society = {
+		icon = mission_noble_council
+		required_missions = { evenk_rule }
+		position = 3
+	
+		trigger = {
+			is_tribal = no
+		}
+		
+		effect = {
+			add_innovativeness_big_effect = yes
+			add_country_modifier = {
+				name = evenk_reform
+				duration = 7300
+			}
+		}
+	}
+	
+	evenk_state = {
+		icon = mission_evenk
+		required_missions = { evenk_society }
+		position = 5
+	
+		trigger = {
+			total_development = 300
+			crown_land_share = 50
+			stability = 2
+			NOT = { average_autonomy = 35 }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = evenk_state
+				duration = -1
+			}
+		}
+	}
+	
+	
+}
+
+ab_evenk_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			primary_culture = evenk
+			primary_culture = nivkh
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	
+	evenk_humiliate = {
+		icon = mission_native_build_army_mission
+		required_missions = {  }
+		position = 2
+	
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = obj_humiliate_rival_tooltip
+				has_country_flag = humiliated_rival
+			}
+		}
+		
+		provinces_to_highlight = {
+			owner = {
+				is_enemy = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 50
+			add_country_modifier = {
+				name = evenk_supremacy
+				duration = 7300
+			}
+			2446 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1055 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1056 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1057 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	evenk_gold = {
+		icon = mission_zambezi_gold
+		required_missions = { evenk_humiliate }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1057
+				province_id = 1056
+				province_id = 1055
+				province_id = 2446
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    1057 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    1056 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    1055 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    2446 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			1056 = {
+				add_base_production = 2
+			}
+			add_treasury = 100
+		}
+	}
+	
+	evenk_sakhalin = {
+		icon = mission_invade_island
+		required_missions = { evenk_unite }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1033
+				province_id = 4658
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			adm_power = 100
+			owns = 4658
+			NOT = {
+				any_country = {
+					owns = 1033
+				}
+			}
+		}
+		
+		effect = {
+			add_adm_power = -100
+			1033 = {
+				cede_province = ROOT
+				add_core = ROOT
+			}
+			1441 = {
+				discover_country = ROOT
+			}
+			1032 = {
+				discover_country = ROOT
+			}
+			1031 = {
+				discover_country = ROOT
+			}
+			1852 = {
+				discover_country = ROOT
+			}
+			1847 = {
+				discover_country = ROOT
+			}
+		}
+	}
+	
+	
+	
+}
+
+ab_evenk_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			primary_culture = evenk
+			primary_culture = nivkh
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	
+	evenk_expansion = {
+		icon = mission_iroquois_warriors
+		required_missions = {  }
+		position = 1
+	
+		trigger = {
+			army_size_percentage = 1
+		}
+			
+		effect = {
+			add_country_modifier = {
+				name = evenk_expansionism
+				duration = 5475
+			}
+		}
+	}
+	
+	evenk_extend_reach = {
+		icon = mission_unite_home_region
+		required_missions = { evenk_expansion evenk_humiliate }
+		trigger = { grown_by_development = 25 }
+		position = 3
+		effect = {
+			capital_scope = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+				area = {
+					limit = { owned_by = ROOT }
+					add_province_modifier = {
+						name = "growth_of_capital"
+						duration = 9125 #25 years
+					}
+				}
+			}
+			heilongjiang_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			east_heilongjiang_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			ilan_hala_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	evenk_unite = {
+		icon = mission_amur_acquisition
+		required_missions = { evenk_extend_reach }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				culture = evenk
+				culture = nivkh
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						culture = evenk
+						culture = nivkh
+					}
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			change_tag = EKK
+			change_government_reform_progress = 25
+			add_adm_power = 100
+			hidden_effect = {
+				complete_mission = evenk_unite
+				country_event = {
+					id = ideagroups.1
+				}
+			}
+			manchuria_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	evenk_amur = {
+		icon = mission_advance_to_the_dnieper
+		required_missions = { evenk_unite }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				culture = manchu_new
+				culture = manchu
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = manchu_manchuria_decision.tooltip_new
+				num_of_owned_provinces_with = {
+					is_core = ROOT
+					OR = {
+						culture = manchu_new
+						culture = manchu
+					}
+					value = 12
+				}
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 20
+			add_country_modifier = {
+				name = evenk_manchuria
+				duration = 9125
+			}
+		}
+	}
+	
+	evenk_manchuria = {
+		icon = mission_manchu_warrior
+		required_missions = { evenk_amur }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				region = manchuria_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    manchuria_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			add_country_modifier = {
+				name = evenk_adopt
+				duration = -1
+			}
+			hebei_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			korea_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+			
+	evenk_bane = {
+		icon = mission_dethrone
+		required_missions = { evenk_manchuria }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				area = hebei_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    hebei_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_country_modifier = {
+				name = evenk_ascendant
+				duration = 9125
+			}
+			north_china_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			mongolia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	
+}
+
+ab_evenk_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			primary_culture = evenk
+			primary_culture = nivkh
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	evenk_hunting = {
+		icon = mission_native_dev_capital
+		required_missions = { evenk_khal }
+		position = 2
+		
+		trigger = {
+			army_tradition = 30
+			monthly_mil = 7
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = evenk_improved_hunting
+				duration = 5475
+			}
+		}
+	}
+	
+	evenk_food = {
+		icon = mission_extent_yasak_to_the_east
+		required_missions = { evenk_hunting }
+		position = 3
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				has_production_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = evenk_population
+				duration = -1
+			}
+		}
+	}
+	
+	evenk_fur = {
+		icon = mission_collect_yasak
+		required_missions = { evenk_food }
+		position = 5
+		
+		trigger = {
+			mercantilism = 5
+			num_of_owned_provinces_with = {
+				value = 5
+				trade_goods = fur
+				development = 10
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 1.5
+			add_country_modifier = {
+				name = evenk_fur_trade
+				duration = 9125
+			}
+			capital_scope = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+}
+
+
+ab_evenk_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			primary_culture = evenk
+			primary_culture = nivkh
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	evenk_khal = {
+		icon = mission_che_the_beloved_woman
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			prestige = 30
+		    legitimacy = 90
+			num_of_royal_marriages = 3
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			add_country_modifier = {
+				name = evenk_khal
+				duration = -1
+			}
+		}
+	}
+	
+	evenk_worship = {
+		icon = mission_iroquois_the_five_nations
+		required_missions = { evenk_khal }
+		position = 2
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = evenk_temples
+				duration = 9125
+			}
+		}
+	}
+	
+	evenk_festival = {
+		icon = mission_celebrate
+		required_missions = { evenk_worship }
+		position = 3
+		
+		trigger = {
+			theologian = 3
+			num_of_owned_provinces_with = {
+				value = 10
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = evenk_festival
+				duration = -1
+			}
+		}
+	}
+	
+	
+	evenk_port = {
+		icon = mission_polynesian_navy_build
+		required_missions = { evenk_food }
+		position = 4
+		
+		trigger = {
+			owns = 2106
+			2106 = {
+				OR = {
+					has_building = shipyard
+					has_building = grand_shipyard
+				}
+				OR = {
+					has_building = dock
+					has_building = drydock
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 2106
+		}
+		
+		effect = {
+			add_navy_tradition = 15
+			2106 = {
+			add_province_modifier = {
+				name = evenk_trade_port
+				duration = -1
+			}
+			}
+		}
+	}
+	
+	evenk_alaska = {
+		icon = mission_colonize_alaska
+		required_missions = { evenk_port }
+		position = 6
+		
+		trigger = {
+			cascadia_region = {
+				owned_by = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = cascadia_region
+		}
+		
+		effect = {
+			create_explorer = { tradition = 50 }
+			define_advisor = {
+				type = colonist
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+	
+}

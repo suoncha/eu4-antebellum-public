@@ -1,0 +1,739 @@
+teu_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = TEU
+	}
+	has_country_shield = yes
+	
+	teu_danzig = {
+		icon = mission_hanseatic_city
+		required_missions = { }
+		position = 1
+	
+		trigger = {
+			owns = 43
+			43 = {
+				owned_by = ROOT 
+				development = 20
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 43
+		}
+		
+		effect = {
+			add_mercantilism = 2
+			43 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	teu_fleet = {
+	    icon = mission_galleys_in_port
+		required_missions = { teu_danzig }
+		position = 2
+		
+		trigger = {
+			naval_forcelimit = 25
+			navy_size_percentage = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "teu_fleet"
+				duration = 5475
+			}
+			1981 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			25 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	teu_isles = {
+	    icon = mission_invade_island
+		required_missions = { teu_fleet }
+		position = 3
+		
+		trigger = {
+			1981 = {
+				country_or_subject_holds = ROOT
+			}
+			25 = {
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1981
+				province_id = 25
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 10
+			add_navy_tradition = 10
+		}
+	}
+	
+	teu_silesia = {
+		icon = mission_landsknecht_soldier
+		required_missions = { teu_pomerania }
+		position = 4
+		
+		trigger = {
+		    silesia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = silesia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+		    add_army_tradition = 15
+		}
+	}
+}
+
+teu_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = TEU
+	}
+	has_country_shield = yes
+	
+	teu_pomerania = {
+		icon = mission_rb_unite_the_clans
+		required_missions = { teu_prussia teu_fleet }
+		position = 3
+		
+		trigger = {
+		    hinter_pommern_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    neumark_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = hinter_pommern_area
+				area = neumark_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_adm_power = 100
+			vorpommern_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mittelmark_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			silesia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	teu_wendish = {
+		icon = mission_rb_conquer_the_highlands
+		required_missions = { teu_pomerania }
+		position = 4
+		
+		trigger = {
+		    mittelmark_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    vorpommern_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = mittelmark_area
+				area = vorpommern_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mil_power = 100
+		}
+	}
+	
+	teu_arkona = {
+		icon = mission_rb_control_state_religion
+		required_missions = { teu_wendish }
+		position = 5
+		
+		trigger = {
+			owns = 4745
+			4745 = {
+				religion = catholic
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 4745
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_papal_influence = 25
+		}
+	}
+	
+}
+
+teu_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = TEU
+	}
+	has_country_shield = yes
+	
+	teu_prussia = {
+		icon = mission_unite_home_region
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			stability = 1
+			religious_unity = 0.75
+		    east_prussia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    west_prussia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = east_prussia_area
+				area = west_prussia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "teu_secured"
+				duration = 5475
+			}
+			hinter_pommern_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			neumark_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lithuania_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			samogitia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mazovia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kuyavia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	teu_polish_invasion = {
+		icon = mission_conquer_5_states
+		required_missions = { teu_prussia }
+		position = 3
+		
+		trigger = {
+		    kuyavia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    mazovia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = kuyavia_area
+				area = mazovia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 100
+			poland_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	teu_poland = {
+		icon = mission_crusade_for_varna
+		required_missions = { teu_polish_invasion teu_pomerania }
+		position = 4
+		
+		trigger = {
+		    poland_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = poland_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "teu_poland_rule"
+				duration = 5475
+			}
+			podlasie_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	teu_newprussia = {
+		icon = mission_conquer_50_development
+		required_missions = { teu_poland }
+		position = 5
+		
+		trigger = {
+		    podlasie_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = podlasie_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			podlasie_area = {
+				add_province_modifier = {
+					name = "teu_newprussia"
+					duration = 9125
+				}
+			}
+		}
+	}
+}
+
+teu_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = TEU
+	}
+	has_country_shield = yes
+	
+	teu_lithuania = {
+		icon = mission_cossack_cavalry
+		required_missions = { teu_prussia }
+		position = 3
+
+		trigger = {
+		    lithuania_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    samogitia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = samogitia_area
+				area = lithuania_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "teu_balticcrusade"
+				duration = 5475
+			}
+			livonia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			curonia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			estonia_ingria_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	teu_livonia = {
+		icon = mission_rb_conquer_the_highlands
+		required_missions = { teu_lithuania }
+		position = 4
+
+		trigger = {
+		    curonia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    livonia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = curonia_area
+				area = livonia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			38 = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+			}
+		}
+	}
+	
+	teu_crusader = {
+		icon = mission_teutonic_knights
+		required_missions = { teu_livonia teu_estonia }
+		position = 5
+
+		trigger = {
+		    baltic_region = {
+			    type = all
+				religion = catholic
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = baltic_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_papal_influence = 25
+		}
+	}
+}
+
+teu_fifth_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = TEU
+	}
+	has_country_shield = yes
+	
+	teu_marienburg = {
+		icon = mission_eastern_european_city
+		required_missions = { }
+		position = 1
+	
+		trigger = {
+			owns_core_province = 1841
+			1841 = {
+				development = 20
+			}
+			1841 = {
+				OR = {
+					culture = prussian
+					culture = baltic_german
+				}
+			}
+			1841 = {
+				has_fort_building_trigger = yes
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 1841
+		}
+		
+		effect = {
+			set_capital = 1841
+			1841 = {
+				add_base_manpower = 3
+				add_province_modifier = {
+					name = "teu_marienburg"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	teu_germanize = {
+		icon = mission_settlers_north_america
+		required_missions = { teu_marienburg }
+		position = 2
+		
+		trigger = {
+		    east_prussia_area = {
+			    type = all
+				OR = {
+					culture = prussian
+					culture = baltic_german
+				}
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    west_prussia_area = {
+			    type = all
+				OR = {
+					culture = prussian
+					culture = baltic_german
+				}
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = west_prussia_area
+				area = east_prussia_area
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "teu_ost"
+				duration = -1
+			}
+		}
+	}
+	
+	teu_countryside = {
+		icon = mission_colonial
+		required_missions = { teu_germanize }
+		position = 3
+		
+		trigger = {
+			owns = 2958
+			2958 = {
+				development = 10
+				OR = {
+					culture = prussian
+					culture = baltic_german
+				}
+			}
+			owns = 40
+			40 = {
+				development = 10
+				OR = {
+					culture = prussian
+					culture = baltic_german
+				}
+			}
+			owns = 4968
+			4968 = { 
+				development = 10
+				OR = {
+					culture = prussian
+					culture = baltic_german
+				}
+			}
+			owns = 767
+			767 = {
+				development = 10
+				OR = {
+					culture = prussian
+					culture = baltic_german
+				}
+			}
+			owns = 42
+			42 = {
+				development = 10
+				OR = {
+					culture = prussian
+					culture = baltic_german
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 42
+				province_id = 767
+				province_id = 40
+				province_id = 2958
+				province_id = 4968
+			}
+			OR = {
+				NOT = { development = 10 }
+				NOT = {
+					OR = {
+						culture = prussian
+						culture = baltic_german
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "teu_develop"
+				duration = -1
+			}
+		}
+	}
+	
+	teu_estonia = {
+		icon = mission_assemble_an_army
+		required_missions = { teu_lithuania }
+		position = 4
+
+		trigger = {
+		    estonia_ingria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = estonia_ingria_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_adm_power = 100
+		}
+	}
+}
+		

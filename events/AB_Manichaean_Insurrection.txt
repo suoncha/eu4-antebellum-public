@@ -1,0 +1,1071 @@
+namespace = ab_mani
+
+#Starting Event
+country_event = {
+	id = ab_mani.1
+	title = ab_mani.1.t
+	desc = ab_mani.1.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			ab_persia_check_completed_missions = yes
+			random_owned_province = {
+				limit = {
+					NOT = {
+						is_capital_of = ROOT
+					}
+					region = persia_region
+					NOT = {
+						religion = manichaean 
+					}
+				}
+				change_religion = manichaean
+			}
+			random_owned_province = {
+				limit = {
+					NOT = {
+						is_capital_of = ROOT
+					}
+					region = persia_region
+					NOT = {
+						religion = manichaean 
+					}
+				}
+				change_religion = manichaean
+			}
+			random_owned_province = {
+				limit = {
+					NOT = {
+						is_capital_of = ROOT
+					}
+					region = persia_region
+					NOT = {
+						religion = manichaean 
+					}
+				}
+				change_religion = manichaean
+			}
+			random_owned_province = {
+				limit = {
+					NOT = {
+						is_capital_of = ROOT
+					}
+					region = persia_region
+					NOT = {
+						religion = manichaean 
+					}
+				}
+				change_religion = manichaean
+			}
+		}
+	}
+	
+	major = yes
+	
+	option = {
+		name = ab_mani.1.a
+		set_country_flag = ab_mani_disaster_zoro
+		add_stability = -4
+		random_owned_province = {
+			limit = {
+				NOT = {
+					is_capital_of = ROOT
+				}
+				region = persia_region
+			}
+			spawn_rebels = {
+				type = mani_rebels
+				size = 3
+			}
+		}
+		random_owned_province = {
+			limit = {
+				NOT = {
+					is_capital_of = ROOT
+				}
+				region = persia_region
+			}
+			spawn_rebels = {
+				type = mani_rebels
+				size = 3
+			}
+		}
+		random_owned_province = {
+			limit = {
+				NOT = {
+					is_capital_of = ROOT
+				}
+				region = persia_region
+			}
+			spawn_rebels = {
+				type = mani_rebels
+				size = 2
+			}
+		}
+	}
+	
+	option = {
+		name = ab_mani.1.b
+		set_country_flag = ab_mani_disaster_mani
+		add_stability = -4
+		change_tag = PMN
+		# Switch the color of every satrapy too
+		hidden_effect = {
+			every_subject_country = {
+				limit = {
+					has_country_flag = has_eyalet_color
+				}
+				change_country_color = {
+					country = ROOT
+				}
+			}
+		}
+		change_religion = manichaean
+		swap_non_generic_missions = yes
+		swap_free_idea_group = yes
+		add_country_modifier = {
+			name = "conversion_zeal"
+			duration = 3650
+		}
+		hidden_effect = {
+			ab_persia_complete_checked_missions = yes
+		}
+		random_owned_province = {
+			limit = {
+				NOT = {
+					is_capital_of = ROOT
+				}
+				region = persia_region
+			}
+			spawn_rebels = {
+				type = zoroastrian_rebels
+				size = 3
+			}
+		}
+		random_owned_province = {
+			limit = {
+				NOT = {
+					is_capital_of = ROOT
+				}
+				region = persia_region
+			}
+			spawn_rebels = {
+				type = zoroastrian_rebels
+				size = 3
+			}
+		}
+		random_owned_province = {
+			limit = {
+				NOT = {
+					is_capital_of = ROOT
+				}
+				region = persia_region
+			}
+			spawn_rebels = {
+				type = zoroastrian_rebels
+				size = 3
+			}
+		}
+		random_owned_province = {
+			limit = {
+				NOT = {
+					is_capital_of = ROOT
+				}
+				region = persia_region
+			}
+			spawn_rebels = {
+				type = zoroastrian_rebels
+				size = 2
+			}
+		}
+	}
+
+}
+
+#Ending Event
+country_event = {
+	id = ab_mani.2
+	title = ab_mani.2.t
+	desc = ab_mani.2.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_mani.2.a
+		add_stability = 1
+		set_country_flag = per_completed_mani_disaster
+		if = {
+			limit = {
+				has_country_modifier = per_bent
+			}
+			remove_country_modifier = per_bent
+		}
+		if = {
+			limit = {
+				has_country_modifier = per_martial_law
+			}
+			remove_country_modifier = per_martial_law
+		}
+		if = {
+			limit = {
+				has_country_modifier = per_preacher_ignored
+			}
+			remove_country_modifier = per_preacher_ignored
+		}
+		if = {
+			limit = {
+				has_country_modifier = per_commoners_alienated
+			}
+			remove_country_modifier = per_commoners_alienated
+		}
+		if = {
+			limit = {
+				has_country_modifier = per_aristocratic_resistance
+			}
+			remove_country_modifier = per_aristocratic_resistance
+		}
+		if = {
+			limit = {
+				has_country_modifier = per_clinging_to_darkness
+			}
+			remove_country_modifier = per_clinging_to_darkness
+		}
+		if = {
+			limit = {
+				has_country_modifier = per_religious_infighting
+			}
+			remove_country_modifier = per_religious_infighting
+		}
+		if = {
+			limit = {
+				has_country_modifier = per_yamag_oversight
+			}
+			remove_country_modifier = per_yamag_oversight
+		}
+	}
+	
+}
+
+#Deal with the Clergy
+country_event = {
+	id = ab_mani.3
+	title = ab_mani.3.t
+	desc = {
+	   trigger = { tag = PER }
+	   desc = "ab_mani.3.d.1"
+	}
+	desc = {
+	   trigger = { tag = PRZ }
+	   desc = "ab_mani.3.d.2"
+	}
+	desc = {
+	   trigger = { tag = PRC }
+	   desc = "ab_mani.3.d.3"
+	}
+	picture = PRAYING_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_disaster = manichaean_insurrection
+		has_country_flag = ab_mani_disaster_zoro
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = ab_mani.3.a
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -10
+		}
+		add_country_modifier = {
+			name = per_caesaropapism
+			duration = 7300
+		}
+	}
+	
+	option = {
+		name = ab_mani.3.b
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -10
+		}
+		add_country_modifier = {
+			name = per_bent
+			duration = -1
+			desc = per_bent_desc
+		}
+		define_advisor = {
+			type = inquisitor
+			skill = 2
+			religion = ROOT
+			culture = ROOT
+			cost_multiplier = 0.35
+		}
+	}
+	
+}
+
+#Guerillas
+country_event = {
+	id = ab_mani.4
+	title = ab_mani.4.t
+	desc = ab_mani.4.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_disaster = manichaean_insurrection
+		has_country_flag = ab_mani_disaster_zoro
+	}
+	
+	mean_time_to_happen = {
+		months = 20
+	}
+	
+	option = {
+		name = ab_mani.4.a
+		add_yearly_manpower = -1
+		add_country_modifier = {
+			name = per_guerilla_challenged
+			duration = 3650
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+			}
+			add_base_tax = -1
+			add_base_production = -1
+			add_base_manpower = -1
+		}
+	}
+	
+	option = {
+		name = ab_mani.4.b
+		add_country_modifier = {
+			name = per_guerilla_unchallenged
+			duration = 3650
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+			}
+			add_base_tax = -1
+			add_base_production = -1
+			add_base_manpower = -1
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+			}
+			add_base_tax = -1
+			add_base_production = -1
+			add_base_manpower = -1
+		}
+	}
+}
+
+#Lightbringer
+country_event = {
+	id = ab_mani.5
+	title = ab_mani.5.t
+	desc = ab_mani.5.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_disaster = manichaean_insurrection
+		has_country_flag = ab_mani_disaster_zoro
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_saved_name = {
+				key = mani_lightbringer
+				type = simple
+				name = "Bahram the Lightbringer"
+			}
+			random_owned_province = {
+				limit = {
+					region = persia_region
+					is_capital = no
+					NOT = { religion = manichaean }
+				}
+				save_event_target_as = target_province
+			}
+		}
+	}
+	
+	option = {
+		name = ab_mani.5.a
+		add_yearly_manpower = -1
+		goto = target_province
+		add_country_modifier = {
+			name = per_guerilla_challenged
+			duration = 3650
+		}
+		event_target:target_province = {
+			change_religion = manichaean
+			spawn_rebels = {
+				type = mani_rebels
+				size = 3
+				leader = mani_lightbringer
+			}
+		}
+	}
+}
+
+#Street Preachers
+country_event = {
+	id = ab_mani.6
+	title = ab_mani.6.t
+	desc = ab_mani.6.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_disaster = manichaean_insurrection
+		has_country_flag = ab_mani_disaster_zoro
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	option = {
+		name = ab_mani.6.a
+		add_yearly_manpower = -1.5
+		add_country_modifier = {
+			name = per_martial_law
+			duration = -1
+			desc = per_bent_desc
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+				NOT = {
+					is_capital_of = ROOT
+				}
+				NOT = {
+					religion = manichaean
+				}
+			}
+			change_religion = manichaean
+			spawn_rebels = {
+				type = mani_rebels
+				size = 1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_mani.6.b
+		add_country_modifier = {
+			name = per_preacher_ignored
+			duration = -1
+			desc = per_bent_desc
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+				NOT = {
+					is_capital_of = ROOT
+				}
+				NOT = {
+					religion = manichaean
+				}
+			}
+			change_religion = manichaean
+			spawn_rebels = {
+				type = mani_rebels
+				size = 1
+			}
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+				NOT = {
+					is_capital_of = ROOT
+				}
+				NOT = {
+					religion = manichaean
+				}
+			}
+			change_religion = manichaean
+			spawn_rebels = {
+				type = mani_rebels
+				size = 1
+			}
+		}
+		random_owned_province = {
+			limit = {
+				region = persia_region
+				NOT = {
+					is_capital_of = ROOT
+				}
+				NOT = {
+					religion = manichaean
+				}
+			}
+			change_religion = manichaean
+			spawn_rebels = {
+				type = mani_rebels
+				size = 1
+			}
+		}
+	}
+}
+
+#Defenders
+country_event = {
+	id = ab_mani.7
+	title = ab_mani.7.t
+	desc = {
+	   trigger = { tag = PER }
+	   desc = "ab_mani.7.d.1"
+	}
+	desc = {
+	   trigger = { tag = PRZ }
+	   desc = "ab_mani.7.d.2"
+	}
+	desc = {
+	   trigger = { tag = PRC }
+	   desc = "ab_mani.7.d.3"
+	}
+	picture = RELIGIOUS_WARS_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_disaster = manichaean_insurrection
+		has_country_flag = ab_mani_disaster_zoro
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	option = {
+		name = ab_mani.7.a
+		add_yearly_manpower = 1
+		add_country_modifier = {
+			name = per_zealots_ranks
+			duration = 3650
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					any_owned_province = {
+						religion = manichaean
+					}
+				}
+				random_owned_province = {
+					limit = {
+						religion = manichaean
+					}
+					save_event_target_as = target_province
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_mani.7.b
+		random_list = {
+			25 = {
+				create_general = { tradition = 60 }
+			}
+			25 = { 
+				define_advisor = {
+					type = commandant
+					skill = 2
+					religion = ROOT
+					culture = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			25 = { 
+				define_advisor = {
+					type = army_reformer
+					skill = 2
+					religion = ROOT
+					culture = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			25 = { 
+				define_advisor = {
+					type = quartermaster
+					skill = 2
+					religion = ROOT
+					culture = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_mani.7.c
+		trigger = {
+			NOT = {
+				has_saved_event_target = target_province
+			}
+		}
+		add_country_modifier = {
+			name = per_push_back
+			duration = 3650
+		}
+	}
+
+	option = {
+		name = ab_mani.7.c
+		trigger = {
+			has_saved_event_target = target_province
+		}
+		goto = target_province
+		event_target:target_province = {
+			change_religion = ROOT
+		}
+		add_country_modifier = {
+			name = per_push_back
+			duration = 3650
+		}
+	}
+}
+
+#Religious Tension
+country_event = {
+	id = ab_mani.8
+	title = ab_mani.8.t
+	desc = ab_mani.8.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_disaster = manichaean_insurrection
+		has_country_flag = ab_mani_disaster_mani
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = ab_mani.8.a
+		random_list = {
+			33 = { 
+				add_country_modifier = {
+					name = per_commoners_alienated
+					duration = -1
+					desc = per_bent_desc
+				}
+				random_owned_province = {
+					limit = {
+						region = persia_region
+						NOT = {
+							is_capital_of = ROOT
+						}
+						NOT = {
+							religion = manichaean
+						}
+					}
+					spawn_rebels = {
+						type = anti_tax_rebels
+						size = 2
+					}
+				}
+			}
+			33 = { 
+				add_country_modifier = {
+					name = per_aristocratic_resistance
+					duration = -1
+					desc = per_bent_desc
+				}
+				random_owned_province = {
+					limit = {
+						region = persia_region
+						NOT = {
+							is_capital_of = ROOT
+						}
+						NOT = {
+							religion = manichaean
+						}
+					}
+					spawn_rebels = {
+						type = noble_rebels
+						size = 2
+					}
+				}
+			}
+			33 = { 
+				add_country_modifier = {
+					name = per_clinging_to_darkness
+					duration = -1
+					desc = per_bent_desc
+				}
+				random_owned_province = {
+					limit = {
+						region = persia_region
+						NOT = {
+							is_capital_of = ROOT
+						}
+						NOT = {
+							religion = manichaean
+						}
+					}
+					spawn_rebels = {
+						type = zoroastrian_rebels
+						size = 2
+					}
+				}
+			}
+		}
+	}
+}
+
+#Defenders of the False Faith
+country_event = {
+	id = ab_mani.9
+	title = ab_mani.9.t
+	desc = ab_mani.9.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_disaster = manichaean_insurrection
+		has_country_flag = ab_mani_disaster_mani
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+
+	immediate = {
+		hidden_effect = {
+			random_owned_province = {
+				limit = {
+					region = persia_region
+					is_capital = no
+					religion = manichaean
+				}
+				save_event_target_as = target_province
+			}
+		}
+	}
+
+	
+	option = {
+		name = ab_mani.9.a
+		add_stability = -1
+		goto = target_province
+		event_target:target_province = {
+			if = {
+				limit = {
+					owner = {
+						was_tag = PER
+					}
+				}
+				change_religion = zoroastrian
+			}
+			else_if = {
+				limit = {
+					owner = {
+						was_tag = PRZ
+					}
+				}
+				change_religion = sunni
+			}
+			else_if = {
+				limit = {
+					owner = {
+						was_tag = PRC
+					}
+				}
+				change_religion = nestorian
+			}
+		}
+		event_target:target_province = {
+			if = {
+				limit = {
+					owner = {
+						was_tag = PER
+					}
+				}
+				spawn_rebels = {
+					type = zoroastrian_rebels
+					size = 3
+				}
+			}
+			if = {
+				limit = {
+					owner = {
+						was_tag = PRZ
+					}
+				}
+				spawn_rebels = {
+					type = sunni_rebels
+					size = 3
+				}
+			}
+			if = {
+				limit = {
+					owner = {
+						was_tag = PRC
+					}
+				}
+				spawn_rebels = {
+					type = nestorian_rebels
+					size = 3
+				}
+			}
+		}
+		add_country_modifier = {
+			name = per_instability
+			duration = 3650
+		}
+	}
+}
+
+#The Yamag Challenges Our Authority
+country_event = {
+	id = ab_mani.10
+	title = ab_mani.10.t
+	desc = ab_mani.10.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_disaster = manichaean_insurrection
+		has_country_flag = ab_mani_disaster_mani
+		owns = 454
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+	}
+	
+	option = {
+		name = ab_mani.10.a
+		454 = {
+			if = {
+				limit = {
+					NOT = {
+						religion = manichaean
+					}
+				}
+				change_religion = manichaean
+			}
+			else = {
+				random_neighbor_province = {
+					limit = {
+						NOT = {
+							religion = manichaean
+						}
+					}
+					change_religion = manichaean
+				}
+			}
+		}
+		454 = {
+			add_local_autonomy = 50
+		}
+		add_country_modifier = {
+			name = per_yamag_oversight
+			duration = -1
+			desc = per_bent_desc
+		}
+		add_country_modifier = {
+			name = per_restored_yamagate
+			duration = -1
+		}
+	}
+	
+	option = {
+		name = ab_mani.10.b
+		454 = {
+			spawn_rebels = {
+				type = heretic_rebels
+				size = 3
+			}
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -20
+		}
+		add_country_modifier = {
+			name = per_religious_infighting
+			duration = -1
+			desc = per_bent_desc
+		}
+		add_country_modifier = {
+			name = per_thumb_yamagate
+			duration = -1
+		}
+	}
+}
+
+#The Lightbringer
+country_event = {
+	id = ab_mani.11
+	title = ab_mani.11.t
+	desc = ab_mani.11.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_disaster = manichaean_insurrection
+		has_country_flag = ab_mani_disaster_mani
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	option = {
+		name = ab_mani.11.a
+		define_general = {
+			shock = 5
+			fire = 5
+			manuever = 5
+			siege = 2
+			name = "Bahram the Lightbringer"
+		}
+	}
+	
+	option = {
+		name = ab_mani.11.b
+		define_advisor = {
+			type = commandant
+			name = "Bahram the Lightbringer"
+			skill = 3
+			culture = ROOT
+			religion = ROOT
+			cost_multiplier = 0.5
+		}
+	}
+	
+	option = {
+		name = ab_mani.11.c
+		define_advisor = {
+			type = inquisitor
+			name = "Bahram the Lightbringer"
+			skill = 3
+			culture = ROOT
+			religion = ROOT
+			cost_multiplier = 0.5
+		}
+	}
+	
+	option = {
+		name = ab_mani.11.de
+		define_heir = {
+			name = "Bahram"
+			dynasty = ROOT
+			claim = 50
+			adm = 3
+			dip = 3
+			mil = 5
+		}
+	}
+}
+
+#Pashtun Rebellion
+country_event = {
+	id = ab_mani.12
+	title = ab_mani.12.t
+	desc = ab_mani.12.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_disaster = manichaean_insurrection
+		has_country_flag = ab_mani_disaster_mani
+		owns_all_provinces = {
+		  culture = afghani
+		}
+		owns = 449
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					culture = afghani
+				}
+				add_core = AFG
+			}
+			release = AFG
+			AFG = {
+				change_religion = mahayana
+				change_government = monarchy
+				add_government_reform = feudalism_reform
+				add_legitimacy = 100
+				add_manpower = 13
+				add_army_tradition = 50
+				add_prestige = 30
+				add_treasury = 150
+				add_mil_power = 300
+				create_general = { tradition = 60 }
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.8
+						cavalry = 0.2
+					}
+					infantry = AFG
+					infantry = AFG
+					infantry = AFG
+					infantry = AFG
+				}
+			}
+		}	
+	}
+	
+	option = {
+		name = ab_mani.12.a
+		add_yearly_manpower = -2	
+		declare_war_with_cb = {
+			who = AFG
+			casus_belli = cb_core
+			war_goal_province = 449
+		}
+	}
+	
+	option = {
+		name = ab_mani.12.b
+		ai_chance = { factor = 0 }
+		add_yearly_manpower = -2
+		every_province = {
+			limit = {
+				owned_by = AFG
+			}
+			remove_core = ROOT
+		}
+	}
+}

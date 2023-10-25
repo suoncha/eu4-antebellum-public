@@ -1,0 +1,75 @@
+namespace = lion_and_the_empire
+
+country_event = {
+	id = lion_and_the_empire.1
+	title = lion_and_the_empire.1.t
+	desc = lion_and_the_empire.1.d
+	picture = EMPEROR_eventPicture
+
+	is_triggered_only = yes
+	fire_only_once = yes
+	major = yes
+
+	option = {
+		name = lion_and_the_empire.1.a
+		if = {
+			limit = {
+				exists = SWE
+			}
+			SWE = {
+				set_in_empire = yes
+			}
+		}
+		else_if = {
+			limit = {
+				exists = SCA
+			}
+			SCA = {
+				set_in_empire = yes
+			}
+		}
+	}
+	option = {
+		name = lion_and_the_empire.1.b
+		if = {
+			limit = {
+				exists = SWE
+			}
+			SWE = {
+				every_country = {
+					limit = {
+						OR = {
+							is_elector = yes
+							is_emperor = yes
+						}
+					}
+					reverse_add_casus_belli = {
+						type = cb_insult
+						months = 300
+						target = ROOT
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				exists = SCA
+			}
+			SCA = {
+				every_country = {
+					limit = {
+						OR = {
+							is_elector = yes
+							is_emperor = yes
+						}
+					}
+					reverse_add_casus_belli = {
+						type = cb_insult
+						months = 300
+						target = ROOT
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,287 @@
+namespace = galician_event
+normal_or_historical_nations = yes
+
+
+country_event = {
+	id = galician_event.1
+	title = galician_event.1.t
+	desc = galician_event.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = VOL
+		NOT = { is_year = 1450 }
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = galician_event.1.a
+		custom_tooltip = galicia_event_info
+		ai_chance = {
+			factor = 100
+		}
+		PAP = {
+			set_country_flag = VOL_pope
+		}
+	}
+	
+	option = {
+		name = galician_event.1.b
+		ai_chance = {
+			factor = 0
+		}
+		VOL = {
+			set_country_flag = VOL_pope_reject
+		}
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+country_event = {
+	id = galician_event.2
+	title = galician_event.2.t
+	desc = galician_event.2.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = PAP
+		has_country_flag = VOL_pope
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = galician_event.2.a
+		add_prestige = 15
+		add_adm_power = -75
+		custom_tooltip = PAP_GALICIA_CONVERT
+		ai_chance = {
+			factor = 99
+		}
+		VOL = {
+			set_country_flag = VOL_pope_accept
+		}
+	}
+	
+	option = {
+		name = galician_event.2.b
+		add_prestige = -15
+		custom_tooltip = PAP_GALICIA_LOCK
+		ai_chance = {
+			factor = 1
+		}
+		VOL = {
+			set_country_flag = VOL_pope_reject
+		}
+	}
+}
+
+country_event = {
+	id = galician_event.3
+	title = galician_event.3.t
+	desc = galician_event.3.d
+	picture = POPE_PREACHING_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = VOL
+		has_country_flag = VOL_pope_accept
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = galician_event.3.a
+		ai_chance = {
+			factor = 99
+		}
+		VOL = {
+			clr_country_flag = VOL_pope_accept
+		}
+		VOL = {
+			change_religion = catholic
+		}
+		capital_scope = {
+			change_religion = catholic
+		}
+		add_government_reform = principality_vol
+		# So people don't think the opinion modifiers
+		# are part of the government reform
+		custom_tooltip = AB_EMPTY
+		every_known_country = {
+			limit = {
+				religion = orthodox
+				primary_culture = ruthenian
+			}
+			add_opinion = {
+				who = root
+				modifier = opinion_kingdom_rus
+			}
+		}
+		VOL = {
+			set_country_flag = completed_galician_event
+		}
+		PAP = {
+			add_opinion = {
+				who = root
+				modifier = opinion_magyar_catholic
+			}
+		}
+	}
+}
+
+country_event = {
+	id = galician_event.4
+	title = galician_event.4.t
+	desc = galician_event.4.d
+	picture = POPE_PREACHING_eventPicture
+	
+	trigger = {
+		tag = VOL
+		has_country_flag = VOL_pope_reject
+	}
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = galician_event.4.a
+		VOL = {
+			add_opinion = {
+				who = PAP
+				modifier = opinion_kingdom_of_rus
+			}
+		}
+	}
+}
+
+country_event = {
+	id = galician_event.5
+	title = galician_event.5.t
+	desc = galician_event.5.d
+	picture = POPE_PREACHING_eventPicture
+	
+	trigger = {
+		tag = PDL
+		is_subject_of = VOL
+		VOL = {
+			religion = catholic
+		}
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = galician_event.5.a
+		ai_chance = {
+			factor = 100
+		}
+		add_ruler_modifier = {
+			name = pdl_reject
+		}
+	}
+	
+	option = {
+		name = galician_event.5.b
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+country_event = {
+	id = galician_event.6
+	title = galician_event.6.t
+	desc = galician_event.6.d
+	picture = ENTERING_MOSCOW_eventPicture
+	
+	trigger = {
+		culture_group = east_slavic
+		war_with = GOL
+		466 = {
+			controlled_by = ROOT
+		}
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = galician_event.6.a 
+		add_treasury = 500
+		466 = {
+			add_base_tax = -3
+			add_base_production = -3
+			add_base_manpower = -3
+			add_devastation = 75
+		}
+	}
+	option = {
+		name = galician_event.6.b
+		add_prestige = -10
+	}
+}
+
+country_event = {
+	id = galician_event.7
+	title = galician_event.7.t
+	desc = galician_event.7.d
+	picture = KREMLIN_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = RUS
+		exists = UKR
+	}
+	
+	option = {
+		name = galician_event.7.a
+		add_historical_rival = UKR
+		add_casus_belli = {
+			target = UKR
+			type = cb_restore_personal_union
+			months = 1825
+		}
+	}
+}
+
+country_event = {
+	id = galician_event.8
+	title = galician_event.8.t
+	desc = galician_event.8.d
+	picture = KREMLIN_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = UKR
+		exists = RUS
+	}
+	
+	option = {
+		name = galician_event.8.a
+		add_historical_rival = RUS
+		add_casus_belli = {
+			target = RUS
+			type = cb_restore_personal_union
+			months = 1825
+		}
+	}
+}

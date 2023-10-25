@@ -1,0 +1,207 @@
+take_capital_become_hk = {
+	type = take_capital
+
+
+	attacker = {
+		badboy_factor = 0.75
+		prestige_factor = 1.25
+		peace_cost_factor = 0.75	
+		
+		allowed_provinces = {
+			always = yes
+		}
+		
+		peace_options = {
+			ab_high_king
+			po_demand_provinces
+		}
+
+		deny_annex = yes
+	}
+	
+	defender = {
+		badboy_factor = 1.0
+		prestige_factor = 1.25
+		peace_cost_factor = 1.0	
+		
+		allowed_provinces = {
+			always = yes
+		}
+		
+		peace_options = {
+			po_demand_provinces
+		}
+	}		
+
+	war_name = WAR_FOR_HK
+}
+
+take_capital_force_ruirech = {
+	type = take_capital
+
+	attacker = {
+		badboy_factor = 1.25
+		prestige_factor = 1
+		peace_cost_factor = 1
+
+		allowed_provinces = {
+			always = yes
+		}
+		
+		peace_options = {
+			po_ab_force_ruirech
+		}
+
+		deny_annex = yes
+	}
+
+	defender = {
+		badboy_factor = 1
+		prestige_factor = 1
+		peace_cost_factor = 1
+		
+		peace_options = {
+			po_release_vassals
+			po_release_annexed
+			po_concede_defeat
+		}
+	}
+
+	WAR_NAME = WAR_FOR_FORCING_RUIRECH
+}
+
+superiority_iranian_unification = {
+	type = superiority
+	
+	attacker = {
+		badboy_factor = 0.75
+		prestige_factor = 1.5
+		peace_cost_factor = 0.75
+		
+		allowed_provinces = {
+			superregion = persia_superregion
+		}
+		
+		peace_options = {
+			po_demand_provinces
+		}
+		
+		country_desc = ALL_IRANIAN_COUNTRIES
+		prov_desc = ALL_IRANIAN_PROVS
+	}
+	
+	defender = {
+		badboy_factor = 0.25
+		prestige_factor = 1.5
+		peace_cost_factor = 0.5
+		
+		allowed_provinces = {
+			OR = {
+				superregion = persia_superregion
+				culture_group = FROM
+			}
+		}
+		
+		peace_options = {
+			po_demand_provinces
+		}
+		
+		country_desc = ALL_IRANIAN_COUNTRIES
+		prov_desc = ALL_IRANIAN_PROVS
+	}
+	
+	war_name = IRANIAN_UNIFICATION_WAR_NAME	
+}
+
+superiority_russian_unification = {
+	type = superiority
+	
+	attacker = {
+		badboy_factor = 0.75
+		prestige_factor = 1.5
+		peace_cost_factor = 0.75
+		
+		allowed_provinces = {
+			OR = {
+				region = russia_region
+				region = ruthenia_region
+			}
+		}
+		
+		peace_options = {
+			po_demand_provinces
+		}
+		
+		country_desc = ALL_RUSSIAN_COUNTRIES
+		prov_desc = ALL_RUSSIAN_PROVS
+	}
+	
+	defender = {
+		badboy_factor = 0.25
+		prestige_factor = 1.5
+		peace_cost_factor = 0.5
+		
+		allowed_provinces = {
+			OR = {
+				region = russia_region
+				region = ruthenia_region
+				culture_group = FROM
+			}
+		}
+		
+		peace_options = {
+			po_demand_provinces
+		}
+		
+		country_desc = ALL_RUSSIAN_COUNTRIES
+		prov_desc = ALL_RUSSIAN_PROVS
+	}
+	
+	war_name = RUSSIAN_UNIFICATION_WAR_NAME	
+}
+
+# Copy of superiority_crusade, with insertion of po_change_religion in attacker peace options
+superiority_zun_crusade = {
+	type = superiority
+	
+	attacker = {
+		badboy_factor = 0.75
+		prestige_factor = 1.25
+		peace_cost_factor = 1.0	
+		
+		allowed_provinces = {
+			always = yes
+		}
+		
+		peace_options = {
+			po_demand_provinces
+			
+			# We need to use a custom peace offer type, because the hardcoded po_change_religion only permits you to force religion on the primary defender
+			# Putting conversion underneath demand provinces means the AI will normally prefer to take provinces instead of demanding conversion.
+			po_zun_change_religion
+			
+		}
+		
+		country_desc = ALL_INFIDELS
+		prov_desc = ALL_PROVS
+	}
+	
+	defender = {
+		badboy_factor = 0.75
+		prestige_factor = 1.25
+		peace_cost_factor = 1.0	
+		
+		allowed_provinces = {
+			always = yes
+		}
+		
+		peace_options = {
+			po_demand_provinces
+		}
+		
+		country_desc = ALL_INFIDELS
+		prov_desc = ALL_PROVS
+	}
+	
+	war_name = CRUSADE_WAR_NAME	
+}

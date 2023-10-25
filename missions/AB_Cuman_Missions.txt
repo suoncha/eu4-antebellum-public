@@ -1,0 +1,979 @@
+cumania_first = {
+	slot = 1 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = CMN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes	
+
+	cmn_crimea = {
+	    icon = mission_invade_island
+		required_missions = { cmn_alania }
+		position = 3
+		
+		provinces_to_highlight = {
+			area = crimea_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			crimea_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "aln_cmn_black"
+				duration = 5475
+			}
+			285 = {
+				add_unit_construction = {
+					type = light_ship
+					amount = 5
+					speed = 0.25
+					cost = 0
+				}
+			}
+		}
+	}
+	
+	cmn_qifjaq = {
+		icon = mission_dominate_home_trade_node
+		required_missions = { cmn_crimea }
+		position = 5
+		provinces_to_highlight = {
+			province_id = 285
+			NOT = {
+				development = 20
+			}
+		}
+		trigger = {
+			285 = {
+				development = 20
+				has_trade_building_trigger = yes
+			}
+		}
+		effect = {
+			285 = {
+				add_center_of_trade_level = 1
+				add_province_modifier = {
+					name = "cmn_trade"
+					duration = -1
+				}
+			}
+			
+			285 = {
+				change_trade_goods = slaves
+			}
+		}
+	}
+	
+	cmn_carpathia = {
+	    icon = mission_abu_saids_dream
+		required_missions = { cmn_romania }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = transylvania_area
+				area = southern_transylvania_area
+				area = alfold_area
+				area = centralhungary_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			transylvania_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			southern_transylvania_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			alfold_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			centralhungary_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			custom_tooltip = CMN_MONUMENT
+			add_country_modifier = {
+				name = "aln_magyar_recruit"
+				duration = 9125
+			}
+			carpathia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+}
+
+cumania_second = {
+	slot = 2 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = CMN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	cmn_army = {
+		icon = mission_crusade_for_varna
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "aln_war"
+				duration = 5475
+			}
+			circassia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cmn_alania = {
+	    icon = mission_chinese_general_riding
+		required_missions = { cmn_army }
+		position = 2
+		
+		provinces_to_highlight = {
+			area = circassia_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			circassia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_mil_power = 50
+			add_country_modifier = {
+				name = "cmn_recruit"
+				duration = 7300
+			}
+			imereti_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			samtskhe_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kartli_kakheti_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			azov_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			zaporizhia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			crimea_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cmn_georgia = {
+		icon = mission_georgia
+		required_missions = { cmn_alania }
+		position = 3
+		
+		provinces_to_highlight = {
+			region = caucasia_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				region = caucasia_region
+			}
+		}
+		
+		effect = {
+			custom_tooltip = CMN_CAUCASIA
+			tooltip = {
+				add_nationalism = -5
+			}
+			caucasia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						region = caucasia_region
+					}
+					add_nationalism = -5
+				}
+			}
+		}
+	}
+	
+	cmn_romania = {
+	    icon = mission_conquer_romania
+		required_missions = { cmn_ruthenia }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = wallachia_area
+				area = bessarabia_area
+				area = moldavia_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			wallachia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			bessarabia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			moldavia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_army_tradition = 10
+			add_country_modifier = {
+				name = "cmn_obedient"
+				duration = 9125
+			}
+			silistria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			bulgaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			transylvania_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			southern_transylvania_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			alfold_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			centralhungary_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = CMN_SUBJUGATE
+			tooltip = {
+				change_monarch_points_or_power = {
+					points = 1
+					power = dip
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						overlord_of = WAL
+						overlord_of = MOL
+					}
+					change_monarch_points_or_power = {
+						points = 1
+						power = dip
+					}
+				}
+			}
+		}
+	}
+	
+	cmn_bulgaria = {
+	    icon = push_on_to_bulgaria
+		required_missions = { cmn_romania }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = silistria_area
+				area = bulgaria_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			silistria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			bulgaria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = "aln_balkan"
+				duration = 9125
+			}
+			define_advisor = {
+				type = commandant
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			thrace_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cmn_blood = {
+	    icon = mission_based
+		required_missions = { cmn_bulgaria }
+		position = 7
+		
+		provinces_to_highlight = {
+			area = thrace_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			thrace_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			country_event = { id = ab_cuman.2 }
+		}
+	}
+
+}
+
+cumania_third = {
+	slot = 3 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = CMN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes	
+	
+	cmn_azov = {
+	    icon = mission_cossack_cavalry
+		required_missions = { cmn_alania }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = azov_area
+				area = zaporizhia_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			azov_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			zaporizhia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_prestige = 10
+			add_country_modifier = {
+				name = "cmn_restoring"
+				duration = 9125
+			}
+			east_dniepr_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			west_dniepr_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			yedisan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			podolia_volhynia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	cmn_ruthenia = {
+	    icon = mission_rule_ruthenia
+		required_missions = { cmn_azov }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = podolia_volhynia_area
+				area = yedisan_area
+				area = west_dniepr_area
+				area = east_dniepr_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			podolia_volhynia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			yedisan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_dniepr_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_dniepr_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = "cmn_invasion"
+				duration = 7300
+			}
+			ruthenia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			wallachia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			moldavia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			bessarabia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = CMN_CB_WAL
+			custom_tooltip = CMN_CB_MOL
+			hidden_effect = {
+				if = {
+					limit = {
+						exists = WAL
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = WAL
+					}
+				}
+				if = {
+					limit = {
+						exists = MOL
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = MOL
+					}
+				}
+			}
+		}
+	}
+	
+	cmn_yoke = {
+		icon = mission_war_chest
+		required_missions = { cmn_ruthenia }
+		position = 6
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SEL_TRIBUTARY_OR_VASSAL
+				OR = {
+					calc_true_if = {
+						desc = establish_tributaries_tt
+						all_subject_country = {
+							is_subject_of_type = tributary_state
+						}
+						amount = 10
+					}
+					calc_true_if = {
+						all_subject_country = {
+							OR = {
+								is_subject_of_type = vassal
+								is_subject_of_type = march
+							}
+						}
+						amount = 3
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 0.5
+			capital_scope = {
+				add_prosperity = 100
+			}
+			add_country_modifier = {
+				name = "cmn_tributary"
+				duration = -1
+			}
+		}
+	}
+}
+
+cumania_fourth = {
+	slot = 4 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = CMN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	cmn_defy = {
+		icon = mission_forthehorde
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			owned_by = GLH
+		}
+		
+		trigger = {
+			CMN = {
+				NOT = {
+					is_subject_of_type = tributary_state
+				}
+			}
+		}
+		
+		effect = {
+			add_legitimacy = 10
+			add_country_modifier = {
+				name = "aln_anti"
+				duration = 5475
+			}
+			astrakhan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cmn_sack = {
+		icon = mission_steppe_warriors
+		required_missions = { cmn_defy cmn_coalition }
+		position = 3
+		
+		provinces_to_highlight = {
+			area = astrakhan_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			astrakhan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_cuman.1 }
+			crimea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cmn_legacy = {
+		icon = mission_non-western_cavalry_raid
+		required_missions = { cmn_sack }
+		position = 5
+		
+		trigger = {
+			num_of_cavalry = 12
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "aln_legacy"
+				duration = 9125
+			}
+			define_advisor = {
+				type = dragoon
+				skill = 1
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	cmn_adopt = {
+		icon = mission_khitan
+		required_missions = { cmn_dismantle }
+		position = 6
+		
+		provinces_to_highlight = {
+			NOT = {
+				owned_by = ROOT
+			}
+			culture_group = tartar
+		}
+		
+		trigger = {
+			army_tradition = 50
+			num_of_owned_provinces_with = {
+				value = 45
+				culture_group = tartar
+			}
+		}
+		
+		effect = {
+			custom_tooltip = CMN_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = cmn_evolved_ideas
+				if = {
+					limit = {
+						tag = CMN
+					}
+					swap_free_idea_group = yes
+				}
+			}
+		}
+	}
+	
+}
+
+cumania_fifth = {
+	slot = 5 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = CMN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	cmn_coalition = {
+		icon = mission_noble_council
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			num_of_allies = 2
+		}
+		
+		effect = {
+			create_general = { tradition = 50 }
+			custom_tooltip = ALN_MONGOL_RIVAL
+			tooltip = {
+				define_advisor = {
+					type = commandant
+					skill = 2
+					religion = ROOT
+					culture = ROOT
+					cost_multiplier = 0.35
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_ally = {
+							is_enemy = GLH
+						}
+					}
+					define_advisor = {
+						type = commandant
+						skill = 2
+						religion = ROOT
+						culture = ROOT
+						cost_multiplier = 0.35
+					}
+				}
+			}
+		}
+	}
+	
+	cmn_rule_steppe = {
+		icon = mission_advance_to_the_dnieper
+		required_missions = { cmn_sack }
+		position = 4
+		
+		provinces_to_highlight = {
+			region = crimea_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			crimea_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 25
+			add_country_modifier = {
+				name = "aln_hegemony"
+				duration = -1
+			}
+			custom_tooltip = ALN_GLH
+			hidden_effect = {
+				every_province = {
+					limit = {
+						owned_by = GLH
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	cmn_dismantle = {
+		icon = mission_unite_home_region
+		required_missions = { cmn_rule_steppe }
+		position = 5
+		
+		provinces_to_highlight = {
+			owned_by = GLH
+		}
+		
+		trigger = {
+			NOT = {
+				exists = GLH
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			custom_tooltip = ALN_REMOVE_CORE
+			add_ruler_modifier = {
+				name = "aln_bane"
+				duration = -1
+			}
+			
+			central_asia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						is_core = GLH
+					}
+					remove_core = GLH
+				}
+			}
+		}
+	}
+	
+	cmn_central_asia = {
+		icon = mission_yuanmanpower
+		required_missions = { cmn_dismantle }
+		position = 7
+		
+		provinces_to_highlight = {
+			region = central_asia_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 25
+				region = central_asia_region
+			}
+		}
+		
+		effect = {
+			custom_tooltip = CMN_HORDE
+			tooltip = {
+				override_country_name = CMNH
+				add_country_modifier = {
+					name = "cmn_confederation"
+					duration = -1
+				}
+			}
+			custom_tooltip = CMN_NON_HORDE
+			tooltip = {
+				add_dip_power = 100
+				add_country_modifier = {
+					name = "cmn_steppe"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_reform = steppe_horde
+					}
+					override_country_name = CMNH
+					add_country_modifier = {
+						name = "cmn_confederation"
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							has_reform = steppe_horde
+						}
+					}
+					add_dip_power = 100
+					add_country_modifier = {
+						name = "cmn_steppe"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+}

@@ -1,0 +1,50 @@
+country_decisions = {
+
+	reform_shogunate = {
+		major = yes
+		potential = {
+			NOT = { tag = JAP }
+			NOT = { has_country_flag = reformed_shogunate_flag }
+			has_reform = shogunate
+			has_government_attribute = can_form_shogunate
+			has_country_flag = formed_shogunate_flag
+		}
+		allow = {
+			NOT = { exists = JAP }
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			custom_trigger_tooltip = {
+				tooltip = ab_can_form_shogunate_tt
+				has_government_attribute = can_form_shogunate
+			}
+			custom_trigger_tooltip = {
+				tooltip = shogunate_has_proclaimed
+				has_country_flag = formed_shogunate_flag
+			}
+			NOT = {
+				any_country = {
+					has_reform = daimyo
+					capital_scope = { region = japan_region }
+				}
+			}
+		}
+		effect = {
+			custom_tooltip = REFORMED_SHOGUNATE
+			custom_tooltip = SHOGUN_MILITARIZATION
+			set_country_flag = reformed_shogunate_flag
+			add_government_reform = reformed_shogunate
+			# This is needed because the previous reform we have
+			# has a different mechanic
+			regenerate_government_mechanics = yes
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0
+				NOT = { num_of_cities = 30 }
+			}
+		}
+	}
+	
+}

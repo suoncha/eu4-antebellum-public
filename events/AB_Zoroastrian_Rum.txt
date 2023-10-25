@@ -1,0 +1,214 @@
+namespace = ab_zrum
+
+#Annexation of the Ilkhanate
+country_event = {
+	id = ab_zrum.1
+	title = ab_zrum.1.t
+	desc = ab_zrum.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	trigger = {
+		OR = {
+			tag = SRK
+			tag = RUM
+		}
+		religion = zoroastrian
+		has_country_flag = rum_can_annex_ilk
+		ILK = {
+			vassal_of = ROOT
+		}
+		NOT = {
+			ILK = {
+				liberty_desire = 50
+			}
+		}
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_zrum.1.a
+		add_legitimacy = 20
+		inherit = ILK
+	}
+}
+
+#A New Capital
+country_event = {
+	id = ab_zrum.2
+	title = ab_zrum.2.t
+	desc = ab_zrum.2.d
+	picture = CITY_VIEW_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_zrum.2.a
+			410 = {
+				move_capital_effect = yes
+			}
+			410 = {
+				change_province_name = "Ctesiphon"
+				rename_capital = "Ctesiphon"
+			}
+			410 = {
+				add_province_modifier = {
+					name = "rum_seat_shah"
+					duration = -1
+				}
+			}
+		set_country_flag = rum_picked_capital
+	}
+	
+	option = {
+		name = ab_zrum.2.b
+			2218 = {
+				move_capital_effect = yes
+			}
+			2218 = {
+				change_province_name = "Persepolis"
+				rename_capital = "Persepolis"
+			}
+			2218 = {
+				add_province_modifier = {
+					name = "rum_seat_shah"
+					duration = -1
+				}
+			}
+		set_country_flag = rum_picked_capital
+	}
+	
+	option = {
+		name = ab_zrum.2.c
+			capital_scope = {
+				add_province_modifier = {
+					name = "rum_seat_shah"
+					duration = -1
+				}
+			}
+	}
+}
+
+#Legacy of Seljuk event for all Beyliks
+country_event = {
+	id = ab_zrum.3
+	title = ab_zrum.3.t
+	desc = ab_zrum.3.d
+	picture = AB_SELJUK_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_zrum.3.a
+		add_prestige = 25
+		create_general = { tradition = 50 }
+		custom_tooltip = RUM_ADD_CORES
+		
+		hidden_effect = {
+			every_province = {
+				limit = {
+					is_core = SEL
+				}
+				add_core = ROOT
+			}
+		}
+	}
+}
+
+#The Destruction of Mecca and Medina
+country_event = {
+	id = ab_zrum.4
+	title = ab_zrum.4.t
+	desc = ab_zrum.4.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_zrum.4.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		384 = {
+			add_devastation = 100
+		}
+		385 = {
+			add_devastation = 100
+		}
+		custom_tooltip = PER_KAABA
+		add_country_modifier = {
+			name = "rum_rashidun"
+			duration = -1
+		}
+		set_global_flag = per_destroyed_mecca
+		hidden_effect = {
+			385 = {
+				destroy_great_project = {
+					type = kaaba
+				}
+			}
+		}
+	}
+}
+
+#Capture of Constantinople
+country_event = {
+	id = ab_zrum.5
+	title = ab_zrum.5.t
+	desc = ab_zrum.5.d
+	picture = AB_JUSTINIAN_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+	
+	option = {
+		name = ab_zrum.5.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		custom_tooltip = SELJUK_CAPITAL
+		add_country_modifier = {
+			name = "rum_c_capture"
+			duration = 9125
+		}
+	}
+}
+
+#Fall of Rome
+country_event = {
+	id = ab_zrum.6
+	title = ab_zrum.6.t
+	desc = ab_zrum.6.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+	
+	option = {
+		name = ab_zrum.6.a
+			if = {
+				limit = {
+					piety = 0
+				}
+				add_piety = 0.5
+			}
+			else_if = {
+				limit = {
+					NOT = { piety = 0 }
+				}
+				add_piety = -0.5
+			}
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		add_country_modifier = {
+			name = "rum_fall_rome"
+			duration = -1
+		}
+	}
+}

@@ -1,0 +1,757 @@
+swa_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = SWA
+	}
+	has_country_shield = yes
+	
+	swa_invade_switzerland = {
+		icon = consolidate_switzerland
+		required_missions = { swa_unite_swabia }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				area = switzerland_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    switzerland_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+		    add_accepted_culture_or_dip_power = {
+		    	culture = swiss
+		    }
+			romandie_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tirol_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	swa_romandie = {
+		icon = sway_geneva
+		required_missions = { swa_invade_switzerland }
+		position = 4
+
+		provinces_to_highlight = {
+			OR = {
+				area = romandie_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    romandie_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_adm_power = 100
+		}
+	}
+}
+
+swa_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = SWA
+	}
+	has_country_shield = yes
+	
+	swa_unite_swabia = {
+		icon = control_swabia
+		required_missions = { }
+		position = 1
+
+		provinces_to_highlight = {
+			OR = {
+				area = lower_swabia_area
+				area = upper_swabia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    lower_swabia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    upper_swabia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_country_modifier = {
+				name = "swa_united_swabia"
+				duration = 7300
+			}
+			switzerland_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	swb_swabian_liberty = {
+		icon = balance_of_power
+		required_missions = { swa_unite_swabia }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				area = lower_swabia_area
+				area = upper_swabia_area
+			}
+			NOT = { owner = { primary_culture = swabian } }
+		}
+		
+		trigger = {
+			lower_swabia_area = {
+				type = all
+				owner = { primary_culture = swabian }
+			}
+			upper_swabia_area = {
+				type = all
+				owner = { primary_culture = swabian }
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							alliance_with = root
+							primary_culture = swabian
+						}
+					}
+				}
+				custom_tooltip = swa_swabian_liberty_effect_tooltip
+			}
+			else = {
+				every_country = {
+					limit = {
+						alliance_with = root
+						primary_culture = swabian
+					}
+					country_event = { id = emp_mission_events.11 days = 5 }
+				}
+			}
+			upper_rhineland_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	swa_habsburgs = {
+		icon = alpine_fortifications
+		required_missions = { swa_invade_switzerland }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				area = tirol_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    tirol_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "swa_habsburg"
+				duration = 7300
+			}
+			east_bavaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_bavaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_bavaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	swa_bavaria = {
+		icon = duchy_of_bavaria
+		required_missions = { swa_habsburgs }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = upper_bavaria_area
+				area = lower_bavaria_area
+				area = east_bavaria_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    upper_bavaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    lower_bavaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    east_bavaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 150
+			add_country_modifier = {
+				name = "swa_bavaria"
+				duration = 7300
+			}
+			south_german_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+swa_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = SWA
+	}
+	has_country_shield = yes
+	
+	swa_palatinate = {
+		icon = establish_a_standing_army
+		required_missions = {  }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				area = palatinate_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    palatinate_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+		    lower_rhineland_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		    north_rhine_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	swa_rhineland = {
+		icon = sway_cologne
+		required_missions = { swa_palatinate }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				area = lower_rhineland_area
+				area = north_rhine_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    north_rhine_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    lower_rhineland_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = "swa_rhenish"
+				duration = 7300
+			}
+		}
+	}
+}
+
+swa_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = SWA
+	}
+	has_country_shield = yes
+	
+	swa_alsace = {
+		icon = connect_further_austria
+		required_missions = {  }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				area = alsace_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    alsace_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			add_country_modifier = {
+				name = "swa_expansionism"
+				duration = 5475
+			}
+		    flanders_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		    lorraine_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		    88 = {
+		    	if = {
+		    		limit = {
+		    			NOT = { is_core = ROOT }
+		    			NOT = { is_permanent_claim = ROOT }
+		    		}
+		    		add_permanent_claim = ROOT
+		    	}
+		    }
+		    1743 = {
+		    	if = {
+		    		limit = {
+		    			NOT = { is_core = ROOT }
+		    			NOT = { is_permanent_claim = ROOT }
+		    		}
+		    		add_permanent_claim = ROOT
+		    	}
+		    }
+			91 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1866 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			181 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			94 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	swa_lotharingia = {
+		icon = the_crown_of_lothair
+		required_missions = { swa_alsace swa_czech_throne }
+		position = 4
+		
+		trigger = {
+		    flanders_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    lorraine_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    owns_or_non_sovereign_subject_of = 94
+			owns_or_non_sovereign_subject_of = 181
+			owns_or_non_sovereign_subject_of = 1866
+			owns_or_non_sovereign_subject_of = 91
+			owns_or_non_sovereign_subject_of = 1743
+			owns_or_non_sovereign_subject_of = 88
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = flanders_area
+				area = lorraine_area
+				province_id = 94
+				province_id = 181
+				province_id = 1866
+				province_id = 91
+				province_id = 1743
+				province_id = 88
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			low_countries_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	swa_lowlands = {
+		icon = bavarian_netherlands
+		required_missions = { swa_lotharingia swa_rhineland }
+		position = 6
+		
+		provinces_to_highlight = {
+			region = low_countries_region
+			OR = {
+				NOT = { owned_by = root }
+				NOT = { is_core = root }
+			}
+		}
+		trigger = {
+			OR = {
+				AND = {
+					is_year = 1650
+					NOT = { has_disaster = dutch_revolt_disaster }
+				}
+				custom_trigger_tooltip = {
+					tooltip = emp_bur_dutch_revolt_has_happened
+					has_country_flag = had_dutch_revolt
+				}
+			}
+			low_countries_region = {
+				type = all
+				owned_by = root
+				is_core = root
+			}
+		}
+		effect = {
+			low_countries_region = {
+				add_province_modifier = {
+					name = bur_lowlands_secured_mod
+					duration = 7300
+				}
+			}
+		}
+	}
+	
+}
+		
+
+swa_fifth_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = SWA
+	}
+	has_country_shield = yes
+	
+	swa_bohemia = {
+		icon = hussite_regency
+		required_missions = { }
+		position = 1
+
+		provinces_to_highlight = {
+			OR = {
+				area = bohemia_area
+				area = erzgebirge_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			OR = {
+		    BOH = {
+				religion = hussite
+			}
+			BOH = {
+				NOT = {
+					dynasty = "Hohenstaufen"
+				}
+			}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = { 
+					BOH = { religion = catholic }
+				}
+			bohemia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			erzgebirge_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			}
+			else = {
+		    	add_casus_belli = {
+					type = cb_restore_personal_union
+					months = 300
+					target = BOH
+				}
+			}
+				
+		}
+	}
+	
+	swa_czech_throne = {
+		icon = reform_bergordnung
+		required_missions = { swa_bohemia }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				area = bohemia_area
+				area = erzgebirge_area
+			}
+		}
+		
+		trigger = {
+		    bohemia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    erzgebirge_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}	
+		
+		effect = {
+			add_country_modifier = {
+				name = "lot_lion"
+				duration = 9125
+			}
+		    flanders_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		    alsace_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		    lorraine_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		    88 = {
+		    	if = {
+		    		limit = {
+		    			NOT = { is_core = ROOT }
+		    			NOT = { is_permanent_claim = ROOT }
+		    		}
+		    		add_permanent_claim = ROOT
+		    	}
+		    }
+		    1743 = {
+		    	if = {
+		    		limit = {
+		    			NOT = { is_core = ROOT }
+		    			NOT = { is_permanent_claim = ROOT }
+		    		}
+		    		add_permanent_claim = ROOT
+		    	}
+		    }
+			91 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1866 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			181 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			94 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			5008 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		   
+		}
+		
+	}
+
+	
+	swa_hohenstaufen = {
+		icon = spread_the_von_wettins
+		required_missions = { swa_czech_throne swa_lotharingia }
+		position = 5
+	
+		trigger = {
+			dynasty = "Hohenstaufen"
+			prestige = 90
+			legitimacy = 90
+			stability = 1
+			is_great_power = yes
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = hohenstaufen_century
+				duration = 36500
+			}
+		}
+	}
+	
+}

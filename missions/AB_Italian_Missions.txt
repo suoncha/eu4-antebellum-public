@@ -1,0 +1,1635 @@
+ita_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = ITA
+	}
+	has_country_shield = yes
+	
+	ita_isles = {
+	    icon = overshadow_venice
+		required_missions = { }
+		position = 2
+		
+		provinces_to_highlight = {
+			area = corsica_sardinia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    corsica_sardinia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ita_expand_fleet"
+				duration = 7300
+			}
+		}
+	}
+	
+	ita_southern = {
+	    icon = develop_the_south
+		required_missions = { ita_liberate }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = naples_area
+				area = sicily_area
+				area = western_sicily_area
+				area = calabria_area
+				area = apulia_area
+			}
+			NOT = { development = 20 }
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = ita_develop_the_south_tt
+				num_of_owned_provinces_with = {
+					OR = {
+						area = naples_area
+						area = sicily_area
+						area = western_sicily_area
+						area = calabria_area
+						area = apulia_area
+					}
+					development = 20
+					value = 5
+				}
+			}
+		}
+		effect = {
+			custom_tooltip = ita_develop_the_south_tt2
+			tooltip = {
+				add_province_Modifier = {
+					name = ita_southern_focus
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = naples_area
+							area = sicily_area
+							area = western_sicily_area
+							area = calabria_area
+							area = apulia_area
+						}
+					}
+					add_province_modifier = {
+						name = ita_southern_focus
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	ita_prosperity = {
+	    icon = develop_the_po_valley
+		required_missions = { ita_southern }
+		position = 5
+
+		provinces_to_highlight = {
+			if = {
+				limit = {
+					has_dlc = "Mandate of Heaven"
+				}
+				country_or_non_sovereign_subject_holds = ROOT
+				is_prosperous = no
+			}
+			else = {
+				owned_by = ROOT
+				devastation = 1
+			}
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_dlc = "Mandate of Heaven"
+				}
+				custom_trigger_tooltip = {
+					tooltip = emp_ita_prosperity_for_all_tt
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						is_prosperous = yes
+						value = 8
+					}
+				}
+			}
+			else = {
+				all_owned_province = {
+					NOT = { devastation = 1 }
+				}
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = ita_italian_prosperity
+				duration = 7300
+			}
+		}
+	}
+	
+	ita_trade = {
+	    icon = sources_of_trade
+		required_missions = { ita_prosperity ita_continue }
+		position = 6
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 1298
+					1298 = {
+						NOT = { is_strongest_trade_power = ROOT }
+					}
+				}
+				AND = {
+					province_id = 1308
+					1308 = {
+						NOT = { is_strongest_trade_power = ROOT }
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			1298 = {		# Straits of Johor
+				is_strongest_trade_power = ROOT
+			}
+			1308 = {		# Straits of Johor
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		
+		effect = {
+			101 = {
+				add_base_production = 3
+			}
+			112 = {
+				add_base_production = 3
+			}
+		}
+	}
+	
+	ita_roads = {
+	    icon = appease_the_estates
+		required_missions = { ita_trade }
+		position = 7
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_road_building_trigger = no
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				has_road_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ita_roads
+				duration = 7300
+			}
+		}
+	}
+	
+	ita_industry = {
+	    icon = industrialized_rhineland
+		required_missions = { ita_roads }
+		position = 8
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
+				}
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 15
+			}
+		}
+		
+		
+		effect = {
+			add_treasury = 500
+			add_country_modifier = {
+				name = ita_industry
+				duration = 7300
+			}
+		}
+	}
+	
+	ita_new = {
+	    icon = mission_colonize_the_caribbean
+		required_missions = { ita_colonial }
+		position = 10
+		
+		trigger = {
+			num_of_colonies = 3
+		}
+		
+		
+		effect = {
+			create_conquistador = { tradition = 75 }
+			define_advisor = {
+				type = colonist
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+}
+
+
+ita_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = ITA
+	}
+	has_country_shield = yes
+	
+	ita_liberate = {
+	    icon = king_of_naples
+		required_missions = { ita_roman ita_isles }
+		position = 3
+		
+		trigger = {
+		    naples_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    apulia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    calabria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = calabria_area
+				area = naples_area
+				area = apulia_area
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ita_liberators"
+				duration = 5475
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	ita_continue = {
+	    icon = continue_the_renaissance
+		required_missions = {  }
+		position = 5
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_building = university }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				has_building = university
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = ita_continued_renaissance
+				duration = 7300
+			}
+		}
+	}
+	
+	
+	ita_nation = {
+	    icon = establish_client_states
+		required_missions = { ita_continue }
+		position = 7
+		
+		trigger = {
+			has_institution = nacionalizmus
+		}
+		
+		
+		effect = {
+			add_country_modifier = {
+				name = ita_nationalism
+				duration = -1
+			}
+		}
+	}
+	
+	ita_colonial = {
+	    icon = mission_look_west
+		required_missions = { ita_baleares }
+		position = 9
+		
+		trigger = {
+		    OR = {
+				exploration_ideas = 1
+				num_of_explorers = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ibe_quest
+				duration = 7300
+			}
+		}
+	}
+	
+	ita_africa = {
+	    icon = mission_west_african_ports
+		required_missions = { ita_colonial }
+		position = 10
+		
+		trigger = {
+			guinea_region = {
+				owned_by = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = guinea_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			create_explorer =  { tradition = 50 }
+		    1177 = {
+		    	if = {
+		    		limit = {
+		    			NOT = { is_core = ROOT }
+		    			NOT = { is_permanent_claim = ROOT }
+		    		}
+		    		add_permanent_claim = ROOT
+		    	}
+		    }
+		}
+	}
+	
+	ita_cape = {
+	    icon = indonesian_trade
+		required_missions = { ita_africa }
+		position = 11
+		
+		trigger = {
+			owns = 1177
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1177
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_treasury = 300
+		}
+		
+	}
+	
+	ita_india = {
+	    icon = mission_indian_empire
+		required_missions = { ita_cape }
+		position = 12
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					trade_company_region = trade_company_west_india
+					if = {
+						limit = {
+							ROOT = {
+								OR = {
+									has_dlc = "Dharma"
+									has_dlc = "Wealth of Nations"
+								}
+							}
+						}
+						is_owned_by_trade_company = no
+					}
+					else = {
+						OR = {
+							NOT = { is_core = root }
+							unrest = 1
+						}
+					}
+					ROOT = {
+						NOT = {
+							num_of_owned_provinces_with = {
+								value = 5
+								trade_company_region = trade_company_west_india
+								if = {
+									limit = {
+										ROOT = {
+											OR = {
+												has_dlc = "Dharma"
+												has_dlc = "Wealth of Nations"
+											}
+										}
+									}
+									is_owned_by_trade_company = yes
+								}
+								else = {
+									is_core = root
+									NOT = { unrest = 1 }
+								}
+							}
+						}
+					}
+				}
+				AND = {
+					trade_company_region = trade_company_coromandel
+					if = {
+						limit = {
+							ROOT = {
+								OR = {
+									has_dlc = "Dharma"
+									has_dlc = "Wealth of Nations"
+								}
+							}
+						}
+						is_owned_by_trade_company = no
+					}
+					else = {
+						OR = {
+							NOT = { is_core = root }
+							unrest = 1
+						}
+					}
+					ROOT = {
+						NOT = {
+							num_of_owned_provinces_with = {
+								value = 5
+								trade_company_region = trade_company_coromandel
+								if = {
+									limit = {
+										ROOT = {
+											OR = {
+												has_dlc = "Dharma"
+												has_dlc = "Wealth of Nations"
+											}
+										}
+									}
+									is_owned_by_trade_company = yes
+								}
+								else = {
+									is_core = root
+									NOT = { unrest = 1 }
+								}
+							}
+						}
+					}
+				}
+				AND = {
+					trade_company_region = trade_company_east_india
+					if = {
+						limit = {
+							ROOT = {
+								OR = {
+									has_dlc = "Dharma"
+									has_dlc = "Wealth of Nations"
+								}
+							}
+						}
+						is_owned_by_trade_company = no
+					}
+					else = {
+						OR = {
+							NOT = { is_core = root }
+							unrest = 1
+						}
+					}
+					ROOT = {
+						NOT = {
+							num_of_owned_provinces_with = {
+								value = 5
+								trade_company_region = trade_company_east_india
+								if = {
+									limit = {
+										ROOT = {
+											OR = {
+												has_dlc = "Dharma"
+												has_dlc = "Wealth of Nations"
+											}
+										}
+									}
+									is_owned_by_trade_company = yes
+								}
+								else = {
+									is_core = root
+									NOT = { unrest = 1 }
+								}
+							}
+						}
+					}
+				}
+				AND = {
+					trade_company_region = trade_company_indonesia
+					if = {
+						limit = {
+							ROOT = {
+								OR = {
+									has_dlc = "Dharma"
+									has_dlc = "Wealth of Nations"
+								}
+							}
+						}
+						is_owned_by_trade_company = no
+					}
+					else = {
+						OR = {
+							NOT = { is_core = root }
+							unrest = 1
+						}
+					}
+					ROOT = {
+						NOT = {
+							num_of_owned_provinces_with = {
+								value = 5
+								trade_company_region = trade_company_indonesia
+								if = {
+									limit = {
+										ROOT = {
+											OR = {
+												has_dlc = "Dharma"
+												has_dlc = "Wealth of Nations"
+											}
+										}
+									}
+									is_owned_by_trade_company = yes
+								}
+								else = {
+									is_core = root
+									NOT = { unrest = 1 }
+								}
+							}
+						}
+					}
+				}
+			}
+			has_port = yes
+		}
+		trigger = {
+			if = {
+				limit = {
+					OR = {
+						has_dlc = "Dharma"
+						has_dlc = "Wealth of Nations"
+					}
+				}
+				num_of_owned_provinces_with = {
+					value = 5
+					trade_company_region = trade_company_west_india
+					is_owned_by_trade_company = yes
+				}
+				num_of_owned_provinces_with = {
+					value = 5
+					trade_company_region = trade_company_coromandel
+					is_owned_by_trade_company = yes
+				}
+				num_of_owned_provinces_with = {
+					value = 5
+					trade_company_region = trade_company_east_india
+					is_owned_by_trade_company = yes
+				}
+				num_of_owned_provinces_with = {
+					value = 5
+					trade_company_region = trade_company_indonesia
+					is_owned_by_trade_company = yes
+				}
+			}
+			else = {
+				num_of_owned_provinces_with = {
+					value = 5
+					trade_company_region = trade_company_west_india
+					is_core = root
+					NOT = { unrest = 1 }
+				}
+				num_of_owned_provinces_with = {
+					value = 5
+					trade_company_region = trade_company_coromandel
+					is_core = root
+					NOT = { unrest = 1 }
+				}
+				num_of_owned_provinces_with = {
+					value = 5
+					trade_company_region = trade_company_east_india
+					is_core = root
+					NOT = { unrest = 1 }
+				}
+				num_of_owned_provinces_with = {
+					value = 5
+					trade_company_region = trade_company_indonesia
+					is_core = root
+					NOT = { unrest = 1 }
+				}
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = ita_india
+				duration = 7300
+			}
+			west_guangdong_area = {
+				limit = {
+					NOT = { is_core = root }
+					NOT = { is_permanent_claim = root }
+				}
+				add_permanent_claim = root
+			}
+			guangdong_area = {
+				limit = {
+					NOT = { is_core = root }
+					NOT = { is_permanent_claim = root }
+				}
+				add_permanent_claim = root
+			}
+			fujian_area = {
+				limit = {
+					NOT = { is_core = root }
+					NOT = { is_permanent_claim = root }
+				}
+				add_permanent_claim = root
+			}
+			zhejiang_area = {
+				limit = {
+					NOT = { is_core = root }
+					NOT = { is_permanent_claim = root }
+				}
+				add_permanent_claim = root
+			}
+			custom_tooltip = emp_hab_indian_trading_effect_tooltip
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							superregion = india_superregion
+							superregion = east_indies_superregion
+						}
+						NOT = { owned_by = root }
+						NOT = { is_core = root }
+						NOT = { is_claim = root }
+						any_neighbor_province = {
+							owned_by = root
+						}
+					}
+					add_permanent_claim = root
+				}
+			}
+		}
+	}
+	
+	ita_indies = {
+	    icon = mission_rb_take_indian_coast
+		required_missions = { ita_india }
+		position = 13
+		
+		provinces_to_highlight = {
+			province_id = 1361
+			has_discovered = ROOT
+		}
+		
+		trigger = { 
+			1361 = {		# Straits of Johor
+				is_strongest_trade_power = ROOT
+			}
+		}
+	
+		effect = {
+			add_country_modifier = {
+				name = "por_johor_dominance"
+				duration = 7300
+			}
+		}
+	}
+	
+}
+
+ita_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = ITA
+	}
+	has_country_shield = yes
+	
+	ita_north = {
+	    icon = kingdom_of_lombardy
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+		    piedmont_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    liguria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    lombardy_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    venetia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    po_valley_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    tuscany_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    emilia_romagna_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = piedmont_area
+				area = liguria_area
+				area = lombardy_area 
+				area = venetia_area
+				area = po_valley_area
+				area = tuscany_area
+				area = emilia_romagna_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ita_unified"
+				duration = 7300
+			}
+			italy_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ita_roman = {
+	    icon = answer_the_roman_question
+		required_missions = { ita_north }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 118
+				
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			118 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_legitimacy = 15
+			custom_tooltip = ita_move_capital_rome
+			set_country_flag = ita_move_capital
+		}
+	}
+	
+	ita_eternal_city = {
+	    icon = mission_early_modern_university
+		required_missions = { ita_roman }
+		position = 3
+		
+		trigger = {
+			118 = {
+				is_capital_of = ROOT
+			}
+			118 = {
+				development = 40
+			}
+			118 = {
+				has_trade_building_trigger = yes
+			}
+			118 = {
+				has_tax_building_trigger = yes
+			}
+			118 = {
+				has_production_building_trigger = yes	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 118
+			}
+		}
+		
+		effect = {
+			118 = {
+				add_province_modifier = {
+					name = "ita_rome"
+					duration = -1
+				}
+			}
+			118 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	ita_sicily = {
+	    icon = mission_combat_barbary_piracy
+		required_missions = { ita_liberate }
+		position = 4
+		
+		trigger = {
+		    sicily_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    western_sicily_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = western_sicily_area
+				area = sicily_area
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+		    sicily_area = {
+				change_religion = ROOT
+			}
+		    western_sicily_area = {
+				change_religion = ROOT
+			}
+		}
+	}
+	
+	ita_complete = {
+	    icon = complete_the_risorgimento
+		required_missions = { ita_sicily }
+		position = 5
+		
+		trigger = {
+		    italy_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = ROOT
+				culture_group = latin
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = italy_region
+			}
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { religion = ROOT }
+				NOT = { culture_group = latin }
+			}
+		}
+		
+		effect = {
+			grant_all_mana = {
+				mana = 150
+			}
+			add_country_modifier = {
+				name = "ita_risorgimento"
+				duration = -1
+			}
+		}
+	}
+	
+	ita_empire = {
+	    icon = a_real_roman_empire
+		required_missions = { ita_complete }
+		position = 6
+		
+		trigger = {
+			if = {
+				limit = {
+					has_dlc = "Common Sense"
+				}
+				government_rank = 3
+			}
+			else = {
+				total_development = 1000
+			}
+		}
+		
+		effect = {
+			set_country_flag = ita_can_form_empire
+			add_prestige = 25
+			add_legitimacy = 25
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			custom_tooltip = ita_rename_empire
+		}
+	}
+	
+	ita_baleares = {
+	    icon = mission_invade_island
+		required_missions = { ita_navy }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				area = baleares_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    baleares_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ita_grip"
+				duration = 7300
+			}
+		}
+	}
+}
+
+ita_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = ITA
+	}
+	has_country_shield = yes
+	
+	ita_adriatic = {
+	    icon = reclaim_the_ducal_lands
+		required_missions = { ita_north ita_defenses }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4738
+				province_id = 130
+				
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			4738 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			130 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			130 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			east_adriatic_coast_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ita_dalmatia = {
+	    icon = dalmatian_conquest
+		required_missions = { ita_adriatic }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = east_adriatic_coast_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    east_adriatic_coast_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "ita_dalmatia"
+				duration = 7300
+			}
+			albania_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ita_balkan = {
+	    icon = capture_adriatic_ports
+		required_missions = { ita_dalmatia }
+		position =  4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = albania_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    albania_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ita_expansionism"
+				duration = 7300
+			}
+		}
+	}
+	
+	ita_navy = {
+	    icon = a_worthy_navy
+		required_missions = { }
+		position = 7
+		
+		trigger = {
+			navy_size_percentage = 0.9
+			num_of_heavy_ship = 5
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ita_regia"
+				duration = -1
+			}
+			tunisia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			djerba_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			baleares_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ita_mare = {
+	    icon = mission_rb_mediterranean_authority
+		required_missions = { ita_navy ita_baleares }
+		position = 9
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 137
+					137 = {
+						NOT = { is_strongest_trade_power = ROOT }
+					}
+				}
+				AND = {
+					province_id = 1295
+					1295 = {
+						NOT = { is_strongest_trade_power = ROOT }
+					}
+				}
+				AND = {
+					province_id = 341
+					341 = {
+						NOT = { is_strongest_trade_power = ROOT }
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			137 = {	
+				is_strongest_trade_power = ROOT
+			}
+			1295 = {	
+				is_strongest_trade_power = ROOT
+			}
+			341 = {	
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		
+		effect = {
+			add_mercantilism = 10
+			add_country_modifier = {
+				name = "ita_nostrum"
+				duration = 9125
+			}
+		}
+	}
+	
+	ita_terra = {
+	    icon = terra_santa
+		required_missions = { ita_egypt }
+		position = 11
+		
+		provinces_to_highlight = {
+			OR = {
+				area = palestine_area
+				area = syria_area
+				area = aleppo_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			palestine_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			syria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			aleppo_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_prestige = 50
+			add_country_modifier = {
+				name = "ita_holy"
+				duration = -1
+			}
+			if = {
+				limit = {
+					379 = {
+						NOT = { religion = ROOT }
+					}
+				}
+				379 = {
+					change_religion = ROOT
+				}
+			}
+		}
+	}
+
+
+}
+
+
+ita_fifth_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = ITA
+	}
+	has_country_shield = yes
+	
+	ita_defenses = {
+	    icon = alpine_defenses
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				area = liguria_area
+				area = piedmont_area
+				area = lombardy_area
+				area = po_valley_area
+				area = venetia_area
+			}
+			owned_by = root
+			province_has_current_tech_fort_trigger = no
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					area = liguria_area
+					area = piedmont_area
+					area = lombardy_area
+					area = po_valley_area
+					area = venetia_area
+				}
+				province_has_current_tech_fort_trigger = yes
+			}
+		}
+	
+		effect = {
+			add_country_modifier = {
+				name = "ita_fort"
+				duration = -1
+			}
+			tirol_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ita_tirol = {
+	    icon = claim_tirol
+		required_missions = { ita_defenses }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tirol_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    tirol_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ita_tirol"
+				duration = 7300
+			}
+			provence_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			savoy_dauphine_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ita_transalpine = {
+	    icon = spagna_tarraconense
+		required_missions = { ita_tirol }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = savoy_dauphine_area
+				area = provence_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    savoy_dauphine_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			provence_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_accepted_culture_or_dip_power = {
+				culture = aquitaine
+			}
+		}
+	}
+	
+	ita_tunis = {
+	    icon = africa_proconsulare
+		required_missions = { ita_navy }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tunisia_area
+				area = djerba_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    tunisia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			djerba_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_country_modifier = {
+				name = ita_carthage
+				duration = 7300
+			}
+			tripolitania_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ita_tripolitania = {
+	    icon = mission_control_the_barbary_coast
+		required_missions = { ita_tunis }
+		position = 9
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tripolitania_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    tripolitania_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			354 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			2954 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			341 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			fezzan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ita_egypt = {
+	    icon = invade_egypt
+		required_missions = { ita_tripolitania }
+		position = 10
+		
+		provinces_to_highlight = {
+			OR = {
+				region = egypt_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    egypt_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ita_granary"
+				duration = 7300
+			}
+			horn_of_africa_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ita_ethiopia = {
+	    icon = mission_envoy_to_ethiopia
+		required_missions = { ita_egypt }
+		position = 11
+		
+		provinces_to_highlight = {
+			OR = {
+				region = horn_of_africa_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    horn_of_africa_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ita_admin"
+				duration = 7300
+			}
+		}
+	}
+	
+	ita_somaliland = {
+	    icon = mission_arabian_sea_trade
+		required_missions = { ita_ethiopia }
+		position = 12
+
+		provinces_to_highlight = {
+			province_id = 4346
+		}
+		
+		trigger = {
+			4346 = {	
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		effect = {
+			add_treasury = 500
+		}
+	}
+	
+}

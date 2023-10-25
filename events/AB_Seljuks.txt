@@ -1,0 +1,610 @@
+namespace = ab_seljuk
+normal_or_historical_nations = yes
+
+#BranchingMissions
+country_event = {
+	id = ab_seljuk.1
+	title = ab_seljuk.1.t
+	desc = ab_seljuk.1.d
+	picture = AB_SELJUK_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_seljuk.1.a
+		custom_tooltip = SELJUK_ARABIZATION
+		set_country_flag = seljuk_arab
+		move_turkish_into_levantine_group = yes
+		hidden_effect = {
+			swap_non_generic_missions = yes
+			maghreb_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	option = {
+		name = ab_seljuk.1.b
+		custom_tooltip = SELJUK_TURAN
+		set_country_flag = seljuk_turan
+		hidden_effect = {
+			swap_non_generic_missions = yes
+			crimea_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			caucasia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = {  is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ruthenia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_claim = ROOT
+			}
+			russia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_claim = ROOT
+			}
+			ural_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+#Unification of Turan
+country_event = {
+	id = ab_seljuk.2
+	title = ab_seljuk.2.t
+	desc = ab_seljuk.2.d
+	picture = AB_SELJUK_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_seljuk.2.a
+		change_tag = TRN
+		hidden_effect = {
+			override_country_name = TRN
+		}
+		swap_free_idea_group = yes
+		add_country_modifier = {
+			name = "sel_turan"
+			duration = -1
+		}
+	}
+	
+}
+
+#Great Sultan of India
+country_event = {
+	id = ab_seljuk.3
+	title = ab_seljuk.3.t
+	desc = ab_seljuk.3.d
+	picture = AB_MAHAL_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_seljuk.3.a
+		custom_tooltip = SEL_TAJ
+		add_ruler_modifier = {
+			name = "sel_sultan"
+			duration = -1
+		}
+			india_superregion  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		hidden_effect = {
+			524 = {
+				change_religion = ROOT
+				add_great_project_tier = {
+					type = taj_mahal
+					tier = 3
+				}
+			}
+		}
+	}
+	
+}
+
+#Convert Beyliks
+province_event = {
+	id = ab_seljuk.4
+	title = ab_seljuk.4.t
+	desc = ab_seljuk.4.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		owner = {
+			mission_completed = seljuk_dominate_beyliks
+		}
+		culture = turkish
+		NOT = {
+			religion = sunni
+		}
+		NOT = { has_province_modifier = seluk_convert }
+	}
+	
+	option = {
+		name = ab_seljuk.4.a
+		add_province_modifier = {
+			name = "seluk_convert"
+			duration = -1
+		}
+	}
+	
+}
+
+
+#Convert Beyliks 2
+province_event = {
+	id = ab_seljuk.5
+	title = ab_seljuk.5.t
+	desc = ab_seljuk.5.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		owner = {
+			mission_completed = seljuk_dominate_beyliks
+		}
+		culture = turkish
+		religion = sunni
+		has_province_modifier = seluk_convert
+	}
+	
+	option = {
+		name = ab_seljuk.3.a
+		remove_province_modifier = seluk_convert
+	}
+	
+}
+
+#Persia
+country_event = {
+	id = ab_seljuk.6
+	title = ab_seljuk.6.t
+	desc = ab_seljuk.6.d
+	picture = AB_PERSIA_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_seljuk.6.a
+		persia_region = {
+			add_devastation = 50
+		}
+		set_government_rank = 3
+		persia_region = {
+			add_province_modifier = {
+				name = seljuk_islamization
+				duration = -1
+			}
+		}
+		khorasan_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+	
+}
+
+# Protector of the Pilgrimage
+country_event = {
+	id = ab_seljuk.7
+	title = ab_seljuk.7.t
+	desc = ab_seljuk.7.d
+	picture = HAJJ_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = SEL
+			was_tag = SEL
+			tag = RUM
+		}
+		is_at_war = no
+		owns = 361
+		owns = 358
+		owns = 382
+		owns = 379
+		religion_group = muslim
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+
+	option = {
+		name = ab_seljuk.7.a
+		add_adm_power = 200
+		add_prestige = 25
+		add_legitimacy = 25
+		add_piety = 0.25
+	}
+}
+
+# Fate of the Patriarchate
+country_event = {
+	id = ab_seljuk.8
+	title = ab_seljuk.8.t
+	desc = ab_seljuk.8.d
+	picture = ORTHODOX_eventPicture
+	
+	
+	fire_only_once = yes
+
+	
+	trigger ={
+		OR = {
+			tag = SEL
+			was_tag = SEL
+			tag = RUM
+		}
+		capital = 151
+		religion_group = muslim
+		NOT = { exists = BYZ }
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	}
+	
+	
+	option = {		# Allow the Patriarchate to exist and keep the current Patriarch
+		name = ab_seljuk.8.a
+		ai_chance = { factor = 50 }
+		capital_scope = {
+			add_base_manpower = 3
+		}
+		every_known_country = {
+			limit = {
+				religion = orthodox
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = allows_the_patriarchate
+			}
+		}
+	}
+	option = {		# Close down the Patriarchate and confiscate its properties
+		name = ab_seljuk.8.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0.5
+				any_neighbor_country = {
+					religion = orthodox
+					army_size = TUR
+				}
+			}
+		}
+		add_years_of_income = 0.5
+		capital_scope = {
+			add_base_tax = 1
+		}
+		every_known_country = {
+			limit = {
+				religion = orthodox
+			}
+			add_opinion = {
+				who = ROOT
+				modifier = closed_down_the_patriarchate
+			}
+		}
+	}
+}
+
+# Military Reforms
+country_event = {
+	id = ab_seljuk.9
+	title = ab_seljuk.9.t
+	desc = ab_seljuk.9.d
+	picture = REFORM_eventPicture
+	
+	fire_only_once = yes
+
+	trigger ={
+		tag = SEL
+		is_year = 1450
+		NOT = { is_year = 1550 }
+		MIL = 4
+	}
+	
+	mean_time_to_happen = {
+		months = 300
+	}
+	
+	
+	option = {		# Great Army Reform
+		name = "flavor_tur.EVTOPTA3354"
+		ai_chance = { factor = 50 }
+		add_army_professionalism = 0.02
+		add_country_modifier = {
+			name = tur_army_reform
+			duration = 7300
+		}
+	}
+	option = {		# Reform Army and Navy
+		name = "flavor_tur.EVTOPTB3354"
+		ai_chance = { factor = 25 }
+		add_army_professionalism = 0.02
+		add_country_modifier = {
+			name = tur_army_and_navy_reform
+			duration = 7300
+		}
+	}
+	option = {		# Great Navy Reform
+		name = "flavor_tur.EVTOPTC3354"
+		ai_chance = { factor = 25 }
+		add_army_professionalism = 0.02
+		add_country_modifier = {
+			name = tur_navy_reform
+			duration = 7300
+		}
+	}
+}
+
+# Enderun Academy
+country_event = {
+	id = ab_seljuk.10
+	title = ab_seljuk.10.t
+	desc = ab_seljuk.10.d
+	picture = UNIVERSITY_eventPicture
+	
+	
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			was_tag = SEL
+			tag = SEL
+			tag = RUM
+		}
+		religion_group = muslim
+		capital = 151
+		has_country_modifier = the_devshirme_system
+	}
+	
+	mean_time_to_happen = {
+		months = 100
+	}
+	
+	
+	option = {		# Found the Enderun
+		name = "flavor_tur.EVTOPTA3357"
+		add_years_of_income = -0.10
+		add_army_professionalism = 0.02
+		add_country_modifier = {
+			name = enderun_academy
+			duration = 3650
+		}
+		
+	}
+	option = {		# Expand the Timariot System instead
+		name = "flavor_tur.EVTOPTB3357"
+		add_army_professionalism = 0.02
+		add_country_modifier = {
+			name = expanded_timariot_system
+			duration = 3650
+		}		
+	}
+}
+
+#Akgunid formed Rum - return to Theocracy
+country_event = {
+	id = ab_seljuk.11
+	title = ab_seljuk.11.t
+	desc = ab_seljuk.11.d
+	picture = AB_SELJUK_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = RUM
+		was_tag = AKG
+	}
+	
+	option = {
+		name = ab_seljuk.11.a
+		change_government = theocracy
+		add_government_reform = akgunid_reform
+	}
+	option = {
+		name = ab_seljuk.11.b
+	}
+}
+
+#Zangid formed Rum - return to Republic
+country_event = {
+	id = ab_seljuk.12
+	title = ab_seljuk.12.t
+	desc = ab_seljuk.12.d
+	picture = AB_SELJUK_eventPicture
+	
+	fire_only_once = yes
+
+	trigger = {
+		tag = RUM
+		was_tag = ZNG
+	}
+	
+	option = {
+		name = ab_seljuk.12.a
+		change_government = republic
+		add_government_reform = zangid_republic
+	}
+	option = {
+		name = ab_seljuk.12.b
+	}
+}
+
+#Fall of Constantinople
+country_event = {
+	id = ab_seljuk.13
+	title = ab_seljuk.13.t
+	desc = ab_seljuk.13.d
+	picture = AB_MEHMET_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_seljuk.13.a
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		add_ruler_modifier = {
+			name = seljuk_fatih
+			duration = -1
+		}
+		custom_tooltip = SELJUK_CAPITAL
+		BYZ = {
+			add_stability = -1
+			add_country_modifier = {
+				name = seljuk_byz_fall
+				duration = 9125
+			}
+		}
+	}
+}
+
+#Seljuk Caliphate
+country_event = {
+	id = ab_seljuk.14
+	title = ab_seljuk.14.t
+	desc = ab_seljuk.14.d
+	picture = DEVLET_I_RUM_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_seljuk.14.a
+		custom_tooltip = SEL_ADOPT_TITLE
+		add_historical_rival = ADU
+		add_country_modifier = {
+			name = sel_caliphate
+			duration = -1
+		}
+		hidden_effect = {
+			ADU = {
+				add_historical_rival = ROOT
+			}
+		}
+		country_event = { id = ab_seljuk.16 }
+	}
+}
+
+#Rumi Caliphate
+country_event = {
+	id = ab_seljuk.15
+	title = ab_seljuk.15.t
+	desc = ab_seljuk.15.d
+	picture = DEVLET_I_RUM_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_seljuk.15.a
+		add_historical_rival = ADU
+		custom_tooltip = RUM_ARABIZATION
+		move_turkish_into_levantine_group = yes
+		custom_tooltip = SEL_ADOPT_TITLE
+		add_country_modifier = {
+			name = rum_caliphate
+			duration = -1
+		}
+		hidden_effect = {
+			ADU = {
+				add_historical_rival = ROOT
+			}
+			ROOT = {
+				add_historical_rival = ADU
+			}
+		}
+	}
+}
+
+#New Head of Ummah
+country_event = {
+	id = ab_seljuk.16
+	title = ab_seljuk.16.t
+	desc = ab_seljuk.16.d
+	picture = EYALET_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_seljuk.16.a
+		custom_tooltip = tur_legalism_path_tt
+		hidden_effect = {
+			set_country_flag = tur_chose_legalism
+			clr_country_flag = tur_chose_mysticism
+			clr_country_flag = tur_non_muslim_path_flag
+		}
+		swap_non_generic_missions = yes
+		add_country_modifier = {
+			name = tur_embraced_legalism_modifier
+			duration = 18250
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+
+	option = {
+		name = ab_seljuk.16.b
+		custom_tooltip = tur_mysticism_path_tt
+		hidden_effect = {
+			clr_country_flag = tur_chose_legalism
+			set_country_flag = tur_chose_mysticism
+			clr_country_flag = tur_non_muslim_path_flag
+		}
+		swap_non_generic_missions = yes
+		add_country_modifier = {
+			name = tur_embraced_mysticism_modifier
+			duration = 18250
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}

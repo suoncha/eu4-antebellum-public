@@ -1,0 +1,251 @@
+EST_missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = EST
+	}
+	has_country_shield = yes
+	
+	est_livonia = {
+		icon = mission_crusade_for_varna
+		position = 1
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			OR = {
+			area = livonia_area
+			area = curonia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			livonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			curonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			lithuania_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			samogitia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	est_lithuania = {
+		icon = mission_eastern_european_city
+		position = 2
+		required_missions = { est_livonia }
+		
+		provinces_to_highlight = {
+			OR = {
+			area = lithuania_area
+			area = samogitia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			lithuania_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			samogitia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "prr_baltic"
+				duration = 7300
+			}
+			east_prussia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			west_prussia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	est_prussia = {
+		icon = mission_conquer_50_development
+		position = 3
+		required_missions = { est_lithuania }
+		
+		provinces_to_highlight = {
+			OR = {
+			area = east_prussia_area
+			area = west_prussia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			east_prussia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_prussia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_treasury = 350
+			pskov_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	est_pskov = {
+		icon = mission_consolidate_the_state
+		position = 4
+		required_missions = { est_prussia }
+		
+		provinces_to_highlight = {
+			area = pskov_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			pskov_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			novgorod_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	est_novgorod = {
+		icon = mission_conquer_novgorod
+		position = 5
+		required_missions = { est_pskov }
+		
+		provinces_to_highlight = {
+			area = novgorod_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			novgorod_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_dip_power = 100
+			add_mercantilism = 3
+		}
+	}
+}
+
+EST_missions_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = EST
+	}
+	has_country_shield = yes
+	
+	est_finland = {
+		icon = mission_conquer_finland
+		position = 3
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			area = finland_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			finland_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+		    add_accepted_culture_or_dip_power = {
+		    	culture = finnish
+		    }
+			bothnia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	est_both = {
+		icon = mission_rb_conquer_the_highlands
+		position = 5
+		required_missions = { est_finland }
+		
+		provinces_to_highlight = {
+			area = bothnia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			bothnia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			grant_all_mana = {
+				mana = 75
+			}
+		}
+	}
+}

@@ -1,0 +1,177 @@
+LVA_missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = LVA
+	}
+	has_country_shield = yes
+	
+	lva_riga = {
+		icon = mission_conquer_riga
+		position = 1
+		required_missions = { }
+		
+		trigger = {
+			owns = 38
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 38
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_treasury = 350
+			estonia_ingria_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lva_estonia = {
+		icon = mission_crusade_for_varna
+		position = 2
+		required_missions = { lva_riga }
+		
+		provinces_to_highlight = {
+			area = estonia_ingria_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			estonia_ingria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			samogitia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lithuania_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lva_lithuania = {
+		icon = mission_eastern_european_city
+		position = 3
+		required_missions = { lva_estonia }
+		
+		provinces_to_highlight = {
+			OR = {
+			area = lithuania_area
+			area = samogitia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			lithuania_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			samogitia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "prr_baltic"
+				duration = 7300
+			}
+			east_prussia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_prussia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	lva_prussia = {
+		icon = mission_conquer_50_development
+		position = 4
+		required_missions = { lva_lithuania }
+		
+		provinces_to_highlight = {
+			OR = {
+			area = east_prussia_area
+			area = west_prussia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			east_prussia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_prussia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+		}
+	}
+	
+	lva_unite = {
+		icon = mission_unite_home_region
+		position = 5
+		required_missions = { lva_prussia }
+		
+		provinces_to_highlight = {
+			region = baltic_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			religious_unity = 1
+			stability = 1
+			baltic_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_legitimacy = 15
+			add_country_modifier = {
+				name = "prr_pagan_fury"
+				duration = -1
+			}
+		}
+	}
+	
+}

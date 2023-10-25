@@ -1,0 +1,269 @@
+namespace = ab_novgorod
+normal_or_historical_nations = yes
+
+#Remove Center
+province_event = {
+	id = ab_novgorod.0
+	title = none
+	desc = none
+	picture = none
+	hidden = yes	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_reform_center = orthodox
+	}
+	
+	option = { }
+}
+
+#Boyar Insurrection
+country_event = {
+	id = ab_novgorod.1
+	title = ab_novgorod.1.t
+	desc = ab_novgorod.1.d
+	picture = AB_NOVGOROD_eventPicture
+
+	major = yes
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = NOV
+		NOT = { mil = 3 }
+		NOT = { stability = 1 }
+		NOT = { legitimacy_equivalent = 80 }
+	}
+	
+	option = {
+		name = ab_novgorod.1.a
+		ai_chance = {
+			factor = 0.9
+		}
+		add_stability = -2
+			NOV = {
+				if = {
+					limit = {
+						NOT = { government = monarchy }
+					}
+					change_government = monarchy
+				}
+				add_government_reform = principality
+			}
+		define_ruler = {
+			name = "Rostislav"
+			dynasty = "Rurikovich"
+			adm = 3
+			dip = 3
+			mil = 4
+			age = 28
+			claim = 75
+		}
+		add_ruler_modifier = {
+			name = ab_novgorod_liberator
+			duration = -1
+		}
+		    russia_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+	}
+	
+	option = {
+		name = ab_novgorod.1.b
+		ai_chance = {
+			factor = 0.1
+		}
+		add_stability = 1
+		add_republican_tradition = 15
+		random_owned_province = {
+			spawn_rebels = {
+				type = noble_rebels
+				size = 3
+				leader = "Rostislav Rurikovich"
+			}
+		}
+	}
+}
+
+#Bogdangrad
+country_event = {
+	id = ab_novgorod.2
+	title = ab_novgorod.2.t
+	desc = ab_novgorod.2.d
+	picture = CITY_DEVELOPMENT_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = NOV
+			was_tag = NOV
+		}
+		mission_completed = nov_build_navy
+		owns = 33
+		33 = {
+			development = 30
+		}
+	}
+	
+	option = {
+		name = ab_novgorod.2.a
+		33 = {
+			add_base_production = 3 
+		}
+		33 = {
+			change_province_name = "Bogdangrad"
+		}
+		33 = {
+			rename_capital = "Bogdangrad"
+		}
+		33 = {
+			add_province_modifier = {
+				name = rus_bogdangrad
+				duration = -1
+			}
+		}
+	}
+}
+
+#The Patriarchate of All Rus'
+country_event = {
+	id = ab_novgorod.3
+	title = ab_novgorod.3.t
+	desc = ab_novgorod.3.d
+	picture = ORTHODOX_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_rus.8.a
+		add_patriarch_authority = 0.25
+		add_papal_influence = 25
+		add_country_modifier = {
+			name = rus_independent_patriarchate
+			duration = -1
+		}
+		if = {
+			limit = {
+				religion = orthodox
+			}
+			custom_tooltip = RUS_METROPOLITAN
+		}
+	}
+	
+}
+
+#Restoration of Rus
+country_event = {
+	id = ab_novgorod.4
+	title = ab_novgorod.4.t
+	desc = ab_novgorod.4.d
+	picture = AB_RUS_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_novgorod.4.a
+		change_mil = 1
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		add_country_modifier = {
+			name = rus_kievan_rus
+			duration = 9125
+		}
+	}
+}
+
+#End of the Crusade
+country_event = {
+	id = ab_novgorod.5
+	title = ab_novgorod.5.t
+	desc = ab_novgorod.5.d
+	picture = ORTHODOX_ICON_FLAG_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_novgorod.5.a
+		custom_tooltip = RUS_STOCKHOLM
+		add_country_modifier = {
+			name = rus_scandinavian_hegemon
+			duration = -1
+		}
+		hidden_effect = {
+			1 = {
+				add_reform_center = orthodox
+			}
+			1 = {
+				province_event = {
+					id = ab_novgorod.0
+					days = 9125
+				}
+			}
+		}
+	}
+}
+
+#The Destruction of Sarai
+country_event = {
+	id = ab_novgorod.6
+	title = ab_novgorod.6.t
+	desc = ab_novgorod.6.d
+	picture = ORTHODOX_ICON_FLAG_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_novgorod.6.a
+		add_prestige = 25
+		466 = {
+			add_devastation = 100
+		}
+		466 = {
+			change_culture = ROOT
+		}
+		466 = {
+			change_religion = ROOT
+		}
+		add_ruler_modifier = {
+			name = rus_mongolbreaker
+			duration = -1
+		}
+		custom_tooltip = NOV_HORDE
+		hidden_effect = {
+			every_province = {
+				limit = {
+					is_core = GLH
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	option = {
+		name = ab_novgorod.6.b
+		add_stability_or_adm_power = yes
+		add_country_modifier = {
+			name = rus_bloodshed
+			duration = 9125
+		}
+	}
+	
+}

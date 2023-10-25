@@ -1,0 +1,36 @@
+# Unite Persia Prince
+cb_russian_unification = {
+	valid_for_subject = no
+
+	prerequisites_self = {
+		is_free_or_tributary_trigger = yes
+		OR = {
+			has_reform = principality
+			has_reform = veche_republic
+			has_reform = metropoliskiev
+			has_reform = principality_vol
+		}
+	}
+
+	prerequisites = {
+		FROM = {
+			NOT = { is_subject_of = ROOT }
+			OR = {
+				has_reform = principality
+				has_reform = veche_republic
+				has_reform = metropoliskiev
+				has_reform = principality_vol
+			}
+			any_owned_province = {
+				OR = {
+					region = russia_region
+					region = ruthenia_region
+				}
+			}
+			NOT = { has_country_modifier = the_mandate_of_heaven }
+		}
+		is_neighbor_of = FROM
+	}
+
+	war_goal = superiority_russian_unification
+}

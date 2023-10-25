@@ -1,0 +1,445 @@
+ab_ainu_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = ANU
+			was_tag = ANU
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	ainu_retaliation = {
+		icon = mission_native_build_army_mission
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+		    num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ainu_retaliation
+				duration = 5475
+			}
+			thohoku_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ainu_invasion = {
+		icon = mission_eronin
+		position = 2
+		required_missions = { ainu_retaliation }
+		
+		provinces_to_highlight = {
+			area = thohoku_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			thohoku_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = ainu_invade
+				duration = 9125
+			}
+			define_advisor = {
+				type = army_reformer
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+			hokuriku_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kanto_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_kanto_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_chubu_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			chubu_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AINU_ARMY
+			tooltip = {
+				create_general = { tradition = 50 }
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								capital_scope = { region = japan_region }
+								army_size = ROOT
+							}
+						}
+					}
+					create_general = { tradition = 50 }
+				}
+			}
+		}
+	}
+	
+	ainu_defeat = {
+		icon = mission_katana
+		position = 3
+		required_missions = { ainu_invasion }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = chubu_area
+				area = eastern_chubu_area
+				area = eastern_kanto_area
+				area = kanto_area
+				area = hokuriku_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			chubu_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			eastern_chubu_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			eastern_kanto_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			kanto_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			hokuriku_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 20
+			add_country_modifier = {
+				name = ainu_seasoned
+				duration = -1
+			}
+			japan_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ainu_twilight = {
+		icon = mission_fuji
+		position = 4
+		required_missions = { ainu_defeat }
+		
+		provinces_to_highlight = {
+			region = japan_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = japan_region
+				value = 40
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			hokkaido_area = {
+				add_base_manpower = 3
+			}
+			add_country_modifier = {
+				name = "ainu_rising"
+				duration = -1
+			}
+		}
+	}
+	
+	ainu_restoration = {
+		icon = mission_unite_home_region
+		position = 5
+		required_missions = { ainu_twilight }
+		
+		provinces_to_highlight = {
+			region = japan_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			japan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			change_tag = JOO
+			change_government = monarchy
+			add_government_reform = ezochi_empire
+			hidden_effect = {
+				complete_mission = ainu_restoration
+			}
+			country_event = {
+				id = ideagroups.1
+			}
+			set_government_rank = 2
+			add_ruler_modifier = {
+				name = "ainu_jomon"
+				duration = -1
+			}
+			korea_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+ab_ainu_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = ANU
+			was_tag = ANU
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	ainu_reform = {
+		icon = mission_extent_yasak_to_the_east
+		position = 1
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			share_of_starting_income = 1.5
+			capital_scope = {
+				num_of_times_improved = 5
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_institution_embracement = {
+					which = feudalism
+					value = 100
+				}
+			}
+			add_country_modifier = {
+				name = "ainu_reforms"
+				duration = 9125
+			}
+		}
+	}
+	
+	ainu_organize = {
+		icon = mission_collect_yasak
+		position = 2
+		required_missions = { ainu_reform }
+		
+		provinces_to_highlight = {
+			NOT = {
+				OR = {
+					has_tax_building_trigger = yes
+					has_production_building_trigger = yes
+				}
+			}
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				value = 15
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_prosperity = 100
+			}
+			add_country_modifier = {
+				name = "ainu_prosperity"
+				duration = 9125
+			}
+		}
+	}
+	
+	ainu_resettle = {
+		icon = mission_che_the_cave_country
+		position = 3
+		required_missions = { ainu_organize }
+		
+		provinces_to_highlight = {
+			NOT = {
+				culture = ROOT
+			}
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				culture = ROOT
+				value = 20
+			}
+		    japan_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			japan_region = {
+				add_province_modifier = {
+					name = "ainu_resettle"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	ainu_exploration = {
+		icon = mission_polynesian_navy_build
+		position = 4
+		required_missions = { }
+		
+		trigger = {
+			navy_size_percentage = 1
+		    OR = {
+				exploration_ideas = 1
+				num_of_explorers = 1
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AINU_SETTLE
+			add_country_modifier = {
+				name = "ainu_colonial"
+				duration = 9125
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						1033 = {
+							is_empty = yes
+						}
+					}
+					1033 = {
+						cede_province = ROOT
+						add_core = ROOT
+					}
+				}
+				if = {
+					limit = {
+						1032 = {
+							is_empty = yes
+						}
+					}
+					1032 = {
+						cede_province = ROOT
+						add_core = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+	ainu_colonize_pacific = {
+		icon = mission_look_west
+		position = 5
+		required_missions = { ainu_exploration }
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = oceanea_region
+				value = 5
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = oceanea_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_explorer = { tradition = 50 }
+			add_country_modifier = {
+				name = "ainu_claim"
+				duration = 18250
+			}
+		}
+	}
+	
+}

@@ -1,0 +1,92 @@
+zangid_republic = {
+	icon = "aduceremonial"
+	allow_normal_conversion = no
+	modifiers = {
+		max_absolutism = -25
+		development_cost = -0.1
+		production_efficiency = 0.05
+	}
+	valid_for_nation_designer = yes
+	lock_level_when_selected = yes
+	nation_designer_cost = 40
+	maintain_dynasty = yes
+	royal_marriage = yes
+	potential = {
+		NOT = { map_setup = map_setup_random }
+		OR = {
+			tag = ZNG
+			was_tag = ZNG
+		}
+	}
+	boost_income = yes
+	factions = {
+		mr_aristocrats
+		mr_traders
+		mr_guilds
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Res Publica"
+			NOT = { has_dlc = "Mare Nostrum" }
+		}
+		can_use_trade_post = yes
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Mare Nostrum"
+			NOT = { has_dlc = "Res Publica" }
+		}
+		can_form_trade_league = yes
+		trade_city_reform = trading_city
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Res Publica"
+			has_dlc = "Mare Nostrum"
+		}
+		can_use_trade_post = yes
+		can_form_trade_league = yes
+		trade_city_reform = trading_city
+	}
+	custom_attributes = {
+		enables_plutocratic_idea_group = yes
+		enables_aristocratic_idea_group = no
+		lottery_election = yes
+		election_on_death = yes
+		enables_nepotism = yes
+		is_merchant_republic = yes
+	}
+	has_term_election = no
+}
+
+zangid_virtues = {
+	icon = "aduforeignscholar"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ZNG
+			was_tag = ZNG
+		}
+	}
+	modifiers = {
+		prestige_decay = -0.01
+		candidate_random_bonus = 2
+
+	}
+}
+
+zangid_power = {
+	icon = "adulegalsystem"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ZNG
+			was_tag = ZNG
+		}
+	}
+	modifiers = {
+		governing_capacity = 50
+		republican_tradition = 0.3
+
+	}
+}

@@ -1,0 +1,91 @@
+lusatia_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = SOR
+	}
+	has_country_shield = yes
+	
+	sor_independence = {
+	    icon = mission_rb_conquer_the_highlands
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+		    is_subject = no
+		}
+		
+		effect = {
+			add_dip_power = 50
+			add_country_modifier = {
+				name = sor_independence
+				duration = 5475
+			}
+			mittelmark_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	sor_barlin = {
+	    icon = mission_unite_home_region
+		required_missions = { sor_independence }
+		position = 3
+		
+		trigger = {
+		    mittelmark_area = {
+			    type = all
+				is_core = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = mittelmark_area
+			NOT = { is_core = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 10
+			custom_tooltip = SOR_CORES
+			hidden_effect = {
+				every_province = {
+					limit = {
+						is_core = VLT
+					}
+					add_territorial_core = ROOT
+				}
+			}
+		}
+	}
+	
+	sor_restore = {
+	    icon = mission_empire
+		required_missions = { sor_barlin }
+		position = 5
+		
+		trigger = {
+		    NOT = {
+				exists = VLT
+			}
+			is_at_war = no
+		}
+		
+		provinces_to_highlight = {
+			owned_by = VLT
+		}
+		
+		effect = {
+			change_tag = VLT
+			swap_non_generic_missions = yes
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+		}
+	}
+}

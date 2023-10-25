@@ -1,0 +1,1852 @@
+wls_branch_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = WLS
+			tag = BRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	build_up_the_ring = {
+		icon = mission_conquer_50_development
+		required_missions = { }
+		provinces_to_highlight = {
+			area = wales_area
+			OR = {
+				has_fort_building_trigger = no
+				province_id = 242
+			}
+		}
+		trigger = {
+			OR = {
+				calc_true_if = {
+					all_owned_province = {
+						has_fort_building_trigger = yes
+					}
+					amount = 2
+				}
+				242 = {
+					has_great_project = {
+						type = iron_ring
+						tier = 1
+					}
+				}
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = protect_wls
+				duration = 9125
+			}
+			242 = {
+				add_province_modifier = {
+					name = build_wls
+					duration = 9125
+				}
+			}
+		}
+	}
+	expand_gwyn = {
+		icon = mission_early_game_buildings
+		required_missions = { build_up_the_ring }
+		provinces_to_highlight = {
+			province_id = 242
+		}
+		trigger = {
+			242 = {
+				development = 10
+				has_trade_building_trigger = yes
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		effect = {
+			add_prestige = 10
+			define_advisor = {
+				type = planner
+				skill = 2
+				discount = yes
+				culture = welsh
+				religion = catholic
+			}
+		}
+	}
+	production_expansion = {
+		icon = mission_have_manufactories
+		required_missions = { expand_gwyn }
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				trade_goods = livestock
+				trade_goods = grain
+				trade_goods = wine
+			}
+			NOT = {
+				has_building = farm_estate
+			}
+		}
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_building = farm_estate
+				}
+				amount = 5
+			}
+		}
+		effect = {
+			add_years_of_income = 0.5
+			capital_scope = {
+				add_prosperity = 100
+			}
+		}
+	}
+	industrial_wales = {
+		icon = mission_rb_build_furnaces
+		position = 5
+		required_missions = { production_expansion }
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				trade_goods = coal
+				has_latent_trade_goods = coal
+			}
+		  	NOT = {
+				has_building = furnace
+			}
+		}
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_building = furnace
+				}
+				amount = 5
+			}
+			has_institution = industrialization
+		}
+		effect = {
+			add_country_modifier = {
+				name = wales_indust
+				duration = -1
+			}
+		}
+	}
+}
+BRN_branch_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = BRN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	invade_ireland_wls = {
+		icon = mission_rb_conquer_leinster
+		position = 6
+		required_missions = { proclaim_pyrdain_wls }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = munster_area
+				area = leinster_area
+				area = ulster_area
+				area = connacht_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			munster_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			leinster_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			ulster_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			connacht_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			373 = {
+				add_province_modifier = {
+					name = build_wls
+					duration = 10950
+				}
+			}
+		}
+	}
+	
+	wls_union_ireland = {
+	    icon = mission_rb_irish_america
+		required_missions = { invade_ireland_wls }
+		position = 8
+		
+		trigger = {
+			accepted_culture = irish
+			munster_area = {
+				type = all
+				owned_by = ROOT
+				NOT = { unrest = 1 }
+				NOT = { nationalism = 1 } 
+			}
+			leinster_area = {
+				type = all
+				owned_by = ROOT
+				NOT = { unrest = 1 }
+				NOT = { nationalism = 1 } 
+			}
+			ulster_area = {
+				type = all
+				owned_by = ROOT
+				NOT = { unrest = 1 }
+				NOT = { nationalism = 1 } 
+			}
+			connacht_area = {
+				type = all
+				owned_by = ROOT
+				NOT = { unrest = 1 }
+				NOT = { nationalism = 1 } 
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = munster_area
+				area = leinster_area
+				area = ulster_area
+				area = connacht_area
+			}
+			OR = { 
+				unrest = 1 
+				nationalism = 1 
+				NOT = { owned_by = ROOT }
+			}
+		}
+		
+		effect = {
+			tooltip = {
+				custom_tooltip = ENG_COLONIZE_IRELAND5
+				add_country_modifier = {
+					name = "eng_union_ireland"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								culture = irish
+							}
+							add_base_manpower = 1
+						}
+					"
+				}
+				add_country_modifier = {
+					name = "eng_union_ireland"
+					duration = -1
+				}
+			}
+		}
+	}
+
+	high_king_ire_wls = {
+		icon = mission_rb_control_electors
+		position = 10
+		required_missions = { wls_union_ireland }
+		provinces_to_highlight = {
+			province_id = 373
+		}
+		trigger = {
+            OR = {
+                373 = {
+                    has_great_project = {
+                        type = hill_tara
+                        tier = 2
+                    }
+                }
+                373 = {
+                    has_great_project = {
+                        type = hill_tara
+                        tier = 3
+                    }
+                }
+            }
+        }
+		effect = {
+			add_yearly_manpower = 1.5
+			add_country_modifier = {
+				name = "wls_union_ireland"
+				duration = -1
+			}
+		}
+	}
+	
+	wls_ostmark = {
+		icon = revenge_for_nicopolis
+		position = 12
+		required_missions = { wls_germany }
+	
+		trigger = {
+			inner_austria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			austria_proper_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = inner_austria_area
+				area = austria_proper_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = WLS_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = wls_evolved_ideas
+				if = {
+					limit = {
+						tag = BRN
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+			add_country_modifier = {
+				name = wls_protector_empire
+				duration = 5475
+			}
+		}
+	}
+}				
+wls_branch_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = WLS
+			tag = BRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	defenders_cymru = {
+		icon = mission_portuguese_oman
+		position = 2
+		required_missions = { build_up_the_ring }
+		provinces_to_highlight = {
+			if = {
+				limit = {
+					242 = {
+						NOT = {
+							has_great_project = {
+								type = iron_ring
+								tier = 3
+							}
+						}
+					}
+				}
+				province_id = 242
+			}
+		}
+		trigger = {
+			242 = {
+				has_great_project = {
+					type = iron_ring
+					tier = 3
+				}
+			}
+		}
+		effect = {
+			242 = {
+				add_base_tax = 2
+				add_base_manpower = 3
+				add_base_production = 2
+			}
+			add_country_modifier = {
+					name = build_wls2
+					duration = -1
+				}
+			add_prestige = 10
+		}
+	}
+	golden_hills_wls = {
+		icon = mission_rb_conquer_wales
+		required_missions = { expand_gwyn }
+		position = 3
+		provinces_to_highlight = {
+			area = wales_area
+			NOT = {
+				development = 10
+			}
+		}
+		trigger = {
+			wales_area = { type = all development = 10 }
+			custom_trigger_tooltip = {
+				tooltip = prosperious_wales_tt
+				wales_area = { is_prosperous = yes }
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = golden_wales
+				duration = -1
+			}
+		}
+	}
+	take_the_marshlands_wls = {
+		icon = mission_rb_into_england
+		required_missions = { take_anglia_wls }
+		position = 4
+		provinces_to_highlight = {
+			OR = {
+				area = scottish_marches_area 
+				area = yorkshire_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			scottish_marches_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			yorkshire_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_mil_power = 100
+			define_advisor = {
+				type = fortification_expert
+				skill = 2
+				culture = welsh
+				discount = yes
+			}
+		}
+	}
+}
+BRN_branch_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = BRN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	invade_the_scots_wls = {
+		icon = mission_rb_conquer_scotland 
+		position = 6
+		required_missions = { proclaim_pyrdain_wls }
+		provinces_to_highlight = {
+			OR = {
+				area = highlands_area
+				area = lowlands_area
+				area = kingdom_of_the_isles_area
+			}
+		}
+		trigger = {
+			highlands_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			lowlands_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			kingdom_of_the_isles_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			custom_tooltip = WLS_LOWLANDS
+			tooltip = {
+				add_province_modifier = {
+					name = scot_dev_wls
+					duration = 5475
+				}
+			}
+			hidden_effect = {
+				every_owned_province = { 
+					limit = {
+						OR = {
+							culture = highland_scottish
+							culture = scottish
+						}
+					}
+					add_province_modifier = {
+						name = scot_dev_wls
+						duration = 5475
+					}
+				}
+			}
+		}
+	}
+	land_of_the_picts = {
+		icon = mission_rb_conquer_the_highlands
+		position = 7
+		required_missions = { invade_the_scots_wls }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			AND = {
+				culture = highland_scottish
+				NOT = {
+					development = 8
+				}
+			}
+		}
+		
+		trigger = {
+			crown_land_share = 40
+			calc_true_if = {
+				all_owned_province = {
+					culture = highland_scottish
+					development = 8
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			custom_tooltip = WLS_HIGHLANDER_PROVINCE
+			highlands_area = {
+				add_province_modifier = {
+					name = wls_prosperous_region
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = highland_scottish
+					}
+					add_base_manpower = 1
+				}
+			}
+		}
+	}
+
+	take_the_low_countries_wls = {
+		icon = bavarian_netherlands
+		required_missions = { land_in_continent_wls }
+		position = 8
+		
+		provinces_to_highlight = {
+			region = low_countries_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			low_countries_region = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = wls_dutch_ports
+				duration = 7300
+			}
+			4383 = {
+				add_unit_construction = {
+					type = heavy_ship
+					amount = 5
+					speed = 0.25
+					cost = 0
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			north_rhine_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_rhineland_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			palatinate_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = WLS_EMPEROR
+			tooltip = {
+				add_country_modifier = {
+					name = wls_invade_empire
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						emperor = {
+							NOT = {
+								total_development = ROOT
+							}
+						}
+					}
+					add_country_modifier = {
+						name = wls_invade_empire
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	wls_rhineland = {
+		icon = claim_the_borderlands
+		position = 9
+		required_missions = { take_the_low_countries_wls }
+	
+		trigger = {
+			north_rhine_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			lower_rhineland_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			palatinate_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = north_rhine_area
+				area = lower_rhineland_area
+				area = palatinate_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 25
+			custom_tooltip = WLS_RHINE
+			tooltip = {
+				add_province_modifier = {
+					name = wls_rhenish_border
+					duration = -1
+				}
+			}
+			south_german_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = north_rhine_area
+							area = lower_rhineland_area
+							area = palatinate_area
+						}
+					}
+					add_province_modifier = {
+						name = wls_rhenish_border
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	wls_germany = {
+		icon = interfere_in_germany
+		position = 11
+		required_missions = { wls_rhineland }
+		
+		provinces_to_highlight = {
+			region = south_german_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = south_german_region
+				value = 20
+			}
+		}
+		
+		effect = {
+			add_prestige = 20
+			add_country_modifier = {
+				name = wls_iron
+				duration = 5475
+			}
+			if = {
+				limit = {
+					hre_size = 1
+				}
+				custom_tooltip = WLS_ELECTOR_CLAIM
+				hidden_effect = {
+				every_elector = {
+					capital_scope = {
+						add_permanent_claim = ROOT
+					}
+				}
+			  }
+			}
+		}
+	}
+	
+	wls_hre = {
+		icon = humiliate_austria
+		position = 13
+		required_missions = { wls_germany }
+		
+		provinces_to_highlight = {
+			region = south_german_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			OR = {
+				NOT = { hre_size = 1 }
+				num_of_owned_provinces_with = {
+					is_core = ROOT
+					OR = {
+						region = north_german_region
+						region = south_german_region
+					}
+					value = 40
+				}
+			}
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
+			}
+			add_ruler_modifier = {
+				name = wls_conqueror
+				duration = -1
+			}
+			north_german_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+		
+}
+wls_branch_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = WLS
+			tag = BRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	force_limit_wls = {
+		icon = mission_crusade_for_varna
+		required_missions = { }
+		trigger = {
+			army_size_percentage = 1
+			num_of_generals = 1
+			manpower_percentage = 0.8
+		}
+		effect = {
+			define_advisor = {
+				type = army_reformer
+				culture = welsh
+				skill = 1
+				discount = yes
+			}
+			west_midlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	expand_dike_wls = {
+		icon = mission_unite_home_region
+		required_missions = { force_limit_wls }
+		provinces_to_highlight = {
+			area = west_midlands_area
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			west_midlands_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_country_modifier = {
+				name = "wls_saxon_burhs"
+				duration = 5475
+			}
+			east_midlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_anglia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	take_anglia_wls = {
+		icon = mission_rb_unite_the_clans
+		required_missions = { expand_dike_wls }
+		provinces_to_highlight = {
+			OR = {
+				area = east_anglia_area
+				area = east_midlands_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			east_anglia_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			east_midlands_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = "wls_dragons"
+				duration = 7300
+			}
+			scottish_marches_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			yorkshire_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			home_counties_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			234 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4374 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4130 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	proclaim_pyrdain_wls = {
+		icon = mission_invade_england
+		required_missions = { take_anglia_wls take_londinium_wls take_the_marshlands_wls }
+		position = 5
+		provinces_to_highlight = { 
+		  area = wessex_area
+		  NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+		  wessex_area = { 
+			type = all
+			country_or_non_sovereign_subject_holds = ROOT
+		  }
+		}
+		effect = {
+			country_event = { id = wales_flavor.2 }
+			british_isles_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			brittany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			normandy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			picardy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}	
+	}
+}
+BRN_branch_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = BRN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	land_in_continent_wls = {
+		icon = the_seven_provinces
+		required_missions = { proclaim_pyrdain_wls }
+		position = 7
+		provinces_to_highlight = {
+			OR = {
+				area = normandy_area 
+				area = picardy_area 
+				area = brittany_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			normandy_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			brittany_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+			picardy_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_country_modifier = {
+				name = "wls_continental"
+				duration = 9125
+			}
+			france_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			low_countries_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	reclaim_frankia_wls = {
+		icon = carolingian_empire
+		position = 8
+		required_missions = { land_in_continent_wls }
+		
+		provinces_to_highlight = {
+			region = france_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = france_region
+				value = 30
+			}
+		}
+		
+		effect = {
+			add_dip_power = 150
+			add_country_modifier = {
+				name = wls_reclaiming
+				duration = 5475
+			}
+			catalonia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			basque_country = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			} 
+			lombardy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			piedmont_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			emilia_romagna_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			liguria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	wls_po_valley = {
+		icon = sweep_the_po
+		required_missions = { reclaim_frankia_wls }
+		position = 10
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lombardy_area
+				area = piedmont_area
+				area = emilia_romagna_area
+				area = liguria_area 
+				area = po_valley_area 
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			calc_true_if = {
+				desc = north_ital_tt
+				amount = 15
+				lombardy_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				piedmont_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				emilia_romagna_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				liguria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				po_valley_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = wls_italian_wars
+				duration = 9125
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			central_italy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lazio_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			venetia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	wls_rome = {
+		icon = sway_the_pope
+		required_missions = { wls_po_valley }
+		position = 12
+		
+		trigger = {
+			tuscany_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			central_italy_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			lazio_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tuscany_area
+				area = central_italy_area
+				area = lazio_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_legitimacy = 25
+			custom_tooltip = WLS_OCCUPATION
+			add_country_modifier = {
+				name = wls_conquest_rome
+				duration = 7300
+			}
+			naples_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			apulia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			calabria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = WLS_SICILY
+			hidden_effect = {
+				every_province = {
+					limit = {
+						owned_by = SIC
+						region = italy_region
+					}
+					add_territorial_core = ROOT
+				}
+			}
+		}
+	}
+
+	ave_imperator_wls = {
+		icon = a_roman_empire
+		required_missions = { wls_rome wls_hre }
+		position = 14
+		
+		trigger = {
+			stability = 3
+			crown_land_share = 60
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = ave_rome_wls
+				duration = -1
+			}
+		}
+	}		
+}
+wls_branch_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = WLS
+			tag = BRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	house_of_glyndwr = {
+		position = 2
+		icon = hungarian_union
+		required_missions = { gather_allies_wls }
+		trigger = {
+			calc_true_if = {
+				all_country = {
+					dynasty = ROOT
+					marriage_with = ROOT
+				}
+				amount = 3
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = house_glyndwr
+				duration = -1
+			}
+		}
+	}
+	dominate_trade_wls = {
+		icon = mission_establish_high_seas_navy
+		position = 3
+		required_missions = { new_welsh_navy }
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = ENG
+				province_id = 1269
+			}
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					exists = ENG
+				}
+				navy_size = ENG
+				navy_tradition = 50
+			}
+			else = {
+				navy_size = 30
+				navy_tradition = 30
+			}
+			1269 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = wls_naval_supremacy
+				duration = 9125
+			}
+		}
+	}
+	take_londinium_wls = {
+		icon = mission_rb_scottish_conquer_london
+		position = 4
+		required_missions = { take_anglia_wls }
+		provinces_to_highlight = {
+			area = home_counties_area
+		}
+		trigger = {
+			home_counties_area = { type = all country_or_non_sovereign_subject_holds = root }
+		}
+		effect = {
+			country_event = { id = wales_flavor.1 }
+		}
+	}
+}
+
+BRN_branch_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = BRN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	land_of_britons = {
+		icon = unite_the_wittelsbachs
+		position = 8
+		required_missions = { king_of_britons }
+		
+		provinces_to_highlight = {
+			region = british_isles_region
+			NOT = { culture = briton }
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = british_isles_region
+					culture = briton
+				}
+				amount = 25
+			}
+			stability = 1
+			num_of_rebel_controlled_provinces = 0
+			british_isles_region = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = { id = wales_flavor.8 }
+		}
+	}
+	
+	wls_moors = {
+		icon = knights_of_the_new_world
+		required_missions = { reclaim_frankia_wls }
+		position = 9
+		
+		trigger = {
+			basque_country = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			catalonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = basque_country
+				area = catalonia_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = wls_avenging_valencia
+				duration = 9125
+			}
+			iberia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = WLS_ANDALUSIA
+			tooltip = {
+				add_country_modifier = {
+					name = wls_second_crusade
+					duration = 5475
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						ADU = {
+							NOT = {
+								army_size = ROOT
+							}
+						}
+					}
+					add_country_modifier = {
+						name = wls_second_crusade
+						duration = 5475
+					}
+				}
+			}
+		}
+	}
+	
+	wls_conversion = {
+	    icon = mission_reclaim_andalucia
+		required_missions = { wls_moors }
+		position = 10
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				religion = ROOT
+				region = iberia_region
+				value = 30
+			}
+		}
+		
+		provinces_to_highlight = {
+			AND = {
+				region = iberia_region
+				owned_by = ROOT
+			}
+			NOT = { religion = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = WLS_DEFENDER
+			add_country_modifier = {
+				name = "wls_reconquista"
+				duration = 9125
+			}
+			maghreb_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						religion = catholic
+						NOT = {
+							any_country = {
+								religion = catholic
+								is_defender_of_faith = yes
+							}
+						}
+					}
+					set_defender_of_the_faith = { who = ROOT religion = ROOT }
+				}
+			}
+		}
+	}
+	
+	wls_sitaly = {
+		icon = mission_rule_italy
+		required_missions = { wls_rome }
+		position = 13
+		
+		trigger = {
+			naples_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			apulia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			calabria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = naples_area
+				area = apulia_area
+				area = calabria_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = WLS_SITALY
+			tooltip = {
+				add_province_modifier = {
+					name = "wls_convert_italy"
+					duration = 9125
+				}
+			}
+			east_adriatic_coast_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			albania_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_greece_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			ionian_islands_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			morea_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = italy_region
+						religion_group = muslim
+					}
+					add_province_modifier = {
+						name = "wls_convert_italy"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+
+}	
+
+wls_branch_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = WLS
+			tag = BRN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gather_allies_wls = {
+		icon = mission_alliances
+		required_missions = { }
+		
+		trigger = {
+			num_of_allies = 2
+			calc_true_if = {
+				all_ally = {
+					has_opinion = {
+						who = ROOT
+						value = 100
+					}
+				}
+				amount = 2
+			}
+		}
+		
+		effect = {
+			every_ally = { 
+				add_trust = {
+					who = ROOT
+					value = 15
+					mutual = yes
+				}
+			}
+			add_country_modifier = {
+				name = cymru_diplomacy
+				duration = 3650
+			}
+		}
+	}
+	
+	new_welsh_navy = {
+		icon = mission_galleys_in_port
+		required_missions = { gather_allies_wls }
+		
+		trigger = {
+			navy_size_percentage = 1
+			num_of_light_ship = 15
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = wls_saxon_rival
+				duration = 5475
+			}
+			random_owned_province = {
+				limit = { has_port = yes }
+				heavy_ship = ROOT
+			}
+			random_owned_province = {
+				limit = { has_port = yes }
+				heavy_ship = ROOT
+			}
+		}
+	}
+	
+	explore_new_world_wls = {
+		icon = mission_invade_island
+		required_missions = { new_welsh_navy }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = vke_explore_tt
+				OR = {
+					north_america = { has_discovered = ROOT }
+					south_america = { has_discovered = ROOT }
+					new_world = { has_discovered = ROOT }
+				}
+			}
+			navy_size_percentage = 1
+			OR = {
+				num_of_light_ship = 20
+				num_of_heavy_ship = 10
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = search_for_avalon
+				duration = 9125
+			}
+		}
+	}
+	ynys_afallon = {
+		icon = mission_look_west
+		position = 5
+		required_missions = { explore_new_world_wls }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = colonial_wls_tt
+				calc_true_if = {
+					all_subject_country = {
+						is_colonial_nation = yes
+						num_of_cities = 10
+					}
+					amount = 1
+				}
+			}	
+		}
+		effect = {
+			add_prestige = 25
+			custom_tooltip = WLS_AVALON
+			tooltip = {
+			  add_country_modifier = {
+				name = avalon_found
+				duration = 9125
+			  }
+			}
+			hidden_effect = {
+			  add_country_modifier = {
+				name = avalon_found
+				duration = 9125
+			  }
+			every_subject_country = {
+			  limit = {
+				is_colonial_nation_of = ROOT
+				num_of_cities = 10
+			  }
+			  add_country_modifier = {
+				name = avalon_found
+				duration = 9125
+			  }
+			}
+			}
+		}
+	}
+}
+
+BRN_branch_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = BRN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	take_cornwall = {
+		icon = mission_assemble_an_army
+		required_missions = { proclaim_pyrdain_wls }
+		position = 6
+		provinces_to_highlight = {
+			area = cornwall_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			cornwall_area = { type = all country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_country_modifier = {
+				name = celtic_wls
+				duration = 5475
+			}
+		}
+	}
+	
+	king_of_britons = {
+		icon = mission_empire
+		position = 7
+		required_missions = { take_cornwall }
+		provinces_to_highlight = {
+			region = british_isles_region
+			NOT = {  OR = { culture = welsh culture = cornish } }
+		}
+		trigger = {
+			NOT = {
+				OR = {
+					current_age = age_of_discovery
+					current_age = age_of_reformation
+				}
+			}
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						culture = welsh
+						culture = cornish
+					}
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				amount = 10
+			}
+		}
+		effect = {
+			country_event = { id = wales_flavor.3 }
+		}
+	}
+	
+	house_pendraigh = {
+		icon = mission_monarch_in_throne_room
+		position = 8
+		required_missions = { king_of_britons }
+		
+		trigger = {
+			crown_land_share = 70
+			stability = 1
+		}
+		
+		effect = {
+			set_dynasty = "Pendraig"
+			add_country_modifier = {
+				name = wls_absolute 
+				duration = -1
+			}
+		}
+	}
+	
+	wls_pacify = {
+	    icon = mission_the_french_menace
+		required_missions = { reclaim_frankia_wls }
+		position = 9
+		
+		provinces_to_highlight = {
+			region = france_region
+			OR = {
+				NOT = {
+					is_core = ROOT
+				}
+				unrest = 1
+			}
+		}
+		
+		trigger = {
+			france_region = {
+				type = all
+				is_core = ROOT
+			}
+			france_region = {
+				type = all
+				NOT = { unrest = 1 }
+			}
+		}
+		
+		effect = {
+			france_region = {
+				add_nationalism = -5
+				add_province_modifier = {
+					name = "wls_pacified_france"
+					duration = 5475
+				}
+			}
+		}
+	}
+	
+	wls_breton = {
+	    icon = expand_to_the_south
+		required_missions = { wls_pacify }
+		position = 11
+		
+		provinces_to_highlight = {
+			area = brittany_area
+			NOT = { development = 15 }
+		}
+		
+		trigger = {
+			brittany_area = {
+				type = all
+				owned_by = ROOT
+				development = 15
+			}
+		}
+		
+		effect = {
+			brittany_area = {
+				add_prosperity = 100
+			}
+			brittany_area = {
+				add_province_modifier = {
+					name = "wls_renaissance"
+					duration = -1
+				}
+			}
+		}
+	}
+}

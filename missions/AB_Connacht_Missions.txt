@@ -1,0 +1,1885 @@
+ab_cot_missions1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = COT
+			was_tag = COT
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	cot_reign = {
+	    icon = mission_rb_rule_britannia_irish_version
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = COT_VASSALS
+				ulster_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				munster_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				connacht_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				leinster_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+	
+		provinces_to_highlight = {
+			OR = {
+				area = ulster_area
+				area = munster_area
+				area = leinster_area
+				area = connacht_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_legitimacy = 10
+			add_country_modifier = {
+				name = "cot_authority"
+				duration = 5475
+			}
+			define_advisor = {
+				type = diplomat
+				skill = 1
+				discount = yes
+				culture = irish
+			}
+		}
+	}
+	
+	cot_loyalty = {
+	    icon = mission_have_two_subjects
+		required_missions = { cot_reign }
+		position = 2
+		
+		provinces_to_highlight = {
+			owner = {
+				is_subject_of = ROOT
+				liberty_desire = 20
+			}
+		}
+		
+		trigger = {
+			all_subject_country = {
+				NOT = { liberty_desire = 20 }
+			}
+			all_subject_country = {
+				has_opinion = {
+					who = ROOT
+					value = 125
+				}
+			}
+		}
+		
+		effect = {
+			add_dip_power = 50
+			add_country_modifier = {
+				name = "cot_centralize"
+				duration = 7300
+			}
+		}
+	}
+	
+	cot_centralize = {
+	    icon = mission_unite_home_region
+		required_missions = { cot_loyalty }
+		position = 3
+		
+		trigger = {
+			stability = 1
+			ulster_area = {
+				type = all
+				NOT = { local_autonomy_above_min = 10 }
+				owned_by = ROOT
+			}
+			munster_area = {
+				type = all
+				NOT = { local_autonomy_above_min = 10 }
+				owned_by = ROOT
+			}
+			leinster_area = {
+				type = all
+				NOT = { local_autonomy_above_min = 10 }
+				owned_by = ROOT
+			}
+			connacht_area = {
+				type = all
+				NOT = { local_autonomy_above_min = 10 }
+				owned_by = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = ulster_area
+				area = munster_area
+				area = leinster_area
+				area = connacht_area
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				local_autonomy_above_min = 10
+			}
+		}
+		
+		effect = {
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+				set_country_flag = connoch_reform
+			}
+			country_event = {
+				id = hk_ire.8
+			}
+		}
+	}
+	
+	cot_church_ireland = {
+	    icon = mission_religious
+		required_missions = { }
+		position = 4
+		
+		trigger = {
+			estate_loyalty = {
+				estate = estate_church
+				loyalty = 60
+			}
+			PAP = {
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = PAP
+		}
+		
+		effect = {
+			custom_tooltip = IRE_PAP
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion = catholic
+						capital_scope = {
+							OR = {
+								area = munster_area
+								area = leinster_area
+								area = connacht_area
+								area = ulster_area
+							}
+						}
+					}
+					add_trust = { who = ROOT value = 10 mutual = yes }
+				}
+			}
+			add_country_modifier = {
+				name = "cot_solidified"
+				duration = 7300
+			}
+		}
+	}
+	
+	cot_monasteries = {
+	    icon = mission_european_church
+		required_missions = { cot_church_ireland }
+		position = 6
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = temple
+						has_building = cathedral
+					}
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = { estate = estate_church loyalty = 10 }
+			add_country_modifier = {
+				name = "crn_church"
+				duration = 7300
+			}
+		}
+	}
+	
+	cot_unity = {
+	    icon = mission_luther_theses
+		required_missions = { cot_monasteries }
+		position = 8
+		
+		trigger = {
+			is_year = 1550
+			OR = {
+				AND = {
+					religion = catholic
+					religious_unity = 0.85
+				}
+				NOT = {
+					religion = catholic
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					religion = catholic
+				}
+				add_papal_influence = 10
+				add_country_modifier = {
+					name = "cot_maintain"
+					duration = 7300
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = "cot_church"
+					duration = 7300
+				}
+			}
+		}
+	}
+	
+	cot_canada = {
+		icon = mission_protect_white_sea_trade
+		required_missions = { cot_new_world }
+		position = 10
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_canada
+			has_discovered = ROOT
+			NOT = {
+				OR = {
+					owned_by = ROOT
+					owner = {
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				colonial_region = colonial_canada
+				owner = {
+					OR = {
+						tag = ROOT
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "the_unknown_frontier"
+				duration = 5475
+			}
+		}
+	}
+	
+	cot_cascadia = {
+		icon = mission_colonize_alaska
+		required_missions = { cot_canada }
+		position = 11
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_alaska
+			has_discovered = ROOT
+			NOT = {
+				OR = {
+					owned_by = ROOT
+					owner = {
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				colonial_region = colonial_alaska
+				owner = {
+					OR = {
+						tag = ROOT
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "cot_claim_north"
+				duration = 5475
+			}
+			canada_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_claim = ROOT
+			}
+			cascadia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_claim = ROOT
+			}
+			hudson_bay_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+}
+
+ab_cot_missions2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = COT
+			was_tag = COT
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	cot_stone_destiny = {
+	    icon = mission_tara
+		required_missions = { cot_reign }
+		position = 2
+		
+		trigger = {
+			373 = {
+				has_great_project = {
+					type = hill_tara
+					tier = 3
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 373
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = great_builders_IRE
+				duration = -1
+			}
+			custom_tooltip = GDL_STONE_TT
+			custom_tooltip = GDL_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = gdl_evolved_ideas
+				if = {
+					limit = {
+						tag = GDL
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+		}
+	}
+	
+	cot_isles = {
+	    icon = mission_rb_conquer_the_isles
+		required_missions = { cot_highlands }
+		position = 5
+		
+		trigger = {
+			369 = {
+				country_or_subject_holds = ROOT
+			}
+			kingdom_of_the_isles_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 369
+				area = kingdom_of_the_isles_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_navy_tradition = 10
+			add_country_modifier = {
+				name = cot_safeguard_coastline
+				duration = -1
+			}
+			1978 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1979 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	cot_trinity = {
+	    icon = catholic_volunteers
+		required_missions = { cot_monasteries }
+		position = 7
+		
+		trigger = {
+			OR = {
+				5158 = {
+					has_great_project = {
+						type = christ_church 
+						tier = 2
+					}
+				}
+				5158 = {
+					has_great_project = {
+						type = christ_church 
+						tier = 3
+					}
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 5158
+		}
+		
+		effect = {
+			add_papal_influence = 25
+			add_church_power = 50
+			add_ruler_modifier = {
+				name = cot_pious
+				duration = -1
+			}
+		}
+	}
+	
+	cot_new_world = {
+		icon = mission_establish_high_seas_navy
+		required_missions = { }
+		position = 9
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_discover_eastern_america
+				colonial_eastern_america = { has_discovered = ROOT }
+			}
+			custom_trigger_tooltip = {
+				tooltip = miss_discover_caribbean
+				colonial_the_carribean = { has_discovered = ROOT }
+			}
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 35 }
+			define_advisor = {
+				type = navigator
+				skill = 1
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	cot_east_coast = {
+		icon = mission_rb_the_thirteen_colonies
+		required_missions = { cot_new_world }
+		position = 10
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_eastern_america
+			has_discovered = ROOT
+			NOT = {
+				OR = {
+					owned_by = ROOT
+					owner = {
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				colonial_region = colonial_eastern_america
+				owner = {
+					OR = {
+						tag = ROOT
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = eng_settle_new_world
+				duration = 7300
+			}
+		}
+	}
+	
+	cot_potatoes = {
+		icon = mission_rb_import_potatoes
+		required_missions = { cot_east_coast }
+		position = 12
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_eastern_america
+			OR = {
+				owned_by = ROOT
+				owner = {
+					is_colonial_nation_of = ROOT
+				}
+			}
+			is_city = yes
+			NOT = { base_production = 6 }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				colonial_region = colonial_eastern_america
+				base_production = 6
+				owner = {
+					OR = {
+						tag = ROOT
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = COT_POTATO_IMPORT
+			add_country_modifier = {
+				name = cot_potato
+				duration = -1
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								region = british_isles_region
+								culture = irish
+							}
+							add_base_manpower = 1
+						}
+					"
+				}
+			}
+		}
+	}
+	
+}
+
+ab_cot_missions3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = COT
+			was_tag = COT
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	cot_secure_kingdom = {
+	    icon = mission_rb_conquer_the_highlands
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			OR = {
+				army_size_percentage = 1
+				manpower_percentage = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = cot_emerald_island
+				duration = 5475
+			}
+			ulster_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			leinster_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cot_ulster = {
+	    icon = mission_rb_conquer_ulster
+		required_missions = { cot_secure_kingdom }
+		position = 3
+		
+		trigger = {
+			ulster_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = ulster_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "cot_cross_sea"
+				duration = 5475
+			}
+			highlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			wales_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			cornwall_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			376 = {
+				add_unit_construction = {
+					type = transport
+					amount = 3
+					speed = 0.25
+					cost = 0
+				}
+			}
+		}
+	}
+	
+	cot_highlands = {
+	    icon = mission_rb_rein_in_the_highland_clans
+		required_missions = { cot_ulster }
+		position = 4
+		
+		trigger = {
+			4363 = {
+				country_or_subject_holds = ROOT
+			}
+			250 = {
+				country_or_subject_holds = ROOT
+			}
+			5168 = {
+				country_or_subject_holds = ROOT
+			}
+			252 = {
+				country_or_subject_holds = ROOT
+			}
+			5170 = {
+				country_or_subject_holds = ROOT
+			}
+			5169 = {
+				country_or_subject_holds = ROOT
+			}
+			4110 = {
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4363
+				province_id = 250
+				province_id = 5168
+				province_id = 252
+				province_id = 5170
+				province_id = 5169
+				province_id = 4110
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = "cot_subjugate_clans"
+				duration = 5475
+			}
+			lowlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kingdom_of_the_isles_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cot_goidelic = {
+	    icon = mission_empire
+		required_missions = { cot_alba cot_isles }
+		position = 6
+		
+		trigger = {
+			legitimacy = 90
+			accepted_culture = highland_scottish
+		}
+		
+		provinces_to_highlight = {
+			area = lowlands_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 25
+			change_tag = GDL
+			hidden_effect = {
+				complete_mission = cot_goidelic
+				if = {
+					limit = {
+						has_custom_ideas = no
+					}
+					country_event = { id = ideagroups.1 } #Swap Ideas
+				}
+			}
+			country_event = {
+				id = ab_goidelic_revolution.1
+			}
+			east_anglia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			east_midlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			west_midlands_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			yorkshire_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			scottish_marches_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			wessex_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			home_counties_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cot_atlantic = {
+		icon = mission_rb_scottish_north_sea_trade
+		required_missions = { cot_goidelic }
+		position = 7
+		
+		trigger = {
+			1978 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			1979 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1978
+				province_id = 1979
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			create_admiral = { tradition = 50 }
+			add_country_modifier = {
+				name = "cot_rule_nsea"
+				duration = 9125
+			}
+			northern_norway = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			western_norway = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_norway = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cot_threat = {
+		icon = mission_longship
+		required_missions = { cot_atlantic }
+		position = 8
+		
+		trigger = {
+			NOT = {
+				exists = NOR
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = NOR
+		}
+		
+		effect = {
+			add_stability = 1
+			add_country_modifier = {
+				name = "cot_purge"
+				duration = 9125
+			}
+			custom_tooltip = COT_NORSE_CLAIM
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							religion = norse_pagan_reformed
+							religion = reformed_norse
+						}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	cot_caribbean = {
+		icon = mission_colonize_the_caribbean
+		required_missions = { cot_new_world }
+		position = 10
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_the_carribean
+			has_discovered = ROOT
+			NOT = {
+				OR = {
+					owned_by = ROOT
+					owner = {
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				colonial_region = colonial_the_carribean
+				owner = {
+					OR = {
+						tag = ROOT
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = COT_CARIBBEAN
+			tooltip = {
+				add_province_modifier = {
+					name = "cot_colonize_caribbean"
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						region = carribeans_region
+						OR = {
+							owned_by = ROOT
+							owner = {
+								is_colonial_nation_of = ROOT
+							}
+						}
+					}
+					add_province_modifier = {
+						name = "cot_colonize_caribbean"
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	cot_mexico = {
+		icon = mission_native_reductions
+		required_missions = { cot_caribbean }
+		position = 11
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_mexico
+			has_discovered = ROOT
+			NOT = {
+				OR = {
+					owned_by = ROOT
+					owner = {
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				colonial_region = colonial_mexico
+				owner = {
+					OR = {
+						tag = ROOT
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = COT_CONVERT
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_colonial_nation_of = ROOT
+					}
+					add_country_modifier = {
+						name = "cot_native_reduction"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_cot_missions4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = COT
+			was_tag = COT
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	cot_leinster = {
+	    icon = mission_rb_conquer_leinster
+		required_missions = { cot_secure_kingdom }
+		position = 2
+		
+		trigger = {
+			leinster_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = leinster_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 10
+			add_country_modifier = {
+				name = "cot_replenish"
+				duration = 7300
+			}
+			define_advisor = {
+				type = mr_advisor
+				skill = 1
+				discount = yes
+				culture = irish
+			}
+		}
+	}
+	
+	cot_unite = {
+	    icon = mission_rb_into_ireland
+		required_missions = { cot_leinster cot_ulster }
+		position = 4
+		
+		trigger = {
+			ulster_area = {
+				type = all
+				owned_by = ROOT
+			}
+			munster_area = {
+				type = all
+				owned_by = ROOT
+			}
+			leinster_area = {
+				type = all
+				owned_by = ROOT
+			}
+			connacht_area = {
+				type = all
+				owned_by = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = ulster_area
+				area = munster_area
+				area = leinster_area
+				area = connacht_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_modifier = annexers_legacy
+					}
+					remove_country_modifier = annexers_legacy
+				}
+				else = {
+					add_dip_power = 50
+				}
+			}
+			add_country_modifier = {
+				name = "cot_unified"
+				duration = 9125
+			}
+			custom_tooltip = COT_REMOVE_LEGACY
+		}
+	}
+	
+	cot_alba = {
+	    icon = mission_rb_conquer_scotland
+		required_missions = { cot_highlands }
+		position = 5
+		
+		trigger = {
+			lowlands_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = lowlands_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_adm_power = 100
+			lowlands_area = {
+				add_province_modifier = {
+					name = "cot_integrate"
+					duration = 5475
+				}
+			}
+		}
+	}
+	
+	cot_northsea = {
+		icon = mission_rb_cod_wars
+		required_missions = { cot_threat }
+		position = 9
+		
+		trigger = {
+			1975 = {
+				trade_share = {
+					country = ROOT
+					share = 50
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 1975
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			1975 = {
+				add_trade_modifier = {
+					who = root
+					duration = -1
+					power = 10
+					key = cot_dominate_nsea
+				}
+			}
+			define_advisor = {
+				type = trader
+				skill = 3
+				discount = yes
+				culture = irish
+			}
+		}
+	}
+	
+	cot_marketrev = {
+		icon = mission_rb_monopolize_the_channel
+		required_missions = { cot_northsea cot_channel }
+		position = 10
+		
+		trigger = {
+			mercantilism = 40
+			trade_income_percentage = 0.4
+			has_institution = global_trade
+			calc_true_if = {
+			  all_owned_province = {
+				OR = {
+					province_has_center_of_trade_of_level = 2
+					province_has_center_of_trade_of_level = 3
+				}
+			  }
+			  amount = 12
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "cot_market"
+				duration = -1
+			}
+		}
+	}
+}
+
+ab_cot_missions5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = COT
+			was_tag = COT
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	cot_galway = {
+	    icon = mission_dominate_home_trade_node
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+		owns = 5159
+			5159 = {
+				development = 15
+			}
+			5159 = {
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 5159
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "cot_irish_ports"
+				duration = 5475
+			}
+			5159 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	cot_western_ports = {
+	    icon = mission_rb_irish_america
+		required_missions = { cot_galway }
+		position = 2
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_trade_building_trigger = yes
+				}
+				amount = 5
+			}
+			5159 = {
+				owned_by = ROOT
+				base_production = 8
+			}
+			5160 = {
+				owned_by = ROOT
+				base_production = 8
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 5159
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { base_production = 8 }
+					}
+				}
+				AND = {
+					province_id = 5160
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { base_production = 8 }
+					}
+				}
+				if = {
+					# Conditions under which we should stop
+					# highlighting
+					limit = {
+						calc_true_if = {
+							ROOT = {
+								all_owned_province = {
+									has_trade_building_trigger = yes
+								}
+							}
+							amount = 5
+						}
+					}
+					always = no
+				}
+				else = {
+					# <trigger> that decide which provinces to highlight
+					# this is an AND = { }
+					NOT = {
+						has_trade_building_trigger = yes
+					}
+					owned_by = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			custom_tooltip = COT_PORTS
+			tooltip = {
+				add_province_modifier = {
+					name = "cot_western_port"
+					duration = -1
+				}
+			}
+			custom_tooltip = COT_CONTROL_NSE
+			tooltip = {
+				add_years_of_income = 0.5
+			}
+			hidden_effect = {
+				5159 = {
+					add_province_modifier = {
+						name = "cot_western_port"
+						duration = -1
+					}
+				}
+				5160 = {
+					add_province_modifier = {
+						name = "cot_western_port"
+						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						1975 = {
+							trade_share = {
+								country = ROOT
+								share = 25
+							}
+						}
+					}
+					add_years_of_income = 0.5
+				}
+			}
+		}
+	}
+	
+	cot_learning = {
+	    icon = mission_rb_college_of_justice
+		required_missions = { cot_western_ports }
+		position = 3
+		
+		trigger = {
+			OR = {
+				innovativeness = 20
+				AND = {
+					innovativeness = 10
+					advisor = in_advisor
+				}
+			}
+		}
+		
+		effect = {
+			5159 = {
+				add_building = university
+			}
+			add_country_modifier = {
+				name = "cot_learning"
+				duration = 7300
+			}
+		}
+	}
+	
+	cot_royal_canal = {
+	    icon = mission_se_along_the_river
+		required_missions = { }
+		position = 4
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = early_road
+						has_building = gravel_road
+						has_building = royal_road
+						has_building = macadam_road
+						has_building = rail_road
+					}
+				}
+				amount = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = early_road
+					has_building = gravel_road
+					has_building = royal_road
+					has_building = macadam_road
+					has_building = rail_road
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = IRE_PROSPERITY
+			hidden_effect = {
+				ulster_area = {
+					add_prosperity = 100
+				}
+				munster_area = {
+					add_prosperity = 100
+				}
+				connacht_area = {
+					add_prosperity = 100
+				}
+				leinster_area = {
+					add_prosperity = 100
+				}
+			}
+			add_country_modifier = {
+				name = "cot_infrastructure"
+				duration = 9125
+			}
+		}
+	}
+	
+	cot_deforestation = {
+	    icon = mission_rb_conquer_wales
+		required_missions = { cot_royal_canal }
+		position = 5
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						culture = irish
+						culture = goidelic
+					}
+					development = 10
+				}
+				amount = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				culture = irish
+				culture = goidelic
+			}
+			NOT = {
+				development = 10
+			}
+		}
+		
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_ire_deforestation
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = cot_shipbuilding
+				duration = -1
+			}
+		}
+	}
+	
+	cot_manufactories = {
+	    icon = mission_rb_central_belt_coal_mining
+		required_missions = { cot_deforestation }
+		position = 6
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
+				}
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = cot_industrialize
+				duration = 9125
+			}
+			define_advisor = {
+				type = natural_scientist
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = COT_CRYSTAL
+			tooltip = {
+				5162 = {
+					change_trade_goods = glass
+				}
+				5162 = {
+					add_province_modifier = {
+						name = cot_crystal_waterford
+						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						5162 = {
+							development = 20
+						}
+					}
+					5162 = {
+						change_trade_goods = glass
+					}
+					5162 = {
+						add_province_modifier = {
+							name = cot_crystal_waterford
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+			
+	
+	cot_invade_england = {
+		icon = mission_rb_into_england
+		required_missions = { cot_goidelic }
+		position = 7
+		
+		trigger = {
+			east_anglia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			east_midlands_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			west_midlands_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			yorkshire_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			scottish_marches_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			wessex_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			home_counties_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = scottish_marches_area
+				area = yorkshire_area
+				area = west_midlands_area
+				area = east_midlands_area
+				area = east_anglia_area
+				area = wessex_area
+				area = home_counties_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = cot_ended
+				duration = -1
+			}
+			british_isles_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cot_conquer_britannia = {
+		icon = mission_invade_england
+		required_missions = { cot_invade_england }
+		position = 8
+		
+		trigger = {
+			british_isles_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = british_isles_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			set_government_rank = 3
+			add_ruler_modifier = {
+				name = cot_conqueror_britannia
+				duration = -1
+			}
+		}
+	}
+	
+	cot_channel = {
+		icon = mission_rb_scottish_the_darien_scheme
+		required_missions = { cot_conquer_britannia }
+		position = 9
+		
+		trigger = {
+			1269 = {
+				trade_share = {
+					country = ROOT
+					share = 50
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 1269
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			1269 = {
+				add_trade_modifier = {
+					who = root
+					duration = -1
+					power = 10
+					key = ang_dominate_chan
+				}
+			}
+			holland_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			normandy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			brittany_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cot_borderlands = {
+		icon = lead_the_empire
+		required_missions = { cot_channel }
+		position = 11
+		
+		trigger = {
+			normandy_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			brittany_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = normandy_area
+				area = brittany_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 20 
+			add_country_modifier = {
+				name = cot_encroach
+				duration = 9125
+			}
+			ile_de_france_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	cot_dethrone = {
+		icon = carolingian_empire
+		required_missions = { cot_borderlands }
+		position = 12
+		
+		trigger = {
+			ile_de_france_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = ile_de_france_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_dip_power = 200
+			add_country_modifier = {
+				name = cot_legacy
+				duration = -1
+			}
+			custom_tooltip = COT_EMPEROR
+			hidden_effect = {
+				if = {
+					limit = {
+						is_emperor = yes
+					}
+					france_region = {
+						limit = {
+							NOT = { is_permanent_claim = ROOT	}
+							NOT = { is_core = ROOT	}
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+}

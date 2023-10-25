@@ -1,0 +1,253 @@
+#### MODDED BUILDINGS - DIPLOMACY
+
+consulate = {
+    cost = 500
+    time = 12
+	
+	build_trigger = {
+		is_capital = yes
+	}
+
+    one_per_country = yes
+    allow_in_gold_provinces = yes
+    onmap = no
+    modifier = {
+    	diplomatic_upkeep = 1
+	envoy_travel_time = -0.25
+    }
+    ai_will_do = {
+        factor = 10
+    }
+}
+
+embassy = {
+    cost = 1500
+    time = 12
+	
+	build_trigger = {
+		has_building = consulate
+		is_capital = yes
+	}
+	
+	make_obsolete = consulate
+    one_per_country = yes
+    allow_in_gold_provinces = yes
+    onmap = no
+    modifier = {
+    	diplomatic_upkeep = 1
+	diplomatic_reputation = 1
+	envoy_travel_time = -0.5
+    }
+    ai_will_do = {
+        factor = 10
+    }
+}
+
+navalministry = {
+    cost = 2000
+    time = 24
+	
+	build_trigger = {
+		owner = {
+			full_idea_group = maritime_ideas
+		}
+	}
+	
+	keep_trigger = {
+		owner = { 
+			full_idea_group = maritime_ideas
+		}
+	}
+	
+    one_per_country = yes
+    allow_in_gold_provinces = yes
+    onmap = no
+    modifier = {
+    	navy_tradition_decay = -0.01
+		admiral_cost = -0.1
+		global_naval_engagement_modifier = 0.1
+    }
+    ai_will_do = {
+        factor = 10
+    }
+}
+
+colonialministry = {
+    cost = 2000
+    time = 24
+	
+	build_trigger = {
+		owner = {
+			full_idea_group = exploration_ideas
+		}
+	}
+	
+	keep_trigger = {
+		owner = { 
+			full_idea_group = exploration_ideas
+		}
+	}
+	
+    one_per_country = yes
+    allow_in_gold_provinces = yes
+    onmap = no
+    modifier = {
+    	colonist_placement_chance = 0.05
+		colony_cost_modifier = -0.5
+	reduced_liberty_desire_on_other_continent = 20
+    }
+    ai_will_do = {
+        factor = 10
+    }
+}
+
+intelministry = {
+    cost = 2000
+    time = 24
+	
+	build_trigger = {
+		owner = {
+			full_idea_group = spy_ideas
+		}
+	}
+	
+	keep_trigger = {
+		owner = { 
+			full_idea_group = spy_ideas
+		}
+	}
+	
+    one_per_country = yes
+    allow_in_gold_provinces = yes
+    onmap = no
+    modifier = {
+		global_spy_defence = 0.25
+    	spy_offence = 0.5
+		rebel_support_efficiency = 1
+    }
+    ai_will_do = {
+        factor = 10
+    }
+}
+
+externalministry = {
+    cost = 2000
+    time = 24
+	
+	build_trigger = {
+		owner = { 
+			OR = {
+				full_idea_group = diplomatic_ideas
+				full_idea_group = influence_ideas
+			}
+		}
+	}
+	
+	keep_trigger = {
+		owner = { 
+			OR = {
+				full_idea_group = diplomatic_ideas
+				full_idea_group = influence_ideas
+			}
+		}
+	}
+	
+    one_per_country = yes
+    allow_in_gold_provinces = yes
+    onmap = no
+    modifier = {
+		accept_vassalization_reasons = 5
+		diplomatic_annexation_cost = -0.1
+		monthly_favor_modifier = 0.25
+    }
+    ai_will_do = {
+        factor = 10
+    }
+}
+
+commerceministry = {
+    cost = 2000
+    time = 24
+	
+	build_trigger = {
+		owner = {
+			full_idea_group = trade_ideas
+		}
+	}
+	
+	keep_trigger = {
+		owner = { 
+			full_idea_group = trade_ideas
+		}
+	}
+	
+    one_per_country = yes
+    allow_in_gold_provinces = yes
+    onmap = no
+    modifier = {
+		placed_merchant_power = 3
+    	mercantilism_cost = -0.1
+		trade_company_investment_cost = -0.2
+    }
+    ai_will_do = {
+        factor = 10
+    }
+}
+
+imperialministry = {
+    cost = 2000
+    time = 24
+	
+	build_trigger = {
+		owner = {
+			full_idea_group = imperial_ideas
+		}
+	}
+	
+	keep_trigger = {
+		owner = { 
+			full_idea_group = imperial_ideas
+		}
+	}
+	
+    one_per_country = yes
+    allow_in_gold_provinces = yes
+    onmap = no
+    modifier = {
+		imperial_authority = 0.05
+    	reasons_to_elect = 10
+		relation_with_same_religion = 10
+    }
+    ai_will_do = {
+        factor = 10
+    }
+}
+
+celestialministry = {
+    cost = 2000
+    time = 24
+	
+	build_trigger = {
+		owner = {
+			full_idea_group = celestial_ideas
+		}
+	}
+	
+	keep_trigger = {
+		owner = { 
+			full_idea_group = celestial_ideas
+		}
+	}
+	
+    one_per_country = yes
+    allow_in_gold_provinces = yes
+    onmap = no
+    modifier = {
+		yearly_corruption = -0.05
+    	global_monthly_devastation = -0.05
+		all_estate_loyalty_equilibrium = 0.1
+    }
+    ai_will_do = {
+        factor = 10
+    }
+}

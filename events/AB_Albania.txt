@@ -1,0 +1,83 @@
+namespace = ab_albania
+normal_or_historical_nations = yes
+
+#Timed Mission Unlock
+country_event = {
+	id = ab_albania.1
+	title = ab_albania.1.t
+	desc = ab_albania.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_cornwall.1.a
+		set_country_flag = alb_mission_unlocked
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Timed Mission Fail
+country_event = {
+	id = ab_albania.2
+	title = ab_albania.2.t
+	desc = ab_albania.2.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		is_year = 1460
+		OR = {
+			tag = ALB
+			was_tag = ALB
+		}
+		has_country_flag = alb_mission_unlocked
+		NOT = {
+			mission_completed = alb_skanderbeg
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = alb_mission_unlocked
+			set_country_flag = alb_mission_failed
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_albania.2.a
+	}
+}
+
+#Skanderbeg
+country_event = {
+	id = ab_albania.3
+	title = ab_albania.3.t
+	desc = ab_albania.3.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_cornwall.1.a
+		define_ruler = {
+			name = "Gjergj 'Skanderbeg'"
+			dynasty = "Kastrioti"
+			adm = 5
+			dip = 4
+			mil = 6
+			age = 50
+			claim = 95
+		}
+		define_ruler_to_general = {
+			fire = 5
+			shock = 5
+			manuever = 3
+			siege = 3
+		}
+	}
+}

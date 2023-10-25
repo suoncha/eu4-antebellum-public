@@ -1,0 +1,1135 @@
+BRI_missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GLL
+			tag = BRI
+		}
+	}
+	has_country_shield = yes
+
+	bri_conquer_normandy = {
+		icon = mission_rb_angevin_kingdom
+		required_missions = { bri_alliance }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				area = normandy_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    normandy_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 65 }
+			add_country_modifier = {
+				name = "bri_normand"
+				duration = 9125
+			}
+		    loire_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    ile_de_france_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    home_counties_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    wessex_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    cornwall_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+
+	bri_dethrone = {
+		icon = carolingian_empire
+		required_missions = { bri_conquer_normandy }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				area = ile_de_france_area
+				area = loire_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    ile_de_france_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    loire_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_legitimacy = 25
+			add_country_modifier = {
+				name = "bri_carolingians"
+				duration = 9125
+			}
+		    france_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	
+	bri_tide = {
+		icon = centralize_france
+		required_missions = { bri_dethrone }
+		position = 4
+
+		provinces_to_highlight = {
+			OR = {
+				region = france_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    OR = {
+			custom_trigger_tooltip = {
+				tooltip = BRI_MORE_DEV
+				NOT = {
+					OR = {
+						FRC = {
+							total_development = ROOT
+						}
+						FRA = {
+							total_development = ROOT
+						}
+					}
+				}
+			}
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = france_region
+				value = 30
+			}
+		}
+		}
+		
+		effect = {
+			add_army_tradition = 25
+			add_country_modifier = {
+				name = "bri_order"
+				duration = -1
+			}
+		}
+	}
+}
+
+BRI_missions_1_2 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLL
+	}
+	has_country_shield = yes
+	
+	bri_crown_of_italy = {
+		icon = kingdom_of_lombardy
+		required_missions = { bri_restoration }
+		position = 6
+
+		provinces_to_highlight = {
+			OR = {
+				region = italy_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+	
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = italy_region
+				value = 20
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "bri_new_hegemon"
+				duration = 9125
+			}
+		    lazio_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	bri_avenge = {
+		icon = give_him_back_his_legions
+		required_missions = { bri_crown_of_italy }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				area = lazio_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    lazio_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_brittany.2 }
+		    italy_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+
+}
+
+BRI_missions_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GLL
+			tag = BRI
+		}
+	}
+	has_country_shield = yes
+
+	bri_alliance = {
+		icon = mission_noble_council
+		required_missions = { }
+
+		trigger = {
+			num_of_allies = 3
+		}
+		
+		effect = {
+			custom_tooltip = frc_scaled_dip_per_alliance 
+		    	add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = NRM
+				}
+			normandy_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			4963 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = { num_of_allies = 4 }
+					add_dip_power = 100 
+				}
+				else_if = {
+					limit = { num_of_allies = 3 }
+					add_dip_power = 75
+				}
+				else_if = {
+					limit = { num_of_allies = 2 }
+					add_dip_power = 50
+				}
+				else_if = {
+					limit = { num_of_allies = 1 }
+					add_dip_power = 25
+				}
+			}
+		}
+	}
+
+	bri_imperial = {
+		icon = switzerland_and_the_empire
+		required_missions = { bri_alliance }
+		position = 2
+
+		trigger = {
+			OR = {
+				emperor = {
+					is_rival = ROOT
+				}
+				ROOT = {
+					is_rival = emperor
+				}
+				is_part_of_hre = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = BRI_MISSION_1
+			tooltip = {
+				add_country_modifier = {
+					name = "bri_joined_hre"
+					duration = 9125
+				}
+			}
+			custom_tooltip = BRI_MISSION_2
+			tooltip = {
+				add_country_modifier = {
+					name = "bri_rivaled_hre"
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_country_modifier = {
+						name = "bri_joined_hre"
+						duration = 9125
+					}
+				}
+				else = {
+					add_country_modifier = {
+						name = "bri_rivaled_hre"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+
+	bri_brittonic_resurgence = {
+		icon = the_hundred_years_war
+		required_missions = { bri_conquer_normandy }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				area = home_counties_area
+				area = wessex_area
+				area = cornwall_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    home_counties_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    wessex_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    cornwall_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_country_modifier = {
+				name = "bri_overthrow"
+				duration = 9125
+			}
+			british_isles_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	bri_celtic_union = {
+		icon = mission_empire
+		required_missions = { bri_brittonic_resurgence }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				region = british_isles_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    british_isles_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			grant_all_mana = {
+				mana = 150
+			}
+			add_country_modifier = {
+				name = "bri_celtic_union"
+				duration = -1
+			}
+		}
+	}
+	
+	bri_restoration = {
+		icon = expand_to_the_south
+		required_missions = { bri_tide }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				region = france_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			NOT = {
+				exists = FRC
+			}
+			NOT = {
+				exists = FRA
+			}
+		    france_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_brittany.1 }
+		}
+	}
+}
+
+BRI_missions_2_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = GLL
+	}
+	has_country_shield = yes
+	
+	bri_rhine = {
+		icon = reclaim_our_ancestral_lands
+		required_missions = { bri_restoration }
+		position = 6
+
+		provinces_to_highlight = {
+			OR = {
+				area = lower_rhineland_area
+				area = palatinate_area
+				area = north_rhine_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    palatinate_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    north_rhine_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    lower_rhineland_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BRI_RHENISH_BORDER
+			tooltip = {
+				add_province_modifier = {
+					name = "bri_rhenish"
+					duration = -1
+				}
+			}
+			low_countries_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = lower_rhineland_area
+							area = north_rhine_area
+							area = palatinate_area
+						}
+					}
+				add_province_modifier = {
+					name = "bri_rhenish"
+					duration = -1
+				}
+			}
+			}
+					
+		}
+	}
+	
+	bri_empire = {
+		icon = a_real_roman_empire
+		required_missions = { bri_rhine bri_crown_of_italy }
+		position = 7
+		
+		trigger = {
+		    OR = {
+				government_rank = 3
+				total_development = 1000
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			custom_tooltip = BRI_GALLIC_EMPIRE
+			hidden_effect = {
+				override_country_name = BRI_GALLIA
+			}
+		    iberia_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	bri_caliphate = {
+		icon = mission_reclaim_andalucia
+		required_missions = { bri_empire }
+		position = 8
+
+		provinces_to_highlight = {
+			OR = {
+				region = iberia_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+	
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = iberia_region
+				value = 20
+			}
+		}
+		
+		effect = {
+			add_mil_power = 200
+			add_country_modifier = {
+				name = "bri_banish_muslims"
+				duration = 9125
+			}
+		}
+	}
+}
+
+BRI_missions_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GLL
+			tag = BRI
+		}
+	}
+	has_country_shield = yes
+	
+	bri_royal_status = {
+		icon = invest_in_the_provinces
+		required_missions = { bri_alliance }
+		position = 2
+
+		trigger = {
+			OR = {
+				total_development = 300
+				government_rank = 2
+			}
+		}
+
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			add_country_modifier = {
+				name = "bri_royal"
+				duration = -1
+			}
+		}
+	}
+	
+	bri_brest = {
+		icon = brest_dockyards
+		required_missions = { }
+		position = 3
+		
+		provinces_to_highlight = {
+			province_id = 170
+			OR = {
+				has_dock_building_trigger = no
+				NOT = { owned_by = ROOT }
+				NOT = { controlled_by = ROOT }
+			}
+		}
+		trigger = {
+			170 = {
+				owned_by = ROOT
+				controlled_by = ROOT
+				has_dock_building_trigger = yes
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					170 = {
+						NOT = {
+							has_building = drydock
+						}
+					}
+				}
+				170 = {
+					add_building = drydock
+				}
+			}
+			170 = {
+				add_unit_construction = {
+					type = heavy_ship
+					amount = 5
+					speed = 0.25
+					cost = 0
+				}
+			}
+		}
+	}
+
+	bri_new_brittany = {
+		icon = mission_settlers_north_america
+		required_missions = { bri_brest }
+		position = 4
+		provinces_to_highlight = {
+			colonial_region = colonial_canada
+			NOT = { country_or_non_sovereign_subject_holds = root }
+			has_port = yes
+			has_discovered = root
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_colony_in_colonial_canada
+				colonial_canada = {
+					owner = {
+						is_colonial_nation_of = root
+					}
+				}
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = bri_colonialism
+				duration = 7300
+			}
+		}
+	}
+	
+	bri_east_america = {
+		icon = mission_rb_the_thirteen_colonies
+		required_missions = { bri_new_brittany }
+		position = 6
+		provinces_to_highlight = {
+			colonial_region = colonial_eastern_america
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		trigger = { 
+			custom_trigger_tooltip = {
+				tooltip = miss_colonize_eastern_america
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 1
+					colonial_region = colonial_eastern_america
+					is_city = yes
+				}
+			}
+		}
+		effect = {
+			create_explorer = { tradition = 75 }
+			add_country_modifier = {
+				name = bri_colonialism_2
+				duration = 7300
+			}
+		}
+	}
+	
+	bri_expand_new_brittany = {
+		icon = mission_rb_scottish_the_darien_scheme
+		required_missions = { bri_east_america }
+		position = 8
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_canada
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_colonize_canada_20
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 20
+					colonial_region = colonial_canada
+					is_city = yes
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "eng_rb_established_shipping"
+				duration = 7300
+			}
+			define_advisor = {
+				type = colonist
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	
+	}
+	
+}
+
+
+BRI_missions_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GLL
+			tag = BRI
+		}
+	}
+	has_country_shield = yes
+
+	bri_estates = {
+	    icon = all_bases_covered
+		required_missions = { bri_language }
+		position = 2
+		
+		trigger = {
+			estate_loyalty = { 
+				estate = estate_church 
+				loyalty = 60 
+			} 
+			estate_loyalty = { 
+				estate = estate_nobles
+				loyalty = 60 
+			} 
+			estate_loyalty = { 
+				estate = estate_burghers
+				loyalty = 60 
+			} 
+		}
+		
+		effect = {
+			add_adm_power = 50
+			add_country_modifier = {
+				name = "bri_estates"
+				duration = 9125
+			}
+		}
+	}
+
+	bri_capital = {
+	    icon = appease_the_estates
+		required_missions = { bri_estates }
+		position = 3
+		
+		trigger = {
+			capital_scope = {
+				development = 25
+					OR = {
+						has_building = temple
+						has_building = cathedral
+					}
+					has_production_building_trigger = yes
+			}
+		}
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		effect = {
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" }
+				capital_scope = {
+					add_prosperity = 50 
+				}
+			}
+			capital_scope = {
+				add_province_modifier = {
+					name = "bri_renovated"
+					duration = -1
+				}
+			}
+			capital_scope = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	bri_university = {
+	    icon = mission_rb_college_of_justice
+		required_missions = { bri_capital }
+		position = 4
+		
+		trigger = {
+			capital_scope = {
+				has_building = university
+			}
+		}
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		effect = {
+			change_government_reform_progress = 25
+			add_country_modifier = {
+				name = "bri_university"
+				duration = 9125
+			}
+		}
+	}
+	
+	bri_better_weather = {
+		icon = mission_potosi_silver
+		required_missions = { bri_new_brittany }
+		position = 5
+		provinces_to_highlight = {
+			colonial_region = colonial_the_carribean
+			NOT = { country_or_non_sovereign_subject_holds = root }
+			has_discovered = root
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_colony_in_colonial_caribbean
+				colonial_the_carribean = {
+					owner = {
+						is_colonial_nation_of = root
+					}
+				}
+			}
+		}
+		effect = {
+			1516 = {
+				add_trade_modifier = {
+					who = root
+					duration = 7300
+					power = 30
+					key = bri_breton_better_weather
+				}
+			}
+		}
+	}
+	
+	bri_caribbean = {
+		icon = mission_colonize_the_caribbean
+		required_missions = { bri_better_weather }
+		position = 7
+
+		provinces_to_highlight = {
+			colonial_region = colonial_the_carribean
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = { 
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				colonial_region = colonial_the_carribean
+				is_city = yes
+			}
+		}
+
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = "bri_expand_empire"
+				duration = 18250
+			}
+		}
+	}
+
+
+}
+
+BRI_missions_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = GLL
+			tag = BRI
+		}
+	}
+	has_country_shield = yes
+	
+	bri_language = {
+	    icon = reform_the_nomocanon
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			has_institution  = renaissance
+			prestige = 50
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "bri_codified"
+				duration = -1
+			}
+			define_advisor = {
+				type = philosopher
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	bri_catholicon = {
+	    icon = subiaco_press
+		required_missions = { bri_language }
+		position = 2
+		
+		trigger = {
+			has_institution  = printing_press
+			treasury = 250
+		}
+		
+		effect = {
+			add_treasury = -250
+			add_prestige = 15
+			add_country_modifier = {
+				name = "bri_catholicon_reformed"
+				duration = -1
+			}
+		}
+	}
+	
+	bri_agriculture = {
+	    icon = mission_rb_import_potatoes
+		required_missions = { bri_estates }
+		position = 3
+		
+		provinces_to_highlight = {
+			area = brittany_area
+			NOT = { base_production = 7 }
+		}
+		
+		trigger = {
+			brittany_area = {
+				type = all
+				base_production = 7
+			}
+		}
+		
+		effect = {
+			brittany_area = {
+				add_base_production = 1 
+			}
+			add_country_modifier = {
+				name = "bri_agriculture"
+				duration = 9125
+			}
+		}
+	}
+	
+	bri_industrialization = {
+	    icon = mission_rb_build_furnaces
+		required_missions = { bri_agriculture }
+		position = 4
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			add_treasury = 1000
+			add_country_modifier = {
+				name = "bri_revolution"
+				duration = -1
+			}
+		}
+	}
+	
+	bri_parliament = {
+	    icon = mission_rb_trinity_college_dublin
+		required_missions = { bri_university }
+		position = 5
+		
+		trigger = {
+			reform_level = 7
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "bri_parliament"
+				duration = -1
+			}
+		}
+	}
+	
+	bri_atlantic_trade = {
+		icon = mission_dominate_home_trade_node
+		position = 6
+		required_missions = { bri_better_weather }
+		provinces_to_highlight = {
+			#the two Atlantic trade nodes
+			OR = {
+				province_id = 1490
+				province_id = 1516
+			}
+			NOT = { is_strongest_trade_power = root }
+			has_discovered = root
+		}
+		trigger = {
+			1490 = { is_strongest_trade_power = root }
+			1516 = { is_strongest_trade_power = root }
+			calc_true_if = {
+				amount = 2
+				all_subject_country = {
+					is_colonial_nation_of = root
+					num_of_cities = 10
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					owns = 170 #Finistere
+				}
+				170 = {
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 3 }
+						}
+						add_center_of_trade_level = 1
+						add_base_production = 2
+					}
+					else = { add_base_production = 3 }
+				}
+			}
+			else = { add_dip_power = 100 }
+			if = {
+				limit = {
+					owns = 172 #Nantes
+				}
+				172 = {
+					add_base_production = 2
+				}
+			}
+			else = { add_adm_power = 100 }
+		}
+	}
+	
+}

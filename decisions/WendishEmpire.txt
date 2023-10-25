@@ -1,0 +1,115 @@
+country_decisions = {
+
+	wendish_empire = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			
+			NOT = { has_country_flag = formed_wendish_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = WEE }
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
+			OR = {
+				tag = SOR
+				tag = VLT
+				tag = OBD
+				tag = POM
+				tag = RUG
+			}
+			OR = {
+				ai = no
+				AND = {
+					ai = yes
+					num_of_cities = 15
+				}
+			}
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 50
+				province_id = 1763
+				province_id = 60
+				province_id = 1858
+				province_id = 4745
+				province_id = 2996
+				
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+			owns_core_province = 50
+			owns_core_province = 1763
+			owns_core_province = 60
+			owns_core_province = 1858
+			owns_core_province = 4745
+			owns_core_province = 2996
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = WEE
+			swap_non_generic_missions = yes
+			set_country_flag = formed_wendish_flag
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			# Only add this monarchy-only reform if we are a monarchy
+			# some nations like Velveti might want to keep their
+			# Slavic Theocracy government reform
+			if = {
+				limit = {
+					government = monarchy
+				}
+				add_government_reform = wee_confederation
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			custom_tooltip = WEE_FORMED_OBD
+			tooltip = {
+				add_country_modifier = {
+					name = "wee_obotrite_legacy"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						was_tag = OBD
+					}
+					add_country_modifier = {
+						name = "wee_obotrite_legacy"
+						duration = -1
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}

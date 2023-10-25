@@ -1,0 +1,222 @@
+estate_burghers_patronage_of_the_arts = {
+	icon = privilege_build_jain_temple
+	max_absolutism = -5
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = {
+	}
+	conditional_modifier = {
+		trigger = { NOT = { has_country_flag = AB_SHH_improved_patronage_privilege } }
+		modifier = {
+			global_tax_modifier = -0.05
+			prestige = 0.5
+		}
+	}
+	# Upgraded SHH version, double yearly prestige and no Tax Modifier penalty
+	conditional_modifier = {
+		trigger = { has_country_flag = AB_SHH_improved_patronage_privilege }
+		modifier = { prestige = 1 }
+	}
+	cooldown_years = 10
+	on_granted = {
+		if = {
+			limit = { prestige = 50 }
+			add_prestige = 10
+		}
+		else_if = {
+			limit = { prestige = 0 }
+			add_prestige = 15
+		}
+		else_if = {
+			limit = { prestige = -25 }
+			add_prestige = 20
+		}
+		else_if = {
+			limit = { prestige = -50 }
+			add_prestige = 25
+		}
+		else = {
+			add_prestige = 30
+		}
+	}
+	conditional_modifier = {
+		trigger = { has_government_mechanic = russian_modernization_mechanic }
+		modifier = { monthly_russian_modernization = -0.03 }
+	}
+	#conditional_modifier = {
+	#	trigger = { has_government_mechanic = ottoman_decadence_mechanic }
+	#	modifier = { monthly_ottoman_decadence = 0.02 }
+	#}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+AB_estate_burghers_urbanization = {
+	icon = privilege_grant_new_world_charter
+	max_absolutism = -5
+	loyalty = 0.05
+	influence = 0
+	is_valid = {
+		OR = {
+			has_mission = AB_Shahi_Urbanization
+			has_unlocked_estate_privilege = {
+				estate_privilege = AB_estate_burghers_urbanization
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_AB_estate_burghers_urbanization
+			has_unlocked_estate_privilege = {
+				estate_privilege = AB_estate_burghers_urbanization
+			}	
+		}
+		any_owned_province = {
+			OR = {
+				has_terrain = mountain
+				has_terrain = drylands
+				has_terrain = desert
+			}
+		}
+	}
+	on_granted = {
+		custom_tooltip = AB_estate_burghers_urbanization_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				has_terrain = mountain
+			}
+			add_province_modifier = {
+				name = AB_SHH_decrease_mountain_dev_cost
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_terrain = drylands
+			}
+			add_province_modifier = {
+				name = AB_SHH_decrease_drylands_dev_cost
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_terrain = desert
+			}
+			add_province_modifier = {
+				name = AB_SHH_decrease_desert_dev_cost
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = AB_estate_burghers_urbanization_rk
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = AB_SHH_decrease_mountain_dev_cost
+					has_province_modifier = AB_SHH_decrease_drylands_dev_cost
+					has_province_modifier = AB_SHH_decrease_desert_dev_cost
+				}
+			}
+			remove_province_modifier = AB_SHH_decrease_mountain_dev_cost
+			remove_province_modifier = AB_SHH_decrease_drylands_dev_cost
+			remove_province_modifier = AB_SHH_decrease_desert_dev_cost
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				OR = {
+					has_province_modifier = AB_SHH_decrease_mountain_dev_cost
+					has_province_modifier = AB_SHH_decrease_drylands_dev_cost
+					has_province_modifier = AB_SHH_decrease_desert_dev_cost
+				}
+			}
+			remove_province_modifier = AB_SHH_decrease_mountain_dev_cost
+			remove_province_modifier = AB_SHH_decrease_drylands_dev_cost
+			remove_province_modifier = AB_SHH_decrease_desert_dev_cost
+		}
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}
+
+estate_burghers_cultivate_the_drylands = {
+	icon = privilege_dev_cost_desert
+	land_share = 5
+	max_absolutism = -10
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = {
+		OR = {
+			has_mission = koj_cultivate_the_holy_land
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_cultivate_the_drylands
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_burghers_cultivate_the_drylands_tt
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_burghers_cultivate_the_drylands
+			}	
+		}
+		any_owned_province = {
+			OR = {
+				region = mashriq_region
+				region = egypt_region
+			}
+			has_terrain = drylands
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_burghers_cultivate_the_drylands_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				OR = {
+					region = mashriq_region
+					region = egypt_region
+				}
+				has_terrain = drylands
+			}
+			add_province_modifier = {
+				name = koj_cultivate_drylands
+				duration = -1
+			}
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_burghers_cultivate_the_drylands_rt
+	}
+	on_revoked_province = {
+		if = {
+			limit = { has_province_modifier = koj_cultivate_drylands }
+			remove_province_modifier = koj_cultivate_drylands
+		}
+	}
+	on_invalid = {
+		custom_tooltip = estate_burghers_cultivate_the_drylands_rt
+	}
+	on_invalid_province = {
+		if = {
+			limit = { has_province_modifier = koj_cultivate_drylands }
+			remove_province_modifier = koj_cultivate_drylands
+		}
+	}
+	ai_will_do = {
+		factor = 0
+	}
+}

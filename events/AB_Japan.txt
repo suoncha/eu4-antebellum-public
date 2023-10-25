@@ -1,0 +1,313 @@
+namespace = ab_japan
+normal_or_historical_nations = yes
+
+
+country_event = {
+	id = ab_japan.1
+	title = ab_japan.1.t
+	desc = ab_japan.1.d
+	picture = AB_BYZANTIUM_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_reform = shogunate
+		mission_completed = tjj_reign
+		has_country_modifier = annexers_legacy
+		OR = {
+			DIP = 5
+			DIP = 6
+		}
+	}
+	
+	option = {
+		name = ab_japan.1.a
+		remove_country_modifier = annexers_legacy
+	}
+}
+
+country_event = {
+	id = ab_japan.5
+	title = ab_japan.5.t
+	desc = ab_japan.5.d
+	picture = AB_BYZANTIUM_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_japan.5.a
+		change_tag = JPE
+	}
+}
+
+country_event = {
+	id = ab_japan.6
+	title = ab_japan.6.t
+	desc = ab_japan.6.d
+	picture = URBANISATION_INCIDENT_eventPicture
+	trigger = {
+		OR = {
+			tag = JAP
+			has_reform = reformed_shogunate
+		}
+		5072 = { owned_by = ROOT }
+		1020 = { owned_by = ROOT }
+	}
+	fire_only_once = yes
+	mean_time_to_happen = {
+		months = 1
+	}
+	option = {
+		name = jap_capital1
+		set_country_flag = jap_picked_new_capital
+		trigger = {
+			NOT = {
+				OR = {
+					5072 = {
+						is_capital = yes
+					}
+					1020 = {
+						is_capital = yes
+					}
+				}
+			}
+		}
+		capital_scope = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+		capital_scope = {
+			if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 1 }
+				}
+				center_of_trade = 1
+			}
+			else_if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 3 }
+				}
+				add_center_of_trade_level = 1
+			}
+		}
+	}
+	option = {
+		name = jap_capital2
+		set_country_flag = jap_picked_new_capital
+		if = {
+			limit = {
+				5072 = {
+					is_capital = yes
+				}
+			}
+			add_stability_or_adm_power = yes
+		}
+		else = {
+			set_capital = 5072
+		}
+		5072 = {
+			add_base_tax = 3
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+		capital_scope = {
+			if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 1 }
+				}
+				center_of_trade = 1
+			}
+			else_if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 3 }
+				}
+				add_center_of_trade_level = 1
+			}
+		}
+	}
+	option = {
+		name = jap_capital3
+		set_country_flag = jap_picked_new_capital
+		if = {
+			limit = {
+				1020 = {
+					is_capital = yes
+				}
+			}
+			add_stability_or_adm_power = yes
+		}
+		else = {
+			set_capital = 1020
+		}
+		1020 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 3
+		}
+		capital_scope = {
+			if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 1 }
+				}
+				center_of_trade = 1
+			}
+			else_if = {
+				limit = {
+					NOT = { province_has_center_of_trade_of_level = 3 }
+				}
+				add_center_of_trade_level = 1
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ab_japan.7
+	title = ab_japan.7.t
+	desc = ab_japan.7.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_japan.7.a
+		add_prestige = 25
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		1816 = {
+			add_devastation = 75
+		}
+		add_ruler_modifier = {
+    		name = jap_conqueror_yuan
+   			duration = -1
+		}
+	}
+}
+
+country_event = {
+	id = ab_japan.8
+	title = ab_japan.8.t
+	desc = ab_japan.8.d
+	picture = CHINESE_GENERAL_eventPicture
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = ab_japan.8.a
+			add_country_modifier = {
+				name = jap_masters_dragon_throne_modifier
+				duration = -1 
+			}
+			if = {
+				limit = { 
+					is_emperor_of_china = yes 
+					has_dlc = "Mandate of Heaven" 
+				}
+				custom_tooltip = jap_enable_fabricating_trib_CB_tt
+				set_country_flag = jap_enable_fabricating_trib_CB_flag 
+				
+				add_country_modifier = {
+					name = jap_divine_aspirations_modifier
+					duration = -1 
+				}
+			}
+			else_if = {
+				limit = { 
+					is_emperor_of_china = no 
+					has_dlc = "Mandate of Heaven" 
+				}
+				custom_tooltip = jap_reward_if_EoC_tt
+				custom_tooltip = jap_enable_fabricating_trib_CB_tt
+				tooltip = {
+					add_country_modifier = {
+						name = jap_divine_aspirations_modifier
+						duration = -1 
+					}
+				}
+			}
+	}
+}
+
+country_event = {
+	id = ab_japan.9
+	title = ab_japan.9.t
+	desc = ab_japan.9.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_japan.9.a
+			add_adm_power = 150
+			add_country_modifier = {
+				name = japan_sphere
+				duration = -1
+			}
+			bengal_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+	}
+}
+
+country_event = {
+	id = ab_japan.10
+	title = ab_japan.10.t
+	desc = ab_japan.10.d
+	picture = GIFTS_TO_EMPEROR_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_japan.10.a
+			add_absolutism = 10
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			add_ruler_modifier = {
+				name = japan_restoration
+				duration = -1
+			}
+			set_country_flag = jap_yamato_dynasty
+			custom_tooltip = JAP_YAMATO
+	}
+}
+
+country_event = {
+	id = ab_japan.11
+	title = ab_japan.11.t
+	desc = ab_japan.11.d
+	picture = AB_RISING_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		tag = JPE
+	}
+	
+	major = yes
+	
+	option = {
+		name = ab_japan.11.a
+	}
+}

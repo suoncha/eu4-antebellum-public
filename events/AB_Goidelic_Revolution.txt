@@ -1,0 +1,599 @@
+namespace = ab_goidelic_revolution
+
+# Goidelic Revolution Start - Ireland and Scotland
+country_event = {
+	id = ab_goidelic_revolution.1
+	title = ab_goidelic_revolution.1.t
+	picture = COURT_eventPicture
+
+	desc = {
+		trigger = {
+			was_tag = COT
+		}
+		desc = ab_goidelic_revolution.1.desc_connacht
+	}
+	desc = {
+		trigger = {
+			was_tag = HSC
+		}
+		desc = ab_goidelic_revolution.1.desc_gaeldom
+	}
+	
+	is_triggered_only = yes
+	
+	
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						tag = COT
+						was_tag = COT
+					}
+				}
+				set_country_flag = goidelic_government_flag
+			}
+			if = {
+				limit = {
+					OR = {
+						tag = HSC
+						was_tag = HSC
+					}
+				}
+				set_country_flag = ab_goidelic_union
+			}
+		}
+	}
+	
+	option = {
+		name = ab_goidelic_revolution.1.a
+		if = {
+			limit = {
+				was_tag = HSC
+			}
+			add_country_modifier = {
+				name = ab_goidelic_union
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				was_tag = COT
+			}
+			add_country_modifier = {
+				name = cot_goidelic_union
+				duration = -1
+			}
+		}
+
+		grant_all_mana = {
+			mana = 150
+		}
+		
+		if = {
+			limit = {
+				was_tag = COT
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = goidelic_government
+		}
+	}
+	
+	option = {
+		name = ab_goidelic_revolution.1.b
+
+		change_primary_culture = goidelic
+		if = {
+			limit = {
+				has_ruler = yes
+			}
+			set_ruler_culture = goidelic
+		}
+		if = {
+			limit = {
+				has_heir = yes
+			}
+			set_heir_culture = goidelic
+		}
+		if = {
+			limit = {
+				has_consort = yes
+				consort_culture = ROOT
+			}
+			set_consort_culture = goidelic
+		}
+		capital_scope = {
+			change_culture = goidelic
+			change_original_culture = goidelic
+			hidden_effect = {
+				add_province_modifier = {
+					name = goidelic_acceptance
+					duration = -1
+				}
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = ab_goidelic_revolution_start_tt
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = ab_goidelic_revolution_help_spread
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = ab_goidelic_revolution_reject_spread
+
+		if = {
+			limit = {
+				was_tag = COT
+			}
+			custom_tooltip = AB_EMPTY
+			add_government_reform = goidelic_government
+		}
+
+		if = {
+			limit = {
+				was_tag = HSC
+			}
+			hidden_effect = { 
+				add_accepted_culture = highland_scottish
+			}
+		}
+	}
+}
+
+# Goidelic Ideas Spread
+province_event = {
+	id = ab_goidelic_revolution.2 
+	title = ab_goidelic_revolution.2.t
+	desc = ab_goidelic_revolution.2.d
+	picture = CULTURE_eventPicture
+	
+	trigger = {
+		owner = {
+			primary_culture = goidelic
+		}
+		NOT = {
+			OR = {
+				has_province_modifier = goidelic_acceptance
+				has_province_modifier = goidelic_rejection
+				culture = goidelic
+				owner = {
+					has_country_modifier = goidelic_dominance
+				}
+			}
+		}
+		any_friendly_coast_border_province = { 
+			owned_by = ROOT
+			OR = {
+				has_province_modifier = goidelic_acceptance
+				culture = goidelic 
+			}
+		}
+	}
+
+	is_mtth_scaled_to_size = 1
+	
+	mean_time_to_happen = {
+		# Long but not the longest, it is still shorter than the
+		# one that punishes you
+		months = 24
+		modifier = {
+			factor = 1.1
+			development = 15
+		}
+		modifier = {
+			factor = 1.1
+			development = 30
+		}
+		modifier = {
+			factor = 0.5
+			nacionalizmus = 100
+		}
+		modifier = {
+			factor = 0.75
+			culture_group = gaelic
+		}
+		modifier = {
+			factor = 0.8
+			owner = { accepted_culture = PREV }
+			NOT = { culture_group = gaelic }
+		}
+		modifier = {
+			factor = 0.5
+			OR = {
+				culture = irish
+				culture = highland_scottish
+			}
+		}
+		modifier = {
+			factor = 0.75
+			religion = owner
+		}
+		modifier = {
+			factor = 0.25
+			has_province_modifier = goidelic_interest
+		}
+		modifier = {
+			factor = 5
+			NOT = { region = british_isles_region }
+		}
+		modifier = {
+			factor = 0.9
+			owner = { stability = 1 }
+		}
+		modifier = {
+			factor = 0.9
+			owner = { stability = 2 }
+		}
+		modifier = {
+			factor = 0.8
+			owner = { stability = 3 }
+		}
+	}
+	
+	option = {
+		name = goidelic_acceptance.1
+		custom_tooltip = goidelic_acceptance_eventual_conversion_tt
+		add_province_modifier = {
+			name = goidelic_acceptance
+			duration = -1
+		}
+		hidden_effect = {
+			# Fire at least 1 year later, with a maximum delay of 2 years
+			province_event = {
+				id = ab_goidelic_revolution.3
+				days = 365
+				random = 730
+			}
+		}
+	}
+}
+
+# Goidelic Acceptance
+province_event = {
+	id = ab_goidelic_revolution.3 
+	title = ab_goidelic_revolution.3.t
+	desc = ab_goidelic_revolution.3.d
+	picture = REFORM_eventPicture
+
+	hidden = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		# The modifier is lost if culture changes so no problems here
+		has_province_modifier = goidelic_acceptance
+		NOT = { culture = goidelic }
+	}
+	
+	option = {
+		name = ab_goidelic_revolution.3.a
+		change_culture = goidelic
+		change_original_culture = goidelic
+	}
+}
+
+# Rejection of the Goidelics
+province_event = {
+	id = ab_goidelic_revolution.4
+	title = ab_goidelic_revolution.4.t
+	desc = ab_goidelic_revolution.4.d
+	picture = ANGRY_MOB_eventPicture
+		
+	trigger = {
+		owner = {
+			primary_culture = goidelic
+		}
+		NOT = {
+			OR = {
+				has_province_modifier = goidelic_acceptance
+				has_province_modifier = goidelic_rejection
+				has_province_modifier = goidelic_interest
+				has_province_modifier = goidelic_apathy
+				culture = goidelic
+				owner = {
+					has_country_modifier = goidelic_dominance
+				}
+			}
+		}
+		any_friendly_coast_border_province = { 
+			owned_by = ROOT
+			OR = {
+				has_province_modifier = goidelic_acceptance
+				culture = goidelic 
+			}
+		}
+	}
+
+	is_mtth_scaled_to_size = 1
+
+	mean_time_to_happen = {
+		# Longest because it is a negative, but lots of modifiers
+		months = 38
+		modifier = {
+			factor = 0.5
+			nacionalizmus = 100
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { religion = owner }
+		}
+		modifier = {
+			factor = 0.9
+			owner = {
+				NOT = { stability = 0 }
+			}
+		}
+		modifier = {
+			factor = 0.9
+			owner = {
+				NOT = { stability = -1 }
+			}
+		}
+		modifier = {
+			factor = 0.9
+			owner = {
+				NOT = { stability = -2 }
+			}
+		}
+		modifier = {
+			factor = 1.5
+			culture_group = gaelic
+		}
+		modifier = {
+			factor = 5
+			NOT = { region = british_isles_region }
+		}
+		modifier = {
+			factor = 0.9
+			NOT = { culture_group = gaelic }
+			owner = {
+				NOT = { accepted_culture = PREV }
+			}
+		}
+	}
+	
+	option = {
+		name = ab_goidelic_revolution.4.a 
+		custom_tooltip = goidelic_rejection_ten_years_tt
+		add_province_modifier = {
+			name = goidelic_rejection
+			duration = 3650
+		}
+	}
+	
+	option = {
+		name = ab_goidelic_revolution.4.b
+		custom_tooltip = goidelic_rejection_five_years_tt
+		add_province_modifier = {
+			name = goidelic_rejection
+			duration = 1825
+		}
+		owner = {
+			add_years_of_income = -0.05
+		}
+	}
+	
+	option = {
+		name = ab_goidelic_revolution.4.c
+		custom_tooltip = goidelic_rejection_five_years_tt
+		add_province_modifier = {
+			name = goidelic_rejection
+			duration = 1825
+		}
+		spawn_rebels = {
+			type = noble_rebels
+			size = 1
+		}
+	}
+}
+
+# Apathy Torwards Goidelics
+province_event = {
+	id = ab_goidelic_revolution.5
+	title = ab_goidelic_revolution.5.t
+	desc = ab_goidelic_revolution.5.d
+	picture = DEBATE_REPUBLICAN_eventPicture
+		
+	trigger = {
+		owner = {
+			primary_culture = goidelic
+		}
+		any_friendly_coast_border_province = { 
+			owned_by = ROOT
+			OR = {
+				has_province_modifier = goidelic_acceptance
+				culture = goidelic 
+			}
+		}
+		NOT = {
+			OR = {
+				has_province_modifier = goidelic_acceptance
+				has_province_modifier = goidelic_interest
+				has_province_modifier = goidelic_apathy
+				has_province_modifier = goidelic_rejection
+				culture = goidelic
+				owner = {
+					has_country_modifier = goidelic_dominance
+				}
+			}
+		}
+	}
+
+	is_mtth_scaled_to_size = 1
+	
+	mean_time_to_happen = {
+		# Shorter than acceptance or Apathy, but less modifiers
+		months = 18
+		modifier = {
+			factor = 1.1
+			owner = { stability = 1 }
+		}
+		modifier = {
+			factor = 1.1
+			owner = { stability = 2 }
+		}
+		modifier = {
+			factor = 1.1
+			owner = { stability = 3 }
+		}
+		modifier = {
+			factor = 5
+			NOT = { region = british_isles_region }
+		}
+	}
+	
+	option = {
+		name = ab_goidelic_revolution.5.a
+		custom_tooltip = goidelic_rejection_three_years_tt
+		add_province_modifier = {
+			name = goidelic_apathy
+			duration = 1095
+		}
+	}
+	
+	option = {
+		name = ab_goidelic_revolution.5.b
+		custom_tooltip = goidelic_interest_chance_tt
+		owner = {
+			add_years_of_income = -0.075
+		}
+		add_province_modifier = {
+			name = goidelic_interest
+			duration = 3650
+		}
+	}
+}
+
+# The Goidelic Era
+country_event = {
+	id =  ab_goidelic_revolution.6
+	title = ab_goidelic_revolution.6.t
+	desc = ab_goidelic_revolution.6.d
+	picture = COURT_eventPicture
+
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = {
+			has_country_modifier = goidelic_dominance
+		}
+		calc_true_if = {
+			all_owned_province = {
+				culture = goidelic
+			}
+			amount = 30
+		}
+	}
+			
+	option = {
+		name = ab_goidelic_revolution.6.a
+		custom_tooltip = goidelic_natural_spread_tt
+		hidden_effect = {
+			every_owned_province = { 
+				limit = {
+					OR = {
+						has_province_modifier = goidelic_acceptance
+						has_province_modifier = goidelic_interest
+						has_province_modifier = goidelic_apathy
+						has_province_modifier = goidelic_rejection
+					}
+				}
+				remove_province_modifier = goidelic_acceptance
+				remove_province_modifier = goidelic_interest
+				remove_province_modifier = goidelic_apathy
+				remove_province_modifier = goidelic_rejection
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = goidelic_dominance
+			duration = -1
+		}
+	}
+}
+
+province_event = {
+	id = ab_goidelic_revolution.7
+	title = ab_goidelic_revolution.7.t
+	desc = ab_goidelic_revolution.7.d
+	picture = SYNTHETICS_eventPicture
+
+	hidden = yes
+
+	trigger = {
+		owner = { has_country_modifier = goidelic_dominance }
+		any_friendly_coast_border_province = {
+			owned_by = ROOT
+			culture = goidelic
+		}
+		OR = {
+			culture_group = gaelic
+			culture = english
+			culture = scottish
+		}
+	}
+
+	is_mtth_scaled_to_size = 1
+
+	mean_time_to_happen = {
+		months = 52
+		modifier = {
+			factor = 0.8
+			religion = owner
+		}
+		modifier = {
+			factor = 1.3
+			NOT = { religion = owner }
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { culture_group = gaelic }
+			owner = {
+				accepted_culture = PREV
+			}
+		}
+		modifier = {
+			factor = 1.5
+			NOT = { culture_group = gaelic }
+			owner = {
+				NOT = { accepted_culture = PREV }
+			}
+		}
+		modifier = {
+			factor = 0.9
+			owner = { stability = 1 }
+		}
+		modifier = {
+			factor = 0.9
+			owner = { stability = 2 }
+		}
+		modifier = {
+			factor = 0.9
+			owner = { stability = 3 }
+		}
+		modifier = {
+			factor = 1.1
+			owner = {
+				NOT = { stability = 0 }
+			}
+		}
+		modifier = {
+			factor = 1.1
+			owner = {
+				NOT = { stability = -1 }
+			}
+		}
+		modifier = {
+			factor = 1.1
+			owner = {
+				NOT = { stability = -2 }
+			}
+		}
+		modifier = {
+			factor = 3
+			NOT = { region = british_isles_region }
+		}
+	}
+
+	option = {
+		change_culture = goidelic
+		change_original_culture = goidelic
+	}
+}

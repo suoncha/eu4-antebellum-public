@@ -1,0 +1,72 @@
+country_decisions = {
+
+	form_frisia = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_frisia_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = FII }
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
+			NOT = { tag = UNN }
+			tag = NED
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+			has_country_flag = can_form_unl
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1931
+				province_id = 4382
+				province_id = 100
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+			primary_culture = frisian
+			owns_core_province = 1931
+			owns_core_province = 4382
+			owns_core_province = 100
+		}
+		effect = {
+			if = {
+				limit = {
+					is_part_of_hre = yes
+					is_elector = no
+					is_emperor = no
+				}
+				emperor = {
+					add_opinion = {
+						who = root
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
+				}
+			}
+			change_tag = FII
+			set_country_flag = formed_frisia_flag
+			custom_tooltip = cosmetic_tag_info
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

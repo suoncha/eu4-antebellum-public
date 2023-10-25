@@ -1,0 +1,96 @@
+# The following scripted effects are hacks to deal with stupid stuff in the game
+
+ab_on_bankruptcy_restore_decadence_effect = {
+	# Bankruptcy wipes Byzantine Decadence, so add it back
+	# if you have not completed the missions
+	if = {
+		limit = {
+			has_government_mechanic = byzantine_decadence_mechanic
+		}
+		if = {
+			limit = {
+				NOT = { mission_completed = byzantium_traitors }
+			}
+			add_government_power = { 
+				mechanic_type = byzantine_decadence_mechanic
+				power_type = byzantine_decadence
+				value = 25
+			}
+		}
+		if = {
+			limit = {
+				NOT = { mission_completed = byzantium_court }
+			}
+			add_government_power = { 
+				mechanic_type = byzantine_decadence_mechanic
+				power_type = byzantine_decadence
+				value = 25
+			}
+		}
+		if = {
+			limit = {
+				NOT = { mission_completed = byzantium_economy }
+			}
+			add_government_power = { 
+				mechanic_type = byzantine_decadence_mechanic
+				power_type = byzantine_decadence
+				value = 25
+			}
+		}
+		if = {
+			limit = {
+				NOT = { mission_completed = byzantium_imperial_army }
+			}
+			add_government_power = { 
+				mechanic_type = byzantine_decadence_mechanic
+				power_type = byzantine_decadence
+				value = 25
+			}
+		}
+	}
+}
+
+ab_on_dependency_gained_ai_vassalize_ruirech_effect = {
+	# Workaround for AI picking Vassalization Peace Option
+	# instead of Become Ruirech peace option
+	if = {
+		limit = {
+			ai = yes
+			FROM = {
+				ai = yes
+				NOT = { has_country_modifier = ire_high_king_opp } 
+				NOT = { is_subject_of_type = ire_vassal }
+				OR = {
+					primary_culture = irish
+					primary_culture = norse_gael
+				}
+				capital_scope = {
+					OR = {
+						area = munster_area
+						area = ulster_area
+						area = connacht_area
+						area = leinster_area
+					}
+				}
+			}
+			OR = {
+				primary_culture = irish
+				primary_culture = norse_gael
+			}
+			capital_scope = {
+				OR = {
+					area = munster_area
+					area = ulster_area
+					area = connacht_area
+					area = leinster_area
+				}
+			}
+		}
+		FROM = { grant_independence = yes }
+		create_subject = {
+			subject_type = ire_vassal
+			subject = FROM
+		}
+		FROM = { add_government_reform = irish_ruirech }
+	}
+}

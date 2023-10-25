@@ -1,0 +1,94 @@
+dnz_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = DNZ
+	}
+	has_country_shield = yes
+	
+	
+	dnz_crusader = {
+		icon = mission_landsknecht_soldier
+		required_missions = { }
+		position = 1
+	
+		trigger = {
+			land_forcelimit = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "dnz_crusade"
+				duration = 7300
+			}
+			west_prussia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_prussia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	dnz_prussia = {
+		icon = mission_unite_home_region
+		required_missions = { dnz_crusader }
+		position = 3
+		
+		trigger = {
+		    east_prussia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    west_prussia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = east_prussia_area
+				area = west_prussia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_adm_power = 50
+		}
+	}
+	
+	dnz_order = {
+		icon = mission_teutonic_knights
+		required_missions = { dnz_prussia }
+		position = 5
+		
+		trigger = {
+			stability = 1
+			PAP = {
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+		}
+		
+		effect = {
+			DNZ = {
+				country_event = { id = teuton_event.1 }
+			}
+		}
+	}
+}

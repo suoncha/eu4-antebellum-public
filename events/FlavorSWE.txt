@@ -1,0 +1,296 @@
+namespace = flavor_swe
+normal_or_historical_nations = yes
+
+# Formation of the Sweden Empire
+country_event = {
+	id = flavor_swe.109
+	title = flavor_swe.109.t
+	desc = flavor_swe.109.desc
+	picture = EMPEROR_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_swe.109.a
+		if = {
+			limit = { NOT = { government_rank = 3 } }
+			set_government_rank = 3
+		}
+		add_country_modifier = {
+			name = sca_great_empire_of_scandinavia
+			duration = -1
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+# Pillage of Lübeck
+country_event = {
+	id = flavor_swe.110
+	title = flavor_swe.110.t
+	desc = flavor_swe.110.desc
+	picture = SIEGE_eventPicture
+	is_triggered_only = yes
+
+	option = {	#Barbarians...
+		name = flavor_swe.110.a
+		tooltip = {
+			45 = {
+				add_loot_from_rich_province_general_effect = {
+					LOOTER = ROOT
+				}
+			}
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+# Investment of Dalaskogen
+country_event = {
+	id = flavor_swe.112
+	title = flavor_swe.112.t
+	desc = flavor_swe.112.desc
+	picture = FALUN_COPPER_MINE_eventPicture
+	is_triggered_only = yes
+
+	option = {	#Invest into the Copper mine itself
+		name = flavor_swe.112.a
+		trigger = {
+			has_dlc = "Leviathan"
+			8 = {
+				NOT = {
+					has_great_project = {
+						type = falun_copper_mine
+						tier = 2
+					}
+				}
+				NOT = {
+					has_great_project = {
+						type = falun_copper_mine
+						tier = 3
+					}
+				}
+			}
+		}
+		8 = {
+			set_great_project_tier_2 = {
+				type = falun_copper_mine
+			}
+		}
+		add_treasury = -1500
+
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = {	#Expand into the infrastructure around the Mine
+		name = flavor_swe.112.b
+		trigger = {
+			8 = {
+				NOT = { trade_goods = gold }	#Will never be true, but better safe tahn 
+			}
+		}
+		8 = {
+			if = {
+				limit = {
+					has_manufactory_trigger = yes
+				}
+				add_base_production = 4
+			}
+			else = {
+				add_manufactory = yes
+			}
+			if = {
+				limit = {
+					has_building = counting_house
+				}
+				add_base_production = 2
+			}
+			else = {
+			add_building = counting_house
+			}
+		}
+		add_treasury = -750
+		
+		ai_chance = {
+			factor = 50
+		}
+	}
+
+	option = {	#We don't have to do anything
+		name = flavor_swe.112.c
+		8 = {
+			add_base_production = 4
+		}
+		
+		ai_chance = {
+			factor = 25
+		}
+	}
+}
+
+# Monopolization of Copper
+country_event = {
+	id = flavor_swe.114
+	title = flavor_swe.114.t
+	desc = flavor_swe.114.desc
+	picture = TRADE_GOODS_METALS_AND_MINING_EQUIPENT_eventPicture
+	is_triggered_only = yes
+	major = yes
+	
+	option = {	#Monopolize the Copper Market
+		name = "flavor_swe.114.a"
+		add_mercantilism = 5
+		change_price = {
+			trade_goods = copper
+			key = SWEDEN_COPPER_MONOPOLIZATION
+			value = 1.5
+			duration = 14600
+		}
+		change_price = {
+			trade_goods = iron
+			key = SWEDEN_IRON_MONOPOLIZATION
+			value = 0.25
+			duration = 14600
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+	
+	option = {	#Flood the Copper Market
+		name = "flavor_swe.114.b"
+		add_years_of_owned_provinces_production_income = {
+			years = 10
+			trigger = {
+				OR = {
+					province_id = 8
+					province_id = 4
+					province_id = 5
+					province_id = 1985
+				}
+			}
+			custom_tooltip = swe_industrialize_sweden_tt
+		}
+		change_price = {
+			trade_goods = copper
+			key = SWEDEN_COPPER_FLOOD
+			value = -0.5
+			duration = 14600
+		}
+		change_price = {
+			trade_goods = iron
+			key = SWEDEN_IRON_FLOOD
+			value = -0.15
+			duration = 14600
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+	
+	option = {	#Keep it moderate
+		name = "flavor_swe.114.c"
+		add_years_of_owned_provinces_production_income = {
+			years = 5
+			trigger = {
+				OR = {
+					province_id = 8
+					province_id = 4
+					province_id = 5
+					province_id = 1985
+				}
+			}
+			custom_tooltip = swe_industrialize_sweden_tt
+		}
+		add_mercantilism = 2
+		change_price = {
+			trade_goods = copper
+			key = SWEDEN_COPPER
+			value = 0.2
+			duration = 14600
+		}
+		change_price = {
+			trade_goods = iron
+			key = SWEDEN_IRON
+			value = 0.1
+			duration = 14600
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+# The universities of Lund and Uppsala
+country_event = {
+	id = flavor_swe.119
+	title = flavor_swe.119.t
+	desc = flavor_swe.119.desc
+	picture = UNIVERSITY_eventPicture
+	is_triggered_only = yes
+	
+	option = {
+		name = "flavor_swe.119.a"
+		add_adm_power = 200
+		change_innovativeness = 3
+		1 = { add_building = university }
+		6 = { add_building = university }
+	}
+}
+
+# The League War - Swedish Contribution
+country_event = {
+	id = flavor_swe.101
+	title = "flavor_swe.101.t"
+	desc = "flavor_swe.101.desc"
+	picture = SWEDEN_LEAGUE_WAR_eventPicture
+	trigger = {
+		has_dlc = "Art of War"
+		has_country_flag = swe_catholic_modifier_for_league_war
+		in_league = catholic
+		NOT = { has_country_modifier = swe_fight_for_the_catholic_league }
+		is_in_league_war = yes
+	}
+	fire_only_once = yes
+	mean_time_to_happen = { months = 1 }
+	option = {		# Let us show these infidels what Swedish soldiers are made of!
+		name = "flavor_swe.101.a"
+		if = {
+			limit = { has_country_flag = swe_catholic_modifier_for_league_war }
+			add_country_modifier = {
+				name = swe_fight_for_the_catholic_league
+				duration = -1
+				desc = swe_fight_for_league_tt
+			}
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+# The League War - End of Swedish Contribution
+country_event = {
+	id = flavor_swe.1010
+	title = "flavor_swe.1010.t"
+	desc = "flavor_swe.1010.desc"
+	picture = SWEDEN_LEAGUE_WAR_eventPicture
+	trigger = {
+		is_in_league_war = no
+		has_country_modifier = swe_fight_for_the_catholic_league
+	}
+	fire_only_once = yes
+	mean_time_to_happen = { months = 1 }
+	option = {		# It was a good run
+		name = "flavor_swe.1010.a"
+		remove_country_modifier = swe_fight_for_the_catholic_league
+		ai_chance = {
+			factor = 1
+		}
+	}
+}

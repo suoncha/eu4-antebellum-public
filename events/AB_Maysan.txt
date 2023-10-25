@@ -1,0 +1,95 @@
+namespace = ab_maysan
+
+#Claims on Indian Trade Ports
+#Time to go into india and steal all their shit, for the economy, ofc
+country_event = {
+	id = ab_maysan.1
+	title = ab_maysan.1.t
+	desc = ab_maysan.1.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_maysan.1.a		
+		add_country_modifier = {
+			name = into_india_prep_modifier
+			duration = -1
+		}
+		4457 = { add_permanent_claim = ROOT }
+		517 = { add_permanent_claim = ROOT }
+		2089 = { add_permanent_claim = ROOT }
+		529 = { add_permanent_claim = ROOT }
+
+	}
+}
+
+#Into India
+#Mission unlocks colonist and overseas expansion routes, flavor should be something involving expanding out bases overseas, specifically with a spin on directing trade toward Basra to go with the tall play roleplay
+country_event = {
+	id = ab_maysan.2
+	title = ab_maysan.2.t
+	desc = ab_maysan.2.d
+	picture = HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	major = yes
+	
+	option = {
+		name = ab_maysan.2.a		
+		custom_tooltip = swap_into_india_modifiers_tt
+		tooltip = {
+			add_country_modifier = {
+				name = into_india_finished_modifier
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			remove_country_modifier = into_india_prep_modifier
+			add_country_modifier = {
+				name = into_india_finished_modifier
+				duration = -1
+			}
+		}
+		capital_scope = {
+			change_trade_goods = silk
+			add_permanent_province_modifier = {
+				name = silk_production_boosted_modifier
+				duration = -1
+			}
+		}
+	}
+}
+
+#Unlocking of Branching missions
+#Two paths, basically the decision from the top down to enable diverse opinions or crack down. Missions are unlocked depending on which one you choose with a modifier that will be upgraded as you finish the missions.
+country_event = {
+	id = ab_maysan.3
+	title = ab_maysan.3.t
+	desc = ab_maysan.3.d
+	picture = HAJJ_eventPicture
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_maysan.3.a		
+		add_country_modifier = {
+			name = humanist_maysan_modifier
+			duration = -1
+		}
+		set_country_flag = branching_missions_unlocked_flag
+		set_country_flag = humanist_maysan_flag
+		swap_non_generic_missions = yes
+	}
+	
+	option = {
+		name = ab_maysan.3.b		
+		add_country_modifier = {
+			name = zealous_maysan_modifier
+			duration = -1
+		}
+		set_country_flag = branching_missions_unlocked_flag
+		set_country_flag = zealous_maysan_flag
+		swap_non_generic_missions = yes
+	}
+}

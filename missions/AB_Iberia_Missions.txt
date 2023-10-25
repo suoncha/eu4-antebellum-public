@@ -1,0 +1,2065 @@
+ibe_first = {
+	slot = 1
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = IBE
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	ibe_convert = {
+		icon = mission_hands_praying
+		required_missions = { ibe_finish_reconquista }
+		position = 2
+
+		provinces_to_highlight = {
+			region = iberia_region
+			NOT = { religion_group = ROOT }
+		}
+
+		trigger = {
+			iberia_region = {
+				type = all
+				religion_group = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_cleansed"
+				duration = 5475
+			}
+		}
+	}
+	
+
+	ibe_prepare_army = {
+		icon = protect_against_austria
+		position = 4
+		required_missions = { ibe_convert }
+		
+		trigger = {
+			army_size_percentage = 0.8
+			navy_size_percentage = 0.8
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_invasion"
+				duration = 5475
+			}
+		    northern_morocco_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	ibe_tercios = {
+		icon = mission_italian_condottiere
+		position = 5
+		required_missions = { ibe_prepare_army }
+		
+		trigger = {
+			in_golden_age = yes
+			IBE_ideas = 7
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.2
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_tercios_mission"
+				duration = 36500
+			}
+		}
+	}
+			
+	ibe_pirates = {
+		icon = mission_combat_barbary_piracy
+		position = 6
+		required_missions = { ibe_invade_morocco }
+		
+		provinces_to_highlight = {
+			province_id = 1110
+		}
+		
+		trigger = {
+			1110 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "ibe_defeated_pirates"
+				duration = 5475
+			}
+		}
+	}
+	
+	ibe_exploration = {
+		icon = mission_look_west
+		position = 8
+		required_missions = { }
+		
+		trigger = {
+		    OR = {
+				exploration_ideas = 1
+				num_of_explorers = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_exploration"
+				duration = 5475
+			}
+		}
+	}
+	
+	ibe_iberian_armada = {
+		icon = mission_spanish_armada
+		position = 9
+		required_missions = { ibe_exploration }
+		
+		trigger = {
+			num_of_heavy_ship = 25
+		}
+		
+		effect = {
+			create_admiral = { tradition = 75 }
+			add_country_modifier = {
+				name = "ibe_armada"
+				duration = 5475
+			}
+		}
+	}
+	
+	ibe_iberian_empire = {
+		icon = mission_iberia
+		position = 10
+		required_missions = { ibe_iberian_armada }
+		
+		trigger = {
+			num_of_heavy_ship = 50
+			colony = 6
+			total_development = 1000
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			override_country_name = IBERIAN_EMPIRE
+		}
+	}
+	
+	ibe_hispaniola = {
+		icon = mission_portuguese_malabar
+		required_missions = { ibe_caribbean }
+		position = 11
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						area = hispaniola_area
+						area = dominica_area
+					}
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+
+				}
+				province_id = 490
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+				490 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				OR = {
+					area = hispaniola_area
+					area = dominica_area
+				}
+				is_city = yes
+			}
+		}
+		effect = {
+			490 = {
+				add_base_production = 3
+				if = {
+					limit = {
+						NOT = {
+							trade_goods = sugar
+						}
+					}
+					change_trade_goods = sugar
+				}
+			}
+			north_florida_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT	}
+					is_empty = no
+				}
+				add_permanent_claim = ROOT
+			}
+			florida_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT	}
+					is_empty = no
+				}
+				add_permanent_claim = ROOT
+			}
+			mexico_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_mexico_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			puebla_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ibe_florida = {
+		icon = mission_colonize_florida
+		required_missions = { ibe_hispaniola }
+		position = 12
+		
+		trigger = {
+		    florida_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    north_florida_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = florida_area
+				area = north_florida_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_viceroyalties"
+				duration = 9125
+			}
+		}
+	}
+	
+	ibe_california = {
+		icon = mission_colonize_california
+		required_missions = { ibe_florida ibe_mexico }
+		position = 13
+
+		provinces_to_highlight = {
+			colonial_region = colonial_california
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				colonial_region = colonial_california
+				is_city = yes
+			}
+		}
+		effect = {
+			define_advisor = {
+				type = colonist
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			colonial_california = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+		
+	ibe_plains = {
+		icon = mission_settlers_north_america
+		required_missions = { ibe_california }
+		position = 15
+
+		provinces_to_highlight = {
+			colonial_region = colonial_louisiana
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				colonial_region = colonial_louisiana
+				is_city = yes
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "ibe_plains"
+				duration = 9125
+			}
+		}
+	}
+}
+
+ibe_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = IBE
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	ibe_finish_reconquista = {
+	    icon = mission_reclaim_andalucia
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+		    upper_andalucia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    lower_andalucia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lower_andalucia_area
+				area = upper_andalucia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = IBE_CONVERT_IBERIA
+			hidden_effect = {
+				every_province = {
+					limit = {
+						region = iberia_region
+						religion = sunni
+					}
+					add_province_modifier = {
+						name = ibe_finish_reconquista_convert
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	ibe_cordoba_control = {
+	    icon = mission_crush_delhi
+		required_missions = { ibe_finish_reconquista }
+		position = 2
+		
+		trigger = {
+		    225 = {
+				owned_by = ROOT
+				is_core = IBE
+			}
+		}
+		
+		
+		effect = {
+			country_event = { id = ab_iberia.1 }
+		}
+	}
+	
+	ibe_revitalize_economy = {
+		icon = mission_african_gold
+		required_missions = { ibe_cordoba_control }
+		position = 3
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = temple
+						has_building = cathedral
+					}
+					has_production_building_trigger = yes
+				}
+				amount = 7
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_revitalized"
+				duration = 9125
+			}
+		}
+	}
+		
+	
+	
+	ibe_capital = {
+	    icon = mission_golden_century
+		required_missions = { ibe_revitalize_economy }
+		position = 4
+		
+		trigger = {
+			capital_scope = {
+				development = 40
+					OR = {
+						has_building = temple
+						has_building = cathedral
+					}
+					has_production_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_province_modifier = {
+					name = "ibe_new_capital"
+					duration = -1
+				}
+			}
+			capital_scope = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	
+	ibe_invade_morocco = {
+	    icon = mission_retake_ceuta
+		required_missions = { ibe_prepare_army }
+		position = 5
+		
+		trigger = {
+		    northern_morocco_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = northern_morocco_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_africa"
+				duration = 5475
+			}
+		    tafilalt_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    sus_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    southern_morocco_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    western_morocco_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}	
+		    marrekesh_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}					
+		
+		}
+	}
+	
+	ibe_rule_maghreb = {
+	    icon = mission_moroccan_ports
+		required_missions = { ibe_invade_morocco ibe_pirates }
+		position = 7
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = maghreb_region
+				value = 20
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = maghreb_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_continuing"
+				duration = 5475
+			}
+		    maghreb_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	ibe_caribbean = {
+		icon = mission_caribbean_cn
+		required_missions = { ibe_discover_caribbean }
+		position = 10
+
+		provinces_to_highlight = {
+			colonial_region = colonial_the_carribean
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = { 
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				colonial_region = colonial_the_carribean
+				is_city = yes
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = "the_unknown_frontier"
+				duration = 5475
+			}
+		}
+	}
+	
+	ibe_mexico = {
+		icon = mission_temple_patronage
+		required_missions = { ibe_hispaniola ibe_caribbean }
+		position = 12
+		
+		trigger = {
+		    mexico_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = mexico_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_treasury = 500
+			add_country_modifier = {
+				name = "ibe_fall_aztec"
+				duration = 9125
+			}
+		    mexico_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	ibe_reduction = {
+		icon = mission_native_reductions
+		required_missions = { ibe_mexico }
+		position = 13
+
+
+		provinces_to_highlight = {
+			region = mexico_region
+			NOT = { religion = ROOT }
+		}
+		trigger = {
+			num_of_provinces_owned_or_owned_by_subjects_with = {
+				value = 10
+				religion = ROOT
+				region = mexico_region
+			}
+		}
+		
+		effect = {
+			mexico_region = {
+				add_province_modifier = {
+					name = "ibe_reduction_native"
+					duration = 9125
+				}
+			}
+		}
+	}
+	
+	ibe_newiberia = {
+		icon = mission_newiberia
+		required_missions = { ibe_reduction }
+		position = 14
+		
+		trigger = {
+		    mexico_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = mexico_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 100 }
+			add_country_modifier = {
+				name = "ibe_new_iberia"
+				duration = -1
+			}
+		    central_america_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+			
+	ibe_yucatan = {
+		icon = mission_mayan_conquest
+		required_missions = { ibe_newiberia }
+		position = 16
+
+		provinces_to_highlight = {
+			OR = {
+				area = yucatan_area
+				area = east_yucatan_area
+				area = campeche_area
+				area = guatemala_lowlands_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			yucatan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_yucatan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			campeche_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			guatemala_lowlands_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			central_america_region = {
+				add_province_modifier = {
+					name = "ibe_mayan_conversion"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+}
+
+ibe_third = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = IBE
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	ibe_secure_baleares = {
+	    icon = mission_invade_island
+		required_missions = { ibe_finish_reconquista }
+		position = 2
+		
+		trigger = {
+		    baleares_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = baleares_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_navy_tradition = 10
+			333 = {
+				change_culture = catalan
+			}
+			4559 = {
+				change_culture = catalan
+			}
+			4560 = {
+				change_culture = catalan
+			}
+		    corsica_sardinia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+		
+	ibe_take_isles = {
+	    icon = mission_seize_the_isles
+		required_missions = { ibe_secure_baleares }
+		position = 3
+		
+		trigger = {
+		    corsica_sardinia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = corsica_sardinia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_authority"
+				duration = 5475
+			}
+		    naples_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    calabria_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    apulia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    sicily_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    western_sicily_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	ibe_dismantle_sultanate = {
+	    icon = mission_fatimid_caliphate
+		required_missions = { ibe_take_isles }
+		position = 4
+
+		trigger = {
+		    sicily_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    western_sicily_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    naples_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    calabria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    apulia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = western_sicily_area
+				area = sicily_area
+				area = naples_area
+				area = calabria_area
+				area = apulia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_papal_influence = 25
+			add_country_modifier = {
+				name = "ibe_liberator_of_italy"
+				duration = 7300
+			}
+		}
+	}
+			
+	ibe_fortify = {
+	    icon = alpine_defenses
+		required_missions = { }
+		position = 5
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = emp_ita_alpine_defenses_tooltip
+			}
+			num_of_owned_provinces_with = {
+				value = 3
+				OR = {
+					area = catalonia_area
+					area = aragon_area
+					area = basque_country
+				}
+				if = {
+					limit = {
+						ROOT = {
+							NOT = { mil_tech = 14 }
+						}
+					}
+					has_building = fort_15th
+				}
+				else_if = {
+					limit = {
+						ROOT = {
+							AND = {
+								mil_tech = 14
+								NOT = { mil_tech = 19 }
+							}
+						}
+					}
+					has_building = fort_16th
+				}
+				else_if = {
+					limit = {
+						ROOT = {
+							AND = {
+								mil_tech = 19
+								NOT = { mil_tech = 24 }
+							}
+						}
+					}
+					has_building = fort_17th
+				}
+				else_if = {
+					limit = {
+						ROOT = {
+							AND = {
+								mil_tech = 24
+								NOT = { mil_tech = 33 }
+							}
+						}
+					}
+					has_building = fort_18th
+				}
+				else_if = {
+					limit = {
+						ROOT = {
+							mil_tech = 33
+						}
+					}
+					has_building = fort_19th
+				}
+			}
+		}
+		
+		effect = {
+			aragon_area = {
+			add_province_modifier = {
+				name = "ibe_fort"
+				duration = -1
+			}
+			}
+			basque_country = {
+			add_province_modifier = {
+				name = "ibe_fort"
+				duration = -1
+			}
+			}
+			catalonia_area = {
+			add_province_modifier = {
+				name = "ibe_fort"
+				duration = -1
+			}
+			}
+		    languedoc_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    pyrenees_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    guyenne_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	ibe_invade_francia = {
+	    icon = mission_invade_occitania
+		required_missions = { ibe_fortify }
+		position = 6
+		
+		trigger = {
+		    guyenne_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    pyrenees_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    languedoc_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = guyenne_area
+				area = languedoc_area
+				area = pyrenees_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					exists = FRC
+				}
+		    	add_casus_belli = {
+					type = cb_restore_personal_union
+					months = 300
+					target = FRC
+				}
+			}
+			else_if = {
+				limit = {
+					exists = FRA
+				}
+		    	add_casus_belli = {
+					type = cb_restore_personal_union
+					months = 300
+					target = FRA
+				}
+			}
+			else = {
+		    france_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	ibe_control_francia = {
+	    icon = carolingian_empire
+		required_missions = { ibe_invade_francia }
+		position = 7
+		
+		trigger = {
+		    ile_de_france_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = ile_de_france_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 150
+			add_country_modifier = {
+				name = "ibe_union"
+				duration = 9125
+			}
+		}
+	}
+	
+	ibe_imperial = {
+	    icon = switzerland_and_the_empire
+		required_missions = { ibe_control_francia }
+		position = 8
+		
+		trigger = {
+			is_emperor = yes
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_imperial"
+				duration = 9125
+			}
+		}
+	}
+	
+	ibe_discover_caribbean = {
+		icon = mission_colonize_the_caribbean
+		required_missions = { ibe_exploration }
+		position = 9
+		
+		trigger = {
+			colonial_the_carribean = {
+				has_discovered = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ibe_settlement
+				duration = 5475
+			}
+		}
+	}
+	
+	ibe_brazil = {
+		icon = mission_iberian_conquistador
+		required_missions = { ibe_discover_caribbean }
+		position = 10
+	
+		provinces_to_highlight = {
+			colonial_region = colonial_brazil
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = { 
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				colonial_region = colonial_brazil
+				is_city = yes
+			}
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 50 }
+			add_country_modifier = {
+				name = ibe_explore_jungle
+				duration = 5475
+			}
+		}
+	}
+		
+	ibe_triangle_trade = {
+		icon = mission_the_triangle_trade
+		required_missions = { ibe_brazil ibe_west_africa }
+		position = 11
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1466
+				province_id = 1531
+				province_id = 1293
+			}
+			NOT = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		trigger = {
+			1466 = {
+				is_strongest_trade_power = ROOT
+			}
+			1531 = {
+				is_strongest_trade_power = ROOT
+			}
+			1293 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+		effect = {
+			add_mercantilism = 5
+			custom_tooltip = IBE_TRIANGLE_TRADE
+			tooltip = {
+				add_province_modifier = {
+					name = "ibe_triangle_trade"
+					duration = 7300
+				}
+			}	
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						continent = africa
+						trade_goods = slaves
+					}
+					add_province_modifier = {
+						name = "ibe_triangle_trade"
+						duration = 7300
+					}
+				}
+			}
+		}
+	}	
+	
+	ibe_colombia = {
+		icon = mission_new_kingdom_of_granada
+		required_missions = { ibe_mexico }
+		position = 13
+
+		provinces_to_highlight = {
+			colonial_region = colonial_colombia
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = yes
+		}
+
+		# free mission
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				colonial_region = colonial_colombia
+				is_city = yes
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = ibe_pacify
+				duration = 5475
+			}
+		}
+	}
+	
+	ibe_incas = {
+		icon = mission_entrepot_of_india
+		required_missions = { ibe_colombia }
+		position = 15
+
+		provinces_to_highlight = {
+			OR = {
+				area = upper_peru
+				area = potosi_area
+				area = antisuyu_area
+				area = kuntisuyu_area
+				province_id = 794
+				province_id = 2837
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			upper_peru = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			potosi_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			antisuyu_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			kuntisuyu_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			794 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			2837 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_treasury = 500
+			peru_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+ibe_fourth = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = IBE
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	ibe_protect_holy_see = {
+	    icon = mission_pope
+		required_missions = { ibe_inquisition }
+		position = 2
+
+		trigger = {
+			OR = {
+				alliance_with = PAP
+				118 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = IBE_PAPAL_ALLIANCE
+		    naples_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    calabria_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    apulia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+			hidden_effect = {
+			add_country_modifier = {
+				name = "ibe_papal_alliance"
+				duration = -1
+			}
+			}
+		}
+	}
+	
+	ibe_empower_clergy = {
+	    icon = support_the_orders
+		required_missions = { ibe_protect_holy_see }
+		position = 4
+
+		trigger = {
+			estate_loyalty = {
+				estate = estate_church
+				loyalty = 60
+			}
+			OR = {
+				temple = 10
+				cathedral = 10
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 10
+			}		
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	ibe_holy_see = {
+	    icon = counter_reformation
+		required_missions = { ibe_empower_clergy }
+		position = 6
+
+		trigger = {
+			is_papal_controller = yes
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_papal"
+				duration = 9125
+			}
+		}
+	}
+	
+	ibe_new_dockyard = {
+	    icon = toulon_dockyards
+		required_missions = { ibe_countryside }
+		position = 8
+		
+		provinces_to_highlight = {
+			province_id = 227
+		}
+		
+		trigger = {
+				227 = {
+					OR = {
+						has_building = shipyard
+						has_building = grand_shipyard
+					}
+					OR = {
+						has_building = dock
+						has_building = drydock
+					}
+				}
+		}
+		
+		effect = {
+			227 = {
+			add_province_modifier = {
+				name = "ibe_new_world_dock"
+				duration = -1
+			}
+			}
+			227 = {
+				add_unit_construction = {
+					type = heavy_ship
+					amount = 3
+					speed = 1
+					cost = 0
+				}
+			}
+		}
+	}
+	
+	ibe_west_africa = {
+	    icon = mission_west_african_ports
+		required_missions = { ibe_discover_caribbean }
+		position = 10
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					region = guinea_region
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				province_id = 1466
+			}
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			guinea_region = {
+				owned_by = ROOT
+			}
+			1466 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+		effect = {
+			add_mercantilism = 3
+		    lower_volta_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    kong_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    manding_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	ibe_invade_mali = {
+	    icon = mission_invade_mali
+		required_missions = { ibe_west_africa }
+		position = 11
+		
+		trigger = {
+		    manding_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    kong_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    lower_volta_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lower_volta_area
+				area = kong_area
+				area = manding_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_empires"
+				duration = 7300
+			}
+		    niger_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	ibe_slave_trade = {
+	    icon = mission_african_gold
+		required_missions = { ibe_triangle_trade }
+		position = 12
+		
+		trigger = {
+			production_leader = {
+				trade_goods = slaves
+			}
+		}
+		
+		effect = {
+			add_treasury = 500
+			add_country_modifier = {
+				name = "ibe_slaves"
+				duration = -1
+			}
+		}
+	}
+	
+	ibe_discover_spice_isles = {
+		icon = mission_sail_to_the_east_indies
+		required_missions = { ibe_southafrica }
+		position = 14
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = cas_spice_islands_tooltip
+				moluccas_region = {
+					type = all
+					has_discovered = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_eastindies"
+				duration = 9125
+			}
+			mindanao_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			west_mindanao_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			visayas_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			palawan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			luzon_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			southern_luzon_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	ibe_archipelago = {
+		icon = mission_las_islas_filipinas
+		required_missions = { ibe_discover_spice_isles }
+		position = 16
+
+		provinces_to_highlight = {
+			OR = {
+				area = mindanao_area
+				area = west_mindanao_area
+				area = visayas_area
+				area = palawan_area
+				area = luzon_area
+				area = southern_luzon_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+
+		trigger = {
+			southern_luzon_area = {
+				type = all
+				owned_by = ROOT
+			}
+			luzon_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			mindanao_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_mindanao_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			visayas_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			palawan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "ibe_asiantrade"
+				duration = -1
+			}
+			southern_luzon_area = {
+				limit = {
+					owned_by = ROOT
+				}
+				change_religion = ROOT
+			}
+			luzon_area = {
+				limit = {
+					owned_by = ROOT
+				}
+				change_religion = ROOT
+			}
+		}
+	}
+	
+	ibe_trade_with_china = {
+	    icon = mission_trade_with_japan
+		required_missions = { ibe_archipelago }
+		position = 18
+		
+		provinces_to_highlight = {
+			OR = {
+				superregion = china_superregion
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				OR = {
+					superregion = china_superregion
+				}
+				value = 3
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 5
+			add_country_modifier = {
+				name = "ibe_china_trade"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+ibe_fifth = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = IBE
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	ibe_inquisition = {
+	    icon = mission_religious
+		required_missions = { }
+		position = 1
+
+		trigger = {
+			IBE_ideas = 2
+		}
+		
+		effect = {
+			define_advisor = {
+				type = inquisitor
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	ibe_crusade = {
+	    icon = knights_of_the_new_world
+		required_missions = { ibe_inquisition ibe_protect_holy_see }
+		position = 3
+		
+		trigger = { army_size = 50 }
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_last_crusade"
+				duration = 7300
+			}
+		    palestine_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+		
+	ibe_jerusalem = {
+	    icon = jerusalem
+		required_missions = { ibe_crusade }
+		position = 5
+
+		trigger = {
+			exists = KOJ
+			KOJ = {
+				vassal_of = ROOT
+			}
+		    palestine_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = palestine_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}	
+		
+		effect = {
+			add_army_tradition = 25
+			add_country_modifier = {
+				name = "ibe_jerusalem_alliance"
+				duration = -1
+			}
+		}
+	}
+	
+	ibe_countryside = {
+	    icon = prosperity_for_all
+		required_missions = { }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				region = iberia_region
+			}
+			NOT = { development = 15 }
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = ibe_develop_countryside
+				num_of_owned_provinces_with = {
+					OR = {
+						region = iberia_region
+					}
+					development = 15
+					value = 15
+				}
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = "ibe_development"
+				duration = 7300
+			}
+		}
+	}
+	
+	ibe_roads = {
+	    icon = a_roman_empire
+		required_missions = { ibe_countryside }
+		position = 8
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = { 
+						has_building = early_road
+						has_building = gravel_road
+						has_building = royal_road
+						has_building = macadam_road
+						has_building = rail_road
+					}
+				}
+				amount = 20
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_via_romana"
+				duration = -1
+			}
+		}
+	}
+			
+	ibe_industrialize_iberia = {
+	    icon = industrialized_rhineland
+		required_missions = { ibe_roads }
+		position = 9
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 20
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ibe_industry
+				duration = 9125
+			}
+		}
+	}
+	
+	ibe_guinea = {
+	    icon = mission_invade_kanem
+		required_missions = { ibe_west_africa }
+		position = 11
+		
+		provinces_to_highlight = {
+			OR = {
+				region = guinea_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				OR = {
+					region = guinea_region
+				}
+				value = 7
+			}
+		}
+		
+		effect = {
+			1126 = {
+				add_trade_modifier = {
+					who = root
+					duration = 7300
+					power = 25
+					key = ibe_guinea_control
+				}
+			}
+		}
+	}
+	
+	ibe_southafrica = {
+	    icon = mission_ibeafrica
+		required_missions = { ibe_guinea }
+		position = 13
+		
+		provinces_to_highlight = {
+			OR = {
+				region = south_africa_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				OR = {
+					region = south_africa_region
+				}
+				value = 3
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_east_indies"
+				duration = 7300
+			}
+		}
+	}
+	
+	ibe_presence_in_india = {
+	    icon = mission_indian_trade_company
+		required_missions = { ibe_southafrica }
+		position = 14
+		
+		provinces_to_highlight = {
+			OR = {
+				superregion = india_superregion
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				OR = {
+					superregion = india_superregion
+				}
+				value = 5
+			}
+		}
+		
+		effect = {
+			custom_tooltip = IBE_INDIA_MARKETPLACE
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						superregion = india_superregion
+						NOT = {
+							has_trade_building_trigger = yes
+						}
+					}
+					add_building = marketplace
+				}
+			}
+		}
+	}
+	
+	ibe_australia = {
+		icon = settle_austrialasia
+		required_missions = { ibe_discover_spice_isles }
+		position = 15
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_australia
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_discover_australia
+				colonial_australia = { has_discovered = ROOT }
+			}
+			custom_trigger_tooltip = {
+				tooltip = england_discovers_australia.tooltip
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 5
+					colonial_region = colonial_australia
+					is_city = yes
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "ibe_southern_seas"
+				duration = 7300
+			}
+		}
+	}
+	
+	ibe_spice = {
+		icon = mission_dominate_persian_gulf
+		required_missions = { ibe_archipelago }
+		position = 17
+	
+		trigger = {
+			1361 = {	
+				is_strongest_trade_power = ROOT
+			}
+		}
+		
+		effect = {
+			add_treasury = 1000
+			add_country_modifier = {
+				name = "ibe_trade_empire"
+				duration = -1
+			}
+		}
+	}
+	
+}

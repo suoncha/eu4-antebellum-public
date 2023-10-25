@@ -1,0 +1,1697 @@
+ab_yuan_horde_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = YUA
+		has_country_flag = YUA_HORDE
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	yuan_horde_guard = {
+		icon = mission_khitan
+		required_missions = { yuan_horde_manpower }
+		position = 3
+	
+		trigger = {
+		    num_of_infantry = 50
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.15
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 75 }
+			define_advisor = {
+				type = commandant
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = YUA_EVOLVING_IDEA_3
+			hidden_effect = {
+				set_country_flag = yua_evolved_ideas3
+				if = {
+					limit = {
+						tag = YUA
+						has_country_flag = YUA_HORDE
+					}
+					swap_free_idea_group = yes
+				}
+			}
+		}
+	}
+	
+	yuan_horde_privy = {
+		icon = mission_noble_council
+		required_missions = { yuan_horde_guard }
+		position = 4
+	
+		trigger = {
+		    monthly_mil = 12
+			has_mil_advisor_3 = yes
+			OR = {
+				full_idea_group = offensive_ideas
+				full_idea_group = quality_ideas
+				full_idea_group = professional_ideas
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = yua_privy_council
+				duration = -1
+			}
+			custom_tooltip = YUA_COUNCIL
+			tooltip = {
+				add_army_professionalism = 0.1
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						MIL = 6
+					}
+					add_army_professionalism = 0.1
+				}
+			}
+		}
+	}
+	
+	yuan_horde_korea = {
+		icon = mission_twokingdoms
+		required_missions = { yuan_horde_temugids }
+		position = 5
+		provinces_to_highlight = { 
+			OR = {
+				region = korea_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			korea_region = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			5123 = {
+				add_unit_construction = {
+					type = heavy_ship
+					amount = 5
+					speed = 0.25
+					cost = 0
+				}
+			}
+			add_country_modifier = {
+				name = yua_korea
+				duration = 9125
+			}
+		}
+	}
+	
+	yuan_horde_invasion = {
+		icon = mission_to_the_south_china_sea
+		required_missions = { yuan_horde_korea }
+		position = 7
+
+		trigger = {
+			num_of_transport = 20
+			OR = {
+				num_of_heavy_ship = 10
+				num_of_galley = 20
+			}
+		}
+		effect = {
+			custom_tooltip = YUAN_TOYOUJI
+			hidden_effect = {
+				if = { 
+					limit = { 
+						exists = TJJ 
+						TJJ = { 
+							is_subject = no 
+						} 
+					} 
+					add_casus_belli = { 
+						target = TJJ 
+						type = cb_vassalize_mission 
+					} 
+				} 
+			}
+			add_country_modifier = {
+				name = yua_defy_divine
+				duration = 5475
+			}
+			1020 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			kyushu_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_kyushu  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_japan = {
+		icon = mission_japanese_fort
+		required_missions = { yuan_horde_invasion }
+		position = 9
+		provinces_to_highlight = { 
+			OR = {
+				province_id = 1020
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			OR = {
+				owns = 1020
+				overlord_of = TJJ
+			}
+		}
+		effect = {
+			country_event = { id = ab_yuan.9 }
+		}
+	}
+	
+	yuan_horde_control_japan = {
+		icon = mission_japanseal
+		required_missions = { yuan_horde_japan }
+		position = 11
+		provinces_to_highlight = { 
+			OR = {
+				region = japan_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			japan_region = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			country_event = { id = ab_yuanhorde.3 }
+		}
+	}
+	
+}
+
+ab_yuan_horde_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = YUA
+		has_country_flag = YUA_HORDE
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	yuan_horde_manpower = {
+		icon = mission_yuanmanpower
+		required_missions = { yuan_horde_crisis }
+		position = 2
+
+		trigger = {
+			manpower_percentage = 0.35
+		}
+		
+		effect = {
+			add_mil_power = 50
+			add_country_modifier = {
+				name = yua_reinforcing
+				duration = 5475
+			}
+			liaoning_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_temugids = {
+		icon = mission_impaled_soldies
+		required_missions = { yuan_horde_manpower }
+		position = 4
+		provinces_to_highlight = { 
+			area = liaoning_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			liaoning_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			country_event = { id = ab_yuanhorde.1 }
+			liaoning_area = {
+			add_province_modifier = {
+				name = yua_horde_nestorian
+				duration = 5475
+			}
+			}
+			jilin_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			ningguta_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			korea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_manchuria = {
+		icon = mission_manchu_warrior
+		required_missions = { yuan_horde_temugids }
+		position = 6
+		provinces_to_highlight = { 
+			OR = {
+				area = ningguta_area
+				area = jilin_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			ningguta_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			jilin_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_yearly_manpower = 1
+			add_country_modifier = {
+				name = yua_horde_incursion
+				duration = 5475
+			}
+			manchuria_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_tibet = {
+		icon = mission_buddhist_monk_praying
+		required_missions = { yuan_horde_warlords  }
+		position = 8
+		provinces_to_highlight = {
+			OR = {
+				region = tibet_region
+			}
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}			
+		}
+		trigger = {
+			tibet_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			country_event = { id = mch_missions.6 }
+			nepal_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kashmir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_gateway = {
+		icon = mission_che_the_cave_country
+		required_missions = { yuan_horde_tibet }
+		position = 9
+		provinces_to_highlight = {
+			OR = {
+				area = nepal_area
+				area = kashmir_area
+			}
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}			
+		}
+		trigger = {
+			nepal_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			kashmir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = yua_horde_lay_claim
+				duration = 18250
+			}
+			define_advisor = {
+				type = ae_advisor
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	yua_horde_maharajas = {
+	    icon = mission_maharajas
+		required_missions = { yuan_horde_gateway }
+		position = 10
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				superregion = india_superregion
+				value = 100
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				superregion = india_superregion
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = yua_horde_claim_india
+				duration = 9125
+			}
+			india_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = YUA_INDIA
+			tooltip = {
+				country_event = { id = ab_yuanhorde.5 }
+			}
+		}
+	}
+	
+	yuan_horde_europe = {
+		icon = peace_in_europe
+		required_missions = { yuan_horde_russia }
+		position = 12
+		provinces_to_highlight = {
+			OR = {
+				region = poland_region
+				region = baltic_region
+				region = ruthenia_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				region = poland_region
+				value = 15
+			}
+			num_of_owned_provinces_with = {
+				region = baltic_region
+				value = 15
+			}
+			ruthenia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "mon_europe"
+				duration = -1
+			}
+			custom_tooltip = MON_CLAIM_EUROPE
+			hidden_effect = {
+			europe_superregion = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			eastern_europe_superregion = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			}
+		}
+	}
+			
+}
+
+
+ab_yuan_horde_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = YUA
+		has_country_flag = YUA_HORDE
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	yuan_horde_crisis = {
+		icon = qng_end_yuan
+		required_missions = { }
+		position = 1
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = "YUA_disaster_tooltip"
+				has_country_flag = had_yuan_crisis
+			}
+			has_any_disaster = no
+		}
+		
+		effect = {
+			add_horde_unity = 10
+			add_country_modifier = {
+				name = "yua_horde_recover"
+				duration = 9125
+			}
+		}
+	}
+	
+	yuan_horde_stability = {
+		icon = mission_market_place_with_asian_traders
+		required_missions = { yuan_horde_crisis yuan_horde_vassals yuan_horde_manpower }
+		position = 3
+
+		trigger = {
+			stability = 1
+			horde_unity = 75
+			NOT = {
+				unrest = 1
+			}
+		}
+		
+		effect = {
+			add_stability = 1
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" }
+				capital_scope = {
+					add_prosperity = 25
+				}
+			}
+			north_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_nchina = {
+		icon = mission_great_wall
+		required_missions = { yuan_horde_stability  }
+		position = 5
+		provinces_to_highlight = {
+			region = north_china_region
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}			
+		}
+		trigger = {
+			north_china_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			add_prestige = 20
+			add_country_modifier = {
+				name = "yua_horde_cities"
+				duration = 9125
+			}
+			south_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			xinan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_warlords = {
+		icon = mission_warring
+		required_missions = { yuan_horde_nchina  }
+		position = 7
+		provinces_to_highlight = {
+			OR = {
+				region = south_china_region
+				region = xinan_region
+			}
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}			
+		}
+		trigger = {
+			south_china_region = {
+                type = all
+                OR = {
+                    country_or_non_sovereign_subject_holds = ROOT
+                    is_empty = yes
+                }
+            }
+			xinan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		effect = {
+			country_event = { id = ab_yuanhorde.2 }
+			tibet_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			red_river_delta_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			vietnam_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			north_laos_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			shan_hill_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			karenni_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_southern = {
+		icon = mission_rule_indochina
+		required_missions = { yuan_horde_warlords  }
+		position = 8
+		provinces_to_highlight = {
+			OR = {
+				area = karenni_area
+				area = shan_hill_area
+				area = north_laos_area
+				area = vietnam_area
+				area = red_river_delta_area
+			}
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}			
+		}
+		trigger = {
+			karenni_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			shan_hill_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			north_laos_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			vietnam_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			red_river_delta_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			define_advisor = {
+				type = army_reformer
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			burma_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			indo_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_central_asia = {
+		icon = mission_central_asian_city
+		required_missions = { yuan_horde_riches }
+		position = 9
+		provinces_to_highlight = {
+			region = central_asia_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				region = central_asia_region
+				value = 30
+			}
+			469 = { owned_by = ROOT }
+			441 = { owned_by = ROOT }
+		}
+		effect = {
+			add_country_modifier = {
+				name = "mon_consolidate"
+				duration = 5475
+			}
+			crimea_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_tatars = {
+		icon = mission_non-western_cavalry_raid
+		required_missions = { yuan_horde_central_asia }
+		position = 10
+		provinces_to_highlight = {
+			region = crimea_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				region = crimea_region
+				value = 15
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "mon_golden"
+				duration = 9125
+			}
+			ruthenia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			russia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_russia = {
+		icon = mission_the_third_rome
+		required_missions = { yuan_horde_tatars }
+		position = 11
+		provinces_to_highlight = {
+			OR = {
+				region = ruthenia_region
+				region = russia_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				OR = {
+					region = ruthenia_region
+					region = russia_region
+				}
+				value = 30
+			}
+			280 = { owned_by = ROOT }
+			310 = { owned_by = ROOT }
+		}
+		effect = {
+			country_event = { id = ab_yuan.15 }
+		}
+	}
+	
+	yuan_mongol_empire = {
+		icon = mission_forthehorde
+		required_missions = { yuan_horde_russia }
+		position = 13
+		
+		trigger = {
+			tag = MGE
+		}
+		
+		effect = {
+			country_event = { id = ab_yuanhorde.6 }
+		}
+	}
+	
+	yuan_horde_pax_mongolica = {
+		icon = mission_kowtow
+		required_missions = { yuan_mongol_empire }
+		position = 14
+		provinces_to_highlight = {
+			OR = {
+				region = mongolia_region
+				region = north_china_region
+				region = central_asia_region
+				region = crimea_region
+				region = persia_region
+				region = khorasan_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			stability = 3
+			NOT = { average_unrest = 3 }
+			mongolia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			north_china_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			central_asia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			crimea_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			persia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			khorasan_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "pax_mongolica"
+				duration = -1
+			}
+			custom_tooltip = YUA_HORDE_PEACE
+			tooltip = {
+				add_country_modifier = {
+					name = "yua_horde_harmony"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				IF = {
+					limit = { has_reform = horde_tribal_unity_reform }
+					add_country_modifier = {
+						name = "yua_horde_harmony"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+
+ab_yuan_horde_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = YUA
+		has_country_flag = YUA_HORDE
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	yuan_horde_vassals = {
+		icon = mission_war_chest
+		required_missions = { yuan_horde_crisis }
+		position = 2
+
+		provinces_to_highlight = {
+			owner = {
+				is_subject_of = ROOT
+				liberty_desire = 50
+			}
+		}
+
+		trigger = {
+			all_subject_country = {  
+				NOT = {
+					liberty_desire = 50
+				}
+			}
+			calc_true_if = {
+				all_subject_country = {
+					is_subject_of_type = tributary_state
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "yua_horde_restore_tributary"
+				duration = -1
+			}
+		}
+	}
+
+	yuan_horde_dread = {
+		icon = mission_abu_saids_dream
+		required_missions = { yuan_horde_qaraqorum }
+		position = 3
+		
+		trigger = {
+			num_of_cavalry = 50
+		}
+		
+		effect = {
+			create_general = { tradition = 75 }
+			add_country_modifier = {
+				name = "oir_cavalry_2"
+				duration = 9125
+			}
+			define_advisor = {
+				type = dragoon
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	yuan_horde_oirats = {
+		icon = mission_oirat
+		required_missions = { yuan_horde_stability }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				region = mongolia_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			OR = {
+				mongolia_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				AND = {
+					mongolia_region = {
+						type = all
+						country_or_subject_holds = ROOT
+					}
+					if = {
+						limit = {
+							exists = CRS
+							CRS = {
+								is_subject_of = YUA
+								is_subject_of_type = tributary_state
+							}
+						}
+						CRS = {
+							has_opinion = { who = YUA value = 200 } 
+						}
+					}
+					if = {
+						limit = {
+							exists = KHT
+							KHT = {
+								is_subject_of = YUA
+								is_subject_of_type = tributary_state
+							}
+						}
+						KHT = {
+							has_opinion = { who = YUA value = 200 } 
+						}
+					}
+					if = {
+						limit = {
+							exists = DRB
+							DRB = {
+								is_subject_of = YUA
+								is_subject_of_type = tributary_state
+							}
+						}
+						DRB = {
+							has_opinion = { who = YUA value = 200 } 
+						}
+					}
+					if = {
+						limit = {
+							exists = TRG
+							TRG = {
+								is_subject_of = YUA
+								is_subject_of_type = tributary_state
+							}
+						}
+						TRG = {
+							has_opinion = { who = YUA value = 200 } 
+						}
+					}
+				}
+			}
+			
+		}
+		
+		effect = {
+			add_horde_unity = 15
+			custom_tooltip = YUA_TRIBAL_INHERIT
+			mongolia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tarim_basin_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			shanshan_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kashgaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+					if = {
+						limit = {
+							exists = TRG
+							TRG = {
+								is_subject_of = YUA
+								is_subject_of_type = tributary_state
+								has_opinion = { who = YUA value = 200 }
+							}
+						}
+						inherit = TRG
+					}
+					if = {
+						limit = {
+							exists = CRS
+							CRS = {
+								is_subject_of = YUA
+								is_subject_of_type = tributary_state
+								has_opinion = { who = YUA value = 200 }
+							}
+						}
+						inherit = CRS
+					}
+					if = {
+						limit = {
+							exists = DRB
+							DRB = {
+								is_subject_of = YUA
+								is_subject_of_type = tributary_state
+								has_opinion = { who = YUA value = 200 }
+							}
+						}
+						inherit = DRB
+					}
+					if = {
+						limit = {
+							exists = KHT
+							KHT = {
+								is_subject_of = YUA
+								is_subject_of_type = tributary_state
+								has_opinion = { who = YUA value = 200 }
+							}
+						}
+						inherit = KHT
+					}
+			}
+		}
+	}
+	
+	yuan_horde_tarim = {
+		icon = mission_sw_against_the_desert
+		required_missions = { yuan_horde_oirats }
+		position = 6
+	
+		provinces_to_highlight = {
+			OR = {
+				area = shanshan_area
+				area = tarim_basin_area
+				area = kashgaria_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    shanshan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    tarim_basin_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    kashgaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "yua_horde_tarim"
+				duration = 5475
+			}
+			jetysuu_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_khitan = {
+		icon = mission_unite_rajputana
+		required_missions = { yuan_horde_tarim }
+		position = 7
+	
+		provinces_to_highlight = {
+			OR = {
+				area = jetysuu_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    jetysuu_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = "yua_horde_division"
+				duration = 5475
+			}
+			arys_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			transoxiana_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			ferghana_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_riches = {
+		icon = mission_dominate_persian_gulf
+		required_missions = { yuan_horde_khitan }
+		position = 8
+		provinces_to_highlight = { 
+			OR = {
+				area = ferghana_area
+				area = transoxiana_area
+				area = arys_area
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			ferghana_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			transoxiana_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+			arys_area = {
+				type = all
+				country_or_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "amdo_silk"
+				duration = 7300
+			}
+			central_asia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			khorasan_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			persia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_persia = {
+		icon = mission_persianate_empire
+		required_missions = { yuan_horde_ilkhanate }
+		position = 10
+		provinces_to_highlight = {
+			region = persia_region
+		}
+		trigger = {
+			persia_region = {
+				type = all
+				country_or_subject_holds = ROOT
+				NOT = { local_autonomy_above_min = 10 }
+				NOT = { nationalism = 1 }
+			}
+		}
+		effect = {
+			add_dip_power = 150
+			persia_region = {
+				add_province_modifier = {
+					name = "yuan_mongol_persian"
+					duration = 7300
+				}
+			}
+			custom_tooltip = YUA_HORDE_PERSIA
+			tooltip = {
+				change_monarch_points_or_power = {
+					points = 1
+					power = dip
+				}
+				add_country_modifier = {
+					name = "yuan_king_kings"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						accepted_culture = persian
+					}
+					change_monarch_points_or_power = {
+						points = 1
+						power = dip
+					}
+					add_country_modifier = {
+						name = "yuan_king_kings"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	
+}
+
+ab_yuan_horde_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = YUA
+		has_country_flag = YUA_HORDE
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	yuan_horde_qaraqorum = {
+		icon = mission_qara
+		required_missions = { }
+		position = 2
+	
+		trigger = {
+			2190 = {
+				development = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 2190
+		}
+		
+		effect = {
+			2190 = {
+				add_province_modifier = {
+					name = "yua_horde_mongol_center"
+					duration = -1
+				}
+			}
+			custom_tooltip = YUA_CAPITAL_DECISION
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = YUA_CAPITAL_WARNING
+			tooltip = {
+				2190 = {
+					if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 1 }
+						}
+						center_of_trade = 1
+					}
+					else_if = {
+						limit = {
+							NOT = { province_has_center_of_trade_of_level = 3 }
+						}
+						add_center_of_trade_level = 1
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = { has_country_flag = upgraded_qaraqorum }
+					}
+					2190 = {
+						if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 1 }
+							}
+							center_of_trade = 1
+						}
+						else_if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 3 }
+							}
+							add_center_of_trade_level = 1
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	yuan_horde_festival = {
+		icon = mission_mnd_dai_universities
+		required_missions = { yuan_horde_qaraqorum }
+		position = 3
+	
+		trigger = {
+			years_of_income = 1.5
+		}
+		
+		effect = {
+			add_years_of_income = -1.5
+			custom_tooltip = YUA_FESTIVAL
+			custom_tooltip = YUA_FESTIVAL_2
+			set_country_flag = yua_can_earn_festival_bonus
+		}
+	}
+	
+	yuan_horde_mongols = {
+		icon = mission_chinese_general_riding
+		required_missions = { yuan_horde_festival yuan_horde_oirats }
+		position = 5
+	
+		provinces_to_highlight = {
+			region = mongolia_region
+			local_autonomy_above_min = 10
+		}
+		
+		trigger = {
+		    mongolia_region = {
+			    type = all
+				NOT = { local_autonomy_above_min = 10 }
+			}
+		    mongolia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = mch_missions.7 }
+		}
+	}
+	
+	yuan_horde_yasa = {
+		icon = mission_scholar_officials
+		required_missions = { yuan_horde_mongols }
+		position = 6
+		
+		trigger = {
+		    ADM = 5
+			horde_unity = 90
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "yua_horde_yasa"
+				duration = -1
+			}
+		}
+	}
+	
+	yuan_horde_trade = {
+		icon = mission_dominate_trade_in_bengal
+		required_missions = { yuan_horde_tarim }
+		position = 7
+		
+		trigger = {
+		    num_of_centers_of_trade = 10
+		}
+		
+		effect = {
+			add_years_of_income = 0.5
+			add_country_modifier = {
+				name = "yua_horde_center"
+				duration = 9125
+			}
+		}
+	}
+	
+	yuan_horde_yam = {
+		icon = mission_conquer_malwa_bah
+		required_missions = { yuan_horde_trade }
+		position = 8
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = { 
+						has_building = early_road
+						has_building = gravel_road
+						has_building = royal_road
+						has_building = macadam_road
+						has_building = rail_road
+					}
+				}
+				amount = 30
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "yua_china_yam"
+				duration = -1
+			}
+		}
+	}
+	
+	yuan_horde_ilkhanate = {
+		icon = mission_ilkhanate
+		required_missions = { yuan_horde_riches }
+		position = 9
+		provinces_to_highlight = { 
+			OR = {
+				region = khorasan_region
+				region = persia_region
+			}
+			NOT = { country_or_subject_holds = ROOT }
+		}
+		trigger = {
+			is_at_war = no
+			is_at_war = no
+			num_of_owned_provinces_with = {
+				OR = {
+					region = persia_region
+					region = khorasan_region
+				}
+				value = 30
+			}
+			4338 = { owned_by = ROOT }
+			4293 = { owned_by = ROOT }
+		}
+		effect = {
+			if = {
+				limit = {
+					ILK = {
+						exists = no
+					}
+				}
+				country_event = { id = flavor_cri.8 }
+			}
+			anatolia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			caucasia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mashriq_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_anatolia = {
+		icon = anatolian_frontier
+		required_missions = { yuan_horde_ilkhanate }
+		provinces_to_highlight = {
+			OR = {
+				region = anatolia_region
+				region = mashriq_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				region = anatolia_region
+				value = 20
+			}
+			num_of_owned_provinces_with = {
+				region = mashriq_region
+				value = 20
+			}
+		}
+		effect = {
+			add_mil_power = 150
+			add_country_modifier = {
+				name = "yua_middle_east"
+				duration = 9125
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_nizzarids = {
+		icon = mission_nizzarid
+		required_missions = { yuan_horde_anatolia }
+		trigger = {
+		    egypt_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = egypt_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_country_modifier = {
+				name = "mon_sword"
+				duration = -1
+			}
+			arabia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	yuan_horde_arabia = {
+		icon = mission_into_arabia
+		required_missions = { yuan_horde_nizzarids }
+		trigger = {
+		    arabia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = arabia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_prestige = 25
+			add_country_modifier = {
+				name = "yuan_horde_crescent"
+				duration = -1
+			}
+		}
+	}
+	
+}

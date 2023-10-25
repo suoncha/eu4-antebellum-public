@@ -1,0 +1,217 @@
+namespace = ab_inward
+normal_or_historical_nations = yes
+
+country_event = {
+	id = ab_inward.3
+	title = ab_inward.3.t
+	desc = ab_inward.3.d
+	picture = HRE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_reform = yuainward
+		OR = {
+			AND = {
+				tag = YUA
+				was_tag = YUA
+			}
+			AND = {
+				tag = LIO
+				was_tag = LIO
+			}
+			AND = {
+				tag = QNG
+				was_tag = QNG
+			}
+			AND = {
+				tag = JIN
+				was_tag = JIN
+			}
+			tag = CLE
+			culture_group = east_asian
+		}
+		NOT = {
+			tag = KOR
+			tag = GGR
+			tag = JSN
+		}
+	}
+	
+	option = {
+		name = ab_inward.3.a
+		every_owned_province = {
+			limit = {
+				superregion = china_superregion
+				NOT = {
+					development = 20
+					has_province_modifier = ab_inward_development
+				}
+			}
+			add_province_modifier = {
+				name = "ab_inward_development"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+country_event = {
+	id = ab_inward.4
+	title = ab_inward.4.t
+	desc = ab_inward.4.d
+	picture = HRE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_reform = yuainward
+		OR = {
+			AND = {
+				tag = YUA
+				was_tag = YUA
+			}
+			AND = {
+				tag = LIO
+				was_tag = LIO
+			}
+			AND = {
+				tag = QNG
+				was_tag = QNG
+			}
+			AND = {
+				tag = JIN
+				was_tag = JIN
+			}
+			tag = CLE
+			culture_group = east_asian
+		}
+		NOT = {
+			tag = KOR
+			tag = GGR
+			tag = JSN
+		}
+	}
+	
+	option = {
+		name = ab_inward.4.a
+		every_owned_province = {
+			limit = {
+				superregion = china_superregion
+				development = 20
+				has_province_modifier = ab_inward_development
+			}
+			remove_province_modifier = ab_inward_development
+		}
+	}
+	
+}
+
+country_event = {
+	id = ab_inward.5
+	title = ab_inward.5.t
+	desc = ab_inward.5.d
+	picture = HRE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_reform = yuainward
+		OR = {
+			AND = {
+				tag = KOR
+				was_tag = JSN
+			}
+			AND = {
+				tag = GGR
+				was_tag = JSN
+			}
+			tag = JSN
+		}
+	}
+	
+	option = {
+		name = ab_inward.3.a
+		every_owned_province = {
+			limit = {
+				region = korea_region
+				NOT = {
+					development = 25
+					has_province_modifier = ab_inward_development
+				}
+			}
+			add_province_modifier = {
+				name = "ab_inward_development"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+country_event = {
+	id = ab_inward.6
+	title = ab_inward.6.t
+	desc = ab_inward.6.d
+	picture = HRE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_reform = yuainward
+		OR = {
+			AND = {
+				tag = KOR
+				was_tag = JSN
+			}
+			AND = {
+				tag = GGR
+				was_tag = JSN
+			}
+			tag = JSN
+		}
+	}
+	
+	option = {
+		name = ab_inward.4.a
+		every_owned_province = {
+			limit = {
+				region = korea_region
+				development = 25
+				has_province_modifier = ab_inward_development
+			}
+			remove_province_modifier = ab_inward_development
+		}
+	}
+	
+}
+
+country_event = {
+	id = ab_inward.7
+	title = ab_inward.7.t
+	desc = ab_inward.7.d
+	picture = HRE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		NOT = {
+			has_reform = yuainward
+		}
+		any_owned_province = {
+			has_province_modifier = ab_inward_development
+		}
+	}
+	
+	option = {
+		name = ab_inward.7.a
+		every_owned_province = {
+			limit = {
+				has_province_modifier = ab_inward_development
+			}
+			remove_province_modifier = ab_inward_development
+		}
+	}
+	
+}

@@ -1,0 +1,195 @@
+namespace = ab_sweden
+
+
+#Timed Mission Unlock
+country_event = {
+	id = ab_sweden.1
+	title = ab_sweden.1.t
+	desc = ab_sweden.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_cornwall.1.a
+		set_country_flag = swe_mission_unlocked
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Timed Mission Fail
+country_event = {
+	id = ab_sweden.2
+	title = ab_sweden.2.t
+	desc = ab_sweden.2.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		is_year = 1500
+		OR = {
+			tag = SWE
+			was_tag = SWE
+		}
+		has_country_flag = swe_mission_unlocked
+		NOT = {
+			mission_completed = ab_swe_northern_crusade
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = swe_mission_unlocked
+			set_country_flag = swe_mission_failed
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_sweden.2.a
+	}
+}
+
+#AI Help 1
+country_event = {
+	id = ab_sweden.3
+	title = ab_sweden.3.t
+	desc = ab_sweden.3.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SWE
+		ai = yes
+		is_year = 1447
+		NOT = {
+			mission_completed = ab_swe_catholic_alliances
+		}
+	}
+	
+	option = {
+		name = ab_sweden.3.a
+		complete_mission = ab_swe_catholic_alliances
+		hidden_effect = {
+			every_ally = {
+				ROOT = { 
+					add_mil_power = 25 
+				}
+			}
+		}
+		add_country_modifier = {
+			name = swe_political_security
+			duration = 3650
+		}
+	}
+}
+
+#AI Help 2
+country_event = {
+	id = ab_sweden.4
+	title = ab_sweden.4.t
+	desc = ab_sweden.4.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SWE
+		ai = yes
+		is_year = 1447
+		NOT = {
+			mission_completed = ab_swe_call_crusade
+		}
+	}
+	
+	option = {
+		name = ab_sweden.4.a
+		complete_mission = ab_swe_call_crusade
+		create_general = { tradition = 30 }
+		add_country_modifier = {
+			name = swe_northern_crusade
+			duration = 5475
+		}
+	}
+}
+
+#Teutonic Modifier
+country_event = {
+	id = ab_sweden.5
+	title = ab_sweden.5.t
+	desc = ab_sweden.5.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = SWE
+			was_tag = SWE
+		}
+		has_country_modifier = swe_teuton_slot
+		NOT = {
+			TEU = {
+				is_subject_of = ROOT
+			}
+		}
+	}
+	
+	option = {
+		name = ab_sweden.5.a
+		remove_country_modifier = swe_teuton_slot
+	}
+}
+
+#Livonian Modifier
+country_event = {
+	id = ab_sweden.6
+	title = ab_sweden.6.t
+	desc = ab_sweden.6.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	hidden = yes
+	
+	trigger = {
+		OR = {
+			tag = SWE
+			was_tag = SWE
+		}
+		has_country_modifier = swe_livonia_slot
+		NOT = {
+			LIV = {
+				is_subject_of = ROOT
+			}
+		}
+	}
+	
+	option = {
+		name = ab_sweden.5.a
+		remove_country_modifier = swe_livonia_slot
+	}
+}
+
+#Lion and the Empire
+country_event = {
+	id = ab_sweden.7
+	title = ab_sweden.7.t
+	desc = ab_sweden.7.d
+	picture = EMPEROR_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_sweden.7.a
+		custom_tooltip = sweden_hre_incident
+	}
+}

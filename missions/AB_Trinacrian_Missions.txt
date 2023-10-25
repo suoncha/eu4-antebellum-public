@@ -1,0 +1,650 @@
+trc_first = {
+	slot = 1
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = TRC
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	trc_navy = {
+		icon = overshadow_venice
+		required_missions = { }
+		position = 2
+
+		trigger = {
+			navy_size_percentage = 0.75
+			num_of_galley = 10
+		}
+		
+		effect = {
+			create_admiral = { tradition = 50 }
+		    corsica_sardinia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	trc_isles = {
+	    icon = mission_seize_the_isles
+		required_missions = { trc_navy }
+		position = 3
+		
+		trigger = {
+		    corsica_sardinia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = corsica_sardinia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = "trc_defeated_genoa"
+				duration = 5475
+			}
+		    101 = {
+		    	if = {
+		    		limit = {
+		    			NOT = { is_core = ROOT }
+		    			NOT = { is_permanent_claim = ROOT }
+		    		}
+		    		add_permanent_claim = ROOT
+		    	}
+		    }
+		    baleares_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    tunisia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	trc_control = {
+	    icon = mission_combat_barbary_piracy
+		required_missions = { trc_isles trc_trade }
+		position = 4
+		
+		trigger = {
+			101 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    baleares_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    tunisia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = baleares_area
+				area = tunisia_area
+				province_id = 101
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			add_country_modifier = {
+				name = "trc_naval_superiority"
+				duration = -1
+			}
+		    tripolitania_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    djerba_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	trc_tripolitania = {
+	    icon = mission_control_the_barbary_coast
+		required_missions = { trc_control }
+		position = 5
+		
+		trigger = {
+		    tripolitania_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    djerba_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tripolitania_area
+				area = djerba_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_navy_tradition = 15
+			add_country_modifier = {
+				name = "trc_pirates"
+				duration = 9125
+			}
+		}
+	}
+	
+
+}	
+
+trc_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = TRC
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	trc_recover = {
+		icon = protect_against_austria
+		required_missions = { trc_stabilize }
+		position = 2
+
+		trigger = {
+			army_size_percentage = 0.75
+			manpower_percentage = 0.75
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "trc_recover"
+				duration = 9125
+			}
+		}
+	}
+	
+	trc_trade = {
+	    icon = purely_for_commerce
+		required_missions = { trc_navy }
+		position = 3
+		
+		trigger = {
+			num_of_light_ship = 7
+			101 = {
+				trade_share = {
+					country = ROOT
+					share = 35
+				}
+			}
+		}
+		
+		effect = {
+			add_treasury = 150
+			add_country_modifier = {
+				name = "trc_merchant_fleet"
+				duration = 9125
+			}
+		}
+	}
+	
+	trc_rome = {
+		icon = answer_the_roman_question
+		required_missions = { trc_italian_wars  }
+		position = 4
+		provinces_to_highlight = {
+			if = {
+				limit = {
+					ROOT = {
+						religion = catholic
+					}
+				}
+				owner = { tag = PAP }
+			}
+			else = {
+				province_id = 118
+			}
+		}
+		trigger = {
+			if = {
+				limit = {
+					exists = PAP
+					religion = catholic
+					NOT = { is_rival = PAP }
+				}
+				num_of_cardinals = 2
+				alliance_with = PAP
+			}
+			else_if = {
+				limit = {
+					religion = catholic
+				}
+				num_of_cardinals = 3
+			}
+			else = {
+				owns_core_province = 118
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					NOT = { owns_core_province = 118 }
+				}
+				add_papal_influence = 25
+			}
+			else = {
+				add_prestige = 25
+			}
+		}
+	}
+	
+	
+}
+
+
+trc_third = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = TRC
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	trc_stabilize = {
+		icon = republican_yearnings
+		required_missions = { }
+		position = 1
+
+		trigger = {
+			stability = 1
+			religious_unity = 0.75
+			NOT = {
+				unrest = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "trc_finish_religion"
+				duration = 5475
+			}
+		}
+	}
+	
+	trc_develop_south = {
+		icon = prosperity_for_all
+		position = 2
+		required_missions = { trc_stabilize }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = naples_area
+				area = sicily_area
+				area = western_sicily_area
+				area = calabria_area
+				area = apulia_area
+			}
+			NOT = { development = 15 }
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = trc_south_develop
+				num_of_owned_provinces_with = {
+					OR = {
+						area = naples_area
+						area = sicily_area
+						area = western_sicily_area
+						area = calabria_area
+						area = apulia_area
+					}
+					development = 15
+					value = 7
+				}
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "trc_urban"
+				duration = 5475
+			}
+			define_advisor = {
+				type = planner
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	trc_italian_wars = {
+		icon = mission_rule_italy
+		required_missions = { trc_alliances trc_recover }
+		position = 3
+		
+		provinces_to_highlight = {
+			region = italy_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = italy_region
+				value = 25
+			}
+		}
+		
+		effect = {
+			add_mil_power = 150
+		    italy_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}	
+		    east_adriatic_coast_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}	
+		}
+	}
+	
+	trc_dalmatia = {
+		icon = dalmatian_conquest
+		required_missions = { trc_italian_wars }
+		position = 4
+		
+		provinces_to_highlight = {
+			area = east_adriatic_coast_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    east_adriatic_coast_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			137 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			add_country_modifier = {
+				name = "nap_ragusa_trade"
+				duration = 7300
+			}
+		    albania_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}	
+		}
+	}
+	
+	trc_reign = {
+		icon = mission_italian_conquest
+		required_missions = { trc_venice trc_rome }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 116
+				province_id = 4728
+				province_id = 113
+				province_id = 103
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    116 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    4728 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    113 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    103 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 25
+				add_country_modifier = {
+					name = "trc_italian_war"
+					duration = 7300
+				}
+		}
+	}
+	
+}
+
+trc_fourth = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = TRC
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	trc_alliances = {
+		icon = mission_alliances
+		required_missions = { trc_stabilize }
+		position = 2
+
+		trigger = {
+			calc_true_if = {
+				all_ally = {
+					religion_group = christian
+				}
+				amount = 3
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "trc_alliance"
+				duration = 5475
+			}
+		}
+	}
+	
+	trc_venice = {
+		icon = mission_control_venice
+		required_missions = { trc_italian_wars }
+		position = 4
+		
+		provinces_to_highlight = {
+			province_id = 112
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    112 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "trc_adriatic"
+				duration = 9125
+			}
+		}
+	}
+	
+	
+}
+
+trc_fifth = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = TRC
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	trc_renaissance = {
+		icon = friends_in_high_places
+		required_missions = { }
+		position = 3
+		
+		trigger = {
+			has_institution = renaissance
+			OR = {
+				advisor = artist
+				advisor = planner
+				advisor = architect
+			}
+		}
+		
+		effect = {
+			change_government_reform_progress = 25
+			add_country_modifier = {
+				name = "trc_renaissance"
+				duration = 9125
+			}
+		}
+	}
+	
+	trc_two_capitals = {
+		icon = reclaim_the_ducal_lands
+		required_missions = { trc_renaissance }
+		position = 4
+		
+		trigger = {
+			121 = {
+				owned_by = ROOT
+				development = 25
+			}
+			125 = {
+				owned_by = ROOT
+				development = 25
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 121
+				province_id = 125
+			}
+		}
+		
+		effect = {
+			121 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			125 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+			
+	trc_government = {
+		icon = neapolitan_govenance
+		position = 5
+		required_missions = { trc_two_capitals }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = naples_government_tt
+				OR = {
+					government = republic
+					has_final_tier_reforms_trigger = yes
+				}
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "trc_government"
+				duration = -1
+			}
+		}
+	}
+	
+}	

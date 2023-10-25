@@ -1,0 +1,222 @@
+namespace = ab_roc
+normal_or_historical_nations = yes
+
+#Revolution
+country_event = {
+	id = ab_roc.1
+	title = ab_roc.1.t
+	desc = ab_roc.1.d
+	picture = REVOLUTION_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ROC
+	}
+
+	major = yes
+
+	option = {
+		name = ab_roc.1.a
+		set_country_flag = chinese_revolution_flag
+		add_republican_tradition = -50
+		custom_tooltip = CHINA_REVOLUTION
+		hidden_effect = {
+			if = {
+				limit = {
+					ai = no
+				}
+				add_country_modifier = {
+					name = "chinese_revolution"
+					duration = -1
+				}
+			}
+		}
+		random_owned_province = {
+			leadered_peasant_rebels = 3
+		}
+		random_owned_province = {
+			leadered_peasant_rebels = 3
+		}
+		random_owned_province = {
+			leadered_peasant_rebels = 3
+		}
+		random_owned_province = {
+			leadered_peasant_rebels = 3
+		}
+		random_owned_province = {
+			leadered_peasant_rebels = 3
+		}
+		random_owned_province = {
+			leadered_peasant_rebels = 3
+		}
+		random_owned_province = {
+			leadered_peasant_rebels = 3
+		}
+		random_owned_province = {
+			leadered_peasant_rebels = 3
+		}
+	}
+}
+
+#End of Revolution
+country_event = {
+	id = ab_roc.2
+	title = ab_roc.2.t
+	desc = ab_roc.2.d
+	picture = REVOLUTION_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ROC
+		has_country_flag = chinese_revolution_flag
+		stability = 1
+		num_of_rebel_armies = 0
+		num_of_rebel_controlled_provinces = 0
+	}
+
+	option = {
+		name = ab_roc.2.a
+		add_stability = 1
+		add_republican_tradition = 25
+		remove_country_modifier = chinese_revolution
+		clr_country_flag = chinese_revolution_flag
+	}
+}
+
+#Storming of the Imperial Palace
+country_event = {
+	id = ab_roc.3
+	title = ab_roc.3.t
+	desc = ab_roc.3.d
+	picture = REVOLUTION_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ROC
+		has_country_flag = chinese_revolution_flag
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	option = {
+		name = ab_roc.3.a
+		capital_scope = {
+			spawn_rebels = {
+				type = pretender_rebels
+				size = 3
+				win = yes
+			}
+		}
+	}
+}
+
+#Army Deserters
+country_event = {
+	id = ab_roc.4
+	title = ab_roc.4.t
+	desc = ab_roc.4.d
+	picture = REVOLUTION_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ROC
+		has_country_flag = chinese_revolution_flag
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+
+	option = {
+		name = ab_roc.4.a
+		add_army_tradition = -10
+		add_manpower = -20
+	}
+}
+
+#Depletion of the Imperial Treasury
+country_event = {
+	id = ab_roc.5
+	title = ab_roc.5.t
+	desc = ab_roc.5.d
+	picture = REVOLUTION_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ROC
+		has_country_flag = chinese_revolution_flag
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+	}
+
+	option = {
+		name = ab_roc.5.a
+		add_corruption = 5
+		add_years_of_income = -2
+	}
+}
+
+#Nobles rise in revolt, demanding old privileges
+country_event = {
+	id = ab_roc.6
+	title = ab_roc.6.t
+	desc = ab_roc.6.d
+	picture = REVOLUTION_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ROC
+		has_country_flag = chinese_revolution_flag
+	}
+	
+	mean_time_to_happen = {
+		months = 10
+	}
+	
+	option = {
+		name = ab_roc.6.a
+			add_republican_tradition = -10
+			add_mil_power = -150
+			add_estate_loyalty = {
+				estate = estate_nobles
+				loyalty = 10
+			}
+	}
+
+
+	option = {
+		name = ab_roc.6.b
+			add_estate_loyalty = {
+				estate = estate_nobles
+				loyalty = -20
+			}
+		random_owned_province = {
+			spawn_rebels = {
+				type = noble_rebels
+				size = 3
+			}
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = noble_rebels
+				size = 3
+			}
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = noble_rebels
+				size = 3
+			}
+		}
+	}
+}

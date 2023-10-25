@@ -1,0 +1,1476 @@
+ab_pnn_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PNN
+			was_tag = PNN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	pnn_slavonia = {
+		icon = mission_unite_home_region
+		required_missions = { pnn_inevitable  }
+		position = 2
+		
+		provinces_to_highlight = {
+			area =  slavonia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT	 }
+		}
+		
+		trigger = {
+			slavonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = pnn_balkan
+				duration = 7300
+			}
+			croatia_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			east_adriatic_coast_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	pnn_croatia = {
+		icon = secure_the_sava
+		required_missions = { pnn_slavonia  }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = croatia_area
+				area = east_adriatic_coast_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT	 }
+		}
+		
+		trigger = {
+			croatia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			east_adriatic_coast_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = pnn_adriatic
+				duration = 9125
+			}
+			custom_tooltip = PNN_VENICE
+			tooltip = {
+				add_country_modifier = {
+					name = pnn_hegemony
+					duration = 5475
+				}
+				venetia_area = {
+					limit = {
+						NOT = { is_core = ROOT}
+						NOT = { owned_by = ROOT}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						army_size = VEN
+						total_development = VEN
+					}
+					add_country_modifier = {
+						name = pnn_hegemony
+						duration = 5475
+					}
+					venetia_area = {
+							limit = {
+									NOT = { is_core = ROOT}
+									NOT = { owned_by = ROOT}
+								}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	pnn_rudohorie = {
+		icon = mission_zambezi_gold
+		position = 4
+		required_missions = { pnn_peaks }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = slovakia_area
+				area = eastslovakia_area
+			}
+			NOT = {
+				base_production = 6
+			}
+		}
+		
+		trigger = {
+            calc_true_if = {
+                all_owned_province = {
+                    OR = {
+						area = slovakia_area
+						area = eastslovakia_area
+					}
+					base_production = 6
+                }
+                amount = 5
+            }
+		}
+		
+		effect = {
+			add_years_of_income = 0.5
+			add_country_modifier = {
+				name = pnn_riches
+				duration = 9125
+			}
+		}
+	}
+
+	pnn_kremnica = {
+	    icon = dominant_economy
+		required_missions = { pnn_rudohorie }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 4944
+		}
+		
+		trigger = {
+			4944 = {
+				num_of_times_improved = 10
+			}
+		}
+		
+		effect = {
+		    4944 = {
+                add_province_modifier = {
+                    name = "mva_kremnica"
+					duration = -1
+				}
+			}
+			custom_tooltip = MVA_GOLD
+		}
+	}
+
+	pnn_develop = {
+		icon = mission_colonial
+		position = 10
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_terrain = highlands
+				has_terrain = mountain
+			}
+			OR = {
+				NOT = {
+					has_production_building_trigger = yes
+				}
+				NOT = {
+					development = 12
+				}
+			}
+		}
+		
+		trigger = {
+            calc_true_if = {
+                all_owned_province = {
+                    OR = {
+						has_terrain = highlands
+						has_terrain = mountain
+					}
+					has_production_building_trigger = yes
+					development = 12
+                }
+                amount = 10
+            }
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 0.5
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = "pnn_urban"
+				duration = 7300
+			}
+		}
+	}
+	
+	pnn_intensify = {
+		icon = reissue_the_mining_code
+		position = 11
+		required_missions = { pnn_develop }
+		
+		trigger = {
+			production_income_percentage = 0.33
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "pnn_operation"
+				duration = -1
+			}
+		}
+	}
+}
+
+ab_pnn_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PNN
+			was_tag = PNN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	pnn_peaks = {
+		icon = mission_nitra
+		required_missions = { pnn_river  }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = slovakia_area
+				area = eastslovakia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT	 }
+		}
+		
+		trigger = {
+			slovakia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			eastslovakia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = pnn_securing
+				duration = 7300
+			}
+			custom_tooltip = PNN_GMA_CLAIM
+			custom_tooltip = PNN_MVA_RIVAL
+			tooltip = {
+				add_country_modifier = {
+					name = pnn_svatopluk
+					duration = 5475
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							is_rival = MVA
+							is_enemy = MVA
+						}
+					}
+					add_country_modifier = {
+						name = pnn_svatopluk
+						duration = 5475
+					}
+				}
+				moravia_area = {
+					limit = {
+						NOT = { is_core = ROOT}
+						NOT = { owned_by = ROOT}
+					}
+					add_permanent_claim = ROOT
+				}
+				bohemia_area = {
+					limit = {
+						NOT = { is_core = ROOT}
+						NOT = { owned_by = ROOT}
+					}
+					add_permanent_claim = ROOT
+				}
+				erzgebirge_area = {
+					limit = {
+						NOT = { is_core = ROOT}
+						NOT = { owned_by = ROOT}
+					}
+					add_permanent_claim = ROOT
+				}
+				silesia_area = {
+					limit = {
+						NOT = { is_core = ROOT}
+						NOT = { owned_by = ROOT}
+					}
+					add_permanent_claim = ROOT
+				}
+				lusatia_area = {
+					limit = {
+						NOT = { is_core = ROOT}
+						NOT = { owned_by = ROOT}
+					}
+					add_permanent_claim = ROOT
+				}
+				1770 = {
+					if = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { owned_by = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+				134 = {
+					if = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { owned_by = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+				2960 = {
+					if = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { owned_by = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+				262 = {
+					if = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { owned_by = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	pnn_mountain = {
+		icon = alpine_defenses
+		required_missions = { pnn_peaks }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = slovakia_area
+				area = eastslovakia_area
+			}
+			NOT = { fort_level = 3 }
+		}
+		
+		trigger = {
+            calc_true_if = {
+                all_owned_province = {
+                    OR = {
+						area = slovakia_area
+						area = eastslovakia_area
+					}
+					fort_level = 3
+                }
+                amount = 3
+            }
+		}
+		
+		effect = {
+			custom_tooltip = PNN_FORTS_SLO
+			tooltip = {
+				add_province_modifier = {
+					name = pnn_fortress
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = slovakia_area
+							area = eastslovakia_area
+						}
+						fort_level = 3
+					}
+					add_base_manpower = 2
+					add_province_modifier = {
+						name = pnn_fortress
+						duration = -1
+					}
+				}
+			}	
+		}
+	}
+	
+	pnn_crimea = {
+		icon = mission_invade_island
+		position = 9
+		required_missions = { pnn_danubian }
+		
+		provinces_to_highlight = {
+			province_id = 285
+		}
+		
+		trigger = {
+			OR = {
+                owns = 285
+                285 = {
+                    owner = {
+                        custom_trigger_tooltip = {
+                            tooltip = PNN_won_war_against_owner_of_285
+                            ROOT = {
+                                has_won_war_against = { who = PREV }
+                            }
+                        }
+                    }
+                }
+				285 = {
+					owner = {
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			285 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 20
+					key = pnn_crimea_deal
+				}
+			}
+		}
+	}
+}
+
+ab_pnn_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PNN
+			was_tag = PNN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	pnn_inevitable = {
+		icon = mission_recruit_streltsy
+		required_missions = {  }
+		position = 1
+
+		trigger = {
+			army_size_percentage = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = pnn_anticavalry
+				duration = 5475
+			}
+			centralhungary_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			slavonia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = PNN_MGY_ARMY
+			tooltip = {
+				create_general = { tradition = 35 }
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						army_size = MGY
+					}
+					create_general = { tradition = 35 }
+				}
+			}
+		}
+	}
+	
+	pnn_river = {
+		icon = mission_advance_to_the_dnieper
+		required_missions = { pnn_inevitable }
+		position = 2
+
+		provinces_to_highlight = {
+			area = centralhungary_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT	 }
+		}
+		
+		trigger = {
+		    centralhungary_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_army_tradition = 10
+			centralhungary_area = {
+				add_province_modifier = {
+					name = pnn_cyrilomethodic
+					duration = 5475
+				}
+			}
+			alfold_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			slovakia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			eastslovakia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	pnn_baptism = {
+		icon = mission_hands_praying
+		required_missions = { pnn_river }
+		position = 4
+
+		provinces_to_highlight = {
+			area = centralhungary_area
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { religion = ROOT }
+			}
+		}
+		
+		trigger = {
+		    centralhungary_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+				religion = ROOT
+			}
+		}
+		effect = {
+			add_patriarch_authority = 0.1
+			centralhungary_area = {
+				change_culture = ROOT
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	pnn_christ = {
+		icon = spread_piety
+		required_missions = { pnn_baptism pnn_bend }
+		position = 6
+
+		provinces_to_highlight = {
+			region = carpathia_region
+			religion = tengri_pagan_reformed
+		}
+		
+		trigger = {
+			religious_unity = 1
+		    NOT = {
+				any_province = {
+					region = carpathia_region
+					religion = tengri_pagan_reformed
+				}
+			}
+		}
+		effect = {
+			custom_tooltip = PNN_CULTURE
+			add_country_modifier = {
+				name = pnn_hungarians
+				duration = -1
+			}
+			replace_culture_with_effect = {
+				new_culture = slavichungarian
+				old_culture_1 = hungarian
+				old_culture_2 = Szekler
+			}
+			hidden_effect = {
+				4126 = {
+					change_original_culture = slavichungarian
+				}
+				1954 = {
+					change_original_culture = slavichungarian
+				}
+				156 = {
+					change_original_culture = slavichungarian
+				}
+				4955 = {
+					change_original_culture = slavichungarian
+				}
+				155 = {
+					change_original_culture = slavichungarian
+				}
+				4950 = {
+					change_original_culture = slavichungarian
+				}
+				153 = {
+					change_original_culture = slavichungarian
+				}
+				4125 = {
+					change_original_culture = slavichungarian
+				}
+				1953 = {
+					change_original_culture = slavichungarian
+				}
+				157 = {
+					change_original_culture = slavichungarian
+				}
+				4954 = {
+					change_original_culture = slavichungarian
+				}
+				162 = {
+					change_original_culture = slavichungarian
+				}
+				1952 = {
+					change_original_culture = slavichungarian
+				}
+				4953 = {
+					change_original_culture = slavichungarian
+				}
+				158 = {
+					change_original_culture = slavichungarian
+				}
+			}
+		}
+	}
+	
+	pnn_pannonia = {
+		icon = prosper_in_piedmont
+		position = 7
+		required_missions = { pnn_christ pnn_mountain pnn_never }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				NOT = {
+					fort_level = 3
+				}
+				NOT = {
+					base_manpower = 5
+				}
+				NOT = {
+					OR = {
+						has_building = barracks
+						has_building = training_fields
+					}
+				}
+			}
+		}
+		
+		trigger = {
+            calc_true_if = {
+                all_owned_province = {
+                    fort_level = 3
+					base_manpower = 5
+					OR = {
+						has_building = barracks
+						has_building = training_fields
+					}
+                }
+                amount = 8
+            }
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = pnn_pan
+				duration = -1
+			}
+		}
+	}
+	
+	pnn_danubian = {
+		icon = despot_stefans_legacy
+		position = 8
+		required_missions = { pnn_pannonia }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+            calc_true_if = {
+                all_owned_province = {
+                    has_trade_building_trigger = yes
+                }
+                amount = 10
+            }
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = pnn_inland
+				duration = 5475
+			}
+			define_advisor = {
+				type = trader
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	pnn_ragusa = {
+		icon = capture_adriatic_ports
+		position = 9
+		required_missions = { pnn_danubian }
+		
+		provinces_to_highlight = {
+			province_id = 137
+		}
+		
+		trigger = {
+			OR = {
+                owns = 137
+                137 = {
+                    owner = {
+                        custom_trigger_tooltip = {
+                            tooltip = PNN_won_war_against_owner_of_137
+                            ROOT = {
+                                has_won_war_against = { who = PREV }
+                            }
+                        }
+                    }
+                }
+				137 = {
+					owner = {
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			137 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 20
+					key = pnn_ragusa_deal
+				}
+			}
+		}
+	}
+	
+	pnn_hegemon = {
+		icon = mission_entrepot_of_india
+		position = 9
+		required_missions = { pnn_ragusa pnn_constantinople pnn_crimea }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				AND = {
+					is_capital_of = ROOT
+					NOT = {
+						province_has_center_of_trade_of_level = 3
+					}
+				}
+				AND = {
+					province_has_center_of_trade_of_level = 1
+					NOT = {
+						has_manufactory_trigger = yes
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			capital_scope = {
+				province_has_center_of_trade_of_level = 3
+			}
+			calc_true_if = {
+				all_owned_province = {
+					province_has_center_of_trade_of_level = 1
+					has_manufactory_trigger = yes
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			custom_tooltip = TUR_MARKETPLACE
+			add_country_modifier = {
+				name = pnn_tradehegemon
+				duration = -1
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_building = marketplace
+							}
+							remove_building = marketplace
+							add_building = trade_depot
+						}
+					"
+				}
+			}
+			custom_tooltip = PNN_TRADE_IDEAS
+			tooltip = {
+				add_years_of_income = 1
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						full_idea_group = trade_ideas
+					}
+					add_years_of_income = 1
+				}
+			}
+		}
+	}
+	
+	pnn_heart = {
+		icon = peace_in_europe
+		position = 12
+		required_missions = { pnn_hegemon pnn_basket pnn_intensify }
+		
+		provinces_to_highlight = {
+			owner = {
+				capital_scope = {
+					continent = europe
+				}
+				monthly_income = ROOT
+			}
+		}
+		
+		trigger = {
+			NOT = {
+				any_country = {
+					capital_scope = {
+						continent = europe
+					}
+					monthly_income = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 50
+			}
+			add_country_modifier = {
+				name = pnn_heart_europe
+				duration = -1
+			}
+			custom_tooltip = PNN_DEVELOPING
+		}
+	}
+}
+
+ab_pnn_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PNN
+			was_tag = PNN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	pnn_plains = {
+		icon = mission_mal_subjugate_zaf
+		required_missions = { pnn_river  }
+		position = 3
+		
+		provinces_to_highlight = {
+			area =  alfold_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			alfold_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			alfold_area = {
+				add_province_modifier = {
+					name = pnn_cyrilomethodic
+					duration = 5475
+				}
+			}
+			transylvania_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			southern_transylvania_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	pnn_bend = {
+		icon = mission_che_the_cave_country
+		required_missions = { pnn_plains  }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = transylvania_area
+				area = southern_transylvania_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT	 }
+		}
+		
+		trigger = {
+			transylvania_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			southern_transylvania_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			4128 = {
+				NOT = {
+					has_construction = great_project
+				}
+			}
+		}
+		
+		effect = {
+			4128 = {
+				add_great_project_tier = {
+					type = bran_castle
+					tier = 1
+				}
+			}
+			add_country_modifier = {
+				name = pnn_triumph
+				duration = -1
+			}
+			wallachia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			moldavia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			bessarabia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	pnn_never = {
+		icon = protect_against_the_turks
+		required_missions = { pnn_bend  }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = transylvania_area
+				area = southern_transylvania_area
+			}
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { is_core = ROOT }
+				NOT = { fort_level = 3 }
+				NOT = { num_of_times_improved = 4 }
+			}
+		}
+		
+		trigger = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = PNN_UNLOCK_IDEA
+					has_idea = pnn_first
+				}
+				has_global_modifier_value = {
+					which = defensiveness
+					value = 0.3
+				}
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 3
+				OR = {
+					area = transylvania_area
+					area = southern_transylvania_area
+				}
+				OR = {
+					fort_level = 3
+					num_of_times_improved = 4
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = PNN_FORTS
+			tooltip = {
+				add_province_modifier = {
+					name = pnn_fortress
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = transylvania_area
+							area = southern_transylvania_area
+						}
+						OR = {
+							fort_level = 3
+							num_of_times_improved = 4
+						}
+					}
+					add_base_manpower = 2
+					add_province_modifier = {
+						name = pnn_fortress
+						duration = -1
+					}
+				}
+			}		
+		}
+	}
+	
+	pnn_constantinople = {
+		icon = end_the_schism
+		position = 9
+		required_missions = { pnn_danubian }
+		
+		provinces_to_highlight = {
+			province_id = 151
+		}
+		
+		trigger = {
+			OR = {
+                owns = 151
+                151 = {
+                    owner = {
+                        custom_trigger_tooltip = {
+                            tooltip = PNN_won_war_against_owner_of_151
+                            ROOT = {
+                                has_won_war_against = { who = PREV }
+                            }
+                        }
+                    }
+                }
+				151 = {
+					owner = {
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			151 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 20
+					key = pnn_const_deal
+				}
+			}
+		}
+	}
+	
+}
+
+ab_pnn_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PNN
+			was_tag = PNN
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	pnn_glagolitic = {
+		icon = reform_the_nomocanon
+		position = 2
+		required_missions = { }
+		
+		trigger = {
+			has_institution = renaissance
+			prestige = 50
+			OR = {
+				ADM = 4
+				has_adm_advisor_2 = yes
+			}
+		}
+		
+		effect = {
+			change_innovativeness = 3
+			add_country_modifier = {
+				name = mva_script
+				duration = 5475
+			}
+		}
+	}
+	
+	pnn_religious_reforms = {
+		icon = mission_land_of_churches
+		position = 3
+		required_missions = { pnn_glagolitic }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_tax_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_tax_building_trigger = yes
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = { estate = estate_church loyalty = 10 }
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	pnn_diocese = {
+		icon = mission_autocephalous_archbishopric
+		position = 4
+		required_missions = { pnn_religious_reforms }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_state_patriach = yes
+			}
+		}
+		
+		trigger = {
+			patriarch_authority = 0.75
+			num_of_owned_provinces_with = {
+				religion = orthodox
+				value = 30
+			}
+            calc_true_if = {
+                all_owned_province = {
+                    has_state_patriach = yes
+                }
+                amount = 30
+            }
+		}
+		
+		effect = {
+			custom_tooltip = PNN_MANPOWER_ORTHODOX
+			add_country_modifier = {
+				name = pnn_diocese
+				duration = -1
+			}
+			hidden_effect = {
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								religion = orthodox
+							}
+							add_base_manpower = 1
+                        }
+                    "
+                }
+			}
+			custom_tooltip = PNN_METRO
+		}
+	}
+	
+	pnn_mining = {
+		icon = mission_eastern_european_city
+		position = 6
+		required_missions = { pnn_bend }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = transylvania_area
+				area = southern_transylvania_area
+			}
+			OR = {
+				NOT = {
+					has_production_building_trigger = yes
+				}
+				NOT = {
+					development = 12
+				}
+			}
+		}
+		
+		trigger = {
+            calc_true_if = {
+                all_owned_province = {
+                    OR = {
+						area = transylvania_area
+						area = southern_transylvania_area
+					}
+					has_production_building_trigger = yes
+					development = 12
+                }
+                amount = 5
+            }
+		}
+		
+		effect = {
+			custom_tooltip = PNN_MINING_TT
+			tooltip = {
+				add_province_modifier = {
+					name = pnn_mining
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				transylvania_area = {
+					add_prosperity = 100
+				}
+				southern_transylvania_area = {
+					add_prosperity = 100
+				}
+                every_owned_province = {
+					limit = {
+						OR = {
+							area = transylvania_area
+							area = southern_transylvania_area
+						}
+						has_production_building_trigger = yes
+						development = 12
+					}
+					add_province_modifier = {
+						name = pnn_mining
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	pnn_black_soil = {
+		icon = prosperity_for_all
+		position = 10
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_terrain = farmlands
+				has_terrain = grasslands
+			}
+			OR = {
+				NOT = {
+					has_production_building_trigger = yes
+				}
+				NOT = {
+					development = 12
+				}
+			}
+		}
+		
+		trigger = {
+            calc_true_if = {
+                all_owned_province = {
+                    OR = {
+						has_terrain = farmlands
+						has_terrain = grasslands
+					}
+					has_production_building_trigger = yes
+					development = 12
+                }
+                amount = 12
+            }
+		}
+		
+		effect = {
+			country_event = { id = ab_pannonia.1 }
+			carpathia_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_province_modifier = {
+					name = pnn_blacksoil
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	pnn_basket = {
+		icon = mission_farm
+		position = 11
+		required_missions = { pnn_black_soil }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				trade_goods = grain
+				trade_goods = livestock
+			}
+			OR = {
+				NOT = {
+					has_production_building_trigger = yes
+				}
+				NOT = {
+					development = 12
+				}
+			}
+		}
+		
+		trigger = {
+            calc_true_if = {
+                all_owned_province = {
+                    OR = {
+						trade_goods = grain
+						trade_goods = livestock
+					}
+					has_production_building_trigger = yes
+					development = 12
+                }
+                amount = 10
+            }
+		}
+		
+		effect = {
+			custom_tooltip = PNN_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = pnn_evolved_ideas
+				if = {
+					limit = {
+						tag = PNN
+					}
+					swap_free_idea_group = yes
+				}
+				else_if = {
+					limit = {
+						tag = GMA
+					}
+					add_country_modifier = {
+						name = pnn_evolving
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+}

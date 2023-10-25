@@ -1,0 +1,166 @@
+ottoman_corporation = {
+	icon = "ottomans"
+	allow_normal_conversion = no
+	modifiers = {
+		placed_merchant_power = 3
+		mercantilism_cost = -0.1
+		max_absolutism = -25
+	}
+	valid_for_nation_designer = yes
+	lock_level_when_selected = yes
+	nation_designer_cost = 40
+	maintain_dynasty = yes
+	royal_marriage = yes
+	potential = {
+		NOT = { map_setup = map_setup_random }
+		OR = {
+			tag = TUR
+			was_tag = TUR
+		}
+		religion_group = muslim
+	}
+	boost_income = yes
+	factions = {
+		mr_aristocrats
+		mr_traders
+		mr_guilds
+	}
+	government_abilities = {
+            ottoman_commercialism_mechanic
+        }
+	conditional = {
+		allow = {
+			has_dlc = "Res Publica"
+			NOT = { has_dlc = "Mare Nostrum" }
+		}
+		can_use_trade_post = yes
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Mare Nostrum"
+			NOT = { has_dlc = "Res Publica" }
+		}
+		can_form_trade_league = yes
+		trade_city_reform = trading_city
+	}
+	conditional = {
+		allow = {
+			has_dlc = "Res Publica"
+			has_dlc = "Mare Nostrum"
+		}
+		can_use_trade_post = yes
+		can_form_trade_league = yes
+		trade_city_reform = trading_city
+	}
+	conditional = {
+		allow = { has_dlc = "Domination" }
+		has_pashas = yes
+		has_janissaries = yes
+		has_harem = yes
+		custom_attributes = {
+			has_harem_events = yes
+		}
+	}
+	conditional = {
+		allow = { 
+			has_dlc = "Cradle of Civilization"
+			NOT = { has_dlc = "Domination" }
+		}
+		has_pashas = yes
+		has_janissaries = yes
+	}
+	custom_attributes = {
+		enables_plutocratic_idea_group = yes
+		enables_aristocratic_idea_group = no
+		lottery_election = yes
+		election_on_death = yes
+		enables_nepotism = yes
+		is_merchant_republic = yes
+	}
+	has_term_election = no
+}
+
+ottoman_millet = {
+	icon = "muslim"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = TUR
+			was_tag = TUR
+		}
+		religion_group = muslim
+	}
+	effect = {
+		custom_tooltip = ab_millet_system_province_modidier
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					NOT = { religion = ROOT }
+				}
+				add_province_modifier = {
+					name = tur_millet_system
+					duration = -1
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					has_province_modifier = tur_millet_system
+				}
+				remove_province_modifier = tur_millet_system
+			}
+		}
+	}
+	modifiers = {
+		global_unrest = -1
+	}
+}
+
+ottoman_eyalets = {
+	icon = "noble_muslim"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = TUR
+			was_tag = TUR
+		}
+		religion_group = muslim
+	}
+	modifiers = {
+		state_governing_cost = -0.15
+	}
+}
+
+ottoman_lodge = {
+	icon = "trading_city"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = TUR
+			was_tag = TUR
+		}
+	}
+	modifiers = {
+		diplomatic_reputation = 1    
+		improve_relation_modifier = 0.1
+	}
+}
+
+
+ottoman_nizam = {
+	icon = "soldiers_3"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = TUR
+			was_tag = TUR
+		}
+		religion_group = muslim
+	}
+	modifiers = {
+		army_tradition_decay = -0.01
+	}
+}

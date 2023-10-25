@@ -1,0 +1,86 @@
+country_decisions = {
+	ab_pendragon_ireland = {
+		major = yes
+		ai_will_do = {
+			factor = 0
+		}
+		potential = {
+			has_country_flag = can_release_irish_march
+			NOT = { has_country_flag = released_irish_march }
+		}
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			leinster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			munster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			connacht_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			ulster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			custom_tooltip = SCO_IRE_RELEASE
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							area = ulster_area
+							area = leinster_area
+							area = connacht_area
+							area = munster_area
+						}
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					# Give us all the provinces
+					cede_province = ROOT
+					# Remove all our cores and the cores
+					# from our subjects
+					remove_core = ROOT
+					ROOT = {
+						every_subject_country = {
+							limit = {
+								NOT = {
+									is_subject_of_type = tributary_state
+								}
+								is_core = PREV_PREV
+							}
+							remove_core = PREV_PREV
+						}
+					}
+					# Add Irish core
+					add_core = IRE
+				}
+				release = IRE
+				create_march = IRE
+				set_country_flag = released_irish_march
+			}
+			custom_tooltip = AB_EMPTY
+			IRE = {
+				set_capital = 376
+				# This needs to be hidden as
+				# there are no rulers yet
+				hidden_effect = {
+					set_ruler_culture = ROOT
+					set_heir_culture = ROOT	
+				}
+				change_religion = ROOT
+				add_manpower = 10
+				add_treasury = 100
+				add_country_modifier = {
+					name = loyal_subject_SCO1
+					duration = -1
+				}
+			}
+		}
+	}
+}

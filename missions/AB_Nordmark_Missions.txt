@@ -1,0 +1,264 @@
+ab_nordmark_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = NRD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	nrd_obotrites = {
+		icon = mission_rb_unite_the_clans
+		required_missions = { nrd_protectors }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4786
+				province_id = 53
+				province_id = 46
+				province_id = 2996
+				province_id = 1857
+				province_id = 1775
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    4786 = {
+				owned_by = ROOT
+			}
+		    53 = {
+				owned_by = ROOT
+			}
+		    46 = {
+				owned_by = ROOT
+			}
+		    2996 = {
+				owned_by = ROOT
+			}
+		    1857 = {
+				owned_by = ROOT
+			}
+		    1775 = {
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = nrd_dismantled
+				duration = 7300
+			}
+		}
+	}
+	
+	nrd_convert = {
+		icon = mission_hands_praying
+		required_missions = { nrd_obotrites }
+		position = 4
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = obj_convert_10_provinces_tooltip
+				check_variable = { which = num_converted_religion value = 10 }
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = nrd_convert
+				duration = 7300
+			}
+		}
+	}
+		
+}	
+
+
+ab_nordmark_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = NRD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	nrd_protectors = {
+		icon = switzerland_and_the_empire
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 0.85
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = nrd_protectors
+				duration = 7300
+			}
+			mittelmark_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			4786 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			53 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			46 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2996 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1857 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			1775 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	nrd_veleti = {
+		icon = mission_unite_home_region
+		required_missions = { nrd_protectors }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = mittelmark_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    mittelmark_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_adm_power = 100
+			lusatia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nrd_lusatia = {
+		icon = mission_landsknecht_soldier
+		required_missions = { nrd_veleti }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lusatia_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    lusatia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "nrd_claiming"
+				duration = 5475
+			}
+			neumark_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nrd_brandenburg = {
+		icon = electorate_of_brandenburg
+		required_missions = { nrd_lusatia }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = neumark_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    neumark_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_legitimacy = 15
+			add_mil_power = 100
+		}
+	}
+}

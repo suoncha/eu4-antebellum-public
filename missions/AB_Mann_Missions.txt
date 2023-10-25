@@ -1,0 +1,1272 @@
+mann_missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	mann_unity_in_faith = {
+	    icon = mission_religious
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			PAP = {
+				has_opinion = {
+					who = ROOT
+					value = 100
+				}
+			}
+			papal_influence = 10
+		}
+		effect = {
+			add_adm_power = 100
+			add_dip_power = 100
+			add_country_modifier = { name = unity_in_faith_modifier duration = 7300 }
+		}
+	}
+	
+	mann_prsthelytize_beliefs = {
+	    icon = kingdom_of_heaven
+		required_missions = { mann_unity_in_faith }
+		position = 2
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { religion = ROOT }
+		}
+		trigger = {
+			check_variable = { which = num_converted_religion value = 5 }
+		}
+		effect = {
+			add_country_modifier = { name = prosthelytizers_modifier duration = 7300 }
+		}
+	}
+}
+
+mann_choice_slot_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+		NOT = { has_country_flag = christian_mann_decision }
+		NOT = { has_country_flag = norse_mann_decision }
+	}
+	has_country_shield = yes
+	
+	mann_branch_1_4 = {
+	    icon = mission_unknown_mission
+		required_missions = { mann_branch_2_3 }
+		position = 4
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = selectable_mission_trigger_tt
+				always = no
+			}
+		}
+		effect = {
+			
+		}
+	}
+	
+	mann_branch_1_5 = {
+	    icon = mission_unknown_mission
+		required_missions = { mann_branch_1_4 }
+		position = 5
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = selectable_mission_trigger_tt
+				always = no
+			}
+		}
+		effect = {
+			
+		}
+	}
+
+}
+
+mann_choice_slot_1_catholic = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+		has_country_flag = christian_mann_decision
+	}
+	has_country_shield = yes
+	
+	mann_iceland_catholic_hands = {
+	    icon = mission_settlers_north_america
+		required_missions = { mann_return_hebrides }
+		position = 4
+		
+		provinces_to_highlight = {
+			area = subarctic_islands_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			subarctic_islands_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		effect = {
+			custom_tooltip = iceland_catholic_hands_tt
+			hidden_effect = {
+				every_province = {
+					limit = { religion = norse_pagan_reformed }
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	mann_northern_crusade = {
+	    icon = mission_native_build_army_mission
+		required_missions = { mann_iceland_catholic_hands }
+		position = 5
+		
+		provinces_to_highlight = {
+			religion = norse_pagan_reformed
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = northern_crusade_trigger_tt
+				all_province = {
+					NOT = { religion = norse_pagan_reformed }
+				}
+			}
+		}
+		effect = {
+			add_country_modifier = { name = northern_crusade_modifier duration = -1 }
+		}
+	}
+
+}
+
+mann_choice_slot_1_norse = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+		has_country_flag = norse_mann_decision
+	}
+	has_country_shield = yes
+	
+	mann_berzerkers_on_isles = {
+	    icon = mission_berzerker
+		required_missions = { mann_freyas_blessings }
+		position = 4
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = berzerkers_on_isles_tt
+				NOT = { 
+					any_country = {
+						capital_scope = { region = british_isles_region }
+						army_size = ROOT
+					}
+				}
+			}
+			has_mil_advisor_3 = yes
+			OR = {
+				advisor = commandant
+				advisor = army_reformer
+			}
+		}
+		effect = {
+			add_army_tradition = 20
+			add_country_modifier = { name = berzerkers_on_isles_modifier duration = 7300 }
+		}
+	}
+	
+	mann_warriors_of_thor = {
+	    icon = mission_thor
+		required_missions = { mann_berzerkers_on_isles }
+		position = 5
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { religion = ROOT }
+		}
+		
+		trigger = {
+			land_forcelimit = 75
+			num_of_owned_provinces_with = {
+				value = 40
+				religion = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = { name = warriors_of_thor_modifier duration = -1 }
+		}
+	}
+
+}
+
+mann_missions_1_2 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	mann_golden_years = {
+		icon = mission_golden_century
+		required_missions = {  }
+		position = 7
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			in_golden_age = yes
+		}
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection	
+				amount = 25				
+			}
+			add_country_modifier = { name = golden_years_modifier duration = 9125 }
+		}
+	}
+	
+	mann_university_mann = {
+		icon = eastern_catholicization
+		required_missions = { mann_golden_years }
+		position = 8
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+			NOT = { has_building = university }
+		}
+		trigger = {
+			capital_scope = { has_building = university }
+		}
+		effect = {
+			change_innovativeness = 5
+			capital_scope = {
+				add_province_modifier = { name = university_mann_modifier duration = -1 }
+			}
+		}
+	}
+	
+	mann_educated_masses = {
+		icon = found_the_vatican_library
+		required_missions = { mann_university_mann }
+		position = 9
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_building = university }
+		}
+		trigger = {
+			innovativeness = 50
+			num_of_owned_provinces_with = {
+				value = 5
+				has_building = university
+			}
+		}
+		effect = {
+			add_country_modifier = { name = educated_masses_modifier duration = 7300 }
+		}
+	}
+}
+
+mann_missions_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	mann_religious_crisis = {
+	    icon = crush_heretic_strongholds
+		required_missions = { mann_unity_in_faith }
+		position = 2
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { religion = ROOT }
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = mann_religious_crisis_tt
+				OR = { 
+					has_country_flag = christian_mann_decision
+					has_country_flag = norse_mann_decision
+				}
+			}
+			religious_unity = 1
+		}
+		effect = {
+			custom_tooltip = mann_religous_crisis_tt
+			hidden_effect = {
+				swap_non_generic_missions = yes
+			}
+		}
+	}
+}
+
+
+
+mann_choice_slot_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+		NOT = { has_country_flag = christian_mann_decision }
+		NOT = { has_country_flag = norse_mann_decision }
+	}
+	has_country_shield = yes
+	
+	mann_branch_2_3 = {
+	    icon = mission_unknown_mission
+		required_missions = { mann_religious_crisis }
+		position = 3
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = selectable_mission_trigger_tt
+				always = no
+			}
+		}
+		effect = {
+			
+		}
+	}
+	
+	mann_branch_2_5 = {
+	    icon = mission_unknown_mission
+		required_missions = { mann_branch_2_3 }
+		position = 4
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = selectable_mission_trigger_tt
+				always = no
+			}
+		}
+		effect = {
+			
+		}
+	}
+
+}
+
+
+mann_choice_slot_2_catholic = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+		has_country_flag = christian_mann_decision
+	}
+	has_country_shield = yes
+	
+	mann_return_hebrides = {
+	    icon = mission_disrupt_portuguese_trade
+		required_missions = { mann_religious_crisis }
+		position = 3
+		
+		provinces_to_highlight = {
+			area = kingdom_of_the_isles_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			kingdom_of_the_isles_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			define_explorer = {
+				fire = 3
+				shock = 3
+				manuever = 5
+				siege = 1
+			}
+			custom_tooltip = blank
+			add_country_modifier = { name = return_hebrides_modifier duration = 10950 }
+			subarctic_islands_area = { add_permanent_claim = ROOT }
+		}
+	}
+	
+	mann_whole_new_world = {
+	    icon = mission_rb_colonise_canada
+		required_missions = { mann_return_hebrides }
+		position = 4
+		
+		provinces_to_highlight = {
+			area = greenland_area
+			NOT = { owned_by = ROOT }
+			NOT = { is_city = yes }
+		}
+		trigger = {
+			greenland_area = {
+				type = all
+				owned_by = ROOT
+				is_city = yes
+			}
+		}
+		effect = {
+			add_prestige = 25
+			1104 = {
+				if = {
+					limit = {
+						NOT = { trade_goods = fur }
+					}
+					change_trade_goods = fur
+				}
+				center_of_trade = 1
+				add_permanent_province_modifier = { name = whole_new_world_modifier duration = -1 }
+			}
+		}
+	}
+
+}
+
+mann_choice_slot_2_norse = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+		has_country_flag = norse_mann_decision
+	}
+	has_country_shield = yes
+	
+	mann_freyas_blessings = {
+	    icon = mission_freya
+		required_missions = { mann_religious_crisis }
+		position = 3
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { religion = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				religion = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = { name = freyas_blessings_modifier duration = 7300 }
+		}
+	}
+	
+	mann_brothers_in_faith = {
+	    icon = imperial_ascendancy
+		required_missions = { mann_freyas_blessings }
+		position = 4
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			OR = {
+				any_ally = { country_religion = ROOT }
+				calc_true_if = {
+					amount = 2
+					all_subject_country = { country_religion = ROOT }
+					desc = brothers_in_faith_tt
+				}
+			}
+		}
+		effect = {
+			add_mil_power = 100
+			add_prestige = 25
+			add_country_modifier = { name = brothers_in_faith_modifier duration = 7300 }
+		}
+	}
+
+}
+
+mann_missions_2_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	mann_places_for_worship = {
+	    icon = mission_hands_praying
+		required_missions = { mann_productive_economy }
+		position = 6
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_tax_building_trigger = yes }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				has_tax_building_trigger = yes
+			}
+		}
+		effect = {
+			if = {
+				limit = { religion = catholic }
+				add_papal_influence = 10
+			}
+			custom_tooltip = MANN_PLACES_FOR_WORSHIP_TT
+			hidden_effect = {
+				every_owned_province = {
+					limit = { has_tax_building_trigger = yes }
+					add_base_tax = 1
+				}
+			}
+			add_country_modifier = { name = places_for_worship_modifier duration = 10950 }
+		}
+	}	
+	
+	mann_army_of_empire = {
+		icon = establish_a_standing_army
+		required_missions = { mann_golden_years }
+		position = 8
+		
+		provinces_to_highlight = {
+		
+		}
+		trigger = {
+			land_forcelimit = 75
+			army_size_percentage = 1
+		}
+		effect = {
+			add_army_tradition = 20
+			add_country_modifier = { name = professional_army_modifier duration = 7300 }
+		}
+	}
+	
+}
+
+mann_missions_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	mann_savvy_diplomacy = {
+	    icon = all_bases_covered
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			calc_true_if = {
+					all_ally = {
+						has_opinion = {
+							who = ROOT
+							value = 100
+						}
+					}
+					amount = 2
+				}
+		}
+		effect = {
+			add_country_modifier = { name = savvy_diplomacy_modifier duration = 5475 }
+			
+			ulster_area = { add_permanent_claim = ROOT }
+			leinster_area = { add_permanent_claim = ROOT }
+		}
+	}
+	
+	mann_efficient_blockades = {
+	    icon = mission_aragonese_navy
+		required_missions = { mann_savvy_diplomacy }
+		position = 2
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			navy_size_percentage = 1
+			num_of_galley = 5
+		}
+		effect = {
+			capital_scope = { add_building = naval_battery }
+			add_country_modifier = { name = efficient_blockades_modifier duration = 5475 }
+			4963 = { add_permanent_claim = ROOT }
+		}
+	}
+	
+	mann_pride_of_fleet = {
+	    icon = mission_rb_grow_the_channel
+		required_missions = { mann_efficient_blockades }
+		position = 3
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			has_flagship = yes
+			num_of_heavy_ship = 3
+		}
+		effect = {
+			add_country_modifier = { name = naval_culture_modifier duration = 7300 }
+		}
+	}
+	
+	mann_productive_economy = {
+	    icon = mission_establish_mint_towns
+		required_missions = { }
+		position = 5
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+			NOT = { num_of_buildings_in_province = 2 }
+			NOT = { num_of_times_improved = 5 }
+		}
+		trigger = {
+			capital_scope = { num_of_buildings_in_province = 2 }
+			capital_scope = { num_of_times_improved = 5 }
+		}
+		effect = {
+			capital_scope = { 
+				add_base_tax = 2
+				custom_tooltip = " "
+				add_province_modifier = { name = productive_economy_modifier duration = 7300 }
+			}
+		}
+	}
+	
+	mann_efficient_production = {
+	    icon = mission_dominate_persian_gulf
+		required_missions = { mann_productive_economy }
+		position = 6
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_production_building_trigger = yes }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				has_production_building_trigger = yes
+			}
+		}
+		effect = {
+			custom_tooltip = mann_efficient_production_tt
+			tooltip = {
+				add_province_modifier = { name = efficient_production_modifier2 duration = 7300 }
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = { has_production_building_trigger = yes }
+					add_province_modifier = { name = efficient_production_modifier2 duration = 7300 }
+				}
+			}
+			add_country_modifier = { name = efficient_production_modifier duration = 7300 }
+		}
+	}
+	
+	mann_employment_people = {
+	    icon = mission_rb_build_furnaces
+		required_missions = { mann_efficient_production }
+		position = 7
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_manufactory_trigger = yes }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				has_manufactory_trigger = yes
+			}
+		}
+		effect = {
+			add_dip_power = 100
+			add_years_of_owned_provinces_production_income = {
+				years = 8
+				custom_tooltip = employment_people_tt
+			}
+		}
+	}
+	
+	mann_hadrians_contribution = {
+		icon = alpine_defenses
+		required_missions = { mann_army_of_empire }
+		position = 9
+		
+		provinces_to_highlight = {
+			province_id = 246
+			OR = {
+				NOT = { owned_by = ROOT }
+				246 = { 
+					OR = {
+						NOT = {
+							has_great_project = {
+								type = hadrian
+								tier = 2
+							}
+						}
+						NOT = {
+							has_great_project = {
+								type = hadrian
+								tier = 3
+							}
+						}
+					}
+				}
+			}
+		}
+		trigger = {
+			owns = 246
+			246 = { 
+				OR = {
+					has_great_project = {
+						type = hadrian
+						tier = 2
+					}
+					has_great_project = {
+						type = hadrian
+						tier = 3
+					}
+				}
+			}
+		}
+		effect = {
+			hidden_effect = {
+				if = { 
+					limit = {
+						246 = {
+							NOT = {
+								has_great_project = { type = hadrian tier = 3 }
+							}
+						}
+					}
+					246 = {
+						add_great_project_tier = { type = hadrian tier = 1 }
+					}
+				}
+				else = { 
+					add_treasury = 1000
+					add_mil_power = 100
+				}
+			}
+			add_country_modifier = { name = hadrians_defenses_modifier duration = -1 }
+			custom_tooltip = hadrians_contribution_tt
+		}
+	}
+		
+}
+
+mann_missions_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	mann_manx_expansion = {
+	    icon = mission_rb_conquer_the_isles
+		required_missions = { mann_savvy_diplomacy }
+		position = 2
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			grown_by_development = 30
+		}
+		effect = {
+			add_country_modifier = {
+				name = "man_expand_realm"
+				duration = 5475
+			}
+			scottish_marches_area = { add_permanent_claim = ROOT }
+			yorkshire_area = { add_permanent_claim = ROOT }
+		}
+	}
+	
+	
+	mann_challenge_high_king = {
+	    icon = mission_rb_control_electors
+		required_missions = { mann_manx_expansion }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+					area = munster_area
+					area = connacht_area
+					area = ulster_area
+					area = leinster_area
+				}
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 4
+				OR = {
+					area = munster_area
+					area = connacht_area
+					area = ulster_area
+					area = leinster_area
+				}
+			}
+			
+		}
+		effect = {
+			add_accepted_culture = irish
+			add_country_modifier = {
+				name = "man_challenge"
+				duration = 7300
+			}
+			leinster_area = { add_permanent_claim = ROOT }
+			ulster_area = { add_permanent_claim = ROOT }
+			custom_tooltip = MANN_CONNACHT
+			tooltip = {
+				add_power_projection = {
+					type = mission_rewards_power_projection	
+					amount = 20			
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							exists = COT
+						}
+					}
+					add_power_projection = {
+						type = mission_rewards_power_projection	
+						amount = 20			
+					}
+				}
+			}
+		}
+	}
+	
+	mann_irish_dominance = {
+	    icon = mission_rb_rule_britannia_irish_version
+		required_missions = { mann_challenge_high_king }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+					area = ulster_area
+					area = leinster_area
+				}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			ulster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			leinster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}			
+		}
+		effect = {
+			define_advisor = {
+				type = ae_advisor
+				skill = 1
+				culture = irish
+				discount = yes
+			}
+			custom_tooltip = blank
+			munster_area = { add_permanent_claim = ROOT }
+			connacht_area = { add_permanent_claim = ROOT }
+			custom_tooltip = blank
+			custom_tooltip = ENG_IRE_VASSAL
+			tooltip = {
+				add_country_modifier = {
+					name = "eng_consolidate_ireland2"
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						calc_true_if = {
+							all_subject_country = {
+								capital_scope = {
+									OR = {
+										area = munster_area
+										area = leinster_area
+										area = ulster_area
+										area = connacht_area
+									}
+								}
+							}
+							amount = 2
+						}
+					}
+					add_country_modifier = {
+						name = "eng_consolidate_ireland2"
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	mann_english_juggernaut = {
+	    icon = mission_behead
+		required_missions = {  }
+		position = 5
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			if = {
+				limit = {
+					ENG = { exists = yes }
+				}
+				army_size = ENG
+				navy_size = ENG
+			}
+			else = { 
+				army_size_percentage = 1 
+				navy_size_percentage = 1
+			}
+			NOT = { num_of_loans = 1 }
+			
+		}
+		effect = {
+			define_advisor = {
+				type = naval_reformer
+				skill = 1
+				discount = yes
+			}
+			custom_tooltip = blank
+			add_country_modifier = { name = english_juggernaut_modifier duration = 5475 }
+		}
+	}
+	
+	mann_mineral_aquisition = {
+	    icon = mission_rb_prospect_for_coal
+		required_missions = { mann_productive_economy mann_english_juggernaut }
+		position = 6
+		
+		provinces_to_highlight = {
+			region = british_isles_region
+			OR = {
+				trade_goods = copper
+				trade_goods = iron
+			}
+			owned_by = ROOT
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 3
+				OR = { 
+					trade_goods = iron
+					trade_goods = copper
+				}
+			}
+			
+		}
+		effect = {
+			custom_tooltip = mann_mineral_aquisition_production_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = { 
+							trade_goods = iron
+							trade_goods = copper
+						}		
+					}
+				add_base_production = 2
+				}
+			}
+			custom_tooltip = blank
+			custom_tooltip = mann_mineral_aquisition_tt
+			tooltip = {
+				add_province_modifier = { name = productive_mining_operation_modifier duration = -1 }
+			}
+			hidden_effect = {
+				random_owned_province = {
+					limit = {
+						OR = { 
+							trade_goods = iron
+							trade_goods = copper
+						}				
+					}
+					add_permanent_province_modifier = { name = productive_mining_operation_modifier duration = -1 }
+				}
+			}
+		}
+	}
+	
+	mann_shepherds_heritage = {
+	    icon = mission_rb_conquer_wales
+		required_missions = { mann_efficient_production mann_mineral_aquisition }
+		position = 7
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			trade_goods = wool
+			NOT = { has_manufactory_trigger = yes }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 6
+				trade_goods = wool
+				has_manufactory_trigger = yes
+			}
+			# 4368 = {
+				# owned_by = ROOT
+				# has_manufactory_trigger = yes
+			# }
+			
+		}
+		effect = {
+			custom_tooltip = mann_shepherds_heritage_tt
+			hidden_effect = {
+				random_owned_province = {
+					limit = { 
+						trade_goods = wool 
+						has_manufactory_trigger = yes
+						NOT = { province_id = 4368 }
+					}
+					change_trade_goods = cloth
+				}
+				random_owned_province = {
+					limit = { 
+						trade_goods = wool 
+						has_manufactory_trigger = yes
+						NOT = { province_id = 4368 }
+					}
+					change_trade_goods = cloth
+				}
+				random_owned_province = {
+					limit = { 
+						trade_goods = wool 
+						has_manufactory_trigger = yes
+						NOT = { province_id = 4368 }
+					}
+					change_trade_goods = cloth
+				}
+			}
+			# custom_tooltip = blank
+			# country_event = { id = mann_events.201 }
+		}
+	}
+	
+
+}
+
+
+mann_missions_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = KOI
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	mann_prepare_conquest = {
+	    icon = mission_have_two_subjects
+		required_missions = {   }
+		position = 1
+		
+		provinces_to_highlight = {
+
+		}
+		trigger = {
+			army_size_percentage = 1
+			manpower_percentage = 0.5
+			num_of_generals = 1
+			
+		}
+		effect = {
+			add_country_modifier = { name = prepare_conquest_modifier duration = 3650 }
+			lowlands_area = { add_permanent_claim = ROOT }
+		}
+	}
+
+	mann_gaelic_subjects = {
+	    icon = mission_rb_conquer_the_highlands
+		required_missions = { mann_prepare_conquest mann_manx_expansion }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = highlands_area
+				area = lowlands_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 3
+				OR = {
+					area = highlands_area
+					area = lowlands_area
+				}
+			}
+			
+		}
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = "mann_storming_highlands"
+				duration = 7300
+			}
+			wales_area = { add_permanent_claim = ROOT }
+		}
+	}
+
+	mann_demense_wales = {
+	    icon = mission_wine_monopolies
+		required_missions = { mann_gaelic_subjects mann_challenge_high_king }
+		position = 4
+		
+		provinces_to_highlight = {
+			area = wales_area
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 3
+				area = wales_area
+			}
+		}
+		effect = {
+			random_owned_province = {
+				limit = { 
+					area = wales_area 
+					has_port = yes
+				}
+				add_unit_construction = {
+					type = galley
+					amount = 5
+					speed = 0.5
+					cost = 0
+				}
+			}
+			custom_tooltip = " "
+			wales_area = {
+				add_province_modifier = { name = demense_wales_modifier duration = 10950 }
+			}
+		}
+	}
+
+	mann_british_possessions = {
+	    icon = mission_rb_into_england
+		required_missions = { mann_english_juggernaut mann_demense_wales }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = yorkshire_area
+				area = scottish_marches_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			scottish_marches_area = {
+				type = all
+				owned_by = ROOT
+			}
+			yorkshire_area = {
+				type = all
+				owned_by = ROOT
+			}
+			if = {
+				limit = { 
+					ENG = { exists = yes }
+				}
+				has_won_war_against = {
+					who = ENG
+					max_years_since = 5
+				}
+			}
+		}
+		effect = {
+			country_event = { id = mann_events.3 }
+			custom_tooltip = blank
+			british_isles_region = { add_permanent_claim = ROOT }
+		}
+	}
+
+	mann_isles_of_mann = {
+	    icon = mission_imperium_mann
+		required_missions = { mann_british_possessions }
+		position = 8
+		
+		provinces_to_highlight = {
+			region = british_isles_region
+			NOT = { owned_by = ROOT }
+		}
+		trigger = {
+			british_isles_region = {
+				type = all
+				owned_by = ROOT
+			}
+			is_at_war = no
+		}
+		effect = {
+			country_event = { id = mann_events.4 }
+			custom_tooltip = blank
+			add_country_modifier = { name = isles_of_mann_modifier duration = -1 }
+			normandy_area = { add_permanent_claim = ROOT }
+			picardy_area = { add_permanent_claim = ROOT }
+			flanders_area = { add_permanent_claim = ROOT }
+			holland_area = { add_permanent_claim = ROOT }
+		}
+	}
+	
+	
+}

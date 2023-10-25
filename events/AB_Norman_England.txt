@@ -1,0 +1,943 @@
+namespace = ab_norman_england
+normal_or_historical_nations = yes
+
+#Anglois Culture
+province_event = {
+	id = ab_norman_england.1
+	title = ab_norman_england.1.t
+	desc = ab_norman_england.1.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+	}
+	
+	trigger = {
+		owner = {
+			mission_completed = nrm_cultural
+		}
+		culture = english
+		any_neighbor_province = {
+			culture = Anglois
+		}
+	}
+	
+	option = {
+		name = ab_norman_england.1.a
+		change_culture = Anglois
+		change_original_culture = Anglois
+	}
+}
+
+#Hastings
+country_event = {
+	id = ab_norman_england.2
+	title = ab_norman_england.2.t
+	desc = ab_norman_england.2.d
+	picture = BATTLE_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = ab_norman_england.2.a
+		add_casus_belli = {
+			type = cb_restore_personal_union
+			months = 300
+			target = ENG
+		}
+		add_country_modifier = {
+			name = nrm_avenged
+			duration = -1
+		}
+	}
+}
+
+#Fall of Paris
+country_event = {
+	id = ab_norman_england.3
+	title = ab_norman_england.3.t
+	desc = ab_norman_england.3.d
+	picture = AB_CHARLEMAGNE_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_norman_england.3.a
+		add_prestige = 25
+		add_country_modifier = {
+			name = nrm_humiliate
+			duration = 9125
+		}
+		france_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		custom_tooltip = AB_EMPTY
+		if = {
+			limit = {
+				exists = FRC
+			}
+			FRC = {
+				add_stability = -1
+				add_country_modifier = {
+					name = nrm_frc_paris
+					duration = 5475
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				exists = FRA
+			}
+			FRA = {
+				add_stability = -1
+				add_country_modifier = {
+					name = nrm_frc_paris
+					duration = 5475
+				}
+			}
+		}
+	}
+}
+
+#Dual Monarchy
+country_event = {
+	id = ab_norman_england.4
+	title = ab_norman_england.4.t
+	desc = ab_norman_england.4.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_norman_england.4.a
+		change_tag = DLM
+		swap_free_idea_group = yes
+		set_government_rank = 3
+		hidden_effect = {
+			complete_mission = nrm_dual
+			override_country_name = DLM
+		}
+		custom_tooltip = NRM_DLM_EVENT
+		tooltip = {
+			add_province_modifier = {
+				name = nrm_union_dlm
+				duration = 9125
+			}
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						region = france_region
+						region = british_isles_region
+					}
+				}
+				add_province_modifier = {
+					name = nrm_union_dlm
+					duration = 9125
+				}
+			}
+			# Switch CN colors
+			ab_update_preset_cn_colors = yes
+		}
+	}
+}
+
+#University
+country_event = { 
+	id = ab_norman_england.5
+	title = flavor_eng.9880.t
+	desc = ab_norman_england.5.d
+	picture = UNIVERSITY_eventPicture
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		237 = {
+			owned_by = ROOT
+		}
+		4370 = {
+			owned_by = ROOT
+		}
+		mission_completed = nrm_universities
+	}
+	
+	immediate = {
+		
+	}
+	
+	option = {
+		name = ab_norman_england.5.a
+		
+		if = {
+			limit = {
+				check_variable = {
+					which = oxbridge_subject
+					value = 1
+				}
+				NOT = {
+					check_variable = {
+						which = oxbridge_subject
+						value = 2
+					}
+				}
+			}
+			add_country_modifier = {
+				name = "rb_eng_passage_spheres"
+				duration = 1825
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = oxbridge_subject
+					value = 2
+				}
+				NOT = {
+					check_variable = {
+						which = oxbridge_subject
+						value = 3
+					}
+				}
+			}
+			add_country_modifier = {
+				name = "rb_eng_theory_warfare"
+				duration = 1825
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = oxbridge_subject
+					value = 3
+				}
+				NOT = {
+					check_variable = {
+						which = oxbridge_subject
+						value = 4
+					}
+				}
+			}
+			add_country_modifier = {
+				name = "rb_eng_philosophy_royalty"
+				duration = 1825
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = oxbridge_subject
+					value = 4
+				}
+				NOT = {
+					check_variable = {
+						which = oxbridge_subject
+						value = 5
+					}
+				}
+			}
+			add_country_modifier = {
+				name = "rb_eng_divine_common"
+				duration = 1825
+			}
+		}
+		else_if = {
+			limit = {
+				check_variable = {
+					which = oxbridge_subject
+					value = 5
+				}
+			}
+			add_country_modifier = {
+				name = "rb_eng_national_economy"
+				duration = 1825
+			}
+		}
+		custom_tooltip = "flavor_eng.9880.a.tooltip"
+		hidden_effect = {
+			country_event = {
+				id = flavor_eng.9880
+				days = 3650
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = oxbridge_subject
+						value = 1
+					}
+					NOT = {
+						check_variable = {
+							which = oxbridge_subject
+							value = 2
+						}
+					}
+				}
+				random_list = {
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 2
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 3
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 4
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 5
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						which = oxbridge_subject
+						value = 2
+					}
+					NOT = {
+						check_variable = {
+							which = oxbridge_subject
+							value = 3
+						}
+					}
+				}
+				random_list = {
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 1
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 3
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 4
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 5
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						which = oxbridge_subject
+						value = 3
+					}
+					NOT = {
+						check_variable = {
+							which = oxbridge_subject
+							value = 4
+						}
+					}
+				}
+				random_list = {
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 1
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 2
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 4
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 5
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						which = oxbridge_subject
+						value = 4
+					}
+					NOT = {
+						check_variable = {
+							which = oxbridge_subject
+							value = 5
+						}
+					}
+				}
+				random_list = {
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 1
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 2
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 3
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 5
+						}
+					}
+				}
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						which = oxbridge_subject
+						value = 5
+					}
+				}
+				random_list = {
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 1
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 2
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 3
+						}
+					}
+					25 = {
+						set_variable = {
+							which = oxbridge_subject
+							value = 4
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					check_variable = {
+						which = oxbridge_symposium
+						value = 0
+					}
+					NOT = {
+						check_variable = {
+							which = oxbridge_symposium
+							value = 1
+						}
+					}
+				}	
+				set_variable = { which = oxbridge_symposium value = 2 }
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						which = oxbridge_symposium
+						value = 1
+					}
+					NOT = {
+						check_variable = {
+							which = oxbridge_symposium
+							value = 2
+						}
+					}
+				}	
+				set_variable = { which = oxbridge_symposium value = 2 }
+			}
+			else_if = {
+				limit = {
+					check_variable = {
+						which = oxbridge_symposium
+						value = 2
+					}
+				}	
+				set_variable = { which = oxbridge_symposium value = 1 }
+			}
+		}
+	}
+}
+
+#Native Opposition
+country_event = {
+	id = ab_norman_england.6
+	title = ab_norman_england.6.t
+	desc = ab_norman_england.6.d
+	picture = ANGRY_MOB_eventPicture
+	
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ANG
+		NOT = {
+			OR = {
+				has_country_flag = ang_domesday
+				has_country_flag = ang_magna
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	option = {
+		name = ab_norman_england.6.a
+		set_country_flag = ang_rebel_events
+		random_owned_province = {
+			limit = {
+				culture = english
+			}
+			pretender_rebels = 2
+		}
+		random_owned_province = {
+			limit = {
+				culture = english
+			}
+			pretender_rebels = 2
+		}
+		random_owned_province = {
+			limit = {
+				culture = english
+			}
+			pretender_rebels = 1
+		}
+	}
+}
+
+#Western Rebellion
+country_event = {
+	id = ab_norman_england.7
+	title = ab_norman_england.7.t
+	desc = ab_norman_england.7.d
+	picture = ANGRY_MOB_eventPicture
+	
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ANG
+		has_country_flag = ang_rebel_events
+		239 = {
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+		240 = {
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+		NOT = {
+			OR = {
+				has_country_flag = ang_domesday
+				has_country_flag = ang_magna
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	option = {
+		name = ab_norman_england.6.a
+		set_country_flag = ang_rebel_events2
+		240 = {
+			spawn_rebels = {
+				type = pretender_rebels
+				size = 2
+				leader_dynasty = "Hwicce"
+			}
+		}
+		239 = {
+			spawn_rebels = {
+				type = pretender_rebels
+				size = 1
+				leader_dynasty = "Hwicce"
+			}
+		}
+	}
+}
+
+#Northern Rebellion
+country_event = {
+	id = ab_norman_england.8
+	title = ab_norman_england.8.t
+	desc = ab_norman_england.8.d
+	picture = ANGRY_MOB_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ANG
+		has_country_flag = ang_rebel_events
+		246 = {
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+		245 = {
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+		4375 = {
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+		244 = {
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+		NOT = {
+			OR = {
+				has_country_flag = ang_domesday
+				has_country_flag = ang_magna
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	option = {
+		name = ab_norman_england.8.a
+		set_country_flag = ang_rebel_events3
+		246 = {
+			noble_rebels = 3
+		}
+		245 = {
+			noble_rebels = 2
+		}
+		4375 = {
+			noble_rebels = 2
+		}
+		244 = {
+			noble_rebels = 1
+		}
+	}
+	
+	option = {
+		name = ab_norman_england.8.b
+		add_mil_power = -150
+		set_country_flag = ang_rebel_events3
+		scottish_marches_area = {
+			add_province_modifier = {
+				name = ang_north
+				duration = 18250
+			}
+		}
+		yorkshire_area = {
+			add_province_modifier = {
+				name = ang_north
+				duration = 18250
+			}
+		}
+	}
+}
+
+#Coronation Day Massacre
+country_event = {
+	id = ab_norman_england.9
+	title = ab_norman_england.9.t
+	desc = ab_norman_england.9.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ANG
+		234 = {
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = ab_norman_england.9.a
+		234 = {
+			anti_tax_rebels = 1
+		}
+		add_ruler_modifier = {
+			name = ang_massacre
+			duration = -1
+		}
+	}
+	
+	option = {
+		name = ab_norman_england.9.b
+		add_legitimacy = -10
+		234 = {
+			anti_tax_rebels = 2
+		}
+	}
+	
+	option = {
+		name = ab_norman_england.9.c
+		add_prestige = -10
+		add_years_of_income = -0.25
+	}
+}
+
+#Rebellion Defeat - Magna Carta
+country_event = {
+	id = ab_norman_england.10
+	title = ab_norman_england.10.t
+	desc = ab_norman_england.10.d
+	picture = BIG_BOOK_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ANG
+		has_country_flag = ang_rebel_events
+		num_of_rebel_controlled_provinces = 15
+		capital_scope = {
+			controlled_by = REB
+		}
+		NOT = {
+			has_country_flag = ang_domesday
+		}
+	}
+	
+	option = {
+		name = ab_norman_england.10.a
+		set_country_flag = ang_magna
+		add_stability = 1
+		disband_rebels = anti_tax_rebels
+		disband_rebels = noble_rebels
+		disband_rebels = pretender_rebels
+		add_country_modifier = {
+			name = ang_magna
+			duration = -1
+		}
+	}
+}
+
+#Rebellion Victory - Domesday Book
+country_event = {
+	id = ab_norman_england.11
+	title = ab_norman_england.11.t
+	desc = ab_norman_england.11.d
+	picture = BIG_BOOK_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ANG
+		has_country_flag = ang_rebel_events
+		has_country_flag = ang_rebel_events2
+		has_country_flag = ang_rebel_events3
+		has_country_flag = ang_rebel_events4
+		has_country_flag = ang_rebel_events5
+		NOT = { num_of_rebel_controlled_provinces = 1 }
+		NOT = {
+			has_country_flag = ang_magna
+		}
+	}
+	
+	option = {
+		name = ab_norman_england.11.a
+		set_country_flag = ang_domesday
+		add_stability = 1
+		add_country_modifier = {
+			name = ang_domesday
+			duration = -1
+		}
+		clr_country_flag = ang_rebel_events
+		clr_country_flag = ang_rebel_events2
+		clr_country_flag = ang_rebel_events3
+		clr_country_flag = ang_rebel_events4
+		clr_country_flag = ang_rebel_events5
+	}
+}
+
+#Eastern Rebellion
+country_event = {
+	id = ab_norman_england.12
+	title = ab_norman_england.12.t
+	desc = ab_norman_england.12.d
+	picture = ANGRY_MOB_eventPicture
+	
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ANG
+		has_country_flag = ang_rebel_events
+		1860 = {
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+		NOT = {
+			OR = {
+				has_country_flag = ang_domesday
+				has_country_flag = ang_magna
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	option = {
+		name = ab_norman_england.12.a
+		set_country_flag = ang_rebel_events4
+		1860 = {
+			spawn_rebels = {
+				type = pretender_rebels
+				size = 2
+				leader_dynasty = "Godwin"
+			}
+		}
+	}
+}
+
+#Wessex Rebellion
+country_event = {
+	id = ab_norman_england.13
+	title = ab_norman_england.13.t
+	desc = ab_norman_england.13.d
+	picture = ANGRY_MOB_eventPicture
+	
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = ANG
+		has_country_flag = ang_rebel_events
+		234 = {
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+		NOT = {
+			OR = {
+				has_country_flag = ang_domesday
+				has_country_flag = ang_magna
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 30
+	}
+	
+	option = {
+		name = ab_norman_england.13.a
+		set_country_flag = ang_rebel_events5
+		234 = {
+			spawn_rebels = {
+				type = pretender_rebels
+				size = 2
+				leader_dynasty = "Westeaxe"
+			}
+		}
+	}
+}
+
+#Disafforestation Cct
+country_event = {
+	id = ab_norman_england.14
+	title = ab_norman_england.14.t
+	desc = ab_norman_england.14.d
+	picture = REFORM_eventPicture
+	
+	
+	fire_only_once = yes
+	
+	
+	mean_time_to_happen = {
+		months = 300
+	}
+	
+	trigger = {
+		OR = {
+			tag = ANG
+			was_tag = ANG
+		}
+		is_year = 1600
+		has_estate = estate_nobles
+	}
+	
+	option = {
+		name = ab_norman_england.14.a #keep the royal forests
+		add_adm_power = 50
+		add_country_modifier = {
+			name = ang_kept_royal_forest
+			duration = 3650
+		}
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = 10
+		}
+	}
+	
+	option = {
+		name = ab_norman_england.14.b #abolish the royal forests
+		add_adm_power = -100
+		custom_tooltip = add_5_crown_land_share
+		hidden_effect = {
+			change_estate_land_share = {
+				estate = all
+				share = -5
+			}
+		}
+		add_country_modifier = {
+			name = ang_abolished_royal_forest
+			duration = 9125
+		}
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = -20
+		}
+		set_country_flag = ang_prevent_accident
+		custom_tooltip = ANG_ACCIDENT
+	}
+}

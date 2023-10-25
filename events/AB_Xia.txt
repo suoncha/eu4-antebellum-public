@@ -1,0 +1,149 @@
+namespace = ab_xia
+normal_or_historical_nations = yes
+
+#Restoration
+country_event = {
+	id = ab_xia.1
+	title = ab_xia.1.t
+	desc = ab_xia.1.d
+	picture = AB_DRAGON_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		ai_chance = { factor = 100 }
+		name = ab_xia.1.a
+		change_tag = XXI
+		swap_free_idea_group = yes
+		change_government = monarchy
+		change_technology_group = chinese
+		698 = {
+			move_capital_effect = yes
+		}
+		if = {
+			limit = {
+				NOT = { government_rank = 3 }
+			}
+			set_government_rank = 3
+		}
+		
+	}
+	
+}
+
+country_event = {
+	id = ab_xia.2
+	title = ab_xia.2.t
+	desc = ab_xia.2.d
+	picture = BUDDHA_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_xia.2.a
+		add_stability = 1
+		add_legitimacy = 10
+		add_country_modifier = {
+			name = maitreya_union
+			duration = -1
+		}
+		ai_chance = { factor = 70 }
+	}	
+	
+	option = {
+		name = ab_xia.2.b
+		change_religion = maitreya
+		set_ruler_religion = maitreya
+		tooltip = {
+			add_stability = -1
+			add_prestige = -100
+		}
+		define_advisor = {
+			type = inquisitor
+			skill = 2
+			discount = yes
+		}
+		random_core_province = { 
+			change_religion = maitreya 
+		}
+		random_core_province = {
+			change_religion = maitreya
+		}
+		capital_scope = {
+			change_religion = maitreya
+		}
+		ai_chance = { factor = 30 }
+	}
+}
+
+country_event = {
+	id = ab_xia.3
+	title = ab_xia.3.t
+	desc = ab_xia.3.d
+	picture = BUDDHA_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		religion = vajrayana
+		has_country_flag = tgu_nirvana_flag
+		any_owned_province = {
+			religion = vajrayana
+			NOT = {
+				has_province_modifier = ab_nirvana_tangut
+			}
+		}
+	}
+	
+	option = {
+		name = ab_xia.3.a
+		every_owned_province = {
+			limit = {
+				religion = vajrayana
+			}
+			add_province_modifier = {
+				name = "ab_nirvana_tangut"
+				duration = -1
+			}
+		}
+	}	
+	
+}
+
+country_event = {
+	id = ab_xia.4
+	title = ab_xia.4.t
+	desc = ab_xia.4.d
+	picture = BUDDHA_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		religion = maitreya
+		has_country_flag = tgu_nirvana_flag
+		any_owned_province = {
+			religion = maitreya
+			NOT = {
+				has_province_modifier = ab_nirvana_tangut
+			}
+		}
+	}
+	
+	option = {
+		name = ab_xia.4.a
+		every_owned_province = {
+			limit = {
+				religion = maitreya
+			}
+			add_province_modifier = {
+				name = "ab_nirvana_tangut"
+				duration = -1
+			}
+		}
+	}	
+	
+}

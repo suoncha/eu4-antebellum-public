@@ -1,0 +1,38 @@
+latin_zealotry_mechanic = {
+	alert_icon_gfx = GFX_alerticons_government_mechanics
+	alert_icon_index = 10
+	available = {
+		has_dlc = "Rights of Man"
+	}
+
+	powers = {
+		latin_zealotry = {
+            gui = latin_zealotry_gov_mech
+			max = 100
+			base_monthly_growth = 0
+			scaled_modifier = {
+				modifier = {
+					morale_damage = 0.2
+					warscore_from_battles_modifier = 0.2
+					war_exhaustion = -0.05
+				}
+			}
+			scaled_modifier = {
+				trigger = {
+					has_government_power = {
+						mechanic_type = latin_zealotry_mechanic
+						power_type = latin_zealotry
+						value = 100
+					}
+				}
+				modifier = {
+					extra_manpower_at_religious_war = yes
+				}
+			}
+			on_max_reached = {
+				custom_tooltip = LAT_MAX_ZEALOTRY
+			}
+		}
+	}
+	
+}

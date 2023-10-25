@@ -1,0 +1,1680 @@
+qqt_first = {
+	slot = 1
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = QQT
+			tag = LIO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	qqt_army = {
+	    icon = mission_subdue_rajputana
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 0.85
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = qqt_ready
+				duration = 7300
+			}
+		}
+	}
+	
+	qqt_ordu = {
+	    icon = mission_abu_saids_dream
+		required_missions = { qqt_army }
+		position = 3
+		
+		trigger = {
+			mil = 4
+			num_of_cavalry = 15
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = qqt_ordu
+				duration = 9125
+			}
+			custom_tooltip = QQT_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = qqt_evolved_ideas
+				if = {
+					limit = {
+						tag = QQT
+					}
+					swap_free_idea_group = yes
+				}
+				else_if = {
+					limit = {
+						tag = LIO
+					}
+					add_country_modifier = {
+						name = lio_evolving_modifier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	qqt_silkroad = {
+		icon = mission_grand_trunk_road_mug
+		required_missions = { qqt_tarim }
+		position = 5
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_road_building_trigger = no
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_road_building_trigger = yes
+				}
+				amount = 7
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = qqt_silk
+				duration = 7300
+			}
+			ferghana_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			arys_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+	
+qqt_first_lio = {
+	slot = 1
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = LIO
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	qqt_central = {
+	    icon = mission_central_asian_city
+		required_missions = { qqt_silkroad }
+		position = 6
+		
+		trigger = {
+		    ferghana_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    arys_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = ferghana_area
+				area = arys_area
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_country_modifier = {
+				name = qqt_expand
+				duration = 9125
+			}
+		}
+	}
+
+	qqt_tibet = {
+	    icon = mission_buddhist_monk_praying
+		required_missions = { qqt_cities }
+		position = 7
+		
+		trigger = {
+		    tibet_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = tibet_region
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_patriarch_authority = 0.15
+			add_country_modifier = {
+				name = qqt_tibet
+				duration = 18250
+			}
+		}
+	}	
+	
+	qqt_rebuild_capital = {
+		icon = mission_mnd_dai_temples
+		required_missions = { }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4203
+			}
+		}
+		
+		trigger = {
+			4203 = {
+				owned_by = ROOT
+				development = 20
+			}
+		}
+		
+		effect = {
+			4203 = {
+				move_capital_effect = yes
+			}
+			4203 = {
+				change_province_name = "Shangjing"
+				rename_capital = "Shangjing"
+			}
+			4203 = {
+				add_province_modifier = {
+					name = qqt_capital_new
+					duration = -1
+				}
+			}
+			4203 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	qqt_admin = {
+		icon = mission_scholar_officials
+		required_missions = { qqt_rebuild_capital }
+		position = 9
+		
+		trigger = {
+			stability = 2
+			NOT = { average_autonomy = 35 }
+			has_adm_advisor_3 = yes
+		}
+		
+		effect = {
+			add_corruption = -3
+			add_country_modifier = {
+				name = qqt_new_administration
+				duration = 7300
+			}
+		}
+	}
+	
+	qqt_rebirth = {
+		icon = mission_kowtow
+		required_missions = { qqt_admin }
+		position = 10
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					culture = Khitan
+				}
+				amount = 25
+			}
+		}
+		
+		effect = {
+			custom_tooltip = QQT_CULTURE
+			hidden_effect = {
+			every_owned_province = {
+				limit = {
+					culture = Khitan
+				}
+				add_base_manpower = 1
+			}
+			}
+		}
+	}
+	
+	lio_china_metropolis = {
+	    icon = mission_asian_city
+		required_missions = { lio_china_urban }
+		position = 13
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			1816 = {
+				development = 70
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 1816
+		}
+		
+		effect = {
+			1816 = {
+				change_trade_goods = paper
+			}
+			1816 = {
+				add_province_modifier = {
+					name = yua_economic_heart
+					duration = -1
+				}
+			}
+		}
+	}
+
+}
+		
+
+qqt_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = QQT
+			tag = LIO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	qqt_kashgar = {
+	    icon = mission_reclaim_lost_territory
+		required_missions = { qqt_consolidate qqt_army }
+		position = 2
+		
+		trigger = {
+		    kashgaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = kashgaria_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = qqt_restoration
+				duration = 7300
+			}
+			shanshan_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			tarim_basin_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	qqt_tarim = {
+	    icon = mission_unite_home_region
+		required_missions = { qqt_kashgar }
+		position = 4
+		
+		trigger = {
+		    shanshan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    tarim_basin_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = shanshan_area
+				area = tarim_basin_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = qqt_expanding
+				duration = 7300
+			}
+		}
+	}
+	
+	qqt_gold = {
+	    icon = mission_zambezi_gold
+		required_missions = { qqt_tarim }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2121
+			}
+		}
+		
+		trigger = {
+			owns = 2121
+			2121 = {
+				base_production = 7
+			}
+		}
+		
+		effect = {
+			add_treasury = 150
+			add_country_modifier = {
+				name = qqt_gold
+				duration = -1
+			}
+		}
+	}
+	
+	qqt_cities = {
+		icon = mission_market_place_with_asian_traders
+		required_missions = { qqt_silkroad }
+		position = 6
+		
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 739
+				province_id = 2124
+			}
+			has_trade_building_trigger = no
+		}
+
+		trigger = {
+			owns = 739
+			739 = {
+				has_trade_building_trigger = yes
+			}
+			owns = 2124
+			2124 = {
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			739 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			2124 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			tibet_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			kashmir_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	
+}
+
+qqt_second_2 = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = LIO
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	qqt_kashmir = {
+	    icon = mission_che_the_cave_country
+		required_missions = { qqt_cities }
+		position = 8
+		
+		trigger = {
+		    kashmir_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = kashmir_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_treasury = 350
+			define_advisor = {
+				type = trader
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+
+	qqt_government = {
+	    icon = mission_mnd_siam_subjugate_vietnam
+		required_missions = { qqt_throne }
+		position = 9
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = mch_2_cultures
+				calc_true_if = {
+					accepted_culture = manchu
+					accepted_culture = chihan
+					accepted_culture = miao
+					accepted_culture = cantonese
+					accepted_culture = jin
+					accepted_culture = wu
+					accepted_culture = chimin
+					accepted_culture = hakka
+					accepted_culture = gan
+					accepted_culture = xiang
+					accepted_culture = sichuanese
+					accepted_culture = jianghuai
+					accepted_culture = xibei
+					accepted_culture = hubei
+					accepted_culture = zhongyuan
+					accepted_culture = shandong_culture
+					amount = 2
+				}
+			}
+			OR = {
+				has_global_modifier_value = {
+					which = administrative_efficiency
+					value = 0.05
+				}
+				# The global_modifier_value does not apply to tech
+				adm_tech = 17
+			}
+		}
+		
+		effect = {
+			add_adm_power = 75
+			add_country_modifier = {
+				name = qqt_government
+				duration = 7300
+			}
+			custom_tooltip = LIO_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = lio_evolved_ideas
+				if = {
+					limit = {
+						tag = LIO
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+		}
+	}
+	
+	lio_china_urban = {
+	    icon = mission_colonial
+		required_missions = { lio_china_inward }
+		position = 12
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			calc_true_if = {
+				all_owned_province = {
+					development = 20
+				}
+				amount = 35
+			}
+		}
+		
+		provinces_to_highlight = {
+			NOT = {
+				development = 20
+			}
+			owned_by = ROOT
+		}
+		
+		effect = {
+			china_superregion = {
+				add_province_modifier = {
+					name = jsn_buildings
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					has_dlc = "Cradle of Civilization" 
+				}
+				define_advisor = {
+					type = planner
+					skill = 5
+					religion = ROOT
+					cost_multiplier = 0.25
+				}
+			}
+			else = {
+				define_advisor = {
+					type = planner
+					skill = 3
+					religion = ROOT
+					cost_multiplier = 0.25
+				}
+			}
+		}
+	}
+	
+	lio_china_imperial = {
+		icon = mission_khitan
+		required_missions = { }
+		position = 14
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			army_size = 300
+		}
+		
+		effect = {
+			create_general = { tradition = 100 }
+			add_country_modifier = {
+				name = yua_imperial_army
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+qqt_third = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = QQT
+			tag = LIO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	qqt_consolidate = {
+	    icon = mission_unite_rajputana
+		required_missions = { }
+		position = 1
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { religion = ROOT }
+		}
+		
+		trigger = {
+		    religious_unity = 0.85
+			NOT = {
+				unrest = 1
+			}
+		}
+		
+		effect = {
+			add_stability = 1
+			kashgaria_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			zungaria_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			north_zungaria = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			turpan_kumul_area = {
+			    limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	qqt_mongolia = {
+	    icon = mission_non-western_cavalry_raid
+		required_missions = { qqt_consolidate }
+		position = 3
+		
+		trigger = {
+		    turpan_kumul_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    north_zungaria = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    zungaria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = turpan_kumul_area
+				area = north_zungaria
+				area = zungaria_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_general = { tradition = 50 }
+			add_mil_power = 100
+			mongolia_region = {
+			    limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	qqt_unite = {
+	    icon = mission_chinese_general_riding
+		required_missions = { qqt_mongolia qqt_sack }
+		position = 5
+		
+		trigger = {
+		    mongolia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = mongolia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_country_modifier = {
+				name = "qqt_mongols"
+				duration = -1
+			}
+			liaoning_area = {
+			    limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	qqt_homeland = {
+	    icon = mission_khitan
+		required_missions = { qqt_unite }
+		position = 6
+		
+		trigger = {
+		    liaoning_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = liaoning_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "qqt_restoration_culture"
+				duration = -1
+			}
+			liaoning_area = {
+				change_culture = Khitan
+				change_religion = ROOT
+			}
+			chahar_area = {
+				change_culture = Khitan
+				change_religion = ROOT
+			}
+			hebei_area = {
+			    limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	qqt_dethrone = {
+	    icon = mission_dethrone
+		required_missions = { qqt_homeland }
+		position = 7
+		
+		trigger = {
+		    hebei_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = hebei_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			country_event = { id = ab_khitan.1 }
+			north_china_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+}
+
+qqt_third_2 = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = LIO
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	qqt_throne = {
+	    icon = mission_jaded
+		required_missions = { qqt_dethrone }
+		position = 8
+		
+		trigger = {
+			OR = {
+				is_emperor_of_china = yes
+				total_development = 1000
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_country_modifier = {
+				name = qqt_throne
+				duration = 7300
+			}
+		}
+	}
+	
+	qqt_reform = {
+	    icon = mission_mnd_maj_end_disaster
+		required_missions = { qqt_throne qqt_government qqt_tribuatries }
+		position = 10
+		
+		trigger = {
+			empire_of_china_reform_passed = centralizing_top_government_decision
+		}
+		
+		effect = {
+			add_meritocracy = 10
+			add_country_modifier = {
+				name = mch_celestial_reforms
+				duration = -1
+			}
+		}
+	}
+	
+	lio_china_inward = {
+		icon = mission_seize_the_dragon_throne
+		required_missions = { }
+		position = 11
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+		}
+		
+		effect = {
+			custom_tooltip = INWARD_CHINA_DEVELOPMENT
+			tooltip = {
+				add_province_modifier = {
+					name = "ab_inward_development"
+					duration = -1
+				}
+			}
+			custom_tooltip = INWARD_REMOVE_20_DEV
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						superregion = china_superregion
+						NOT = {
+							development = 20
+						}
+					}
+					add_province_modifier = {
+						name = "ab_inward_development"
+						duration = -1
+					}
+				}	
+			}
+		}
+	}	
+	
+	lio_china_steel = {
+		icon = mission_state_manufactories
+		required_missions = { lio_china_inward }
+		position = 12
+
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			trade_goods = iron
+			NOT = { development = 25 }
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				trade_goods = iron
+				development = 25
+			}
+		}
+		
+		effect = {
+			custom_tooltip = YUA_INWARD_PRODUCTION
+			tooltip = {
+				add_province_modifier = {
+					name = "ab_inward_production"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+			every_owned_province = {
+				limit = { trade_goods = iron }
+				add_province_modifier = {
+					name = "ab_inward_production"
+					duration = -1
+				}
+			}
+			}
+			custom_tooltip = YUA_INWARD_PRODUCTION_2
+			tooltip = {
+				add_years_of_income = 3
+			}
+			hidden_effect = {
+			if = {
+				limit = {
+					production_leader = {
+						trade_goods = iron
+					}
+				}
+				add_years_of_income = 3
+			}
+			}
+
+		}
+	}
+	
+	lio_china_world = {
+	    icon = mission_rb_build_furnaces
+		required_missions = { lio_china_steel }
+		position = 13
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			custom_trigger_tooltip = {
+				tooltip = YUA_largest_income
+				NOT = {
+					any_country = {
+						monthly_income = ROOT
+					}
+				}
+			}
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+				amount = 50
+			}
+		}
+		
+		provinces_to_highlight = {
+			NOT = {
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
+				}
+			}
+			owned_by = ROOT
+		}
+		
+		effect = {
+			custom_tooltip = YUA_PRODUCTION_MANUFAC
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							has_building = mills
+							has_building = farm_estate
+							has_building = tradecompany
+							has_building = plantations
+							has_building = textile
+							has_building = weapons
+							has_building = wharf
+							has_building = furnace
+						}
+					}
+					add_base_production = 1
+				}
+			}
+			add_country_modifier = {
+				name = yuan_china_workshop_world
+				duration = -1
+			}
+		}
+	}
+	
+	lio_china_tiger = {
+	    icon = mission_conquer_bengal_dlh
+		required_missions = { lio_china_world lio_china_gun lio_china_imperial }
+		position = 15
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			custom_trigger_tooltip = {
+				tooltip = YUA_largest_army
+				NOT = {
+					any_country = {
+						army_size = ROOT
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = YUA_largest_development
+				NOT = {
+					any_country = {
+						total_development = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 2
+				power = adm
+			}
+			change_monarch_points_or_power = {
+				points = 2
+				power = dip
+			}
+			change_monarch_points_or_power = {
+				points = 2
+				power = mil
+			}
+			add_ruler_modifier = {
+				name = yua_china_tiger
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+qqt_fourth = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = QQT
+			tag = LIO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	qqt_income = {
+		icon = mission_high_income
+		required_missions = {  
+		    qqt_capital
+		}
+		position = 3
+		trigger = { share_of_starting_income = 2 }
+		effect = {
+			add_country_modifier = {
+				name = qqt_economy
+				duration = 7300
+			}
+		}
+	}
+	
+	qqt_sack = {
+		icon = mission_qara
+		required_missions = { qqt_mongolia }
+		position = 4
+		
+		provinces_to_highlight = {
+			province_id = 2190
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    owns = 2190
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_army_tradition = 25
+			2190 = {
+				add_devastation = 75
+			}
+			add_country_modifier = {
+				name = qqt_mongol_conquest
+				duration = 7300
+			}
+			custom_tooltip = QQT_SACK
+			tooltip = {
+				mongolia_region = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_core = ROOT
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							YUA = {
+								army_size = ROOT
+							}
+						}
+					}
+				mongolia_region = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_core = ROOT
+				}
+			}
+			}
+		}
+	}
+	
+	qqt_temples = {
+		icon = mission_conquer_malwa_bng
+		required_missions = { qqt_spread }
+		position = 5
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_tax_building_trigger = no
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				has_tax_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			add_patriarch_authority = 0.1
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+}
+
+qqt_fourth_2 = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = LIO
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	qqt_tribuatries = {
+	    icon = mission_war_chest
+		required_missions = { qqt_throne }
+		position = 9
+
+		provinces_to_highlight = {
+			is_capital = yes
+			if = {
+				limit = {
+					has_dlc = "Mandate of Heaven"
+				}
+				owner = {
+					# It is impossible for non-neighbor
+					# tributaries
+					is_neighbor_of = ROOT
+					OR = {
+						is_subject = no
+						NOT = { is_subject_of = ROOT }
+					}
+				}
+			}
+			else = {
+				owner = {
+					is_subject_of = ROOT
+					liberty_desire = 50
+				}
+			}
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					has_dlc = "Mandate of Heaven"
+				}
+				calc_true_if = {
+					desc = establish_tributaries_tt
+					all_subject_country = {
+						is_subject_of_type = tributary_state
+					}
+					amount = 10
+				}
+			}
+			else = {
+				num_of_subjects = 3
+				NOT = {
+					any_subject_country = {
+						liberty_desire = 50
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_dip_power = 75
+			add_country_modifier = {
+				name = qqt_subjects
+				duration = -1
+			}
+		}
+	}
+	
+	lio_china_hermit = {
+		icon = mission_fortify_mandu
+		required_missions = { lio_china_inward }
+		position = 12
+		
+		provinces_to_highlight = {
+			has_fort_building_trigger = no
+			owned_by = ROOT
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			calc_true_if = {
+				all_owned_province = {
+					has_fort_building_trigger = yes
+				}
+				amount = 20
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 25
+			define_advisor = {
+				type = fortification_expert
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.25
+			}
+			add_country_modifier = {
+				name = yua_hermit
+				duration = -1
+			}
+		}
+	}
+	
+	lio_china_gun = {
+		icon = mission_mnd_siam_revolution
+		required_missions = { }
+		position = 14
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			OR = {
+				num_of_artillery = 50
+				has_global_modifier_value = {
+					which = artillery_power
+					value = 0.2
+				}
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = yua_firearms
+				duration = 9125
+			}
+		}
+	}
+	
+}
+
+qqt_fifth = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = QQT
+			tag = LIO
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	qqt_capital = {
+		icon = mission_assert_control_over_delhi
+		required_missions = { }
+		position = 2
+		
+		provinces_to_highlight = {
+			province_id = 2125
+		}
+		
+		trigger = {
+			owns_core_province = 2125
+			2125 = {
+				development = 25
+			}
+			2125 = {
+				has_production_building_trigger = yes
+			}
+			2125 = {
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			2125 = {
+				change_trade_goods = silk
+			}
+			2125 = {
+				add_province_modifier = {
+					name = qqt_capital
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	qqt_spread = {
+		icon = mission_hands_praying
+		position = 4
+		required_missions = { qqt_capital }
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { religion = nestorian }
+		}
+	
+		trigger = {
+			religion = nestorian
+			custom_trigger_tooltip = {
+				tooltip = obj_convert_10_provinces_tooltip
+				check_variable = { which = num_converted_religion value = 10 }
+			}
+		}
+		
+		effect = {
+			add_church_power = 25
+			add_country_modifier = {
+				name = qqt_spread
+				duration = 9125
+			}
+		}
+	}
+	
+	qqt_patriarch = {
+		icon = mission_to_china
+		position = 6
+		required_missions = { qqt_spread qqt_temples }
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { religion = nestorian }
+		}
+	
+		trigger = {
+			religion = nestorian
+			patriarch_authority = 0.5
+			num_of_owned_provinces_with = {
+				religion = nestorian
+				value = 25
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = qqt_patriarch
+				duration = -1
+			}
+		}
+	}
+}
+
+qqt_fifth_lio = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = LIO
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+
+	qqt_christianize = {
+		icon = spread_piety
+		position = 7
+		required_missions = { qqt_patriarch }
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			superregion = china_superregion
+			NOT = { religion = nestorian }
+		}
+	
+		trigger = {
+			religion = nestorian
+			num_of_owned_provinces_with = {
+				superregion = china_superregion
+				religion = nestorian
+				value = 50
+			}
+		}
+		
+		effect = {
+			add_patriarch_authority = 0.25
+			custom_tooltip = YUA_PATRIARCH
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_state_patriach = yes
+					}
+					add_base_manpower = 1
+				}
+			}
+			add_country_modifier = {
+				name = qqt_true_path
+				duration = -1
+			}
+		}
+	}
+	
+	qqt_north_china = {
+		icon = mission_great_wall
+		required_missions = { qqt_dethrone }
+		position = 8
+		
+		provinces_to_highlight = {
+			region = north_china_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    north_china_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = qqt_fort_city
+				duration = 9125
+			}
+			china_superregion = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_core = ROOT
+			}
+		}
+	}
+		
+		
+	qqt_house = {
+		icon = mission_asian_city
+		required_missions = { qqt_north_china }
+		position = 10
+		
+		provinces_to_highlight = {
+			superregion = china_superregion
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				is_empty = no
+			}
+		}
+		
+		trigger = {
+		    china_superregion = {
+			    type = all
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					is_empty = yes
+				}
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 25
+			add_country_modifier = {
+				name = qqt_conquerors
+				duration = -1
+			}
+		}
+	}
+	
+	lio_china_great_wall = {
+		icon = mission_wall
+		required_missions = { lio_china_hermit }
+		position = 13
+		
+		provinces_to_highlight = {
+			province_id = 698
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = has_yuainward_govref_tt
+				has_reform = yuainward
+			}
+			OR = {
+				698 = {
+					has_great_project = {
+						type = the_great_wall_of_china
+						tier = 3
+					}
+				}
+				has_country_modifier = great_wall_reparations
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = yua_wall
+				duration = -1
+			}
+			custom_tooltip = YUA_INWARD_WALL
+			tooltip = {
+				add_country_modifier = {
+					name = yua_wall_2
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						full_idea_group = defensive_ideas
+					}
+					add_country_modifier = {
+						name = yua_wall_2
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}

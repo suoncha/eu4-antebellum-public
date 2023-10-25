@@ -1,0 +1,49 @@
+yuan_crisis = {
+	potential = {
+		tag = YUA
+		NOT = {
+			has_country_flag = had_yuan_crisis
+		}
+		num_of_cities = 2
+		any_owned_province = {
+			is_capital = no
+			is_core = ROOT
+		}
+		government = monarchy
+		is_free_or_tributary_trigger = yes
+		uses_doom = no
+		normal_or_historical_nations = yes
+	}
+	
+	can_start = {
+		tag = YUA
+		NOT = {
+			has_ruler = "Shaozong"
+		}
+	}
+	
+	can_stop = {
+		has_any_disaster = yes
+	}
+	
+	progress = {
+		modifier = {
+			factor = 25
+			tag = YUA
+		} 
+	}
+	
+	modifier = {
+		global_unrest = 10
+		all_power_cost = 0.25
+	}
+	
+	can_end = {
+		NOT = { num_of_rebel_controlled_provinces = 1 }
+		NOT = { num_of_rebel_armies = 1 }
+		stability = 1
+	}
+	
+	on_start = ab_yuan.2
+	on_end = ab_yuan.6
+}

@@ -1,0 +1,204 @@
+namespace = ab_jerusalem
+normal_or_historical_nations = yes
+
+
+country_event = {
+	id = ab_jerusalem.1
+	title = ab_jerusalem.1.t
+	desc = ab_jerusalem.1.d
+	picture = AB_BYZANTIUM_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_jerusalem.1.a
+		set_government_rank = 3
+	}
+}
+
+#Timed Mission Unlock
+country_event = {
+	id = ab_jerusalem.2
+	title = ab_jerusalem.2.t
+	desc = ab_jerusalem.2.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_cornwall.1.a
+		set_country_flag = koj_mission_unlocked
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Timed Mission Fail
+country_event = {
+	id = ab_jerusalem.3
+	title = ab_jerusalem.3.t
+	desc = ab_jerusalem.3.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		is_year = 1455
+		OR = {
+			tag = KOJ
+			was_tag = KOJ
+		}
+		has_country_flag = koj_mission_unlocked
+		NOT = {
+			mission_completed = koj_triumph_cross
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = koj_mission_unlocked
+			set_country_flag = koj_mission_failed
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_jerusalem.3.a
+	}
+}
+
+#Outremer Culture
+province_event = {
+	id = ab_jerusalem.4
+	title = ab_jerusalem.4.t
+	desc = ab_jerusalem.4.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+	}
+	
+	trigger = {
+		owner = {
+			mission_completed = koj_outremer_nation
+		}
+		OR = {
+			region = mashriq_region
+			region = egypt_region
+		}
+		religion = catholic
+		any_neighbor_province = {
+			culture = Outremer
+		}
+	}
+	
+	option = {
+		name = ab_jerusalem.4.a
+		change_culture = Outremer
+		change_original_culture = Outremer
+	}
+}
+
+#Latin Empire
+country_event = {
+	id = ab_jerusalem.5
+	title = ab_jerusalem.5.t
+	desc = ab_jerusalem.5.d
+	picture = AB_BYZFALL_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_jerusalem.5.a
+		add_prestige_or_monarch_power = {
+			amount = 50
+		}
+		if = {
+			limit = { NOT = { government_rank = 3 } }
+			set_government_rank = 3
+		}
+		add_country_modifier = {
+			name = koj_latin_empire
+			duration = -1
+		}
+	}
+	
+	option = {
+		name = ab_jerusalem.5.b
+		custom_tooltip = KOJ_LAT_GREECE
+		add_country_modifier = {
+			name = koj_crown_romans
+			duration = -1
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = thrace_area
+						area = macedonia_area 
+						area = morea_area
+						area = aegean_archipelago_area
+						area = northern_greece_area
+					}
+				}
+				cede_province = LAT
+				add_core = LAT
+			}
+			create_union = LAT
+			LAT = {
+				set_government_rank = 3
+				set_country_flag = lat_cant_trigger_events
+			}
+		}
+	}
+}
+
+#Fate of Islam
+country_event = {
+	id = ab_jerusalem.6
+	title = ab_jerusalem.6.t
+	desc = ab_jerusalem.6.d
+	picture = muslimgfx_HAJJ_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_jerusalem.6.a
+		add_prestige_or_monarch_power = {
+			amount = 25
+		}
+		384 = {
+			add_devastation = 100
+		}
+		385 = {
+			add_devastation = 100
+		}
+		destroy_great_project = {
+			type = kaaba
+		}
+		add_country_modifier = {
+			name = koj_sword_of_islam
+			duration = -1
+		}
+	}
+	
+	option = {
+		name = ab_jerusalem.6.b
+		add_legitimacy = 25
+		384 = {
+			upgrade_tax_building = yes
+		}
+		385 = {
+			upgrade_tax_building = yes
+		}
+		add_country_modifier = {
+			name = koj_safeguard_holy_places
+			duration = -1
+		}
+	}
+}

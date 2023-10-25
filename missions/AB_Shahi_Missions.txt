@@ -1,0 +1,1518 @@
+﻿AB_Shahi_missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = { tag = SHH }
+	has_country_shield = yes
+
+	AB_Shahi_Field_Testing = {
+		required_missions = { AB_Shahi_Assemble_Tribal_Host }
+		icon = mission_prepare_an_invasion_force
+		position = 2
+		trigger = {
+			army_tradition = 20
+			power_projection = 25
+			has_mil_advisor = yes
+		}
+		effect = {
+			custom_tooltip = AB_SHH_mil_advisor_reward_tt
+			balkh_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ghor_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						employed_advisor = { type = army_reformer }
+					}
+					add_country_modifier = {
+						name = AB_SHH_Field_Testing_1
+						duration = 9125
+						hidden = yes
+					}
+				}
+				else_if = {
+					limit = {
+						employed_advisor = { type = army_organiser }
+					}
+					add_country_modifier = {
+						name = AB_SHH_Field_Testing_2
+						duration = 9125
+						hidden = yes
+					}
+				}
+				else_if = {
+					limit = {
+						employed_advisor = { type = commandant }
+					}
+					add_country_modifier = {
+						name = AB_SHH_Field_Testing_3
+						duration = 9125
+						hidden = yes
+					}
+				}
+				else_if = {
+					limit = {
+						employed_advisor = { type = grand_captain }
+					}
+					add_country_modifier = {
+						name = AB_SHH_Field_Testing_4
+						duration = 9125
+						hidden = yes
+					}
+				}
+				else_if = {
+					limit = {
+						employed_advisor = { type = recruitmaster }
+					}
+					add_country_modifier = {
+						name = AB_SHH_Field_Testing_5
+						duration = 9125
+						hidden = yes
+					}
+				}
+				else_if = {
+					limit = {
+						employed_advisor = { type = fortification_expert }
+					}
+					add_country_modifier = {
+						name = AB_SHH_Field_Testing_6
+						duration = 9125
+						hidden = yes
+					}
+				}
+				else_if = {
+					limit = {
+						employed_advisor = { type = quartermaster }
+					}
+					add_country_modifier = {
+						name = AB_SHH_Field_Testing_7
+						duration = 9125
+						hidden = yes
+					}
+				}
+			}
+		}
+	}
+
+	AB_Shahi_Threat_West = {
+		required_missions = { AB_Shahi_Field_Testing }
+		icon = mission_unite_west_india
+		position = 3
+		provinces_to_highlight = {
+			OR = {
+				area = balkh_area
+				province_id = 449
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			balkh_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			449 = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_country_modifier = {
+				name = AB_SHH_surge_ghori_warriors
+				duration = 9125
+			}
+			custom_tooltip = SHH_AFGHAN_BUDDHISM
+			tooltip = {
+				add_devastation = -5
+				add_province_modifier = {
+					name = AB_SHH_afghan_buddhism
+					duration = 14600
+				}
+			}
+			hidden_effect = {
+				balkh_area = {
+					add_devastation = -5
+					add_province_modifier = {
+						name = AB_SHH_afghan_buddhism
+						duration = 14600
+					}
+				}
+				449 = {
+					add_devastation = -5
+					add_province_modifier = {
+						name = AB_SHH_afghan_buddhism
+						duration = 14600
+					}
+				}
+			}
+			kalat_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			makran_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	AB_Shahi_Ressurgent_Afghanistan = {
+		required_missions = { 
+			AB_Shahi_Threat_West
+			AB_Shahi_End_Zuni_Incursion
+		}
+		icon = mission_defeat_mewar
+		position = 5
+		provinces_to_highlight = {
+			OR = {
+				area = ghor_area
+				area = kalat_area
+				area = makran_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			ghor_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			kalat_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			makran_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			custom_tooltip = AB_SHH_Form_Afghanistan_Decision_tt
+			custom_tooltip = AB_EMPTY
+			kashmir_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sind_sagar_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			multan_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							capital_scope = {
+								region = persia_region
+							}
+							total_development = ROOT
+						}
+					}
+				}
+				custom_tooltip = SHH_PERSIA_CLAIM
+				tooltip = {
+					persia_region = {
+						limit = {
+							NOT = { owned_by = ROOT }
+							NOT = { is_core = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+			else = {
+				custom_tooltip = SHH_PERSIA_CLAIM_NO
+				tooltip = {
+					persia_region = {
+						limit = {
+							NOT = { owned_by = ROOT }
+							NOT = { is_core = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								capital_scope = {
+									region = persia_region
+								}
+								total_development = ROOT
+							}
+						}
+					}
+					persia_region = {
+						limit = {
+							NOT = { owned_by = ROOT }
+							NOT = { is_core = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	AB_Shahi_Hindu_Shahis = {
+		required_missions = { AB_Shahi_Ressurgent_Afghanistan }
+		icon = mission_unite_the_deccan
+		position = 6
+		provinces_to_highlight = {
+			OR = {
+				area = kashmir_area
+				area = sind_sagar_area
+				area = multan_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			kashmir_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			sind_sagar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			multan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = AB_SHH_shahi_unification
+				duration = -1
+			}
+			lahore_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			sirhind_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			set_country_flag = AB_SHH_timer_start_flag
+		}
+	}
+
+	AB_Shahi_Gateway_Hindustan = {
+		required_missions = { AB_Shahi_Hindu_Shahis }
+		icon = mission_dharma_mission_religious_harmony
+		position = 7
+		provinces_to_highlight = {
+			OR = {
+				area = lahore_area
+				area = sirhind_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			lahore_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			sirhind_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = AB_SHH_Into_Hindustan
+				duration = -1
+			}
+			if = {
+				limit = {
+					NOT = {
+						had_country_flag = {
+							flag = AB_SHH_timer_start_flag
+							days = 3651
+						}
+					}
+				}
+				custom_tooltip = AB_SHH_extra_event_if_timed
+				tooltip = {
+					country_event = {
+						id = AB_Shahi_Event.1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = AB_SHH_extra_event_if_timed_no
+				tooltip = {
+					country_event = {
+						id = AB_Shahi_Event.1
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							had_country_flag = {
+								flag = AB_SHH_timer_start_flag
+								days = 3651
+							}
+						}
+					}
+					country_event = {
+						id = AB_Shahi_Event.1
+					}
+				}
+			}
+		}
+	}
+}
+
+AB_Shahi_missions_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = { tag = SHH }
+	has_country_shield = yes
+
+	AB_Shahi_Assemble_Tribal_Host = {
+		icon = mission_accomodate_the_rajputs
+		position = 1
+		trigger = {
+			army_size_percentage = 0.9
+			estate_loyalty = {
+				estate = estate_nobles
+				loyalty = 60
+			}
+		}
+		effect = {
+			create_general = {
+				tradition = 30
+				add_shock = 2
+			}
+			custom_tooltip = AB_SHH_improved_nobles_privilege_tt
+			hidden_effect = {
+				if = {
+					limit = { has_estate_privilege = estate_nobles_command_of_the_military }
+					remove_estate_privilege = estate_nobles_command_of_the_military
+					set_country_flag = AB_SHH_improved_nobles_privilege
+					set_estate_privilege = AB_estate_nobles_command_of_the_military_improved
+				}
+				else = { set_country_flag = AB_improved_command_military_privilege }
+			}
+		}
+	}
+
+	AB_Shahi_Troublesome_Religion = {
+		required_missions = { AB_Shahi_Assemble_Tribal_Host }
+		icon = mission_patronize_local_gods
+		position = 2
+		provinces_to_highlight = { province_id = 448 }
+		trigger = {
+			448 = {
+				owned_by = ROOT
+				religion = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = AB_SHH_one_true_shahi_faith
+				duration = 9125
+			}
+			if = {
+				limit = {
+					2225 = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+				}
+				2225 = { add_permanent_claim = ROOT }
+			}
+		}
+	}
+
+	AB_Shahi_End_Zuni_Incursion = {
+		required_missions = { AB_Shahi_Troublesome_Religion }
+		icon = mission_the_battle_for_raichur
+		position = 4
+		provinces_to_highlight = { province_id = 2225 }
+		trigger = {
+			2225 = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		effect = {
+			add_karma = 10
+			2225 = {
+				change_religion = ROOT
+				add_province_modifier = {
+					name = AB_SHH_assimilation_zuni
+					duration = 10950
+				}
+			}
+			kashgaria_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			tarim_basin_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			shanshan_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	AB_Shahi_Our_Fair_Share = {
+		required_missions = { 
+			AB_Shahi_End_Zuni_Incursion
+			AB_Shahi_Ressurgent_Afghanistan
+		}
+		icon = mission_protect_jain_communities
+		position = 6
+		provinces_to_highlight = {
+			OR = {
+				area = kashgaria_area
+				area = tarim_basin_area
+				area = shanshan_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		trigger = {
+			kashgaria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			tarim_basin_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			shanshan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			custom_tooltip = AB_SHH_mission_rewards_tt
+			tooltip = {
+				add_province_modifier = {
+					name = AB_SHH_silk_road_revenue
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				kashgaria_area = {
+					add_base_production = 1
+				}
+				tarim_basin_area = {
+					add_base_production = 1
+				}
+				shanshan_area = {
+					add_base_production = 1
+				}
+				kashgaria_area = {
+					add_province_modifier = {
+						name = AB_SHH_silk_road_revenue
+						duration = -1
+					}
+				}
+				tarim_basin_area = {
+					add_province_modifier = {
+						name = AB_SHH_silk_road_revenue
+						duration = -1
+					}
+				}
+				shanshan_area = {
+					add_province_modifier = {
+						name = AB_SHH_silk_road_revenue
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+AB_Shahi_missions_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = { tag = SHH }
+	has_country_shield = yes
+
+	AB_Shahi_Tribal_Court = {
+		required_missions = { 
+			AB_Shahi_Assemble_Tribal_Host
+			AB_Shahi_Artistic_Revival
+		}
+		icon = mission_suppress_the_saophasa
+		position = 2
+		trigger = {
+			has_advisor = yes
+			OR = {
+				adm_tech = 4
+				dip_tech = 4
+				mil_tech = 4
+			}
+		}
+		effect = {
+			custom_tooltip = AB_SHH_NI_if_SHH_tt
+			hidden_effect = {
+				if = {
+					limit = { 
+						tag = SHH
+					}
+					hidden_effect = { 
+						set_country_flag = AB_SHH_1st_empowered
+						swap_free_idea_group = yes
+					}
+				}
+				else = {
+					add_country_modifier = {
+						name = AB_SHH_haqqanaian_court
+						duration = 18250
+					}
+				}
+			}
+
+		}
+	}
+
+	AB_Shahi_Teachings_Buddha = {
+		required_missions = { 
+			AB_Shahi_Tribal_Court
+			AB_Shahi_Buildingblocks_Nation
+		}
+		icon = mission_protect_lankan_buddhism
+		position = 3
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				NOT = { religion = ROOT }
+				has_tax_building_trigger = no
+			}
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 3
+				religion = ROOT
+				has_tax_building_trigger = yes
+			}
+			if = {
+				limit = {
+					has_dlc = "Rule Britannia"
+				}
+				innovativeness = 20
+			}
+		}
+		effect = {
+			grant_all_mana = {
+				mana = 75
+			}
+			if = {
+				limit = {
+					has_country_modifier = monastic_education_system 
+				}
+				custom_tooltip = AB_SHH_modify_monastic_education
+			}
+			else = {
+				custom_tooltip = AB_SHH_modify_monastic_education_no
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_modifier = monastic_education_system 
+					}
+					remove_country_modifier = monastic_education_system 
+					add_country_modifier = {
+						name = AB_monastic_education_system 
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	AB_Shahi_Higher_Buddhist_Education = {
+		required_missions = { 
+			AB_Shahi_Teachings_Buddha
+		}
+		icon = mission_vedic_education
+		position = 4
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				NOT = { religion = ROOT }
+				NOT = { base_tax = 5 }
+				has_tax_building_trigger = no
+			}
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 2
+				religion = ROOT
+				has_tax_building_trigger = yes
+				base_tax = 5
+			}
+			if = {
+				limit = {
+					has_dlc = "Rule Britannia"
+				}
+				innovativeness = 40
+			}
+		}
+		effect = {
+			custom_tooltip = AB_SHH_university_reward
+			hidden_effect = {
+				random_owned_province = {
+					limit = {
+						religion = ROOT
+						has_tax_building_trigger = yes
+						base_tax = 5
+					}
+					add_building = university
+					set_province_flag = AB_SHH_university_built
+				}
+				random_owned_province = {
+					limit = {
+						religion = ROOT
+						has_tax_building_trigger = yes
+						base_tax = 5
+						NOT = {
+							has_province_flag = AB_SHH_university_built
+						}
+					}
+					add_building = university
+				}
+			}
+			if = {
+				limit = {
+					has_country_modifier = AB_monastic_education_system
+				}	
+				custom_tooltip = AB_SHH_extra_reward_if_modifier
+			}
+			else = {
+				custom_tooltip = AB_SHH_extra_reward_if_modifier_no
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_modifier = AB_monastic_education_system
+					}
+					remove_country_modifier = AB_monastic_education_system
+					add_country_modifier = {
+						name = AB_higher_monastic_education_system
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	AB_Shahi_Safe_Haven = {
+		required_missions = { 
+			AB_Shahi_Higher_Buddhist_Education
+			AB_Shahi_End_Zuni_Incursion
+		}
+		icon = mission_rule_the_garjats
+		position = 5
+		trigger = {
+			has_global_modifier_value = {
+				which = tolerance_heathen
+				value = 0.01
+			}
+			has_global_modifier_value = {
+				which = tolerance_heretic
+				value = 0.03
+			}
+		}
+		effect = {
+			custom_tooltip = AB_SHH_reward_if_SHH_or_else
+			hidden_effect = {
+				if = {
+					limit = {
+						tag = SHH
+					}
+					clr_country_flag = AB_SHH_1st_empowered
+					set_country_flag = AB_SHH_2nd_empowered
+					swap_free_idea_group = yes
+				}
+				else = {
+					add_country_modifier = {
+						name = AB_SHH_turco_buddhist_tolerance
+						duration = -1
+					}
+				}
+			}
+			if = {
+				limit = { has_idea = ecumenism }
+				custom_tooltip = AB_SHH_reward_if_humanism
+				tooltip = {
+					add_country_modifier = {
+						name = AB_SHH_tolerance_shahi
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = AB_SHH_reward_if_humanism_no
+				tooltip = {
+					add_country_modifier = {
+						name = AB_SHH_tolerance_shahi
+						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = { has_idea = ecumenism }
+					add_country_modifier = {
+						name = AB_SHH_tolerance_shahi
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	AB_Shahi_modernize_government = {
+		required_missions = { 
+			AB_Shahi_Safe_Haven
+			AB_Shahi_Urbanization
+		}
+		icon = mission_into_the_west
+		position = 6
+		trigger = {
+			reform_level = 10
+			has_adm_advisor_3 = yes
+			has_dip_advisor_3 = yes
+			has_mil_advisor_3 = yes
+			government_rank = 3
+		}
+		effect = {
+			add_country_modifier = {
+				name = AB_SHH_Afghan_Bureacracy
+				duration = -1
+			}
+		}
+	}
+	AB_Shahi_Waystation = {
+		required_missions = { AB_Shahi_Our_Fair_Share }
+		icon = mission_conquer_central_deccan
+		position = 7
+		provinces_to_highlight = {
+			OR = {
+				owned_by = TCR
+				AND = {
+					OR = {
+						area = kashgaria_area
+						area = tarim_basin_area
+						area = shanshan_area
+					}
+					OR = {
+						has_trade_building_trigger = no
+						NOT = { development = 30 }
+						NOT = { country_or_non_sovereign_subject_holds = ROOT }
+						AND = {
+							province_has_center_of_trade_of_level = 1
+							NOT = { province_has_center_of_trade_of_level = 3 }
+							ROOT = {
+								NOT = {
+									any_owned_province = {
+										OR = {
+											area = kashgaria_area
+											area = tarim_basin_area
+											area = shanshan_area
+										}
+										province_has_center_of_trade_of_level = 3
+									}
+								}
+							}
+						}
+					}
+				}
+				AND = {
+					OR = {
+						province_id = 2124
+						province_id = 710
+					}
+					NOT = { province_has_center_of_trade_of_level = 2 }
+				}
+			}
+		}
+		trigger = {
+			NOT = { exists = TCR }
+			kashgaria_area = {
+				development = 30
+				has_trade_building_trigger = yes
+			}
+			tarim_basin_area = {
+				development = 30
+				has_trade_building_trigger = yes
+			}
+			shanshan_area = {
+				development = 30
+				has_trade_building_trigger = yes
+			}
+			if = {
+				limit = { has_dlc = "Dharma" }
+				2124 = { province_has_center_of_trade_of_level = 2 }
+				710 = { province_has_center_of_trade_of_level = 2 }
+				any_owned_province = {
+					OR = {
+						area = kashgaria_area
+						area = tarim_basin_area
+						area = shanshan_area
+					}
+					province_has_center_of_trade_of_level = 3
+				}
+			}
+		}
+		effect = {
+			country_event = {
+				id = AB_Shahi_Event.2
+			}
+		}
+	}
+}
+
+AB_Shahi_missions_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = { tag = SHH }
+	has_country_shield = yes
+
+	AB_Shahi_Artistic_Revival = {
+		icon = mission_ahmadabad_paper
+		position = 1
+		trigger = {
+			prestige = 10
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" }
+				splendor = 100
+			}
+		}
+		effect = { 
+			add_country_modifier = {
+				name = AB_SHH_Hellenitic_Buddhist_Revival
+				duration = 9125
+			}
+
+			custom_tooltip = AB_SHH_patronage_arts_empowered_tt
+			set_country_flag = AB_SHH_improved_patronage_privilege
+		}
+	}
+	AB_Shahi_Buildingblocks_Nation = {
+		icon = mission_pacify_punjab
+		required_missions = { AB_Shahi_Artistic_Revival }
+		position = 2
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { num_of_times_improved_by_owner = 3 }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 3
+				num_of_times_improved_by_owner = 3
+			}
+		}
+		effect = { 
+			add_country_modifier = {
+				name = AB_SHH_Rise_Nation
+				duration = 9125
+			}
+		}
+	}
+	AB_Shahi_National_Treasure = {
+		icon = mission_bankers_of_cambay
+		required_missions = { 
+			AB_Shahi_Buildingblocks_Nation
+			AB_Shahi_Commercial_Power
+		}
+		position = 4
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2226
+				province_id = 578
+				province_id = 448
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { num_of_times_improved_by_owner = 3 }
+				has_production_building_trigger = no
+			}
+		}
+		trigger = {
+			2226 = {
+				owned_by = ROOT
+				num_of_times_improved_by_owner = 3
+				has_production_building_trigger = yes
+			}
+			578 = {
+				owned_by = ROOT
+				num_of_times_improved_by_owner = 3
+				has_production_building_trigger = yes
+			}
+			448 = {
+				owned_by = ROOT
+				num_of_times_improved_by_owner = 3
+				has_production_building_trigger = yes
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = AB_SHH_Afghan_Production
+				duration = 18250
+			}
+			country_event = {
+				id = AB_Shahi_Event.4
+			}
+		}
+	}
+	AB_Shahi_Urbanization = {
+		icon = mission_the_chola_campaigns
+		required_missions = { AB_Shahi_National_Treasure }
+		position = 5
+		trigger = {
+			has_adm_advisor_2 = yes
+			has_dip_advisor_2 = yes
+			has_mil_advisor_2 = yes
+			monthly_adm = 10
+			monthly_dip = 10
+			monthly_mil = 10
+			estate_loyalty = {
+				estate = estate_burghers
+				loyalty = 60
+			}
+		}
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = AB_estate_burghers_urbanization
+			}
+			if = {
+				limit = {
+					full_idea_group = economic_ideas
+				}
+				custom_tooltip = AB_SHH_extra_reward_if_eco_complete
+			}
+			else = {
+				custom_tooltip = AB_SHH_extra_reward_if_eco_complete_no
+			}
+			hidden_effect = {
+				if = {
+					limit = { full_idea_group = economic_ideas }
+					set_country_flag = AB_SHH_extra_dev_click
+				}
+			}
+		}
+	}
+	AB_Shahi_Ambitions_Industrialization = {
+		icon = mission_industrialize_bengal
+		required_missions = { AB_Shahi_Urbanization }
+		position = 6
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					owned_by = ROOT
+					OR = {
+						has_production_building_trigger = no
+						has_manufactory_trigger = no
+					}
+					ROOT = {
+						NOT = {
+							num_of_owned_provinces_with = {
+								value = 10
+								has_production_building_trigger = yes
+								has_manufactory_trigger = yes
+							}
+						}
+					}
+				}
+				AND = {
+					region = khorasan_region
+					has_terrain = mountain
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { num_of_times_improved_by_owner = 5 }
+					}
+					ROOT = {
+						NOT = {
+							num_of_owned_provinces_with = {
+								value = 5
+								has_terrain = mountain
+								region = khorasan_region
+								num_of_times_improved_by_owner = 5
+							}
+						}
+					}
+				}
+			}
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				has_production_building_trigger = yes
+				has_manufactory_trigger = yes
+			}
+			num_of_owned_provinces_with = {
+				value = 5
+				has_terrain = mountain
+				region = khorasan_region
+				num_of_times_improved_by_owner = 5
+			}
+		}
+		effect = {
+			custom_tooltip = AB_SHH_reward_coal_tt
+			hidden_effect = {
+				random_owned_province = {
+					limit = {
+						has_terrain = mountain
+						region = khorasan_region
+						OR = {
+							trade_goods = livestock
+							trade_goods = grain
+						}
+					}
+					change_trade_goods = coal
+					set_province_flag = AB_SHH_coal_province
+				}
+				random_owned_province = {
+					limit = {
+						has_terrain = mountain
+						region = khorasan_region
+						OR = {
+							trade_goods = livestock
+							trade_goods = grain
+						}
+						NOT = { has_province_flag = AB_SHH_coal_province }
+					}
+					change_trade_goods = coal
+				}
+			}
+			custom_tooltip = AB_SHH_gain_25_per_workshop_50_per_manufactory_tt
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_production_building_trigger = yes
+					}
+					ROOT = { add_treasury = 25 }
+				}
+				every_owned_province = {
+					limit = {
+						has_manufactory_trigger = yes
+					}
+					ROOT = { add_treasury = 50 }
+				}
+			}
+		}
+	}
+	AB_Shahi_Economic_Hegemony = {
+		icon = mission_establish_mint_towns
+		required_missions = { 
+			AB_Shahi_modernize_government
+			AB_Shahi_Ambitions_Industrialization
+			AB_Shahi_Center_World
+		}
+		position = 7
+		provinces_to_highlight = {
+			OR = {
+				owner = { monthly_income = ROOT }
+				owner = { total_development = ROOT }
+			}
+		}
+		trigger = {
+			all_country = {
+				NOT = {
+					AND = {
+						monthly_income = ROOT
+						total_development = ROOT
+					}
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = { has_dlc = "Emperor" }
+				custom_tooltip = AB_SHH_claim_economic_hegemony_tt
+				set_country_flag = AB_claimed_economic_hegemon_mission_reward
+			}
+			else = {
+				add_country_modifier = {
+					name = AB_SHH_Economic_Hegemon
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+AB_Shahi_missions_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = { tag = SHH }
+	has_country_shield = yes
+
+	AB_Shahi_Buddhist_Diplomacy = {
+		icon = mission_buddhist_monk_praying
+		position = 1
+		provinces_to_highlight = {
+			is_capital = yes
+			owner = {
+				religion = vajrayana
+				NOT = {
+					has_opinion = {
+						who = ROOT
+						value = 75
+					}
+				}
+			}
+			ROOT = {
+				NOT = {
+					any_country = {
+						religion = vajrayana
+						has_opinion = {
+							who = ROOT
+							value = 75
+						}
+					}
+				}
+			}
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = AB_SHH_trigger_1_tt
+				any_country = {
+					religion = vajrayana
+					has_opinion = {
+						who = ROOT
+						value = 75
+					}
+				}
+			}
+			legitimacy_equivalent = 95
+			stability = 1
+		}
+		effect = { 
+			add_country_modifier = {
+				name = AB_SHH_Buddhist_Diplomacy
+				duration = 9125
+			}
+
+			tibet_region = { discover_country = ROOT }
+			china_superregion = { discover_country = ROOT }
+		}
+	}
+
+	AB_Shahi_Confirming_Legitimacy = {
+		icon = mission_restore_faith_in_the_throne
+		position = 2
+		required_missions = { AB_Shahi_Buddhist_Diplomacy }
+		provinces_to_highlight = {
+			is_capital_of = event_target:EmperorOfChina
+		}
+		trigger = {
+			if = {
+				legitimacy_equivalent = 95
+				stability = 1
+				limit = { has_dlc = "Mandate of Heaven" }
+				OR = {
+					is_emperor_of_china = yes
+					event_target:EmperorOfChina = {
+						has_opinion = {
+							who = ROOT
+							value = 75
+						}
+					}
+					NOT = {
+						any_country = {
+							is_emperor_of_china = yes
+						}
+					}
+				}
+			}
+			else = {
+				legitimacy_equivalent = 95
+				stability = 1
+				any_country = {
+					capital_scope = { superregion = china_superregion }
+					has_opinion = {
+						who = ROOT
+						value = 75
+					}
+				}
+			}
+		}
+		effect = { 
+			country_event = { id = AB_Shahi_Event.5 }
+		}
+	}
+	AB_Shahi_Commercial_Power = {
+		icon = mission_dominate_trade_in_bengal
+		position = 3
+		required_missions = { 
+			AB_Shahi_Confirming_Legitimacy
+			AB_Shahi_Buildingblocks_Nation
+		}
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				NOT = { base_production = 4 }
+				has_trade_building_trigger = no
+			}
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 2
+				has_trade_building_trigger = yes
+				base_production = 4
+			}
+		}
+		effect = { 
+			add_country_modifier = {
+				name = AB_SHH_newfound_commercial_interest
+				duration = 9125
+			}
+			if = {
+				limit = {
+					has_estate_privilege = estate_burghers_land_of_commerce
+				}
+				custom_tooltip = AB_SHH_crownlands_if_privilege_tt
+			}
+			else = {
+				custom_tooltip = AB_SHH_crownlands_if_privilege_tt_no
+			}
+			hidden_effect = {
+				if = {
+					limit = { has_estate_privilege = estate_burghers_land_of_commerce }
+					change_estate_land_share = {
+						estate = all
+						share = -5
+					}
+				}
+			}
+		}
+	}
+	AB_Shahi_Caravanserai = {
+		icon = mission_conquer_malwa_bah
+		position = 4
+		required_missions = { AB_Shahi_Commercial_Power }
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_trade_building_trigger = no
+				has_road_building_trigger = no
+				AND = {
+					province_has_center_of_trade_of_level = 1
+					NOT = { province_has_center_of_trade_of_level = 2 }
+				}
+				NOT = { base_production = 8 }
+			}
+		}
+		trigger = {
+			if = {
+				limit = {
+					has_dlc = "Dharma"
+				}
+				num_of_owned_provinces_with = {
+					value = 2
+					has_trade_building_trigger = yes
+					has_road_building_trigger = yes
+					province_has_center_of_trade_of_level = 2
+					base_production = 8
+				}
+			}
+			else = {
+				num_of_owned_provinces_with = {
+					value = 2
+					has_trade_building_trigger = yes
+					has_road_building_trigger = yes
+					base_production = 8
+				}
+			}
+		}
+		effect = { 
+			random_owned_province = {
+				limit = {
+					has_trade_building_trigger = yes
+					has_road_building_trigger = yes
+					province_has_center_of_trade_of_level = 2
+					base_production = 8
+				}
+				upgrade_road_building = yes
+				upgrade_trade_building = yes
+				set_province_flag = AB_SHH_upgraded_road
+			}
+			random_owned_province = {
+				limit = {
+					has_trade_building_trigger = yes
+					has_road_building_trigger = yes
+					province_has_center_of_trade_of_level = 2
+					base_production = 8
+					NOT = { has_province_flag = AB_SHH_upgraded_road }
+				}
+				upgrade_road_building = yes
+				upgrade_trade_building = yes
+			}
+			add_country_modifier = {
+				name = "seljuk_bridging"
+				duration = 7300
+			}
+			define_advisor = {
+				type = planner
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	AB_Shahi_Global_Market = {
+		icon = mission_malayan_viceroyalty
+		position = 5
+		required_missions = { 
+			AB_Shahi_Caravanserai 
+			AB_Shahi_National_Treasure
+		}
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					province_id = 4341
+					4341 = {
+						NOT = { is_strongest_trade_power = ROOT }
+					}
+				}
+				AND = {
+					province_id = 1334
+					NOT = {
+						1334 = {
+							trade_share = {
+								country = ROOT
+								share = 30
+							}
+						}
+					}
+				}
+				AND = {
+					province_id = 507
+					507 = {
+						NOT = {
+							trade_share = {
+								country = ROOT
+								share = 80
+							}
+						}
+					}
+				}
+				AND = {
+					province_id = 1320
+					1320 = {
+						NOT = { trade_range = ROOT }
+					}
+				}
+			}
+		}
+		trigger = {
+			num_of_merchants = 4
+			507 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			4341 = { is_strongest_trade_power = ROOT }
+			1334 = {
+				trade_share = {
+					country = ROOT
+					share = 30
+				}
+			}
+			has_global_modifier_value = {
+				which = trade_efficiency
+				value = 0.5
+			}
+			1320 = { trade_range = ROOT }
+		}
+		effect = { 
+			add_years_of_trade_income = {
+				years = 1
+				custom_tooltip = eng_trade_income
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = AB_SHH_if_time_get_global_trade_tt
+			if = {
+				limit = {
+					NOT = { is_institution_enabled = global_trade }
+				}
+				set_country_flag = AB_SHH_discover_global_trade
+			}
+		}
+	}
+	AB_Shahi_Center_World = {
+		icon = mission_indian_empire
+		position = 6
+		required_missions = { 
+			AB_Shahi_Global_Market
+		}
+		provinces_to_highlight = {
+			ROOT = {
+				home_trade_node = {
+					province_id = PREV_PREV
+				}
+			}
+		}
+		trigger = {
+			home_trade_node = {
+				highest_value_trade_node = yes
+				trade_node_value = 200
+			}
+		}
+		effect = { 
+			add_country_modifier = {
+				name = AB_SHH_center_world
+				duration = -1
+			}
+			custom_tooltip = AB_SHH_commercial_school_afghanistan_modifier_tt
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = AB_SHH_Merchant_trade_power_tt
+			set_country_flag = AB_SHH_activate_triggered_modifier
+		}
+	}
+}

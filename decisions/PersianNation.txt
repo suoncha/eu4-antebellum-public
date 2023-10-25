@@ -1,0 +1,150 @@
+country_decisions = {
+
+	persian_nation = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			was_never_end_game_tag_trigger = yes
+			NOT = { has_country_flag = formed_persia_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			OR = {
+				ai = no
+				NOT = { exists = PER }
+			}
+			NOT = { tag = MUG }
+			NOT = { tag = TIM }
+			NOT = { tag = PER }
+			NOT = { tag = HLR }
+			NOT = { tag = ROM }
+			NOT = { tag = PAP }
+			NOT = { tag = TUR }
+			NOT = { tag = BYZ }
+			NOT = { tag = ARB }
+			NOT = { tag = ROB }
+			NOT = { tag = ZNN }
+			NOT = { tag = JLR }
+			NOT = { tag = ABS }
+			OR = {
+				has_reform = persianprince
+				has_reform = persianprincet
+			}
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+			NOT = { exists = PER }
+			NOT = { exists = PRZ }
+			NOT = { exists = PRC }
+			NOT = { exists = PMN }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4338
+				province_id = 4341
+				province_id = 429
+				province_id = 4326
+				province_id = 445
+				province_id = 431
+				province_id = 2218
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			is_tribal = no
+			if = {
+				limit = {
+					ai = yes
+				}
+				num_of_owned_provinces_with = {
+					region = persia_region
+					value = 30
+				}
+			}
+			else = {
+				owns_core_province = 4338
+				owns_core_province = 4341
+				owns_core_province = 429
+				owns_core_province = 4326
+				owns_core_province = 445
+				owns_core_province = 431
+				owns_core_province = 2218
+			}
+		}
+		effect = {
+			add_prestige = 25
+			if = {
+				limit = {
+					religion = zoroastrian
+				}
+				change_tag = PER
+			}
+			else_if = {
+				limit = {
+					religion_group = muslim
+				}
+				change_tag = PRZ
+			}
+			else_if = {
+				limit = {
+					religion_group = christian
+				}
+				change_tag = PRC
+			}
+			swap_non_generic_missions = yes
+			remove_non_electors_emperors_from_empire_effect = yes
+			set_government_rank = 3
+			if = {
+				limit = {
+					government = theocracy
+				}
+				add_government_reform = persianempiret
+			}
+			if = {
+				limit = {
+					government = monarchy
+					is_revolutionary = no
+				}
+				add_government_reform = persianempire
+			}
+			if = {
+				limit = {
+					has_reform = states_general_reform
+				}
+				remove_government_reform = states_general_reform
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			if = {
+				limit = {
+					NOT = { primary_culture = persian }
+				}
+				change_primary_culture = persian
+			}
+			set_country_flag = formed_persia_flag
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+	
+}

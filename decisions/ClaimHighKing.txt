@@ -1,0 +1,91 @@
+country_decisions = {
+
+	claim_high_king = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			OR = {
+				primary_culture = irish
+				primary_culture = norse_gael
+			}
+			NOT = {
+				OR = {
+					exists = IRE
+					exists = FNG
+					exists = GDL
+				}
+				OR = {
+					tag = ENG
+					tag = WLS
+					tag = SCO
+					tag = CRN
+					tag = GBR
+				}
+			}
+			# We need to check ourselves too, otherwise we will
+			# display this decision to the current High King
+			all_countries_including_self = {
+				NOT = { 
+					has_country_modifier = ire_high_king_opp
+					# The Irish High King and Reformed Irish High King
+					# reforms indicate someone has successfully
+					# unified the Island and removed the opposition
+					has_reform = irish_highking
+					has_reform = irish_highking_reform
+				}
+			}
+			capital_scope = {
+				OR = {
+					area = ulster_area
+					area = connacht_area
+					area = munster_area
+					area = leinster_area
+				}
+			}
+		}
+		
+		allow = {
+			is_at_war = no
+			ulster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			munster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			leinster_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			connacht_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			has_regency = no
+			is_free_or_tributary_trigger = yes
+			legitimacy = 90
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ire_high_king_opp
+				duration = -1
+			}
+			hidden_effect = {
+				# There is a new high king, clear this flag.
+				every_country = {
+					limit = {
+						has_country_flag = dismantled_the_high_king
+					}
+					clr_country_flag = dismantled_the_high_king
+				}
+			}
+			add_government_reform = irish_highking_opp
+		}
+		ai_will_do = {
+			factor = 5
+		}
+		ai_importance = 400
+	}
+}

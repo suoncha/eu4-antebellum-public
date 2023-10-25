@@ -1,0 +1,202 @@
+namespace = ab_china
+normal_or_historical_nations = yes
+
+country_event = {
+	id = ab_china.1
+	title = "ab_china.1.t"
+	desc = "ab_china.1.d"
+	picture = AB_DRAGON_eventPicture
+
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_china.1.a
+			add_army_tradition = 25
+			add_country_modifier = {
+				name = china_suppress
+				duration = 9125
+			}
+			south_china_region  = {
+				limit = {
+					NOT = { is_core = ROOT	}
+					NOT = { area = taiwan_area }
+				}
+				add_core = ROOT
+			}
+			xinan_region = {
+				limit = {
+					NOT = { is_core = ROOT	}
+				}
+				add_core = ROOT
+			}
+	}
+}
+
+country_event = {
+	id = ab_china.2
+	title = ab_china.2.t
+	desc = ab_china.2.d
+	picture = IMPERIAL_SEAL_eventPicture
+	is_triggered_only = yes
+	option = {
+		name = ab_china.2.a
+		add_stability_or_adm_power = yes
+		add_country_modifier = {
+			name = "the_sacred_edict"
+			duration = -1
+		}
+	}
+}
+
+country_event = {
+	id = ab_china.3
+	title = ab_china.3.t
+	desc = ab_china.3.d
+	picture = CHINESE_GENERAL_eventPicture
+	is_triggered_only = yes
+	option = {
+		name = ab_china.3.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		add_country_modifier = {
+			name = china_dynasty
+			duration = 9125
+		}
+		liaoning_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+country_event = {
+	id = ab_china.4
+	title = ab_china.4.t
+	desc = ab_china.4.d
+	picture = URBANISATION_INCIDENT_eventPicture
+	is_triggered_only = yes
+	option = {
+		name = ab_china.4.a
+		custom_tooltip = CHINA_CULTURE_CHANGE
+		hidden_effect = {
+			change_primary_culture = chinese_culture
+			set_ruler_culture = chinese_culture
+			set_heir_culture = chinese_culture
+			set_consort_culture = chinese_culture
+		}
+		hidden_effect = {
+			every_province = {
+				limit = { superregion = china_superregion }
+				change_culture = chinese_culture
+			}
+		}
+		hidden_effect = {
+			every_province = {
+				limit = { culture_group = east_asian }
+				change_culture = chinese_culture
+			}
+				every_country = {
+					limit = {
+						culture_group = east_asian
+					}
+					change_primary_culture = chinese_culture
+					set_ruler_culture = chinese_culture
+					if = {
+						limit = {
+							has_heir = yes
+						}
+						set_heir_culture = chinese_culture
+					}
+					if = {
+						limit = {
+							has_consort = yes
+							culture_group = east_asian
+						}
+						set_consort_culture = chinese_culture
+					}
+				}
+		}
+		add_country_modifier = {
+			name = china_sinification
+			duration = -1
+		}
+	}
+}
+
+country_event = {
+	id = ab_china.5
+	title = ab_china.5.t
+	desc = ab_china.5.d
+	picture = IMPERIAL_SEAL_eventPicture
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_china.5.a
+		custom_tooltip = AB_CHINA_DARK_RED
+		change_country_color = { 
+			color = { 167  33  62 }
+		}
+		set_country_flag = has_overriden_color_flag
+		set_country_flag = china_picked_color
+	}
+	
+	option = {
+		name = ab_china.5.b
+		custom_tooltip = AB_CHINA_BRIGHT_RED
+		change_country_color = { 
+			color = { 236  8  34 }
+		}
+		set_country_flag = has_overriden_color_flag
+		set_country_flag = china_picked_color
+	}
+	
+	option = {
+		name = ab_china.5.c
+		custom_tooltip = AB_CHINA_AMBER
+		change_country_color = { 
+			color = { 255 192 0 }
+		}
+		set_country_flag = has_overriden_color_flag
+		set_country_flag = china_picked_color
+	}
+	
+	option = {
+		name = ab_china.5.de
+		custom_tooltip = AB_CHINA_ROYAL_YELLOW
+		change_country_color = { 
+			color = { 250 218 94 }
+		}
+		set_country_flag = has_overriden_color_flag
+		set_country_flag = china_picked_color
+	}
+	
+	option = {
+		name = ab_china.5.e
+		custom_tooltip = AB_CHINA_JADE
+		change_country_color = { 
+			color = { 0 163 108 }
+		}
+		set_country_flag = has_overriden_color_flag
+		set_country_flag = china_picked_color
+	}
+	
+	option = {
+		name = ab_china.5.f
+		custom_tooltip = AB_CHINA_LIGHT_PURPLE
+		change_country_color = { 
+			color = { 132 108 193 }
+		}
+		set_country_flag = has_overriden_color_flag
+		set_country_flag = china_picked_color
+	}
+	
+	option = {
+		name = ab_china.5.g
+	}
+}

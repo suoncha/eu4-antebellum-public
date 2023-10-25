@@ -1,0 +1,138 @@
+# This casus belli is given to Moravia over all heretic (from Orhtodox POV)
+# HRE members for 300 months via completion of mva_fate_empire mission
+cb_mva_fate_empire = {
+	is_triggered_only = yes
+	war_goal = superiority_heretic
+}
+
+cb_ire_high_king = {
+	exclusive = yes
+	independence = yes
+
+	prerequisites_self = {
+		is_subject_of_type = ire_vassal
+		OR = {
+			primary_culture = irish
+			primary_culture = norse_gael
+		}
+	}
+
+	prerequisites = {
+		FROM = { has_reform = irish_highking_opp } 
+	}
+	
+	war_goal = take_capital_become_hk
+
+}
+cb_ire_high_king_king = {
+	valid_for_subject = no
+
+	prerequisites_self = {
+		is_subject = no
+		OR = {
+			primary_culture = irish
+			primary_culture = norse_gael
+		}
+	}
+
+	prerequisites = {
+		FROM = { has_reform = irish_highking_opp } 
+	}
+	
+	war_goal = take_capital_become_hk	
+	
+}
+
+cb_ire_force_ruirech = {
+	valid_for_subject = no
+
+	prerequisites_self = {
+		OR = {
+			primary_culture = irish
+			primary_culture = norse_gael
+		}
+	}
+
+	prerequisites = {
+		FROM = {
+			OR = {
+				primary_culture = irish
+				primary_culture = norse_gael
+			}
+			capital_scope = {
+				# Region of Ireland
+				OR = {
+					area = leinster_area
+					area = munster_area
+					area = ulster_area
+					area = connacht_area
+				}
+			}
+		}
+		OR = {
+			has_reform = irish_highking_opp
+			NOT = {
+				any_country = { has_reform = irish_highking_opp }
+			}
+		}
+	}
+
+	war_goal = take_capital_force_ruirech
+}
+
+# This casus belli is given to all Norse-Gaelic Irish minors that
+# complete the mission norse_remnants_vke.
+cb_irish_crusade = {
+	is_triggered_only = yes
+	war_goal = superiority_crusade
+}
+
+# Warlord Unite China
+cb_china_unification = {
+	valid_for_subject = no
+
+	prerequisites_self = {
+		is_free_or_tributary_trigger = yes
+		OR = {
+			AND = {
+				has_dlc = "Mandate of Heaven"
+				has_government_attribute = unification_of_china_cb
+			}
+			AND = {
+				NOT = { has_dlc = "Mandate of Heaven" }
+				culture_group = east_asian #Chinese
+				OR = {	#Manchus won't get this unless they unify
+					tag = MCH
+					tag = QNG
+					NOT = { primary_culture = manchu }
+				}
+			}
+		}
+	}
+
+	prerequisites = {
+		FROM = { #Applies against other powers in China unless they have the Mandate of Heaven
+			NOT = { is_subject_of = ROOT }
+			OR = {
+				has_dlc = "Mandate of Heaven"
+				culture_group = east_asian #Chinese
+			}
+			any_owned_province = {
+				OR = {
+					region = north_china_region
+					region = xinan_region
+					region = south_china_region
+				}
+			}
+			NOT = { has_country_modifier = the_mandate_of_heaven }
+		}
+		is_neighbor_of = FROM
+	}
+
+	attacker_disabled_po = {
+		po_become_tributary_state
+		po_subjugate_tributary_state
+	}
+
+	war_goal = superiority_chinese_unification
+}

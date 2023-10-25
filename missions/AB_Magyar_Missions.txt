@@ -1,0 +1,1090 @@
+mgy_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = MGY
+	}
+	has_country_shield = yes
+	
+	mgy_empire = {
+	    icon = humiliate_austria
+		required_missions = { mgy_moravia }
+		position = 4
+		
+		trigger = {
+		    inner_austria_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    carinthia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    austria_proper_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = inner_austria_area
+				area = carinthia_area
+				area = austria_proper_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 25
+		    south_german_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	mgy_burn_germany = {
+	    icon = interfere_in_germany
+		required_missions = { mgy_empire }
+		position = 5
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				is_core = ROOT
+				region = south_german_region
+				value = 30
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = south_german_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "mgy_expansionism"
+				duration = -1
+			}
+		    france_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    north_german_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	mgy_francia = {
+	    icon = centralize_france
+		required_missions = { mgy_burn_germany }
+		position = 6
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				is_core = ROOT
+				region = france_region
+				value = 30
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = france_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_general = { tradition = 100 }
+		    iberia_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    low_countries_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    italy_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	mgy_iberia = {
+	    icon = mission_castillian_aggression
+		required_missions = { mgy_francia }
+		position = 7
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				is_core = ROOT
+				region = iberia_region
+				value = 30
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = iberia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mil_power = 150
+			add_country_modifier = {
+				name = "mgy_razing"
+				duration = -1
+			}
+		}
+	}
+}
+
+mgy_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = MGY
+	}
+	has_country_shield = yes
+	
+	mgy_prepare_for_war = {
+	    icon = mission_non-western_cavalry_raid
+		required_missions = {  }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_mil_power = 50
+			add_country_modifier = {
+				name = "magyars_war"
+				duration = 3650
+			}
+			transdanubia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			slovakia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			eastslovakia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	mgy_nitra = {
+		icon = fortress_of_belgrade
+		position = 2
+		required_missions = { mgy_prepare_for_war }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = slovakia_area
+				area = eastslovakia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			slovakia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			eastslovakia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+		    add_accepted_culture_or_dip_power = {
+		    	culture = slovak
+		    }
+			moravia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	mgy_moravia = {
+		icon = fight_bosnian_heresies
+		position = 3
+		required_missions = { mgy_nitra }
+		
+		provinces_to_highlight = {
+			area = moravia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			moravia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_treasury = 350
+			silesia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			malopolska_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			austria_proper_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			inner_austria_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			carinthia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	mgy_polish_invasion = {
+		icon = revenge_for_nicopolis
+		position = 4
+		required_missions = { mgy_moravia }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = silesia_area
+				area = malopolska_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			silesia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			malopolska_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_manpower = 10
+			poland_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	mgy_poland = {
+		icon = polish_diplomacy
+		position = 5
+		required_missions = { mgy_polish_invasion }
+		
+		provinces_to_highlight = {
+			region = poland_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				is_core = ROOT
+				region = poland_region
+				value = 15
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "mgy_poland"
+				duration = -1
+			}
+			baltic_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			wendia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	mgy_italy = {
+	    icon = mission_rule_italy
+		required_missions = { mgy_francia }
+		position = 7
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				is_core = ROOT
+				region = italy_region
+				value = 25
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = italy_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "mgy_expand_tribal"
+				duration = -1
+			}
+		}
+	}
+	
+	mgy_homeland = {
+	    icon = mission_farm
+		required_missions = { }
+		position = 9
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { base_production = 10 }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				base_production = 10
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "mgy_homeland"
+				duration = 5475
+			}
+		}
+	}
+	
+	mgy_arpad = {
+	    icon = mission_noble_council
+		required_missions = { mgy_homeland }
+		position = 10
+		
+		trigger = {
+			num_of_royal_marriages = 3
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "mgy_arpad"
+				duration = -1
+			}
+		}
+	}
+}
+
+mgy_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = MGY
+	}
+	has_country_shield = yes
+	
+	mgy_transdanubia = {
+		icon = mission_advance_to_the_dnieper
+		position = 2
+		required_missions = { mgy_prepare_for_war }
+		
+		provinces_to_highlight = {
+			area = transdanubia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			transdanubia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "magyars_revenge"
+				duration = 3650
+			}
+		}
+	}
+	
+	mgy_adriatic = {
+		icon = secure_the_sava
+		position = 4
+		required_missions = { mgy_carpathia }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = croatia_area
+				area = east_adriatic_coast_area
+				area = slavonia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			croatia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			slavonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			east_adriatic_coast_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_horde_unity = 15
+			define_advisor = {
+				type = commandant
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	mgy_etelkoz = {
+		icon = mission_chinese_general_riding
+		position = 5
+		required_missions = { mgy_romania }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = yedisan_area
+				area = podolia_volhynia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			yedisan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			podolia_volhynia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			define_advisor = {
+				type = dragoon
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			west_dniepr_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_dniepr_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	mgy_kiev = {
+		icon = mission_steppe_warriors
+		position = 6
+		required_missions = { mgy_etelkoz }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = east_dniepr_area
+				area = west_dniepr_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			east_dniepr_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			west_dniepr_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_treasury = 500
+			add_country_modifier = {
+				name = "mgy_tatar"
+				duration = -1
+			}
+			ruthenia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			russia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ural_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	mgy_ruthenia = {
+		icon = mission_rule_ruthenia
+		position = 7
+		required_missions = { mgy_kiev }
+		
+		provinces_to_highlight = {
+			region = ruthenia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			ruthenia_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_horde_unity = 25
+			add_country_modifier = {
+				name = "mgy_ruined_ruthenia"
+				duration = -1
+			}
+		}
+	}
+	
+	mgy_horde = {
+		icon = mission_forthehorde
+		position = 8
+		required_missions = { mgy_magna mgy_ruthenia mgy_iberia mgy_italy mgy_byzantium }
+		
+		trigger = {
+			has_reform = steppe_horde
+			total_development = 1000
+			horde_unity = 90
+			army_tradition = 90
+		}
+		effect = {
+			override_country_name = HUNGARIAN_HORDE
+			add_country_modifier = {
+				name = "mgy_horde"
+				duration = -1
+			}
+		}
+	}
+	
+	mgy_military = {
+		icon = mission_colonial
+		position = 10
+		required_missions = { mgy_homeland }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = regimental_camp
+					has_building = conscription_center
+					has_building = barracks
+					has_building = training_fields
+				}
+			}
+		}
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = regimental_camp
+						has_building = conscription_center
+						has_building = barracks
+						has_building = training_fields
+					}
+				}
+				amount = 20
+			}
+		}
+		effect = {
+			add_country_modifier = {
+				name = "mgy_military"
+				duration = -1
+			}
+		}
+	}
+	
+	mgy_dread = {
+		icon = mission_abu_saids_dream
+		position = 11
+		required_missions = { mgy_military }
+		
+		trigger = {
+			num_of_cavalry = 60
+		}
+		effect = {
+			add_country_modifier = {
+				name = "mgy_dread"
+				duration = -1
+			}
+		}
+	}
+}
+
+mgy_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = MGY
+	}
+	has_country_shield = yes
+	
+	mgy_carpathia = {
+		icon = mission_unite_home_region
+		position = 3
+		required_missions = { mgy_bacs mgy_nitra mgy_transdanubia }
+		
+		trigger = {
+			stability = 1
+			religious_unity = 0.85
+		}
+		
+		effect = {
+			country_event = { id = magyar_events.1 }
+			wallachia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			moldavia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bessarabia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			croatia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			slavonia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_adriatic_coast_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	mgy_serbia = {
+		icon = defeat_the_serbs
+		position = 6
+		required_missions = { mgy_bulgaria }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = serbia_area
+				area = rascia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			serbia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			rascia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_manpower = 10
+		}
+	}
+	
+	mgy_magna = {
+		icon = mission_plain
+		position = 7
+		required_missions = { mgy_kiev }
+		
+		provinces_to_highlight = {
+			region = ural_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			ural_region = {
+                type = all
+                OR = {
+                    country_or_non_sovereign_subject_holds = ROOT
+                    is_empty = yes
+                }
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = "mgy_homelands"
+				duration = -1
+			}
+		}
+	}
+	
+	mgy_raze = {
+	    icon = mission_rb_control_state_religion
+		required_missions = { }
+		position = 9
+		
+		trigger = {
+			is_nomad = yes
+		custom_trigger_tooltip = {
+			tooltip = achievement_pyramid_of_skulls_tooltip
+			has_country_flag = have_razed_wealthy_province
+		}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "mgy_raze"
+				duration = -1
+			}
+		}
+	}
+	
+	mgy_treasury = {
+	    icon = mission_war_chest
+		required_missions = { mgy_raze }
+		position = 11
+		
+		trigger = {
+			treasury = 1000
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "mgy_treasure"
+				duration = -1
+			}
+		}
+	}
+}
+		
+
+mgy_fifth_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = MGY
+	}
+	has_country_shield = yes
+	
+	mgy_bacs = {
+		icon = mission_have_two_subjects
+		position = 2
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			OR = {
+			province_id = 4126
+			province_id = 158
+			province_id = 162
+			}
+		}
+		
+		trigger = {
+			owns = 4126
+			owns = 158
+			owns = 162
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "mgy_tribes"
+				duration = 5475
+			}
+		}
+	}
+	
+	mgy_romania = {
+		icon = mission_impaled_soldies
+		position = 4
+		required_missions = { mgy_carpathia }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = bessarabia_area
+				area = wallachia_area
+				area = moldavia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			bessarabia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			wallachia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			moldavia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_horde_unity = 15
+			add_adm_power = 100
+			add_country_modifier = {
+				name = "mgy_impaled"
+				duration = 9125
+			}
+		    bulgaria_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    silistria_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		    yedisan_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    podolia_volhynia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	mgy_bulgaria = {
+		icon = push_on_to_bulgaria
+		position = 5
+		required_missions = { mgy_romania }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = silistria_area
+				area = bulgaria_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			bulgaria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			silistria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "mgy_balkan"
+				duration = 5475
+			}
+		    thrace_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    serbia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		    rascia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+				}
+		}
+	}
+	
+	mgy_byzantium = {
+		icon = mission_based
+		position = 7
+		required_missions = { mgy_bulgaria }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = thrace_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			thrace_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.1
+			add_country_modifier = {
+				name = "mgy_byzantium"
+				duration = -1
+			}
+			balkan_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}

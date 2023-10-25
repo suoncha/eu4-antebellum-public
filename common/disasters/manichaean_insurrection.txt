@@ -1,0 +1,95 @@
+manichaean_insurrection = {
+	potential = {
+		OR = {
+			tag = PRZ
+			tag = PRC
+			tag = PMN
+			tag = PER
+		}
+		NOT = { has_country_flag = per_completed_mani_disaster }
+		is_free_or_tributary_trigger = yes
+		uses_doom = no
+		normal_or_historical_nations = yes
+		current_age = age_of_reformation
+	}
+
+	can_start = {
+		has_any_disaster = no
+		NOT = { stability = 1 }
+		NOT = {
+			religious_unity = 0.8
+		}
+		any_owned_province = {
+			religion = manichaean
+		}
+	}
+
+	progress = {
+		modifier = {
+			factor = 1
+			unrest = 1.5
+		}
+		modifier = {
+			factor = 1
+			NOT = { stability = 1 }
+		}
+		modifier = {
+			factor = 1
+			NOT = { religious_unity = 0.75 }
+		}
+		modifier = {
+			factor = 1
+			corruption = 1
+		}
+		modifier = {
+			factor = 3
+			any_owned_province = {
+				religion = manichaean
+			}
+		}
+		modifier = {
+			factor = 3
+			war_exhaustion = 10
+		}
+	}
+
+	can_stop = {
+		has_any_disaster = yes
+	}
+
+	modifier = {
+		global_unrest = 10
+		tolerance_heretic = -3
+		tolerance_heathen = -3
+		stability_cost_modifier = 0.25
+	}
+
+	can_end = {
+		if = {
+			limit = {
+				religion = manichaean
+			}
+			stability = 1
+			religious_unity = 0.75
+			NOT = { num_of_rebel_controlled_provinces = 1 }
+			NOT = { num_of_rebel_armies = 1 }
+		}
+		else = {
+			stability = 1
+			religious_unity = 0.75
+			NOT = { num_of_rebel_controlled_provinces = 1 }
+			NOT = { num_of_rebel_armies = 1 }
+			NOT = {
+				any_owned_province = {
+					religion = manichaean
+				}
+			}
+		}
+	}
+
+	on_start = ab_mani.1
+	on_end = ab_mani.2
+	
+	on_monthly = {
+	}
+}

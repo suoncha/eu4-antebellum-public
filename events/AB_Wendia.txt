@@ -1,0 +1,65 @@
+namespace = ab_wendia
+
+#The Destruction of Aachen
+country_event = {
+	id = ab_wendia.1
+	title = ab_wendia.1.t
+	desc = ab_wendia.1.d
+	picture = HRE_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_wendia.1.a
+		add_years_of_income = 1.5
+		add_country_modifier = {
+			name = wee_charlemagne
+			duration = -1
+		}
+		if = {
+			limit = {
+				any_country = {
+					is_emperor = yes
+				}
+			}
+			emperor = {
+				add_stability = -1
+				add_imperial_influence = -25
+			}
+		}
+		custom_tooltip = WEE_AACHAEN
+	}
+}
+
+#The Balto-Slavic Union
+country_event = {
+	id = ab_wendia.2
+	title = ab_wendia.2.t
+	desc = ab_wendia.2.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_wendia.2.a
+		set_country_flag = wee_union_flag
+		custom_tooltip = WEE_BALTIC_UNION
+
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					culture_group = baltic
+					has_owner_accepted_culture = no
+				}
+				add_province_modifier = {
+					name = wee_union_modifier
+					duration = -1
+				}
+			}
+		}
+	}
+}

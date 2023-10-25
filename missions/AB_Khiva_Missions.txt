@@ -1,0 +1,1665 @@
+AB_Khiva_Missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+            tag = MNK
+            tag = CHS
+        }
+	}
+	has_country_shield = yes
+
+    mnk_host = {
+        required_missions = { }
+        icon = mission_persian_soldiers
+        position = 1
+        trigger = {
+    		army_size_percentage = 1
+        }
+        effect = {
+            add_country_modifier = {
+                name = mnk_tribal_army
+                duration = 7300
+            }
+            set_ruler_flag = ab_mnk_tribes_loyalty_per_battle_won_flag
+            custom_tooltip = ab_mnk_tribes_loyalty_per_battle_won_tt
+        }
+    }
+
+    mnk_warriors = {
+        required_missions = { mnk_mongols }
+        icon = mission_cossack_cavalry
+        position = 3
+        provinces_to_highlight = {
+            has_terrain = steppe
+            OR = {
+                NOT = { num_of_times_improved_by_owner = 3 }
+                NOT = { base_manpower = 5 }
+            }
+            owned_by = ROOT
+        }
+        trigger = {
+    		num_of_owned_provinces_with = {
+                has_terrain = steppe
+                num_of_times_improved_by_owner = 3
+                base_manpower = 5
+                value = 5
+            }
+        }
+        effect = {
+            custom_tooltip = ab_unlock_steppe_warriors_privilege
+            set_country_flag = ab_mnk_steppe_warriors
+            hidden_effect = {
+                AB_distribute_development = {
+                    type = manpower
+                    amount = 10
+                    limit = "has_terrain = steppe"
+                }
+            }
+        }
+    }
+
+    mnk_silk = {
+        required_missions = { mnk_yuan }
+        icon = mission_central_asian_city
+        position = 5
+        provinces_to_highlight = {
+            OR = {
+                province_id = 739
+                province_id = 2124
+                province_id = 710
+            }
+            NOT = { country_or_non_sovereign_subject_holds = ROOT }
+        }
+        trigger = {
+    		739 = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            2124 = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            710 = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+        }
+        effect = {
+            739 = {
+                add_center_of_trade_level = 1
+                add_province_modifier = {
+                    name = mnk_monopolize_the_route
+                    duration = -1
+                }
+                add_base_production = 1
+            }
+            2124 = {
+                add_center_of_trade_level = 1
+                add_province_modifier = {
+                    name = mnk_monopolize_the_route
+                    duration = -1
+                }
+                add_base_production = 1
+            }
+            710 = {
+                add_center_of_trade_level = 1
+                add_province_modifier = {
+                    name = mnk_monopolize_the_route
+                    duration = -1
+                }
+                add_base_production = 1
+            }
+            custom_tooltip = AB_EMPTY
+            if = {
+                limit = {
+                    development_in_provinces = {
+                        value = 40
+                        trade_goods = silk
+                    }
+                }
+                custom_tooltip = AB_silk_40_dev
+            }
+            else = {
+                custom_tooltip = AB_silk_40_dev_no
+            }
+            hidden_effect = {
+                if = {
+                    739 = {
+                        change_trade_goods = silk
+                    }
+                    limit = {
+                        development_in_provinces = {
+                            value = 40
+                            trade_goods = silk
+                        }
+                    }
+                    for = {
+                        amount = 10
+                        effect = "
+                            random_owned_province = {
+                                limit = {
+                                    trade_goods = silk
+                                }
+                                add_base_production = 1
+                            }
+                        "
+                    }
+                }
+            }
+        }
+    }
+
+    mnk_confusius = {
+        required_missions = { mnk_silk }
+        icon = mission_scholar_officials
+        position = 6
+        provinces_to_highlight = {
+            province_id = 2140
+            OR = {
+                NOT = { development = 15 }
+                NOT = { owned_by = ROOT }
+            }
+        }
+        trigger = {
+    		OR = {
+                2140 = {
+                    owned_by = ROOT
+                    development = 15
+                }
+                calc_true_if = { 
+                    all_ally = {
+                        religion = confucianism
+                        trust = { who = ROOT value = 60 }
+                    }
+                    amount = 2
+                }
+            }
+        }
+        effect = {
+            custom_tooltip = ab_mnk_unlock_teachings_of_confusius
+            set_country_flag = mani_confucian_flag
+            add_adm_power = 100
+            add_prestige_or_monarch_power = { amount = 15 }
+            custom_tooltip = AB_EMPTY
+            custom_tooltip = ab_mnk_if_we_own_beijing
+            hidden_effect = {
+                if = {
+                    limit = {
+                        owns = 2140
+                    }
+                    set_country_flag = ab_mnk_buffed_confusius
+                }
+            }
+        }
+    }
+
+    mnk_conscription = {
+        required_missions = { mnk_army_reforms }
+        icon = mission_unite_west_india
+        position = 8
+        provinces_to_highlight = {
+            owned_by = ROOT
+            OR = {
+                NOT = { has_forcelimit_building_trigger = yes }
+                NOT = { base_manpower = 5 }
+            }
+        }
+        trigger = {
+    		num_of_owned_provinces_with = {
+                has_forcelimit_building_trigger = yes
+                base_manpower = 5
+                value = 10
+            }
+        }
+        effect = {
+            custom_tooltip = ab_mnk_developing_forcelimit_provinces_can_give_more_manpower
+        }
+    }
+
+    mnk_tactics = {
+        required_missions = { mnk_vulboshi }
+        icon = mission_control_the_ganges_delta
+        position = 10
+        trigger = {
+    		has_leader_with = {
+                total_pips = 15
+            }
+            army_reformer = 3
+            OR = {
+                mil = 5
+                monthly_mil = 11
+            }
+        }
+        effect = {
+            country_event = { id = mnk_flavor.5 }
+        }
+    }
+}
+
+AB_Khiva_Missions_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+            tag = MNK
+            tag = CHS
+        }
+	}
+	has_country_shield = yes
+
+    mnk_golden_horde = {
+        required_missions = { }
+        icon = mission_ghorde
+        position = 1
+        provinces_to_highlight = {
+            is_capital_of = GLH
+        }
+        trigger = {
+    		OR = {
+                GLH = {
+					custom_trigger_tooltip = {
+						tooltip = has_been_insulted_by_root
+						OR = {
+							has_opinion_modifier = {
+								who = ROOT
+								modifier = insulted
+							}
+							has_opinion_modifier = {
+								who = ROOT
+								modifier = scornfully_insulted
+							}
+						}
+					}
+				}
+                NOT = {
+                    exists = GLH
+                }
+                AND = {
+                    GLH = {
+                        has_opinion = { #Never can be completed really. Just throwing it in there for multiplayer games
+                            who = ROOT
+                            value = 100
+                        }
+                    }
+                    NOT = {
+                        is_subject_of_type_with_overlord = {
+                            who = GLH
+                            type = tributary_state
+                        }       
+                    }
+                }
+            }
+        }
+        effect = {
+            custom_tooltip = ab_if_insulted_or_bad_opinion
+            tooltip = {
+                if = {
+                    limit = {
+                        GLH = {
+                            has_opinion_modifier = {
+								who = ROOT
+								modifier = scornfully_insulted
+							}
+                        }
+                    }
+                    create_general = { tradition = 80 add_shock = 2 }
+                }
+                else = {
+                    create_general = { tradition = 60 add_shock = 1 }
+                    custom_tooltip = ab_mnk_upgraded_general_via_scornful_insult
+                }
+            }
+            custom_tooltip = AB_EMPTY
+            custom_tooltip = ab_if_positive_opinion
+            tooltip = {
+                GLH = {
+                    country_event = { id = mnk_flavor.2 }
+                }
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        GLH = {
+                            has_opinion_modifier = {
+                                who = ROOT
+                                modifier = scornfully_insulted
+                            }
+                        }
+                    }
+                    create_general = { tradition = 80 add_shock = 2 }
+                }
+                else_if = {
+                    limit = {
+                        OR = {
+                            NOT = {
+                                exists = GLH
+                            }
+                            GLH = {
+                                has_opinion_modifier = {
+						    		who = ROOT
+						    		modifier = insulted
+						    	}
+                            }
+                        }
+                    }
+                    create_general = { tradition = 60 add_shock = 1 }
+                }
+                else = {
+                    GLH = {
+                        save_event_target_as = golden_horde_tag
+                    }
+                    ROOT = {
+                        save_event_target_as = khiva_tag
+                    }
+                    event_target:golden_horde_tag = {
+                      country_event = { id = mnk_flavor.2 }
+                    }
+                }
+            }
+        }
+    }
+
+    mnk_mongols = {
+        required_missions = { mnk_golden_horde mnk_host }
+        icon = mission_non-western_cavalry_raid
+        position = 2
+        provinces_to_highlight = {
+            OR = {
+                area = nogai_area
+                area = khiva_area
+                area = kazakhstan_area
+                area = syr_darya_area
+            }
+            NOT = { country_or_non_sovereign_subject_holds = ROOT }
+        }
+        trigger = {
+    		num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                OR = {
+                    area = nogai_area
+                    area = khiva_area
+                    area = kazakhstan_area
+                    area = syr_darya_area
+                }
+                value = 10
+            }
+        }
+        effect = {
+            change_monarch_points_or_power = {
+                power = mil
+                points = 1
+            }
+            add_country_modifier = {
+                name = ab_mnk_triumph_against_hordes
+                duration = 7300
+            }
+        }
+    }
+
+    mnk_yuan = {
+        required_missions = { }
+        icon = mission_kowtow
+        position = 4
+        provinces_to_highlight = {
+            is_capital_of = YUA
+        }
+        trigger = {
+            OR = {
+                owns_core_province = 1816
+                has_good_relations_with_yuan_or_owner_of_beijing = yes
+                has_insulted_yuan_or_owner_of_beijing = yes
+            }
+        }
+        effect = {
+            if = {
+                limit = {
+                    OR = {
+                        has_insulted_yuan_or_owner_of_beijing = yes
+                        owns_core_province = 1816
+                    }
+                }
+                custom_tooltip = ab_mnk_if_insult
+            }
+            else = {
+                custom_tooltip = ab_mnk_if_insult_no
+            }
+            tooltip = {
+                add_mil_power = 50
+                add_prestige_or_monarch_power = { amount = 10 }
+                add_country_modifier = {
+                    name = ab_mnk_enemy_of_china
+                    duration = 5475
+                }
+            }
+            if = {
+                limit = {
+                    has_good_relations_with_yuan_or_owner_of_beijing = yes
+                }
+                if = {
+                    limit = {
+                        has_insulted_yuan_or_owner_of_beijing = yes
+                    }
+                    custom_tooltip = ab_mnk_if_opinion_precedence 
+                }
+                else = {
+                    custom_tooltip = ab_mnk_if_opinion
+                }
+            }
+            else = {
+                custom_tooltip = ab_mnk_if_opinion_no
+            }
+            tooltip = {
+                add_country_modifier = {
+                    name = ab_mnk_chinese_help
+                    duration = 5475
+                }
+                add_adm_power = 50
+                custom_tooltip = gain_15_trust_with_yua_or_owner_of_china
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        OR = {
+                            has_insulted_yuan_or_owner_of_beijing = yes
+                            owns_core_province = 1816
+                        }
+                    }
+                    add_country_modifier = {
+                        name = ab_mnk_enemy_of_china
+                        duration = 5475
+                    }
+                    add_prestige_or_monarch_power = { amount = 15 }
+                    add_mil_power = 50
+                }
+                else = {
+                    add_country_modifier = {
+                        name = ab_mnk_chinese_help
+                        duration = 5475
+                    }
+                    add_adm_power = 50
+                    if = {
+                        limit = {
+                            exists = YUA
+                        }
+                        add_trust = {
+                            who = YUA
+                            value = 15
+                            mutual = yes
+                        }
+                    }
+                    else = {
+                        1816 = {
+                            owner = {
+                                ROOT = {
+                                    add_trust = {
+                                        who = PREV
+                                        value = 15
+                                        mutual = yes
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    mnk_army_reforms = {
+        required_missions = { }
+        icon = mission_new_army
+        position = 7
+        trigger = {
+    		army_size = 15
+            manpower = 10
+        }
+        effect = {
+			add_army_professionalism = 0.05
+            add_country_modifier = {
+                name = mnk_military_reforms
+                duration = 7300
+            }
+        }
+    }
+
+    mnk_route = {
+        required_missions = { mnk_army_reforms }
+        icon = mission_entrepot_of_india
+        position = 8
+        provinces_to_highlight = {
+            OR = {
+                trade_goods = silk
+                trade_goods = cloth
+            }
+            OR = {
+                NOT = { has_fort_building_trigger = yes }
+                NOT = { development = 10 }
+            }
+            owned_by = ROOT
+        }
+        trigger = {
+    		num_of_owned_provinces_with = {
+                OR = {
+                    trade_goods = silk
+                    trade_goods = cloth
+                }
+                has_fort_building_trigger = yes
+                development = 10
+                value = 5
+            }
+        }
+        effect = {
+            add_country_modifier = {
+                name = mnk_secured_trade
+                duration = 7300
+            }
+            custom_tooltip = ab_mnk_random_province
+            tooltip = {
+                add_province_modifier = {
+                    name = mnk_fortified_outpost
+                    duration = -1
+                }
+            }
+            hidden_effect = {
+                random_owned_province = {
+                    limit = {
+                        OR = {
+                            trade_goods = silk
+                            trade_goods = cloth
+                        }
+                        has_fort_building_trigger = yes
+                        development = 10
+                    }
+                    add_province_modifier = {
+                        name = mnk_fortified_outpost
+                        duration = -1
+                    }
+                }
+                random_owned_province = {
+                    limit = {
+                        OR = {
+                            trade_goods = silk
+                            trade_goods = cloth
+                        }
+                        has_fort_building_trigger = yes
+                        development = 10
+                    }
+                    add_province_modifier = {
+                        name = mnk_fortified_outpost
+                        duration = -1
+                    }
+                }
+            }
+        }
+    }
+
+    mnk_vulboshi = {
+        required_missions = { mnk_route mnk_conscription }
+        icon = mission_rajendras_ambition
+        position = 9
+        trigger = {
+    		OR = {
+                army_tradition = 35
+                army_professionalism = 0.5
+            }
+            OR = {
+                ruler_has_personality = martial_educator_personality
+                monthly_mil = 10
+            }
+            army_size = 40
+            has_global_modifier_value = {
+                which = discipline
+                value = 0.1
+            }
+        }
+        effect = {
+            add_country_modifier = {
+                name = mnk_centralized_army
+                duration = -1
+            }
+            custom_tooltip = ab_mnk_winning_battles_gives_professionalism
+            set_country_flag = ab_mnk_professionalism_vs_heretics
+        }
+    }
+}
+
+AB_Khiva_Missions_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+            tag = MNK
+            tag = CHS
+        }
+	}
+	has_country_shield = yes
+
+    mnk_uyghurs = {
+        required_missions = { mnk_chorasmia }
+        icon = mission_lit_harness_steppes
+        position = 4
+        provinces_to_highlight = {
+            OR = {
+                region = mongolia_region
+                area = jetysuu_area
+            }
+            NOT = { country_or_non_sovereign_subject_holds = ROOT }
+        }
+        trigger = {
+            OR = {
+                any_country = {
+                    is_subject_of_type_with_overlord = { who = YUA type = tributary_state }
+                    has_opinion = {
+                        who = ROOT
+                        value = 100
+                    }
+                    OR = {
+                        tag = QQT
+                        primary_culture = oirats
+                    }
+                }
+                num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                    OR = {
+                        region = mongolia_region
+                        area = jetysuu_area
+                    }
+                    value = 10
+                }
+            }
+        }
+        effect = {
+            custom_tooltip = ab_mnk_uyghur_if_completed_with_opinion
+            custom_tooltip = AB_EMPTY
+            custom_tooltip = ab_mnk_uyghur_if_completed_by_conquest
+            tooltip = {
+                custom_tooltip = ab_mnk_distribute_development
+                add_country_modifier = {
+                    name = ab_conquest_of_oirat
+                    duration = 7300
+                }
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                            OR = {
+                                region = mongolia_region
+                                area = jetysuu_area
+                            }
+                            value = 10
+                        }
+                    }
+                    add_country_modifier = {
+                        name = ab_conquest_of_oirat
+                        duration = 7300
+                    }
+                    AB_distribute_development = {
+                        type = manpower
+                        amount = 10
+                        limit = "culture = oirats"
+                    }
+                }
+                else = {
+                    set_country_flag = ab_mnk_unlocks_plant_rebellion
+                    every_country = {
+                        limit = {
+                            OR = {
+                                tag = QQT
+                                primary_culture = oirats
+                            }
+                            is_subject_of_type_with_overlord = { who = YUA type = tributary_state }
+                        }
+                        add_trust = {
+                            who = ROOT
+                            value = 25
+                            mutual = yes
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    mnk_kill_yuan = {
+        required_missions = { mnk_uyghurs mnk_yuan }
+        icon = mission_asian_city
+        position = 5
+        provinces_to_highlight = {
+            region = mongolia_region
+            NOT = { country_or_non_sovereign_subject_holds = ROOT }
+        }
+        trigger = {
+            OR = {
+                calc_true_if = { 
+                    all_country = {
+                        custom_trigger_tooltip = { 
+                            tooltip = AB_MNK_JOINED_REBELLION_TT
+                            has_country_flag = ab_mnk_will_join_rebellion
+                        }
+                    }
+                    amount = 4
+                }
+                num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                    region = mongolia_region
+                    value = 15
+                }
+            }
+        }
+        effect = {
+            custom_tooltip = ab_mnk_if_rebellion
+            tooltip = {
+                add_casus_belli = {
+                    target = YUA
+                    type = cb_liberate_oirat
+                    months = -1
+                }
+                custom_tooltip = ab_mnk_create_oirat_vassal
+            }
+            custom_tooltip = AB_EMPTY
+            custom_tooltip = ab_mnk_if_conquest
+            tooltip = {
+                define_advisor = {
+                    type = dragoon
+                    skill = 3
+                    culture = oirats
+                    religion = tengri_pagan_reformed
+                }
+                add_mil_power = 100
+                add_army_tradition = 10
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                            region = mongolia_region
+                            value = 15
+                        }
+                    }
+                    define_advisor = {
+                        type = dragoon
+                        skill = 3
+                        culture = oirats
+                        religion = tengri_pagan_reformed
+                    }
+                    add_mil_power = 100
+                    add_army_tradition = 10
+                }
+                else = {
+                    add_casus_belli = {
+                        target = YUA
+                        type = cb_liberate_oirat
+                        months = -1
+                    }
+                }
+            }
+        }
+    }
+
+    mnk_create_oirat = {
+        required_missions = { mnk_kill_yuan }
+        icon = mission_forthehorde
+        position = 6
+        provinces_to_highlight = {
+            region = mongolia_region
+            NOT = { country_or_non_sovereign_subject_holds = ROOT }
+        }
+        trigger = {
+    		mongolia_region = {
+                type = all
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+        }
+        effect = {
+            add_ruler_personality = conqueror_personality
+            if = {
+                limit = {
+                    OIR = {
+                        NOT = { is_subject_of = ROOT }
+                    }
+                }
+                add_ruler_modifier = {
+                    name = ab_mnk_liberator_of_oirat
+                    duration = -1
+                }
+                custom_tooltip = ab_mnk_becomes_country_modifier_if_oirat_subject
+            }
+            else = {
+                add_country_modifier = {
+                    name = ab_mnk_liberator_of_oirat
+                    duration = -1
+                }
+            }
+        }
+    }
+
+    mnk_khiva_silk = {
+        required_missions = { mnk_legacy_silk_road }
+        icon = mission_son_own_develop_clothes_and_salt
+        position = 8
+        provinces_to_highlight = {
+            province_id = 1967
+            OR = {
+                NOT = { owned_by = ROOT }
+                NOT = { has_production_building_trigger = yes }
+                NOT = { is_prosperous = yes }
+            }
+        }
+        trigger = {
+    		1967 = {
+                owned_by = ROOT
+            }
+            1967 = {
+                has_production_building_trigger = yes
+            }
+            1967 = {
+                prosperity = 100
+            }
+        }
+        effect = {
+            1967 = {
+                center_of_trade = 2
+                add_province_modifier = {
+                    name = mnk_secured_silk_trade
+                    duration = 7300
+                }
+            }
+            if = {
+                limit = {
+                    1967 = { base_production = 10 }
+                }
+                custom_tooltip = ab_mnk_if_10_production_yes
+            }
+            else = {
+                custom_tooltip = ab_mnk_if_10_production
+            }
+            hidden_effect = {
+                1967 = {
+                    if = {
+                        limit = {
+                            base_production = 10
+                        }
+                        remove_province_modifier = mnk_secured_silk_trade
+                        add_province_modifier = {
+                            name = mnk_secured_silk_trade
+                            duration = -1
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    mnk_soldier_outfits = {
+        required_missions = { mnk_khiva_silk mnk_route }
+        icon = mission_integrate_the_purbias
+        position = 9
+        trigger = {
+    		monthly_income = 100
+            army_reformer = 3
+            num_of_generals = 3
+        }
+        effect = {
+            custom_tooltip = ab_mnk_gain_bonuses_at_60_ap
+            set_country_flag = ab_mnk_extra_ap
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = commandant
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+        }
+    }
+
+    mnk_mercenaries = {
+        required_missions = { mnk_vulboshi mnk_soldier_outfits }
+        icon = mission_subdue_the_afghans
+        position = 10
+        trigger = {
+    		num_of_mercenaries = 60
+            is_bankrupt = no
+            is_in_deficit = no
+            NOT = {
+                num_of_loans = 1
+            }
+        }
+        effect = {
+            add_country_modifier = {
+                name = ab_mnk_merc_army
+                duration = -1
+            }
+            custom_tooltip = ab_mnk_recruiting_mercs_from_true_faith_provinces_doesnt_take_professionalism
+            set_country_flag = ab_mnk_no_prof_malus_true_faith
+        }
+    }
+}
+
+AB_Khiva_Missions_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+            tag = MNK
+            tag = CHS
+        }
+	}
+	has_country_shield = yes
+
+    mnk_eastern_expedition = {
+        required_missions = { }
+        icon = mission_afghan_frontier
+        position = 1
+        trigger = {
+    		OR = {
+                num_of_generals = 2
+                is_monarch_leader = yes
+            }
+        }
+        effect = {
+            add_country_modifier = {
+                name = mnk_turkestan_expedition
+                duration = 5475
+            }
+            if = {
+                limit = {
+                    exists = TRK
+                }
+                hidden_effect = {
+                    TRK = {
+                        every_owned_province = {
+                            limit = {
+                                NOT = { is_permanent_claim = ROOT }
+                                NOT = { is_core = ROOT }
+                            }
+                            add_permanent_claim = ROOT
+                        }
+                    }
+                }
+                custom_tooltip = mnk_claims_on_trk
+            }
+            else = {
+                transoxiana_area = {
+                    limit = {
+                        NOT = { is_permanent_claim = ROOT }
+                        NOT = { is_core = ROOT }
+                    }
+                    add_permanent_claim = ROOT
+                }
+                2363 = {
+                    if = {
+                        limit = {
+                            NOT = { is_permanent_claim = ROOT }
+                            NOT = { is_core = ROOT }
+                        }
+                        add_permanent_claim = ROOT
+                    }
+                }
+                2356 = {
+                    if = {
+                        limit = {
+                            NOT = { is_permanent_claim = ROOT }
+                            NOT = { is_core = ROOT }
+                        }
+                        add_permanent_claim = ROOT
+                    }
+                }
+                5199 = {
+                    if = {
+                        limit = {
+                            NOT = { is_permanent_claim = ROOT }
+                            NOT = { is_core = ROOT }
+                        }
+                        add_permanent_claim = ROOT
+                    }
+                }
+                444 = {
+                    if = {
+                        limit = {
+                            NOT = { is_permanent_claim = ROOT }
+                            NOT = { is_core = ROOT }
+                        }
+                        add_permanent_claim = ROOT
+                    }
+                }
+            }
+
+            if = {
+                limit = {
+                    exists = MGS
+                }
+                hidden_effect = {
+                    MGS = {
+                        every_owned_province = {
+                            limit = {
+                                NOT = { is_permanent_claim = ROOT }
+                                NOT = { is_core = ROOT }
+                            }
+                            add_permanent_claim = ROOT
+                        }
+                    }
+                }
+                custom_tooltip = mnk_claims_on_mgs
+            }
+            else = {
+                ferghana_area = {
+                    limit = {
+                        NOT = { is_permanent_claim = ROOT }
+                         NOT = { is_core = ROOT }
+                    }
+                    add_permanent_claim = ROOT
+                }
+                termez_area = {
+                    limit = {
+                        NOT = { is_permanent_claim = ROOT }
+                         NOT = { is_core = ROOT }
+                    }
+                    add_permanent_claim = ROOT
+                }
+            }
+            if = {
+                limit = {
+                    is_monarch_leader = yes
+                }
+                custom_tooltip = ab_mnk_becomes_ruler_modifier
+            }
+            else = {
+                custom_tooltip = ab_mnk_becomes_ruler_modifier_no
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        is_monarch_leader = yes
+                    }
+                    remove_country_modifier = mnk_turkestan_expedition
+                    add_ruler_modifier = {
+                        name = mnk_turkestan_expedition
+                        duration = -1
+                    }
+                }
+            }
+        }
+    }
+
+    mnk_turkestan = {
+        required_missions = { mnk_eastern_expedition mnk_leader }
+        icon = mission_order_in_the_domain
+        position = 2
+        provinces_to_highlight = {
+            OR = {
+                area = transoxiana_area
+                area = termez_area
+                province_id = 2363
+                province_id = 2356
+                province_id = 5199
+                province_id = 444
+                province_id = 1967
+                province_id = 458
+            }
+            NOT = { country_or_non_sovereign_subject_holds = ROOT }
+        }
+        trigger = {
+    		transoxiana_area = {
+                type = all
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            1967 = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            458 = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            termez_area = {
+                type = all
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            2363 = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            2356 = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            5199 = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            444 = {
+                country_or_non_sovereign_subject_holds = ROOT
+            }
+            
+        }
+        effect = {
+            country_event = { id = mnk_flavor.3 }
+            445 = {
+                if = {
+                    limit = {
+                        NOT = { is_permanent_claim = ROOT }
+                        NOT = { is_core = ROOT }
+                    }
+                    add_permanent_claim = ROOT
+                }
+            }
+            446 = {
+                if = {
+                    limit = {
+                        NOT = { is_permanent_claim = ROOT }
+                        NOT = { is_core = ROOT }
+                    }
+                    add_permanent_claim = ROOT
+                }
+            }
+            4325 = {
+                if = {
+                    limit = {
+                        NOT = { is_permanent_claim = ROOT }
+                        NOT = { is_core = ROOT }
+                    }
+                    add_permanent_claim = ROOT
+                }
+            }
+        }
+    }
+
+    mnk_chorasmia = {
+        required_missions = { mnk_turkestan }
+        icon = mission_empire
+        position = 3
+        trigger = {
+    		tag = CHS
+        }
+        effect = {
+			add_church_power = 50
+            add_country_modifier = {
+                name = mnk_bastion_of_manichean_faith
+                duration = -1
+            }
+        }
+    }
+
+    mnk_zeal = {
+        required_missions = { mnk_chorasmia mnk_persia }
+        icon = mission_hands_praying
+        position = 4
+        provinces_to_highlight = {
+            owned_by = ROOT
+            NOT = { religion = ROOT }
+        }
+        trigger = {
+    		OR = {
+                religious_unity = 1
+                num_of_owned_provinces_with = {
+                    religion = ROOT
+                    value = 10
+                }
+            }
+        }
+        effect = {
+            custom_tooltip = ab_manichean_conversions
+            set_country_flag = ab_manichean_conversions_flag
+            custom_tooltip = AB_EMPTY
+            add_prestige_or_monarch_power = { amount = 15 }
+        }
+    }
+
+    mnk_manichean = {
+        required_missions = { mnk_zeal }
+        icon = mission_persianate_empire
+        position = 5
+        provinces_to_highlight = {
+            region = persia_region
+            OR = {
+                NOT = { religion = ROOT }
+                NOT = { country_or_non_sovereign_subject_holds = ROOT }
+            }
+        }
+        trigger = {
+    		num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                region = persia_region
+                religion = ROOT
+                value = 15
+            }
+        }
+        effect = {
+            custom_tooltip = ab_distribute_tax_and_grant_tax_modifier
+            hidden_effect = {
+                AB_distribute_development = {
+                    type = tax
+                    amount = 15
+                    limit = " region = persia_region "
+                }
+                every_owned_province = {
+                    limit = {
+                        region = persia_region
+                        has_tax_building_trigger = yes
+                    }
+                    add_province_modifier = {
+                        name = mnk_manichean_temples
+                        duration = 5475
+                    }
+                }
+            }
+        }
+    }
+
+    mnk_legacy_silk_road = {
+        required_missions = { }
+        icon = mission_high_income
+        position = 7
+        provinces_to_highlight = {
+            province_id = 441
+            OR = {
+                NOT = { owned_by = ROOT }
+                NOT = { development = 11 }
+            }
+        }
+        trigger = {
+    		441 = {
+                owned_by = ROOT
+                development = 11
+            }
+        }
+        effect = {
+            if = {
+                limit = {
+                    441 = {
+                        province_has_center_of_trade_of_level = 3
+                    }
+                }
+                441 = {
+                    add_base_production = 3
+                }
+            }
+            else = {
+                441 = {
+                    add_center_of_trade_level = 1
+                }
+            }
+            custom_tooltip = AB_EMPTY
+            if = {
+                limit = {
+                    trading_bonus = {
+                        trade_goods = silk
+                        value = yes
+                    }
+                }
+                custom_tooltip = ab_if_trade_bonus_silk
+            }
+            else = {
+                custom_tooltip = ab_if_trade_bonus_silk_no
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        trading_bonus = {
+                            trade_goods = silk
+                            value = yes
+                        }
+                    }
+                    AB_add_years_of_trade_income = { years = 5 }
+                }
+            }
+        }
+    }
+
+    mnk_sogdians = {
+        required_missions = { mnk_khiva_silk mnk_trade_outposts }
+        icon = mission_market_place_with_asian_traders
+        position = 9
+        trigger = {
+			tag = CHS
+    		OR = {
+                AND = {
+                    full_idea_group = trade_ideas
+                    estate_loyalty = { 
+                        estate = estate_burghers
+                        loyalty = 75
+                    }
+                }
+                monthly_dip = 13
+                AND = {
+                    trade_income_percentage = 0.35
+                    monthly_income = 50
+                }
+            }
+        }
+        effect = {
+            custom_tooltip = ab_every_silk_province_becomes_tall_meta
+            set_country_flag = ab_sogdians_check
+            hidden_effect = {
+                every_owned_province = {
+                    limit = {
+                        trade_goods = silk
+                    }
+                    add_province_modifier = {
+                        name = mnk_silk_province
+                        duration = -1
+                    }
+                }
+            }
+			custom_tooltip = MNK_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = mnk_evolved_ideas
+				if = {
+					limit = {
+						tag = CHS
+					}
+					country_event = { id = ideagroups.1 } #Swap Ideas
+				}
+			}
+        }
+    }
+
+    mnk_silk_trade_hegemony = {
+        required_missions = { mnk_soldier_outfits mnk_sogdians mnk_medical_school }
+        icon = mission_zambezi_gold
+        position = 10
+        provinces_to_highlight = {
+            owned_by = ROOT
+            trade_goods = silk
+        }
+        trigger = {
+    		production_leader = {
+                trade_goods = silk
+            }
+            development_in_provinces = {
+                trade_goods = silk
+                value = 200
+            }
+        }
+        effect = {
+            add_country_modifier = {
+                name = mnk_silk_trade
+                duration = -1
+            }
+            change_price = {
+                trade_goods = silk
+                key = mnk_silk_hegemony
+                value = 0.25
+                duration = -1
+            }
+        }
+    }
+}
+
+AB_Khiva_Missions_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+            tag = MNK
+            tag = CHS
+        }
+	}
+	has_country_shield = yes
+
+    mnk_leader = {
+        required_missions = { }
+        icon = mission_subdue_rajputana
+        position = 1
+        trigger = {
+            OR = {
+                has_estate_privilege = estate_nomadic_tribes_tribal_host 
+                AND = {
+                    estate_loyalty = { 
+                        estate = estate_nomadic_tribes
+                        loyalty = 60
+                    }
+                    estate_influence = { 
+                        estate = estate_nomadic_tribes
+                        influence = 50
+                    }
+                }
+            }
+        }
+        effect = {
+            if = {
+                limit = {
+                    has_estate_privilege = estate_nomadic_tribes_tribal_host
+                }
+                custom_tooltip = AB_if_tribal_host
+            }
+            else = {
+                custom_tooltip = AB_if_tribal_host_no
+            }
+            tooltip = {
+                change_monarch_points_or_power = {
+                    power = mil
+                    points = 2
+                }
+                custom_tooltip = AB_if_we_unite_chorasania_on_rulers_life
+            }
+            custom_tooltip = AB_EMPTY
+            if = {
+                limit = {
+                    estate_loyalty = {
+                        estate = estate_nomadic_tribes
+                        loyalty = 60
+                    }
+                    estate_influence = {
+                        estate = estate_nomadic_tribes
+                        influence = 50
+                    }
+                    has_estate_privilege = estate_nomadic_tribes_tribal_host
+                }
+                custom_tooltip = AB_if_influence_precedence
+            }
+            else_if = {
+                limit = {
+                    estate_loyalty = {
+                        estate = estate_nomadic_tribes
+                        loyalty = 60
+                    }
+                    estate_influence = {
+                        estate = estate_nomadic_tribes
+                        influence = 50
+                    }
+                }
+                custom_tooltip = AB_if_influence
+            }
+            else = {
+                custom_tooltip = AB_if_influence_no
+            }
+            tooltip = {
+                country_event = { id = mnk_flavor.1 }
+            }
+            hidden_effect = {
+                if = {
+                    limit = {
+                        has_estate_privilege = estate_nomadic_tribes_tribal_host 
+                    }
+                    change_monarch_points_or_power = {
+                        power = mil
+                        points = 2
+                    }
+                    set_ruler_flag = ab_chorasania_ruler_check
+                }
+                else = {
+                    country_event = { id = mnk_flavor.1 }
+                }
+            }
+        }
+    }
+
+    mnk_persia = {
+        required_missions = { }
+        icon = mission_persiamap
+        position = 3
+        provinces_to_highlight = {
+            OR = {
+                region = persia_region
+                region = khorasan_region
+            }
+            NOT = { country_or_non_sovereign_subject_holds = ROOT }
+        }
+        trigger = {
+    		num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+                OR = {
+                    region = persia_region
+                    region = khorasan_region
+                }
+                value = 5
+            }
+        }
+        effect = {
+            persia_region = {
+                 limit = {
+                      NOT = { is_permanent_claim = ROOT }
+                      NOT = { is_core = ROOT }
+                }
+                 add_permanent_claim = ROOT
+            }
+            khorasan_region = {
+                 limit = {
+                      NOT = { is_permanent_claim = ROOT }
+                      NOT = { is_core = ROOT }
+                }
+                 add_permanent_claim = ROOT
+            }
+
+            custom_tooltip = ab_mnk_converting_provinces_now_gives_church_power
+            set_country_flag = ab_mnk_church_power_conversion
+        }
+    }
+
+    mnk_islam = {
+        required_missions = { mnk_zeal }
+        icon = mission_mosque
+        position = 5
+        provinces_to_highlight = {
+            owned_by = ROOT
+            religion_group = muslim
+        }
+        trigger = {
+            OR = {
+                development_in_provinces = {
+                    religion_group = muslim
+                    value = 100
+                }
+                calc_true_if = {
+                    all_ally = {
+                        religion_group = muslim
+                        trust = {
+                            who = ROOT
+                            value = 60
+                        }
+                    }
+                    amount = 3 
+                }
+            }
+        }
+        effect = {
+            custom_tooltip = ab_mnk_unlock_teachings_of_muhammad
+            set_country_flag = mani_islam_flag
+            add_adm_power = 100
+            add_church_power = 100
+        }
+    }
+
+    mnk_triumph = {
+        required_missions = { mnk_manichean mnk_islam }
+        icon = mission_viceroyalty_of_the_deccan
+        position = 6
+        provinces_to_highlight = {
+            owned_by = ROOT
+            NOT = { religion = ROOT }
+        }
+        trigger = {
+    		calc_true_if = { 
+                all_province = {
+                    religion = ROOT
+                }
+                amount = 150
+            }
+        }
+        effect = {
+            custom_tooltip = ab_mnk_converting_provinces_gives_dev
+            set_country_flag = mnk_triumph
+            custom_tooltip = AB_EMPTY
+            custom_tooltip = ab_mnk_modify_bastion
+            hidden_effect = {
+                remove_country_modifier = mnk_bastion_of_manichean_faith
+                add_country_modifier = {
+                    name = mnk_bastion_of_manichean_faith_2
+                    duration = -1
+                }
+            }
+        }
+    }
+
+    mnk_trade_outposts = {
+        required_missions = { mnk_legacy_silk_road }
+        icon = mission_gujarati_textiles
+        position = 8
+        provinces_to_highlight = {
+            province_id = 441
+            OR = {
+                NOT = { owned_by = ROOT }
+                NOT = { development = 20 }
+                NOT = { province_has_center_of_trade_of_level = 2 }
+                NOT = { higher_development_than = 454 }
+            }
+        }
+        trigger = {
+    		441 = {
+                has_trade_building_trigger = yes
+                development = 20
+                province_has_center_of_trade_of_level = 2
+            }
+            454 = {
+                owned_by = ROOT
+                NOT = { higher_development_than = 441 }
+            }
+        }
+        effect = {
+            441 = {
+                add_province_modifier = {
+                    name = mnk_primary_outpost
+                    duration = -1
+                }
+            }
+			441 = {
+				upgrade_trade_building = yes
+			}
+        }
+    }
+
+    mnk_medical_school = {
+        required_missions = { }
+        icon = mission_early_modern_university
+        position = 9
+        trigger = {
+    		innovativeness = 40
+            OR = {
+                ruler_has_personality = scholar_personality
+                philosopher = 3
+            }
+        }
+        effect = {
+            441 = {
+                if = {
+                    limit = {
+                        has_building = university
+                    }
+                    add_base_tax = 2
+                    add_base_production = 2
+                    add_base_manpower = 2
+                }
+                else = {
+                    add_building = university
+                }
+            }
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = in_advisor
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+            custom_tooltip = emp_ven_plague_doctor_training_tt
+			set_country_flag = has_competent_doctors
+        }
+    }
+}

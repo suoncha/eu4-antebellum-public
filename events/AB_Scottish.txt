@@ -1,0 +1,760 @@
+namespace = ab_scottish
+normal_or_historical_nations = yes
+
+#BranchingMissions
+country_event = {
+	id = ab_scottish.1
+	title = ab_scottish.1.t
+	desc = ab_scottish.1.d
+	picture = CONQUEST_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = SCO
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = {
+		name = ab_scottish.1a
+		add_heir_claim = 20
+		hidden_effect = {
+			country_event = {
+				id = ab_scottish.2
+				days = 91
+			}
+		}
+		custom_tooltip = SCO_ALB
+	}
+	
+	option = {
+		name = ab_scottish.1b
+		set_heir_culture = highland_scottish
+		hidden_effect = {
+			country_event = {
+				id = ab_scottish.3
+				days = 91
+			}
+		}
+		custom_tooltip = SCO_GAE
+	}
+	
+	option = {
+		name = ab_scottish.1c
+		set_heir_culture = english
+		hidden_effect = {
+			country_event = {
+				id = ab_scottish.4
+				days = 91
+			}
+		}
+		custom_tooltip = SCO_SCO
+	}
+}
+
+country_event = {
+	id = ab_scottish.2
+	title = ab_scottish.2.t
+	desc = ab_scottish.2.d
+	picture = CULTURE_eventPicture
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			kill_ruler = yes
+		}
+	}
+	
+	option = {
+		name = ab_scottish.2a
+		add_accepted_culture = highland_scottish
+		set_country_flag = kingdom_alba
+		random_core_province = { 
+			spawn_rebels = {
+				type = pretender_rebels
+				size = 2
+			}
+		}
+		add_government_reform = albadual
+		hidden_effect = {
+			swap_non_generic_missions = yes
+			add_ruler_modifier = {
+				name = EDGAR_DUNK
+				duration = -1
+				hidden = yes
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ab_scottish.3
+	title = ab_scottish.3.t
+	desc = ab_scottish.3.d
+	picture = CULTURE_eventPicture
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			kill_ruler = yes
+		}
+	}
+	
+	option = {
+		name = ab_scottish.3a
+		set_country_flag = kingdom_gaeldom
+		change_tag = HSC
+		change_primary_culture = highland_scottish
+		set_capital = 4363
+		add_government_reform = gaelmonarchy
+		random_core_province = { 
+			spawn_rebels = {
+				type = pretender_rebels
+				size = 2
+			}
+		}
+		swap_free_idea_group = yes
+		hidden_effect = {
+			swap_non_generic_missions = yes
+			add_ruler_modifier = {
+				name = EDGAR_DUNK
+				duration = -1
+				hidden = yes
+			}
+		}
+	}
+}
+country_event = {
+	id = ab_scottish.4
+	title = ab_scottish.4.t
+	desc = ab_scottish.4.d
+	picture = CULTURE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			kill_ruler = yes
+		}
+	}
+	
+	option = {
+		name = ab_scottish.4a
+		if = {
+			limit = {
+				accepted_culture = highland_scottish
+			}
+			remove_accepted_culture = highland_scottish
+		}
+		add_accepted_culture = english
+		random_core_province = { 
+			spawn_rebels = {
+				type = pretender_rebels
+				size = 2
+			}
+		}
+		set_country_flag = kingdom_scotland
+		swap_free_idea_group = yes
+		hidden_effect = {
+			swap_non_generic_missions = yes
+			add_ruler_modifier = {
+				name = EDGAR_DUNK
+				duration = -1
+				hidden = yes
+			}
+		}
+	}
+}
+country_event = {
+	id = ab_scottish.5
+	title = ab_scottish.5.t
+	desc = ab_scottish.5.d
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			ROOT = {
+				save_global_event_target_as = SCO_DEMAND
+			}
+		}
+	}
+	
+	option = {
+		name = ab_scottish.5a
+		NOR = {
+			country_event = {
+				id = ab_scottish.6
+			}
+		}
+	}
+	option = {
+		name = ab_scottish.5b
+		NOR = {
+			hidden_effect = {
+				set_country_flag = PAID_SCO
+			}
+			country_event = {
+				id = ab_scottish.6
+			}
+		}
+		custom_tooltip = PAYMENT_SCO
+	}
+}
+
+country_event = {
+	id = ab_scottish.6
+	title = ab_scottish.6.t
+	desc = ab_scottish.6.d
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_scottish.6a
+		event_target:SCO_DEMAND = {
+			country_event = {
+				id = ab_scottish.7
+				days = 2
+			}
+		}
+		ai_chance = { 
+			factor = 80
+			modifier = {
+				factor = 30
+				NOR ={
+					has_country_flag = PAID_SCO
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_scottish.6b
+		if = {
+			limit = {
+				NOR = {
+					NOT = { has_country_flag = PAID_SCO }
+				}
+			}
+			event_target:SCO_DEMAND = {
+				set_country_flag = give_land_SCO
+				country_event = {
+					id = ab_scottish.7
+					days = 2
+				}
+				
+			}
+		}
+		else = {
+			event_target:SCO_DEMAND = {
+				set_country_flag = give_land_SCO1
+				country_event = {
+					id = ab_scottish.7
+					days = 2
+				}
+				
+			}
+		}
+		ai_chance = { 
+			factor = 20 
+			modifier = {
+				factor = 70
+				NOR ={
+					has_country_flag = PAID_SCO
+				}
+			}
+		}
+	}
+}
+country_event = {
+	id = ab_scottish.7
+	title = ab_scottish.7.t
+	desc = ab_scottish.7.d
+	picture = ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+		
+	option = {
+		name = ab_scottish.7a
+		trigger = {
+			event_target:SCO_DEMAND = {
+					NOT = { has_country_flag = give_land_SCO }
+					NOT = { has_country_flag = give_land_SCO1 }
+			}
+		}
+		add_ruler_modifier = {
+			name = invade_isles_SCO
+			duration = -1
+		}
+		kingdom_of_the_isles_area = { 
+			limit = {
+					NOT = { is_permanent_claim = event_target:SCO_DEMAND	}
+					NOT = { is_core = event_target:SCO_DEMAND	}
+				}
+			add_core = event_target:SCO_DEMAND
+		}
+		highlands_area = {
+			limit = {
+				NOT = { is_permanent_claim = event_target:SCO_DEMAND }
+				not = { is_core = event_target:SCO_DEMAND }
+			}
+		add_core = event_target:SCO_DEMAND
+		}
+	}
+	
+	option = {
+		name = ab_scottish.7b
+		trigger = {
+			event_target:SCO_DEMAND = {
+				OR = {
+					has_country_flag = give_land_SCO
+					has_country_flag = give_land_SCO1
+				}
+			}
+		}
+		if = {
+			limit = {
+				event_target:SCO_DEMAND = {
+					has_country_flag = give_land_SCO
+				}
+			}
+			kingdom_of_the_isles_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = NOR
+				}
+				add_core = event_target:SCO_DEMAND
+				cede_province = event_target:SCO_DEMAND
+				remove_core = NOR
+			}
+			highlands_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = NOR
+				}
+				add_core = event_target:SCO_DEMAND
+				cede_province = event_target:SCO_DEMAND
+				remove_core = NOR
+			}
+		}
+		else = {
+			kingdom_of_the_isles_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = NOR
+				}
+				cede_province = event_target:SCO_DEMAND
+				remove_core = NOR
+			}
+			highlands_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = NOR
+				}
+				cede_province = event_target:SCO_DEMAND
+				remove_core = NOR
+			}
+			add_treasury = -200
+		}
+		369 = {
+			change_culture = ROOT
+		}
+	}
+}
+country_event = {
+	id = ab_scottish.8 
+	title = ab_scottish.8.t
+	desc = ab_scottish.8.d
+	picture = CONQUEST_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_scottish8.a
+		hidden_effect = {
+			restore_country_name = yes
+			clr_country_flag = alba_rename
+		}
+		change_tag = ABO
+		if = {
+			limit = {
+				has_custom_ideas = no
+			}
+			country_event = { id = ideagroups.1 } #Swap Ideas
+		}
+		set_country_flag = albion_formed
+		# Update the colonial country colors
+		hidden_effect = {
+			ab_update_preset_cn_colors = yes
+		}
+	}
+	
+	option = {
+		name = ab_scottish8.b
+		trigger = {
+			has_country_flag = ab_goidelic_union
+		}
+		hidden_effect = {
+			restore_country_name = yes
+		}
+		change_tag = GDL
+		if = {
+			limit = {
+				has_custom_ideas = no
+			}
+			country_event = { id = ideagroups.1 } #Swap Ideas
+		}
+	}
+	
+	option = {
+		name = ab_scottish8.c
+		trigger = {
+			has_country_flag = anglo_scot_brit
+		}
+		hidden_effect = {
+			restore_country_name = yes
+		}
+		change_tag = GBR
+		if = {
+			limit = {
+				has_custom_ideas = no
+			}
+			country_event = { id = ideagroups.1 } #Swap Ideas
+		}
+	}
+}
+country_event = {
+	id = ab_scottish.11 
+	title = ab_scottish.11.t
+	desc = ab_scottish.11.d
+	picture = ANGLICAN_SERMON_eventPicture
+	
+	trigger = {
+		is_religion_enabled = protestant
+		is_lesser_in_union = no
+		is_subject = no
+		NOT = { has_country_flag = had_gaelic_question }
+		religion_years = { protestant = 15 }
+		or = {
+			tag = SCO
+			tag = ABO
+			and = {
+				tag = GDL
+				was_tag = SCO
+			}
+			and = {
+				tag = GBR
+				was_tag = SCO
+			}
+		}
+		capital_scope = {
+			region = british_isles_region
+		}
+		NOT = {
+			has_country_flag = kingdom_scotland
+		}
+	}
+	
+	fire_only_once = yes 
+	
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.5
+			has_country_modifier = "the_statue_in_restraint_of_appeals"
+		}
+		modifier = {
+			factor = 0.8
+			tag = SCO
+			NOT = {
+				exists = ABO
+				exists = GBR
+				exists = GDL
+			}
+		}
+		modifier = {
+			factor = 1.5
+			tag = SCO
+			OR = {
+				AND = {
+					exists = GBR
+					GBR = { 
+						was_tag = SCO
+					}
+				}
+				exists = ABO
+				exists = GDL
+			}
+		}
+		modifier = {
+			factor = 0.6
+			was_tag = SCO
+			OR = {
+				tag = GBR
+				tag = ABO
+				tag = GDL
+			}
+		}
+		modifier = {
+			factor = 2
+			NOT = {
+				owns_core_province = 248 # Lothian
+			}
+		}
+	}
+
+	immediate = {
+		set_country_flag = had_gaelic_question
+	}
+
+	after = {
+		set_country_flag = answered_gaelic_question
+	}
+	
+	option = {
+		name = ab_scottish.11a
+		add_papal_influence = 15
+		hidden_effect = {
+			set_country_flag = sco_religion
+		}
+	}
+	
+	option = {
+		name = ab_scottish.11b
+		hidden_effect = {
+			set_country_flag = sco_religion1
+		}
+		
+		change_religion = protestant
+		custom_tooltip = AB_EMPTY
+
+		if = {
+			limit = {
+				capital_scope = {
+					is_reformation_center = no
+				}
+			}
+			capital_scope = {
+				change_religion = protestant
+				add_permanent_province_modifier = {
+					name = "religious_zeal_at_conv"
+					duration = 9000
+				}
+			}
+		}
+		else = {
+			random_owned_province = {
+				limit = {
+					religion = catholic
+				}
+				change_religion = protestant
+				add_permanent_province_modifier = {
+					name = "religious_zeal_at_conv"
+					duration = 9000
+				}
+			}
+		}
+
+		add_country_modifier = {
+			name = "conversion_zeal"
+			duration = 3650
+		}
+
+		if = {
+			limit = {
+				religion = catholic
+			}
+			reverse_add_opinion = { who = PAP modifier = opinion_upset_pope }
+		}
+	}
+	
+	option = {
+		name = ab_scottish.11d
+		trigger = {
+			OR = {
+				has_country_flag = kingdom_alba
+				has_country_flag = kingdom_gaeldom
+			}
+		}
+		hidden_effect = {
+			set_country_flag = sco_religion1
+		}
+
+		change_religion = gaelic_ab
+		custom_tooltip = AB_EMPTY
+
+		if = {
+			limit = {
+				capital_scope = {
+					is_reformation_center = no
+				}
+			}
+			capital_scope = {
+				change_religion = gaelic_ab
+				add_permanent_province_modifier = {
+					name = "religious_zeal_at_conv"
+					duration = 9000
+				}
+			}
+		}
+		else = {
+			random_owned_province = {
+				limit = {
+					religion = catholic
+				}
+				change_religion = gaelic_ab
+				add_permanent_province_modifier = {
+					name = "religious_zeal_at_conv"
+					duration = 9000
+				}
+			}
+		}
+
+		add_country_modifier = {
+			name = "conversion_zeal"
+			duration = 3650
+		}
+
+		if = {
+			limit = {
+				religion = catholic
+			}
+			reverse_add_opinion = { who = PAP modifier = opinion_upset_pope }
+		}
+	}
+
+	option = {
+		name = ab_scottish.11e
+		trigger = {
+			OR = {
+				has_country_flag = kingdom_alba
+				has_country_flag = kingdom_gaeldom
+			}
+			current_age = age_of_reformation
+			NOT = {
+				any_province = {
+					is_reformation_center = yes
+					religion = gaelic_ab
+				}
+			}
+		}
+
+		hidden_effect = {
+			set_country_flag = sco_religion1
+		}
+
+		change_religion = gaelic_ab
+		custom_tooltip = AB_EMPTY
+
+		if = {
+			limit = {
+				capital_scope = {
+					can_have_center_of_reformation_trigger = {
+						RELIGION = gaelic_ab
+					}
+				}
+			}
+			capital_scope = {
+				change_religion = gaelic_ab
+				add_reform_center = gaelic_ab
+				add_permanent_province_modifier = {
+					name = religious_zeal_at_conv
+					duration = 9000
+				}
+			}
+		}
+		else = {
+			random_owned_province = {
+				limit = {
+					can_have_center_of_reformation_trigger = {
+						RELIGION = gaelic_ab
+					}
+				}
+				change_religion = gaelic_ab
+				add_reform_center = gaelic_ab
+				add_permanent_province_modifier = {
+					name = "religious_zeal_at_conv"
+					duration = 9000
+				}
+			}
+		}
+		
+		add_country_modifier = {
+			name = "conversion_zeal"
+			duration = 3650
+		}
+
+		add_country_modifier = {
+			name = gaelic_evangelism
+			duration = 3650
+		}
+
+		add_years_of_income = -1 # This is expensive
+		if = {
+			limit = {
+				religion = catholic
+			}
+			reverse_add_opinion = { who = PAP modifier = opinion_upset_pope }
+		}
+	}
+}
+
+country_event = {
+	id = ab_scottish.12
+	title = ab_scottish.12.t
+	desc = ab_scottish.12.d
+	picture = LIBERUM_VETO_eventPicture
+	
+	trigger = {
+		OR = {
+			has_reform = albadual
+			has_reform = gaelmonarchy
+		}
+		ruler_age = 30
+		has_heir = no
+		has_government_attribute = heir
+	}
+	
+	option = {
+		name = ab_scottish.12.a
+		define_heir = {
+			dynasty = original_dynasty
+			male = yes
+			change_adm = 1
+			change_dip = -1
+			change_mil = -1
+			max_random_adm = 6
+			age = 25
+		}
+	}
+	
+	option = {
+		name = ab_scottish.12.b
+		define_heir = {
+			dynasty = original_dynasty
+			male = yes
+			change_adm = -1
+			change_dip = 1
+			change_mil = -1
+			max_random_adm = 3
+			age = 25
+		}
+	}
+	
+	option = {
+		name = ab_scottish.12.c
+		define_heir = {
+			dynasty = original_dynasty
+			male = yes
+			change_adm = -1
+			change_dip = -1
+			change_mil = 1
+			max_random_adm = 4
+			age = 25
+		}
+	}
+
+}

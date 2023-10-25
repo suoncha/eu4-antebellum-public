@@ -1,0 +1,141 @@
+hetmanate = {
+	icon = "horde_riding"
+	legacy_equivalent = cossacks_legacy_reform
+	allow_normal_conversion = no
+	potential = {
+		tag = HTM
+	}
+	
+	raze_province = yes
+	government_abilities = {
+		cossacks_mechanic
+	}
+
+	conditional = {
+		allow = { has_dlc = "Origins" }
+		custom_attributes = {
+			has_itinerant_capital = yes
+		}
+	}
+	valid_for_new_country = yes
+	lock_level_when_selected = yes
+
+	nation_designer_trigger = {
+		any_owned_province = {
+			has_terrain = steppe
+		}
+	}
+
+	valid_for_nation_designer = yes
+	nation_designer_cost = 60
+
+	modifiers = {
+		cavalry_power = 0.25
+		cavalry_cost = -0.25
+		cav_to_inf_ratio = 0.25
+		governing_capacity = 200
+		allowed_cossack_fraction = 0.25
+	}
+	duration = 4
+
+	conditional = {
+		allow = {
+			has_dlc = "The Cossacks"
+		}
+		custom_attributes = {
+			enables_estate_cossacks = yes
+		}
+	}
+
+	custom_attributes = {
+		# AB [[[
+		locked_government_type = yes
+		# ]]]
+		enables_horde_idea_group = yes
+		disables_estate_nobles = yes
+		# AB {{{
+		# Original is inversed, but people were requesting as it
+		# it was more realistic
+		enables_plutocratic_idea_group = no
+		enables_aristocratic_idea_group = yes
+		# }}}
+	}
+}
+
+htm_refuge = {
+	icon = "bulboyar"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ZAZ
+			was_tag = ZAZ
+		}
+	}
+	modifiers = {
+		land_maintenance_modifier = -0.1
+		manpower_in_accepted_culture_provinces = 0.15
+	}
+}
+
+htm_faith = {
+	icon = "ncipatriarch"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ZAZ
+			was_tag = ZAZ
+		}
+	}
+	modifiers = {
+		global_unrest = -1
+		num_accepted_cultures = 2
+		manpower_in_true_faith_provinces = 0.1
+	}
+}
+
+htm_kurin = {
+	icon = "russloboda"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ZAZ
+			was_tag = ZAZ
+		}
+	}
+	modifiers = {
+		production_efficiency = 0.1
+		core_creation = -0.05
+		may_build_supply_depot = yes
+	}
+}
+
+htm_autonomous = {
+	icon = "mvareform"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ZAZ
+			was_tag = ZAZ
+		}
+	}
+	modifiers = {
+		min_autonomy_in_territories = -0.1
+		state_governing_cost = -0.2
+	}
+}
+
+htm_council = {
+	icon = "bulkavkhan"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = ZAZ
+			was_tag = ZAZ
+		}
+	}
+	modifiers = {
+		candidate_random_bonus = 1
+		general_cost = -0.1
+		max_absolutism = 5
+	}
+}

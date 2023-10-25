@@ -1,0 +1,265 @@
+globaldomination_ideas = {
+	category = DIP
+
+	trigger = {
+		has_global_flag = domination_ideas_enabled
+		OR = {
+			current_age = age_of_revolutions
+			current_age = age_of_imperialism
+		}
+		NOT = {
+			has_country_flag = ab_cant_pick_domination
+		}
+	}
+
+	bonus = {
+		yearly_absolutism = 1
+		yearly_revolutionary_zeal = 1
+	}
+
+	domination_first = {
+		max_absolutism = 20
+		max_revolutionary_zeal = 20
+	}
+	domination_second = {
+		global_colonial_growth = 25
+	}
+	domination_third = {
+		prestige_decay = -0.01
+	}
+	domination_fourth = {
+		global_trade_power = 0.2
+	}
+	domination_fifth = {
+		backrow_artillery_damage = 0.15
+	}
+	domination_sixth = {
+		administrative_efficiency = 0.1
+	}
+	domination_seventh = {
+		global_trade_goods_size_modifier = 0.2
+		global_manpower_modifier = 0.2
+	}
+
+	ai_will_do = {
+		factor = 1
+	}
+}
+
+celestial_ideas = {
+	category = DIP
+	
+	trigger = {
+		has_dlc = "Mandate of Heaven"
+		is_emperor_of_china = yes
+	}
+
+	bonus = {
+		meritocracy = 1
+	}
+
+	celestial_first = {
+		advisor_pool = 2
+	}
+	celestial_third = {
+		imperial_mandate = 0.05
+		global_prosperity_growth = 0.5
+	}
+	celestial_second = {
+		monarch_power_tribute = 1
+	}
+	celestial_sixth = {
+		monthly_splendor = 1
+	}
+	celestial_fifth = {
+		governing_capacity = 150
+	}
+	celestial_fourth = {
+		reduced_liberty_desire = 10
+	}
+	celestial_seventh = {
+		max_absolutism = 15
+	}
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 1000
+			is_emperor_of_china = yes
+		}
+	}
+}
+
+professional_ideas = {
+	category = MIL
+	
+	trigger = {
+		has_dlc = "Cradle of Civilization"
+	}
+
+	bonus = {
+		backrow_artillery_damage = 0.15
+	}
+
+	professional_first = {
+		drill_gain_modifier = 0.33
+	}
+	professional_second = {
+		leader_cost = -0.1
+	}
+	professional_third = {
+		army_tradition = 1
+	}
+	professional_fourth = {
+		global_regiment_recruit_speed = -0.3
+	}
+	professional_fifth = {
+		army_tradition_decay = -0.01
+	}
+	professional_sixth = {
+		free_leader_pool = 2
+	}
+	professional_seventh = {
+		land_morale = 0.15
+	}
+
+	ai_will_do = {
+		factor = 1
+		modifier = {
+			factor = 20
+			OR = {
+				tag = NCI
+				tag = HLE
+				tag = PRU
+				tag = NAZ
+				tag = SEL
+			}
+		}
+		modifier = {
+			factor = 1000
+			has_idea_group = celestial_ideas
+		}
+	}
+}
+
+state_governance_ideas = {
+	category = ADM
+
+	bonus = {
+		state_maintenance_modifier = -0.1
+	}
+
+	state_governance_first = {
+		governing_capacity_modifier = 0.1
+	}
+	state_governance_second = {
+		yearly_corruption = -0.05
+	}
+	state_governance_third = {
+		years_of_nationalism = -5
+	}
+	state_governance_fourth = {
+		global_autonomy = -0.05
+	}
+	state_governance_fifth = {
+		max_absolutism = 5
+		max_revolutionary_zeal = 5
+		yearly_absolutism = 0.25
+		yearly_revolutionary_zeal = 0.25
+	}
+	state_governance_sixth = {
+		development_cost = -0.1
+	}
+	state_governance_seventh = {
+		administrative_efficiency = 0.05
+	}
+
+	ai_will_do = {
+		factor = 0.5
+		modifier = {
+			factor = 1.5
+			ROOT = { government_rank = 2 }
+		}
+		modifier = {
+			factor = 2.5
+			ROOT = { is_great_power = yes }
+		}
+		modifier = {
+			factor = 2.5
+			ROOT = { government_rank = 3 }
+		}
+		modifier = {
+			factor = 2.5
+			governing_capacity_percentage = 0.9
+		}
+		modifier = {
+			factor = 2.5
+			num_of_cities = 50
+		}
+		modifier = {
+			factor = 2.5
+			num_of_cities = 100
+		}
+		modifier = {
+			factor = 5.0
+			total_development = 1000
+		}
+		modifier = {
+			factor = 5.0
+			total_development = 2000
+		}
+	}
+}
+
+imperial_ideas = {
+	category = DIP
+	bonus = {
+		improve_relation_modifier = 0.35
+	}
+	
+	trigger = {
+		is_part_of_hre = yes
+	}
+	imperial_third = {
+		diplomatic_upkeep = 1
+		reasons_to_elect = 10
+	}
+	imperial_second = {
+		diplomats = 1
+	}
+	imperial_first = {
+		ae_impact = -0.1
+		unjustified_demands = -0.10
+	}
+	imperial_fourth = {
+		heir_chance = 0.5
+	}
+	imperial_fifth  = {
+		accept_vassalization_reasons = 10
+		diplomatic_annexation_cost = -0.1
+	}
+	imperial_sixth = {
+		monthly_reform_progress_modifier = 0.2
+	}
+	imperial_seventh = {
+		free_dip_policy = 1
+	}
+
+	ai_will_do = {
+		factor = 1
+
+		modifier = {
+			factor = 3
+			is_emperor = yes
+		}
+		modifier = {
+			factor = 1.5
+			is_part_of_hre = yes
+		}
+		modifier = {
+			factor = 100
+			has_idea_group = quantity_ideas
+			tag = FRC
+		}
+	}
+}

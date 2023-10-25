@@ -1,0 +1,106 @@
+country_decisions = {
+
+	kingdom_of_heaven = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = kingdom_of_heaven_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			OR = {
+				tag = KOJ
+				was_tag = KOJ
+			}
+			religion = catholic
+		}
+		
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			development_in_provinces = {
+				value = 1000
+				religion = catholic
+			}
+			is_defender_of_faith_of_tier = 5
+			OR = {
+				is_papal_controller = yes
+				is_emperor = yes
+			}
+			legitimacy = 90
+			prestige = 90
+		}
+		effect = {
+			override_country_name = KHEAVEN
+			add_country_modifier = {
+				name = "koj_kingdom_of_heaven"
+				duration = -1
+			}
+			set_country_flag = kingdom_of_heaven_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+
+	ab_achievement_kingdomofheaven = {
+		major = yes
+		potential = {
+			ai = no
+			OR = {
+				tag = KOJ
+				was_tag = KOJ
+			}
+			NOT = {
+				has_country_flag = achiev_kingdomofheaven
+			}
+		}
+		allow = {
+			custom_trigger_tooltip = {
+				tooltip = AB_ACHIEV_PREVIEW
+				has_country_flag = ab_take_achievement
+			}
+		}
+		effect = {
+			custom_tooltip = AB_KHEAVEN_ACHIVEMENT
+			if = {
+				limit = {
+					ironman = yes
+				}
+				custom_tooltip = AB_IS_IRONMAN
+			}
+			else = {
+				custom_tooltip = AB_ISNT_IRONMAN
+			}
+			if = {
+				limit = {
+					OR = {
+						tag = KOJ
+						was_tag = KOJ
+					}
+				}
+				custom_tooltip = AB_KOJ_YES
+			}
+			else = {
+				custom_tooltip = AB_KOJ_NO
+			}
+			if = {
+				limit = {
+					has_country_flag = kingdom_of_heaven_flag
+				}
+				custom_tooltip = AB_KHEAVEN_YES
+			}
+			else = {
+				custom_tooltip = AB_KHEAVEN_NO
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+		ai_importance = 0
+	}
+	
+}

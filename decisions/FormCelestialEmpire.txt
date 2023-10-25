@@ -1,0 +1,42 @@
+country_decisions = {
+	
+	form_celestial_empire = {
+		major = yes
+		potential = {
+			NOT = { has_country_flag = formed_celestial_empire_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = CLE }
+			is_colonial_nation = no
+			is_emperor_of_china = yes
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			is_emperor_of_china = yes
+			custom_trigger_tooltip = {
+				tooltip = AB_ALL_REFORMS
+				ab_china_has_all_reforms = yes
+			}
+		}
+		effect = {
+			change_tag = CLE
+			override_country_name = CLE
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			set_country_flag = formed_celestial_empire_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}	
+	
+}

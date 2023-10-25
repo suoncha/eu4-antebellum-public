@@ -1,0 +1,41 @@
+country_decisions = {
+
+	form_armenian_empire = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = restored_ame_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			OR = {
+				tag = CLC
+				tag = ARM
+			}
+			NOT = { exists = AME }
+			mission_completed = clc_greater
+			religion_group = christian
+		}
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = AME
+			set_government_rank = 3
+			restore_country_name_effect = yes
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = restored_ame_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+}

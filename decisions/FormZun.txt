@@ -1,0 +1,83 @@
+country_decisions = {
+	
+	form_zun = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_zun_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = ZNN }
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
+			tag = ROB
+			OR = {
+				ai = no
+				AND = {
+					ai = yes
+					num_of_cities = 3
+				}
+			}
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 448
+				province_id = 447
+				province_id = 449
+				province_id = 450
+				province_id = 452
+				province_id = 578
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			religion = zunist
+			owns_core_province = 448
+			owns_core_province = 447
+			owns_core_province = 449
+			owns_core_province = 450
+			owns_core_province = 452
+			owns_core_province = 578
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = ZNN
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			custom_tooltip = ZUN_IDEAS
+			hidden_effect = {
+				country_event = { id = ideagroups.1 }
+			}
+			set_country_flag = formed_zun_flag
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}	
+	
+}

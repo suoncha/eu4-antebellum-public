@@ -1,0 +1,46 @@
+country_decisions = {
+
+	seljuk_move_constantinople = {
+		major = yes
+		potential = {
+			OR = {
+				mission_completed = seljuk_city
+				mission_completed = rum_christian_city
+				mission_completed = rum_muslim_city
+			}
+			normal_or_historical_nations = yes
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { has_country_flag = relocated_capital_seljuk }
+		}
+		allow = {
+			is_core = 151
+			owns = 151
+			NOT = { capital = 151 }
+			is_at_war = no
+			adm_power = 100
+		}
+		effect = {
+			add_adm_power = -100
+			set_country_flag = relocated_capital_seljuk
+			151 = {
+				move_capital_effect = yes
+			}
+			151 = {
+				change_province_name = "Konstantiniyye"
+				rename_capital = "Konstantiniyye"
+			}
+			151 = {
+				change_culture = ROOT
+			}
+			151 = {
+				change_religion = ROOT
+			}			
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

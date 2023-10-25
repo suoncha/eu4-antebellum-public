@@ -1,0 +1,773 @@
+namespace = ab_iberia
+normal_or_historical_nations = yes
+
+#Fate of Cordoba
+country_event = {
+	id = ab_iberia.1
+	title = ab_iberia.1.t
+	desc = ab_iberia.1.d
+	picture = COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+
+	option = {
+		name = ab_iberia.1.a
+		add_prestige = 25
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+		add_treasury = 1000
+		225 = {
+			add_devastation = 75
+			add_base_tax = -3
+			add_base_production = -3
+			add_base_manpower = -3
+			remove_province_modifier = nm_cordoba
+		}
+	}
+	
+	option = {
+		name = ab_iberia.1.b
+		add_prestige = 15
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+		225 = {
+			add_devastation = 35
+			add_base_tax = -1
+			add_base_production = -1
+			add_base_manpower = -1
+			change_religion = root
+		}
+		225 = {
+			move_capital_effect = yes
+			change_culture = castillian
+		}
+	}
+}
+
+#Alhambra Decree
+country_event = {
+	id = ab_iberia.5
+	title = ab_iberia.5.t
+	desc = ab_iberia.5.d
+	picture = REFORM_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 180
+	}
+	
+	trigger = {
+		tag = IBE
+		NOT = { exists = ADU }
+		religion = catholic
+		IBE_ideas = 2
+		is_at_war = no
+	}
+	
+	option = {
+		name = ab_iberia.5.a
+		ai_chance = {
+			factor = 70
+		}
+		add_country_modifier = {
+			name = "alhambra_decree"
+			duration = 3650
+		}
+		PAP = {
+			add_opinion = {
+				who = ROOT
+				modifier = "alhambra_decree_opinion"
+			}
+		}
+	}
+	option = {
+		name = ab_iberia.5.b
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 2
+				has_idea_group = humanist_ideas
+			}
+		}
+		add_prestige = 10
+	}
+}
+
+# Merino Wool
+country_event = {
+	id = ab_iberia.6
+	title = ab_iberia.6.t
+	desc = ab_iberia.6.d
+	picture = ECONOMY_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = IBE
+		NOT = { is_year = 1600 }
+		any_owned_province = {
+			region = iberia_region
+			trade_goods = wool
+		}
+		has_estate = estate_church
+		has_estate = estate_nobles
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	}
+	
+	option = {
+		name = ab_iberia.6.a
+		every_owned_province = {
+			limit = {
+				region = iberia_region
+				trade_goods = wool
+			}
+			add_province_modifier = {
+				name = merino_wool
+				duration = -1
+			}
+		}
+		give_estate_land_share_medium = { estate = estate_nobles }
+		give_estate_land_share_medium = { estate = estate_church }
+	}
+}
+
+# The Mesta
+country_event = {
+	id = ab_iberia.7
+	title = ab_iberia.7.t
+	desc = ab_iberia.7.d
+	picture = ECONOMY_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = IBE
+		any_owned_province = {
+			has_province_modifier = merino_wool
+			OR = {
+				has_building = counting_house
+				has_building = textile
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+	}
+	
+	option = {
+		name = ab_iberia.7.a
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -10
+		}
+		take_estate_land_share_small = { estate = estate_nobles }
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = -10
+		}
+		take_estate_land_share_small = { estate = estate_church }
+		every_owned_province = {
+			limit = {
+				has_province_modifier = merino_wool
+			}
+			remove_province_modifier = merino_wool
+			change_trade_goods = cloth
+			add_province_modifier = {
+				name = "mesta_privileged_revoked"
+				duration = -1
+			}
+		}
+	}
+	option = {
+		name = ab_iberia.7.b
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 5
+		}
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = 5
+		}
+		every_owned_province = {
+			limit = {
+				has_province_modifier = merino_wool
+			}
+			add_local_autonomy = 50
+		}
+	}
+}
+
+# The Communeros
+country_event = {
+	id = ab_iberia.8
+	title = ab_iberia.8.t
+	desc = ab_iberia.8.d
+	picture = ANGRY_MOB_eventPicture
+
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = IBE
+		is_year = 1550
+	}
+
+	mean_time_to_happen = {
+		months = 300
+	}
+	
+
+	option = {		# Crush the Rebellion
+		name = ab_iberia.8.a
+		every_owned_province = {
+			limit = {
+				region = iberia_region
+			}
+			add_unrest = 10
+		}
+	}
+	option = {		# Give concessions to the Peasantry
+		name = ab_iberia.8.b
+		add_ruler_modifier = {
+			name = concessions_to_the_peasantry
+		}
+	}
+}
+
+#The Quest for the New World
+country_event = {
+	id = ab_iberia.9
+	title = ab_iberia.9.t
+	desc = ab_iberia.9.d
+	picture = EXPLORERS_eventPicture
+
+	fire_only_once = yes	
+
+	trigger = {
+		tag = IBE
+		NOT = {
+			exists = ADU
+		}
+		religion = catholic
+		OR = {
+			north_america = {
+				has_discovered = ROOT
+			}
+			south_america = {
+				has_discovered = ROOT
+			}
+		}
+
+	}
+
+	mean_time_to_happen = {
+		months = 64
+	}
+
+
+	option = {		# A New Reconquista! We need Conquistadors
+		name = ab_iberia.9.a
+		ai_chance = { factor = 45 }
+		define_conquistador = {
+			fire = 2
+			shock = 2
+			manuever = 5
+		}
+		add_mil_power = 50
+	}
+	option = {		# A New Reconquista! We need Explorers
+		name = ab_iberia.9.b
+		ai_chance = { factor = 45 }
+		define_explorer = {
+			fire = 2
+			shock = 2
+			manuever = 5
+		}
+		add_mil_power = 50
+	}
+
+}
+
+#The Trade Center of Lisboa
+country_event = {
+	id = ab_iberia.10
+	title = ab_iberia.10.t
+	desc = ab_iberia.10.d
+	picture = MERCHANTS_TALKING_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = IBE
+		owns = 227
+		colony = 3
+		mission_completed = ibe_new_dockyard
+	}
+
+	mean_time_to_happen = {
+		months = 120
+	}
+	
+
+	option = {		# We now have control of our Oversea Trade
+		name = ab_iberia.10.a
+		227 = {
+			add_province_modifier = {
+				name = port_to_the_new_world
+				duration = -1
+			}
+		}
+	}
+}
+
+#Cultures 1
+country_event = {
+	id = ab_iberia.11
+	title = ab_iberia.11.t
+	desc = ab_iberia.11.d
+	picture = FARMING_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = IBE
+		owns = 219
+		owns = 2754
+		owns = 1747
+		owns = 4996
+		219 = {
+			religion = catholic
+		}
+		2754 = {
+			religion = catholic
+		}
+		1747 = {
+			religion = catholic
+		}
+		4996 = {
+			religion = catholic
+		}
+		is_year = 1600
+	}
+
+	mean_time_to_happen = {
+		months = 120
+	}
+	
+
+	option = {
+		name = ab_iberia.11.a
+		219 = {
+			change_culture = castillian
+		}
+		2754 = {
+			change_culture = castillian
+		}
+		1747 = {
+			change_culture = leonese
+		}
+		4996 = {
+			change_culture = leonese
+		}
+	}
+}
+
+#Cultures 2
+country_event = {
+	id = ab_iberia.12
+	title = ab_iberia.12.t
+	desc = ab_iberia.12.d
+	picture = CITY_VIEW_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = IBE
+		owns = 220
+		owns = 4549
+		owns = 1750
+		220 = {
+			religion = catholic
+		}
+		4549 = {
+			religion = catholic
+		}
+		1750 = {
+			religion = catholic
+		}
+		220 = {
+			religion = catholic
+		}
+		229 = {
+			religion = catholic
+		}
+		230 = {
+			religion = catholic
+		}
+		4150 = {
+			religion = catholic
+		}
+		4787 = {
+			religion = catholic
+		}
+		227 = {
+			religion = catholic
+		}
+		228 = {
+			religion = catholic
+		}
+		1851 = {
+			religion = catholic
+		}
+		is_year = 1650
+	}
+
+	mean_time_to_happen = {
+		months = 120
+	}
+	
+
+	option = {
+		name = ab_iberia.12.a
+		220 = {
+			change_culture = Valencian
+		}
+		4549 = {
+			change_culture = Valencian
+		}
+		1750 = {
+			change_culture = Valencian
+		}
+		1851 = {
+			change_culture = Lusitanian
+		}
+		227 = {
+			change_culture = Lusitanian
+		}
+		4787 = {
+			change_culture = Lusitanian
+		}
+		4150 = {
+			change_culture = Lusitanian
+		}
+		230 = {
+			change_culture = Lusitanian
+		}
+		229 = {
+			change_culture = Lusitanian
+		}
+		228 = {
+			change_culture = Lusitanian
+		}
+	}
+}
+
+# Commercial Conflict in the Indian Ocean
+country_event = {
+	id = ab_iberia.13
+	title = ab_iberia.13.t
+	desc = ab_iberia.13.d
+	picture = MERCHANTS_TALKING_eventPicture
+
+	fire_only_once = yes
+
+
+	trigger = {
+		tag = IBE
+		any_active_trade_node = {
+			province_id = 4346	# Gulf of Aden
+			has_merchant = prev
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 12
+	}
+	
+	
+	option = {		# Forcefully control the spice trade
+		name = "flavor_por.EVTOPTA3268"
+		ai_chance = { factor = 10 }
+		random_active_trade_node = {
+			limit = {
+				province_id = 4346	# Gulf of Aden
+			}
+			
+			add_trade_modifier = {
+				who = root
+				duration = -1
+				power = 25
+				key = iberian_privateers
+			}			
+		}
+	}
+	option = {		# Seek better relations in the region
+		name = "flavor_por.EVTOPTB3268"
+		ai_chance = { factor = 0 }
+		custom_tooltip = flavor_por.3268.b.tt
+		hidden_effect = {
+			random_active_trade_node = {
+				limit = {
+					province_id = 4346	# Gulf of Aden
+				}
+				every_trade_node_member_country = {
+					add_opinion = {
+						who = ROOT
+						modifier = careful_trade_expansion
+					}
+				}
+			}
+		}
+	}
+}
+
+# Earthquake destroy Lisboa
+country_event = {
+	id = ab_iberia.14
+	title = ab_iberia.14.t
+	desc = ab_iberia.14.d
+	picture = REVOLUTION_eventPicture
+	
+	
+	fire_only_once = yes
+	trigger = {
+		tag = IBE
+		owns = 227	# Lisboa
+		is_year = 1700
+	}
+	
+	mean_time_to_happen = {
+		months = 2000
+	}
+	
+
+	
+	option = {		# 
+		name = "flavor_por.EVTOPTA3278"
+		227 = {
+			add_province_modifier = {
+				name = earthquake
+				duration = 3650
+			}
+		}
+	}
+}
+
+# Atlantic Slave Trade
+country_event = {
+	id = ab_iberia.15
+	title = ab_iberia.15.t
+	desc = ab_iberia.15.d
+	picture = NATIVES_eventPicture
+	
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = IBE
+		colony = 1
+		south_america = {
+			country_or_vassal_holds = ROOT
+		}
+		OR = {
+			guinea_region = {
+				owned_by = ROOT
+			}
+			south_africa_region = {
+				owned_by = ROOT
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 100
+	}
+	
+
+	option = {		# Encourage slave trade from Africa
+		name = "flavor_por.EVTOPTA2"
+		ai_chance = { factor = 90 }
+		add_country_modifier = {
+			name = african_slaves
+			duration = 18250
+		}
+	}
+	option = {		# The Crown should not get involved
+		name = "flavor_por.EVTOPTB2"
+		ai_chance = { factor = 10 }
+		add_prestige = 10
+	}
+}
+
+# Epidemic Plague
+country_event = {
+	id = ab_iberia.16	
+	title = ab_iberia.16.t
+	desc = ab_iberia.16.d
+	picture = PLAGUE_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = IBE
+		num_of_cities = 4
+		iberia_region = {
+			owned_by = ROOT
+		}
+		is_year = 1550
+		NOT = { is_year = 1700 }
+	}
+
+	mean_time_to_happen = {
+		months = 120
+	}
+	
+
+	option = {		# We will recover
+		name = "flavor_por.EVTOPTA3273"
+		add_country_modifier = { 
+			name = severe_plague 
+			duration = 1825
+		}		
+	}
+}
+
+# Count da Ericeira
+country_event = {
+	id = ab_iberia.17
+	title = ab_iberia.17.t
+	desc = ab_iberia.17.d
+	picture = ADVISOR_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = IBE
+		is_year = 1662
+		NOT = { is_year = 1690 }
+	}
+
+	mean_time_to_happen = {
+		months = 100
+	}
+	
+	option = {		# An Excellent Minister!
+		name = "EXCELLENTMINISTER"
+		add_dip_power = 100
+		define_advisor = {
+			type = statesman
+			name = "Dom Luís de Meneses"
+			culture = galician
+			discount = yes
+			skill = 2
+		}
+	}
+}
+
+# Missionaries in the Spice Islands
+country_event = {
+	id = ab_iberia.18
+	title = ab_iberia.18.t
+	desc = ab_iberia.18.d
+	picture = RELIGION_eventPicture
+	
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = IBE
+		is_year = 1500
+		has_discovered = 646	# Ambon
+		religion = catholic
+		num_of_owned_provinces_with = {
+			region = moluccas_region
+			NOT = { religion = catholic }
+			value = 2
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 300
+	}
+	
+
+	option = {		# Spread the Catholic faith
+		name = "flavor_por.EVTOPTA3"
+		random_owned_province = {
+			limit = {
+				region = moluccas_region
+				NOT = { religion = catholic }
+			}
+			change_religion = catholic
+		}
+		random_owned_province = {
+			limit = {
+				region = moluccas_region
+				NOT = { religion = catholic }
+			}
+			change_religion = catholic
+		}
+	}
+}
+
+# Colonial Policy
+country_event = {
+	id = ab_iberia.19
+	title = ab_iberia.19.t
+	desc = ab_iberia.19.d
+	picture = COLONIZATION_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		tag = IBE
+		colony = 1
+	}
+
+	mean_time_to_happen = {
+		months = 120
+	}
+	
+	
+	option = {		# Every man make his own fortune
+		name = "flavor_por.EVTOPTA3266"
+		ai_chance = { factor = 75 }
+		add_corruption = 1
+		add_country_modifier = {
+			name = colonial_policy
+			duration = -1
+		}
+	}
+	option = {		# Demand less corruption
+		name = "flavor_por.EVTOPTB3266"
+		ai_chance = { factor = 25 }
+		if = {
+			limit = {
+				corruption = 0.01
+			}
+			add_corruption = -1
+		}
+		if = {
+			limit = {
+				NOT = {
+					corruption = 1
+				}
+			}
+			add_country_modifier = {
+				name = less_colonial_corruption
+				duration = -1
+			}
+		}
+	}
+}

@@ -1,0 +1,115 @@
+country_decisions = {
+
+	form_england = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_normandy_england_flag }
+			
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
+			NOT = { tag = GBR }
+			tag = NRM
+			OR = {
+				ai = no
+				AND = {
+					ai = yes
+					num_of_cities = 3
+				}
+			}
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 236		# London
+				province_id = 237		# Oxfordshire
+				province_id = 234		# Wessex
+				province_id = 245
+				province_id = 239
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			if = {
+				limit = {
+					OR = {
+						exists = ENG
+						exists = ANG
+						exists = GBR
+					}
+				}
+				custom_trigger_tooltip = {
+					tooltip = form_england_trigger_england_does_not_exist
+					always = no
+				}
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = form_england_trigger_england_does_not_exist
+					always = yes
+				}
+			}
+			mission_completed = nrm_duke_king
+			owns_core_province = 236		# London
+			owns_core_province = 237		# Oxfordshire
+			owns_core_province = 234		# Wessex
+			owns_core_province = 245
+			owns_core_province = 239
+		}
+		effect = {
+			add_prestige = 25
+			change_tag = ANG
+			236 = {
+				move_capital_effect = yes
+			}
+			swap_non_generic_missions = yes
+			remove_non_electors_emperors_from_empire_effect = yes
+			add_government_reform = english_feudal
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = formed_normandy_england_flag
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						is_core = ENG
+					}
+					remove_core = ENG
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+	
+}

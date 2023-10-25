@@ -1,0 +1,1769 @@
+ab_goryeo_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = GOR
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	gor_capture_capital = {
+		icon = mission_koreacapital
+		required_missions = { gor_kingdoms }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 735
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    735 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			add_country_modifier = {
+				name = gor_defeated_joseon
+				duration = 5475
+			}
+			korea_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	gor_unite_korea = {
+		icon = mission_unitekorea
+		required_missions = { gor_capture_capital }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				region = korea_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    korea_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 75
+			add_country_modifier = {
+				name = jsn_reunification
+				duration = 7300
+			}
+			liaoning_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			jilin_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			ningguta_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = GOR_INTEGRATE_JSN
+			hidden_effect = {
+				if = {
+					limit = {
+						JSN = {
+							is_subject_of = ROOT
+							NOT = {
+								liberty_desire = 50
+							}
+						}
+					}
+					inherit = JSN
+				}
+			}
+		}
+	}
+	
+	gor_jurchens = {
+	    icon = mission_manchu_warrior
+		required_missions = { gor_unite_korea }
+		position = 5
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = manchuria_region
+				value = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = manchuria_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_mil_power = 150
+			add_country_modifier = {
+				name = "gor_invasion_north"
+				duration = 9125
+			}
+			hebei_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			furdan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			central_jilin_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			central_heilongjiang_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	gor_amur = {
+		icon = mission_amur_acquisition
+		required_missions = { gor_jurchens }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = central_heilongjiang_area
+				area = central_jilin_area
+				area = furdan_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    furdan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    central_jilin_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    central_heilongjiang_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_war_exhaustion = -3
+			add_country_modifier = {
+				name = "gor_expansionism"
+				duration = 9125
+			}
+			manchuria_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+		
+	gor_mongol = {
+	    icon = mission_non-western_cavalry_raid
+		required_missions = { gor_beijing }
+		position = 7
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = mongolia_region
+				value = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = mongolia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_general = { tradition = 75 }
+			mongolia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	gor_feed = {
+		icon = mission_rice_field
+		position = 10
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1013
+				province_id = 1845
+			}
+		}
+		
+		trigger = {
+			1013 = {
+				owned_by = ROOT
+				base_production = 6
+			}
+			1845 = {
+				owned_by = ROOT
+				base_production = 6
+			}
+		}
+		
+		effect = {
+			custom_tooltip = JSN_5_MANPOWER
+			add_country_modifier = {
+				name = "gor_feed"
+				duration = -1
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								region = korea_region
+							}
+							add_base_manpower = 1
+						}
+					"
+				}
+			}
+		}
+	}
+	
+	gor_gukjagam = {
+		icon = mission_vedic_education
+		position = 12
+		required_missions = { gor_develop_capital }
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2745
+			}
+		}
+		
+		trigger = {
+			1013 = {
+				owned_by = ROOT
+				has_building = university
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gor_university"
+				duration = 9125
+			}
+		}
+	}
+
+}
+
+ab_goryeo_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = GOR
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gor_kingdoms = {
+		icon = mission_twokingdoms
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+			custom_trigger_tooltip = {
+				tooltip = GOR_MORE_ARMY_JOS
+				NOT = {
+					JSN = {
+						army_size = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_war
+				duration = 7300
+			}
+		    add_casus_belli = {
+				type = cb_vassalize_mission
+				months = 300
+				target = JSN
+			}
+		}
+	}
+	
+	gor_resplendent = {
+		icon = mission_khitan
+		required_missions = { gor_kingdoms }
+		position = 2
+		
+		trigger = {
+			army_size = 50
+			OR = {
+				full_idea_group = defensive_ideas
+				full_idea_group = quantity_ideas
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_resplendent
+				duration = -1
+			}
+		}
+	}
+	
+	gor_hwacha = {
+		icon = mission_asian_cannon
+		required_missions = { gor_rebuilding }
+		position = 3
+		
+		trigger = {
+			num_of_artillery = 3
+			artillery_fraction = 0.3
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_building = regimental_camp
+					has_building = conscription_center
+				}
+			}
+		}
+		effect = {
+			add_mil_power = 50
+			add_country_modifier = {
+				name = hwacha_firepower_bonus
+				duration = 7300
+			}
+		}
+	}
+	
+	gor_fortify_korea = {
+		icon = mission_great_wall
+		position = 4
+		required_missions = { gor_unite_korea }
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2744
+				province_id = 4232
+				province_id = 2743
+				province_id = 2742
+			}
+		}
+		
+		trigger = {
+			any_owned_province = {
+				OR = {
+					province_id = 2744
+					province_id = 4232
+					province_id = 2743
+					province_id = 2742
+				}
+				OR = {
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					NOT = {
+						any_owned_province = {
+							OR = {
+								province_id = 2744
+								province_id = 4232
+								province_id = 2743
+								province_id = 2742
+							}
+							OR = {
+								has_building = fort_16th
+								has_building = fort_17th
+								has_building = fort_18th
+								has_building = fort_19th
+							}
+						}
+					}
+				}
+				custom_tooltip = kor_fortify_korea_tooltip
+			}
+			else = {
+				random_owned_province = {
+					limit = {
+						OR = {
+							province_id = 2744
+							province_id = 4232
+							province_id = 2743
+							province_id = 2742
+						}
+						OR = {
+							has_building = fort_16th
+							has_building = fort_17th
+							has_building = fort_18th
+							has_building = fort_19th
+						}
+					}
+					add_province_modifier = {
+						name = kor_built_the_wall
+						duration = -1
+					}
+					add_base_manpower = 2
+				}
+			}
+		}
+	}
+	
+	gor_beijing = {
+		icon = mission_defy_the_dragon
+		required_missions = { gor_jurchens }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = hebei_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    hebei_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_korea.1 }
+		}
+	}
+	
+	gor_dragon_throne = {
+		icon = mission_seize_the_dragon_throne
+		required_missions = { gor_beijing }
+		position = 7
+		
+		trigger = {
+			OR = {
+				is_emperor_of_china = yes
+				num_of_owned_provinces_with = {
+					is_core = ROOT
+					region = north_china_region
+					value = 30
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = north_china_region
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_meritocracy = 10
+			add_country_modifier = {
+				name = gor_new_dynasty
+				duration = -1
+			}
+			north_china_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+		}
+	}
+	
+	gor_north_china = {
+	    icon = mission_chinese_general_riding
+		required_missions = { gor_dragon_throne }
+		position = 8
+		
+		trigger = {
+		    north_china_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = north_china_region
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_adm_power = 125
+			add_country_modifier = {
+				name = gor_tear_down
+				duration = 9125
+			}
+			south_china_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+			xinan_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+		}
+	}
+	
+	gor_celestial_empire = {
+	    icon = mission_celestial_empire
+		required_missions = { gor_north_china }
+		position = 9
+		
+		trigger = {
+		    south_china_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    xinan_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = south_china_region
+				region = xinan_region
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_celestial_empire
+				duration = -1
+			}
+		}
+	}
+	
+	gor_develop_capital = {
+		icon = mission_mnd_dai_imperial_citadel
+		required_missions = { gor_feed gor_development }
+		position = 11
+		
+		provinces_to_highlight = {
+			province_id = 735
+		}
+
+		trigger = {
+			735 = {
+				development = 25
+			}
+		}
+		
+		effect = {
+			735 = {
+				move_capital_effect = yes
+			}
+			735 = {
+				add_province_modifier = {
+					name = kor_developed_new_capital
+					duration = -1
+				}
+			}
+			custom_tooltip = JSN_DEV_CHINA
+			hidden_effect = {
+				if = {
+					limit = {
+						735 = {
+							NOT = {
+								any_province = {
+									superregion = china_superregion
+									higher_development_than = PREV
+								}
+							}
+						}
+					}
+					735 = {
+						add_base_production = 3
+					}
+				}
+			}
+		}
+	}
+	
+	gor_book = {
+		icon = mission_asian_trader
+		required_missions = { gor_develop_capital }
+		position = 12
+
+		trigger = {
+			has_institution = renaissance
+			dip_power = 150
+		}
+		
+		effect = {
+			add_dip_power = -150
+			if = {
+				limit = {
+					has_dlc = "Rule Britannia"
+				}
+				change_innovativeness = 3
+			}
+			add_country_modifier = {
+				name = gor_sagae
+				duration = -1
+			}
+			define_advisor = {
+				type = visionary
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+
+	gor_end_factional_strife = {
+		icon = mission_scholar_officials
+		required_missions = { gor_book }
+		position = 13
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = KOR_has_factional_upheaval_tooltip
+				has_country_modifier = kor_factional_upheaval
+			}
+			custom_trigger_tooltip = {
+				tooltip = KOR_has_factional_upheaval_tooltip2
+				has_country_flag = kor_third_literati_purge
+			}
+			OR = {
+				crown_land_share = 90
+				custom_trigger_tooltip = {
+					tooltip = KOR_two_pleased_estates_tooltip #Two §Yestates§! have at least §Y70 loyalty§!, the other has at least §Y50 loyalty§!.
+					OR = {
+						AND = {
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 60
+							}
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 40
+							}
+							estate_loyalty = {
+								estate = estate_nobles
+								loyalty = 40
+							}
+						}
+						AND = {
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 40
+							}
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 60
+							}
+							estate_loyalty = {
+								estate = estate_nobles
+								loyalty = 40
+							}
+						}
+						AND = {
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 40
+							}
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 40
+							}
+							estate_loyalty = {
+								estate = estate_nobles
+								loyalty = 60
+							}
+						}
+						AND = {
+							has_parliament = yes
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 60
+							}
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 40
+							}
+						}
+						AND = {
+							has_parliament = yes
+							estate_loyalty = {
+								estate = estate_church
+								loyalty = 40
+							}
+							estate_loyalty = {
+								estate = estate_burghers
+								loyalty = 60
+							}
+						}
+					}
+				}
+            }
+        }
+		
+		effect = {
+			if = {
+				limit = {
+					crown_land_share = 90
+				}
+				add_stability_or_adm_power = yes
+			}
+			else = {
+				hidden_effect = {
+					add_estate_loyalty_modifier = {
+						estate = estate_nobles
+						desc = EST_KOR_FACTIONAL_UNITY
+						loyalty = 15
+						duration = 7300
+					}
+					add_estate_loyalty_modifier = {
+						estate = estate_church
+						desc = EST_KOR_FACTIONAL_UNITY
+						loyalty = 15
+						duration = 7300
+					}
+					add_estate_loyalty_modifier = {
+						estate = estate_burghers
+						desc = EST_KOR_FACTIONAL_UNITY
+						loyalty = 15
+						duration = 7300
+					}
+				}
+				remove_country_modifier = kor_factional_upheaval
+				add_country_modifier = {
+					name = kor_factional_unity
+					duration = 7300
+					
+				}
+				custom_tooltip = kor_end_factional_strife_tt
+			}
+		}
+	}
+	
+	gor_achieve_juche = {
+		icon = mission_asian_city
+		required_missions = { gor_end_factional_strife }
+		
+		provinces_to_highlight = {
+			region = korea_region
+			OR = {
+				NOT = { owned_by = root }
+				NOT = { is_core = root }
+				NOT = { culture = korean }
+				NOT = { development = 8 }
+				has_manufactory_trigger = no
+			}
+		}
+		
+		trigger = {
+			is_subject = no
+			
+			korea_region = {
+				type = all
+				owned_by = root
+				is_core = root
+				OR = {
+					culture = korean
+					culture = korean_new
+				}
+				development = 8
+				has_manufactory_trigger = yes
+			}
+			OR = {
+				army_size = 100
+				AND = {
+					army_size_percentage = 1
+					army_size = 60
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = korea_in_balance
+				duration = -1
+			}
+			custom_tooltip = GOR_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = GOR_evolved_ideas
+				if = {
+					limit = {
+						tag = GOR
+					}
+					swap_free_idea_group = yes
+				}
+				else = {
+					add_country_modifier = {
+						name = gor_evolving_modifier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+
+ab_goryeo_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = GOR
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gor_rebuilding = {
+		icon = mission_unite_rajputana
+		required_missions = { gor_kingdoms }
+		position = 2
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = barracks
+						has_building = training_fields
+					}
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_army_rebuilding
+				duration = 5475
+			}
+			define_advisor = {
+				type = commandant
+				skill = 2
+				religion = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+	
+	gor_rival_shogun = {
+		icon = mission_japanseal
+		required_missions = { gor_rebuilding gor_fleet }
+		position = 4
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = GOR_MORE_NAVY_SHOGUN
+				NOT = {
+					any_country = {
+						capital_scope = { region = japan_region }
+						navy_size = ROOT
+					}
+				}
+			}
+			num_of_galley = 30
+		}
+		
+		effect = {
+			create_admiral = {
+				tradition = 65
+			}
+			add_country_modifier = {
+				name = gor_invasion_japan
+				duration = 5475
+			}
+			1018 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = root
+				}
+			}
+			4183 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = root
+				}
+			}
+			1017 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = root
+				}
+			}
+			1818 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = root
+				}
+			}
+			4182 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = root
+				}
+			}
+			4181 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = root
+				}
+			}
+			1012 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = root
+				}
+			}
+			4651 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = root
+				}
+			}
+		}
+	}
+	
+	gor_divine_wind = {
+	    icon = mission_arabian_sea_trade
+		required_missions = { gor_rival_shogun }
+		position = 5
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = japan_region
+				value = 5
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = japan_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_country_modifier = {
+				name = "gor_japan"
+				duration = 5475
+			}
+			shikoku_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = root
+			}
+			saigoku_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = root
+			}
+			sanindo_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = root
+			}
+			northern_kyushu = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = root
+			}
+			kyushu_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = root
+			}
+			kinai_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = root
+			}
+		}
+	}
+
+	gor_defeat_shogun = {
+		icon = mission_japanese_samurai
+		position = 7
+		required_missions = { gor_divine_wind }
+		
+		provinces_to_highlight = {
+			province_id = 1020
+		}
+
+		trigger = {
+			owns = 1020 #Kyoto
+		}
+		effect = {
+			if = {
+				limit = {
+					has_dlc = "Mandate of Heaven"
+					is_harmonizing_with = shinto
+				}
+				add_harmonization_progress = 15
+			}
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			country_event = { id = flavor_kor.7 }
+
+			japan_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+		}
+	}
+	
+	gor_hainan = {
+	    icon = mission_unite_home_region
+		required_missions = { gor_spices }
+		position = 9
+		
+		trigger = {
+			owns = 666
+			owns = 2160
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 666
+				province_id = 2160
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			666 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = 5475
+					power = 15
+					key = gor_china_sea
+				}
+			}
+			vietnam_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+			red_river_delta_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+			champa_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+		}
+	}
+	
+	gor_development = {
+		icon = mission_mnd_dai_universities
+		position = 10
+		required_missions = { }
+		
+		provinces_to_highlight = {
+			region = korea_region
+			NOT = { development = 6 }
+		}
+		
+		trigger = {
+			korea_region = {
+				type = all
+				development = 6
+			}
+		}
+		
+		effect = {
+			add_stability = 1
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = kor_peasant_struggles
+					}
+				}
+				custom_tooltip = kor_peasant_struggles_mission_tt1
+				hidden_effect = {
+					set_country_flag = kor_peasant_struggles_resolved
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = kor_peasant_struggles
+				}
+				remove_country_modifier = kor_peasant_struggles
+				custom_tooltip = kor_peasant_struggles_mission_tt2
+				hidden_effect = {
+					set_country_flag = kor_peasant_struggles_resolved
+				}
+			}
+			else = {
+				add_legitimacy = 15
+			}
+		}
+	}
+	
+	gor_prosperity = {
+		icon = mission_establish_mint_towns
+		position = 12
+		required_missions = { gor_develop_capital }
+		
+		trigger = {
+			development_in_provinces = {
+				value = 200
+				region = korea_region
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = { has_dlc = "Mandate of Heaven" }
+				capital_scope = {
+					add_prosperity = 100
+				}
+			}
+			korea_region = {
+				limit = { owned_by = root }
+				add_province_modifier = {
+					name = kor_prosperous_korea
+					duration = 7300
+				}
+			}
+		}
+	}
+}
+	
+ab_goryeo_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = GOR
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	gor_fleet = {
+		icon = mission_junk_boat
+		required_missions = { gor_inflitrate }
+		position = 3
+		
+		trigger = {
+			navy_size_percentage = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gor_fleet_mission"
+				duration = 7300
+			}
+		}
+	}
+	
+	gor_naval_capacity = {
+		icon = mission_grand_bengali_shipyards
+		required_missions = { gor_fleet }
+		position = 4
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_building = shipyard
+					has_building = grand_shipyard
+				}
+			}
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					has_building = dock
+					has_building = drydock
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = dock
+					has_building = drydock
+					has_building = shipyard
+					has_building = grand_shipyard
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gor_naval_capacity_increased"
+				duration = -1
+			}
+			define_advisor = {
+				type = dockmaster 
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	gor_korean_trade_ports = {
+		icon = mission_dominate_home_trade_node
+		required_missions = { gor_naval_capacity }
+		position = 5
+
+		provinces_to_highlight = {
+			province_id = 2745
+			NOT = { owned_by = root }
+		}
+		trigger = {
+			mercantilism = 10
+			num_of_owned_provinces_with = {
+				value = 6
+				has_trade_building_trigger = yes
+			}
+			owns = 2745
+		}
+		effect = {
+			2745 = {
+				add_base_production = 2
+				add_trade_modifier = {
+					who = root
+					duration = 7300
+					power = 30
+					key = kor_traders_tm
+				}
+			}
+		}
+	}
+
+	gor_japanese_trade = {
+		icon = mission_market_place_with_asian_traders
+		required_missions = { gor_korean_trade_ports }
+		position = 6
+
+		provinces_to_highlight = {
+			province_id = 1376
+		}
+
+		trigger = {
+			1376 = {
+				trade_share = {
+					country = root
+					share = 50
+				}
+			}
+		}
+
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = kor_mission_traders
+				duration = 7300
+			}
+		}
+	}
+	
+	gor_spices = {
+	    icon = mission_las_islas_filipinas
+		required_missions = { gor_taiwan }
+		position = 8
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = moluccas_region
+				value = 7
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = moluccas_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_spice_trade
+				duration = 9125
+			}
+			666 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2160 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	gor_south = {
+	    icon = settle_austrialasia
+		required_missions = { gor_spices }
+		position = 10
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_japan_australia
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 5
+					colonial_region = colonial_australia
+					is_city = yes
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = australia_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			define_advisor = {
+				type = colonist
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	gor_rival_europe = {
+	    icon = peace_in_europe
+		required_missions = { gor_new_world }
+		position = 12
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = gor_rival_europe
+				any_country = {
+					capital_scope = { continent = europe }
+					is_rival = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 15
+			}
+			add_country_modifier = {
+				name = gor_rival_europe_mission
+				duration = 9125
+			}
+		}
+	}
+
+}
+
+ab_goryeo_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = GOR
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gor_inflitrate = {
+		icon = mission_demand_garjat_fealty
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			is_claim = 4651
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4651
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gor_combat_pirates"
+				duration = 5475
+			}
+			4651 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+						is_city = yes
+					}
+					add_permanent_claim = root
+				}
+			}
+		}
+	}
+	
+	gor_ghost = {
+		icon = mission_entrepot_of_india
+		required_missions = { gor_inflitrate }
+		position = 3
+		
+		trigger = {
+			4651 = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4651
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_treasury = 150
+			add_country_modifier = {
+				name = "gor_naval_trade"
+				duration = 9125
+			}
+			custom_tooltip = JSN_PIRATES
+			tooltip = {
+				add_country_modifier = {
+					name = "gor_wokou"
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						1376 = {
+							trade_share = {
+								country = ROOT
+								share = 25
+							}
+						}
+					}
+					add_country_modifier = {
+						name = "gor_wokou"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	gor_turtle_ships = {
+		icon = mission_to_the_south_china_sea
+		position = 4
+		required_missions = { gor_fleet }
+
+		trigger = {
+			has_global_modifier_value = {
+				which = ship_durability
+				value = 0.15
+			}
+		}
+		effect = {
+			add_navy_tradition = 20
+			add_country_modifier = {
+				name = kor_turtle_fleets
+				duration = 9125
+			}
+		}
+	}
+	
+	gor_exploration = {
+	    icon = mission_look_west
+		required_missions = { }
+		position = 5
+		
+		trigger = {
+		    OR = {
+				exploration_ideas = 1
+				num_of_explorers = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_exploration
+				duration = 7300
+			}
+			taiwan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					is_city = yes
+				}
+				add_permanent_claim = root
+			}
+		}
+	}
+	
+	gor_taiwan = {
+	    icon = mission_invade_island
+		required_missions = { gor_exploration }
+		position = 7
+		
+		trigger = {
+		    taiwan_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = taiwan_area
+
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			create_explorer = { tradition = 50 }
+			taiwan_area = {
+				change_culture = ROOT
+			}
+		}
+	}
+	
+	gor_pacific = {
+	    icon = mission_oceania_royal_marriage
+		required_missions = { gor_taiwan }
+		position = 9
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = oceanea_region
+				value = 5
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = oceanea_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_expedition
+				duration = 9125
+			}
+		}
+	}
+	
+	gor_new_world = {
+	    icon = mission_colonize_california
+		required_missions = { gor_pacific }
+		position = 11
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_japan_california
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 5
+					colonial_region = colonial_california
+					is_city = yes
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = miss_japan_alaska
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 5
+					colonial_region = colonial_alaska
+					is_city = yes
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_eastern_america
+			colonial_region = colonial_alaska
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 75 }
+			add_country_modifier = {
+				name = gor_settlement
+				duration = 7300
+			}
+		}
+	}
+	
+	gor_colonial_empire = {
+	    icon = mission_open_up_china
+		required_missions = { gor_new_world }
+		position = 13
+		
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = have_5_colonial_nations
+				colony = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gor_colonial_empire
+				duration = -1
+			}
+		}
+	}
+	
+}
+		

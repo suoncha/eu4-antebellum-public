@@ -1,0 +1,38 @@
+country_decisions = {
+
+	ab_ai_mercenaries_delete = {
+		potential = {
+			ai = yes
+			num_of_hired_mercenary_companies = 1
+		}
+
+		allow = {
+			is_at_war = no
+			NOT = { num_of_rebel_armies = 1 }
+			OR = {
+				num_of_loans = 1
+				is_in_deficit = yes
+			}
+		}
+
+		effect = {
+			ROOT = {
+				random_hired_mercenary_company = {
+					disband_mercenary_company = THIS
+				}
+			}
+		}
+
+		ai_will_do = {
+			factor = 1.0
+			modifier = {
+				factor = 5
+				num_of_loans = 3
+			}
+			modifier = {
+				factor = 50
+				num_of_loans = 10
+			}
+		}
+	}
+}

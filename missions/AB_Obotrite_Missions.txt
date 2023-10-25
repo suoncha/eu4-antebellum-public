@@ -1,0 +1,578 @@
+obd_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = OBD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	obd_conquer_lubeck = {
+		icon = defend_the_city
+		required_missions = { obd_fleet }
+		position = 2
+	
+		provinces_to_highlight = {
+			province_id = 45
+		}
+		
+		trigger = {
+			owns = 45
+		}
+		
+		effect = {
+			add_treasury = 150
+			44 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			weser_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	
+	obd_holstein = {
+		icon = claim_the_borderlands
+		required_missions = { obd_conquer_lubeck }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = holstein_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    holstein_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			jutland_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	obd_jutland = {
+		icon = mission_scandinavian_port_authority
+		required_missions = { obd_holstein }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = jutland_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    jutland_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 50 }
+			denmark_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			skaneland_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	obd_sound_toll = {
+		icon = mission_hanseatic_city
+		required_missions = { obd_jutland }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 6
+				province_id = 12
+			}
+			NOT = { controlled_by = ROOT }
+		}
+		
+		trigger = {
+			OR = {
+				OR = {
+					controls = 6
+					controls = 12
+				}
+				12 = {
+					owner = {
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+						is_at_war = no
+					}
+				}
+				12 = {
+					NOT = { has_province_modifier = sound_toll }
+				}
+			}
+		}
+		
+		effect = {
+			2996 = {
+				add_province_modifier = {
+					name = "free_shipping_through_the_sound"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	obd_baltic_trade_mission = {
+		icon = mission_develop_nevas_port
+		required_missions = { obd_sound_toll }
+		position = 2
+	
+		provinces_to_highlight = {
+			province_id = 1926 # Baltic Sea
+		}
+	
+		trigger = {
+			1926 = {
+				trade_share = {
+					country = ROOT
+					share = 30
+				}
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "obd_trade"
+				duration = 9125
+			}
+		}
+	}
+	
+}
+
+obd_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = OBD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	obd_fleet = {
+		icon = mission_sea_battles
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+		    num_of_galley = 10
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = obd_fleet
+				duration = 7300
+			}
+			45 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			holstein_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	obd_treasure = {
+		icon = mission_entrepot_of_india
+		required_missions = { obd_fleet }
+		position = 2
+		
+		trigger = {
+			treasury = 250
+		}
+		
+		effect = {
+			add_navy_tradition = 15
+			add_country_modifier = {
+				name = obd_sea
+				duration = 9125
+			}
+		}
+	}
+	
+	obd_hansa = {
+		icon = mission_rb_control_the_hansa
+		required_missions = { obd_conquer_lubeck }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 44
+				area = weser_area
+			}
+		}
+		
+		trigger = {
+			owns = 44
+		    weser_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 15
+			add_mil_power = 150
+			add_country_modifier = {
+				name = obd_invasion
+				duration = 7300
+			}
+		}
+	}
+	
+	obd_quest = {
+	    icon = mission_look_west
+		required_missions = { obd_sound_toll obd_dock }
+		position = 6
+		
+		trigger = {
+		    exploration_ideas = 2
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ibe_quest
+				duration = 7300
+			}
+		}
+	}
+	
+	obd_make_colony = {
+	    icon = mission_rb_the_thirteen_colonies
+		required_missions = { obd_quest }
+		position = 7
+		
+		trigger = {
+			num_of_colonies = 3
+		}
+		
+		
+		effect = {
+			add_country_modifier = {
+				name = ibe_colonization
+				duration = 9125
+			}
+		}
+	}
+}
+		
+
+obd_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = OBD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	obd_capital = {
+		icon = mission_eastern_european_city
+		required_missions = { }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2996
+			}
+		}
+		
+		trigger = {
+			2996 = {
+				owned_by = ROOT
+				development = 25
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_prosperity = 100
+			}
+			capital_scope = {
+				add_province_modifier = {
+					name = wee_capital_development
+					duration = 5475
+				}
+			}
+		}
+	}
+	
+	obd_dock = {
+	    icon = mission_galleys_in_port
+		required_missions = { obd_capital }
+		position = 5
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = shipyard
+						has_building = grand_shipyard
+					}
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "obd_naval"
+				duration = 7300
+			}
+		}
+	}
+			
+}
+
+obd_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = OBD
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	obd_army = {
+		icon = mission_landsknecht_soldier
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 0.85
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = obd_army
+				duration = 7300
+			}
+			mittelmark_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			4749 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2994 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			47 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			4745 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	obd_veleti = {
+		icon = mission_unite_home_region
+		required_missions = { obd_army }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				area = mittelmark_area
+				province_id = 4745
+				province_id = 47
+				province_id = 2994
+				province_id = 4749
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			owns = 4745
+			owns = 47
+			owns = 2994
+			owns = 4749
+		    mittelmark_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = obd_campaign
+				duration = 7300
+			}
+			lusatia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	obd_lusatia = {
+		icon = mission_crusade_for_varna
+		required_missions = { obd_veleti }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lusatia_area
+				
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    lusatia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 15
+			add_adm_power = 75
+			hinter_pommern_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+			neumark_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+					add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	obd_wendish = {
+		icon = mission_empire
+		required_missions = { obd_lusatia }
+		position = 6
+		
+		provinces_to_highlight = {
+			OR = {
+				area = hinter_pommern_area
+				area = neumark_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    hinter_pommern_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    neumark_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = obd_empire
+				duration = 9125
+			}
+		}
+	}
+}
+
+		

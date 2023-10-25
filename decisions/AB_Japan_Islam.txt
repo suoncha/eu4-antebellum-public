@@ -1,0 +1,31 @@
+country_decisions = {
+	convert_to_islam_japan = {
+		potential = {
+			OR = {
+				tag = JAP
+				tag = JPE
+			}
+			has_country_flag = japan_can_convert_to_islam
+			NOT = {
+				religion = sunni
+			}
+			NOT = {
+				has_country_flag = japan_converted_flag
+			}
+		}
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+		}
+		effect = {
+			set_country_flag = japan_converted_flag
+			change_religion = sunni
+			set_country_flag = sunni_dominance
+			add_country_modifier = {
+				name = "japan_conversion_sunni"
+				duration = 9125
+			}
+		}
+		ai_importance = 400
+	}
+}

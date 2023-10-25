@@ -1,0 +1,106 @@
+namespace = magyar_events
+normal_or_historical_nations = yes
+
+country_event = {
+	id = magyar_events.1
+	title = "magyar_events.1.t"
+	desc = "magyar_events.1.d"
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		ai_chance = { factor = 50 }
+		name = magyar_events.1.a
+		add_stability = -2
+		change_religion = catholic
+		change_tag = HUN
+		swap_non_generic_missions = yes
+		change_government = monarchy
+		swap_free_idea_group = yes
+		add_country_modifier = {
+			name = "magyar_catholic"
+			duration = 5475
+		}
+		capital_scope = {
+			change_religion = catholic
+			}
+		PAP = {
+			add_opinion = {
+				who = root
+				modifier = opinion_magyar_catholic
+			}
+		}
+		ROOT = {
+			add_opinion = {
+				who = PAP
+				modifier = opinion_magyar_catholic
+			}
+		}
+		
+	}
+	
+	option = {
+		ai_chance = { factor = 50 }
+		name = magyar_events.1.b
+		add_stability = -2
+		change_religion = orthodox
+		change_tag = HUN
+		swap_non_generic_missions = yes
+		change_government = monarchy
+		swap_free_idea_group = yes
+		add_country_modifier = {
+			name = "magyar_catholic"
+			duration = 5475
+		}
+		capital_scope = {
+			change_religion = orthodox
+			}
+		
+	}
+	
+	option = {
+		name = magyar_events.1.c
+		ai_chance = { factor = 50 }
+		add_prestige = 15
+		custom_tooltip = MAGYAR_HORDE
+		set_country_flag = magyar_can_become_horde
+	}
+}
+	
+country_event = {
+	id = magyar_events.4
+	title = "magyar_events.4.t"
+	desc = "magyar_events.4.d"
+	picture = HORDE_ON_HORSEBACK_eventPicture
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = HUN
+		OR = {
+			religion = catholic 
+			religion = orthodox
+		}
+		NOT = { religious_unity = 1 }
+	}
+	
+	option = {
+		name = magyar_events.4.a
+		random_owned_province = {
+			limit = {
+				religion = tengri_pagan_reformed
+				is_capital = no
+				culture = hungarian
+			}
+			spawn_rebels = {
+				type = tengri_pagan_reformed_rebels
+				size = 3
+			}
+		}
+	}
+}

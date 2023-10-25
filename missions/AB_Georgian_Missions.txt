@@ -1,0 +1,1399 @@
+georgia_first = {
+	slot = 1 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEO
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	geo_crimea = {
+	    icon = mission_invade_island
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2447
+				province_id = 285
+				province_id = 2410
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			2447 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			285 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			2410 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "geo_black_sea"
+				duration = 5475
+			}
+		}
+	}
+		
+	geo_blacksea = {
+	    icon = crusader_fleet
+		required_missions = { geo_crimea geo_trebizond }
+		position = 3
+		
+		trigger = {
+			284 = {
+				is_strongest_trade_power = ROOT
+			}
+			num_of_owned_provinces_with = {
+				province_has_center_of_trade_of_level = 2
+				value = 3
+			}
+
+		}
+		
+		provinces_to_highlight = {
+			province_id = 284
+		}
+		
+		effect = {
+			custom_tooltip = add_25_dip_per_privilege_burghers
+			hidden_effect = {
+				for_privilege_given_to_estate = {
+					estate = burghers
+					max_privileges = 6
+					effect = "add_dip_power = 25"
+				}
+			}
+			add_country_modifier = {
+				name = "geo_black_sea_control"
+				duration = -1
+			}
+			if = {
+				limit = {
+					284 = {
+						trade_share = {
+							country = ROOT
+							share = 50
+						}
+					}
+				}
+				custom_tooltip = GEO_SHARE
+				tooltip = {
+					add_years_of_income = 1.5
+				}
+			}
+			else = {
+				custom_tooltip = GEO_SHARE_NO
+				tooltip = {
+					add_years_of_income = 1.5
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						284 = {
+							trade_share = {
+								country = ROOT
+								share = 50
+							}
+						}
+					}
+					add_years_of_income = 1.5
+				}
+			}
+		}
+	}
+	
+	geo_cilicia = {
+	    icon = knights_of_the_new_world
+		required_missions = { geo_seljuk }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4298
+				province_id = 332
+				province_id = 327
+				province_id = 5133
+				province_id = 5134
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			4298 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			332 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			327 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			5133 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			5134 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_patriarch_authority = 0.1
+			add_country_modifier = {
+				name = "geo_champion"
+				duration = 9125
+			}
+			aleppo_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			syria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			syrian_desert_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			palestine_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			trans_jordan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	geo_levantine = {
+		icon = jerusalem
+		position = 6
+		required_missions = { geo_cilicia }
+	
+		trigger = {
+			trans_jordan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			palestine_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			syrian_desert_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			syria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			aleppo_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = trans_jordan_area
+				area = palestine_area
+				area = syrian_desert_area
+				area = syria_area
+				area = aleppo_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_prestige = 25
+			add_yearly_manpower = 3
+			379 = {
+				add_province_modifier = {
+					name = "geo_holy_city"
+					duration = -1
+				}
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	geo_greece = {
+		icon = cross_the_pindus
+		required_missions = { geo_roman }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				area = macedonia_area
+				area = northern_greece_area
+				area = morea_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			macedonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			northern_greece_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			morea_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 150
+		    if = {
+				limit = {
+					NOT = { accepted_culture = greek }
+				}
+				add_accepted_culture = greek
+			}
+			add_country_modifier = {
+				name = geo_union
+				duration = -1
+			}
+		}
+	}
+
+}
+
+georgia_second = {
+	slot = 2 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEO
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	geo_trebizond = {
+	    icon = mission_pf_cross
+		required_missions = { }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 330
+				province_id = 5147
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			330 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			5147 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_legitimacy = 10
+			add_country_modifier = {
+				name = geo_trebizond
+				duration = 5475
+			}
+			kastamonu_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			erzurum_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			north_kurdistan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			rum_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = GEO_THEODORO
+			tooltip = {
+				add_accepted_culture_or_dip_power = {
+					culture = pontic_greek
+				}
+				add_country_modifier = {
+					name = geo_resettle
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						TRE = {
+							vassal_of = ROOT
+						}
+					}
+					add_accepted_culture_or_dip_power = {
+						culture = pontic_greek
+					}
+					add_country_modifier = {
+						name = geo_resettle
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	geo_seljuk = {
+		icon = mission_seljuk
+		required_missions = { geo_trebizond }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = erzurum_area
+				area = rum_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			erzurum_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			rum_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_georgia.3 }
+		}
+	}
+	
+	geo_roman = {
+		icon = mission_justinian
+		required_missions = { geo_seljuk }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 151
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			151 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = geo_emperor
+			custom_tooltip = GEO_EMPIRE
+			set_government_rank = 3
+			add_country_modifier = {
+				name = geo_empire_modifier
+				duration = -1
+			}
+			thrace_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			bulgaria_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			silistria_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			macedonia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_greece_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			morea_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}	
+	
+	geo_beacon = {
+		icon = spread_piety
+		required_missions = { geo_bulgaria geo_greece }
+		position = 9
+		
+		trigger = {
+			patriarch_authority = 0.75
+			stability = 3
+			is_defender_of_faith_of_tier = 5
+		}
+		
+		effect = {
+			add_dip_power = 200
+			custom_tooltip = GEO_MANPOWER
+			add_country_modifier = {
+				name = geo_beacon
+				duration = -1
+			}
+			hidden_effect = {
+                for = {
+                    amount = 20
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								religion = orthodox
+							}
+							add_base_manpower = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+
+}
+
+georgia_third = {
+	slot = 3 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEO
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	geo_sarukhanids = {
+	    icon = mission_crusade_for_varna
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 4302
+				province_id = 331
+				province_id = 4303
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			4302 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			331 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			4303 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			define_advisor = {
+				type = commandant
+				skill = 1
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.35
+			}
+			armenia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			shirvan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			tabriz_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	geo_ilkhanate = {
+	    icon = mission_ilkhanate
+		required_missions = { geo_sarukhanids }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				area = tabriz_area
+				area = armenia_area
+				area = shirvan_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			tabriz_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			armenia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			shirvan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			country_event = { id = ab_georgia.2 }
+		}
+	}
+	
+	geo_caspian = {
+	    icon = mission_dominate_gujarati_trade
+		required_missions = { geo_ilkhanate }
+		position = 3
+		
+		trigger = {
+			navy_size_percentage = 1
+			OR = {
+				5136 = {
+					light_ships_in_province = 5
+					light_ships_in_province = ROOT
+				}
+				5136 = {
+					galleys_in_province = 5
+					galleys_in_province = ROOT
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 5136
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = ilk_protect
+				duration = 7300
+			}
+			tabarestan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			azerbaijan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			iraq_e_ajam_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					4341 = {
+						trade_share = {
+							country = ROOT
+							share = 20
+						}
+					}
+				}
+				custom_tooltip = GEO_SHARE_PERSIA
+				tooltip = {
+					421 = {
+						if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 1 }
+							}
+							center_of_trade = 1
+						}
+						else_if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 3 }
+							}
+							add_center_of_trade_level = 1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = GEO_SHARE_PERSIA_NO
+				tooltip = {
+					4341 = {
+						if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 1 }
+							}
+							center_of_trade = 1
+						}
+						else_if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 3 }
+							}
+							add_center_of_trade_level = 1
+						}
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						4341 = {
+							trade_share = {
+								country = ROOT
+								share = 20
+							}
+						}
+					}
+					421 = {
+						if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 1 }
+							}
+							center_of_trade = 1
+						}
+						else_if = {
+							limit = {
+								NOT = { province_has_center_of_trade_of_level = 3 }
+							}
+							add_center_of_trade_level = 1
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	geo_beyliks = {
+		icon = anatolian_frontier
+		position = 5
+		required_missions = { geo_seljuk }
+	
+		trigger = {
+			karaman_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			germiyan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			ankara_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			kastamonu_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = karaman_area
+				area = germiyan_area
+				area = ankara_area
+				area = kastamonu_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "geo_consolidate"
+				duration = 5475
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	geo_nicaea = {
+		icon = a_real_roman_empire
+		position = 6
+		required_missions = { geo_beyliks }
+	
+		trigger = {
+			hudavendigar_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = hudavendigar_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = "geo_recruits"
+				duration = 9125
+			}
+		}
+	}
+	
+	geo_bulgaria = {
+		icon = push_on_to_bulgaria
+		required_missions = { geo_roman }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				area = thrace_area
+				area = bulgaria_area
+				area = silistria_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			thrace_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			bulgaria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			silistria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+		    add_mil_power = 150
+			add_country_modifier = {
+				name = geo_bulgar
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+georgia_fourth = {
+	slot = 4 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEO
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	geo_pass = {
+		icon = fortress_of_belgrade
+		required_missions = { }
+		position = 1
+	
+		provinces_to_highlight = {
+			area = kartli_kakheti_area
+			NOT = {
+				OR = {
+					has_building = fort_15th
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 1
+				area = kartli_kakheti_area
+				OR = {
+					has_building = fort_15th
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		
+		effect = {
+			kartli_kakheti_area = {
+				add_base_manpower = 1
+			}
+			kartli_kakheti_area = {
+				add_province_modifier = {
+					name = "geo_passes"
+					duration = -1
+				}
+			}
+			circassia_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			dagestan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	geo_fortify = {
+		icon = alpine_fortifications
+		required_missions = { geo_pass }
+		position = 3
+	
+		provinces_to_highlight = {
+			region = caucasia_region
+			NOT = {
+				OR = {
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 6
+				region = caucasia_region
+				OR = {
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GEO_CAUCASIA
+			tooltip = {
+				add_province_modifier = {
+					name = "geo_caucasia"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = caucasia_region
+						OR = {
+							has_building = fort_15th
+							has_building = fort_16th
+							has_building = fort_17th
+							has_building = fort_18th
+							has_building = fort_19th
+						}
+					}
+					add_province_modifier = {
+						name = "geo_caucasia"
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+		
+	geo_overthrow = {
+	    icon = mission_forthehorde
+		required_missions = { geo_sarai }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = azov_area
+				area = lower_don_area
+				area = lower_yik_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			azov_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lower_don_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lower_yik_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}		
+		effect = {
+			add_army_tradition = 20
+			add_country_modifier = {
+				name = "aln_steppe"
+				duration = 9125
+			}
+			crimea_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					GLH = {
+						is_great_power = no
+					}
+				}
+				custom_tooltip = GEO_GP
+				tooltip = {
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 20
+					}
+				}
+			}
+			else = {
+				custom_tooltip = GEO_GP_NO
+				tooltip = {
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 20
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						GLH = {
+							is_great_power = no
+						}
+					}
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 20
+					}
+				}
+			}
+		}
+	}	
+	
+	geo_revive = {
+	    icon = law_of_the_pious
+		required_missions = { geo_golden }
+		position = 7
+		
+		trigger = {
+			has_institution = renaissance
+			has_dip_advisor_2 = yes
+		}	
+		
+		effect = {	
+			change_government_reform_progress = 25
+			add_country_modifier = {
+				name = "geo_revival"
+				duration = 9125
+			}
+		}
+	}
+	
+	geo_gelati = {
+		icon = mission_autocephalous_archbishopric
+		required_missions = { geo_revive }
+		position = 9
+		
+		provinces_to_highlight = {
+			province_id = 422
+		}
+		
+		trigger = {
+			422 = {
+				has_great_project = {
+					type = gelati
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			add_estate_loyalty = { estate = estate_church loyalty = 10 }
+			custom_tooltip = BYZ_TRUST
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion = orthodox
+					}
+					add_trust = { who = ROOT value = 10 mutual = yes }
+				}
+			}
+			422 = {
+				add_province_modifier = {
+					name = "geo_center"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+}
+
+
+georgia_fifth = {
+	slot = 5 #upper left column
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEO
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	geo_ciscaucasia = {
+	    icon = mission_unite_home_region
+		required_missions = { geo_pass }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = {
+				area = dagestan_area
+				area = circassia_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			dagestan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			circassia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = "geo_sphere"
+				duration = 7300
+			}
+			astrakhan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	geo_sarai = {
+	    icon = mission_steppe_warriors
+		required_missions = { geo_ciscaucasia }
+		position = 3
+		
+		provinces_to_highlight = {
+			area = astrakhan_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			astrakhan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		effect = {
+			country_event = { id = ab_georgia.4 }
+			azov_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_don_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_yik_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	geo_convert = {
+		icon = mission_hands_praying
+		required_missions = { geo_sarai geo_overthrow }
+		position = 5
+		
+		provinces_to_highlight = {
+			superregion = eastern_europe_superregion
+			OR = {
+				NOT = { religion = ROOT }
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				superregion = eastern_europe_superregion
+				religion = ROOT
+			}
+		}
+		
+		effect = {
+			add_patriarch_authority = 0.1
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	geo_golden = {
+		icon = mission_high_income
+		required_missions = { }
+		position = 6
+		
+		trigger = {
+			stability = 1
+			prestige = 35
+			share_of_starting_income = 2
+		}
+		
+		effect = {
+			capital_scope = {
+				add_prosperity = 100
+			}
+			add_country_modifier = {
+				name = "geo_second_golden_age"
+				duration = 7300
+			}
+		}
+	}
+	
+	geo_agriculture = {
+		icon = mission_wine_monopolies
+		required_missions = { geo_golden }
+		position = 7
+		
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			trade_goods = wine
+			NOT = { base_production = 8 }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 6
+				trade_goods = wine
+				base_production = 8
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 0.5
+			add_country_modifier = {
+				name = "geo_wine"
+				duration = -1
+			}
+			if = {
+				limit = {
+					trading_bonus = {
+						trade_goods = wine
+						value = yes
+					}
+				}
+				custom_tooltip = GEORGIA_WINE
+			}
+			else = {
+				custom_tooltip = GEORGIA_WINE_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						trading_bonus = {
+							trade_goods = wine
+							value = yes
+						}
+					}
+					every_owned_province = {
+						limit = {
+							trade_goods = wine
+						}
+						add_base_production = 2
+					}
+				}
+			}
+		}
+	}
+		
+	geo_cities = {
+	    icon = despot_stefans_legacy
+		required_missions = { geo_revive }
+		position = 8
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					development = 15
+				}
+				amount = 5
+			}
+		}
+		
+		provinces_to_highlight = {
+			NOT = {
+				development = 15
+			}
+			owned_by = ROOT
+		}
+		
+		effect = {
+			custom_tooltip = GEO_CITIES
+			tooltip = {
+				add_province_modifier = {
+					name = "geo_prosperous"
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						development = 15
+					}
+					add_province_modifier = {
+						name = "geo_prosperous"
+						duration = -1
+					}
+				}
+			}
+			custom_tooltip = GEO_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = geo_evolved_ideas
+				if = {
+					limit = {
+						tag = GEO
+					}
+					swap_free_idea_group = yes
+				}
+			}
+		}
+	}
+	
+}

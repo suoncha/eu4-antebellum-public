@@ -1,0 +1,39 @@
+namespace = ab_moghulistan
+
+
+#Chagatai
+country_event = {
+	id = ab_moghulistan.1
+	title = ab_moghulistan.1.t
+	desc = ab_moghulistan.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+	
+	option = {
+		name = ab_moghulistan.1.a
+		set_country_flag = mgs_holy_horde_path
+		change_tag = CHG
+		if = {
+			limit = {
+				has_custom_ideas = no
+			}
+			country_event = {
+				id = ideagroups.1
+			}
+		}
+		swap_non_generic_missions = yes
+		if = {
+			limit = {
+				NOT = {
+					government = tribal
+				}
+			}
+			change_government = tribal
+		}
+		add_government_reform = ab_holy_horde_reform
+	}
+
+}

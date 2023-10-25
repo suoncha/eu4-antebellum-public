@@ -1,0 +1,71 @@
+country_decisions = {
+
+	reform_hellenic_religion = {
+		major = yes
+		potential = {
+			religion = hellenic
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 146
+				province_id = 148
+				province_id = 151
+				province_id = 317
+				province_id = 2313
+				province_id = 358
+				province_id = 2982
+				province_id = 320
+				province_id = 5152
+			}
+		}
+		allow = {
+			full_idea_group = religious_ideas
+			any_owned_province = {
+				has_great_project = {
+					type = apollo
+					tier = 1
+				}
+			}
+			owns = 146
+			owns = 148
+			owns = 151
+			owns = 317
+			owns = 2313
+			owns = 358
+			owns = 2982
+			owns = 320
+			owns = 5152
+		}
+		effect = {
+			add_stability = -2
+			change_religion = reformed_hellenic
+			capital_scope = {
+				change_religion = reformed_hellenic
+			}
+			add_country_modifier = {
+				name = "wee_conversion_zeal"
+				duration = 3650
+			}	
+			custom_tooltip = reform_hellenic_subjects_switch_too
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						religion = hellenic
+						NOT = { is_subject_of_type = tributary_state }
+					}
+					change_religion = reformed_hellenic
+					capital_scope = {
+						change_religion = reformed_hellenic
+					}
+					add_country_modifier = {
+						name = wee_conversion_zeal
+						duration = 3650
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

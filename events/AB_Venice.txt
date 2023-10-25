@@ -1,0 +1,110 @@
+namespace = ab_venice
+normal_or_historical_nations = yes
+
+
+#Fate of Constantinople
+country_event = {
+	id = ab_venice.1
+	title = ab_venice.1.t
+	desc = ab_venice.1.d
+	picture = AB_BYZFALL_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_venice.1.a
+		add_prestige = 25
+	}
+	
+	option = {
+		name = ab_papal.7.b
+		custom_tooltip = PAP_LAT_CITY
+		hidden_effect = {
+		151 = {
+			cede_province = LAT
+		}
+		vassalize = LAT
+		151 = {
+			add_core = LAT
+		}
+		LAT = {
+			set_country_flag = lat_cant_trigger_events
+		}
+		}
+		custom_tooltip = PAP_ONLY_OWN_PROVINCE
+	}
+	
+	option = {
+		name = ab_papal.7.c
+		custom_tooltip = PAP_LAT_THRACE
+		hidden_effect = {
+		every_owned_province = {
+			limit = {
+				area = thrace_area
+			}
+			cede_province = LAT
+			add_core = LAT
+		}
+		vassalize = LAT
+		LAT = {
+			set_country_flag = lat_cant_trigger_events
+		}
+		}
+		custom_tooltip = PAP_ONLY_OWN_PROVINCE
+	}
+	
+	option = {
+		name = ab_papal.7.e
+		custom_tooltip = PAP_LAT_GREECE
+		hidden_effect = {
+		every_owned_province = {
+			limit = {
+				OR = {
+					area = thrace_area
+					area = macedonia_area 
+					area = morea_area
+					area = aegean_archipelago_area
+					area = northern_greece_area
+				}
+			}
+			cede_province = LAT
+			add_core = LAT
+		}
+		vassalize = LAT
+		LAT = {
+			set_country_flag = lat_cant_trigger_events
+		}
+		}
+		custom_tooltip = PAP_ONLY_OWN_PROVINCE
+	}
+	
+}
+
+#Fall of Jerusalem
+country_event = {
+	id = ab_venice.2
+	title = ab_venice.2.t
+	desc = ab_venice.2.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		tag = VEN
+		VEN = {
+			has_country_modifier = ven_holyalliance
+				379 = {
+					owner = {
+						NOT = { religion_group = christian }
+					}
+				}
+			}
+	}
+	
+	option = {
+		name = ab_venice.2.b
+		remove_country_modifier = ven_holyalliance
+	}
+	
+}
+

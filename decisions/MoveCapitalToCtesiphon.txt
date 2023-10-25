@@ -1,0 +1,34 @@
+country_decisions = {
+
+	per_move_capital = {
+		major = yes
+		potential = {
+			OR = {
+				mission_completed = per_ctesiphon
+				mission_completed = perc_ctesiphon
+				mission_completed = perm_ctesiphon
+				mission_completed = mper_ctesiphon
+				mission_completed = grg_ctesiphon
+			}
+			NOT = { has_country_flag = relocated_capital_ctesiphon }
+		}
+		allow = {
+			is_core = 410
+			owns = 410
+			NOT = { capital = 410 }
+			is_at_war = no
+			adm_power = 100
+			410 = { religion = ROOT }
+		}
+		effect = {
+			add_adm_power = -100
+			set_country_flag = relocated_capital_ctesiphon
+			410 = {
+				move_capital_effect = yes
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

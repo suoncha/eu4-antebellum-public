@@ -1,0 +1,1843 @@
+wendia_first_group = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = WEE
+	}
+	has_country_shield = yes
+	
+	wee_poland = {
+	    icon = jageillonian_union
+		required_missions = { wee_consolidate_wendia }
+		position = 2
+		
+		trigger = {
+		    wielkopolska_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = wielkopolska_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_adm_power = 50
+			add_country_modifier = {
+				name = pom_lechia
+				duration = 5475
+			}
+			poland_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	wee_lechitic = {
+		icon = polish_diplomacy
+		position = 4
+		required_missions = { wee_poland }
+		
+		provinces_to_highlight = {
+			region = poland_region
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = poland_region
+				}
+				amount = 20
+			}
+		}
+		
+		effect = {
+			unify_polish_cultures_effect = yes
+			add_accepted_culture_or_dip_power = {
+				culture = polish
+			}
+			add_country_modifier = {
+				name = "wee_polish_union"
+				duration = -1
+			}
+			if = {
+				limit = {
+					exists = MVA
+				}
+				custom_tooltip = WEE_MVA_EXIST
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = MVA
+					}
+				}
+			}
+			else = {
+				custom_tooltip = WEE_MVA_EXIST_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = MVA
+					}
+				}
+			}	
+			if = {
+				limit = {
+					NOT = {
+						exists = MVA
+					}
+				}
+				custom_tooltip = WEE_MVA_DOESNT_EXIST
+				tooltip = {
+					moravia_area = {
+							limit = {
+									NOT = { is_core = ROOT}
+									NOT = {owned_by = ROOT}
+								}
+						add_permanent_claim = ROOT
+					}
+					slovakia_area = {
+							limit = {
+									NOT = { is_core = ROOT}
+									NOT = {owned_by = ROOT}
+								}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+			else = {
+				custom_tooltip = WEE_MVA_DOESNT_EXIST_NO
+				tooltip = {
+					moravia_area = {
+							limit = {
+									NOT = { is_core = ROOT}
+									NOT = {owned_by = ROOT}
+								}
+						add_permanent_claim = ROOT
+					}
+					slovakia_area = {
+							limit = {
+									NOT = { is_core = ROOT}
+									NOT = {owned_by = ROOT}
+								}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						exists = MVA
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = MVA
+					}
+				}
+				else = {
+					moravia_area = {
+							limit = {
+									NOT = { is_core = ROOT}
+									NOT = {owned_by = ROOT}
+								}
+						add_permanent_claim = ROOT
+					}
+					slovakia_area = {
+							limit = {
+									NOT = { is_core = ROOT}
+									NOT = {owned_by = ROOT}
+								}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+	wee_moravia = {
+	    icon = bohemian_borderlands
+		required_missions = { wee_lechitic }
+		position = 6
+		
+		trigger = {
+		    moravia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    slovakia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = moravia_area
+				area = slovakia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_yearly_manpower = 2
+			add_country_modifier = {
+				name = "wee_restore_great"
+				duration = 9125
+			}
+			bohemia_area = {
+					limit = {
+							NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			erzgebirge_area = {
+					limit = {
+							NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			transdanubia_area = {
+					limit = {
+							NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			eastslovakia_area = {
+					limit = {
+							NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			centralhungary_area = {
+					limit = {
+							NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			alfold_area = {
+					limit = {
+							NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	wee_carpathia = {
+	    icon = restore_great_moravia
+		required_missions = { wee_moravia }
+		position = 8
+		
+		trigger = {
+		    transdanubia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    eastslovakia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    centralhungary_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    alfold_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = transdanubia_area
+				area = eastslovakia_area
+				area = centralhungary_area
+				area = alfold_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = wee_carpathian
+				duration = 9125
+			}
+			carpathia_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	wee_merchant_fleet = {
+	    icon = mission_dominate_home_trade_node
+		required_missions = { }
+		position = 10
+		
+		trigger = {
+			navy_size_percentage = 1
+			num_of_light_ship = 10
+		}
+		
+		effect = {
+			add_estate_loyalty = { estate = estate_burghers loyalty = 10 }
+			add_country_modifier = {
+				name = wee_fleet
+				duration = 5475
+			}
+		}
+	}
+	
+	wee_port = {
+	    icon = mission_danzig_or_war
+		required_missions = { wee_merchant_fleet }
+		position = 11
+		
+		provinces_to_highlight = {
+			province_id = 1858
+			NOT = {
+				development = 20
+			}
+		}
+		
+		trigger = {
+			1858 = {
+				development = 20
+			}
+			45 = {
+				trade_share = {
+					country = ROOT
+					share = 30
+				}
+			}
+		}
+		
+		effect = {
+			1858 = {
+				add_province_modifier = {
+					name = wee_port
+					duration = -1
+				}
+			}
+			1858 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	wee_merchants = {
+	    icon = mission_rb_scottish_the_darien_scheme
+		required_missions = { wee_dread }
+		position = 12
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+			mercantilism = 20
+			if = {
+				limit = {
+					has_estate = estate_burghers
+				}
+				estate_loyalty = {
+					estate = estate_burghers
+					loyalty = 70
+				}
+			}
+			num_of_estate_agendas_completed = {
+				estate = estate_burghers
+				value = 3
+			}
+			calc_true_if = {
+				all_owned_province = {
+					has_tax_building_trigger = yes
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			custom_tooltip = add_25_dip_per_privilege_burghers
+			hidden_effect = {
+				for_privilege_given_to_estate = {
+					estate = burghers
+					max_privileges = 6
+					effect = "add_dip_power = 25"
+				}
+			}
+			add_country_modifier = {
+				name = wee_appeased
+				duration = 18250
+			}
+			if = {
+				limit = {
+					1926 = {
+						is_strongest_trade_power = ROOT
+					}
+					45 = {
+						is_strongest_trade_power = ROOT
+					}
+				}
+				custom_tooltip = WEE_CONTROL_TRADE
+				tooltip = {
+					add_years_of_income = 1.5
+				}
+			}
+			else = {
+				custom_tooltip = WEE_CONTROL_TRADE_NO
+				tooltip = {
+					add_years_of_income = 1.5
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						1926 = {
+							is_strongest_trade_power = ROOT
+						}
+						45 = {
+							is_strongest_trade_power = ROOT
+						}
+					}
+					add_years_of_income = 1.5
+				}
+			}
+		}
+	}
+	
+}
+
+
+wendia_second_group = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = WEE
+	}
+	has_country_shield = yes
+	
+	wee_consolidate_wendia = {
+	    icon = mission_unite_home_region
+		required_missions = {  }
+		position = 1
+		
+		trigger = {
+			wendia_region = {
+				type = all
+				NOT = {
+					unrest = 1
+				}
+			}
+		    wendia_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+		  region = wendia_region
+		  OR = {
+			NOT = {
+			  owned_by = ROOT
+			}
+			unrest = 1
+		  }
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "wee_consolidate_tribes"
+				duration = 5475
+			}
+			wielkopolska_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = diplomat
+				skill = 2
+				cost_multiplier = 0.5
+				culture = ROOT
+				religion = ROOT
+			}
+		}
+	}
+	
+	wee_government = {
+	    icon = unite_the_wittelsbachs
+		required_missions = { wee_consolidate_wendia }
+		position = 3
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = courthouse
+					has_building = town_hall
+				}
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = courthouse
+						has_building = town_hall
+					}
+				}
+				amount = 10
+			}
+			if = {
+				limit = {
+					government = monarchy
+				}
+				crown_land_share = 40
+				stability = 3
+				legitimacy = 95
+			}
+			else_if = {
+				limit = {
+					government = theocracy
+				}
+				crown_land_share = 40
+				stability = 3
+				devotion = 95
+			}
+		}
+		
+		effect = {
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			add_country_modifier = {
+				name = "wee_government"
+				duration = 7300
+			}
+		}
+	}
+	
+	wee_aachen = {
+	    icon = mission_rb_control_state_religion
+		required_missions = { wee_marches }
+		position = 5
+		
+		provinces_to_highlight = {
+			province_id = 1878
+			NOT = {
+				OR = {
+					controlled_by = ROOT
+					owned_by = ROOT
+				}
+			}
+		}
+		
+		trigger = {
+			1878 = {
+				OR = {
+					controlled_by = ROOT
+					owned_by = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_wendia.1 }
+		}
+	}
+	
+	wee_bohemia = {
+	    icon = bohemian_commonwealth
+		required_missions = { wee_moravia }
+		position = 7
+		
+		trigger = {
+		    erzgebirge_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    bohemia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = erzgebirge_area
+				area = bohemia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_dip_power = 100
+			custom_tooltip = WEE_CZECH
+			tooltip = {
+				add_province_modifier = {
+					name = wee_bohemia
+					duration = -1
+				}
+			}
+			define_advisor = {
+				type = ae_advisor
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = bohemia_area
+							area = erzgebirge_area
+						}
+					}
+					add_province_modifier = {
+						name = wee_bohemia
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	wee_urbanize = {
+		icon = mission_colonial
+		required_missions = { wee_capital }
+		position = 9
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				region = wendia_region
+				development = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = wendia_region
+			NOT = { development = 10 }
+		}
+		
+		effect = {
+			capital_scope = {
+				add_prosperity = 100
+			}
+			add_country_modifier = {
+				name = wee_urbanize
+				duration = 9125
+			}
+			define_advisor = {
+				type = planner
+				skill = 3
+				cost_multiplier = 0.5
+				culture = ROOT
+				religion = ROOT
+			}
+		}
+	}
+	
+	wee_dread = {
+		icon = mission_rb_scottish_north_sea_trade
+		required_missions = { wee_merchant_fleet }
+		position = 11
+		
+		provinces_to_highlight = {
+			owner = {
+				capital_scope = {
+					OR = {
+						region = baltic_region
+						region = scandinavia_region
+					}
+				}
+				navy_size = ROOT
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = WEE_MORE_NAVY
+				NOT = {
+					any_country = {
+						capital_scope = { 
+							OR = {
+								region = baltic_region
+								region = scandinavia_region
+							}
+						}
+						navy_size = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_navy_tradition = 20
+			add_country_modifier = {
+				name = wee_dominate
+				duration = -1
+			}
+			if = {
+				limit = {
+					has_dlc = "Golden Century"
+					has_or_building_flagship = no
+					any_owned_province = {
+						has_port = yes
+					}
+				}
+				custom_tooltip = WEE_FLAGSHIP
+			}
+			else = {
+				custom_tooltip = WEE_FLAGSHIP_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_dlc = "Golden Century"
+						has_or_building_flagship = no
+						any_owned_province = {
+							has_port = yes
+						}
+					}
+					4745 = {
+						create_flagship = {	
+							name = "Polabia"
+							type = heavy_ship
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	wee_wooden = {
+		icon = mission_sea_battles
+		required_missions = { wee_dread }
+		position = 13
+		
+		provinces_to_highlight = {
+			owner = {
+				capital_scope = {
+					region = british_isles_region
+				}
+				navy_size = ROOT
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = WEE_MORE_NAVY_BRIT
+				NOT = {
+					any_country = {
+						capital_scope = { 
+							region = british_isles_region
+						}
+						navy_size = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			create_admiral = { tradition = 100 }
+			add_country_modifier = {
+				name = wee_wall
+				duration = 9125
+			}
+			if = {
+				limit = {
+					NOT = {
+						was_tag = OBD
+					}
+				}
+				custom_tooltip = WEE_TERROR
+				tooltip = {
+					add_country_modifier = {
+						name = wee_terror
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = WEE_TERROR_NO
+				tooltip = {
+					add_country_modifier = {
+						name = wee_terror
+						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							was_tag = OBD
+						}
+					}
+					add_country_modifier = {
+						name = wee_terror
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+}
+
+wendia_third_group = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = WEE
+	}
+	has_country_shield = yes
+	
+	wee_defy = {
+		icon = interfere_in_germany
+		position = 2
+		required_missions = { wee_consolidate_wendia wee_hansa }
+		
+		provinces_to_highlight = {
+			region = north_german_region
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = north_german_region
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 50 }
+			add_country_modifier = {
+				name = wee_imperial_invasion
+				duration = 7300
+			}
+			northern_saxony_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			south_saxony_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	wee_marches = {
+		icon = tame_brandenburg
+		position = 4
+		required_missions = { wee_defy }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = northern_saxony_area
+				area = south_saxony_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+		    northern_saxony_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    south_saxony_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = wee_reckoning
+				duration = 5475
+			}
+			custom_tooltip = WEE_IMPERIAL_CLAIM
+			hidden_effect = {
+				every_province = {
+					limit = {
+						is_capital = yes
+						owner = {
+							OR = {
+								is_elector = yes
+								is_emperor = yes
+							}
+						}
+					}
+					add_claim = ROOT
+				}
+			}
+			hidden_effect = {
+				north_german_region = {
+					limit = {
+						NOT = { is_core = ROOT}
+						NOT = { owned_by = ROOT}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	wee_destroy_empire = {
+		icon = humiliate_austria
+		position = 5
+		required_missions = { wee_marches }
+		
+		provinces_to_highlight = {
+			owner = {
+				is_part_of_hre = yes
+			}
+		}
+		
+		trigger = {
+			NOT = {
+				hre_size = 1
+			}
+		}
+		
+		effect = {
+			change_monarch_points_or_power = {
+				points = 2
+				power = mil
+			}
+			add_ruler_modifier = {
+				name = wee_conqueror_empire
+				duration = -1
+			}
+			south_german_region = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = WEE_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = wee_evolved_ideas1
+				if = {
+					limit = {
+						tag = WEE
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+		}
+	}
+	
+	wee_new_order = {
+		icon = peace_in_europe
+		position = 6
+		required_missions = { wee_shatter wee_aachen }
+		
+		provinces_to_highlight = {
+			owner = {
+				capital_scope = { continent = europe }
+				OR = {
+					army_size = ROOT
+					total_development = ROOT
+				}
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = WEE_NO_ARMY
+				NOT = {
+					any_country = {
+						capital_scope = { continent = europe }
+						army_size = ROOT
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = WEE_NO_DEV
+				NOT = {
+					any_country = {
+						capital_scope = { continent = europe }
+						total_development = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = "wee_order"
+				duration = -1
+			}
+		}
+	}
+	
+	wee_capital = {
+		icon = mission_eastern_european_city
+		required_missions = { }
+		position = 8
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			capital_scope = {
+				development = 25
+				OR = {
+					has_building = temple
+					has_building = cathedral
+				}
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_province_modifier = {
+					name = vlt_capital
+					duration = -1
+				}
+			}
+			capital_scope = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	wee_barlin = {
+		icon = mission_barlin
+		required_missions = { wee_capital }
+		position = 10
+		
+		provinces_to_highlight = {
+			province_id = 50
+		}
+		
+		trigger = {
+			mil_power = 100
+			years_of_income = 1
+			OR = {
+				army_tradition = 75
+				full_idea_group = defensive_ideas
+			}
+			50 = {
+				base_manpower = 12
+			}
+			50 = {
+				OR = {
+					has_building = fort_16th
+					has_building = fort_17th
+					has_building = fort_18th
+					has_building = fort_19th
+				}
+			}
+		}
+		
+		effect = {
+			add_years_of_income = -1
+			add_mil_power = -100
+			custom_tooltip = WEE_CREATE_MONUMENT
+			set_country_flag = wendish_monument_flag
+			hidden_effect = {
+				50 = {
+					add_great_project = {
+						type = barlin
+						instant = yes
+					}
+				}
+				50 = {
+					add_great_project_tier = {
+						type = barlin
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+	
+	wee_caribbean = {
+		icon = mission_colonize_the_caribbean
+		required_missions = { wee_discover }
+		position = 12
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_the_carribean
+			has_discovered = ROOT
+			NOT = {
+				OR = {
+					owned_by = ROOT
+					owner = {
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 5
+				colonial_region = colonial_the_carribean
+				owner = {
+					OR = {
+						tag = ROOT
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = wee_encourage
+				duration = 5475
+			}
+			custom_tooltip = WEE_PLANTAGE
+			tooltip = {
+				add_base_production = 3
+				add_province_modifier = {
+					name = wee_plantage
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				random_province = {
+					limit = {
+						colonial_region = colonial_the_carribean
+						OR = {
+							owned_by = ROOT
+							owner = {
+								is_colonial_nation_of = ROOT
+							}
+						}
+						OR = {
+							trade_goods = sugar
+							trade_goods = cotton
+							trade_goods = tobacco
+						}
+					}
+					add_base_production = 3
+					add_province_modifier = {
+						name = wee_plantage
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+}
+
+wendia_fourth_group = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = WEE
+	}
+	has_country_shield = yes
+	
+	wee_hansa = {
+		icon = mission_rb_control_the_hansa
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			OR = {
+				owned_by = HAS
+				owned_by = HSA
+			}
+		}
+		
+		trigger = {
+			OR = {
+				owns = 45
+				has_won_war_against = {
+					who = HSA
+					max_years_since = 10
+				}
+			}
+			OR = {
+				owns = 44
+				has_won_war_against = {
+					who = HAS
+					max_years_since = 10
+				}
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = wee_sack_hansa
+				duration = 7300
+			}
+			1981 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			weser_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			holstein_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			lower_saxony_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					owns = 45
+					owns = 44
+				}
+				custom_tooltip = WEE_CONQUER_HANSA
+				tooltip = {
+					add_country_modifier = {
+						name = wee_control_baltic
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = WEE_CONQUER_HANSA_NO
+				tooltip = {
+					add_country_modifier = {
+						name = wee_control_baltic
+						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						owns = 45
+						owns = 44
+					}
+					add_country_modifier = {
+						name = wee_control_baltic
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	wee_bornholm = {
+	    icon = mission_invade_island
+		required_missions = { wee_hansa }
+		position = 3
+		
+		trigger = {
+			owns = 1981
+		}
+		
+		provinces_to_highlight = {
+			province_id = 1981
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			1981 = {
+				change_culture = Wendish
+				change_religion = ROOT
+			}
+			add_country_modifier = {
+				name = wee_extending_grip
+				duration = 5475
+			}
+		    denmark_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					DAN = {
+						OR = {
+							is_rival = ROOT
+							is_enemy = ROOT
+						}
+					}
+				}
+				custom_tooltip = WEE_DENMARK_RIVAL
+				tooltip = {
+					4745 = {
+						add_unit_construction = {
+							type = galley
+							amount = 5
+							speed = 0.25
+							cost = 0
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = WEE_DENMARK_RIVAL_NO
+				tooltip = {
+					4745 = {
+						add_unit_construction = {
+							type = galley
+							amount = 5
+							speed = 0.25
+							cost = 0
+						}
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						DAN = {
+							OR = {
+								is_rival = ROOT
+								is_enemy = ROOT
+							}
+						}
+					}
+					4745 = {
+						add_unit_construction = {
+							type = galley
+							amount = 5
+							speed = 0.25
+							cost = 0
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	wee_sound_toll = {
+	    icon = reclaim_the_aegean
+		required_missions = { wee_bornholm }
+		position = 4
+		
+		trigger = {
+		    denmark_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			area = denmark_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = wee_gateway
+				duration = -1
+			}
+		    skaneland_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		    jutland_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = trader
+				skill = 3
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	wee_shatter = {
+	    icon = conquer_east_francia
+		required_missions = { wee_marches }
+		position = 5
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					region = north_german_region
+				}
+				amount = 20
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = north_german_region
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_tradition = 20
+			custom_tooltip = WEE_SLAVICIZATION
+			tooltip = {
+				add_province_modifier = {
+					name = wee_slavicization
+					duration = -1
+				}
+			}
+			set_country_flag = wee_slavicization_flag
+		}
+	}
+	
+	wee_kralowc = {
+	    icon = develop_konigsberg
+		required_missions = { wee_pruthenia }
+		position = 9
+		
+		provinces_to_highlight = {
+			province_id = 41
+		}
+		
+		trigger = {
+			owns = 41
+		    41 = {
+				development = 20
+			}
+			41 = {
+				has_tax_building_trigger = yes
+			}
+			41 = {
+				has_production_building_trigger = yes
+			}
+			41 = {
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			41 = {
+				change_province_name = "Kralowc"
+				rename_capital = "Kralowc"
+			}
+			41 = {
+				change_culture = ROOT
+			}
+			41 = {
+				change_religion = ROOT
+			}
+			41 = {
+				add_province_modifier = {
+					name = wee_jewel
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	wee_discover = {
+		icon = mission_establish_high_seas_navy
+		required_missions = { }
+		position = 11
+		completed_by = 1578.1.1
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_discover_eastern_america
+				colonial_eastern_america = { has_discovered = ROOT }
+			}
+			custom_trigger_tooltip = {
+				tooltip = miss_discover_caribbean
+				colonial_the_carribean = { has_discovered = ROOT }
+			}
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 35 }
+			add_country_modifier = {
+				name = "wee_sail"
+				duration = 5475
+			}
+		}
+	
+	}
+	
+	wee_colonial_empire = {
+		icon = mission_look_west
+		required_missions = { wee_caribbean wee_coast }
+		position = 13
+		completed_by = 1578.1.1
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = WEE_COLONY
+				colony = 5
+			}
+		}
+		
+		effect = {
+			create_explorer = { tradition = 100 }
+			add_country_modifier = {
+				name = "wee_empire"
+				duration = -1
+			}
+		}
+	
+	}
+	
+}
+
+
+wendia_fifth_group = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = WEE
+	}
+	has_country_shield = yes
+	
+	wee_wrath = {
+	    icon = mission_paganfury
+		required_missions = { ab_slavic_reform }
+		position = 6
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					religion = reformed_slavic
+				}
+				amount = 50
+			}
+			OR = {
+				total_development = 750
+				is_defender_of_faith_of_tier = 3
+			}
+		}
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				religion = reformed_slavic
+			}
+		}
+		
+		effect = {
+			custom_tooltip = WEE_DEVELOPMENT_MIL
+			hidden_effect = {
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
+							limit = {
+								religion = reformed_slavic
+							}
+							add_base_manpower = 1
+						}
+					"
+				}
+			}
+			add_country_modifier = {
+				name = wee_unleashed
+				duration = -1
+			}
+		}
+	}
+	
+	wee_banish = {
+	    icon = mission_teutonic_knights
+		required_missions = { }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 43
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		trigger = {
+			43 = {
+				owned_by = ROOT
+			}
+			NOT = {
+				exists = DNZ
+			}
+		}
+		
+		effect = {
+			43 = {
+				add_devastation = 50
+			}
+			43 = {
+				change_culture = ROOT
+			}
+			43 = {
+				change_religion = ROOT
+			}
+            add_country_modifier = {
+                name = "wee_sack_danzig"
+				duration = 9125
+			}	
+			east_prussia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+			west_prussia_area = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	wee_pruthenia = {
+	    icon = mission_rb_conquer_the_highlands
+		required_missions = { wee_banish }
+		position = 8
+		
+		trigger = {
+		    east_prussia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    west_prussia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = west_prussia_area
+				area = east_prussia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			add_army_tradition = 10
+            add_country_modifier = {
+                name = "wee_pruthenians"
+				duration = 7300
+			}	
+			baltic_region = {
+			        limit = {
+					        NOT = { is_core = ROOT}
+							NOT = {owned_by = ROOT}
+						}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	wee_baltoslavic = {
+	    icon = reform_bergordnung
+		required_missions = { wee_pruthenia }
+		position = 10
+		
+		trigger = {
+		    baltic_region = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = baltic_region
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			country_event = { id = ab_wendia.2 }
+			if = {
+				limit = {
+					exists = SWE
+					SWE = {
+						religion = catholic
+					}
+				}
+				custom_tooltip = WEE_SWEDEN
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = SWE
+					}
+				}
+			}
+			else = {
+				custom_tooltip = WEE_SWEDEN_NO
+				tooltip = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = SWE
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						exists = SWE
+						SWE = {
+							religion = catholic
+						}
+					}
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = SWE
+					}
+				}
+			}
+		}
+	}
+	
+	wee_coast = {
+		icon = mission_rb_the_thirteen_colonies
+		required_missions = { wee_discover }
+		position = 12
+		
+		provinces_to_highlight = {
+			colonial_region = colonial_eastern_america
+			has_discovered = ROOT
+			NOT = {
+				OR = {
+					owned_by = ROOT
+					owner = {
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				colonial_region = colonial_eastern_america
+				owner = {
+					OR = {
+						tag = ROOT
+						is_colonial_nation_of = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+            add_country_modifier = {
+                name = "wee_new_wendia"
+				duration = 7300
+			}
+			define_advisor = {
+				type = colonist
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.35
+			}
+		}
+	}
+}

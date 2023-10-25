@@ -1,0 +1,91 @@
+estate_church_interfaith_unity = {
+	icon = privilege_grant_autonomy
+	max_absolutism = -5
+	conditional_modifier = { trigger = { has_absolutism_reduction_for_estate_privileges = yes } modifier = { max_absolutism = 1 } }
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = {
+		OR = {
+			has_mission = koj_interfaith_unity
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_church_interfaith_unity
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_church_interfaith_unity_tt
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_church_interfaith_unity
+			}
+		}
+		any_owned_province = {
+			NOT = { religion_group = ROOT }
+		}
+	}
+	on_granted = {
+		custom_tooltip = estate_church_interfaith_unity_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				NOT = { religion_group = root }
+			}
+			add_province_modifier = {
+				name = koj_interfaith
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = koj_interfaith
+			}
+			remove_province_modifier = koj_interfaith
+		}
+	}
+	on_revoked = {
+		custom_tooltip = estate_church_interfaith_unity_rt
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = koj_interfaith
+			}
+			remove_province_modifier = koj_interfaith
+		}
+	}
+	on_invalid = {
+		custom_tooltip = estate_church_interfaith_unity_rt
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = koj_interfaith
+			}
+			remove_province_modifier = koj_interfaith
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_province = {
+					NOT = { religion_group = ROOT }
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			is_subject = yes
+			overlord = {
+				religion = ROOT
+				has_idea_group = religious_ideas
+			}
+		}
+	}
+}
