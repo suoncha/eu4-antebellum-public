@@ -615,30 +615,35 @@ ab_on_alliance_created_effect = {
 ab_on_alliance_broken_effect = {
 	if = {
 		limit = {
-			OR = {
-				has_country_modifier = koj_holy_alliance
-				FROM = { has_country_modifier = koj_holy_alliance }
-			}
+			has_country_modifier = koj_holy_alliance
 			NOT = { alliance_with = PAP }
 		}
-		FROM = { remove_country_modifier = koj_holy_alliance }
 		remove_country_modifier = koj_holy_alliance
+	}
+	FROM = {
+		if = {
+			limit = {
+				has_country_modifier = koj_holy_alliance
+				NOT = { alliance_with = PAP }
+			}
+			remove_country_modifier = koj_holy_alliance
+		}
 	}
 	if = {
 		limit = {
 			has_country_modifier = ibe_papal_alliance
-			OR = {
-				AND = {
-					tag = IBE
-					NOT = { alliance_with = PAP }
-				}
-				FROM = {
-					tag = IBE
-					NOT = { alliance_with = PAP }
-				}
-			}
+			NOT = { alliance_with = PAP }
 		}
 		remove_country_modifier = ibe_papal_alliance
+	}
+	FROM = {
+		if = {
+			limit = {
+				has_country_modifier = ibe_papal_alliance
+				NOT = { alliance_with = PAP }
+			}
+			remove_country_modifier = ibe_papal_alliance
+		}
 	}
 }
 
