@@ -1,14 +1,17 @@
-slavic_rebels = {
+######################################################################
+# Jewish rebels. Disgruntled fanatics.
+######################################################################
+jewish_rebels = {
 
 	color = { 230 175 175 }
 
 	area = nation 					# Sticks to provinces of their nation
 	government = theocracy 			# Desires Theocracy
-	religion = slavic_pagan
-	defection = none				# Will not defect
+	religion = jewish
+	defection = religion			# Defects to countries of their religion
 	defect_delay = 120				# Held provinces will auto-defect after 18 months, regardless of accept/enforce demands.
 	independence = none				# Does not strive for independence
-	unit_transfer = no
+	unit_transfer = yes
 	gfx_type = culture_province
 	will_relocate = yes	
 	
@@ -42,7 +45,7 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			NOT = { religion = slavic_pagan }
+			NOT = { religion = jewish }
 		}
 		modifier = {
 			factor = 0.001
@@ -54,7 +57,7 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 5.0
-			owner = { has_disaster = religious_turmoil }
+			owner = { has_country_flag = religious_turmoil }
 		}		
 		modifier = {
 			factor = 2000
@@ -87,21 +90,21 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			religion = slavic_pagan
-			owner = { religion = slavic_pagan }
+			religion = jewish
+			owner = { religion = jewish }
 		}
 		modifier = {
 			factor = 2.0
-			NOT = { religion = slavic_pagan }
+			NOT = { religion = jewish }
 			any_neighbor_province = {
-	 			religion = slavic_pagan
+	 			religion = jewish
 	 			NOT = { has_province_modifier = "forced_conversion" }
 	 		}
 	 	}
 		modifier = {
 			factor = 5
 			has_missionary = yes
-			religion = slavic_pagan
+			religion = jewish
 		}
 		modifier = {
 			factor = 1.5
@@ -132,9 +135,9 @@ slavic_rebels = {
 			if = {
 				limit = {
 					OR = {
-						religion = slavic_pagan
+						religion = jewish
 						is_reformation_center = yes
-						owner = { religion = slavic_pagan }
+						owner = { religion = jewish }
 					}
 				}
 				add_province_modifier = {
@@ -144,11 +147,11 @@ slavic_rebels = {
 			}
 			if = {
 				limit = {
-					NOT = { religion = slavic_pagan }
+					NOT = { religion = jewish }
 					is_reformation_center = no
-					NOT = { owner = { religion = slavic_pagan } }
+					NOT = { owner = { religion = jewish } }
 				}
-				change_religion = slavic_pagan
+				change_religion = jewish
 				add_province_modifier = {
 					name = "forced_conversion"
 					duration = 730
@@ -167,8 +170,8 @@ slavic_rebels = {
 	# Country scope
 	can_negotiate_trigger = {
 		OR = {
-			religion_group = eastern
-			dominant_religion = slavic_pagan
+			religion_group = jewish_group
+			dominant_religion = jewish
 		}
 	}
 	
@@ -178,7 +181,7 @@ slavic_rebels = {
 	}
 	
 	# Localisation for their demands
-	demands_description = "slavic_pagan_rebels_demand"
+	demands_description = "jewish_rebels_demand"
 	
 	# Country Scope	
 	demands_enforced_effect = {
@@ -191,7 +194,7 @@ slavic_rebels = {
 		}
 		if = {
 			limit = {
-				NOT = { religion_group = eastern }
+				NOT = { religion_group = jewish_group }
 			}
 			add_prestige = -50
 			every_owned_province = {
@@ -214,7 +217,7 @@ slavic_rebels = {
 		}
 		else_if = {
 			limit = {
-				religion = slavic_pagan
+				religion = jewish
 			}
 			add_country_modifier = {
 				name = "religious_intolerance_enforced"
@@ -224,28 +227,16 @@ slavic_rebels = {
 		
 		else_if = {
 			limit = {
-				NOT = { religion = slavic_pagan }
-				dominant_religion = slavic_pagan
+				NOT = { religion = jewish }
+				dominant_religion = jewish
 			}
-			change_religion = slavic_pagan
+			change_religion = jewish
 			force_converted = yes
-		}
-		else_if = {
-			limit = {
-				NOT = { religion = slavic_pagan }
-				NOT = { dominant_religion = slavic_pagan }
-				religion_group = eastern
-				NOT = { has_country_modifier = heretic_tolerance }
-			}
-			add_country_modifier = {
-				name = "heretic_tolerance"
-				duration = 3650
-			}
 		}
 		else = { add_stability = -1 } #Should probably never get here
 		if = {
 			limit = {
-				religion = slavic_pagan
+				religion = jewish
 				has_estate = estate_church
 				NOT = {
 					has_estate_influence_modifier = {

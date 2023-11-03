@@ -1,10 +1,14 @@
-slavic_rebels = {
+
+######################################################################
+# Mahayana rebels. Disgruntled fanatics.
+######################################################################
+mahayana_rebels = {
 
 	color = { 230 175 175 }
 
 	area = nation 					# Sticks to provinces of their nation
 	government = theocracy 			# Desires Theocracy
-	religion = slavic_pagan
+	religion = mahayana
 	defection = none				# Will not defect
 	defect_delay = 120				# Held provinces will auto-defect after 18 months, regardless of accept/enforce demands.
 	independence = none				# Does not strive for independence
@@ -42,7 +46,7 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			NOT = { religion = slavic_pagan }
+			NOT = { religion = mahayana }
 		}
 		modifier = {
 			factor = 0.001
@@ -87,21 +91,21 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			religion = slavic_pagan
-			owner = { religion = slavic_pagan }
+			religion = mahayana
+			owner = { religion = mahayana }
 		}
 		modifier = {
 			factor = 2.0
-			NOT = { religion = slavic_pagan }
+			NOT = { religion = mahayana }
 			any_neighbor_province = {
-	 			religion = slavic_pagan
+	 			religion = mahayana
 	 			NOT = { has_province_modifier = "forced_conversion" }
 	 		}
 	 	}
 		modifier = {
 			factor = 5
 			has_missionary = yes
-			religion = slavic_pagan
+			religion = mahayana
 		}
 		modifier = {
 			factor = 1.5
@@ -132,9 +136,9 @@ slavic_rebels = {
 			if = {
 				limit = {
 					OR = {
-						religion = slavic_pagan
+						religion = mahayana
 						is_reformation_center = yes
-						owner = { religion = slavic_pagan }
+						owner = { religion = mahayana }
 					}
 				}
 				add_province_modifier = {
@@ -144,11 +148,11 @@ slavic_rebels = {
 			}
 			if = {
 				limit = {
-					NOT = { religion = slavic_pagan }
+					NOT = { religion = mahayana }
 					is_reformation_center = no
-					NOT = { owner = { religion = slavic_pagan } }
+					NOT = { owner = { religion = mahayana } }
 				}
-				change_religion = slavic_pagan
+				change_religion = mahayana
 				add_province_modifier = {
 					name = "forced_conversion"
 					duration = 730
@@ -168,7 +172,7 @@ slavic_rebels = {
 	can_negotiate_trigger = {
 		OR = {
 			religion_group = eastern
-			dominant_religion = slavic_pagan
+			dominant_religion = mahayana
 		}
 	}
 	
@@ -178,7 +182,7 @@ slavic_rebels = {
 	}
 	
 	# Localisation for their demands
-	demands_description = "slavic_pagan_rebels_demand"
+	demands_description = "mahayana_rebels_demand"
 	
 	# Country Scope	
 	demands_enforced_effect = {
@@ -214,7 +218,7 @@ slavic_rebels = {
 		}
 		else_if = {
 			limit = {
-				religion = slavic_pagan
+				religion = mahayana
 			}
 			add_country_modifier = {
 				name = "religious_intolerance_enforced"
@@ -224,16 +228,16 @@ slavic_rebels = {
 		
 		else_if = {
 			limit = {
-				NOT = { religion = slavic_pagan }
-				dominant_religion = slavic_pagan
+				NOT = { religion = mahayana }
+				dominant_religion = mahayana
 			}
-			change_religion = slavic_pagan
+			change_religion = mahayana
 			force_converted = yes
 		}
 		else_if = {
 			limit = {
-				NOT = { religion = slavic_pagan }
-				NOT = { dominant_religion = slavic_pagan }
+				NOT = { religion = mahayana }
+				NOT = { dominant_religion = mahayana }
 				religion_group = eastern
 				NOT = { has_country_modifier = heretic_tolerance }
 			}
@@ -245,7 +249,7 @@ slavic_rebels = {
 		else = { add_stability = -1 } #Should probably never get here
 		if = {
 			limit = {
-				religion = slavic_pagan
+				religion = mahayana
 				has_estate = estate_church
 				NOT = {
 					has_estate_influence_modifier = {

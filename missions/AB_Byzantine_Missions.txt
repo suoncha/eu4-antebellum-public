@@ -14,8 +14,22 @@ byz_first = {
 		position = 2
 		
 		trigger = {
-			army_size_percentage = 1
-			army_tradition = 25
+			if = {
+				limit = {
+					ai = yes
+				}
+				OR = {
+					AND = {
+						army_size_percentage = 1
+						army_tradition = 25
+					}
+					is_year = 1450
+				}
+			}
+			else = {
+				army_size_percentage = 1
+				army_tradition = 25
+			}
 		}
 		
 		effect = {
@@ -707,13 +721,32 @@ byz_second = {
 		position = 1
 		
 		trigger = {
-			NOT = {
-				corruption = 1
+			if = {
+				limit = {
+					OR = {
+						is_year = 1450
+						AND = {
+							NOT = {
+								corruption = 1
+							}
+							OR = {
+								has_adm_advisor = yes
+								has_dip_advisor = yes
+								has_mil_advisor = yes
+							}
+						}
+					}
+				}
 			}
-			OR = {
-				has_adm_advisor = yes
-				has_dip_advisor = yes
-				has_mil_advisor = yes
+			else = {
+				NOT = {
+					corruption = 1
+				}
+				OR = {
+					has_adm_advisor = yes
+					has_dip_advisor = yes
+					has_mil_advisor = yes
+				}
 			}
 		}
 		
@@ -739,16 +772,40 @@ byz_second = {
 		position = 2
 		
 		trigger = {
-			NOT = {
-				num_of_loans = 1
+			if = {
+				limit = {
+					ai = yes
+				}
+				OR = {
+					is_year = 1450
+					AND = {
+						NOT = {
+							num_of_loans = 1
+						}
+						is_in_deficit = no
+						all_owned_province = {
+							development = 6
+						}
+						all_owned_province = {
+							NOT = {
+								devastation = 35
+							}
+						}
+					}
+				}
 			}
-			is_in_deficit = no
-			all_owned_province = {
-				development = 6
-			}
-			all_owned_province = {
+			else = {
 				NOT = {
-					devastation = 35
+					num_of_loans = 1
+				}
+				is_in_deficit = no
+				all_owned_province = {
+					development = 6
+				}
+				all_owned_province = {
+					NOT = {
+						devastation = 35
+					}
 				}
 			}
 		}
@@ -1577,12 +1634,31 @@ byz_third = {
 		position = 2
 		
 		trigger = {
-			NOT = {
-				exists = NCI
+			if = {
+				limit = {
+					ai = yes
+				}
+				OR = {
+					is_year = 1450
+					AND = {
+						NOT = {
+							exists = NCI
+						}
+						hudavendigar_area = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+				}
 			}
-			hudavendigar_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			else = {
+				NOT = {
+					exists = NCI
+				}
+				hudavendigar_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
 			}
 		}
 		

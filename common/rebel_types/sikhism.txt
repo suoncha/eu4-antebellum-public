@@ -1,10 +1,14 @@
-slavic_rebels = {
+
+######################################################################
+# Sihk rebels. Disgruntled fanatics.
+######################################################################
+sikhism_rebels = {
 
 	color = { 230 175 175 }
 
 	area = nation 					# Sticks to provinces of their nation
 	government = theocracy 			# Desires Theocracy
-	religion = slavic_pagan
+	religion = sikhism
 	defection = none				# Will not defect
 	defect_delay = 120				# Held provinces will auto-defect after 18 months, regardless of accept/enforce demands.
 	independence = none				# Does not strive for independence
@@ -42,7 +46,7 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			NOT = { religion = slavic_pagan }
+			NOT = { religion = sikhism }
 		}
 		modifier = {
 			factor = 0.001
@@ -87,21 +91,21 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			religion = slavic_pagan
-			owner = { religion = slavic_pagan }
+			religion = sikhism
+			owner = { religion = sikhism }
 		}
 		modifier = {
 			factor = 2.0
-			NOT = { religion = slavic_pagan }
+			NOT = { religion = sikhism }
 			any_neighbor_province = {
-	 			religion = slavic_pagan
+	 			religion = sikhism
 	 			NOT = { has_province_modifier = "forced_conversion" }
 	 		}
 	 	}
 		modifier = {
 			factor = 5
 			has_missionary = yes
-			religion = slavic_pagan
+			religion = sikhism
 		}
 		modifier = {
 			factor = 1.5
@@ -132,9 +136,9 @@ slavic_rebels = {
 			if = {
 				limit = {
 					OR = {
-						religion = slavic_pagan
+						religion = sikhism
 						is_reformation_center = yes
-						owner = { religion = slavic_pagan }
+						owner = { religion = sikhism }
 					}
 				}
 				add_province_modifier = {
@@ -144,11 +148,11 @@ slavic_rebels = {
 			}
 			if = {
 				limit = {
-					NOT = { religion = slavic_pagan }
+					NOT = { religion = sikhism }
 					is_reformation_center = no
-					NOT = { owner = { religion = slavic_pagan } }
+					NOT = { owner = { religion = sikhism } }
 				}
-				change_religion = slavic_pagan
+				change_religion = sikhism
 				add_province_modifier = {
 					name = "forced_conversion"
 					duration = 730
@@ -167,8 +171,8 @@ slavic_rebels = {
 	# Country scope
 	can_negotiate_trigger = {
 		OR = {
-			religion_group = eastern
-			dominant_religion = slavic_pagan
+			religion_group = dharmic
+			dominant_religion = sikhism
 		}
 	}
 	
@@ -178,9 +182,9 @@ slavic_rebels = {
 	}
 	
 	# Localisation for their demands
-	demands_description = "slavic_pagan_rebels_demand"
+	demands_description = "sikhism_rebels_demand"
 	
-	# Country Scope	
+	# Country Scope
 	demands_enforced_effect = {
 		hidden_effect = {
 			add_country_modifier = {
@@ -191,7 +195,7 @@ slavic_rebels = {
 		}
 		if = {
 			limit = {
-				NOT = { religion_group = eastern }
+				NOT = { religion_group = dharmic }
 			}
 			add_prestige = -50
 			every_owned_province = {
@@ -214,7 +218,7 @@ slavic_rebels = {
 		}
 		else_if = {
 			limit = {
-				religion = slavic_pagan
+				religion = sikhism
 			}
 			add_country_modifier = {
 				name = "religious_intolerance_enforced"
@@ -224,17 +228,17 @@ slavic_rebels = {
 		
 		else_if = {
 			limit = {
-				NOT = { religion = slavic_pagan }
-				dominant_religion = slavic_pagan
+				NOT = { religion = sikhism }
+				dominant_religion = sikhism
 			}
-			change_religion = slavic_pagan
+			change_religion = sikhism
 			force_converted = yes
 		}
 		else_if = {
 			limit = {
-				NOT = { religion = slavic_pagan }
-				NOT = { dominant_religion = slavic_pagan }
-				religion_group = eastern
+				NOT = { religion = sikhism }
+				NOT = { dominant_religion = sikhism }
+				religion_group = dharmic
 				NOT = { has_country_modifier = heretic_tolerance }
 			}
 			add_country_modifier = {
@@ -245,7 +249,7 @@ slavic_rebels = {
 		else = { add_stability = -1 } #Should probably never get here
 		if = {
 			limit = {
-				religion = slavic_pagan
+				religion = sikhism
 				has_estate = estate_church
 				NOT = {
 					has_estate_influence_modifier = {
@@ -260,6 +264,12 @@ slavic_rebels = {
 				duration = 3650
 				influence = 15
 			}
+		}
+		if = {
+			limit = {
+				has_idea_group = indian_muslim_ideas 
+			}
+			swap_free_idea_group = yes
 		}
 		change_estate_land_share = {
 			estate = estate_church

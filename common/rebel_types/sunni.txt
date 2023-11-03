@@ -1,10 +1,14 @@
-slavic_rebels = {
+
+######################################################################
+# Sunni rebels. Disgruntled fanatics.
+######################################################################
+sunni_rebels = {
 
 	color = { 230 175 175 }
 
 	area = nation 					# Sticks to provinces of their nation
 	government = theocracy 			# Desires Theocracy
-	religion = slavic_pagan
+	religion = sunni
 	defection = none				# Will not defect
 	defect_delay = 120				# Held provinces will auto-defect after 18 months, regardless of accept/enforce demands.
 	independence = none				# Does not strive for independence
@@ -42,7 +46,7 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			NOT = { religion = slavic_pagan }
+			NOT = { religion = sunni }
 		}
 		modifier = {
 			factor = 0.001
@@ -87,21 +91,21 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			religion = slavic_pagan
-			owner = { religion = slavic_pagan }
+			religion = sunni
+			owner = { religion = sunni }
 		}
 		modifier = {
 			factor = 2.0
-			NOT = { religion = slavic_pagan }
+			NOT = { religion = sunni }
 			any_neighbor_province = {
-	 			religion = slavic_pagan
+	 			religion = sunni
 	 			NOT = { has_province_modifier = "forced_conversion" }
 	 		}
 	 	}
 		modifier = {
 			factor = 5
 			has_missionary = yes
-			religion = slavic_pagan
+			religion = sunni
 		}
 		modifier = {
 			factor = 1.5
@@ -132,9 +136,9 @@ slavic_rebels = {
 			if = {
 				limit = {
 					OR = {
-						religion = slavic_pagan
+						religion = sunni
 						is_reformation_center = yes
-						owner = { religion = slavic_pagan }
+						owner = { religion = sunni }
 					}
 				}
 				add_province_modifier = {
@@ -144,11 +148,11 @@ slavic_rebels = {
 			}
 			if = {
 				limit = {
-					NOT = { religion = slavic_pagan }
+					NOT = { religion = sunni }
 					is_reformation_center = no
-					NOT = { owner = { religion = slavic_pagan } }
+					NOT = { owner = { religion = sunni } }
 				}
-				change_religion = slavic_pagan
+				change_religion = sunni
 				add_province_modifier = {
 					name = "forced_conversion"
 					duration = 730
@@ -167,8 +171,8 @@ slavic_rebels = {
 	# Country scope
 	can_negotiate_trigger = {
 		OR = {
-			religion_group = eastern
-			dominant_religion = slavic_pagan
+			religion_group = muslim
+			dominant_religion = sunni
 		}
 	}
 	
@@ -178,7 +182,7 @@ slavic_rebels = {
 	}
 	
 	# Localisation for their demands
-	demands_description = "slavic_pagan_rebels_demand"
+	demands_description = "sunni_rebels_demand"
 	
 	# Country Scope	
 	demands_enforced_effect = {
@@ -191,7 +195,7 @@ slavic_rebels = {
 		}
 		if = {
 			limit = {
-				NOT = { religion_group = eastern }
+				NOT = { religion_group = muslim }
 			}
 			add_prestige = -50
 			every_owned_province = {
@@ -214,27 +218,26 @@ slavic_rebels = {
 		}
 		else_if = {
 			limit = {
-				religion = slavic_pagan
+				religion = sunni
 			}
 			add_country_modifier = {
 				name = "religious_intolerance_enforced"
 				duration = 3650
 			}
 		}
-		
 		else_if = {
 			limit = {
-				NOT = { religion = slavic_pagan }
-				dominant_religion = slavic_pagan
+				NOT = { religion = sunni }
+				dominant_religion = sunni
 			}
-			change_religion = slavic_pagan
+			change_religion = sunni
 			force_converted = yes
 		}
 		else_if = {
 			limit = {
-				NOT = { religion = slavic_pagan }
-				NOT = { dominant_religion = slavic_pagan }
-				religion_group = eastern
+				NOT = { religion = sunni }
+				NOT = { dominant_religion = sunni }
+				religion_group = muslim
 				NOT = { has_country_modifier = heretic_tolerance }
 			}
 			add_country_modifier = {
@@ -245,7 +248,7 @@ slavic_rebels = {
 		else = { add_stability = -1 } #Should probably never get here
 		if = {
 			limit = {
-				religion = slavic_pagan
+				religion = sunni
 				has_estate = estate_church
 				NOT = {
 					has_estate_influence_modifier = {

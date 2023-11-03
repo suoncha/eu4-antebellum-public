@@ -1,10 +1,13 @@
-slavic_rebels = {
+######################################################################
+# Hinduism rebels. Disgruntled fanatics.
+######################################################################
+hinduism_rebels = {
 
 	color = { 230 175 175 }
 
 	area = nation 					# Sticks to provinces of their nation
 	government = theocracy 			# Desires Theocracy
-	religion = slavic_pagan
+	religion = hinduism
 	defection = none				# Will not defect
 	defect_delay = 120				# Held provinces will auto-defect after 18 months, regardless of accept/enforce demands.
 	independence = none				# Does not strive for independence
@@ -42,7 +45,7 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			NOT = { religion = slavic_pagan }
+			NOT = { religion = hinduism }
 		}
 		modifier = {
 			factor = 0.001
@@ -87,21 +90,21 @@ slavic_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			religion = slavic_pagan
-			owner = { religion = slavic_pagan }
+			religion = hinduism
+			owner = { religion = hinduism }
 		}
 		modifier = {
 			factor = 2.0
-			NOT = { religion = slavic_pagan }
+			NOT = { religion = hinduism }
 			any_neighbor_province = {
-	 			religion = slavic_pagan
+	 			religion = hinduism
 	 			NOT = { has_province_modifier = "forced_conversion" }
 	 		}
 	 	}
 		modifier = {
 			factor = 5
 			has_missionary = yes
-			religion = slavic_pagan
+			religion = hinduism
 		}
 		modifier = {
 			factor = 1.5
@@ -132,9 +135,9 @@ slavic_rebels = {
 			if = {
 				limit = {
 					OR = {
-						religion = slavic_pagan
+						religion = hinduism
 						is_reformation_center = yes
-						owner = { religion = slavic_pagan }
+						owner = { religion = hinduism }
 					}
 				}
 				add_province_modifier = {
@@ -144,11 +147,11 @@ slavic_rebels = {
 			}
 			if = {
 				limit = {
-					NOT = { religion = slavic_pagan }
+					NOT = { religion = hinduism }
 					is_reformation_center = no
-					NOT = { owner = { religion = slavic_pagan } }
+					NOT = { owner = { religion = hinduism } }
 				}
-				change_religion = slavic_pagan
+				change_religion = hinduism
 				add_province_modifier = {
 					name = "forced_conversion"
 					duration = 730
@@ -156,10 +159,20 @@ slavic_rebels = {
 			}
 		}
 		owner = {
-			change_estate_land_share = {
-				estate = estate_church
-				share = 10.0
-				province = ROOT
+			if = {
+				limit = { has_estate = estate_brahmins }
+				change_estate_land_share = {
+					estate = estate_brahmins
+					share = 10.0
+					province = ROOT
+				}
+			}
+			else = {
+				change_estate_land_share = {
+					estate = estate_church
+					share = 10.0
+					province = ROOT
+				}
 			}
 		}
 	}
@@ -167,8 +180,8 @@ slavic_rebels = {
 	# Country scope
 	can_negotiate_trigger = {
 		OR = {
-			religion_group = eastern
-			dominant_religion = slavic_pagan
+			religion_group = dharmic
+			dominant_religion = hinduism
 		}
 	}
 	
@@ -178,7 +191,7 @@ slavic_rebels = {
 	}
 	
 	# Localisation for their demands
-	demands_description = "slavic_pagan_rebels_demand"
+	demands_description = "hinduism_rebels_demand"
 	
 	# Country Scope	
 	demands_enforced_effect = {
@@ -191,7 +204,7 @@ slavic_rebels = {
 		}
 		if = {
 			limit = {
-				NOT = { religion_group = eastern }
+				NOT = { religion_group = dharmic }
 			}
 			add_prestige = -50
 			every_owned_province = {
@@ -201,6 +214,7 @@ slavic_rebels = {
 				add_local_autonomy = 20
 			}
 		}
+		
 		if = {
 			limit = {
 				# AB [[[
@@ -211,30 +225,33 @@ slavic_rebels = {
 				# ]]]
 			}
 			add_stability = -1
+			add_country_modifier = {
+				name = "heretic_tolerance"
+				duration = 3650
+			}
 		}
 		else_if = {
 			limit = {
-				religion = slavic_pagan
+				NOT = { religion = hinduism }
+				dominant_religion = hinduism
+			}
+			change_religion = hinduism
+			force_converted = yes
+		}
+		else_if = {
+			limit = {
+				religion = hinduism
 			}
 			add_country_modifier = {
 				name = "religious_intolerance_enforced"
 				duration = 3650
 			}
 		}
-		
 		else_if = {
 			limit = {
-				NOT = { religion = slavic_pagan }
-				dominant_religion = slavic_pagan
-			}
-			change_religion = slavic_pagan
-			force_converted = yes
-		}
-		else_if = {
-			limit = {
-				NOT = { religion = slavic_pagan }
-				NOT = { dominant_religion = slavic_pagan }
-				religion_group = eastern
+				NOT = { religion = hinduism }
+				NOT = { dominant_religion = hinduism }
+				religion_group = dharmic
 				NOT = { has_country_modifier = heretic_tolerance }
 			}
 			add_country_modifier = {
@@ -245,7 +262,7 @@ slavic_rebels = {
 		else = { add_stability = -1 } #Should probably never get here
 		if = {
 			limit = {
-				religion = slavic_pagan
+				religion = hinduism
 				has_estate = estate_church
 				NOT = {
 					has_estate_influence_modifier = {
@@ -261,9 +278,24 @@ slavic_rebels = {
 				influence = 15
 			}
 		}
-		change_estate_land_share = {
-			estate = estate_church
-			share = 10.0
+		if = {
+			limit = {
+				has_idea_group = indian_muslim_ideas 
+			}
+			swap_free_idea_group = yes
+		}
+		if = {
+			limit = { has_estate = estate_brahmins }
+			change_estate_land_share = {
+				estate = estate_brahmins
+				share = 10.0
+			}
+		}
+		else = {
+			change_estate_land_share = {
+				estate = estate_church
+				share = 10.0
+			}
 		}
 	}
 }
