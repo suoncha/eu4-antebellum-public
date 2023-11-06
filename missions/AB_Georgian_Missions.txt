@@ -40,12 +40,56 @@ georgia_first = {
 				name = "geo_black_sea"
 				duration = 5475
 			}
+			crimea_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
+
+	geo_seize_crimea = {
+		icon = mission_sca_lit_conquer_crimea
+		required_missions = { geo_crimea }
+		position = 2
 		
+		provinces_to_highlight = {
+			area = crimea_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			crimea_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			random_owned_province = {
+				limit = {
+					has_port = yes
+				}
+				add_unit_construction = {
+					type = light_ship
+					amount = 5
+					speed = 0.1
+					cost = 0
+				}
+			}
+			add_country_modifier = {
+				name = geo_centers_of_trade
+				duration = 3650
+			}
+			custom_tooltip = geo_centers_of_trade_tt
+		}
+	}
+	
 	geo_blacksea = {
-	    icon = crusader_fleet
-		required_missions = { geo_crimea geo_trebizond }
+	    icon = mission_control_the_black_sea
+		required_missions = { geo_seize_crimea geo_trebizond }
 		position = 3
 		
 		trigger = {
@@ -113,7 +157,7 @@ georgia_first = {
 	}
 	
 	geo_cilicia = {
-	    icon = knights_of_the_new_world
+	    icon = arm_restore_armenian_cilicia
 		required_missions = { geo_seljuk }
 		position = 5
 		
@@ -250,46 +294,173 @@ georgia_first = {
 		}
 	}
 	
-	geo_greece = {
-		icon = cross_the_pindus
-		required_missions = { geo_roman }
+	geo_eastern_patriarchates = {
+		icon = mission_conquer_alexandria
+		required_missions = { geo_levantine }
 		position = 8
-		
 		provinces_to_highlight = {
 			OR = {
-				area = macedonia_area
-				area = northern_greece_area
-				area = morea_area
+				province_id = 358
+				province_id = 379
+				province_id = 2313
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
-		
 		trigger = {
-			macedonia_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			owns = 358
+			358 = {
+				religion = ROOT
 			}
-			northern_greece_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			358 = {
+				has_tax_building_trigger = yes
 			}
-			morea_area = {
-				type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					has_dlc = "Third Rome"
+					religion = orthodox
+				}
+				358 = {
+					has_state_patriach = yes
+				}
+			}
+			owns = 379
+			379 = {
+				religion = ROOT
+			}
+			379 = {
+				has_tax_building_trigger = yes
+			}
+			if = {
+				limit = {
+					has_dlc = "Third Rome"
+					religion = orthodox
+				}
+				379 = {
+					has_state_patriach = yes
+				}
+			}
+			owns = 2313
+			2313 = {
+				religion = ROOT
+			}
+			2313 = {
+				has_tax_building_trigger = yes
+			}
+			if = {
+				limit = {
+					has_dlc = "Third Rome"
+					religion = orthodox
+				}
+				2313 = {
+					has_state_patriach = yes
+				}
 			}
 		}
-		
 		effect = {
-			add_adm_power = 150
-		    if = {
+			if = {
 				limit = {
-					NOT = { accepted_culture = greek }
+					358 = {
+						has_building = cathedral
+					}
 				}
-				add_accepted_culture = greek
+				358 = {
+					add_base_tax = 2
+				}
+			}
+			else_if = {
+				limit = {
+					358 = {
+						has_building = temple
+						NOT = {
+							has_building = cathedral
+						}
+					}
+				}
+				358 = {
+					hidden_effect = {
+						remove_building = temple
+					}
+					add_building = cathedral
+				}
+			}
+			else = {
+				358 = {
+					add_building = temple
+				}
+			}
+			if = {
+				limit = {
+					379 = {
+						has_building = cathedral
+					}
+				}
+				379 = {
+					add_base_tax = 2
+				}
+			}
+			else_if = {
+				limit = {
+					379 = {
+						has_building = temple
+						NOT = {
+							has_building = cathedral
+						}
+					}
+				}
+				379 = {
+					hidden_effect = {
+						remove_building = temple
+					}
+					add_building = cathedral
+				}
+			}
+			else = {
+				379 = {
+					add_building = temple
+				}
+			}
+			if = {
+				limit = {
+					2313 = {
+						has_building = cathedral
+					}
+				}
+				2313 = {
+					add_base_tax = 2
+				}
+			}
+			else_if = {
+				limit = {
+					2313 = {
+						has_building = temple
+						NOT = {
+							has_building = cathedral
+						}
+					}
+				}
+				2313 = {
+					hidden_effect = {
+						remove_building = temple
+					}
+					add_building = cathedral
+				}
+			}
+			else = {
+				2313 = {
+					add_building = temple
+				}
 			}
 			add_country_modifier = {
-				name = geo_union
+				name = "geo_light_of_the_east"
 				duration = -1
+			}
+			custom_tooltip = geo_developing_orthodox_tt
+			set_country_flag = geo_orthodox_dev
+			egypt_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
 			}
 		}
 	}
@@ -307,7 +478,7 @@ georgia_second = {
 	has_country_shield = yes
 	
 	geo_trebizond = {
-	    icon = mission_pf_cross
+	    icon = byz_pontic_empire
 		required_missions = { }
 		position = 2
 		
@@ -392,7 +563,7 @@ georgia_second = {
 	}
 
 	geo_seljuk = {
-		icon = mission_seljuk
+		icon = per_the_seljuk_successors
 		required_missions = { geo_trebizond }
 		position = 4
 		
@@ -417,12 +588,71 @@ georgia_second = {
 		
 		effect = {
 			country_event = { id = ab_georgia.3 }
+			custom_tooltip = AB_EMPTY
+			al_jazira_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			iraq_arabi_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			anatolia_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	geo_crade_of_civilization = {
+		icon = geo_crade_of_civilization
+		required_missions = { geo_seljuk }
+		position = 6
+		
+		provinces_to_highlight = {
+			area = iraq_arabi_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			iraq_arabi_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			iraq_arabi_area = {
+				add_base_production = 1
+			}
+			iraq_arabi_area = {
+				add_province_modifier = {
+					name = "geo_fertile_crescent"
+					duration = -1
+				}
+			}
+			basra_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 	
 	geo_roman = {
 		icon = mission_justinian
-		required_missions = { geo_seljuk }
+		required_missions = { geo_nicaea }
 		position = 7
 		
 		provinces_to_highlight = {
@@ -489,36 +719,154 @@ georgia_second = {
 		}
 	}	
 	
-	geo_beacon = {
-		icon = spread_piety
-		required_missions = { geo_bulgaria geo_greece }
-		position = 9
+	geo_greece = {
+		icon = cross_the_pindus
+		required_missions = { geo_roman }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				area = macedonia_area
+				area = northern_greece_area
+				area = morea_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
 		
 		trigger = {
-			patriarch_authority = 0.75
-			stability = 3
-			is_defender_of_faith_of_tier = 5
+			macedonia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			northern_greece_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			morea_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
 		}
 		
 		effect = {
-			add_dip_power = 200
-			custom_tooltip = GEO_MANPOWER
+			add_adm_power = 150
+		    if = {
+				limit = {
+					NOT = { accepted_culture = greek }
+				}
+				add_accepted_culture = greek
+			}
 			add_country_modifier = {
-				name = geo_beacon
+				name = geo_union
 				duration = -1
 			}
+		}
+	}
+	
+	geo_beacon = {
+		icon = spread_piety
+		required_missions = { geo_bulgaria geo_greece geo_eastern_patriarchates }
+		position = 9
+		
+		provinces_to_highlight = {
+			owner = {
+				religion = ROOT
+				army_size = ROOT
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = geo_army_size_true_faith
+				NOT = {
+					any_country = {
+						religion = ROOT
+						army_size = ROOT
+					}
+				}
+			}
+			if = {
+				limit = {
+					has_dlc = "Third Rome"
+				}
+				patriarch_authority = 1
+			}
+			OR = {
+				is_defender_of_faith = yes
+				full_idea_group = religious_ideas
+			}
+			religion_group = christian
+		}
+		
+		effect = {
+			custom_tooltip = geo_ten_provinces_manpower_tt
+			if = {
+				limit = {
+					religion_group = christian
+				}
+				add_country_modifier = {
+					name = "geo_beacon1"
+					duration = -1
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = "geo_beacon2"
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					num_of_owned_provinces_with = {
+						religion = ROOT
+						value = 100
+					}
+				}
+				custom_tooltip = geo_100_prov_tt_yes
+			}
+			else = {
+				custom_tooltip = geo_100_prov_tt_no
+			}
 			hidden_effect = {
-                for = {
-                    amount = 20
-                    effect = "
-                        random_owned_province = {
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
 							limit = {
-								religion = orthodox
+								religion = ROOT
 							}
 							add_base_manpower = 1
-                        }
-                    "
-                }
+						}
+					"
+				}
+				if = {
+					limit = {
+						num_of_owned_provinces_with = {
+							religion = ROOT
+							value = 100
+						}
+					}
+					if = {
+						limit = {
+							has_country_modifier = geo_beacon1
+						}
+						remove_country_modifier = geo_beacon1
+						add_country_modifier = {
+							name = "geo_beacon1_empowered"
+							duration = -1
+						}
+					}
+					else_if = {
+						limit = {
+							has_country_modifier = geo_beacon2
+						}
+						remove_country_modifier = geo_beacon2
+						add_country_modifier = {
+							name = "geo_beacon2_empowered"
+							duration = -1
+						}
+					}
+				}
 			}
 		}
 	}
@@ -536,7 +884,7 @@ georgia_third = {
 	has_country_shield = yes
 	
 	geo_sarukhanids = {
-	    icon = mission_crusade_for_varna
+	    icon = per_create_the_ghulams
 		required_missions = { }
 		position = 1
 		
@@ -827,6 +1175,13 @@ georgia_third = {
 				name = "geo_recruits"
 				duration = 9125
 			}
+			151 = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
 		}
 	}
 	
@@ -945,53 +1300,56 @@ georgia_fourth = {
 		position = 3
 	
 		provinces_to_highlight = {
-			region = caucasia_region
-			NOT = {
-				OR = {
-					has_building = fort_16th
-					has_building = fort_17th
-					has_building = fort_18th
-					has_building = fort_19th
+			AND = {
+				has_fort_building_trigger = yes
+				NOT = {
+					fort_level = 4
 				}
 			}
+			NOT = { num_of_times_improved = 3 }
+			owned_by = ROOT
+			region = caucasia_region
 		}
 		
 		trigger = {
-			num_of_owned_provinces_with = {
-				value = 6
-				region = caucasia_region
-				OR = {
-					has_building = fort_16th
-					has_building = fort_17th
-					has_building = fort_18th
-					has_building = fort_19th
+			calc_true_if = {
+				all_owned_province = {
+					num_of_times_improved = 3
+					fort_level = 4
+					region = caucasia_region
 				}
+				amount = 4
 			}
 		}
 		
 		effect = {
-			custom_tooltip = GEO_CAUCASIA
-			tooltip = {
-				add_province_modifier = {
-					name = "geo_caucasia"
-					duration = -1
+			if = {
+				limit = {
+					has_estate = estate_nobles
+				}
+				unlock_estate_privilege = {
+					estate_privilege = estate_nobles_highland_fortifications
 				}
 			}
-			hidden_effect = {
-				every_owned_province = {
-					limit = {
-						region = caucasia_region
-						OR = {
-							has_building = fort_15th
-							has_building = fort_16th
-							has_building = fort_17th
-							has_building = fort_18th
-							has_building = fort_19th
-						}
-					}
+			else = {
+				add_mil_power = 100
+			}
+			if = {
+				limit = {
+					has_dlc = "Leviathan"
+				}
+				423 = {
 					add_province_modifier = {
-						name = "geo_caucasia"
-						duration = -1
+						name = "geo_narikala_leviathan"
+						duration = 10950
+					}
+				}
+			}
+			else = {
+				423 = {
+					add_province_modifier = {
+						name = "geo_narikala_no_leviathan"
+						duration = 10950
 					}
 				}
 			}
@@ -999,7 +1357,7 @@ georgia_fourth = {
 	}
 		
 	geo_overthrow = {
-	    icon = mission_forthehorde
+	    icon = mission_ghorde
 		required_missions = { geo_sarai }
 		position = 4
 		
@@ -1079,9 +1437,104 @@ georgia_fourth = {
 		}
 	}	
 	
+	geo_rebuild_tbilisi = {
+		icon = mission_narikala
+		required_missions = {  }
+		position = 6
+		
+		provinces_to_highlight = {
+			province_id = 423
+		}
+		
+		trigger = {
+			423 = {
+				owned_by = ROOT
+			}
+			OR = {
+				423 = {
+					num_of_times_improved = 4
+				}
+				423 = {
+					NOT = {
+						num_free_building_slots = 1
+					}
+				}
+			}
+			423 = {
+				NOT = {
+					devastation = 1
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					has_dlc = "Mandate of Heaven"
+				}
+				423 = {
+					add_prosperity = 100
+				}
+			}
+			else = {
+				423 = {
+					add_base_production = 2
+				}
+			}
+			423 = {
+				add_province_modifier = {
+					name = geo_tbilisi
+					duration = 18250
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_institution = renaissance
+					}
+				}
+				custom_tooltip = geo_renaissance_tt_yes
+				tooltip = {
+					423 = {
+						add_institution_embracement = {
+							which = renaissance
+							value = 25
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = geo_renaissance_tt_no
+				tooltip = {
+					423 = {
+						add_institution_embracement = {
+							which = renaissance
+							value = 25
+						}
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							has_institution = renaissance
+						}
+					}
+					423 = {
+						add_institution_embracement = {
+							which = renaissance
+							value = 25
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	geo_revive = {
 	    icon = law_of_the_pious
-		required_missions = { geo_golden }
+		required_missions = { geo_golden geo_rebuild_tbilisi }
 		position = 7
 		
 		trigger = {
@@ -1098,10 +1551,302 @@ georgia_fourth = {
 		}
 	}
 	
+	geo_cathedral_living_pillar = {
+		icon = protectors_of_christendom
+		required_missions = { geo_revive }
+		position = 8
+		provinces_to_highlight = {
+			province_id = 423
+			NOT = {
+				has_tax_building_trigger = yes
+			}
+		}
+		trigger = {
+			423 = {
+				owned_by = ROOT
+				has_tax_building_trigger = yes
+			}
+			if = {
+				limit = {
+					has_estate = estate_church
+				}
+				estate_loyalty = {
+					estate = estate_church
+					loyalty = 60
+				}
+			}
+			if = {
+				limit = {
+					has_estate = estate_church
+				}
+				OR = {
+					num_of_estate_privileges = {
+						estate = estate_church
+						value = 4
+					}
+					num_of_estate_agendas_completed = {
+						estate = estate_church
+						value = 3
+					}
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					has_dlc = "Third Rome"
+					religion = orthodox
+				}
+				custom_tooltip = geo_advisor_scaling_tt
+				set_country_flag = geo_advisor_scaling_flag
+			}
+			else = {
+				add_country_modifier = {
+					name = "geo_religious_mission"
+					duration = -1
+				}
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 3
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	geo_catholicos_patriarch = {
+		icon = promote_the_patriarchate
+		required_missions = { geo_cathedral_living_pillar }
+		position = 9
+		provinces_to_highlight = {
+			owned_by = ROOT
+			religion = ROOT
+			OR = {
+				NOT = {
+					has_tax_building_trigger = yes
+				}
+				NOT = {
+					has_state_patriach = yes
+				}
+			}
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_tax_building_trigger = yes
+				religion = ROOT
+				value = 20
+			}
+			if = {
+				limit = {
+					has_dlc = "Third Rome"
+					religion = orthodox
+				}
+				num_of_owned_provinces_with = {
+					has_state_patriach = yes
+					religion = orthodox
+					value = 40
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					religion = orthodox
+				}
+				custom_tooltip = geo_metropolitan_bonus_tt
+				set_country_flag = geo_metropolitan_flag
+			}
+			if = {
+				limit = {
+					religion = orthodox
+					has_dlc = "Third Rome"
+				}
+				if = {
+					limit = {
+						current_icon = icon_michael
+					}
+					custom_tooltip = geo_michael_icon_tt_yes
+					tooltip = {
+						add_country_modifier = {
+							name = "geo_michael_bonus"
+							duration = 7300
+						}
+					}
+				}
+				else = {
+					custom_tooltip = geo_michael_icon_tt_no
+					tooltip = {
+						add_country_modifier = {
+							name = "geo_michael_bonus"
+							duration = 7300
+						}
+					}
+				}
+				if = {
+					limit = {
+						current_icon = icon_eleusa
+					}
+					custom_tooltip = geo_eleusa_icon_tt_yes
+					tooltip = {
+						add_country_modifier = {
+							name = "geo_eleusa_bonus"
+							duration = 7300
+						}
+					}
+				}
+				else = {
+					custom_tooltip = geo_eleusa_icon_tt_no
+					tooltip = {
+						add_country_modifier = {
+							name = "geo_eleusa_bonus"
+							duration = 7300
+						}
+					}
+				}
+				if = {
+					limit = {
+						current_icon = icon_pancreator
+					}
+					custom_tooltip = geo_pantocrator_icon_tt_yes
+					tooltip = {
+						add_country_modifier = {
+							name = "geo_christ_bonus"
+							duration = 7300
+						}
+					}
+				}
+				else = {
+					custom_tooltip = geo_pantocrator_icon_tt_no
+					tooltip = {
+						add_country_modifier = {
+							name = "geo_christ_bonus"
+							duration = 7300
+						}
+					}
+				}
+				if = {
+					limit = {
+						current_icon = icon_nicholas
+					}
+					custom_tooltip = geo_nicholas_icon_tt_yes
+					tooltip = {
+						add_country_modifier = {
+							name = "geo_nicholas_bonus"
+							duration = 7300
+						}
+					}
+				}
+				else = {
+					custom_tooltip = geo_nicholas_icon_tt_no
+					tooltip = {
+						add_country_modifier = {
+							name = "geo_nicholas_bonus"
+							duration = 7300
+						}
+					}
+				}
+				if = {
+					limit = {
+						current_icon = icon_climacus
+					}
+					custom_tooltip = geo_john_icon_tt_yes
+					tooltip = {
+						add_country_modifier = {
+							name = "geo_john_bonus"
+							duration = 7300
+						}
+					}
+				}
+				else = {
+					custom_tooltip = geo_john_icon_tt_no
+					tooltip = {
+						add_country_modifier = {
+							name = "geo_john_bonus"
+							duration = 7300
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						religion = orthodox
+					}
+				}
+				add_country_modifier = {
+					name = geo_strengthen_the_true_faith
+					duration = 7300
+				}
+				define_advisor = {
+					type = theologian
+					skill = 3
+					culture = ROOT
+					religion = ROOT
+					cost_multiplier = 0.5
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						religion = orthodox
+						has_dlc = "Third Rome"
+					}
+					if = {
+						limit = {
+							current_icon = icon_michael
+						}
+						add_country_modifier = {
+							name = "geo_michael_bonus"
+							duration = 7300
+						}
+					}
+					if = {
+						limit = {
+							current_icon = icon_eleusa
+						}
+						add_country_modifier = {
+							name = "geo_eleusa_bonus"
+							duration = 7300
+						}
+					}
+					if = {
+						limit = {
+							current_icon = icon_pancreator
+						}
+						add_country_modifier = {
+							name = "geo_christ_bonus"
+							duration = 7300
+						}
+					}
+					if = {
+						limit = {
+							current_icon = icon_nicholas
+						}
+						add_country_modifier = {
+							name = "geo_nicholas_bonus"
+							duration = 7300
+						}
+					}
+					if = {
+						limit = {
+							current_icon = icon_climacus
+						}
+						add_country_modifier = {
+							name = "geo_john_bonus"
+							duration = 7300
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	geo_gelati = {
 		icon = mission_autocephalous_archbishopric
-		required_missions = { geo_revive }
-		position = 9
+		required_missions = { geo_catholicos_patriarch }
+		position = 10
 		
 		provinces_to_highlight = {
 			province_id = 422
@@ -1117,7 +1862,7 @@ georgia_fourth = {
 		}
 		
 		effect = {
-			add_estate_loyalty = { estate = estate_church loyalty = 10 }
+			add_patriarch_authority = 0.25
 			custom_tooltip = BYZ_TRUST
 			hidden_effect = {
 				every_country = {
@@ -1128,6 +1873,8 @@ georgia_fourth = {
 				}
 			}
 			422 = {
+				add_base_tax = 2
+				add_base_manpower = 2
 				add_province_modifier = {
 					name = "geo_center"
 					duration = -1
@@ -1150,7 +1897,7 @@ georgia_fifth = {
 	has_country_shield = yes
 	
 	geo_ciscaucasia = {
-	    icon = mission_unite_home_region
+	    icon = mission_the_caucasus_rus
 		required_missions = { geo_pass }
 		position = 2
 		
@@ -1190,7 +1937,7 @@ georgia_fifth = {
 	}
 	
 	geo_sarai = {
-	    icon = mission_steppe_warriors
+	    icon = mission_destroy_the_horde
 		required_missions = { geo_ciscaucasia }
 		position = 3
 		
@@ -1208,6 +1955,7 @@ georgia_fifth = {
 		}
 		effect = {
 			country_event = { id = ab_georgia.4 }
+			custom_tooltip = AB_EMPTY
 			azov_area  = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT	}
@@ -1293,50 +2041,44 @@ georgia_fifth = {
 		position = 7
 		
 		provinces_to_highlight = {
-			country_or_non_sovereign_subject_holds = ROOT
 			trade_goods = wine
-			NOT = { base_production = 8 }
+			NOT = { has_manufactory_trigger = yes }
+			NOT = {	base_production = 4 }
+			owned_by = ROOT
 		}
 		
 		trigger = {
-			num_of_owned_provinces_with = {
-				value = 6
-				trade_goods = wine
-				base_production = 8
+			calc_true_if = {
+				all_owned_province = {
+					trade_goods = wine
+					base_production = 4
+					has_manufactory_trigger = yes
+				}
+				amount = 5
 			}
 		}
 		
 		effect = {
-			add_years_of_income = 0.5
-			add_country_modifier = {
-				name = "geo_wine"
-				duration = -1
-			}
-			if = {
-				limit = {
-					trading_bonus = {
-						trade_goods = wine
-						value = yes
-					}
+			custom_tooltip = geo_wine_tt
+			tooltip = {
+				add_province_modifier = {
+					name = geo_wineyards
+					duration = -1
 				}
-				custom_tooltip = GEORGIA_WINE
 			}
-			else = {
-				custom_tooltip = GEORGIA_WINE_NO
-			}
+			custom_tooltip = geo_wine_manufactory_tt
+			set_country_flag = geo_wine_manufactory_flag
 			hidden_effect = {
-				if = {
+				every_owned_province = {
 					limit = {
-						trading_bonus = {
-							trade_goods = wine
-							value = yes
-						}
+						trade_goods = wine
+						base_production = 4
+						has_manufactory_trigger = yes
 					}
-					every_owned_province = {
-						limit = {
-							trade_goods = wine
-						}
-						add_base_production = 2
+					add_base_production = 1
+					add_province_modifier = {
+						name = geo_wineyards
+						duration = -1
 					}
 				}
 			}
@@ -1391,6 +2133,60 @@ georgia_fifth = {
 						tag = GEO
 					}
 					swap_free_idea_group = yes
+				}
+			}
+		}
+	}
+	
+	geo_legacy_of_the_builder = {
+		icon = eastern_catholicization
+		required_missions = { geo_cities }
+		position = 9
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			num_free_building_slots = 1
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					NOT = {
+						num_free_building_slots = 1
+					}
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			custom_tooltip = geo_visionary_tt
+			set_country_flag = geo_visionary_flag
+			custom_tooltip = geo_georgia_legacy
+			tooltip = {	
+				add_province_modifier = {
+					name = geo_legacy_builder
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				samtskhe_area = {
+					add_province_modifier = {
+						name = geo_legacy_builder
+						duration = -1
+					}
+				}
+				imereti_area = {
+					add_province_modifier = {
+						name = geo_legacy_builder
+						duration = -1
+					}
+				}
+				kartli_kakheti_area = {
+					add_province_modifier = {
+						name = geo_legacy_builder
+						duration = -1
+					}
 				}
 			}
 		}

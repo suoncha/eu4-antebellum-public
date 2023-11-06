@@ -179,7 +179,7 @@ byz_first = {
 	}
 	
 	byzantium_wall = {
-		icon = mission_city_of_the_world's_desire
+		icon = byz_reinforce_constantinople
 		required_missions = { byzantium_sophia }
 		position = 8
 		
@@ -444,7 +444,7 @@ byz_first = {
 	}
 	
 	byzantium_march_rome = {
-		icon = catholic_volunteers
+		icon = byz_justinians_ambition
 		position = 17
 		required_missions = { byzantium_landfall }
 	
@@ -463,6 +463,7 @@ byz_first = {
 		
 		effect = {
 			country_event = { id = ab_byzantium.21 }
+			custom_tooltip = AB_EMPTY
 			tuscany_area  = {
 				limit = {
 					NOT = { is_permanent_claim = ROOT	}
@@ -893,20 +894,16 @@ byz_second = {
 		}
 		
 		effect = {
-			add_prestige = 15
-			151 = {
-				add_province_modifier = {
-					name = "bulgaria_desire"
-					duration = -1
-				}
+			add_province_modifier = {
+				name = BYZ_queen_of_cities
+				duration = -1
 			}
-			define_advisor = {
-				type = planner
-				skill = 2
-				religion = ROOT
-				culture = ROOT
-				cost_multiplier = 0.5
+			add_country_modifier = {
+				name = BYZ_centralize_all_wealth
+				duration = -1
 			}
+			custom_tooltip = BYZ_unlock_bosphorus_toll_decision
+			set_country_flag = BYZ_unlocked_bosphorus_toll
 		}
 	}
 	
@@ -1732,7 +1729,7 @@ byz_third = {
 	byzantium_osmans = {
 		icon = mission_the_grand_bazaar
 		required_missions = { byzantium_hometrade }
-		position = 6
+		position = 5
 		
 		provinces_to_highlight = {
 			province_id = 151
@@ -1810,7 +1807,7 @@ byz_third = {
 	byzantium_queen_cities = {
 		icon = mission_queencities
 		required_missions = { byzantium_osmans }
-		position = 7
+		position = 6
 		
 		provinces_to_highlight = {
 			province_id = 151
@@ -1818,7 +1815,7 @@ byz_third = {
 		
 		trigger = {
 			151 = {
-				development = 60
+				development = 50
 			}
 			151 = {
 				highest_value_trade_node = yes
@@ -1854,6 +1851,50 @@ byz_third = {
 					}
 					add_splendor = 100
 				}
+			}
+		}
+	}
+	
+	BYZ_megalopolis = {
+		icon = mission_megalopolis
+		required_missions = { byzantium_queen_cities }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 151
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { development = 65 }
+				NOT = { num_of_buildings_in_province = 10 }
+			}
+		}
+		
+		trigger = {
+			151 = {
+				owned_by = ROOT
+				development = 65
+				num_of_buildings_in_province = 10
+			}
+		}
+		
+		effect = {
+			151 = {
+				add_province_modifier = {
+					name = BYZ_megalopolis_modifier_1
+					duration = -1
+				}
+				hidden_effect = {
+					add_province_triggered_modifier = BYZ_megalopolis_updater #hidden Ptm that updates the modifier
+				}
+			}
+			
+			custom_tooltip = BYZ_modifier_will_double
+			
+			custom_tooltip = " "
+			
+			add_country_modifier = {
+				name = BYZ_monarch_reigns_in_byzantium
+				duration = -1
 			}
 		}
 	}
@@ -2029,7 +2070,7 @@ byz_third = {
 	}
 	
 	byzantium_sultanate = {
-		icon = mission_sicsultanate
+		icon = arb_sicily
 		position = 17
 		required_missions = { byzantium_carthago byzantium_landfall }
 	
@@ -2485,7 +2526,7 @@ byz_fourth = {
 	}
 	
 	byzantium_manzikert = {
-		icon = revenge_for_nicopolis
+		icon = byz_avenge_1071
 		position = 8
 		required_missions = { byzantium_frontier }
 	
@@ -2662,6 +2703,27 @@ byz_fourth = {
 			add_country_modifier = {
 				name = "byzantium_eastern_empire"
 				duration = -1
+			}
+			tabuk_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			mecca_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			medina_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
 			}
 			egypt_region  = {
 				limit = {
@@ -3060,7 +3122,7 @@ byz_fifth = {
 	byzantium_latins = {
 		icon = nuova_promissione_ducale
 		required_missions = { byzantium_reinforce }
-		position = 4
+		position = 3
 		
 		trigger = {
 		    NOT = {
@@ -3101,7 +3163,7 @@ byz_fifth = {
 	
 	byzantium_aegean = {
 		icon = reclaim_the_aegean
-		position = 5
+		position = 4
 		required_missions = { byzantium_latins }
 	
 		trigger = {
@@ -3147,7 +3209,7 @@ byz_fifth = {
 	
 	byzantium_avenge = {
 		icon = mission_raid_on_venice
-		position = 7
+		position = 5
 		required_missions = { byzantium_aegean }
 	
 		trigger = {
@@ -3166,6 +3228,193 @@ byz_fifth = {
 			add_country_modifier = {
 				name = "venetian_revenge"
 				duration = 7300
+			}
+		}
+	}
+	
+	BYZ_economic_independence = {
+		icon = medici_bank_ledgers
+		required_missions = { }
+		position = 6
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						owned_by = GEN
+						owned_by = VEN
+					}
+					NOT = {
+						owner = {
+							ROOT = {
+								has_won_war_against = { who = PREV max_years_since = 50 }
+							}
+						}
+					}
+				}
+				province_id = 151
+			}
+		}
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = BYZ_has_integrated_galata
+				NOT = {
+					151 = {
+						has_province_modifier = BYZ_galata 
+					}
+				}
+			}
+			NOT = { has_estate_privilege = estate_burghers_reliance_on_republics }
+			NOT = { has_estate_privilege = estate_burghers_exkousseiai_for_latins }
+			OR = {
+				151 = {
+					trade_share = {
+						country = ROOT
+						share = 80
+					}
+				}
+				AND = {
+					if = {
+						limit = {
+							exists = GEN
+						}
+						has_won_war_against = { who = GEN max_years_since = 50 }
+					}
+					else = {
+						GEN = {
+							any_core_province = {
+								country_or_non_sovereign_subject_holds = ROOT
+							}
+						}
+					}
+					if = {
+						limit = {
+							exists = VEN
+						}
+						has_won_war_against = { who = VEN max_years_since = 50 }
+					}
+					else = {
+						VEN = {
+							any_core_province = {
+								country_or_non_sovereign_subject_holds = ROOT
+							}
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			custom_tooltip = BYZ_buff_burgher_loans_no_mercantilism_loss #done via mission_completed
+			
+			custom_tooltip = " "
+			
+			complex_dynamic_effect = {
+				first_custom_tooltip = BYZ_if_done_via_war
+				first_limit = "
+					if = {
+						limit = { exists = GEN }
+						has_won_war_against = { who = GEN max_years_since = 50 }
+					}
+					else = {
+						GEN = {
+							any_core_province = { country_or_non_sovereign_subject_holds = ROOT }
+						}
+					}
+					if = {
+						limit = { exists = VEN }
+						has_won_war_against = { who = VEN max_years_since = 50 }
+					}
+					else = {
+						VEN = {
+							any_core_province = { country_or_non_sovereign_subject_holds = ROOT }
+						}
+					}
+				"
+				first_effect = "
+					add_country_modifier = {
+						name = BYZ_dominance
+						duration = 7300
+					}
+				"
+				second_custom_tooltip = BYZ_if_done_via_trade_share
+				second_limit = "
+					151 = {
+						trade_share = {
+							country = ROOT
+							share = 80
+						}
+					}
+				"
+				second_effect = "
+					add_country_modifier = {
+						name = BYZ_maintaining_relations
+						duration = 5475
+					}
+				"
+			}
+		}
+	}
+	
+	BYZ_collect_our_profits = {
+		icon = mission_african_gold
+		required_missions = { BYZ_economic_independence }
+		position = 7
+		provinces_to_highlight = {
+		}
+		trigger = {
+			monthly_income = 50
+			NOT = { inflation = 0.2 }
+			NOT = { num_of_loans = 1 }
+			home_trade_node = {
+				trade_node_value = 25 
+			}
+		}
+		effect = {
+			country_event = { id = MEE_Byzantine_Events.21 }
+		}
+	}
+	
+	BYZ_warehouse_of_the_east = {
+		icon = saxon_manufacturing
+		required_missions = { BYZ_collect_our_profits BYZ_royal_purple BYZ_wealth_from_the_east }
+		position = 8
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			NOT = { has_manufactory_trigger = yes }
+		}
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_manufactory_trigger = yes
+				value = 50
+			}
+			home_trade_node = {
+				trade_node_value = 100
+				highest_value_trade_node = yes
+			}
+			
+			monthly_income = 400 
+		}
+		effect = {
+			add_country_modifier_for_age = {
+				name = BYZ_economic_intimidation
+				age = age_of_reformation
+				else = "
+					add_dip_power = 100
+					add_years_of_income = 1
+				"
+			}
+			
+			# custom_tooltip = " "
+			
+			custom_tooltip = BYZ_naval_commander_advisor_buff #bound to mission_completed
+			
+			custom_tooltip = " "
+			
+			complex_dynamic_effect = {
+				first_custom_tooltip = BYZ_if_we_have_taken_laesio_enormis
+				first_limit = " has_reform = laesio_enormis_reform "
+				first_effect = "
+					change_government_reform_progress = 200
+				"
 			}
 		}
 	}
@@ -3240,6 +3489,31 @@ byz_fifth = {
 					cost = 0
 				}
 			}
+		}
+	}
+	
+	BYZ_mecca = {
+		icon = mission_into_arabia
+		required_missions = { byzantium_palestine }
+		position = 11
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 384
+				province_id = 385
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			owns = 384
+			owns = 385
+		}
+		
+		effect = {
+			add_power_projection_mission = { amount = 25 }
+			custom_tooltip = AB_EMPTY
+			country_event = { id = MEE_Byzantine_Events.9 }
 		}
 	}
 	
@@ -3321,7 +3595,7 @@ byz_fifth = {
 	}
 	
 	byzantium_suez = {
-		icon = mission_dharma_mission_arabian_trade
+		icon = mam_highway_empire
 		position = 15
 		required_missions = { byzantium_granary }
 	

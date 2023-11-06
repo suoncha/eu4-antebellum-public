@@ -350,6 +350,7 @@ country_decisions = {
 	enforce_religion_muslim = {
 		potential = {
 			NOT = { has_ruler_modifier = muslim_enforced_religion }
+			NOT = { has_ruler_modifier = ARB_muslim_enforced_religion_buff }
 			religion_group = muslim
 		}
 		allow = {
@@ -357,9 +358,22 @@ country_decisions = {
 			has_regency = no
 		}
 		effect = {	
-			add_ruler_modifier = {
-				name = "muslim_enforced_religion"
-				duration = -1
+			if = {
+				limit = {
+					has_country_flag = ARB_buff_enforce_religious_unity_flag
+				}
+				add_ruler_modifier = {
+					name = "ARB_muslim_enforced_religion_buff"
+					duration = -1
+				}
+				add_piety = 0.3
+			}
+			else = {
+				add_ruler_modifier = {
+					name = "muslim_enforced_religion"
+					duration = -1
+				}
+				add_piety = -0.15
 			}
 		}
 		ai_will_do = {
@@ -370,9 +384,9 @@ country_decisions = {
 	the_khalifah = {
 		potential = {
 			NOT = { has_ruler_modifier = khalifah }
+			NOT = { has_ruler_modifier = ARB_khalifah_upgraded }
 			religion = sunni
 			NOT = { tag = MAM } #Controls the Caliph already.
-			NOT = { government = republic }
 			ruler_religion = sunni
 		}
 		allow = {
@@ -381,18 +395,31 @@ country_decisions = {
 			is_female = no
 		}
 		effect = {	
-			add_ruler_modifier = {
-				name = "khalifah"
-				duration = -1
+			if = {
+				limit = {
+					mission_completed = ARB_unite_arabia
+				}
+				add_ruler_modifier = {
+					name = "ARB_khalifah_upgraded"
+					duration = -1
+				}
+				change_piety_effect = {
+					amount = 0.2
+				}
 			}
-			add_piety = 0.10
+			else = {
+				add_ruler_modifier = {
+					name = "khalifah"
+					duration = -1
+				}
+				
+				change_piety_effect = {
+					amount = 0.1
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 1
-			modifier = { 
-				NOT = { piety = -0.1 }
-				factor = 0
-			}
 		}
 	}
 	
@@ -410,14 +437,10 @@ country_decisions = {
 				name = "sect_practices"
 				duration = -1
 			}
-			add_piety = 0.10
+			add_piety = 0.1
 		}
 		ai_will_do = {
 			factor = 1
-			modifier = { 
-				NOT = { piety = -0.1 }
-				factor = 0
-			}			
 		}
 	}
 	
@@ -436,14 +459,12 @@ country_decisions = {
 				name = "islamic_scholarly_centre"
 				duration = -1
 			}
-			add_piety = 0.25
+			change_piety_effect = {
+				amount = 0.25
+			}
 		}
 		ai_will_do = {
 			factor = 1
-			modifier = { 
-				NOT = { piety = -0.1 }
-				factor = 0
-			}			
 		}
 	}
 	
@@ -548,7 +569,14 @@ country_decisions = {
 			}
 		}
 		allow = {
-			legitimacy = 90
+			if = {
+				limit = { OR = { government = monarchy government = tribal } }
+				legitimacy = 90
+			}
+			if = {
+				limit = { uses_devotion = yes }
+				NOT = { devotion = 80 }
+			}
 			has_regency = no
 			is_free_or_tributary_trigger = yes
 			custom_trigger_tooltip = {
@@ -561,7 +589,21 @@ country_decisions = {
 			}
 		}
 		effect = {
-			change_religion = capital
+			if = {
+				limit = { capital_scope = { religion = sunni } }
+				change_religion = sunni
+			}
+			else_if = {
+				limit = { capital_scope = { religion = shiite } }
+				change_religion = shiite
+			}
+			else_if = {
+				limit = { capital_scope = { religion = ibadi } }
+				change_religion = ibadi
+			}
+			else = {
+				change_religion = capital
+			}
 			add_stability = 1
 			add_legitimacy = 10
 			clr_country_flag = sultan_titles_for_non_muslims
@@ -1176,6 +1218,45 @@ country_decisions = {
 		}
 	}
 	
+	norse_gain_norse_missions = {
+		potential = {
+			has_dlc = "Lions of the North"
+			religion = norse_pagan_reformed
+			OR = {
+				AND = {
+					mission_completed = swe_the_theologian_discussions
+					tag = SWE
+				}
+				AND = {
+					mission_completed = dan_the_age_of_reformation
+					tag = DAN
+				}
+				AND = {
+					mission_completed = nor_religious_path_mission
+					tag = NOR
+				}
+				AND = {
+					NOT = { has_mission = sca_restore_the_norse_faith }
+					tag = SCA
+				}
+			}
+			NOT = { has_country_flag = sca_unlock_norse_missions }
+		}
+		allow = {
+			religion = norse_pagan_reformed
+		}
+		major = yes
+		effect = {
+			set_country_flag = sca_unlock_norse_missions
+			country_event = {
+				id = flavor_sca.1
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
 	tengri_yellow_shamanism = {
 		potential = {
 			NOT = { has_country_modifier = yellow_shamanism_modifier }
@@ -1198,13 +1279,14 @@ country_decisions = {
 	
 	tengri_black_shamanism = {
 		potential = {
+			NOT = { has_country_modifier = yellow_shamanism_modifier }
 			NOT = { has_country_modifier = black_shamanism_modifier }
 			religion = tengri_pagan_reformed
-			NOT = { has_secondary_religion = yes }
 		}
 		allow = {
 			ADM = 3
 			NOT = { has_country_modifier = yellow_shamanism_modifier }
+			NOT = { has_secondary_religion = yes }
 		}
 		effect = {	
 			add_country_modifier = {
@@ -1404,11 +1486,8 @@ country_decisions = {
 			owns_core_province = 517 #Sanjan
 			owns_core_province = 529 #Mumbai
 			owns_core_province = 2210 #Kermanshah
-			calc_true_if = {
-				all_owned_province = {
-					religion = zoroastrian
-				}
-				amount = 50
+			all_owned_province = {
+				religion = zoroastrian
 			}
 		}
 		effect = {
@@ -1652,9 +1731,6 @@ country_decisions = {
 			any_owned_province = {
 				religion_group = christian
 			}
-			NOT = {
-				tag = DAN
-			}
 			is_free_or_tributary_trigger = yes
 		}
 		allow = {
@@ -1668,7 +1744,7 @@ country_decisions = {
 			}
 		}
 		ai_will_do = {
-			factor = 0
+			factor = 1
 			modifier = {
 				factor = 0
 				NOT = { religion = animism }
@@ -1695,7 +1771,7 @@ country_decisions = {
 			}
 		}
 		ai_will_do = {
-			factor = 0
+			factor = 1
 			modifier = {
 				factor = 0
 				NOT = { religion = animism }
@@ -1782,7 +1858,7 @@ country_decisions = {
 			}
 		}
 		ai_will_do = {
-			factor = 0
+			factor = 1
 			modifier = {
 				factor = 0
 				NOT = { religion = animism }
@@ -1809,7 +1885,7 @@ country_decisions = {
 			}
 		}
 		ai_will_do = {
-			factor = 0
+			factor = 1
 			modifier = {
 				factor = 0
 				NOT = { religion = animism }
@@ -2017,6 +2093,35 @@ country_decisions = {
 					}
 				}
 			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	
+	buddhism_consulate_monasteries = {
+		potential = {
+			has_dlc = "Common Sense"
+			has_government_attribute = enable_karma_decision
+		}
+		allow = {
+			custom_trigger_tooltip = {
+				tooltip = decision_once_every_twenty_years
+				OR = {
+					NOT = { has_country_flag = karma_adjustment_decision }
+					had_country_flag = {
+						flag = karma_adjustment_decision
+						days = 7300
+					}
+				}
+			}
+		}
+		effect = {
+			country_event = {
+				id = buddhism_events.44
+			}
+			clr_country_flag = karma_adjustment_decision
+			set_country_flag = karma_adjustment_decision
 		}
 		ai_will_do = {
 			factor = 0

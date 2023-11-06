@@ -40,12 +40,31 @@ marketplace = {
 			type = production
 			value = 1
 		}
+		if = {
+			limit = {
+				FROM = { 
+					has_dlc = "Mandate of Heaven"
+					has_country_flag = mam_trade_building_prosperity_flag
+				}
+			}
+			add_prosperity = 5
+		}
 	}
 	on_destroyed = {
 		remove_development_from_building = {
 			building = marketplace
 			type = production
 			value = 1
+		}
+		if = {
+			limit = {
+				FROM = { 
+					has_dlc = "Mandate of Heaven"
+					has_country_flag = mam_trade_building_prosperity_flag
+				}
+				
+			}
+			add_prosperity = -5
 		}
 	}
 
@@ -122,6 +141,7 @@ temple = {
 	}
 	
 	on_built = {
+		on_built_tax_building_effect = yes
 		on_province_tax_building_built_estate_privileges_effect = yes
 		add_development_from_building = {
 			building = temple
@@ -964,6 +984,7 @@ cathedral = {
 		local_tax_modifier = 0.6
 	}
 	on_built = {
+		on_built_tax_building_effect = yes
 		on_province_tax_building_built_estate_privileges_effect = yes
 		add_development_from_upgrading_or_building = {
 			building = cathedral
@@ -1040,6 +1061,8 @@ cathedral = {
 				clr_province_flag = ab_production_from_norse_mead
 			}
 		}
+	}
+	on_obsolete = {
 	}
 
 	ai_will_do = {
@@ -2544,17 +2567,33 @@ farm_estate = {
 			type = production 
 			value = 1
 		}
+		if = {
+			limit = {
+				FROM = {
+					has_country_flag = geo_wine_manufactory_flag
+				}
+			}
+			add_base_production = 1
+		}
 	}
 	on_destroyed = {
 		remove_development_from_building = {
 			building = manufactory 
 			type = production 
-			value = 2
+			value = 2 
 		}
 		remove_dev_from_building = {
 			building = manufactory 
 			type = production 
 			value = 1
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_country_flag = geo_wine_manufactory_flag
+				}
+			}
+			add_base_production = -1
 		}
 	}
 	on_obsolete = {
@@ -2679,6 +2718,10 @@ ramparts = {
 	}
 	
 	on_destroyed = {
+		if = {
+			limit = { has_province_modifier = per_reinforced_defenses }
+			remove_province_modifier = per_reinforced_defenses
+		}
 		remove_dev_from_building = {
 			building = manufactory 
 			type = manpower 
@@ -2693,6 +2736,18 @@ ramparts = {
 	}
 	ai_will_do = {
 		factor = 1
+		modifier = {
+			factor = 0
+			from = { num_of_loans = 3 }
+		}
+		modifier = {
+			factor = 20
+			has_terrain = mountain
+		}
+		modifier = {
+			factor = 0
+			from = { personality = ai_militarist }
+		}
 	}
 }
 

@@ -40,7 +40,8 @@ COT_ideas = {
 
 ANG_ideas = {
 	trigger = {
-		TAG = ANG
+		tag = ANG
+		NOT = { has_country_flag = ang_evolved_ideas1 }
 	}
 	start = { 
 		infantry_power = 0.1
@@ -102,6 +103,7 @@ CRK_ideas = {
 	}
 	CRK_fifth = {
 		colonists = 1
+		effect = { remove_temporary_colonist = yes }
 	}
 	CRK_sixth = {
 		trade_steering = 0.20
@@ -291,6 +293,7 @@ DMA_ideas = {
 	DMA_fifth = {
 		colonists = 1
 		global_colonial_growth = 10
+		effect = { remove_temporary_colonist = yes }
  	}
 	DMA_sixth = {
 		religious_unity = 0.15
@@ -322,6 +325,7 @@ GDL_ideas = {
 	GDL_third = {
 		colonists = 1
 		may_explore = yes
+		effect = { remove_temporary_colonist = yes }
 	}
 	GDL_fourth = {
 		infantry_cost = -0.1
@@ -380,7 +384,7 @@ GBR2_ideas = {
 	}
 }
 
-DLM2_ideas = {
+DLM_ideas = {
 	start = {
 		naval_forcelimit_modifier = 0.1
 		land_forcelimit_modifier = 0.2
@@ -392,6 +396,7 @@ DLM2_ideas = {
 	
 	trigger = {
 		tag = DLM
+		NOT = { has_country_flag = dlm_evolved_ideas1 }
 	}
 	free = yes		
 	
@@ -419,9 +424,51 @@ DLM2_ideas = {
 	}
 }
 
+DLM2_ideas = {
+	start = {
+		naval_forcelimit_modifier = 0.2
+		land_forcelimit_modifier = 0.2
+	}
+
+	bonus = {
+		discipline = 0.05
+	}
+	
+	trigger = {
+		tag = DLM
+		has_country_flag = dlm_evolved_ideas1
+	}
+	free = yes		
+	
+	dlm_first = {
+		legitimacy = 1
+	}
+	dlm_second = {
+		land_morale = 0.2
+	}
+	dlm_third = {
+		global_own_trade_power = 0.15
+	}
+	dlm_fourth = {
+		army_tradition_decay = -0.01
+	}
+	dlm_fifth = {
+		diplomatic_reputation = 1
+		unjustified_demands = -0.25
+	}
+	dlm_sixth = {
+		global_colonial_growth = 20
+		cb_on_overseas = yes
+	}
+	dlm_seventh = {
+		own_coast_naval_combat_bonus = 1
+	}
+}
+
 ANG2_ideas = {
 	trigger = {
-		TAG = ANG
+		tag = ANG
+		has_country_flag = ang_evolved_ideas1
 	}
 	start = { 
 		infantry_power = 0.1
@@ -526,6 +573,7 @@ NSE2_ideas = {
 	nse_third = {
 		global_colonial_growth = 10
 		colonists = 1
+		effect = { remove_temporary_colonist = yes }
 	}
 	nse_fourth = {
 		infantry_power = 0.15
@@ -802,6 +850,7 @@ KOI_ideas = {
 	}
 	KOI_fifth = {
 		colonists = 1
+		effect = { remove_temporary_colonist = yes }
 	}
 	KOI_sixth = {
 		prestige = 1
@@ -840,6 +889,7 @@ imperial_KOI_ideas = {
 	imperial_KOI_fifth = {
 		colonists = 1
 		global_colonial_growth = 35
+		effect = { remove_temporary_colonist = yes }
 	}
 	imperial_KOI_sixth = {
 		development_cost = -0.1
@@ -872,6 +922,7 @@ GDL2_ideas = {
 	GDL_third = {
 		colonists = 1
 		may_explore = yes
+		effect = { remove_temporary_colonist = yes }
 	}
 	GDL_fourth = {
 		infantry_cost = -0.1
@@ -927,5 +978,91 @@ irish2_ideas = {
  	}
 	ire_gallowglasses = {
 		discipline = 0.05
+	}
+}
+
+ENG_ideas = {
+	start = {
+		shock_damage = 0.1
+		naval_morale = 0.1
+	}
+
+	bonus = {
+		free_leader_pool = 1
+	}
+	
+	trigger = {
+		OR = {
+			tag = ENG
+			tag = EAN
+			tag = ESX
+			tag = KNT
+			tag = SSX
+			tag = WSX
+		}
+	}
+	free = yes		#will be added at load.
+	
+	eng_sixth = {
+		ae_impact = -0.15
+	}
+	eng_fifth = {
+		reinforce_speed = 0.1
+	}
+	eng_second = {
+		monarch_diplomatic_power = 1
+	}
+	navigation_acts = {
+		trade_efficiency = 0.1
+	}
+	eng_fourth = {
+		defensiveness = 0.15
+	}
+	eng_third = {
+		navy_tradition = 0.25
+		heavy_ship_power = 0.10
+	}
+	eng_first = {
+		own_coast_naval_combat_bonus = 1
+	}
+}
+
+GBR_ideas = {
+	start = {
+		naval_morale = 0.20
+		heavy_ship_power = 0.15
+	}
+
+	bonus = {
+		navy_tradition = 1
+	}
+	
+	trigger = {
+		tag = GBR
+	}
+	free = yes		#will be added at load.
+
+	eng_first = {
+		own_coast_naval_combat_bonus = 1
+	}
+	city_upon_a_hill = {
+		global_colonial_growth = 20
+	}
+	gbr_second = {
+		prestige_decay = -0.01
+	}
+	gbr_the_royal_society = {
+		technology_cost = -0.05
+	}
+	reform_of_comission_buying = {
+		discipline = 0.05
+	}
+	british_industrialization = {
+		global_trade_goods_size_modifier = 0.2
+	}
+	gbr_seventh = {
+		leader_naval_manuever = 1
+		blockade_efficiency = 0.33
+		allowed_marine_fraction = 0.10
 	}
 }

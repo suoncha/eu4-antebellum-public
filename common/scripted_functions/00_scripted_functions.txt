@@ -51,20 +51,6 @@ can_increase_stability = {
 
 # ROOT = province, FROM = country
 can_add_province_to_hre = {
-	condition = {
-		tooltip = "PAP_CANT_JOIN_HRE"
-		potential = {
-			owner = {
-				tag = PAP
-			}
-		}
-		allow = {
-			owner = {
-				is_part_of_hre = yes
-			}
-		}
-	}
-	
 }
 
 #ROOT = province, FROM = country
@@ -247,4 +233,28 @@ will_demand_annexation = {
 			NOT = { hre_reform_passed = landfriede }
 		}
 	}
+}
+
+can_join_hre = {
+	condition = {
+		tooltip = "PERMANENTLY_LEFT_HRE"
+		potential = {
+		}
+		allow = {
+			NOT = {
+				has_country_flag = permanently_left_hre_flag
+			}
+		}
+	}
+	condition = {
+		tooltip = "PAP_CANT_JOIN_HRE"
+		potential = {
+		}
+		allow = {
+			NOT = { tag = PAP }
+		}
+	}
+}
+
+can_leave_hre = {
 }

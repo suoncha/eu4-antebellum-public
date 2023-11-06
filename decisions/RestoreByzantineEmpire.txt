@@ -11,6 +11,10 @@ country_decisions = {
 				ai = no
 				is_playing_custom_nation = no
 			}
+			OR = {
+				is_free_or_tributary_trigger = yes
+				ai = no
+			}
 			NOT = { exists = BYZ }
 			NOT = { exists = GRE }
 			NOT = { tag = HLR }
@@ -80,9 +84,8 @@ country_decisions = {
 				move_capital_effect = yes
 			}
 			change_tag = BYZ
-			hidden_effect = {
-				override_country_name = BYZ
-			}
+			on_change_tag_effect = yes
+			restore_country_name = yes
 			if = {
 				limit = {
 					NOT = { culture_group = byzantine }
@@ -177,9 +180,16 @@ country_decisions = {
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
 			set_country_flag = formed_byzantium_flag
+			
+			if = {
+				limit = {
+					has_country_flag = BYZ_accepted_ottoman_threat
+				}
+				clr_country_flag = BYZ_accepted_ottoman_threat 
+			}
 		}
 		ai_will_do = {
-			factor = 1
+			factor = 0
 		}
 	}
 	

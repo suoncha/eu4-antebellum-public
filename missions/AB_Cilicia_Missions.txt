@@ -124,44 +124,55 @@ clc_first = {
 		}
 		
 		effect = {
-			379 = {
-				add_prosperity = 100
-			}
-			379 = {
-				add_province_modifier = {
-					name = "clc_holy"
-					duration = -1
+			if = {
+				limit = { 
+					has_dlc = "Leviathan"
+				}
+				379 = {
+					add_great_project_tier = {
+						type = holy_city_jerusalem
+						tier = 1
+					}
 				}
 			}
-			custom_tooltip = CLC_JERUSALEM
-			tooltip = {
-				add_country_modifier = {
-					name = clc_expand
-					duration = -1
+			else = {
+				custom_tooltip = arm_empower_jerusalem_tt
+				set_country_flag = arm_empower_jerusalem
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
 				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					religion = coptic
+					NOT = {
+						any_country = {
+							religion = coptic
+							is_defender_of_faith = yes
+						}
+					}
+				}
+				custom_tooltip = arm_dotf_tt_yes
+			}
+			else = {
+				custom_tooltip = arm_dotf_tt_no
 			}
 			hidden_effect = {
 				if = {
 					limit = {
-						OR = {
-							379 = {
-								has_great_project = {
-									type = holy_city_jerusalem
-									tier = 2
-								}
-							}
-							379 = {
-								has_great_project = {
-									type = holy_city_jerusalem
-									tier = 3
-								}
+						religion = coptic
+						NOT = {
+							any_country = {
+								religion = coptic
+								is_defender_of_faith = yes
 							}
 						}
 					}
-					add_country_modifier = {
-						name = clc_expand
-						duration = -1
-					}
+					set_defender_of_the_faith = { who = ROOT religion = ROOT }
 				}
 			}
 		}
@@ -172,21 +183,312 @@ clc_first = {
 		position = 6
 		required_missions = { clc_egypt }
 	
-		trigger = {
-			num_of_owned_provinces_with = {
-				value = 15
-				region = egypt_region
-				religion = coptic
+		provinces_to_highlight = {
+			region = egypt_region
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				NOT = {
+					religion = ROOT
+				}
+				nationalism = 1
+				local_autonomy = 10
 			}
 		}
 		
-		provinces_to_highlight = {
-			region = egypt_region
-			NOT = { religion = coptic }
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = egypt_region
+				religion = ROOT
+				value = 12
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = egypt_region
+				NOT = {
+					nationalism = 1
+				}
+				value = 12
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = egypt_region
+				NOT = {
+					local_autonomy = 10
+				}
+				value = 12
+			}
 		}
 		
 		effect = {
-			country_event = { id = ab_cilicia.3 }
+			country_event = { id = flavor_arm.4 }
+			custom_tooltip = AB_EMPTY
+			egypt_region = {
+				add_province_modifier = {
+					name = arm_coptic_restoration
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	arm_ecclesiastical_revival = {
+		icon = mission_most_holy_synod
+		required_missions = { }
+		position = 7
+		
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			NOT = {
+				religion = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				religion = ROOT
+				value = 12
+			}
+			if = {
+				limit = {
+					has_estate = estate_church
+				}
+				estate_loyalty = {
+					estate = estate_church
+					loyalty = 60
+				}
+				num_of_estate_agendas_completed = {
+					estate = estate_church
+					value = 3
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = arm_true_faith_tax_tt
+			add_country_modifier = {
+				name = "arm_ecclesiastical_revival"
+				duration = 7300
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								religion = ROOT
+							}
+							add_base_tax = 1
+						}
+					"
+				}
+			}
+		}
+	}
+	
+	arm_etchmiadzin_cathedral = {
+		icon = arm_etchmiadzin_cathedral
+		required_missions = { arm_ecclesiastical_revival }
+		position = 8
+		
+		provinces_to_highlight = {
+			if = {
+				limit = { 
+					has_dlc = "Leviathan"
+				}
+				OR = {
+					province_id = 419
+					AND = {
+						NOT = {
+							has_tax_building_trigger = yes
+						}
+						owned_by = ROOT
+					}
+				}
+			}
+			else = {
+				owned_by = ROOT
+				NOT = {
+					has_tax_building_trigger = yes
+				}
+			}
+		}
+		
+		trigger = {
+			if = {
+				limit = { 
+					has_dlc = "Leviathan"
+				}
+				owns = 419
+				419 = {
+					has_great_project = {
+						type = etchimiadzin_cathedral
+						tier = 1
+					}
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					has_tax_building_trigger = yes
+					value = 5
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					has_tax_building_trigger = yes
+					value = 10
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = arm_upgrade_church_tt
+			add_country_modifier = {
+				name = arm_cathedral
+				duration = 3650
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 3
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.25
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_building = temple
+							}
+							remove_building = temple
+							add_building = cathedral
+						}
+					"
+				}
+			}
+		}
+	}
+	
+	arm_holy_sites = {
+		icon = arm_holy_sites
+		required_missions = { arm_etchmiadzin_cathedral }
+		position = 10
+		
+		provinces_to_highlight = {
+			if = {
+				limit = {
+					ROOT = {
+						religion = coptic
+					}
+				}
+				OR = {
+					province_id = 358
+					province_id = 1227
+					province_id = 2313
+					province_id = 1234
+					province_id = 419
+				}
+				NOT = {
+					owner = {
+						religion = coptic
+					}
+				}
+			}
+			else = {
+				owned_by = ROOT
+				has_tax_building_trigger = yes
+				NOT = {
+					base_tax = 10
+				}
+			}
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					religion = coptic
+				}
+				calc_true_if = {
+					desc = arm_own_coptic_holy_site_tt
+					all_province = {
+						OR = {
+							province_id = 358
+							province_id = 1227
+							province_id = 2313
+							province_id = 1234
+							province_id = 419
+						}
+						owner = {
+							religion = coptic
+						}
+					}
+					amount = 3
+				}
+			}
+			else = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					has_tax_building_trigger = yes
+					base_tax = 10
+					value = 10
+				}
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					religion = coptic
+				}
+				custom_tooltip = arm_all_coptic_tt
+				if = {
+					limit = {
+						owns = 358
+						owns = 1227
+						owns = 2313
+						owns = 1234
+						owns = 419
+					}
+					custom_tooltip = arm_own_holy_sites_tt_yes
+				}
+				else = {
+					custom_tooltip = arm_own_holy_sites_tt_no
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = arm_sword_of_true_faith
+					duration = 9125
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						religion = coptic
+					}
+					every_country = {
+						limit = {
+							religion = coptic
+						}
+						add_country_modifier = {
+							name = arm_holy_sites_protector
+							duration = 9125
+						}
+					}
+					if = {
+						limit = {
+							owns = 358
+							owns = 1227
+							owns = 2313
+							owns = 1234
+							owns = 419
+						}
+						remove_country_modifier = arm_holy_sites_protector
+						add_country_modifier = {
+							name = arm_holy_sites_protector
+							duration = -1
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -257,7 +559,7 @@ clc_second = {
 	}
 	
 	clc_phoenix = {
-		icon = end_the_schism
+		icon = mission_justinian
 		required_missions = { clc_alliances }
 		position = 2
 		
@@ -457,7 +759,7 @@ clc_second = {
 	clc_ark = {
 	    icon = ark_of_the_covenant
 		required_missions = { clc_nile }
-		position = 8
+		position = 9
 		
 		trigger = {
 		    1227 = {
@@ -581,7 +883,7 @@ clc_third = {
 	}
 	
 	clc_constantinople = {
-		icon = mission_city_of_the_world's_desire
+		icon = end_the_schism
 		position = 5
 		required_missions = { clc_encroach }
 	
@@ -637,54 +939,153 @@ clc_third = {
 		}
 	}
 	
-	clc_legacy = {
-		icon = empower_the_junkers
-		position = 7
-		required_missions = { clc_resettle }
+	clc_tigran = {
+		icon = appease_the_estates
+		position = 8
+		required_missions = { arm_national_awakening }
 	
 		trigger = {
-			prestige = 95
-			legitimacy = 95
-			absolutism = 50
-			stability = 3
-			is_great_power = yes
+			418 = {
+				development = 25
+			}
+			418 = {
+				religion = coptic
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 418
 		}
 		
 		effect = {
-			add_ruler_modifier = {
-				name = clc_heir
-				duration = -1
+			418 = {
+				move_capital_effect = yes
+				change_culture = armenian
+				change_province_name = "Tigranakert"
+				rename_capital = "Tigranakert"
 			}
-			custom_tooltip = CLC_EVOLVING_IDEA_1
-			hidden_effect = {
-				set_country_flag = clc_evolved_ideas
+			418 = {
+				add_province_modifier = {
+					name = "clc_tigranakert"
+					duration = -1
+				}
+			}
+			418 = {
 				if = {
 					limit = {
-						OR = {
-							tag = ARM
-							tag = AME
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			custom_tooltip = CLC_SILK
+		}
+	}
+	
+	arm_refine_the_nakharar = {
+		icon = mission_early_russian_army
+		required_missions = { }
+		position = 9
+		
+		trigger = {
+			if = {
+				limit = {
+					has_estate = estate_nobles
+				}
+				OR = {
+					estate_loyalty = {
+						estate = estate_nobles
+						loyalty = 60
+					}
+					num_of_estate_privileges = {
+						estate = estate_nobles
+						value = 4
+					}
+				}
+				num_of_estate_agendas_completed = {
+					estate = estate_nobles
+					value = 3
+				}
+			}
+			else = {
+				OR = {
+					MIL = 5
+					monthly_mil = 10
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = arm_gain_mil_per_privileges
+			set_country_flag = arm_unlocked_nakharar
+			unlock_government_reform = {
+				government_reform = nakharar_title
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						num_of_estate_privileges = {
+							estate = estate_nobles
+							value = 4
 						}
 					}
-					country_event = {
-						id = ideagroups.1
-					}
+					add_mil_power = 100
 				}
-			}
-			custom_tooltip = CLC_AGE
-			tooltip = {
-				grant_all_mana = {
-					mana = 150
-				}
-			}
-			hidden_effect = {
-				if = {
+				else_if = {
 					limit = {
-						in_golden_age = yes
+						num_of_estate_privileges = {
+							estate = estate_nobles
+							value = 3
+						}
 					}
-				grant_all_mana = {
-					mana = 150
+					add_mil_power = 75
 				}
+				else_if = {
+					limit = {
+						num_of_estate_privileges = {
+							estate = estate_nobles
+							value = 2
+						}
+					}
+					add_mil_power = 50
 				}
+				else_if = {
+					limit = {
+						num_of_estate_privileges = {
+							estate = estate_nobles
+							value = 1
+						}
+					}
+					add_mil_power = 25
+				}
+			}
+		}
+	}
+	
+	arm_office_of_sparapet = {
+		icon = mission_late_ottoman_reforms
+		required_missions = { arm_refine_the_nakharar }
+		position = 10
+		
+		trigger = {
+			OR = {
+				army_tradition = 60
+				army_professionalism = 0.3
+			}
+			monthly_mil = 10
+			has_mil_advisor_3 = yes
+		}
+		
+		effect = {
+			set_country_flag = arm_unlocked_sparapet
+			unlock_government_reform = {
+				government_reform = sparapet_office
 			}
 		}
 	}
@@ -701,14 +1102,23 @@ clc_fourth = {
 	has_country_shield = yes
 	
 	clc_destroy = {
-		icon = mission_persian_soldiers
+		icon = geo_turkoman
 		position = 1
 		required_missions = {  }
 	
 		trigger = {
-			war_score_against = {
-				who = SEL
-				value = 10
+			OR = {
+				war_score_against = {
+					who = SEL
+					value = 10
+				}
+				NOT = {
+					exists = SEL
+				}
+				has_won_war_against = {
+					who = SEL
+					max_years_since = 10
+				}
 			}
 		}
 		
@@ -736,7 +1146,7 @@ clc_fourth = {
 	}
 	
 	clc_ascendant = {
-		icon = mission_empire
+		icon = arm_restore_armenian_cilicia
 		position = 2
 		required_missions = { clc_destroy }
 	
@@ -798,122 +1208,323 @@ clc_fourth = {
 		
 		effect = {
 			country_event = { id = ab_cilicia.1 }
+			custom_tooltip = AB_EMPTY
+			change_ruler_stat = {
+				type = mil
+				amount = 2
+			}
+			add_ruler_modifier = {
+				name = "arm_liberator"
+				duration = -1
+			}
+			custom_tooltip = arm_cores_armenian_provinces_tt
+			hidden_effect = {
+				every_province = {
+					limit = {
+						culture = armenian
+						NOT = {
+							OR = {
+								is_core = ROOT
+								country_or_non_sovereign_subject_holds = ROOT
+							}
+						}
+					}
+					add_core = ROOT
+				}
+			}
 			hidden_effect = {
 				complete_mission = clc_homeland
 			}
-		}
-	}
-	
-	clc_tigran = {
-		icon = appease_the_estates
-		position = 5
-		required_missions = { clc_homeland }
-	
-		trigger = {
-			418 = {
-				development = 25
-			}
-			418 = {
-				religion = coptic
-			}
-		}
-		
-		provinces_to_highlight = {
-			province_id = 418
-		}
-		
-		effect = {
-			418 = {
-				move_capital_effect = yes
-				change_culture = armenian
-				change_province_name = "Tigranakert"
-				rename_capital = "Tigranakert"
-			}
-			418 = {
-				add_province_modifier = {
-					name = "clc_tigranakert"
-					duration = -1
+			if = {
+				limit = {
+					is_great_power = yes
+				}
+				custom_tooltip = arm_great_power_tt_yes
+				tooltip = {
+					add_splendor = 200
 				}
 			}
-			418 = {
+			else = {
+				custom_tooltip = arm_great_power_tt_no
+				tooltip = {
+					add_splendor = 200
+				}
+			}
+			hidden_effect = {
 				if = {
 					limit = {
-						NOT = { province_has_center_of_trade_of_level = 1 }
+						is_great_power = yes
 					}
-					center_of_trade = 1
-				}
-				else_if = {
-					limit = {
-						NOT = { province_has_center_of_trade_of_level = 3 }
-					}
-					add_center_of_trade_level = 1
+					add_splendor = 200
 				}
 			}
-			custom_tooltip = CLC_SILK
 		}
 	}
 	
-	clc_resettle = {
-		icon = mission_conquer_malwa_bah
-		position = 6
-		required_missions = { clc_tigran }
-	
+	arm_caspian_riches = {
+		icon = mission_arabian_sea_trade
+		required_missions = { clc_homeland }
+		position = 5
+		
+		provinces_to_highlight = {
+			area = shirvan_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
 		trigger = {
-			num_of_owned_provinces_with = {
-				value = 15
-				culture = armenian
+			shirvan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
 		
 		effect = {
-			capital_scope = {
-				add_base_tax = 2
-				add_base_production = 2
-				add_base_manpower = 1
+			421 = {
+				center_of_trade = 1
 			}
 			add_country_modifier = {
-				name = "clc_diaspora"
-				duration = 18250
+				name = "arm_caspian_riches"
+				duration = 5475
+			}
+			if = {
+				limit = {
+					4341 = { 
+						trade_share = {
+							country = ROOT
+							share = 15
+						}
+					}
+				}
+				custom_tooltip = arm_caspian_riches_tt_yes
+			}
+			else = {
+				custom_tooltip = arm_caspian_riches_tt_no
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						4341 = { 
+							trade_share = {
+								country = ROOT
+								share = 15
+							}
+						}
+					}
+					remove_country_modifier = arm_caspian_riches
+					add_country_modifier = {
+						name = "arm_caspian_riches"
+						duration = 10950
+					}
+				}
 			}
 		}
 	}
 	
-	clc_apostolic = {
-		icon = mission_autocephalous_archbishopric
-		required_missions = { clc_resettle }
+	arm_church_of_the_east = {
+		icon = mission_cradle_of_civilization
+		required_missions = { arm_proclaim_great_armenia }
+		position = 6
+		
+		provinces_to_highlight = {
+			area = iraq_arabi_area
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { religion = ROOT }
+			}
+		}
+		
+		trigger = {
+			iraq_arabi_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			iraq_arabi_area = {
+				type = all
+				religion = ROOT
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					religion = coptic
+				}
+				country_event = { id = flavor_arm.2 }
+				custom_tooltip = arm_church_east_insight_tt
+			}
+			else = {
+				add_country_modifier = {
+					name = "arm_church_east"
+					duration = 10950
+				}
+			}
+		}
+	}
+	
+	arm_national_awakening = {
+		icon = mission_handle_the_streltsy
+		required_missions = { }
+		position = 7
+		
+		provinces_to_highlight = {
+			culture = ROOT
+		}
+		
+		trigger = {
+			development_in_provinces = {
+				value = 80
+				culture = ROOT
+			}
+		}
+		
+		effect = {
+			change_government_reform_progress = 50
+			add_country_modifier = {
+				name = "arm_national_awakening"
+				duration = 7300
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						development = 20
+					}
+				}
+				custom_tooltip = arm_capital_cot_tt_yes
+			}
+			else = {
+				custom_tooltip = arm_capital_cot_tt_no
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						capital_scope = {
+							development = 20
+						}
+					}
+					if = {
+						limit = {
+							capital_scope = {
+								NOT = {
+									OR = {
+										province_has_center_of_trade_of_level = 1
+										province_has_center_of_trade_of_level = 2
+										province_has_center_of_trade_of_level = 3
+									}
+								}
+							}
+						}
+						capital_scope = {
+							center_of_trade = 1
+						}
+					}
+					else_if = {
+						limit = {
+							capital_scope = {
+								OR = {
+									province_has_center_of_trade_of_level = 1
+									province_has_center_of_trade_of_level = 2
+								}
+							}
+						}
+						capital_scope = {
+							add_center_of_trade_level = 1
+						}
+					}
+					else = {
+						capital_scope = {
+							add_base_production = 3
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	arm_wool_industry = {
+		icon = mission_serfdom
+		required_missions = { arm_national_awakening }
 		position = 8
 		
 		provinces_to_highlight = {
+			trade_goods = wool
 			OR = {
-				province_id = 358
-				province_id = 2313
-				province_id = 1227
-				province_id = 1234
-				province_id = 419
+				NOT = { has_production_building_trigger = yes }
+				NOT = {	base_production = 3 }
 			}
+			owned_by = ROOT
 		}
 		
 		trigger = {
-			owns = 358
-			owns = 2313
-			owns = 1227
-			owns = 1234
-			owns = 419
-			num_of_owned_provinces_with = {
-				value = 25
-				OR = {
-					has_building = temple
-					has_building = cathedral
+			calc_true_if = {
+				all_owned_province = {
+					trade_goods = wool
+					base_production = 3
+					has_production_building_trigger = yes
 				}
+				amount = 8
 			}
 		}
 		
 		effect = {
-			add_estate_loyalty = { estate = estate_church loyalty = 20 }
+			custom_tooltip = arm_wool_dev_tt
+			tooltip = {
+				add_province_modifier = {
+					name = "arm_booming_wool_industry"
+					duration = 7300
+				}
+			}
+			define_advisor = {
+				type = natural_scientist
+				skill = 3
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.25
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						trade_goods = wool
+						base_production = 3
+						has_production_building_trigger = yes
+					}
+					add_base_production = 1
+					add_province_modifier = {
+						name = "arm_booming_wool_industry"
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	arm_resettle_ancestral_homeland = {
+		icon = mission_expel_the_moriscos
+		required_missions = { arm_wool_industry arm_rebuild_tigranakert }
+		position = 10
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				culture = ROOT
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					culture = ROOT
+				}
+				amount = 15
+			}
+		}
+		
+		effect = {
+			custom_tooltip = arm_converting_culture_tt
 			add_country_modifier = {
-				name = "clc_blessing"
+				name = "arm_resettle_ancestral"
 				duration = -1
 			}
+			set_country_flag = arm_coversion_bonus
 		}
 	}
 	
@@ -1060,10 +1671,65 @@ clc_fifth = {
 		}
 	}
 	
+	arm_proclaim_great_armenia = {
+		icon = arm_proclaim_great_armenia
+		required_missions = { clc_homeland }
+		position = 5
+		
+		provinces_to_highlight = {
+			culture = armenian
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		trigger = {
+			tag = ARM
+			owns_all_provinces = {
+				culture = armenian
+			}
+		}
+		
+		effect = {
+			add_permanent_power_projection = {
+				type = 10_permanent_power_projection
+				amount = 10
+			}
+			override_country_name = GREAT_ARMENIA
+			set_country_flag = is_GREAT_ARMENIA_flag
+			set_country_flag = has_overriden_name_flag
+			add_country_modifier = {
+				name = "arm_resurgent_armenia"
+				duration = 7300
+			}
+			al_jazira_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			iraq_arabi_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			basra_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
 	clc_caucasia = {
 		icon = prosper_in_piedmont
-		position = 5
-		required_missions = { clc_homeland }
+		position = 6
+		required_missions = { arm_proclaim_great_armenia }
 	
 		trigger = {
 			caucasia_region = {
@@ -1099,7 +1765,7 @@ clc_fifth = {
 	}
 	
 	clc_greater = {
-		icon = mission_armenia
+		icon = arm_artaxiad_legacy
 		position = 7
 		required_missions = { clc_caucasia }
 	
@@ -1129,6 +1795,67 @@ clc_fifth = {
 					NOT = { is_core = ROOT	}
 				}
 				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	clc_legacy = {
+		icon = mission_princespersia
+		position = 9
+		required_missions = { clc_greater }
+		
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+	
+		trigger = {
+			prestige = 95
+			legitimacy = 95
+			absolutism = 50
+			stability = 3
+			is_great_power = yes
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = persia_region
+				value = 10
+			}
+		}
+		
+		effect = {
+			add_ruler_modifier = {
+				name = clc_heir
+				duration = -1
+			}
+			custom_tooltip = CLC_EVOLVING_IDEA_1
+			hidden_effect = {
+				set_country_flag = clc_evolved_ideas
+				if = {
+					limit = {
+						OR = {
+							tag = ARM
+							tag = AME
+						}
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+			custom_tooltip = CLC_AGE
+			tooltip = {
+				grant_all_mana = {
+					mana = 150
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						in_golden_age = yes
+					}
+					grant_all_mana = {
+						mana = 150
+					}
+				}
 			}
 		}
 	}

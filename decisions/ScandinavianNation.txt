@@ -4,11 +4,15 @@ country_decisions = {
 		major = yes
 		potential = {
 			normal_or_historical_nations = yes
-			
+			was_never_end_game_tag_trigger = yes
 			NOT = { has_country_flag = formed_scandinavia_flag }
 			OR = {
 				ai = no
 				is_playing_custom_nation = no
+			}
+			OR = {
+				is_free_or_tributary_trigger = yes
+				ai = no
 			}
 			NOT = { exists = SCA }
 			NOT = { tag = NSE }
@@ -46,6 +50,7 @@ country_decisions = {
 				province_id = 12		# Sjaelland
 				province_id = 15		# Jylland
 				province_id = 17		# Akershus
+				region = scandinavia_region
 			}
 			OR = {
 				NOT = { owned_by = ROOT }
@@ -63,6 +68,10 @@ country_decisions = {
 			owns_core_province = 12		# Sjaelland
 			owns_core_province = 15		# Jylland
 			owns_core_province = 17		# Akershus
+			num_of_owned_provinces_with = {
+				region = scandinavia_region
+				value = 40
+			}
 		}
 		effect = {
 			change_tag = SCA
@@ -74,6 +83,8 @@ country_decisions = {
 				}
 				remove_non_electors_emperors_from_empire_effect = yes
 			}
+			on_change_tag_effect = yes
+			remove_non_electors_emperors_from_empire_effect = yes
 			if = {
 				limit = { NOT = { government_rank = 2 } }
 				set_government_rank = 2
