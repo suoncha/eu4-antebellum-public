@@ -29,3 +29,194 @@ select_current_missions_AB_LIT = {
 		}
 	}
 }
+
+select_current_missions_AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM = {
+	if = {
+		limit = { has_country_flag = tur_chose_legalism }
+		custom_tooltip = AB_EMPTY
+
+		add_country_modifier = {
+			name = tur_embraced_legalism_modifier
+			duration = 18250
+		}
+	}
+	else_if = {
+		limit = { has_country_flag = tur_chose_mysticism }
+		custom_tooltip = AB_EMPTY
+		
+		add_country_modifier = {
+			name = tur_embraced_mysticism_modifier
+			duration = 18250
+		}
+	}
+}
+
+select_current_missions_AB_SEL_ARAB_TURAN = {
+	if = {
+		limit = { has_country_flag = seljuk_arab }
+		custom_tooltip = AB_EMPTY
+
+		custom_tooltip = SELJUK_ARABIZATION
+		hidden_effect = { move_turkish_into_levantine_group = yes }
+
+		custom_tooltip = AB_EMPTY
+
+		maghreb_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = {  is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+	else_if = {
+		limit = { has_country_flag = seljuk_turan }
+		custom_tooltip = AB_EMPTY
+		
+		custom_tooltip = SELJUK_TURAN
+		
+		custom_tooltip = AB_EMPTY
+
+		crimea_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = {  is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		caucasia_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = {  is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		ruthenia_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_claim = ROOT
+		}
+		russia_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_claim = ROOT
+		}
+		ural_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+
+	}
+}
+
+select_current_missions_AB_GLH_TATARIA_HORDE = {
+	set_country_flag = glh_can_convert
+	clr_country_flag = glh_unlocked_mission_tree
+
+	if = {
+		limit = { has_country_flag = glh_european_tree }
+		custom_tooltip = AB_EMPTY
+		
+		custom_tooltip = GLH_EUROPEAN_TREE
+
+		custom_tooltip = AB_EMPTY
+
+		override_country_name = TATARIA
+		hidden_effect = {
+			change_government = monarchy
+		}
+		swap_free_idea_group = yes
+		add_government_reform = tataria_kingdom
+		hidden_effect = {
+			change_estate_land_share = {
+				estate = estate_nomadic_tribes
+				share = -50
+			}
+		}
+	}
+	else_if = {
+		limit = { has_country_flag = glh_horde_tree }
+		custom_tooltip = AB_EMPTY
+
+		custom_tooltip = GLH_HORDE_TREE
+	}
+}
+
+select_current_missions_AB_GLH_FAITH_QUESTION = {
+	clr_country_flag = glh_can_convert
+
+	custom_tooltip = AB_EMPTY
+	
+	if = {
+		limit = {
+			has_country_flag = glh_picked_orthodox
+		}
+		change_religion = orthodox
+		capital_scope = {
+			change_religion = orthodox
+		}
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+	}
+	else_if = {
+		limit = { has_country_flag = glh_picked_sunni }
+		change_religion = sunni
+		capital_scope = {
+			change_religion = sunni
+		}
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+	}
+	else_if = {
+		limit = { has_country_flag = glh_picked_buddhist }
+		change_religion = vajrayana
+		capital_scope = {
+			change_religion = vajrayana
+		}
+		hidden_effect = {
+			add_prestige = 100
+			add_stability = 1
+		}
+	}
+	else_if = {
+		limit = { has_country_flag = glh_picked_tengri }
+		add_stability = 1
+	}
+	else_if = {
+		limit = { has_country_flag = glh_picked_judaism }
+		change_religion = jewish
+		capital_scope = {
+			change_religion = jewish
+		}
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+	}
+	else_if = {
+		limit = {
+			has_country_flag = glh_picked_nestorian
+		}
+		change_religion = nestorian
+		capital_scope = {
+			change_religion = nestorian
+		}
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+	}
+
+	set_country_flag = glh_has_picked_religion
+}

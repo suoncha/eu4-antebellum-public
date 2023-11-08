@@ -437,6 +437,9 @@ country_event = {
 		hidden_effect = {
 			swap_non_generic_missions = yes
 		}
+		ai_chance = {
+			factor = 1
+		}
 	}
 	
 	option = {
@@ -455,6 +458,9 @@ country_event = {
 				estate = estate_nomadic_tribes
 				share = -50
 			}
+		}
+		ai_chance = {
+			factor = 1
 		}
 	}
 }
@@ -478,11 +484,21 @@ country_event = {
 		tag = GLH
 		has_country_flag = glh_can_convert
 	}
+
+	after = {
+		if = {
+			limit = { ai = yes }
+			set_country_flag = glh_has_picked_religion
+			hidden_effect = {
+				swap_non_generic_missions = yes
+			}
+		}
+	}
 	
 	option = {
 		name = ab_ghorde.10.a
-		set_country_flag = glh_has_picked_religion
-		set_country_flag = glh_picked_christian
+		trigger = { ai = yes }
+		set_country_flag = glh_picked_orthodox
 		change_religion = orthodox
 		capital_scope = {
 			change_religion = orthodox
@@ -491,14 +507,14 @@ country_event = {
 			name = "gh_conversion"
 			duration = 3650
 		}
-		hidden_effect = {
-			swap_non_generic_missions = yes
+		ai_chance = {
+			factor = 1
 		}
 	}
 	
 	option = {
 		name = ab_ghorde.10.b
-		set_country_flag = glh_has_picked_religion
+		trigger = { ai = yes }
 		set_country_flag = glh_picked_sunni
 		change_religion = sunni
 		capital_scope = {
@@ -508,14 +524,14 @@ country_event = {
 			name = "gh_conversion"
 			duration = 3650
 		}
-		hidden_effect = {
-			swap_non_generic_missions = yes
+		ai_chance = {
+			factor = 1
 		}
 	}
 	
 	option = {
 		name = ab_ghorde.10.c
-		set_country_flag = glh_has_picked_religion
+		trigger = { ai = yes }
 		set_country_flag = glh_picked_buddhist
 		change_religion = vajrayana
 		capital_scope = {
@@ -525,15 +541,15 @@ country_event = {
 			add_prestige = 100
 			add_stability = 1
 		}
-		hidden_effect = {
-			swap_non_generic_missions = yes
+		ai_chance = {
+			factor = 1
 		}
 	}
 	
 	option = {
 		name = ab_ghorde.10.de
-		set_country_flag = glh_has_picked_religion
-		set_country_flag = glh_picked_christian
+		trigger = { ai = yes }
+		set_country_flag = glh_picked_nestorian
 		change_religion = nestorian
 		capital_scope = {
 			change_religion = nestorian
@@ -542,14 +558,14 @@ country_event = {
 			name = "gh_conversion"
 			duration = 3650
 		}
-		hidden_effect = {
-			swap_non_generic_missions = yes
+		ai_chance = {
+			factor = 1
 		}
 	}
 
 	option = {
 		name = ab_ghorde.10.f
-		set_country_flag = glh_has_picked_religion
+		trigger = { ai = yes }
 		set_country_flag = glh_picked_judaism
 		change_religion = jewish
 		capital_scope = {
@@ -559,18 +575,32 @@ country_event = {
 			name = "gh_conversion"
 			duration = 3650
 		}
-		hidden_effect = {
-			swap_non_generic_missions = yes
+		ai_chance = {
+			factor = 1
 		}
 	}
 	
 	option = {
 		name = ab_ghorde.10.e
-		set_country_flag = glh_has_picked_religion
+		trigger = { ai = yes }
+
 		set_country_flag = glh_picked_tengri
 		add_stability = 1
+		ai_chance = {
+			factor = 1
+		}
+	}
+
+	option = {
+		name = ab_ghorde.10.human
+		trigger = { ai = no }
+
+		custom_tooltip = AB_GLH_FAITH_QUESTION_enable_branching_tt
 		hidden_effect = {
-			swap_non_generic_missions = yes
+			enable_branching_mission_review = {
+				key = AB_GLH_FAITH_QUESTION
+				# No ai_event_id because the AI can never get this
+			}
 		}
 	}
 }
