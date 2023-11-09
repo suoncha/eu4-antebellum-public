@@ -2,4 +2,4 @@
 Checking public build changes for developing Ante Bellum submod
 
 Disclaimer: I don't own Ante Bellum
-All works belong to https://steamcommunity.com/profiles/76561198055745620
+All works belong to [Parmelion](https://steamcommunity.com/profiles/76561198055745620)
