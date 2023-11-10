@@ -207,3 +207,122 @@ country_event = {
 		add_stability = -3
 	}
 }
+
+country_event = {
+	id = MEE_Byzantine_Events.9
+	title = MEE_Byzantine_Events.9.t
+	desc = MEE_Byzantine_Events.9.d
+	picture = RELIGIOUS_TURMOIL_eventPicture
+	
+	is_triggered_only = yes 
+	major = yes
+	
+	goto = 385
+	
+	option = {
+		name = MEE_Byzantine_Events.9.a
+		
+		ai_chance = {
+			factor = 1
+		}
+		
+		add_adm_power = 100
+		
+		custom_tooltip = " "
+		385 = {
+			if = {
+				limit = {
+					NOT = { has_tax_building_trigger = yes }
+				}
+				add_building = cathedral
+			}
+			else = {
+				add_or_upgrade_tax_building = yes
+			}
+		}
+		if = {
+			limit = {
+				has_dlc = "Leviathan"
+			}
+			custom_tooltip = " "
+			custom_tooltip = BYZ_kaaba_but_only_gives_prestige_and_half_of_religious_unity
+			set_country_flag = BYZ_may_use_kaaba
+		}
+	}
+	
+	option = {
+		name = MEE_Byzantine_Events.9.b
+		
+		ai_chance = {
+			factor = 1
+		}
+		
+		add_dip_power = 100
+		
+		custom_tooltip = " "
+		
+		custom_tooltip = BYZ_relations
+		hidden_effect = {
+			every_country = {
+				limit = {
+					religion_group = muslim
+				}
+				add_opinion = {
+					who = ROOT 
+					modifier = BYZ_spared_masjid
+				}
+			}
+		}
+		
+		custom_tooltip = " "
+		
+		385 = {
+			add_province_modifier = {
+				name = BYZ_masjid_local_pilgrimages
+				duration = -1
+			}
+		}
+	}
+}
+
+country_event = {
+	id = MEE_Byzantine_Events.21 
+	title = MEE_Byzantine_Events.21.t #Byzantine Merchants Regain Prominence
+	desc = MEE_Byzantine_Events.21.d
+	picture = TRADEGOODS_eventPicture
+	
+	is_triggered_only = yes 
+	
+	option = {
+		name = MEE_Byzantine_Events.21.a
+		
+		ai_chance = {
+			factor = 1
+		}
+		
+		custom_tooltip = BYZ_buff_private_trade_fleet
+		set_country_flag = BYZ_private_trade_fleet_buff
+	}
+	
+	option = {
+		name = MEE_Byzantine_Events.21.b
+		
+		ai_chance = {
+			factor = 1
+		}
+		
+		custom_tooltip = AB_BYZ_buff_burgher_loans
+		set_country_flag = BYZ_buff_burgher_loans_flag #I know this one doesn't end in _buff. 
+	}
+	
+	option = {
+		name = MEE_Byzantine_Events.21.c
+		
+		ai_chance = {
+			factor = 1
+		}
+		
+		custom_tooltip = BYZ_buff_free_enterprise
+		set_country_flag = BYZ_free_enterprise_buff
+	}
+}

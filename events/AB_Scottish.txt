@@ -69,10 +69,21 @@ country_event = {
 		}
 	}
 	
+	after = {
+		set_country_flag = ab_sco_succession
+		if = {
+			limit = { ai = no }
+			select_current_missions = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+	}
+	
 	option = {
 		name = ab_scottish.2a
 		add_accepted_culture = highland_scottish
 		set_country_flag = kingdom_alba
+		clr_country_flag = kingdom_gaeldom
+		clr_country_flag = kingdom_scotland
+		set_country_flag = final_kingdom_alba
 		random_core_province = { 
 			spawn_rebels = {
 				type = pretender_rebels
@@ -104,10 +115,21 @@ country_event = {
 			kill_ruler = yes
 		}
 	}
+
+	after = {
+		set_country_flag = ab_sco_succession
+		if = {
+			limit = { ai = no }
+			select_current_missions = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+	}
 	
 	option = {
 		name = ab_scottish.3a
 		set_country_flag = kingdom_gaeldom
+		clr_country_flag = kingdom_alba
+		clr_country_flag = kingdom_scotland
+		set_country_flag = final_kingdom_gaeldom
 		change_tag = HSC
 		change_primary_culture = highland_scottish
 		set_capital = 4363
@@ -142,6 +164,15 @@ country_event = {
 			kill_ruler = yes
 		}
 	}
+
+	after = {
+		set_country_flag = ab_sco_succession
+		if = {
+			limit = { ai = no }
+			select_current_missions = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+		}
+		set_country_flag = final_kingdom_scotland
+	}
 	
 	option = {
 		name = ab_scottish.4a
@@ -158,7 +189,10 @@ country_event = {
 				size = 2
 			}
 		}
-		set_country_flag = kingdom_scotland
+		set_country_flag = kingdom_scotlandalbahigh
+		set_country_flag = final_kingdom_scotland
+		clr_country_flag = kingdom_alba
+		clr_country_flag = kingdom_gaeldom
 		swap_free_idea_group = yes
 		hidden_effect = {
 			swap_non_generic_missions = yes

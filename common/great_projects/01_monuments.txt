@@ -9848,26 +9848,42 @@ kaaba = {
 
 	#can our country use it?
 	can_use_modifiers_trigger = {
-		province_is_or_accepts_religion_group = {
-			religion_group = muslim
-		}
 		custom_trigger_tooltip = {
 			tooltip = ab_per_destroyed_monument
 			NOT = {
 				has_global_flag = per_destroyed_mecca
 			}
 		}
+		OR = {
+			province_is_or_accepts_religion_group = {
+				religion_group = muslim
+			}
+			owner = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_may_use_kaaba 
+					has_country_flag = BYZ_may_use_kaaba
+				}
+			}
+		}
 	}
 
 	#can our country upgrade it?
 	can_upgrade_trigger = {
-		province_is_or_accepts_religion_group = {
-			religion_group = muslim
-		}
 		custom_trigger_tooltip = {
 			tooltip = ab_per_destroyed_monument
 			NOT = {
 				has_global_flag = per_destroyed_mecca
+			}
+		}
+		OR = {
+			province_is_or_accepts_religion_group = {
+				religion_group = muslim
+			}
+			owner = {
+				custom_trigger_tooltip = {
+					tooltip = BYZ_may_use_kaaba 
+					has_country_flag = BYZ_may_use_kaaba
+				}
 			}
 		}
 	}
@@ -9930,7 +9946,31 @@ kaaba = {
 			prestige = 0.1
 			religious_unity = 0.1
 		}
-
+		conditional_modifier = {
+			tooltip_potential = {
+				owner = { tag = BYZ }
+			}
+			trigger = {
+				owner = {
+					custom_trigger_tooltip = {
+						tooltip = BYZ_may_use_kaaba 
+						has_country_flag = BYZ_may_use_kaaba
+					}
+				}
+			}
+			modifier = {
+				religious_unity = -0.05
+			}
+		}
+		#conditional_modifier = {
+		#	trigger = {
+		#		owner = { mission_completed = YEM_islamic_ambitions }
+		#	}
+		#	modifier = {
+		#		global_prov_trade_power_modifier = 0.025
+		#	}
+		#}
+		
 		#what effects happen when this tier is achieved
 		on_upgraded = {
 		}
@@ -9962,6 +10002,31 @@ kaaba = {
 			warscore_cost_vs_other_religion = -0.05
 		}
 
+		conditional_modifier = {
+			tooltip_potential = {
+				owner = { tag = BYZ }
+			}
+			trigger = {
+				owner = {
+					custom_trigger_tooltip = {
+						tooltip = BYZ_may_use_kaaba 
+						has_country_flag = BYZ_may_use_kaaba
+					}
+				}
+			}
+			modifier = {
+				religious_unity = -0.075
+				warscore_cost_vs_other_religion = 0.05
+			}
+		}
+		#conditional_modifier = {
+		#	trigger = {
+		#		owner = { mission_completed = YEM_islamic_ambitions }
+		#	}
+		#	modifier = {
+		#		global_prov_trade_power_modifier = 0.05
+		#	}
+		#}
 		#what effects happen when this tier is achieved
 		on_upgraded = {
 		}
@@ -9993,11 +10058,38 @@ kaaba = {
 			warscore_cost_vs_other_religion = -0.1
 		}
 
+		conditional_modifier = {
+			tooltip_potential = {
+				owner = { tag = BYZ }
+			}
+			trigger = {
+				owner = {
+					custom_trigger_tooltip = {
+						tooltip = BYZ_may_use_kaaba 
+						has_country_flag = BYZ_may_use_kaaba
+					}
+				}
+			}
+			modifier = {
+				religious_unity = -0.1
+				warscore_cost_vs_other_religion = 0.1
+			}
+		}
+		#conditional_modifier = {
+		#	trigger = {
+		#		owner = { mission_completed = YEM_islamic_ambitions }
+		#	}
+		#	modifier = {
+		#		global_prov_trade_power_modifier = 0.1
+		#	}
+		#}
+		
 		#what effects happen when this tier is achieved
 		on_upgraded = {
 		}
 	}
 }
+
 
 holy_city_jerusalem = {
 	# province it starts in

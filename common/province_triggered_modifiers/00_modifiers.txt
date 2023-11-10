@@ -1413,3 +1413,67 @@ eng_globe_theatre = {
 	idea_cost = -0.15
 	local_tax_modifier = 0.2
 }
+
+BYZ_megalopolis_updater = {
+	potential = {
+		always = yes
+	}
+
+	hidden = yes
+	
+	trigger = {
+		if = {
+			limit = {
+				has_province_modifier = BYZ_megalopolis_modifier_1
+			}
+			development = 70
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = BYZ_megalopolis_modifier_2
+			}
+			OR = {
+				development = 75
+				NOT = { development = 70 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = BYZ_megalopolis_modifier_3
+			}
+			NOT = { development = 75 }
+		}
+		else = { }
+	}
+	
+	on_activation = {
+		remove_province_modifier = BYZ_megalopolis_modifier_1
+		remove_province_modifier = BYZ_megalopolis_modifier_2
+		remove_province_modifier = BYZ_megalopolis_modifier_3
+		
+		if = {
+			limit = {
+				development = 75
+			}
+			add_province_modifier = {
+				name = BYZ_megalopolis_modifier_3
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				development = 70
+			}
+			add_province_modifier = {
+				name = BYZ_megalopolis_modifier_2
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = BYZ_megalopolis_modifier_1
+				duration = -1
+			}
+		}
+	}
+}
