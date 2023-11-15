@@ -7160,6 +7160,10 @@ pyramid_of_cheops = {
 				culture_group = turko_semitic
 				province_is_or_accepts_culture = yes
 			}
+			AND = {
+				culture = roman
+				province_is_or_accepts_culture = yes
+			}
 		}
 	}
 
@@ -7186,6 +7190,10 @@ pyramid_of_cheops = {
 				culture_group = turko_semitic
 				province_is_or_accepts_culture = yes
 			}
+			AND = {
+				culture = roman
+				province_is_or_accepts_culture = yes
+			}
 		}
 	}
 
@@ -7200,6 +7208,10 @@ pyramid_of_cheops = {
 			}
 			AND = {
 				culture_group = turko_semitic
+				province_is_or_accepts_culture = yes
+			}
+			AND = {
+				culture = roman
 				province_is_or_accepts_culture = yes
 			}
 		}
@@ -7259,8 +7271,9 @@ pyramid_of_cheops = {
 
 		#what modifiers are added to the country when we have this project here on this tier
 		country_modifiers = {
-			advisor_cost = -0.05
-			church_loyalty_modifier = 0.05
+			yearly_government_power = 0.5
+			prestige_decay = -0.005
+			all_estate_loyalty_equilibrium = 0.05
 		}
 
 		#what effects happen when this tier is achieved
@@ -7288,10 +7301,10 @@ pyramid_of_cheops = {
 		}
 
 		#what modifiers are added to the country when we have this project here on this tier
-		country_modifiers = {
-			advisor_cost = -0.1
-			church_loyalty_modifier = 0.1
-			idea_cost = -0.05			
+		country_modifiers = {	
+			prestige_decay = -0.01
+			yearly_government_power = 0.5
+			all_estate_loyalty_equilibrium = 0.05	
 		}
 
 		#what effects happen when this tier is achieved
@@ -7320,9 +7333,10 @@ pyramid_of_cheops = {
 
 		#what modifiers are added to the country when we have this project here on this tier
 		country_modifiers = {
-			advisor_cost = -0.15
-			church_loyalty_modifier = 0.15
-			idea_cost = -0.05
+			yearly_government_power = 1
+			all_estate_loyalty_equilibrium = 0.05
+			prestige_decay = -0.01
+			no_stability_loss_on_monarch_death = yes
 		}
 
 		#what effects happen when this tier is achieved
@@ -16463,6 +16477,16 @@ white_house = {
 			OR = {
 				is_former_colonial_nation = yes
 				tag = USA
+				AND = {
+					NOT = { government = native }
+					is_subject = no
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
 			}			
 		}
 	}
@@ -16478,6 +16502,16 @@ white_house = {
 			OR = {
 				is_former_colonial_nation = yes
 				tag = USA
+				AND = {
+					NOT = { government = native }
+					is_subject = no
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
 			}			
 		}
 	}
@@ -16487,6 +16521,16 @@ white_house = {
 			OR = {
 				is_former_colonial_nation = yes
 				tag = USA
+				AND = {
+					NOT = { government = native }
+					is_subject = no
+					capital_scope = {
+						OR = {
+							continent = north_america
+							continent = south_america
+						}
+					}
+				}
 			}			
 		}
 	}
@@ -19279,28 +19323,8 @@ narikala_fortress = {
 	on_destroyed = {
 	}
 	can_use_modifiers_trigger = {
-		AND = {
-			custom_trigger_tooltip = {
-				tooltip = is_georgian_culture_tt
-				OR = {
-					#culture = georgian_new
-					culture = georgian
-				}
-			}
-			province_is_or_accepts_culture = yes
-		}
 	}
 	can_upgrade_trigger = {
-		AND = {
-			custom_trigger_tooltip = {
-				tooltip = is_georgian_culture_tt
-				OR = {
-					#culture = georgian_new
-					culture = georgian
-				}
-			}
-			province_is_or_accepts_culture = yes
-		}
 	}
 	keep_trigger = {
 		

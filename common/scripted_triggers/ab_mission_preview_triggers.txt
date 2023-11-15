@@ -4,7 +4,7 @@
 ab_not_blocked_from_preview_by_another_branch = {
 	if = {
 		limit = {
-			has_preview_mission_flag = yes
+			ab_has_preview_mission_flag = yes
 		}
 		custom_trigger_tooltip = {
 			tooltip = ab_finish_picking_the_current_preview_tt
@@ -20,7 +20,7 @@ ab_not_blocked_from_preview_by_another_branch = {
 ab_can_confirm_branch = {
 	if = {
 		limit = {
-			can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+			ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
 		}
 		custom_trigger_tooltip = {
 			tooltip = AB_SCO_ALBA_GAELDOM_SCOTLAND_cannot_confirm_tt
@@ -30,4 +30,298 @@ ab_can_confirm_branch = {
 	else = {
 		hidden_trigger = { always = yes }
 	}
+}
+
+ab_has_branching_missions = {
+	# AB [[[
+	OR = {
+		# Lithuania mini update
+		## Lithuania
+		has_mission = lit_future
+		## Seljuks
+		has_mission = seljuk_caliphate # Legalism/Mysticism/Non-Muslim path
+		has_mission = seljuk_cities # Arab/Turan
+		## Golden Horde
+		has_country_flag = glh_unlocked_mission_tree # Tataria/Horde
+		has_country_flag = glh_can_convert # Golden Horde Faith Question
+		## Scotland
+		has_mission = succession_sco # Dunkeld Succession
+	}
+	# ]]]
+}
+
+ab_has_preview_mission_flag = {
+	check_variable = {
+		which = ab_can_preview_missions_var
+		value = 1
+	}
+}
+
+ab_can_preview_mission_of_key = {
+	has_country_flag = can_choose_$key$_branching_missions
+}
+ab_can_preview_missions = {
+	custom_trigger_tooltip = {
+		tooltip = preview_missions_decision_ct
+		OR = {
+			# AB [[[
+			## Lithuania
+			ab_can_preview_mission_of_key = { key = AB_LIT }
+			## Seljuks
+			ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM }
+			ab_can_preview_mission_of_key = { key = AB_SEL_ARAB_TURAN }
+			## Golden Horde
+			ab_can_preview_mission_of_key = { key = AB_GLH_TATARIA_HORDE }
+			ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+			## Alba/Gaeldom/Scotland
+			ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+			# ]]]
+		}
+	}
+}
+
+ab_not_in_mission_preview_mode = {
+	if = {
+		limit = {
+			check_variable = {
+				which = ab_can_preview_missions_var
+				value = 1
+			}
+			has_country_flag = can_choose_$key$_branching_missions
+		}
+		custom_trigger_tooltip = {
+			tooltip = BYZ_we_are_in_preview
+			always = no
+		}
+	}
+}
+
+ab_has_selected_a_branch = {
+	custom_trigger_tooltip = {
+		tooltip = ab_has_selected_a_branch_tt
+		OR = {
+			# AB [[[
+			AND = {
+				OR = {
+					has_country_flag = lithuania_pagan_path
+					has_country_flag = lithuania_orthodox_path
+					has_country_flag = lithuania_catholic_path
+				}
+				ab_can_preview_mission_of_key = { key = AB_LIT }
+			}
+			AND = {
+				OR = {
+					has_country_flag = tur_chose_legalism
+					has_country_flag = tur_chose_mysticism
+					has_country_flag = tur_non_muslim_path_flag
+				}
+				ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM }
+			}
+			AND = {
+				OR = {
+					has_country_flag = seljuk_arab
+					has_country_flag = seljuk_turan
+				}
+				ab_can_preview_mission_of_key = { key = AB_SEL_ARAB_TURAN }
+			}
+			AND = {
+				OR = {
+					has_country_flag = glh_european_tree
+					has_country_flag = glh_horde_tree
+				}
+				ab_can_preview_mission_of_key = { key = AB_GLH_TATARIA_HORDE }
+			}
+			AND = {
+				OR = {
+					has_country_flag = glh_picked_orthodox
+					has_country_flag = glh_picked_sunni
+					has_country_flag = glh_picked_buddhist
+					has_country_flag = glh_picked_tengri
+					has_country_flag = glh_picked_judaism
+					has_country_flag = glh_picked_nestorian
+				}
+				ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+			}
+			AND = {
+				OR = {
+					has_country_flag = kingdom_alba
+					has_country_flag = kingdom_gaeldom
+					has_country_flag = kingdom_scotland
+				}
+				ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+			}
+			# ]]]
+		}
+	}
+}
+
+ab_num_of_mission_branches_3 = {
+	# AB [[[
+	OR = {
+		ab_can_preview_mission_of_key = { key = AB_LIT }
+		# ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM }
+		ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+		ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+	}
+	# ]]]
+}
+
+ab_num_of_mission_branches_4 = {
+	OR = {
+		ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+	}
+}
+
+ab_num_of_mission_branches_5 = {
+	OR = {
+		ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+	}
+}
+ab_num_of_mission_branches_6 = {
+	OR = {
+		ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+	}
+}
+ab_num_of_mission_branches = {
+	ab_num_of_mission_branches_$value$ = yes
+}
+
+ab_currently_selected_branch_1 = {
+	OR = {
+		# AB [[[
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_LIT }
+			has_country_flag = lithuania_pagan_path
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM }
+			has_country_flag = tur_chose_legalism
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_SEL_ARAB_TURAN }
+			has_country_flag = seljuk_arab
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_GLH_TATARIA_HORDE }
+			has_country_flag = glh_european_tree
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+			has_country_flag = glh_picked_orthodox
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+			has_country_flag = kingdom_alba
+		}
+		# ]]]
+	}
+}
+ab_currently_selected_branch_2 = {
+	OR = {
+		# AB [[[
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_LIT }
+			has_country_flag = lithuania_orthodox_path
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM }
+			has_country_flag = tur_chose_mysticism
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_SEL_ARAB_TURAN }
+			has_country_flag = seljuk_turan
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_GLH_TATARIA_HORDE }
+			has_country_flag = glh_horde_tree
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+			has_country_flag = glh_picked_sunni
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+			has_country_flag = kingdom_gaeldom
+		}
+		# ]]]
+	}
+}
+ab_currently_selected_branch_3 = {
+	OR = {
+		# AB [[[
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_LIT }
+			has_country_flag = lithuania_catholic_path
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM }
+			has_country_flag = tur_non_muslim_path_flag
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+			has_country_flag = glh_picked_buddhist
+		}
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
+			has_country_flag = kingdom_scotland
+		}
+		# ]]]
+	}
+}
+ab_currently_selected_branch_4 = {
+	OR = {
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+			has_country_flag = glh_picked_tengri
+		}
+	}
+}
+ab_currently_selected_branch_5 = {
+	OR = {
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+			has_country_flag = glh_picked_judaism
+		}
+	}
+}
+
+ab_currently_selected_branch_6 = {
+	OR = {
+		AND = {
+			ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION }
+			has_country_flag = glh_picked_nestorian
+		}
+	}
+}
+
+ab_currently_selected_branch = {
+	ab_currently_selected_branch_$value$ = yes
+}
+
+ab_can_select_branch_1 = {
+	hidden_trigger = { always = yes }
+}
+ab_can_select_branch_2 = {
+	if = {
+		limit = { ab_can_preview_mission_of_key = { key = TEU_PRU } }
+		hre_size = 1
+	}
+	else = {
+		hidden_trigger = { always = yes }
+	}
+}
+ab_can_select_branch_3 = {
+	hidden_trigger = { always = yes }
+}
+ab_can_select_branch_4 = {
+	hidden_trigger = { always = yes }
+}
+ab_can_select_branch_5 = {
+	hidden_trigger = { always = yes }
+}
+ab_can_select_branch_6 = {
+	hidden_trigger = { always = yes }
+}
+ab_can_select_branch = {
+	ab_can_select_branch_$value$ = yes
 }
