@@ -1,12 +1,15 @@
 ab_enable_branching_mission_review = {
+	[[ai_event_id]
 	if = {
 		limit = { ai = yes }
 		country_event = { id = $ai_event_id$ }
 	}
-	else = {
+	]
+	if = {
+		limit = { ai = no }
 		custom_tooltip = BYZ_unlock_branches_decision
 		hidden_effect = {
-			set_country_flag = can_choose_$key$_branching_missions
+			ab_enable_branching_mission_review_of_batch = { key = $key$ }
 			change_variable = {
 				which = ab_can_preview_missions_var
 				value = 1
@@ -18,7 +21,30 @@ ab_enable_branching_mission_review = {
 
 ab_select_current_missions = {
 	hidden_effect = {
-		clr_country_flag = can_choose_$key$_branching_missions
+		if = {
+			limit = {
+				has_country_flag = ab_can_choose_$key$_1_branching_missions
+				has_country_flag = ab_has_batch_1_active
+			}
+			clr_country_flag = ab_can_choose_$key$_1_branching_missions
+			clr_country_flag = ab_has_batch_1_active
+		}
+		if = {
+			limit = {
+				has_country_flag = ab_can_choose_$key$_2_branching_missions
+				has_country_flag = ab_has_batch_2_active
+			}
+			clr_country_flag = ab_can_choose_$key$_2_branching_missions
+			clr_country_flag = ab_has_batch_2_active
+		}
+		if = {
+			limit = {
+				has_country_flag = ab_can_choose_$key$_3_branching_missions
+				has_country_flag = ab_has_batch_3_active
+			}
+			clr_country_flag = ab_can_choose_$key$_3_branching_missions
+			clr_country_flag = ab_has_batch_3_active
+		}
 		change_variable = {
 			which = ab_can_preview_missions_var
 			value = -1
@@ -28,29 +54,60 @@ ab_select_current_missions = {
 }
 ab_select_current_branch = {
 	custom_tooltip = BYZ_end_preview
+	hidden_effect = { clr_country_flag = ab_has_batch_$batch$_active }
 	# AB [[[
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_LIT } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_LIT
+				batch = $batch$
+			}
+		}
 		ab_select_current_missions = { key = AB_LIT }
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM
+				batch = $batch$
+			}
+		}
 		ab_select_current_missions = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM }
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SEL_ARAB_TURAN } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SEL_ARAB_TURAN
+				batch = $batch$
+			}
+		}
 		ab_select_current_missions = { key = AB_SEL_ARAB_TURAN }
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_TATARIA_HORDE } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_TATARIA_HORDE
+				batch = $batch$
+			}
+		}
 		ab_select_current_missions = { key = AB_GLH_TATARIA_HORDE }
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_FAITH_QUESTION
+				batch = $batch$
+			}
+		}
 		ab_select_current_missions = { key = AB_GLH_FAITH_QUESTION }
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SCO_ALBA_GAELDOM_SCOTLAND
+				batch = $batch$
+			}
+		}
 		ab_select_current_missions = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
 	}
 	# ]]]
@@ -59,29 +116,54 @@ ab_select_current_branch = {
 ab_clear_all_branching_flags = {
 	# AB [[[
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_LIT } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_LIT
+				batch = $batch$
+			}
+		}
 		clr_country_flag = lithuania_pagan_path
 		clr_country_flag = lithuania_catholic_path
 		clr_country_flag = lithuania_orthodox_path
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM
+				batch = $batch$
+			}
+		}
 		clr_country_flag = tur_chose_legalism
 		clr_country_flag = tur_chose_mysticism
 		clr_country_flag = tur_non_muslim_path_flag
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SEL_ARAB_TURAN } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SEL_ARAB_TURAN
+				batch = $batch$
+			}
+		}
 		clr_country_flag = seljuk_arab
 		clr_country_flag = seljuk_turan
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_TATARIA_HORDE } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_TATARIA_HORDE
+				batch = $batch$
+			}
+		}
 		clr_country_flag = glh_european_tree
 		clr_country_flag = glh_horde_tree
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_FAITH_QUESTION
+				batch = $batch$
+			}
+		}
 		clr_country_flag = glh_picked_orthodox
 		clr_country_flag = glh_picked_sunni
 		clr_country_flag = glh_picked_buddhist
@@ -90,7 +172,12 @@ ab_clear_all_branching_flags = {
 		clr_country_flag = glh_picked_nestorian
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SCO_ALBA_GAELDOM_SCOTLAND
+				batch = $batch$
+			}
+		}
 		clr_country_flag = kingdom_alba
 		clr_country_flag = kingdom_gaeldom
 		clr_country_flag = kingdom_scotland
@@ -101,32 +188,62 @@ ab_clear_all_branching_flags = {
 ab_preview_mission_branch_1 = {
 	# AB [[[
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_LIT } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_LIT
+				batch = $batch$
+			}
+		}
 		set_country_flag = lithuania_pagan_path
 		custom_tooltip = lithuania_pagan_path_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM
+				batch = $batch$
+			}
+		}
 		set_country_flag = tur_chose_legalism
 		custom_tooltip = tur_chose_legalism_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SEL_ARAB_TURAN } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SEL_ARAB_TURAN
+				batch = $batch$
+			}
+		}
 		set_country_flag = seljuk_arab
 		custom_tooltip = ab_seljuk_arab_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_TATARIA_HORDE } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_TATARIA_HORDE
+				batch = $batch$
+			}
+		}
 		set_country_flag = glh_european_tree
 		custom_tooltip = glh_european_tree_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_FAITH_QUESTION
+				batch = $batch$
+			}
+		}
 		set_country_flag = glh_picked_orthodox
 		custom_tooltip = glh_picked_orthodox_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SCO_ALBA_GAELDOM_SCOTLAND
+				batch = $batch$
+			}
+		}
 		set_country_flag = kingdom_alba
 		custom_tooltip = kingdom_alba_preview_tt
 	}
@@ -136,32 +253,62 @@ ab_preview_mission_branch_1 = {
 ab_preview_mission_branch_2 = {
 	# AB [[[
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_LIT } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_LIT
+				batch = $batch$
+			}
+		}
 		set_country_flag = lithuania_orthodox_path
 		custom_tooltip = lithuania_orthodox_path_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM
+				batch = $batch$
+			}
+		}
 		set_country_flag = tur_chose_mysticism
 		custom_tooltip = tur_chose_mysticism_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SEL_ARAB_TURAN } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SEL_ARAB_TURAN
+				batch = $batch$
+			}
+		}
 		set_country_flag = seljuk_turan
 		custom_tooltip = ab_seljuk_turan_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_TATARIA_HORDE } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_TATARIA_HORDE
+				batch = $batch$
+			}
+		}
 		set_country_flag = glh_horde_tree
 		custom_tooltip = glh_horde_tree_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_FAITH_QUESTION
+				batch = $batch$
+			}
+		}
 		set_country_flag = glh_picked_sunni
 		custom_tooltip = glh_picked_sunni_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SCO_ALBA_GAELDOM_SCOTLAND
+				batch = $batch$
+			}
+		}
 		set_country_flag = kingdom_gaeldom
 		custom_tooltip = kingdom_gaeldom_preview_tt
 	}
@@ -170,22 +317,42 @@ ab_preview_mission_branch_2 = {
 ab_preview_mission_branch_3 = {
 	# AB [[[
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_LIT } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_LIT
+				batch = $batch$
+			}
+		}
 		set_country_flag = lithuania_catholic_path
 		custom_tooltip = lithuania_catholic_path_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SEL_LEGALISM_MYSTICISM_NOTMUSLIM
+				batch = $batch$
+			}
+		}
 		set_country_flag = tur_non_muslim_path_flag
 		custom_tooltip = tur_non_muslim_path_flag_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_FAITH_QUESTION
+				batch = $batch$
+			}
+		}
 		set_country_flag = glh_picked_buddhist
 		custom_tooltip = glh_picked_buddhist_preview_tt
 	}
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_SCO_ALBA_GAELDOM_SCOTLAND
+				batch = $batch$
+			}
+		}
 		set_country_flag = kingdom_scotland
 		custom_tooltip = kingdom_scotland_preview_tt
 	}
@@ -193,29 +360,64 @@ ab_preview_mission_branch_3 = {
 }
 ab_preview_mission_branch_4 = {
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_FAITH_QUESTION
+				batch = $batch$
+			}
+		}
 		set_country_flag = glh_picked_tengri
 		custom_tooltip = glh_picked_tengri_preview_tt
 	}
 }
 ab_preview_mission_branch_5 = {
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_FAITH_QUESTION
+				batch = $batch$
+			}
+		}
 		set_country_flag = glh_picked_judaism
 		custom_tooltip = glh_picked_judaism_preview_tt
 	}
 }
 ab_preview_mission_branch_6 = {
 	if = {
-		limit = { ab_can_preview_mission_of_key = { key = AB_GLH_FAITH_QUESTION } }
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_GLH_FAITH_QUESTION
+				batch = $batch$
+			}
+		}
 		set_country_flag = glh_picked_nestorian
 		custom_tooltip = glh_picked_nestorian_preview_tt
 	}
 }
 ab_preview_mission_branch = {
-	ab_clear_all_branching_flags = yes
-	ab_preview_mission_branch_$branch$ = yes
+	ab_clear_all_branching_flags = { batch = $batch$ }
+	ab_preview_mission_branch_$branch$ = { batch = $batch$ }
 	hidden_effect = { swap_non_generic_missions = yes }
+}
+ab_enable_branching_mission_review_of_batch = {
+	if = {
+		limit = { not = { has_country_flag = ab_has_batch_1_active } }
+		set_country_flag = ab_has_batch_1_active
+		set_country_flag = ab_can_choose_$key$_1_branching_missions
+	}
+	else_if = {
+		limit = { not = { has_country_flag = ab_has_batch_2_active } }
+		set_country_flag = ab_has_batch_2_active
+		set_country_flag = ab_can_choose_$key$_2_branching_missions
+	}
+	else_if = {
+		limit = { not = { has_country_flag = ab_has_batch_3_active } }
+		set_country_flag = ab_has_batch_3_active
+		set_country_flag = ab_can_choose_$key$_3_branching_missions
+	}
+	else = {
+		log = "Too many mission batches active at the same time. Make sure that any given moment only 3 batches are active to preview"
+	}
 }
 
 ab_select_current_missions_AB_LIT = {
