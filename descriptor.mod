@@ -13,6 +13,6 @@ tags={
 name="Ante Bellum"
 replace_path="common/bookmarks"
 replace_path="gfx/loadingscreens"
-supported_version="1.36.1"
+supported_version="1.36.2"
 path="C:/Users/pavel/Documents/Paradox Interactive/Europa Universalis IV/mod/paganfury"
 remote_file_id="1908400374"
