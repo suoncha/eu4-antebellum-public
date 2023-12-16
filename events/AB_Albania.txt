@@ -81,3 +81,514 @@ country_event = {
 		}
 	}
 }
+
+#Illyrian Culture
+province_event = {
+	id = ab_albania.4
+	title = ab_albania.4.t
+	desc = ab_albania.4.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+		modifier = {
+			factor = 0.5
+			owner = { mission_completed = alb_balkan_dominate }
+		}
+	}
+	
+	trigger = {
+		owner = {
+			mission_completed = alb_progenitors
+		}
+		region = balkan_region
+		any_neighbor_province = {
+			culture = Illyrian
+		}
+	}
+	
+	option = {
+		name = ab_albania.4.a
+		change_culture = Illyrian
+	}
+}
+
+#ALB: Send an Offer to buy Durazzo from Venice
+country_event = {
+	id = ab_albania.5
+	title = ab_albania.5.t
+	desc = ab_albania.5.d
+	picture = BANKRUPTCY_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_albania.5.a
+		ai_chance = { factor = 100 }
+		custom_tooltip = ALB_OFFER_TO_BUY_DURAZZO
+		set_country_flag = alb_offer_75
+		hidden_effect = {
+			VEN = { country_event = { id = ab_albania.6 } }
+		}
+	}
+	
+	option = {
+		name = ab_albania.5.c
+		ai_chance = { factor = 100 }
+		custom_tooltip = ALB_OFFER_TO_BUY_DURAZZO_150
+		set_country_flag = alb_offer_150
+		hidden_effect = {
+			VEN = { country_event = { id = ab_albania.6 } }
+		}
+	}
+	
+	option = {
+		name = ab_albania.5.d
+		ai_chance = { factor = 100 }
+		custom_tooltip = ALB_OFFER_TO_BUY_DURAZZO_300
+		set_country_flag = alb_offer_300
+		hidden_effect = {
+			VEN = { country_event = { id = ab_albania.6 } }
+		}
+	}
+	
+	option = {
+		name = ab_albania.5.b
+		custom_tooltip = ALB_OFFER_TO_BUY_DURAZZO_LAST_CHANCE
+		ai_chance = { factor = 0 }
+	}
+}
+
+#VEN: accept or refuse Albanian offer to sell Durazzo
+country_event = {
+	id = ab_albania.6
+	title = ab_albania.6.t
+	desc = ab_albania.6.d
+	picture = BANKRUPTCY_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_albania.6.a
+		ai_chance = {
+			factor = 10 
+			modifier = {
+				factor = 2
+				FROM = {
+					has_country_flag = alb_offer_75
+				}
+			}
+			modifier = {
+				factor = 5
+				FROM = {
+					has_country_flag = alb_offer_150
+				}
+			}
+			modifier = {
+				factor = 10
+				FROM = {
+					has_country_flag = alb_offer_300
+				}
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_country_flag = alb_offer_75
+				}
+			}
+			add_treasury = 75
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					has_country_flag = alb_offer_150
+				}
+			}
+			add_treasury = 150
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					has_country_flag = alb_offer_300
+				}
+			}
+			add_treasury = 300
+		}
+		custom_tooltip = ALB_CEDE_DURAZZO_TO_ALBANIA
+		hidden_effect = {
+			4174 = {
+				remove_core = ROOT
+			}
+			ALB = {
+				country_event = {
+					id = ab_albania.7
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_albania.6.b
+		ai_chance = {
+			factor = 10 
+			modifier = {
+				factor = 10
+				FROM = {
+					has_country_flag = alb_offer_75
+				}
+			}
+			modifier = {
+				factor = 5
+				FROM = {
+					has_country_flag = alb_offer_150
+				}
+			}
+			modifier = {
+				factor = 2
+				FROM = {
+					has_country_flag = alb_offer_300
+				}
+			}
+		}
+		hidden_effect = {
+			ALB = {
+				country_event = {
+					id = ab_albania.8
+				}
+			}
+		}
+	}
+}
+
+#ALB: Venice accepted to sell Durazzo
+country_event = {
+	id = ab_albania.7
+	title = ab_albania.7.t
+	desc = ab_albania.7.d
+	picture = BANKRUPTCY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_albania.7.a
+		if = {
+			limit = {
+				ROOT = {
+					has_country_flag = alb_offer_75
+				}
+			}
+			add_treasury = -75
+		}
+		else_if = {
+			limit = {
+				ROOT = {
+					has_country_flag = alb_offer_150
+				}
+			}
+			add_treasury = -150
+		}
+		else_if = {
+			limit = {
+				ROOT = {
+					has_country_flag = alb_offer_300
+				}
+			}
+			add_treasury = -300
+		}
+		hidden_effect = {
+			4174 = {
+				cede_province = ALB
+				add_core = ALB
+			}
+		}
+	}
+}
+
+#ALB: Venice refused to sell Durazzo
+country_event = {
+	id = ab_albania.8
+	title = ab_albania.8.t
+	desc = ab_albania.8.d
+	picture = BANKRUPTCY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_albania.8.a
+	}
+}
+
+#Bnraching Missions
+country_event = {
+	id = ab_albania.9
+	title = ab_albania.9.t
+	desc = ab_albania.9.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_albania.9.a
+		ai_chance = {
+			factor = 50
+		}
+		add_country_modifier = {
+			name = alb_revival
+			duration = -1
+		}
+		hidden_effect = {
+			set_country_flag = alb_illyrian_path
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_albania.9.b
+		ai_chance = {
+			factor = 50
+		}
+		hidden_effect = {
+			set_country_flag = alb_latin_path
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Albanian Coup
+country_event = {
+	id = ab_albania.10
+	title = ab_albania.10.t
+	desc = ab_albania.10.d
+	picture = SWORD_OF_OSMAN_eventPicture
+	
+	major = yes
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BUL
+		owns = 4175
+		owns = 4750
+		owns = 143
+		4175 = {
+			controlled_by = BUL
+		}
+		4750 = {
+			controlled_by = BUL
+		}
+		143 = {
+			controlled_by = BUL
+		}
+		NOT = {
+			exists = ALB
+		}
+		ai = no
+	}
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	option = {
+		name = ab_albania.10.a
+		ai_chance = { factor = 100 }
+		151 = {
+			spawn_rebels = {
+				type = nationalist_rebels
+				size = 2
+				friend = ALB
+			}
+		}
+	}
+	
+	option = {
+		name = ab_albania.10.b
+		ai_chance = { factor = 0 }
+		highlight = yes
+		custom_tooltip = ALB_REVOLT
+		hidden_effect = {
+			4175 = {
+				add_core = ALB
+			}
+			4750 = {
+				add_core = ALB
+			}
+			143 = {
+				add_core = ALB
+			}
+			release = ALB
+			ALB = {
+				add_legitimacy = 100
+				add_manpower = 10
+				add_sailors = 600
+				add_prestige = 30
+				add_treasury = 150
+				add_adm_power = 30
+				add_dip_power = 40
+				add_mil_power = 30
+				create_general = { tradition = 35 }
+			}
+			ALB = {
+				capital_scope = {
+					build_to_forcelimit = {
+						infantry = 0.7
+						cavalry = 0.3
+					}
+				}
+				random_owned_province = {
+					limit = {
+						has_port = yes
+					}
+					build_to_forcelimit = {
+						galley = 0.7
+						light_ship = 0.2
+						transport = 0.1
+					}
+				}
+			}
+			ALB = {
+				add_government_reform = league_of_lezhe_reform
+			}
+			switch_tag = ALB
+		}
+		hidden_effect = {
+			BUL = {
+				declare_war_with_cb = {
+					who = ALB
+					casus_belli = cb_core
+					war_goal_province = 4175
+				}
+			}
+		}
+	}	
+}
+
+#Illyria Reborn
+country_event = {
+	id = ab_albania.11
+	title = ab_albania.11.t
+	desc = ab_albania.11.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_albania.11.a
+		override_country_name = ILLYRIA_ALB
+		set_country_flag = albania_illyrian_ideas
+		set_global_flag = albania_formed_illyria
+		custom_tooltip = ALB_IDEA_EMPOWER
+		hidden_effect = {
+			swap_free_idea_group = yes
+		}
+		add_country_modifier = {
+			name = alb_rebirth_illyria
+			duration = -1
+		}
+	}
+}
+
+#Heirs of the Romans
+country_event = {
+	id = ab_albania.12
+	title = ab_albania.12.t
+	desc = ab_albania.12.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_albania.12.a
+		change_monarch_points_or_power = {
+			power = mil
+			points = 2
+		}
+		add_country_modifier = {
+			name = alb_heirs
+			duration = -1
+		}
+	}
+}
+
+#The League of Lezhe
+country_event = {
+	id = ab_albania.13
+	title = ab_albania.13.t
+	desc = ab_albania.13.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_albania.13.a
+		define_ruler = {
+			name = "Stanisha I"
+			dynasty = "Kastrioti"
+			adm = 3
+			dip = 2
+			mil = 5
+			age = 35
+			claim = 95
+		}
+		add_country_modifier = {
+			name = alb_league_kastrioti
+			duration = 5475
+		}
+	}
+	
+	option = {
+		name = ab_albania.13.b
+		define_ruler = {
+			name = "Lekë I"
+			dynasty = "Zaharia"
+			adm = 4
+			dip = 4
+			mil = 2
+			age = 35
+			claim = 95
+		}
+		add_country_modifier = {
+			name = alb_league_zaharia
+			duration = 5475
+		}
+	}
+	
+	option = {
+		name = ab_albania.13.c
+		define_ruler = {
+			name = "Tanush I"
+			dynasty = "Thopia"
+			adm = 2
+			dip = 6
+			mil = 2
+			age = 35
+			claim = 95
+		}
+		add_country_modifier = {
+			name = alb_league_thopia
+			duration = 5475
+		}
+	}
+	
+	option = {
+		name = ab_albania.13.de
+		define_ruler = {
+			name = "Moisa I"
+			dynasty = "Arianiti"
+			adm = 5
+			dip = 3
+			mil = 4
+			age = 35
+			claim = 95
+		}
+		add_country_modifier = {
+			name = alb_league_arianiti
+			duration = 5475
+		}
+	}
+}

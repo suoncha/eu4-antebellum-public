@@ -18,7 +18,6 @@ ab_enable_branching_mission_review = {
 	}
 }
 
-
 ab_select_current_missions = {
 	hidden_effect = {
 		if = {
@@ -110,6 +109,15 @@ ab_select_current_branch = {
 		}
 		ab_select_current_missions = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
 	}
+	if = {
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_ALB 
+				batch = $batch$
+			} 
+		}
+		ab_select_current_missions = { key = AB_ALB }
+	}
 	# ]]]
 }
 
@@ -182,6 +190,16 @@ ab_clear_all_branching_flags = {
 		clr_country_flag = kingdom_gaeldom
 		clr_country_flag = kingdom_scotland
 	}
+	if = {
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_ALB
+				batch = $batch$
+			}
+		}
+		clr_country_flag = alb_illyrian_path
+		clr_country_flag = alb_latin_path
+	}
 	# ]]]
 }
 
@@ -247,6 +265,17 @@ ab_preview_mission_branch_1 = {
 		set_country_flag = kingdom_alba
 		custom_tooltip = kingdom_alba_preview_tt
 	}
+	# Albania 100k
+	if = {
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_ALB
+				batch = $batch$
+			}
+		}
+		set_country_flag = alb_illyrian_path
+		custom_tooltip = alb_illyrian_path_preview_tt
+	}
 	# ]]]
 }
 
@@ -311,6 +340,17 @@ ab_preview_mission_branch_2 = {
 		}
 		set_country_flag = kingdom_gaeldom
 		custom_tooltip = kingdom_gaeldom_preview_tt
+	}
+	# Albania 100k
+	if = {
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_ALB
+				batch = $batch$
+			}
+		}
+		set_country_flag = alb_latin_path
+		custom_tooltip = alb_latin_path_preview_tt
 	}
 	# ]]]
 }
@@ -644,3 +684,24 @@ ab_select_current_missions_AB_GLH_FAITH_QUESTION = {
 }
 
 ab_select_current_missions_AB_SCO_ALBA_GAELDOM_SCOTLAND = {}
+ab_select_current_missions_AB_ALB = {
+	if = {
+		limit = {
+			has_country_flag = alb_illyrian_path
+		}
+		add_country_modifier = {
+			name = alb_revival
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = {
+			has_country_flag = alb_latin_path
+		}
+		change_religion = catholic
+		add_country_modifier = {
+			name = alb_champion
+			duration = -1
+		}
+	}
+}

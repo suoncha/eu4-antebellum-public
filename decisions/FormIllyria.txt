@@ -13,7 +13,12 @@ country_decisions = {
 			NOT = { exists = ILR }
 			NOT = { tag = PAP }
 			NOT = { tag = HLR }
-			culture_group = south_slavic
+			NOT = { tag = ALB } # Have their own rename
+			NOT = { has_global_flag = albania_formed_illyria }
+			OR = {
+				culture_group = south_slavic
+				primary_culture = sclavinian
+			}
 			OR = {
 				ai = no
 				AND = {
@@ -69,7 +74,6 @@ country_decisions = {
 		effect = {
 			add_prestige = 25
 			change_tag = ILR
-			override_country_name = ILR
 			if = {
 				limit = {
 					has_custom_ideas = no
@@ -86,6 +90,14 @@ country_decisions = {
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = renamed_sclavinia
+					}
+					clr_country_flag = renamed_sclavinia
+				}
 			}
 		}
 		ai_will_do = {

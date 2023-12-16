@@ -368,6 +368,21 @@ ab_on_province_culture_changed_effect = {
 			remove_province_modifier = blood_before_faith_mod
 		}
 	}
+	if = {
+		limit = {
+			owner = {
+				mission_completed = alb_progenitors
+			}
+			has_owner_culture = yes
+			NOT = {
+				has_province_flag = alb_converted_bonus
+			}
+		}
+		add_base_tax = 1
+		add_base_manpower = 1
+		add_base_production = 1
+		set_province_flag = alb_converted_bonus
+	}
 }
 
 # Runs when a province is religion converted
@@ -583,6 +598,14 @@ ab_on_culture_demoted_effect = {
 			}
 		}
 	}
+	
+	if = {
+		limit = {
+			has_country_modifier = ser_greek_union
+			NOT = { accepted_culture = greek }
+		}
+		remove_country_modifier = ser_greek_union
+	}
 }
 
 ab_on_alliance_created_effect = {
@@ -736,6 +759,17 @@ ab_on_battle_lost_country_effect = {
 			}
 		}
 		set_country_flag = lat_hasnt_lost_battle
+	}
+	if = {
+		limit = {
+			FROM = {
+				mission_completed = ser_hajduks
+			}
+			owned_by = FROM
+		}
+		FROM = {
+			add_army_tradition = 0.25
+		}
 	}
 }
 
@@ -1246,7 +1280,6 @@ ab_on_admiral_recruited_effect = {
 		}
 		add_navy_tradition = 1
 	}
-
 }
 
 # Runs when a country switches religion
@@ -2060,6 +2093,26 @@ ab_on_concentrate_development_effect = {
 					add_base_manpower = 2
 				}
 			} 
+		}
+	}
+}
+
+ab_on_centralized_state_effect = {
+	if = {
+		limit = {
+			owner = { 
+				has_country_modifier = cro_strengthen_the_government
+			}
+		}
+		area = {
+			limit = {
+				owned_by = ROOT
+			}
+			random_list = {
+				1 = { add_base_tax = 1 }
+				1 = { add_base_production = 1 }
+				1 = { add_base_manpower = 1 }
+			}
 		}
 	}
 }
