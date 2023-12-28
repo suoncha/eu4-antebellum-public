@@ -147,11 +147,26 @@ country_decisions = {
 				duration = 7300
 			}
 			hidden_effect = {
-				complete_mission = byzantium_traitors
-				complete_mission = byzantium_economy
-				complete_mission = byzantium_imperial_army
-				complete_mission = byzantium_court
-				complete_mission = byzantium_crisis
+				if = {
+					limit = { has_mission = byzantium_traitors }
+					complete_mission = byzantium_traitors
+				}
+				if = {
+					limit = { has_mission = byzantium_economy }
+					complete_mission = byzantium_economy
+				}
+				if = {
+					limit = { has_mission = byzantium_imperial_army }
+					complete_mission = byzantium_imperial_army
+				}
+				if = {
+					limit = { has_mission = byzantium_court }
+					complete_mission = byzantium_court
+				}
+				if = {
+					limit = { has_mission = byzantium_crisis }
+					complete_mission = byzantium_crisis
+				}
 			}
 			add_prestige = 10
 			BYZ = {
@@ -180,7 +195,8 @@ country_decisions = {
 			}
 			if = {
 				limit = { has_not_locked_first_tier_reform = yes }
-				add_government_reform = byzantine_autocracy_reform
+				#add_government_reform = byzantine_autocracy_reform
+				add_government_reform = imperial_autocracy
 			}
 			set_government_rank = 3
 			if = {

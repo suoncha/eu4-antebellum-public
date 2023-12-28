@@ -731,11 +731,9 @@ AB_Khiva_Missions_3 = {
         trigger = {
             OR = {
                 calc_true_if = { 
-                    all_country = {
-                        custom_trigger_tooltip = { 
-                            tooltip = AB_MNK_JOINED_REBELLION_TT
-                            has_country_flag = ab_mnk_will_join_rebellion
-                        }
+                    desc = AB_MNK_JOINED_REBELLION_TT
+                    all_known_country = {
+                        has_country_flag = ab_mnk_will_join_rebellion
                     }
                     amount = 4
                 }
@@ -770,11 +768,20 @@ AB_Khiva_Missions_3 = {
             hidden_effect = {
                 if = {
                     limit = {
-                        num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-                            region = mongolia_region
-                            value = 15
+                        calc_true_if = { 
+                            all_known_country = {
+                                has_country_flag = ab_mnk_will_join_rebellion
+                            }
+                            amount = 4
                         }
                     }
+                    add_casus_belli = {
+                        target = YUA
+                        type = cb_liberate_oirat
+                        months = -1
+                    }
+                }
+                else = {
                     define_advisor = {
                         type = dragoon
                         skill = 3
@@ -783,13 +790,6 @@ AB_Khiva_Missions_3 = {
                     }
                     add_mil_power = 100
                     add_army_tradition = 10
-                }
-                else = {
-                    add_casus_belli = {
-                        target = YUA
-                        type = cb_liberate_oirat
-                        months = -1
-                    }
                 }
             }
         }
