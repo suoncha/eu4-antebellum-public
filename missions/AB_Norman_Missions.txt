@@ -329,32 +329,33 @@ ab_nengland_first = {
 				limit = {
 					religion = catholic
 				}
-				custom_tooltip = NRM_CATHOLIC
-				tooltip = {
-					add_papal_influence = 10
-					add_country_modifier = {
-						name = nrm_reinforce
-						duration = 9125
-					}
+				custom_tooltip = YES_NRM_CATHOLIC
+			}
+			else = {
+				custom_tooltip = NO_NRM_CATHOLIC
+			}
+			tooltip = {
+				add_papal_influence = 10
+				add_country_modifier = {
+					name = nrm_reinforce
+					duration = 9125
 				}
 			}
-			else_if = {
+			if = {
 				limit = {
-					OR = {
-						religion = hussite
-						religion = anglican
-						religion = protestant
-						religion = reformed
-					}
+					NOT = { religion = catholic }
 				}
-				custom_tooltip = NRM_PROTESTANT
-				tooltip = {
-					add_church_power = 25
-					add_fervor = 25
-					add_country_modifier = {
-						name = nrm_independent_church
-						duration = 9125
-					}
+				custom_tooltip = YES_NRM_PROTESTANT
+			}
+			else = {
+				custom_tooltip = NO_NRM_PROTESTANT
+			}
+			tooltip = {
+				add_church_power = 25
+				add_fervor = 25
+				add_country_modifier = {
+					name = nrm_independent_church
+					duration = 9125
 				}
 			}
 			hidden_effect = {
@@ -1707,24 +1708,10 @@ ab_nengland_third = {
 		}
 	
 		trigger = {
-			OR = {
-				236 = {
-					has_great_project = {
-						type = tower_of_london
-						tier = 1
-					}
-				}
-				236 = {
-					has_great_project = {
-						type = tower_of_london
-						tier = 2
-					}
-				}
-				236 = {
-					has_great_project = {
-						type = tower_of_london
-						tier = 3
-					}
+			236 = {
+				has_great_project = {
+					type = tower_of_london
+					tier = 1
 				}
 			}
 		}
