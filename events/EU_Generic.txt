@@ -1,0 +1,243 @@
+namespace = eu_generic
+
+country_event = {
+	id = eu_generic.1
+	title = eu_generic.1.t
+	desc = eu_generic.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = "eu_generic.1.a"
+		add_permanent_power_projection = {
+			type = 25_permanent_power_projection
+			amount = 25
+		}
+		add_country_modifier = {
+			name = eu_imperial_glory
+			duration = 18250
+		}
+		custom_tooltip = CLAIM_NEIGHBOUR_REGION
+		hidden_effect = {
+			every_owned_province = {
+				every_neighbor_province = {
+					region = {
+						limit = {
+							NOT = { owned_by = ROOT }
+							NOT = { is_permanent_claim = ROOT    }
+							NOT = { is_core = ROOT    }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+}
+
+country_event = {
+	id = eu_generic.2
+	title = eu_generic.2.t
+	desc = eu_generic.2.d
+	picture = CITY_VIEW_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "eu_generic.1.a"
+		capital_scope = {
+			change_trade_goods = cloth
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 100
+				capital_scope = {
+					OR = {
+						trade_goods = livestock
+						trade_goods = grain
+						trade_goods = fish
+						trade_goods = slaves
+						trade_goods = salt
+						trade_goods = wool
+						trade_goods = naval_supplies
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "eu_generic.1.b"
+		capital_scope = {
+			change_trade_goods = copper
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+	
+	option = {
+		name = "eu_generic.1.c"
+		capital_scope = {
+			change_trade_goods = iron
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+	
+	option = {
+		name = "eu_generic.1.de"
+		capital_scope = {
+			change_trade_goods = glass
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+	
+	option = {
+		name = "eu_generic.1.e"
+		capital_scope = {
+			change_trade_goods = fur
+		}
+		ai_chance = {
+			factor = 0
+		}
+	}
+	
+	option = {
+		name = "eu_generic.1.f"
+		capital_scope = {
+			add_base_production = 3
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				capital_scope = {
+					OR = {
+						trade_goods = livestock
+						trade_goods = grain
+						trade_goods = fish
+						trade_goods = slaves
+						trade_goods = salt
+						trade_goods = wool
+						trade_goods = naval_supplies
+					}
+				}
+			}
+			modifier = {
+				factor = 100
+				capital_scope = {
+					NOT = {
+						OR = {
+							trade_goods = livestock
+							trade_goods = grain
+							trade_goods = fish
+							trade_goods = slaves
+							trade_goods = salt
+							trade_goods = wool
+							trade_goods = naval_supplies
+						}
+					}
+				}
+			}
+		}
+	}	
+}
+
+country_event = {
+	id = eu_generic.3
+	title = eu_generic.3.t
+	desc = eu_generic.3.d
+	picture = PAINTER_ARTIST_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = "eu_generic.3.a"
+		capital_scope = {
+			add_institution_embracement = {
+				which = renaissance
+				value = 25
+			}
+		}
+		add_country_modifier = {
+			name = eu_embraced_renaissance
+			duration = 5475
+		}
+	}
+	
+}
+
+country_event = {
+	id = eu_generic.4
+	title = eu_generic.4.t
+	desc = eu_generic.4.d
+	picture = PRINTING_PRESS_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = "eu_generic.4.a"
+		change_government_reform_progress = 100
+		add_country_modifier = {
+			name = eu_printing_revolution
+			duration = 5475
+		}
+	}
+	
+}
+
+country_event = {
+	id = eu_generic.5
+	title = eu_generic.5.t
+	desc = eu_generic.5.d
+	picture = ENLIGHTENMENT_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = "eu_generic.5.a"
+		change_ruler_stat = {
+			type = adm
+			amount = 1
+		}
+		change_ruler_stat = {
+			type = dip
+			amount = 1
+		}
+		change_ruler_stat = {
+			type = mil
+			amount = 1
+		}
+		if = {
+			limit = {
+				has_dlc = "Mandate of Heaven"
+			}
+			add_country_modifier = {
+				name = eu_enlightened_rule
+				duration = -1
+			}
+		}
+		else = {
+			add_country_modifier = {
+				name = eu_enlightened_rule_dlcless
+				duration = -1
+			}
+		}
+	}
+	
+}

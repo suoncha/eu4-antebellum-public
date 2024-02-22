@@ -1,0 +1,140 @@
+on_battle_won_country = {
+	if = {
+		limit = {
+			has_country_modifier = gen_eur_defender
+			FROM = {
+				NOT = { religion = ROOT }
+			}
+		}
+		add_army_tradition = 0.25
+	}
+}
+
+on_expanded_infrastructure = {
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = expand_infrastructure_bonus_flag
+			}
+		}
+		random_list = {
+			1 = { add_base_tax = 1 }
+			1 = { add_base_production = 1 }
+			1 = { add_base_manpower = 1 }
+		}
+	}
+}
+
+on_war_won = {
+	if = {
+		limit = {
+			ROOT = {
+				mission_completed = eu_generic_a_grand_alliance
+			}
+			FROM = {
+				OR = {
+					is_rival = ROOT
+					is_enemy = ROOT
+				}
+			}
+		}
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 10
+		}
+	}
+}
+
+on_adm_development = {
+	if = {
+		limit = {
+			owner = {
+				has_country_modifier = eu_building_spree
+			}
+		}
+		random_list = {
+			10 = { add_base_tax = 1 } 
+			90 = {  } 
+		}
+	}
+}
+
+on_dip_development = {
+	if = {
+		limit = {
+			owner = {
+				has_country_modifier = eu_building_spree
+			}
+		}
+		random_list = {
+			10 = { add_base_production = 1 } 
+			90 = {  } 
+		}
+	}
+}
+
+on_mil_development = {
+	if = {
+		limit = {
+			owner = {
+				has_country_modifier = eu_building_spree
+			}
+		}
+		random_list = {
+			10 = { add_base_manpower = 1 } 
+			90 = {  } 
+		}
+	}
+}
+
+ab_on_admiral_recruited_effect = {
+	if = {
+		limit = {
+			has_country_flag = eu_admiral_navy_tradition
+		}
+		add_navy_tradition = 1
+	}
+}
+
+
+on_adm_tech_taken = { #ROOT - Country, executed after on_tech_taken!
+	if = {
+		limit = {
+			ROOT = {
+				ruler_total_stats = {
+					amount = 12
+				}
+				has_country_flag = eu_refund_mana_on_tech
+			}
+		}
+		add_adm_power = 50
+	}
+}
+
+on_dip_tech_taken = { #ROOT - Country, executed after on_tech_taken!
+	if = {
+		limit = {
+			ruler_total_stats = {
+				amount = 12
+			}
+			ROOT = {
+				has_country_flag = eu_refund_mana_on_tech
+			}
+		}
+		add_dip_power = 50
+	}
+}
+
+on_mil_tech_taken = { #ROOT - Country, executed after on_tech_taken!
+	if = {
+		limit = {
+			ruler_total_stats = {
+				amount = 12
+			}
+			ROOT = {
+				has_country_flag = eu_refund_mana_on_tech
+			}
+		}
+		add_mil_power = 50
+	}
+} 

@@ -1,0 +1,2148 @@
+eu_generic_missions_1 = { 
+	slot = 1
+	generic = yes 
+	potential = {
+		capital_scope = {
+			continent = europe
+		}
+	}
+	
+	eu_generic_conquer_new_states = {
+		icon = avoid_fragmentation
+		required_missions = { eu_generic_build_to_force_limit }
+		position = 2
+		
+		trigger = { grown_by_states = 5 }
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 10 }
+			add_country_modifier = {
+				name = eu_integrate_new_territories
+				duration = 7300
+			}
+			custom_tooltip = CLAIM_NEIGHBOUR_AREA
+			hidden_effect = {
+				every_owned_province = {
+					every_neighbor_province = {
+						area = {
+							limit = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_permanent_claim = ROOT    }
+								NOT = { is_core = ROOT    }
+							}
+							add_permanent_claim = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	eu_generic_efficient_administration = {
+		icon = mission_plc_governance_act
+		required_missions = { eu_generic_conquer_new_states }
+		position = 4
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			NOT = { has_courthouse_building_trigger = yes }
+		}
+		
+		trigger = {
+			crown_land_share = 60
+			num_of_owned_provinces_with = {
+				has_courthouse_building_trigger = yes
+				value = 10
+			}
+		}
+		
+		effect = {
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+				estate = all
+				share = -5
+				}
+			}
+			add_country_modifier = {
+				name = eu_efficient_administration
+				duration = 3650
+			}
+			custom_tooltip = eu_building_courthouses_bonus
+			hidden_effect = {
+				set_country_flag = fra_courthouse_bonus_flag
+				every_owned_province = {
+					limit = {
+						has_courthouse_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = fra_improved_court_houses_modifier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	eu_generic_renaissance = {
+		icon = mlo_renaissance_city
+		required_missions = { }
+		position = 6
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			prestige = 40
+			capital_scope = {
+				renaissance = 75
+			}
+			OR = {
+				has_adm_advisor_2 = yes
+				has_dip_advisor_2 = yes
+				has_mil_advisor_2 = yes
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_institution_embracement = {
+					which = renaissance
+					value = 25
+				}
+			}
+			add_country_modifier = {
+				name = eu_embraced_renaissance
+				duration = 5475
+			}
+			if = {
+				limit = {
+					any_owned_province = { is_institution_origin = renaissance }
+				}
+				custom_tooltip = eu_own_renaissance_yes
+				tooltip = {
+					if = {
+						limit = {
+							has_dlc = "Rule Britannia"
+						}
+						change_innovativeness = 5
+					}
+					else = {
+						change_government_reform_progress = 50
+					}
+				}
+			}
+			else = {
+				custom_tooltip = eu_own_renaissance_no
+				tooltip = {
+					if = {
+						limit = {
+							has_dlc = "Rule Britannia"
+						}
+						change_innovativeness = 5
+					}
+					else = {
+						change_government_reform_progress = 50
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_owned_province = { is_institution_origin = renaissance }
+					}
+					if = {
+						limit = {
+							has_dlc = "Rule Britannia"
+						}
+						change_innovativeness = 5
+					}
+					else = {
+						change_government_reform_progress = 50
+					}
+				}
+			}
+		}
+	}
+	
+	eu_generic_printing_press = {
+		icon = subiaco_press
+		required_missions = { eu_generic_renaissance }
+		position = 7
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			capital_scope = {
+				printing_press = 100
+			}
+		}
+		
+		effect = {
+			change_government_reform_progress = 100
+			add_country_modifier = {
+				name = eu_printing_revolution
+				duration = 5475
+			}
+			if = {
+				limit = {
+					any_owned_province = { is_institution_origin = printing_press }
+				}
+				custom_tooltip = eu_own_printing_press_yes
+			}
+			else = {
+				custom_tooltip = eu_own_printing_press_no
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_owned_province = { is_institution_origin = printing_press }
+					}
+					remove_country_modifier = eu_printing_revolution
+					add_country_modifier = {
+						name = eu_printing_revolution
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	
+	eu_generic_educate_the_nation = {
+		icon = pontifical_universities
+		required_missions = { eu_generic_printing_press }
+		position = 8
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_building = university
+			}
+		}
+		
+		trigger = {
+			university = 10
+		}
+		
+		effect = {
+			custom_tooltip = eu_refund_mana_on_tech
+			set_country_flag = eu_refund_mana_on_tech
+		}
+	}
+	
+	eu_generic_enlightened_rule = {
+		icon = mission_autocratic_rule
+		required_missions = { eu_generic_educate_the_nation }
+		position = 9
+		
+		trigger = {
+			has_institution = enlightenment
+		}
+		
+		effect = {
+			change_ruler_stat = {
+				type = adm
+				amount = 1
+			}
+			change_ruler_stat = {
+				type = dip
+				amount = 1
+			}
+			change_ruler_stat = {
+				type = mil
+				amount = 1
+			}
+			add_country_modifier = {
+				name = eu_enlightened_rule
+				duration = -1
+			}
+			if = {
+				limit = {
+					any_owned_province = { is_institution_origin = enlightenment }
+				}
+				custom_tooltip = eu_own_enlightenment_yes
+				tooltip = {
+					add_adm_power = 200
+					add_dip_power = 200
+					add_mil_power = 200
+				}
+			}
+			else = {
+				custom_tooltip = eu_own_enlightenment_no
+				tooltip = {
+					add_adm_power = 200
+					add_dip_power = 200
+					add_mil_power = 200
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_owned_province = { is_institution_origin = enlightenment }
+					}
+					add_adm_power = 200
+					add_dip_power = 200
+					add_mil_power = 200
+				}
+			}
+		}
+	}
+	
+	eu_generic_bolster_the_defences = {
+		icon = fixed_garrison_system
+		required_missions = { eu_generic_reform_the_army }
+		position = 10
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_fort_building_trigger = no
+				NOT = { num_of_times_improved = 5 }
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					num_of_times_improved = 5
+					has_fort_building_trigger = yes
+				}
+				amount = 5
+			}
+		}
+		
+		effect = {
+			custom_tooltip = eu_bolster_defences_dev
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						num_of_times_improved = 5
+						has_fort_building_trigger = yes
+					}
+					add_base_manpower = 1
+				}
+			}
+			add_country_modifier = {
+				name = "eu_bolstered_defences"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+eu_generic_missions_2 = { 
+	slot = 2
+	generic = yes 
+	potential = {
+		capital_scope = {
+			continent = europe
+		}
+	}
+	
+	eu_generic_build_to_force_limit = {
+		icon = mission_landsknecht_soldier
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+		}
+		
+		trigger = {
+			OR = {
+				army_size_percentage = 1
+				manpower_percentage = 1
+			}
+		}
+		
+		effect = {
+			create_general_with_pips = { tradition = 40 add_shock = 1 }
+			add_country_modifier = {
+				name = eu_protectors_of_the_realm
+				duration = 9125
+			}
+			custom_tooltip = CLAIM_NEIGHBOUR
+			hidden_effect = {
+				every_owned_province = {
+					every_neighbor_province = {
+						limit = {
+							NOT = { owned_by = ROOT }
+							NOT = { is_permanent_claim = ROOT	}
+							NOT = { is_core = ROOT	}
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+	eu_generic_eclipse_the_neighbours = {
+		icon = assert_our_sovereignty
+		required_missions = { eu_generic_expand_nation eu_generic_conquer_new_states }
+		position = 3
+		
+		provinces_to_highlight = {
+			owner = {
+				is_neighbor_of = ROOT
+				OR = {
+					army_size = ROOT
+					total_development = ROOT
+				}
+			}
+		}
+		
+		trigger = {
+			NOT = {
+				any_neighbor_country = {
+					OR = {
+						army_size = ROOT
+						total_development = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = eu_regional_power
+				duration = 7300
+			}
+			custom_tooltip = EU_CB_NEIGHBOURS
+			custom_tooltip = EU_CLAIM_HOME_REGION
+			hidden_effect = {
+				every_neighbor_country = {
+					limit = {
+						NOT = {
+							total_development = ROOT
+						}
+					}
+					reverse_add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = ROOT
+					}
+				}
+				capital_scope = {
+					every_province = {
+						limit = {
+							region = PREV
+							NOT = { owned_by = ROOT }
+							NOT = { is_core = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+	eu_generic_unite_home_region = {
+		icon = mission_unite_home_region
+		required_missions = { eu_generic_eclipse_the_neighbours }
+		position = 4
+		
+		provinces_to_highlight = {
+			region_for_scope_province = {
+				is_capital_of = ROOT
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = unite_home_region_ct
+					capital_scope = {
+						region_for_scope_province = {
+							type = all
+							owned_by = ROOT 
+						}
+					}
+				}
+				total_development = 300
+			}
+		}
+		
+		effect = {	
+			custom_tooltip = eu_home_region_reward
+			add_country_modifier = {
+				name = eu_unified_homeland
+				duration = -1
+			}
+			custom_tooltip = CLAIM_NEIGHBOUR_AREA
+			hidden_effect = {
+				capital_scope = {
+					every_owned_province = {
+						limit = {
+							region = PREV
+						}
+						add_local_autonomy -25
+						add_nationalism = -10
+					}
+				}
+				every_owned_province = {
+					every_neighbor_province = {
+						area = {
+							limit = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_permanent_claim = ROOT    }
+								NOT = { is_core = ROOT    }
+							}
+							add_permanent_claim = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	eu_generic_european_great_power = {
+		icon = peace_in_europe
+		required_missions = { eu_generic_unite_home_region }
+		position = 5
+		
+		trigger = {
+			if = {
+				limit = {
+					has_dlc = "Rights of Man"
+				}
+				is_great_power = yes
+			}
+			else = {
+				total_development = 500
+			}
+		}
+		
+		effect = {
+			add_prestige_or_monarch_power = { amount = 30 }
+			add_country_modifier = {
+				name = eu_hegemonic_ambitions
+				duration = 9125
+			}
+			custom_tooltip = CLAIM_NEIGHBOUR_AREA
+			hidden_effect = {
+				every_owned_province = {
+					every_neighbor_province = {
+						area = {
+							limit = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_permanent_claim = ROOT    }
+								NOT = { is_core = ROOT    }
+							}
+							add_permanent_claim = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	eu_european_imperial_conquest = {
+		icon = a_real_roman_empire
+		required_missions = { eu_generic_european_great_power }
+		position = 6
+		
+		trigger = {
+			total_development = 1000
+		}
+		
+		effect = {
+			country_event = { id = eu_generic.1 }
+		}
+	}
+	
+	eu_generic_acquire_subjects = {
+		icon = mission_have_two_subjects
+		required_missions = { eu_generic_trustworthy_allies }
+		position = 8
+		
+		trigger = { num_of_non_tributary_subjects = 2 }
+		
+		effect = {
+			add_country_modifier = {
+				name = eu_centralize_the_realm
+				duration = 7300
+			}
+			if = {
+				limit = {
+					has_country_modifier = annexers_legacy
+				}
+				custom_tooltip = eu_annexed_yes
+			}
+			else = {
+				custom_tooltip = eu_annexed_no
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_modifier = annexers_legacy
+					}
+					remove_country_modifier = annexers_legacy
+				}
+				else = {
+					add_dip_power = 50
+				}
+			}
+		}
+	}
+	
+	eu_generic_reform_the_army = {
+		icon = mission_modern_knight_army
+		required_missions = { }
+		position = 9
+		
+		trigger = {
+			army_tradition = 50
+			army_size = 25
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = eu_military_reforms
+				duration = 7300
+			}
+			define_advisor = {
+				type = army_reformer
+				skill = 2
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	eu_generic_military_doctrine = {
+		icon = army_reforms
+		required_missions = { eu_generic_reform_the_army }
+		position = 10
+		
+		trigger = {
+			army_tradition = 60
+			if = {
+				limit = {
+					has_dlc = "Cradle of Civilization"
+				}
+				army_professionalism = 0.4
+			}
+			calc_true_if = {
+				OR = {
+					full_idea_group = aristocratic_ideas
+					full_idea_group = offensive_ideas
+					full_idea_group = defensive_ideas
+					full_idea_group = quality_ideas
+					full_idea_group = quantity_ideas
+					full_idea_group = naval_ideas
+					full_idea_group = mercenary_ideas
+					full_idea_group = divine_ideas
+					full_idea_group = plutocratic_ideas
+				}
+				amount = 1
+			}
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 25 }
+			add_country_modifier = {
+				name = eu_military_high_command
+				duration = -1
+			}
+		}
+	}
+	
+	eu_generic_imperial_army = {
+		icon = neapolitan_govenance
+		required_missions = { eu_generic_military_doctrine }
+		position = 11
+		
+		trigger = {
+			army_tradition = 80
+			if = {
+				limit = {
+					has_dlc = "Cradle of Civilization"
+				}
+				army_professionalism = 0.6
+			}
+			has_mil_advisor_3 = yes
+			OR = {
+				MIL = 5
+				monthly_mil = 12
+			}
+			army_size = 200
+		}
+		
+		effect = {
+			create_general = { tradition = 100 }
+			add_country_modifier = {
+				name = eu_imperial_legions
+				duration = 7300
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							land_morale = ROOT
+						}
+					}
+					NOT = {
+						any_country = {
+							discipline = ROOT
+						}
+					}
+				}
+				custom_tooltip = eu_strongest_army_yes
+				tooltip = {
+					add_mil_tech = 1
+				}
+			}
+			else = {
+				custom_tooltip = eu_strongest_army_no
+				tooltip = {
+					add_mil_tech = 1
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								land_morale = ROOT
+							}
+						}
+						NOT = {
+							any_country = {
+								discipline = ROOT
+							}
+						}
+					}
+					add_mil_tech = 1
+				}
+			}
+		}
+	}
+	
+}
+
+eu_generic_missions_3 = { 
+	slot = 3
+	generic = yes 
+	potential = {
+		capital_scope = {
+			continent = europe
+		}
+	}
+	
+	eu_generic_expand_nation = {
+		icon = unite_the_realm
+		required_missions = { eu_generic_build_to_force_limit }
+		position = 2
+		
+		provinces_to_highlight = {
+		}
+		
+		trigger = { grown_by_development = 50 }
+		
+		effect = {
+			custom_tooltip = AE_NEIGHBOR
+			add_country_modifier = {
+				name = eu_expansionist_policies
+				duration = 3650
+			}
+			custom_tooltip = CLAIM_NEIGHBOUR_AREA
+			hidden_effect = {
+				every_neighbor_country = {
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -10
+						apply_calc = no
+					}
+				}
+				every_owned_province = {
+					every_neighbor_province = {
+						area = {
+							limit = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_permanent_claim = ROOT    }
+								NOT = { is_core = ROOT    }
+							}
+							add_permanent_claim = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	eu_generic_a_worthy_capital = {
+		icon = mission_eastern_european_city
+		required_missions = { eu_generic_expand_nation eu_generic_build_buildings }
+		position = 3
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			capital_scope = {
+				development = 30
+			}
+			capital_scope = {
+				num_of_buildings_in_province = 3
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					has_dlc = "Leviathan"
+				}
+				custom_tooltip = expand_infrastructure_bonus
+				set_country_flag = expand_infrastructure_bonus_flag
+			}
+			else = {
+				266 = {
+					add_base_tax = 1
+					add_base_production = 1
+					add_base_manpower = 1
+				}
+			}
+			capital_scope = {
+				add_province_modifier = {
+					name = "eu_worthy_capital"
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							province_has_center_of_trade_of_level = 1
+						}
+					}
+				}
+				custom_tooltip = capital_gains_cot_yes
+			}
+			else = {
+				custom_tooltip = capital_gains_cot_no
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						capital_scope = {
+							NOT = {
+								province_has_center_of_trade_of_level = 1
+							}
+						}
+					}
+					capital_scope = {
+						center_of_trade = 1
+					}
+				}
+			}
+		}
+	}
+	
+	eu_generic_envy_of_the_world = {
+		icon = appease_the_estates
+		required_missions = { eu_generic_a_worthy_capital }
+		position = 4
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			capital_scope = {
+				development = 50
+			}
+			capital_scope = {
+				num_of_buildings_in_province = 5
+			}
+			if = {
+				limit = {
+					has_dlc = "Mandate of Heaven"
+				}
+				capital_scope = {
+					prosperity = 100
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = eu_empower_worthy_capital
+			if = {
+				limit = {
+					capital_scope = {
+						NOT = {
+							any_province = {
+								continent = europe
+								higher_development_than = PREV
+							}
+						}
+					}
+				}
+				custom_tooltip = capital_most_developed_yes
+				tooltip = {
+					if = {
+						limit = {
+							has_dlc = "Mandate of Heaven"
+						}
+						add_splendor = 200
+					}
+					else = {
+						change_government_reform_progress = 100
+					}
+				}
+			}
+			else = {
+				custom_tooltip = capital_most_developed_no
+				tooltip = {
+					if = {
+						limit = {
+							has_dlc = "Mandate of Heaven"
+						}
+						add_splendor = 200
+					}
+					else = {
+						change_government_reform_progress = 100
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						capital_scope = {
+							NOT = {
+								any_province = {
+									continent = europe
+									higher_development_than = PREV
+								}
+							}
+						}
+					}
+					if = {
+						limit = {
+							has_dlc = "Mandate of Heaven"
+						}
+						add_splendor = 200
+					}
+					else = {
+						change_government_reform_progress = 100
+					}
+				}
+				if = {
+					limit = {
+						any_owned_province = {
+							has_province_modifier = eu_worthy_capital
+						}
+					}
+					capital_scope = {
+						remove_province_modifier = eu_worthy_capital
+						add_province_modifier = {
+							name = "eu_worthy_capital2"
+							duration = -1
+						}    
+					}
+				}
+			}
+		}
+	}
+	
+	eu_generic_build_a_treasury = {
+		icon = mission_war_chest
+		required_missions = { eu_generic_increase_the_production }
+		position = 5
+		
+		trigger = {
+			treasury = 2000
+			is_in_deficit = no
+			NOT = { num_of_loans = 1 }
+		}
+		
+		effect = {
+			add_corruption = -3
+			add_country_modifier = {
+				name = eu_stable_economy
+				duration = 9125
+			}
+		}
+	}
+	
+	eu_generic_trustworthy_allies = {
+		icon = mission_diplomatic_relation
+		required_missions = { }
+		position = 7
+		
+		trigger = {
+			total_development = 1000
+		}
+		
+		effect = {
+			custom_tooltip = eu_5_trust_5_favors
+			add_country_modifier = {
+				name = eu_diplomatic_prowess
+				duration = 7300
+			}
+			custom_tooltip = eu_dip_for_alliances
+			hidden_effect = {
+				every_country = {
+					limit = {
+						alliance_with = ROOT
+					}
+					add_trust = { who = ROOT value = 5 }
+					ROOT = {
+						add_favors = { who = PREV amount = 5 }
+					}
+				}
+				if = {
+					limit = { num_of_allies = 4 }
+					add_dip_power = 100 
+				}
+				else_if = {
+					limit = { num_of_allies = 3 }
+					add_dip_power = 75
+				}
+				else_if = {
+					limit = { num_of_allies = 2 }
+					add_dip_power = 50
+				}
+				else_if = {
+					limit = { num_of_allies = 1 }
+					add_dip_power = 25
+				}
+			}
+		}
+	}
+	
+	eu_generic_a_grand_alliance = {
+		icon = balance_of_power
+		required_missions = { eu_generic_trustworthy_allies }
+		position = 9
+		
+		provinces_to_highlight = {
+			owner = {
+				alliance_with = ROOT
+				OR = {
+					NOT = {
+						total_development = 300
+					}
+					NOT = {
+						trust = { who = ROOT value = 100 }
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_trusted_allies = 3
+			calc_true_if = {
+				any_ally = {
+					total_development = 300
+				}
+				amount = 3
+			}
+		}
+		
+		effect = {
+			change_ruler_stat = {
+				type = dip
+				amount = 2
+			}
+			add_country_modifier = {
+				name = "eu_concert_of_europe"
+				duration = -1
+			}
+			custom_tooltip = eu_winning_war_against_rivals_enemies
+		}
+	}
+	
+	eu_generic_wealth_of_india = {
+		icon = mission_indian_empire
+		required_missions = { eu_generic_african_bases }
+		position = 10
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				OR = {
+					region = bengal_region 
+					region = west_india_region
+					region = coromandel_region
+					region = deccan_region
+				}
+				value = 5
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = bengal_region 
+				region = west_india_region
+				region = coromandel_region
+				region = deccan_region
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				AND = {
+					owned_by = ROOT
+					NOT = { is_core = ROOT }
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "eu_claim_india"
+				duration = 9125
+			}
+			custom_tooltip = eu_perma_claim_india_cot
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							region = bengal_region 
+							region = west_india_region
+							region = coromandel_region
+							region = deccan_region
+						}
+						has_port = yes
+						province_has_center_of_trade_of_level = 1
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+}
+
+eu_generic_missions_4 = { 
+	slot = 4
+	generic = yes 
+	potential = {
+		capital_scope = {
+			continent = europe
+		}
+	}
+	
+	eu_generic_high_income = {
+		icon = mission_high_income
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			share_of_starting_income = 1.5 
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = eu_economic_revitalization
+				duration = 5475
+			}
+			define_advisor = {
+				type = treasurer
+				skill = 2
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	eu_generic_build_buildings = {
+		icon = mission_colonial
+		required_missions = { eu_generic_high_income }
+		position = 2
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			OR = {
+				NOT = { has_tax_building_trigger = yes }
+				NOT = { has_trade_building_trigger = yes }
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_tax_building_trigger = yes
+				value = 5
+			}
+			num_of_owned_provinces_with = {
+				has_trade_building_trigger = yes
+				value = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = eu_building_spree
+				duration = 5475
+			}
+			custom_tooltip = eu_bonus_dev_developing
+		}
+	}
+	
+	eu_generic_increase_the_production = {
+		icon = mission_have_manufactories
+		required_missions = { eu_generic_build_buildings }
+		position = 4
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			NOT = { has_production_building_trigger = yes }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_production_building_trigger = yes
+				value = 10
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 2
+				trigger = {
+					always = yes
+				}
+				custom_tooltip = eu_from_2_years_of_prod_income
+			}
+			country_event = { id = eu_generic.2 }
+		}
+	}
+	
+	eu_generic_industrialize_the_economy = {
+		icon = mission_rb_build_furnaces
+		required_missions = { eu_generic_increase_the_production }
+		position = 6
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_manufactory_trigger = yes
+			}
+		}
+		
+		trigger = {
+			OR = {
+				production_efficiency = 0.2
+				production_income_percentage = 0.2
+			}
+			num_of_owned_provinces_with = {
+				has_manufactory_trigger = yes
+				value = 20
+			}
+			development_in_provinces = {
+				has_manufactory_trigger = yes
+				value = 300
+			}
+		}
+		
+		effect = {
+			custom_tooltip = eu_manufactory_dev
+			add_country_modifier = {
+				name = eu_industrialized_economy
+				duration = 7300
+			}
+			hidden_effect = {		
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								has_manufactory_trigger = yes
+							}
+							add_base_production = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+	eu_generic_naval_capacity = {
+		icon = secure_the_republic
+		required_missions = { eu_generic_construct_a_fleet }
+		position = 7
+		
+		provinces_to_highlight = {
+			has_port = yes
+			country_or_non_sovereign_subject_holds = ROOT
+			OR = {
+				NOT = {
+					has_dock_building_trigger = yes
+				}
+				NOT = {
+					has_shipyard_building_trigger = yes
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				has_dock_building_trigger = yes
+				value = 10
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				has_shipyard_building_trigger = yes
+				value = 10
+			}
+		}
+		
+		effect = {
+			add_sailors = 2500
+			add_country_modifier = {
+				name = eu_mighty_navy
+				duration = 7300
+			}
+			define_advisor = {
+				type = naval_reformer
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+	
+	eu_generic_rule_the_waves = {
+		icon = overshadow_venice
+		required_missions = { eu_generic_naval_capacity }
+		position = 8
+		
+		trigger = {
+			OR = {
+				num_of_heavy_ship = 50
+				navy_size = 100
+			}
+		}
+		
+		effect = {
+			create_admiral = { tradition = 100 }
+			add_country_modifier = {
+				name = eu_rule_the_waves
+				duration = -1
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							navy_size = ROOT
+						}
+					}
+				}
+				custom_tooltip = eu_navy_size_yes
+			}
+			else = {
+				custom_tooltip = eu_navy_size_no
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								navy_size = ROOT
+							}
+						}
+					}
+					set_country_flag = eu_admiral_navy_tradition
+				}
+			}
+		}
+	}
+	
+	eu_generic_african_bases = {
+		icon = mission_west_african_ports
+		required_missions = { eu_generic_settle_the_americas }
+		position = 9
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = guinea_region
+				value = 5
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = guinea_region
+			}
+			NOT = { owned_by = ROOT }
+		}
+		
+		effect = {
+			1126 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 25
+					key = eu_heart_of_darkness
+				}
+			}
+			custom_tooltip = eu_empty
+			create_conquistador = { tradition = 75 }
+		}
+	}
+	
+	eu_generic_spice_isles = {
+		icon = mission_dominate_persian_gulf
+		required_missions = { eu_generic_african_bases }
+		position = 11
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				OR = {
+					region = moluccas_region 
+					region = indonesia_region
+					region = malaya_region
+				}
+				value = 15
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				region = moluccas_region 
+				region = indonesia_region
+				region = malaya_region
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				AND = {
+					owned_by = ROOT
+					NOT = {
+						is_core = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gen_global_trade_empire"
+				duration = -1
+			}
+			custom_tooltip = eu_perma_claim_indonesia_cot
+			if = {
+				limit = {
+					OR = {
+						trading_bonus = {
+							trade_goods = cloves
+							value = yes
+						}
+						trading_bonus = {
+							trade_goods = spices
+							value = yes
+						}
+					}
+				}
+				custom_tooltip = eu_trade_bonus_yes
+				tooltip = {
+					add_years_of_income = 2
+				}
+			}
+			else = {
+				custom_tooltip = eu_trade_bonus_no
+				tooltip = {
+					add_years_of_income = 2
+				}
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							region = moluccas_region 
+							region = indonesia_region
+							region = malaya_region
+						}
+						has_port = yes
+						province_has_center_of_trade_of_level = 1
+					}
+					add_permanent_claim = ROOT
+				}
+				if = {
+					limit = {
+						OR = {
+							trading_bonus = {
+								trade_goods = cloves
+								value = yes
+							}
+							trading_bonus = {
+								trade_goods = spices
+								value = yes
+							}
+						}
+					}
+					add_years_of_income = 2
+				}
+			}
+		}
+	}
+	
+}
+
+gen_europe = {
+
+	slot = 5
+	generic = yes
+	ai = yes
+	
+	potential = {
+		capital_scope = {
+			continent = europe
+		}
+	}
+	has_country_shield = no
+	
+	gen_eur_trade_node = {
+		icon = mission_war_chest
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			home_trade_node = {
+				highest_value_trade_node = yes
+				is_strongest_trade_power = ROOT
+			}
+			
+		}
+		
+		effect = {
+			add_mercantilism = 5 
+			add_country_modifier = {
+				name = "gen_eur_trade_node_mod"
+				duration = 7300
+			}
+			define_advisor = {
+				type = trader
+				skill = 3
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+	
+	gen_eur_defender_faith = {
+		icon = mission_european_church
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			NOT = { current_age = age_of_discovery }
+			is_defender_of_faith = yes
+			religious_unity = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gen_eur_defender"
+				duration = 5475
+			}
+			custom_tooltip = eu_defender_faith_bonus_tradition
+		}
+	}
+}
+
+gen_europe_hre = {
+
+	slot = 5
+	generic = yes
+	ai = yes
+	
+	potential = {
+		capital_scope = {
+			continent = europe
+		}
+		is_part_of_hre = yes
+		NOT = {
+			is_emperor = yes
+		}
+		NOT = { government = theocracy }
+		NOT = { government = republic }
+	}
+	has_country_shield = no
+	
+	gen_hre_electors = {
+		icon = influence_the_princes
+		required_missions = { }
+		position = 3
+		
+		trigger = {
+			if = {
+				limit = {
+					hre_size = 1
+				}
+				calc_true_if = {
+					desc = gen_hre_electors.tooltip
+					all_elector = {
+						preferred_emperor = ROOT
+					}
+					amount = 2
+				}
+			}
+			else = {
+				num_of_allies = 3
+			}
+		}
+		
+		effect = {
+			add_prestige = 10
+			add_country_modifier = {
+				name = "gen_hre_diplomacy_mod"
+				duration = 5475
+			}
+		}
+	}
+	
+	gen_hre_emperor = {
+		icon = carolingian_empire
+		required_missions = { gen_hre_electors }
+		position = 4
+		
+		trigger = {
+			if = {
+				limit = {
+					hre_size = 1
+				}
+				is_emperor = yes
+			}
+			else = {
+				government_rank = 3
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gen_hre_emperor_mod"
+				duration = 5475
+			}
+		}
+	}
+}
+
+gen_europe_hre_ban = {
+
+	slot = 5
+	generic = yes
+	ai = yes
+	
+	potential = {
+		capital_scope = {
+			continent = europe
+		}
+		is_part_of_hre = yes
+		NOT = {
+			is_emperor = yes
+		}
+		NOT = { government = theocracy }
+		NOT = { government = republic }
+	}
+	has_country_shield = no
+	
+	gen_hre_imperial_ban = {
+		icon = lead_the_empire
+		required_missions = { gen_hre_emperor }
+		position = 5
+		
+		provinces_to_highlight = {
+			AND = {
+				is_part_of_hre = yes
+				owner = {
+					is_part_of_hre = no
+				}
+			}
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					hre_size = 1
+					NOT = { has_dlc = "Emperor" }
+				}
+				hre_reform_passed = reichsreform
+				is_emperor = yes
+				NOT = { num_of_foreign_hre_provinces = 1 }
+			}
+			else_if = {
+				limit = {
+					hre_size = 1
+					has_dlc = "Emperor"
+				}
+				hre_reform_passed = emperor_reichsreform
+				is_emperor = yes
+				NOT = { num_of_foreign_hre_provinces = 1 }
+			}
+			else = {
+				custom_trigger_tooltip = {
+					tooltip = imperial_ban_fallback_tt
+					NOT = {
+						any_core_province = {
+							NOT = { owned_by = ROOT }
+						}
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_prestige = 10
+			if = {
+				limit = {
+					hre_size = 1
+				}
+				add_imperial_influence = 10
+				add_country_modifier = {
+					name = "gen_hre_imperial_ban_mod"
+					duration = 5475
+				}
+			}
+		}
+	}
+}
+
+gen_europe_hre_theocracy = {
+	slot = 5
+	generic = yes
+	ai = yes
+	potential = {
+		capital_scope = {
+			continent = europe
+		}
+		is_part_of_hre = yes
+		NOT = {
+			is_emperor = yes
+		}
+		government = theocracy
+	}
+	has_country_shield = no
+	
+	gen_hre_theocracy_house_of_god = {
+		icon = mission_hands_praying
+		required_missions = { }
+		position = 3
+
+		provinces_to_highlight = {
+			owned_by = root
+			has_tax_building_trigger = no
+		}
+
+		trigger = {
+			if = {
+				limit = { NOT = { num_of_cities = 10 } }
+				all_owned_province = {
+					has_tax_building_trigger = yes
+				}
+			}
+			else = {
+				capital_scope = {
+					has_tax_building_trigger = yes
+				}
+				num_of_owned_provinces_with = {
+					value = 10
+					has_tax_building_trigger = yes
+				}
+			}
+		}
+
+		effect = {
+			capital_scope = {
+				if = {
+					limit = { NOT = { has_building = cathedral } }
+					remove_building = temple
+					add_building = cathedral
+				}
+				else = { add_base_tax = 2 }
+			}
+			if = {
+				limit = {
+					NOT = { legitimacy_equivalent = 85 }
+				}
+				add_devotion = 20
+				add_legitimacy = 20
+			}
+			else = {
+				add_stability_or_adm_power = yes
+			}
+		}
+	}
+	gen_hre_theocracy_lords_army = {
+		icon = mission_sword_of_the_reformation
+		required_missions = { gen_hre_theocracy_house_of_god }
+		position = 4
+
+		provinces_to_highlight = {
+			owner = {
+				is_neighbor_of = root
+				army_size = root
+			}
+			root = {
+				NOT = { army_size = 30 }
+			}
+		}
+
+		trigger = {
+			OR = {
+				army_size = 30
+				all_neighbor_country = {
+					NOT = { army_size = root }
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = theocracy_lords_army_mod
+				duration = 5475
+			}
+		}
+	}
+	gen_hre_theocracy_divine_empire = {
+		icon = spread_piety
+		required_missions = { gen_hre_theocracy_lords_army }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				region = north_german_region
+				region = south_german_region
+			}
+			NOT = { religion = root }
+			NOT = {
+				root = {
+					calc_true_if = {
+						amount = 50
+						all_province = {
+							OR = {
+								region = north_german_region
+								region = south_german_region
+							}
+							religion = root
+						}
+					}
+				}
+			}
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = emp_bav_center_of_counter_reformation_tooltip2
+				had_global_flag = {
+					flag = reformation_started
+					days = 18250
+				}
+			}
+			calc_true_if = {
+				desc = gen_hre_theocracy_divine_empire_trigger_tooltip
+				amount = 50
+				all_province = {
+					OR = {
+						region = north_german_region
+						region = south_german_region
+					}
+					religion = root
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = theocracy_divine_empire_mod
+				duration = 5475
+			}
+		}
+	}
+}
+
+
+gen_europe_hre_republic = {
+	slot = 5
+	generic = yes
+	ai = yes
+	potential = {
+		capital_scope = {
+			continent = europe
+		}
+		is_part_of_hre = yes
+		NOT = {
+			is_emperor = yes
+		}
+		government = republic
+	}
+	has_country_shield = no
+	
+	gen_hre_relations_with_emperor = {
+		icon = lead_the_empire
+		required_missions = { }
+		position = 3
+
+		provinces_to_highlight = {
+			is_capital_of = emperor
+		}
+
+		trigger = {
+			alliance_with = emperor
+			emperor = {
+				has_opinion = {
+					who = root
+					value = 120
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = imperial_beneficience
+				duration = 5475
+			}
+		}
+	}
+	gen_hre_financial_centre = {
+		icon = sources_of_trade
+		required_missions = { gen_hre_relations_with_emperor }
+		position = 4
+
+		provinces_to_highlight = {
+			is_capital_of = root
+		}
+
+		trigger = {
+			capital_scope = {
+				development = 25
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = republic_bourgeois_center
+				duration = 5475
+			}
+		}
+	}
+	gen_hre_republic_reform_government = {
+		icon = friends_in_high_places
+		required_missions = { gen_hre_financial_centre }
+		position = 5
+
+		trigger = {
+			reform_level = 7
+			OR = {
+				crown_land_share = 70
+				AND = {
+					estate_loyalty = {
+						estate = estate_burghers
+						loyalty = 60
+					}
+					estate_loyalty = {
+						estate = estate_nobles
+						loyalty = 60
+					}
+					estate_loyalty = {
+						estate = estate_church
+						loyalty = 60
+					}
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = republic_reformed_government
+				duration = 10950
+			}
+		}
+	}
+}
+
+eu_generic_missions_5 = { 
+	slot = 5
+	generic = yes 
+	potential = {
+		capital_scope = {
+			continent = europe
+		}
+	}
+	
+	eu_generic_construct_a_fleet = {
+		icon = mission_galleys_in_port
+		required_missions = { }
+		position = 6
+		
+		trigger = {
+			navy_size_percentage = 1
+		}
+		
+		effect = {
+			add_navy_tradition = 10
+			add_country_modifier = {
+				name = eu_naval_ambitions
+				duration = 7300
+			}
+		}
+	}
+	
+	eu_generic_discover_new_world = {
+		icon = mission_explore_the_world
+		required_missions = { eu_generic_construct_a_fleet }
+		position = 7
+		
+		trigger = {  
+			OR = {
+				has_institution = new_world_i
+				exploration_ideas = 2
+			}
+		} 
+		
+		effect = {
+			add_country_modifier = {
+				name = eu_explore_new_world
+				duration = 9125
+			}
+			create_explorer = { tradition = 50 }
+		}
+	}
+	
+	eu_generic_settle_the_americas = {
+		icon = mission_settlers_north_america
+		required_missions = { eu_generic_discover_new_world }
+		position = 8
+		
+		trigger = {  
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					continent = north_america
+					continent = south_america
+				}
+				value = 10
+			}
+		} 
+		
+		effect = {
+			custom_tooltip = eu_colony_250_settlers
+			add_country_modifier = {
+				name = eu_settle_americas
+				duration = 9125
+			}
+			hidden_effect = {
+				for = {
+					amount = 1
+					effect = "
+						random_owned_province = {
+							limit = {
+								is_colony = yes
+							}
+							add_colonysize = 250
+						}
+					"
+				}
+			}
+		}
+	}
+	
+	eu_generic_colonial_administration = {
+		icon = mission_taula_de_canvi
+		required_missions = { eu_generic_settle_the_americas }
+		position = 9
+		
+		trigger = {
+			OR = {
+				calc_true_if = {
+					amount = 3
+					all_subject_country = {
+						capital_scope = {
+							OR = {
+								continent = south_america
+								continent = north_america
+							}
+						}
+						total_development = 150
+						NOT = {
+							liberty_desire = 25
+						}
+					}
+				}
+				development_in_provinces = {
+					value = 450
+					OR = {
+						continent = south_america
+						continent = north_america
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = eu_subjects_in_americas_ld
+			add_country_modifier = {
+				duration = -1
+				name = eu_reformed_colonial_administration
+			}
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						capital_scope = {
+							OR = {
+								continent = south_america
+								continent = north_america
+							}
+						}
+					}
+					add_liberty_desire = -25
+				}
+			}
+		}
+	}
+	
+	eu_generic_transatlantic_empire = {
+		icon = mission_look_west
+		required_missions = { eu_generic_colonial_administration }
+		position = 11
+		
+		trigger = {
+			OR = {
+				calc_true_if = {
+					amount = 4
+					all_subject_country = {
+						capital_scope = {
+							OR = {
+								continent = south_america
+								continent = north_america
+							}
+						}
+						total_development = 250
+						NOT = {
+							liberty_desire = 25
+						}
+					}
+				}
+				development_in_provinces = {
+					value = 1000
+					OR = {
+						continent = south_america
+						continent = north_america
+					}
+				}
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_trade_node_income = 5
+			}
+			add_country_modifier = {
+				duration = -1
+				name = eu_transatlantic_empire
+			}
+			add_mercantilism_or_monarch_power = { amount = 5 }
+		}
+	}
+}
