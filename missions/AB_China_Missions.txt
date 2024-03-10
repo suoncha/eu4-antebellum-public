@@ -1291,6 +1291,7 @@ ab_china_third = {
 			}
 		    add_accepted_culture_or_dip_power = {
 		    	culture = tibetan
+				dip_reward = yes
 		    }
 		}
 	}
@@ -1619,9 +1620,27 @@ ab_china_fourth = {
 		
 		trigger = {
 			grown_by_development = 100
-			custom_trigger_tooltip = {
-				tooltip = obj_humiliate_rival_tooltip
-				has_country_flag = humiliated_rival
+			OR = {
+				custom_trigger_tooltip = {
+					tooltip = obj_humiliate_rival_tooltip
+					has_country_flag = humiliated_rival
+				}
+				NOT = {
+					any_rival_country = {
+						capital_scope = {
+							superregion = china_superregion
+						}
+						total_development = ROOT
+					}
+				}
+				NOT = {
+					any_rival_country = {
+						capital_scope = {
+							superregion = china_superregion
+						}
+						army_size = ROOT
+					}
+				}
 			}
 		}
 		
@@ -2729,6 +2748,7 @@ ab_china_fifth = {
 							region = malaya_region
 							region = indonesia_region
 						}
+						province_has_center_of_trade_of_level = 1
 					}
 					add_permanent_claim = ROOT
 				}
