@@ -1154,31 +1154,15 @@ glh_horde_second_group = {
 		position = 12
 		
 		provinces_to_highlight = {
-			NOT = {
-				OR = {
-					has_building = early_road
-					has_building = gravel_road
-					has_building = royal_road
-					has_building = macadam_road
-					has_building = rail_road
-				}
-			}
+			NOT = { has_road_building_trigger = yes }
 			owned_by = ROOT
 		}
 		
 		trigger = {
 			ab_not_in_mission_preview_mode = { key = AB_GLH_TATARIA_HORDE }
-			calc_true_if = {
-				all_owned_province = {
-					OR = { 
-						has_building = early_road
-						has_building = gravel_road
-						has_building = royal_road
-						has_building = macadam_road
-						has_building = rail_road
-					}
-				}
-				amount = 30
+			num_of_owned_provinces_with = {
+				value = 30
+				has_road_building_trigger = yes
 			}
 		}
 		

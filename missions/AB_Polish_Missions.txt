@@ -457,39 +457,29 @@ ab_poland_2_ruthenian = {
 		position = 8
 		
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					OR = {
-						has_building = early_road
-						has_building = gravel_road
-						has_building = royal_road
-						has_building = macadam_road
-						has_building = rail_road
-					}
-				}
-				amount = 10
+			num_of_owned_provinces_with = {
+				value = 10
+				has_road_building_trigger = yes
 			}
 			owns_core_province = 43
 			43 = {
-				OR = {
-						has_building = early_road
-						has_building = gravel_road
-						has_building = royal_road
-						has_building = macadam_road
-						has_building = rail_road
-				}
+				has_road_building_trigger = yes
 			}
 		}
 		
 		provinces_to_highlight = {
-			owned_by = ROOT
-			NOT = {
-				OR = {
-					has_building = early_road
-					has_building = gravel_road
-					has_building = royal_road
-					has_building = macadam_road
-					has_building = rail_road
+			OR = {
+				AND = {
+					owned_by = ROOT
+					NOT = { has_road_building_trigger = yes }
+				}
+				AND = {
+					province_id = 43
+					OR = { 
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+						NOT = { has_road_building_trigger = yes }
+					}
 				}
 			}
 		}

@@ -345,24 +345,17 @@ vke_conquest_2 = {
 		position = 3
 		required_missions = { trading_hubs_vke }
 		provinces_to_highlight = {
-			country_or_non_sovereign_subject_holds = ROOT
-			NOT = {
-				has_production_building_trigger = yes
+			owned_by = ROOT
+			OR = {
+				NOT = { has_production_building_trigger = yes }
+				NOT = { has_road_building_trigger = yes }
 			}
 		}
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					has_production_building_trigger = yes
-					OR = {
-						has_building = early_road 
-						has_building = gravel_road
-						has_building = royal_road
-						has_building = macadam_road
-						has_building = rail_road
-					}
-				}
-				amount = 10
+			num_of_owned_provinces_with = {
+				value = 10
+				has_production_building_trigger = yes
+				has_road_building_trigger = yes
 			}
 		}
 		effect = {

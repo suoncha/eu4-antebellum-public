@@ -792,19 +792,16 @@ tcr_third = {
 	    icon = mission_pue_chaco_roads
 		required_missions = { tcr_irrigation }
 		position = 2
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_road_building_trigger = yes }
+		}
 		
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					OR = { 
-						has_building = early_road
-						has_building = gravel_road
-						has_building = royal_road
-						has_building = macadam_road
-						has_building = rail_road
-					}
-				}
-				amount = 7
+			num_of_owned_provinces_with = {
+				has_road_building_trigger = yes
+				value = 7
 			}
 		}
 		
