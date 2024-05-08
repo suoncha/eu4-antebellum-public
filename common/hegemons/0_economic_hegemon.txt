@@ -3,6 +3,16 @@ economic_hegemon = {
 		is_great_power = yes
 		if = {
 			limit = {
+				NOT = { has_country_flag = halve_hegemony_requirements }
+			}
+			monthly_income = 1000 
+		}
+		else = { monthly_income = 500 } 
+		NOT = { any_other_great_power = { monthly_income = root } }
+		NOT = { has_country_modifier = lost_hegemony }
+		# AB [[[
+		if = {
+			limit = {
 				OR = {
 					has_country_flag = AB_claimed_economic_hegemon_mission_reward
 					has_mission = AB_Shahi_Economic_Hegemony
@@ -39,8 +49,9 @@ economic_hegemon = {
 				any_other_great_power = { monthly_income = root } 
 			}
 		}
-		NOT = { has_country_modifier = lost_hegemony }
+		# ]]]
 	}
+	
 	base = {
 		war_exhaustion = -0.1
 		development_cost_modifier = -0.05

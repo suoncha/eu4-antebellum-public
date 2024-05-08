@@ -669,7 +669,7 @@ cro_second_group = {
 	}
 	
 	cro_croatian_government = {
-		icon = mission_among_the_great_powers
+		icon = mission_integrate_croatia
 		required_missions = { cro_zagreb cro_vinodol_code }
 		position = 9
 		
@@ -923,8 +923,21 @@ cro_third_group = {
 		required_missions = { cro_clash_with_bulgars }
 		position = 5
 		
+
+		provinces_to_highlight = {
+			culture_group = south_slavic
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
 		trigger = {
-			tag = ILR
+			OR = {
+				tag = ILR
+				owns_all_provinces = {
+					culture_group = south_slavic
+				}
+			}
 		}
 		
 		effect = {

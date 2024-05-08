@@ -774,6 +774,73 @@ incident_dutch_revolt = {
 	}
 }
 
+incident_hungary_mission = {
+	event = new_flavour_hun.201
+	default_option = 0
+	
+	can_stop = {
+		NOT = {
+			any_country = {
+				has_country_flag = hungary_flag_incident
+			}
+		}
+	}
+	
+	0 = { # hungary joins
+		factor = 1
+		modifier = {
+			factor = 100
+			OR = {
+				ai_attitude = {
+					who = HUN
+					attitude = attitude_friendly
+				}
+				ai_attitude = {
+					who = HUN
+					attitude = attitude_loyal
+				}
+				ai_attitude = {
+					who = HUN
+					attitude = attitude_allied
+				}
+			}
+		}
+	}
+	
+	1 = { # denied
+		factor = 1
+		modifier = {
+			factor = 100
+			OR = {
+				ai_attitude = {
+					who = HUN
+					attitude = attitude_rivalry
+				}
+				ai_attitude = {
+					who = HUN
+					attitude = attitude_hostile
+				}
+				ai_attitude = {
+					who = HUN
+					attitude = attitude_threatened
+				}
+				ai_attitude = {
+					who = HUN
+					attitude = attitude_outraged
+				}
+				ai_attitude = {
+					who = HUN
+					attitude = attitude_disloyal
+				}
+				ai_attitude = {
+					who = HUN
+					attitude = attitude_rebellious
+				}
+			}
+		}
+	}
+}
+
 incident_reformer_dissension = {
 	event = reformer_dissension.1
 	default_option = 1

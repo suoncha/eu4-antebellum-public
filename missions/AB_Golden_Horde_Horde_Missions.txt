@@ -487,7 +487,27 @@ glh_horde_first_sunni_branching = {
 				piety = 0.75
 				NOT = { piety = -0.75 }
 			}
-			has_estate_privilege = estate_church_integrated_school
+			if = {
+				limit = {
+					has_estate = estate_church
+				}
+				has_estate_privilege = estate_church_integrated_school
+			}
+			else = {
+				calc_true_if = {
+					amount = 1
+					all_ally = {
+						has_opinion = {
+							who = ROOT
+							value = 120
+						}
+						religion = sunni
+						NOT = {
+							has_religious_school_of = ROOT
+						}
+					}
+				}
+			}
 			has_adm_advisor = yes
 			has_dip_advisor = yes
 			has_mil_advisor = yes

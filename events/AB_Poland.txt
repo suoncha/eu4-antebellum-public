@@ -1,0 +1,408 @@
+namespace = ab_poland
+
+#Assimilation of Silesians
+country_event = {
+	id = ab_poland.1
+	title = ab_poland.1.t
+	desc = ab_poland.1.d
+	picture = STREET_SPEECH_eventPicture
+	
+	fire_only_once = yes
+
+	mean_time_to_happen = {
+		months = 50
+	}
+	
+	trigger = {
+		OR = {
+			tag = POL
+			was_tag = POL
+		}
+		primary_culture = polish
+		owns_all_provinces = {
+			culture = schlesian
+		}
+		is_year = 1500
+		silesia_area = {
+			type = all
+			owned_by = ROOT
+		}
+		silesia_area = {
+			type = all
+			religion = ROOT
+		}
+		silesia_area = {
+			type = all
+			NOT = {
+				local_autonomy = 1
+			}
+		}
+		silesia_area = {
+			type = all
+			NOT = {
+				nationalism = 1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_poland.1.a
+		every_owned_province = {
+			limit = {
+				culture = schlesian
+			}
+			change_culture = polish
+		}
+	}
+}
+
+#Assimilation of Pomeranians
+country_event = {
+	id = ab_poland.2
+	title = ab_poland.2.t
+	desc = ab_poland.2.d
+	picture = STREET_SPEECH_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 50
+	}
+	
+	trigger = {
+		OR = {
+			tag = POL
+			was_tag = POL
+		}
+		primary_culture = polish
+		owns_all_provinces = {
+			culture = pommeranian
+		}
+		is_year = 1500
+		neumark_area = {
+			type = all
+			owned_by = ROOT
+		}
+		neumark_area = {
+			type = all
+			religion = ROOT
+		}
+		neumark_area = {
+			type = all
+			NOT = {
+				local_autonomy = 1
+			}
+		}
+		neumark_area = {
+			type = all
+			NOT = {
+				nationalism = 1
+			}
+		}
+		hinter_pommern_area = {
+			type = all
+			owned_by = ROOT
+		}
+		hinter_pommern_area = {
+			type = all
+			religion = ROOT
+		}
+		hinter_pommern_area = {
+			type = all
+			NOT = {
+				local_autonomy = 1
+			}
+		}
+		hinter_pommern_area = {
+			type = all
+			NOT = {
+				nationalism = 1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_poland.2.a
+		every_owned_province = {
+			limit = {
+				culture = pommeranian
+			}
+			change_culture = polish
+		}
+	}
+}
+
+#The Birth of Lendia
+country_event = {
+	id = ab_poland.3
+	title = ab_poland.3.t
+	desc = ab_poland.3.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_poland.3.a
+		set_country_flag = pol_unlocked_lendia_rename
+		custom_tooltip = POL_UNLOCK_LENDIA
+		poland_region = {
+			add_nationalism = -20
+		}
+		unify_polish_cultures_effect = yes
+		add_ruler_modifier = {
+			name = "pol_father_of_lendia"
+			duration = -1
+		}
+	}
+}
+
+#The Third Rome
+country_event = {
+	id = ab_poland.4
+	title = ab_poland.4.t
+	desc = ab_poland.4.d
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_poland.4.a
+		custom_tooltip = MVA_TSARDOM
+		hidden_effect = {
+			set_country_flag = pol_become_tsardom
+		}
+		hidden_effect = {
+			add_government_reform = tsardom
+		}
+		add_country_modifier = {
+			name = mva_third_rome
+			duration = -1
+		}
+		custom_tooltip = PLC_EVOLVING_IDEA_1
+		hidden_effect = {
+			set_country_flag = plc_evolved_ideas1
+			if = {
+				limit = {
+					tag = PLC
+				}
+				country_event = {
+					id = ideagroups.1
+				}
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = BUL_ORTHO_CLAIM
+		hidden_effect = {
+			every_province = {
+				limit = {
+					NOT = {
+						owned_by = ROOT
+					}
+					religion = orthodox
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+#Ascendant Lechia
+country_event = {
+	id = ab_poland.5
+	title = ab_poland.5.t
+	desc = ab_poland.5.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_poland.5.a
+		set_country_flag = pol_unlocked_lechia_rename
+		custom_tooltip = POL_UNLOCK_LECHIA
+		poland_region = {
+			add_nationalism = -20
+		}
+		unify_polish_cultures_effect = yes
+		add_ruler_modifier = {
+			name = "pol_father_of_lechia"
+			duration = -1
+		}
+	}
+}
+
+#Great Lechia
+country_event = {
+	id = ab_poland.6
+	title = ab_poland.6.t
+	desc = ab_poland.6.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_poland.6.a
+		change_monarch_points_or_power = {
+			power = mil
+			points = 2
+		}
+		add_country_modifier = {
+			name = pol_lechitic_empire
+			duration = -1
+		}
+		custom_tooltip = PLC_EVOLVING_IDEA_1
+		hidden_effect = {
+			set_country_flag = plc_evolved_ideas1
+			if = {
+				limit = {
+					tag = PLC
+				}
+				country_event = {
+					id = ideagroups.1
+				}
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = POL_CLAIM_PAGAN_EUROPE
+		hidden_effect = {
+			every_province = {
+				limit = {
+					OR = {
+						superregion = europe_superregion
+						superregion = eastern_europe_superregion
+					}
+					OR = {
+						religion_group = pagan
+						religion_group = reformed_pagan
+					}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+#Legacy of Mieszko
+country_event = {
+	id = ab_poland.7
+	title = ab_poland.7.t
+	desc = ab_poland.7.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_poland.7.a
+		set_country_flag = pol_unlocked_polonia_rename
+		custom_tooltip = POL_UNLOCK_POLONIA
+		poland_region = {
+			add_nationalism = -20
+		}
+		unify_polish_cultures_effect = yes
+		add_ruler_modifier = {
+			name = "pol_father_of_poland"
+			duration = -1
+		}
+	}
+}
+
+#An Empire Between the Seas
+country_event = {
+	id = ab_poland.8
+	title = ab_poland.8.t
+	desc = ab_poland.8.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_poland.7.a
+		change_monarch_points_or_power = {
+			power = mil
+			points = 2
+		}
+		custom_tooltip = PLC_EVOLVING_IDEA_1
+		hidden_effect = {
+			set_country_flag = plc_evolved_ideas1
+			if = {
+				limit = {
+					tag = PLC
+				}
+				country_event = {
+					id = ideagroups.1
+				}
+			}
+		}
+	}
+}
+
+#Arrival of the Hussites
+country_event = {
+	id = ab_poland.9
+	title = ab_poland.9.t
+	desc = ab_poland.9.d
+	picture = HUSSITE_eventPicture
+	
+	fire_only_once = yes
+	
+	mean_time_to_happen = {
+		months = 24
+	}
+	
+	trigger = {
+		OR = {
+			tag = POL
+			tag = PLN
+		}
+		religion = catholic
+		any_owned_province = {
+			religion = hussite
+		}
+	}
+	
+	option = {
+		ai_chance = {
+			factor = 80
+		}
+		name = ab_poland.9.a
+		add_papal_influence = 10
+		add_country_modifier = {
+			name = "pol_purge_hussite_heresy"
+			duration = 3650
+		}
+	}
+	
+	option = {
+		ai_chance = {
+			factor = 20
+		}
+		name = ab_poland.9.b
+		add_stability = -2
+		change_religion = hussite
+		capital_scope = {
+			change_religion = hussite
+		}
+		set_ruler_religion = hussite
+		if = {
+			limit = {
+				has_heir = yes
+			}
+			set_heir_religion = hussite
+		}
+		add_country_modifier = {
+			name = "pol_embrace_hus"
+			duration = 3650
+		}
+	}
+}

@@ -829,9 +829,9 @@ trade_refusal = {
 
 mercantilism = {
 	global_prov_trade_power_modifier = 2.0
-	embargo_efficiency = 1
 	burghers_loyalty_modifier = 0.1
 	vaisyas_loyalty_modifier = 0.1
+	embargo_efficiency = 1
 }
 
 army_tradition = {
@@ -874,7 +874,7 @@ positive_piety = { #As of 1.23 Legalism
 	global_tax_modifier = 0.20
 	brahmins_muslim_loyalty_modifier = -0.1
 	church_loyalty_modifier = 0.1
-	dhimmi_loyalty_modifier = -0.1
+	piety_dhimmi_loyalty_modifier = -0.1
 }
 
 #For convenience, its multiplied by negative piety in code.
@@ -883,7 +883,7 @@ negative_piety = { #As of 1.23 Mysticism
 	global_missionary_strength = 0.03
 	idea_cost = -0.1
 	brahmins_muslim_loyalty_modifier = 0.1
-	church_loyalty_modifier = -0.1
+	piety_church_loyalty_modifier = -0.1
 	dhimmi_loyalty_modifier = 0.1
 }
 
@@ -1301,6 +1301,17 @@ BYZ_discipline = {
 	discipline = 0.05
 }
 
+soyurghal_base_overlord_modifiers = {
+	land_forcelimit_modifier = 0.05
+	soyurghals_amount_check_influence = 1 #used for exporting, invisible by default
+}
+
+soyurghal_base_modifiers = { #slightly weaker pronoia but without penalties
+	global_manpower = 5
+	global_manpower_modifier = 0.25
+	global_regiment_cost = -0.25
+}	
+
 tributary_state_behind_overlord_tech_adm = {
 	adm_tech_cost_modifier = -0.05
 }
@@ -1560,6 +1571,7 @@ eyalet_modifier = {
 #scales to amount of up-to-date forts compared to total development
 maintained_forts = {
 	army_tradition = 1
+	nobles_loyalty_modifier_forts = 0.1 
 }
 
 gov_rank_1 = {
@@ -2246,9 +2258,11 @@ guru_teaching = {
 }
 
 diplomatic_reputation = {
+	num_of_soyurghals = 0.5
 }
 
 tolerance_own = {
+	monthly_divine_authority = 0.03
 }
 
 tolerance_heretic = {
@@ -2414,4 +2428,9 @@ sailors_percentage = {
 
 reverse_sailors_percentage = {
 
+}
+
+may_dynastic_influence_modifier = {
+	legitimacy = 0.25 
+	land_forcelimit = 3
 }

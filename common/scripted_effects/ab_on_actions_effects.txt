@@ -606,6 +606,16 @@ ab_on_culture_demoted_effect = {
 		}
 		remove_country_modifier = ser_greek_union
 	}
+	
+	if = {
+		limit = {
+			has_country_modifier = pol_ruthenian_union
+			NOT = {
+				accepted_culture = ruthenian
+			}
+		}
+		remove_country_modifier = pol_ruthenian_union
+	}
 }
 
 ab_on_alliance_created_effect = {
@@ -721,6 +731,24 @@ ab_on_battle_won_country_effect = {
 			power_type = latin_zealotry
 			value = 0.5
 		}
+	}
+	if = {
+		limit = {
+			has_mission = pol_pagan_perun
+			FROM = {
+				religion_group = christian
+			}
+		}
+		change_variable = { which = num_of_won_battles_against_christians value = 1 }
+	}
+	if = {
+		limit = {
+			mission_completed = pol_pagan_perun
+			FROM = {
+				religion_group = christian
+			}
+		}
+		add_army_tradition = 0.25
 	}
 }
 
@@ -2116,3 +2144,6 @@ ab_on_centralized_state_effect = {
 		}
 	}
 }
+
+# Used by on_age_ability_taken = { age = age_of_imperialism }
+on_age_ability_taken_age_of_imperialism = { }

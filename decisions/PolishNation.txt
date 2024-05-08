@@ -82,7 +82,6 @@ country_decisions = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			unify_polish_cultures_effect = yes
 			if = {
 				limit = {
 					government = monarchy
@@ -96,11 +95,42 @@ country_decisions = {
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
 			set_country_flag = formed_poland_flag
+			remove_country_modifier = pol_unite_lechitic_tribes
 		}
 		ai_will_do = {
 			factor = 1
 		}
 		ai_importance = 400 #If there is no Poland then Polish minors will prioritize reforming it.
+	}
+
+	pol_move_capital = {
+		major = yes
+		potential = {
+			OR = {
+				tag = LUD
+				was_tag = LUD
+			}
+			mission_completed = pol_orthodox_mother_of_cities
+			NOT = { has_country_flag = pol_moved_capital }
+		}
+		allow = {
+			is_core = 280
+			owns = 280
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no	
+		}
+		effect = {
+			set_capital = 280
+			280 = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
 	}
 	
 }

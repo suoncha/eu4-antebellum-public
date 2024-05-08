@@ -1,0 +1,42 @@
+country_decisions = {
+
+	rename_polonia = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = formed_polonia }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			OR = {
+				tag = POL
+				tag = PLC
+			}
+			OR = {
+				religion = catholic
+				religion = hussite
+			}
+			has_country_flag = pol_unlocked_polonia_rename
+			is_colonial_nation = no
+			OR = {
+				is_former_colonial_nation = no
+				AND = {
+					is_former_colonial_nation = yes
+					ai = no
+				}
+			}
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+		}
+		effect = {
+			override_country_name = PROCLAIM_POLONIA
+			set_country_flag = formed_polonia
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

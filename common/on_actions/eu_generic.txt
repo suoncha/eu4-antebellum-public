@@ -13,8 +13,21 @@ on_battle_won_country = {
 on_expanded_infrastructure = {
 	if = {
 		limit = {
+			is_capital = yes
 			owner = {
 				has_country_flag = expand_infrastructure_bonus_flag
+				NOT = {
+					check_variable = {
+						which = expanded_infrastructure_bonus
+						value = 3
+					}
+				}
+			}
+		}
+		owner = {
+			change_variable = {
+				which = expanded_infrastructure_bonus
+				value = 1
 			}
 		}
 		random_list = {
@@ -87,7 +100,7 @@ on_mil_development = {
 	}
 }
 
-ab_on_admiral_recruited_effect = {
+on_admiral_recruited_effect = {
 	if = {
 		limit = {
 			has_country_flag = eu_admiral_navy_tradition

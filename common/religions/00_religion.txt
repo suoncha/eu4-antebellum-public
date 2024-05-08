@@ -385,6 +385,7 @@ christian = {
 			taborite_resurgence_aspect
 			orphan_hetmans_aspect
 			freedom_to_preach_aspect
+			rekindle_the_hussite_wars_aspect
 		}
 		aspects_name = PROTESTANT_ASPECTS
 		
@@ -652,6 +653,7 @@ christian = {
 		fervor = yes
 	}
 
+	# AB [[[
 	gaelic_ab = {
         color = { 87 205 58 }
         icon = 43
@@ -684,6 +686,7 @@ christian = {
         
         heretic = { INSULAR }
     }
+	# ]]]
 
 	orthodox = {
 		color = { 178 127 0 }
@@ -692,6 +695,7 @@ christian = {
 			stability_cost_modifier = -0.1
 			tolerance_own = 1
 		}
+		# AB [[[
 		allowed_center_conversion = {
 			catholic
 			protestant
@@ -700,6 +704,7 @@ christian = {
 			reformed
 			nestorian
 		}
+		# ]]]
 		country_as_secondary = {
 			global_colonial_growth = 10
 			tolerance_own = 1
@@ -721,14 +726,14 @@ christian = {
 				discipline = 0.05
 				manpower_recovery_speed = 0.1
 				
-				# AB {{{
+				# AB [[[
 				allow = {
 					religion = orthodox
 				}
 				visible = {
 					religion = orthodox
 				}
-				# }}}
+				# ]]]
 
 				ai_will_do = {
 					factor = 0.05
@@ -746,15 +751,15 @@ christian = {
 			icon_eleusa = {
 				global_unrest = -3
 				harsh_treatment_cost = -0.25
-				
-				# AB {{{
+
+				# AB [[[
 				allow = {
 					religion = orthodox
 				}
 				visible = {
 					religion = orthodox
 				}
-				# }}}
+				# ]]]		
 
 				ai_will_do = {
 					factor = 0.02
@@ -785,15 +790,15 @@ christian = {
 				development_cost = -0.10
 				build_cost = -0.1
 				
-				# AB {{{
+				# AB [[[
 				allow = {
 					religion = orthodox
 				}
 				visible = {
 					religion = orthodox
 				}
-				# }}}
-
+				# ]]]
+				
 				ai_will_do = {
 					factor = 0
 				}
@@ -803,15 +808,14 @@ christian = {
 				improve_relation_modifier = 0.25
 				ae_impact = -0.1
 				
-				# AB {{{
+				# AB [[[
 				allow = {
 					religion = orthodox
 				}
 				visible = {
 					religion = orthodox
 				}
-				# }}}
-
+				# ]]]
 				ai_will_do = {
 					factor = 0.01
 				}
@@ -821,15 +825,14 @@ christian = {
 				global_institution_spread = 0.25
 				embracement_cost = -0.2
 
-				# AB {{{
+				# AB [[[
 				allow = {
 					religion = orthodox
 				}
 				visible = {
 					religion = orthodox
 				}
-				# }}}
-
+				# ]]]
 				ai_will_do = {
 					factor = 0.02
 					modifier = {
@@ -856,8 +859,7 @@ christian = {
 					}
 				}
 			}
-			
-			# AB {{{
+			# AB [[[
 			icon_rostislav = {
 				global_missionary_strength = 0.02
 				missionaries = 1
@@ -866,9 +868,9 @@ christian = {
 					religion = orthodox
 					if = {
 						limit = {
-							has_country_flag = has_unlocked_rostislav_icon
+							has_mission = pol_orthodox_unite_with_moravia
 						}
-						has_country_flag = has_unlocked_rostislav_icon
+						mission_completed = pol_orthodox_unite_with_moravia
 					}
 					else_if = {
 						limit = {
@@ -882,9 +884,15 @@ christian = {
 						}
 						mission_completed = bulgaria_revive_moravia
 					}
+					else_if = {
+						limit = {
+							has_country_flag = has_unlocked_rostislav_icon
+						}
+						has_country_flag = has_unlocked_rostislav_icon
+					}
 					else = {
 						custom_trigger_tooltip = {
-							tooltip = only_mva_and_bul_can_unlock
+							tooltip = only_mva_bul_and_led_can_unlock
 							always = no
 						}
 					}
@@ -1010,11 +1018,11 @@ christian = {
 					factor = 0
 				}
 			}
-			# }}}
+			# ]]]
 		}
 	}
 	
-	# AB {{{
+	# AB [[[
 	# TODO: add `heretic = { HERETIC_NAME_1 HERETIC_NAME_2 HERETIC_NAME_N... }`
 	nestorian = {
 	
@@ -1306,8 +1314,8 @@ christian = {
 			}
 		}
 	}
-	# }}}
-	
+	# ]]]
+
 	coptic = {
 	
 		flags_with_emblem_percentage = 20
@@ -1325,6 +1333,12 @@ christian = {
 		}
 		province = {
 			local_missionary_strength = -0.02
+		}
+		allowed_center_conversion = {
+			orthodox
+			sunni
+			shiite
+			ibadi
 		}
 		
 		heretic = { ZAMIKAELITES STEPHANITES EUSTATHIANS }
@@ -1873,6 +1887,13 @@ muslim = {
 	sunni = {
 		color = { 0 153 0 }
 		icon = 5
+		allowed_center_conversion = {
+			ibadi
+			shiite
+			# AB [[[
+			zoroastrian
+			# ]]]
+		}
 		country = {
 			cav_to_inf_ratio = 0.10
 			heir_chance = 1.0
@@ -1880,9 +1901,6 @@ muslim = {
 		country_as_secondary = {
 			trade_efficiency = 0.1
 			heir_chance = 1.0
-		}
-		allowed_center_conversion = {
-			zoroastrian
 		}
 		province = {
 			local_missionary_strength = -0.02
@@ -1895,7 +1913,11 @@ muslim = {
 
 	shiite = {
 		color = { 0 204 0 }
-		icon = 6
+		icon = 6	
+		allowed_center_conversion = {
+			sunni
+			ibadi
+		}
 		country = {
 			heir_chance = 1.0
 			land_morale = 0.05
@@ -1915,7 +1937,11 @@ muslim = {
 	
 	ibadi = {
 		color = { 0 102 0 }
-		icon = 16
+		icon = 16	
+		allowed_center_conversion = {
+			sunni
+			shiite
+		}
 		country = {
 			heir_chance = 1.0
 			global_trade_goods_size_modifier = 0.1
@@ -1974,7 +2000,7 @@ eastern = {
 		uses_karma = yes
 	}
 	
-	# AB {{{
+	# AB [[[
 	maitreya = {
         color = { 222 0 43 }
         icon = 34
@@ -2006,7 +2032,7 @@ eastern = {
         
         uses_karma = yes
     }
-	# }}}
+	# ]]]
 	
 	vajrayana = {
 		color = { 204 76 76 }
@@ -2146,6 +2172,7 @@ dharmic = {
 		heretic = { BHAKTI }
 	}
 
+	# AB [[[
 	zunist = {
 		color = { 255 255 255 }
 		icon = 38
@@ -2176,6 +2203,7 @@ dharmic = {
 
 		heretic = { BHAKTI }
 	}
+	# ]]]
 
 	sikhism = {
 		color = { 0 153 153 }
@@ -2794,7 +2822,7 @@ dharmic = {
 	crusade_name = CRUSADE
 }
 
-# AB {{{
+# AB [[[
 reformed_pagan = {
 	defender_of_faith = yes
 	
@@ -2959,7 +2987,7 @@ reformed_pagan = {
 	crusade_name = CRUSADE
 	harmonized_modifier = harmonized_reformed_pagan
 }
-# }}}
+# ]]]
 
 pagan = {
 
@@ -2973,9 +3001,9 @@ pagan = {
 			tolerance_own = 1
 			global_unrest = -1
 		}
-		# AB {{{
+		# AB [[[
 		personal_deity = yes
-		# }}}
+		# ]]]
 		country_as_secondary = {
 			tolerance_own = 2
 			loot_amount = 0.25
@@ -3040,6 +3068,7 @@ pagan = {
 		
 		authority = yes
 		religious_reforms = yes
+		require_reformed_for_institution_development = yes
 		reform_tooltip = INTI_REFORM_TOOLTIP
 		
 		heretic = { INTI_HERETIC }	
@@ -3064,6 +3093,7 @@ pagan = {
 		doom = yes
 		declare_war_in_regency = yes
 		religious_reforms = yes
+		require_reformed_for_institution_development = yes
 		reform_tooltip = NAHUATL_REFORM_TOOLTIP
 		
 		heretic = { NAHUATL_HERETIC }	
@@ -3075,16 +3105,17 @@ pagan = {
 		icon = 19
 		country = {
 			tolerance_own = 1
-			advisor_pool = 1
+			same_religion_advisor_cost = -0.1
 		}
 		country_as_secondary = {
-			advisor_pool = 1
+			same_religion_advisor_cost = -0.1
 			stability_cost_modifier = -0.1
 		}
 		province = {
 			local_missionary_strength = 0.02
 		}
 		
+		require_reformed_for_institution_development = yes
 		religious_reforms = yes
 		reform_tooltip = MESOAMERICAN_REFORM_TOOLTIP
 		
@@ -3095,9 +3126,10 @@ pagan = {
 		icon = 21
 		color = { 191 191 191 }
 		country = {
-			# AB {{[
+			# AB [[[
+			#land_forcelimit_modifier = 0.10
 			may_perform_slave_raid = yes
-			# }}}
+			# ]]]
 			naval_forcelimit_modifier = 0.10
 		}
 		country_as_secondary = {
@@ -3112,8 +3144,8 @@ pagan = {
 		
 		heretic = { OLD_NORSE }	
 	}
-	
-	# AB {{{
+
+	# AB [[[
 	slavic_pagan = {
 		icon = 30
 		color = { 88 99 131 }
@@ -3211,8 +3243,8 @@ pagan = {
 		heretic = { OLD_SUOMI }
 	
 	}
-	# }}}
-	
+	# ]]]
+
 	tengri_pagan_reformed = {
 		icon = 27
 		color = { 25 76 217 }
@@ -3220,10 +3252,12 @@ pagan = {
 			cav_to_inf_ratio = 0.25
 			global_regiment_cost = -0.2
 		}
+		# AB [[[
 		country_as_secondary = {
 			cav_to_inf_ratio = 0.25
 			global_regiment_cost = -0.05
 		}
+		# ]]]
 		can_have_secondary_religion = yes
 		heretic = { OLD_TENGRI }
 	}
@@ -3416,7 +3450,8 @@ zoroastrian_group = {
 		
 		heretic = { MAZDAKI MANICHEAN }	
 	}
-
+	# AB [[[
+	
 	manichaean = {
 		color = { 37 147 139 }
 		icon = 37
@@ -3452,6 +3487,7 @@ zoroastrian_group = {
 
 		date = 240.1.1
 	}
+	# ]]]
 	
 	harmonized_modifier = harmonized_zoroastrian_group
 	
