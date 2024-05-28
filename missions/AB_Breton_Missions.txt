@@ -635,11 +635,6 @@ BRI_missions_3 = {
 		
 		provinces_to_highlight = {
 			province_id = 170
-			OR = {
-				has_dock_building_trigger = no
-				NOT = { owned_by = ROOT }
-				NOT = { controlled_by = ROOT }
-			}
 		}
 		trigger = {
 			170 = {
@@ -649,17 +644,8 @@ BRI_missions_3 = {
 			}
 		}
 		effect = {
-			if = {
-				limit = {
-					170 = {
-						NOT = {
-							has_building = drydock
-						}
-					}
-				}
-				170 = {
-					add_building = drydock
-				}
+			170 = {
+				add_or_upgrade_dock_building = yes
 			}
 			170 = {
 				add_unit_construction = {

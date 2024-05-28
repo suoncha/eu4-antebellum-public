@@ -105,6 +105,11 @@ ab_japan_first = {
 		
 		provinces_to_highlight = {
 			area = hokkaido_area
+			OR = {
+				NOT = { owned_by = ROOT }
+				local_autonomy_above_min = 20
+				nationalism = 1
+			}
 		}
 		
 		effect = {
@@ -972,6 +977,7 @@ japanese_missions_eoc_1 = {
 					add_stability_or_adm_power = yes 
 				}
 			}
+			custom_tooltip = AB_EMPTY
 			hidden_effect = {
 				if = {
 					limit = { 
@@ -1977,321 +1983,92 @@ japanese_missions_eoc_2 = {
 		}
 		
 		effect = {
-			custom_tooltip = mng_exam_system_reward_tt
-			tooltip = { 
-				country_event = { id = flavor_mng.30 } 
-			}
-			# custom_tooltip = mng_insight_30_tt
-			
-			custom_tooltip = mng_cmb_reward_tt #Reduce Malus of the starting negative modifier by -10% 
-			
 			if = {
 				limit = {
-					NOT = { has_harmonized_with = pagan }
-					NOT = { has_harmonized_with = vajrayana }
-					religion = confucianism
+					has_reform = examination_system_reform
 				}
-				custom_tooltip = mng_db_reward_1_tt
-				tooltip = {
-					add_harmonized_religion = pagan
-					add_harmonized_religion = vajrayana
-					add_harmony = 10
+				custom_tooltip = AB_HAS_EXAM_SYSTEM
+				hidden_effect = {
+					country_event = { id = flavor_mng.30 }
 				}
 			}
 			else = {
-				custom_tooltip = mng_db_reward_1_tt
-				tooltip = {
-					add_country_modifier = {
-						name = mng_decentralized_migration_modifier
-						duration = -1 
-					}
-				}
+				custom_tooltip = AB_HAS_EXAM_SYSTEM_NO
 			}
-			
-			custom_tooltip = mng_erc_reward_tt #20 mana per Eunuch privilege 
-			
-			custom_tooltip = mng_rf_reward_tt 
-			
-			custom_tooltip = mng_rc_reward_tt
-			
-			custom_tooltip = mng_rotc_reward_tt
-			tooltip = {
-				if = {
-					limit = { 
-						has_dlc = "Rights of Man" 
-						NOT = { num_of_ruler_traits = { amount = 3 } }
-						NOT = { dip = 6 } 
-					}
-					change_dip = 1
-					add_ruler_personality = silver_tongue_personality
-				}
-				else_if = { 
-					limit = { 
-						NOT = { dip = 5 } 
-					}
-					change_dip = 1
-					add_dip_power = 100 
-				} 
-				else = { add_dip_power = 200 }
-			}
-			
-			custom_tooltip = mng_cc_reward_tt
+			#custom_tooltip = mng_exam_system_reward_tt
 			tooltip = { 
-				create_explorer = { tradition = 80 } 
-				add_country_modifier = { 
-					name = mng_colonial_focus
-					duration = 7300 
-				}
+				country_event = { id = flavor_mng.30 } 
 			}
-			hidden_effect = {
-				if = {	
-					limit = { has_reform = examination_system_reform }
-					country_event = { id = flavor_mng.30 }
+			#custom_tooltip = mng_insight_30_tt
+			
+			if = {
+				limit = {
+					NOT = { has_reform = examination_system_reform }
+					government_reform_progress = 250
 				}
-				else = { change_government_reform_progress = -250 }
-				
-				if = {
-					limit = { 
-						has_country_modifier = mng_starting_malus_5_modifier 
-						OR = {
-							has_reform = centralize_empire_reform
-							has_reform = centralize_reform 
-						}
-					}
-					remove_country_modifier = mng_starting_malus_5_modifier 
-					add_country_modifier = {
-						name = mng_starting_malus_4_modifier
-						duration = -1 
-					}
-				}
-				else_if = {
-					limit = { 
-						has_country_modifier = mng_starting_malus_4_modifier 
-						OR = {
-							has_reform = centralize_empire_reform
-							has_reform = centralize_reform 
-						}
-					}
-					remove_country_modifier = mng_starting_malus_4_modifier
-					add_country_modifier = {
-						name = mng_starting_malus_3_modifier
-						duration = -1 
-					}
-				}
-				else_if = {
-					limit = { 
-						has_country_modifier = mng_starting_malus_3_modifier 
-						OR = {
-							has_reform = centralize_empire_reform
-							has_reform = centralize_reform 
-						}
-					}
-					remove_country_modifier = mng_starting_malus_3_modifier
-					add_country_modifier = {
-						name = mng_starting_malus_2_modifier
-						duration = -1 
-					}
-				}
-				else_if = {
-					limit = { 
-						has_country_modifier = mng_starting_malus_2_modifier 
-						OR = {
-							has_reform = centralize_empire_reform
-							has_reform = centralize_reform 
-						}
-					}
-					remove_country_modifier = mng_starting_malus_1_modifier
-					add_country_modifier = {
-						name = mng_starting_malus_2_modifier
-						duration = -1 
-					}
-				}
-				else_if = {
-					limit = { 
-						has_country_modifier = mng_starting_malus_1_modifier 
-						OR = {
-							has_reform = centralize_empire_reform
-							has_reform = centralize_reform 
-						}
-					}
-					remove_country_modifier = mng_starting_malus_1_modifier
-				}
-				else_if = {
-					limit = { 
-						is_emperor_of_china = yes 
-						OR = {
-							has_reform = centralize_empire_reform
-							has_reform = centralize_reform 
-						}
-					} 
-					add_mandate = 5
-				}
-				else_if = {
-					limit = { 
-						is_emperor_of_china = no 
-						OR = {
-							has_reform = centralize_empire_reform
-							has_reform = centralize_reform 
-						}
-					}
-					add_adm_power = 200
-				}
-				
-				if = {
-					limit = {
-						OR = {
-							NOT = { has_harmonized_with = pagan }
-							NOT = { has_harmonized_with = vajrayana }
-						}
-						religion = confucianism
-						has_reform = decentralize_reform
-					}
-					add_harmonized_religion = pagan
-					add_harmonized_religion = vajrayana
-					add_harmony = 10 
-					change_government_reform_progress = -250
-				}
-				else_if = {
-					limit = { has_reform = decentralize_reform } 
-					add_country_modifier = {
-						name = mng_decentralized_migration_modifier
-						duration = -1 
-					}
-				}
-				if = {
-					limit = { has_reform = expand_imperial_court_reform }
-					add_country_modifier = {
-						name = mng_expanded_eunuch_palatial_rights_modifier  
-						duration = -1 
-					}
-					set_estate_privilege = estate_eunuchs_bookkeepers_privilege
-					if = {
-						limit = { 
-							num_of_estate_privileges = {
-								estate = estate_eunuchs 
-								value = 6 
-							}
-						}
-						add_adm_power = 120 
-						add_dip_power = 120 
-						add_mil_power = 120 
-					}
-					else_if = {
-						limit = { 
-							num_of_estate_privileges = {
-								estate = estate_eunuchs 
-								value = 5 
-							}
-						}
-						add_adm_power = 100
-						add_dip_power = 100 
-						add_mil_power = 100
-					}
-					else_if = {
-						limit = { 
-							num_of_estate_privileges = {
-								estate = estate_eunuchs 
-								value = 4 
-							}
-						}
-						add_adm_power = 80
-						add_dip_power = 80 
-						add_mil_power = 80
-					}
-					else_if = {
-						limit = { 
-							num_of_estate_privileges = {
-								estate = estate_eunuchs 
-								value = 3 
-							}
-						}
-						add_adm_power = 60
-						add_dip_power = 60 
-						add_mil_power = 60
-					}
-					else_if = {
-						limit = { 
-							num_of_estate_privileges = {
-								estate = estate_eunuchs 
-								value = 2 
-							}
-						}
-						add_adm_power = 40
-						add_dip_power = 40 
-						add_mil_power = 40
-					}
-					else = {
-						add_adm_power = 20
-						add_dip_power = 20 
-						add_mil_power = 20
-					}
-				}
-				if = {
-					limit = { has_reform = limit_imperial_court_reform }
+				custom_tooltip = AB_HAS_250_REFORM_PROGRESS
+				hidden_effect = {
 					define_advisor = {
 						type = natural_scientist
-						cost_multiplier = 0.5 
+						cost_multiplier = 0.33 
 						skill = 2
 					}
 					define_advisor = {
 						type = trader
-						cost_multiplier = 0.5 
+						cost_multiplier = 0.33
 						skill = 2
 					}
 					define_advisor = {
 						type = quartermaster
-						cost_multiplier = 0.5 
+						cost_multiplier = 0.33
 						skill = 2
 					}
 				}
-				if = {
-					limit = { has_reform = regional_council_reform }
-					every_owned_province = {
-						limit = { has_courthouse_building_trigger = yes development = 15 } 
-						add_building = town_hall
-						add_base_tax = 1 
-					}
+			}
+			else = {
+				custom_tooltip = AB_HAS_250_REFORM_PROGRESS_NO
+			}
+			#custom_tooltip = pol_alternatively_tt
+			tooltip = {
+				define_advisor = {
+					type = natural_scientist
+					cost_multiplier = 0.33 
+					skill = 2
 				}
-				if = {
-					limit = { 
-						has_reform = representation_of_the_crown_reform
-						has_dlc = "Rights of Man" 
-						NOT = { num_of_ruler_traits = { amount = 3 } }
-						NOT = { dip = 6 } 
-					}
-					every_subject_country = {
-						add_trust = {
-							who = ROOT 
-							value = 20
-							mutual = yes 
-						}
-						add_liberty_desire = -25 
-					}
-					change_dip = 1
-					add_ruler_personality = silver_tongue_personality
+				define_advisor = {
+					type = trader
+					cost_multiplier = 0.33
+					skill = 2
 				}
-				else_if = { 
-					limit = { 
-						has_reform = representation_of_the_crown_reform
-						NOT = { dip = 5 } 
-					}
-					change_dip = 1
-					add_dip_power = 100 
-				} 
-				else_if = { 
-					limit = { has_reform = representation_of_the_crown_reform } 
-					add_dip_power = 200 
-				}
-				
-				if = {
-					limit = { has_reform = penal_colonies_reform } 
-					create_explorer = { tradition = 80 } 
-					add_country_modifier = { 
-						name = mng_colonial_focus
-						duration = 7300 
-					}
+				define_advisor = {
+					type = quartermaster
+					cost_multiplier = 0.33
+					skill = 2
 				}
 			}
+			# hidden_effect = {
+			# 	if = {	
+			# 		limit = { has_reform = examination_system_reform }
+			# 		country_event = { id = flavor_mng.30 }
+			# 	}
+			# 	else = { 
+			# 		define_advisor = {
+			# 			type = natural_scientist
+			# 			cost_multiplier = 0.33 
+			# 			skill = 2
+			# 		}
+			# 		define_advisor = {
+			# 			type = trader
+			# 			cost_multiplier = 0.33
+			# 			skill = 2
+			# 		}
+			# 		define_advisor = {
+			# 			type = quartermaster
+			# 			cost_multiplier = 0.33
+			# 			skill = 2
+			# 		}
+			# 	}
+			# }
 		}
 	}
 	
@@ -3255,8 +3032,7 @@ japanese_missions_eoc_3 = {
 				}
 			}
 			2140 = { 
-				add_building = cathedral 
-				remove_building = temple 
+				upgrade_tax_building = yes
 			}
 			add_stability_or_adm_power = yes 
 		}
@@ -3543,7 +3319,7 @@ ab_japan_fourth = {
 				add_navy_tradition = 20
 			}
 			hidden_effect = {
-				IF = {
+				if = {
 					limit = {
 						has_flagship = yes
 					}
@@ -3745,7 +3521,7 @@ ab_japan_fourth = {
 					religion = shinto
 				}
 				custom_tooltip = JAP_SHINTO_REWARD
-				tooltip = {
+				hidden_effect = {
 					1029 = {
 						add_great_project_tier = {
 							type = mount_fuji
@@ -3756,12 +3532,12 @@ ab_japan_fourth = {
 			}
 			else = {
 				custom_tooltip = JAP_SHINTO_REWARD_NO
-				tooltip = {
-					1029 = {
-						add_great_project_tier = {
-							type = mount_fuji
-							tier = 1
-						}
+			}
+			tooltip = {
+				1029 = {
+					add_great_project_tier = {
+						type = mount_fuji
+						tier = 1
 					}
 				}
 			}
@@ -3772,7 +3548,7 @@ ab_japan_fourth = {
 					}
 				}
 				custom_tooltip = JAP_NONSHINTO_REWARD
-				tooltip = {
+				hidden_effect = {
 					define_advisor = {
 						type = theologian
 						skill = 3
@@ -3784,36 +3560,14 @@ ab_japan_fourth = {
 			}
 			else = {
 				custom_tooltip = JAP_NONSHINTO_REWARD_NO
-				tooltip = {
-					define_advisor = {
-						type = theologian
-						skill = 3
-						religion = ROOT
-						culture = ROOT
-						cost_multiplier = 0.5
-					}
-				}
 			}
-			hidden_effect = {
-				if = {
-					limit = {
-						religion = shinto
-					}
-					1029 = {
-						add_great_project_tier = {
-							type = mount_fuji
-							tier = 1
-						}
-					}
-				}
-				else = {
-					define_advisor = {
-						type = theologian
-						skill = 3
-						religion = ROOT
-						culture = ROOT
-						cost_multiplier = 0.5
-					}
+			tooltip = {
+				define_advisor = {
+					type = theologian
+					skill = 3
+					religion = ROOT
+					culture = ROOT
+					cost_multiplier = 0.5
 				}
 			}
 		}
@@ -3963,9 +3717,8 @@ ab_japan_fourth = {
 		trigger = {
 			custom_trigger_tooltip = {
 				tooltip = gor_rival_europe
-				any_country = {
+				any_rival_country = {
 					capital_scope = { continent = europe }
-					is_rival = ROOT
 				}
 			}
 		}
@@ -4076,9 +3829,7 @@ japanese_missions_eoc_4 = {
 		provinces_to_highlight = { 
 			OR = { 
 				province_id = 684 
-				province_id = 1822 
-				province_id = 2145 
-				province_id = 1821
+				province_id = 1816
 			}
 			OR = { 
 				NOT = { num_of_buildings_in_province = 3 }
@@ -4093,7 +3844,7 @@ japanese_missions_eoc_4 = {
 				684 = {
 					OR = { 
 						has_great_project = {
-							type = grand_canal_1
+							type = southern_canal
 							tier = 2 
 						}
 						AND = {
@@ -4120,10 +3871,10 @@ japanese_missions_eoc_4 = {
 			}
 			if = { 
 				limit = { has_dlc = "Leviathan" }
-				1822 = { 
+				1816 = { 
 					OR = { 
 						has_great_project = {
-							type = grand_canal_2
+							type = northern_canal
 							tier = 2 
 						}
 						AND = {
@@ -4135,76 +3886,16 @@ japanese_missions_eoc_4 = {
 				}
 			}
 			else = { 
-				1822 = { num_of_times_improved = 5 }
+				1816 = { num_of_times_improved = 5 }
 			} 
 			if = {
 				limit = { has_dlc = "Mandate of Heaven" }
-				1822 = {
+				1816 = {
 					NOT = { devastation = 1 } 
 				}
 			}
 			else = { 
-				1822 = {
-					NOT = { local_autonomy_above_min = 5 } 
-				}
-			}
-			if = { 
-				limit = { has_dlc = "Leviathan" }
-				2145 = { 
-					OR = { 
-						has_great_project = {
-							type = grand_canal_3
-							tier = 2 
-						}
-						AND = {
-							num_of_buildings_in_province = 3
-							has_production_building_trigger = yes 
-							num_of_times_expanded_infrastructure = 1 
-						}
-					}
-				}
-			}
-			else = { 
-				2145 = { num_of_times_improved = 5 }
-			} 
-			if = {
-				limit = { has_dlc = "Mandate of Heaven" }
-				2145 = {
-					NOT = { devastation = 1 } 
-				}
-			}
-			else = { 
-				2145 = {
-					NOT = { local_autonomy_above_min = 5 } 
-				}
-			}
-			if = { 
-				limit = { has_dlc = "Leviathan" }
-				1821 = { 
-					OR = { 
-						has_great_project = {
-							type = grand_canal_4
-							tier = 2 
-						}
-						AND = {
-							num_of_buildings_in_province = 3
-							has_production_building_trigger = yes 
-							num_of_times_expanded_infrastructure = 1 
-						}
-					}
-				}
-			}
-			else = { 
-				1821 = { num_of_times_improved = 5 }
-			} 
-			if = {
-				limit = { has_dlc = "Mandate of Heaven" }
-				1821 = {
-					NOT = { devastation = 1 } 
-				}
-			}
-			else = { 
-				1821 = {
+				1816 = {
 					NOT = { local_autonomy_above_min = 5 } 
 				}
 			}
@@ -4274,36 +3965,16 @@ japanese_missions_eoc_4 = {
 					duration = -1 
 				}
 			}
-			
-			if = {
-				limit = { 
-					NOT = { is_institution_enabled = printing_press } 
-				}
-				custom_tooltip = mng_before_printing_press_embraced_tt
-				hidden_effect = { 
-					every_owned_province = { 
-						limit = {
-							trade_goods = paper 
-							base_production = 10 
-							has_production_building_trigger = yes 
-						}
-						add_institution_embracement = {
-							which = printing_press 
-							value = 100 
-						}
-					}
-				}
-			}
-			hidden_effect = {
+			hidden_effect = { 
 				every_owned_province = { 
 					limit = {
 						trade_goods = paper 
 						base_production = 10 
 						has_production_building_trigger = yes 
 					}
-					add_province_modifier = { 
-						name = mng_imperial_printing_center_modifier
-						duration = -1 
+					add_institution_embracement = {
+						which = printing_press 
+						value = 100 
 					}
 				}
 			}
@@ -4332,22 +4003,15 @@ ab_japan_fifth = {
 		trigger = {
 			num_of_owned_provinces_with = {
 				region = japan_region
-				OR = {
-					has_building = naval_battery
-					has_building = coastal_defence
-				}
+				has_coast_defense_building_trigger = yes
 				value = 10
 			}
 		}
 		
 		provinces_to_highlight = {
 			owned_by = ROOT
-			OR = {
-				NOT = {
-					has_building = naval_battery
-					has_building = coastal_defence
-				}
-			}
+			region = japan_region
+			has_road_building_trigger = no
 		}
 
 		effect = {

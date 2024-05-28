@@ -1347,14 +1347,13 @@ ab_ire_missions4 = {
 			mercantilism = 40
 			trade_income_percentage = 0.4
 			has_institution = global_trade
-			calc_true_if = {
-			  all_owned_province = {
+			num_of_owned_provinces_with = {
+				value = 12
+
 				OR = {
 					province_has_center_of_trade_of_level = 2
 					province_has_center_of_trade_of_level = 3
 				}
-			  }
-			  amount = 12
 			}
 		}
 		
@@ -1472,13 +1471,11 @@ ab_ire_missions5 = {
 					# Conditions under which we should stop
 					# highlighting
 					limit = {
-						calc_true_if = {
-							ROOT = {
-								all_owned_province = {
-									has_trade_building_trigger = yes
-								}
+						ROOT = {
+							num_of_owned_provinces_with = {
+								value = 5
+								has_trade_building_trigger = yes
 							}
-							amount = 5
 						}
 					}
 					always = no
@@ -1554,7 +1551,7 @@ ab_ire_missions5 = {
 		
 		effect = {
 			5158 = {
-				add_building = university
+				add_or_upgrade_university_building = yes
 			}
 			add_country_modifier = {
 				name = "ire_learning"
@@ -1609,15 +1606,14 @@ ab_ire_missions5 = {
 		position = 5
 		
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					OR = {
-						culture = irish
-						culture = goidelic
-					}
-					development = 10
+			num_of_owned_provinces_with = {
+				value = 10
+
+				OR = {
+					culture = irish
+					culture = goidelic
 				}
-				amount = 10
+				development = 10
 			}
 		}
 		
@@ -1666,20 +1662,19 @@ ab_ire_missions5 = {
 		}
 		
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					OR = {
-						has_building = mills
-						has_building = farm_estate
-						has_building = tradecompany
-						has_building = plantations
-						has_building = textile
-						has_building = weapons
-						has_building = wharf
-						has_building = furnace
-					}
+			num_of_owned_provinces_with = {
+				value = 10
+				
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
 				}
-				amount = 10
 			}
 		}
 		
