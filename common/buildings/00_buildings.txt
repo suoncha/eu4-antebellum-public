@@ -49,6 +49,9 @@ marketplace = {
 			}
 			add_prosperity = 5
 		}
+		# AB [[[
+		ab_building_trade_effect = yes
+		# ]]]
 	}
 	on_destroyed = {
 		remove_development_from_building = {
@@ -66,6 +69,9 @@ marketplace = {
 			}
 			add_prosperity = -5
 		}
+		# AB [[[
+		ab_removing_trade_effect = yes
+		# ]]]
 	}
 
 	on_construction_started = { } #Fires when you start the construction,  ROOT - Province FROM - Country that started
@@ -92,14 +98,7 @@ workshop = {
 			value = 1
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					has_reform = scottish_lawmaker_2_AB
-				}
-			}
-			add_base_production = 1
-		}
+		ab_building_production_effect = yes
 		# ]]]
 	}
 	on_destroyed = {
@@ -109,19 +108,7 @@ workshop = {
 			value = 1
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					has_reform = scottish_lawmaker_2_AB
-				}
-				THIS = {
-					NOT = {
-						nationalism = 0
-					}
-				}
-			}
-			add_base_production = -1
-		}
+		ab_removing_production_effect = yes
 		# ]]]
 	}
 	on_obsolete = {
@@ -216,35 +203,9 @@ temple = {
 				hidden = yes
 			}
 		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_flag = norway_mead_halls
-				}
-				OR = {
-					religion = norse_pagan_reformed
-					religion = reformed_norse
-				}
-			}
-			add_base_production = 1
-			set_province_flag = ab_production_from_norse_mead
-		}
-		if = {
-			limit = {
-				FROM = { mission_completed = pol_pagan_shrines }
-				OR = {
-					religion = slavic_pagan
-					religion = reformed_slavic
-				}
-				NOT = {
-					has_province_modifier = pol_slavic_holy_grounds
-				}
-			}
-			add_province_modifier = {
-				name = pol_slavic_holy_grounds
-				duration = -1
-			}
-		}
+		# AB [[[
+		ab_building_tax_effect = yes
+		# ]]]
 	}
 	on_destroyed = {
 		on_province_tax_building_destroyed_estate_privileges_effect = yes
@@ -302,24 +263,9 @@ temple = {
 			}
 			remove_province_modifier = azt_religious_classes
 		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_flag = norway_mead_halls
-				}
-				has_province_flag = ab_production_from_norse_mead
-			}
-			add_base_production = -1
-			hidden_effect = {
-				clr_province_flag = ab_production_from_norse_mead
-			}
-		}
-		if = {
-			limit = {
-				has_province_modifier = pol_slavic_holy_grounds
-			}
-			remove_province_modifier = pol_slavic_holy_grounds
-		}
+		# AB [[[
+		ab_removing_tax_effect = yes
+		# ]]]
 	}
 	on_obsolete = {
 	}
@@ -356,6 +302,9 @@ barracks = {
 				add_army_professionalism = 0.001
 			}
 		}
+		# AB [[[
+		ab_building_manpower_effect = yes
+		# ]]]
 		add_development_from_building = {
 			building = barracks
 			type = manpower
@@ -399,6 +348,9 @@ barracks = {
 				add_army_professionalism = -0.001
 			}
 		}
+		# AB [[[
+		ab_removing_manpower_effect = yes
+		# ]]]
 		remove_development_from_building = {
 			building = barracks
 			type = manpower
@@ -465,16 +417,7 @@ shipyard = {
 			value = 1
 		}
 		# AB [[[
-		if = {
-			limit = {
-				owner = { mission_completed = ned_shipbuilding }
-			}
-			add_province_modifier = {
-				name = ned_dutch_mission_shipyard
-				duration = -1
-				desc = NED_SHIPBUILDING_TIME_SHIPYARD
-			}
-		}
+		ab_building_shipyard_effect = yes
 		# ]]]
 	}
 	on_destroyed = {
@@ -488,10 +431,7 @@ shipyard = {
 			remove_province_modifier = sca_swe_danish_shipyard
 		}
 		# AB [[[
-		if = {
-			limit = { has_province_modifier = ned_dutch_mission_shipyard }
-			remove_province_modifier = ned_dutch_mission_shipyard
-		}
+		ab_removing_shipyard_effect = yes
 		# ]]]
 	}
 	on_obsolete = {
@@ -633,22 +573,7 @@ fort_15th = {
 			}
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					mission_completed = jsn_fortify_korea_2
-				}
-			}
-			add_base_manpower = 1
-		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_modifier = eng_improved_infrastructure
-				}
-			}
-			add_base_manpower = 1
-		}
+		ab_building_fort_effect = yes
 		# ]]]
 	}
 
@@ -691,22 +616,7 @@ fort_15th = {
 			remove_province_modifier = ned_low_countries_fort_buff_buffed
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					mission_completed = jsn_fortify_korea_2
-				}
-			}
-			add_base_manpower = -1
-		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_modifier = eng_improved_infrastructure
-				}
-			}
-			add_base_manpower = -1
-		}
+		ab_removing_fort_effect = yes
 		# ]]]
 	}
 
@@ -769,14 +679,7 @@ courthouse = {
 			}
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					has_reform = scottish_lawmaker_1_AB
-				}
-			}
-			add_nationalism = -2
-		}
+		ab_building_courthouse_effect = yes
 		# ]]]
 	}
 	on_destroyed = {
@@ -787,19 +690,7 @@ courthouse = {
 		}
 		remove_province_modifier = fra_improved_court_houses_modifier
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					has_reform = scottish_lawmaker_1_AB
-				}
-				THIS = {
-					NOT = {
-						nationalism = 0
-					}
-				}
-			}
-			add_nationalism = 2
-		}
+		ab_removing_courthouse_effect = yes
 		# ]]]
 	}
 	on_obsolete = {
@@ -1170,22 +1061,7 @@ fort_16th = {
 			}
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					mission_completed = jsn_fortify_korea_2
-				}
-			}
-			add_base_manpower = 1
-		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_modifier = eng_improved_infrastructure
-				}
-			}
-			add_base_manpower = 1
-		}
+		ab_building_fort_effect = yes
 		# ]]]
 	}
 
@@ -1216,22 +1092,7 @@ fort_16th = {
 			remove_province_modifier = ned_low_countries_fort_buff_buffed
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					mission_completed = jsn_fortify_korea_2
-				}
-			}
-			add_base_manpower = -1
-		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_modifier = eng_improved_infrastructure
-				}
-			}
-			add_base_manpower = -1
-		}
+		ab_removing_fort_effect = yes
 		# ]]]
 	}
 
@@ -1351,37 +1212,7 @@ cathedral = {
 			hidden = yes
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					has_country_flag = norway_mead_halls
-				}
-				OR = {
-					religion = norse_pagan_reformed
-					religion = reformed_norse
-				}
-			}
-			add_base_production = 1
-			hidden_effect = {
-				set_province_flag = ab_production_from_norse_mead
-			}
-		}
-		if = {
-			limit = {
-				FROM = { mission_completed = pol_pagan_shrines }
-				OR = {
-					religion = slavic_pagan
-					religion = reformed_slavic
-				}
-				NOT = {
-					has_province_modifier = pol_slavic_holy_grounds
-				}
-			}
-			add_province_modifier = {
-				name = pol_slavic_holy_grounds
-				duration = -1
-			}
-		}
+		ab_building_tax_effect = yes
 		# ]]]
 	}
 	on_destroyed = {
@@ -1441,24 +1272,7 @@ cathedral = {
 			remove_province_modifier = azt_religious_classes
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					has_country_flag = norway_mead_halls
-				}
-				has_province_flag = ab_production_from_norse_mead
-			}
-			add_base_production = -1
-			hidden_effect = {
-				clr_province_flag = ab_production_from_norse_mead
-			}
-		}
-		if = {
-			limit = {
-				has_province_modifier = pol_slavic_holy_grounds
-			}
-			remove_province_modifier = pol_slavic_holy_grounds
-		}
+		ab_removing_tax_effect = yes
 		# ]]]
 	}
 	on_obsolete = {
@@ -1484,6 +1298,9 @@ university = {
 			type = tax
 			value = 2
 		}
+		# AB [[[
+		ab_building_university_effect = yes
+		# ]]]
 	}
 	on_destroyed = {
 		remove_development_from_building = {
@@ -1491,6 +1308,9 @@ university = {
 			type = tax
 			value = 2
 		}
+		# AB [[[
+		ab_removing_university_effect = yes
+		# ]]]
 	}
 	on_obsolete = {
 	}
@@ -1580,6 +1400,9 @@ trade_depot = {
 			value = 2
 			upgrade_value = 1
 		}
+		# AB [[[
+		ab_building_trade_effect = yes
+		# ]]]
 	}
 	on_destroyed = {
 		remove_development_from_building = {
@@ -1587,6 +1410,9 @@ trade_depot = {
 			type = production
 			value = 2
 		}
+		# AB [[[
+		ab_removing_trade_effect = yes
+		# ]]]
 	}
 	on_obsolete = {
 	}
@@ -1622,16 +1448,7 @@ grand_shipyard = {
 			upgrade_value = 1
 		}
 		# AB [[[
-		if = {
-			limit = { 
-				owner = { mission_completed = ned_shipbuilding }
-			}
-			add_province_modifier = {
-				name = ned_dutch_mission_shipyard
-				duration = -1
-				desc = NED_SHIPBUILDING_TIME_GRAND_SHIPYARD
-			}
-		}
+		ab_building_shipyard_effect = yes
 		# ]]]
 	}
 	on_destroyed = {
@@ -1645,10 +1462,7 @@ grand_shipyard = {
 			remove_province_modifier = sca_swe_danish_shipyard
 		}
 		# AB [[[
-		if = {
-			limit = { has_province_modifier = ned_dutch_mission_shipyard }
-			remove_province_modifier = ned_dutch_mission_shipyard
-		}
+		ab_removing_shipyard_effect = yes
 		# ]]]
 	}
 	on_obsolete = {
@@ -1744,6 +1558,9 @@ training_fields = {
 				hidden = yes
 			}
 		}
+		# AB [[[
+		ab_building_manpower_effect = yes
+		# ]]]
 	}
 	on_destroyed = {
 		if = {
@@ -1781,6 +1598,9 @@ training_fields = {
 			}
 			remove_province_modifier = azt_barracks_households
 		}
+		# AB [[[
+		ab_removing_manpower_effect = yes
+		# ]]]
 	}
 	on_obsolete = {
 	}
@@ -1894,22 +1714,7 @@ fort_17th = {
 			}
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					mission_completed = jsn_fortify_korea_2
-				}
-			}
-			add_base_manpower = 1
-		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_modifier = eng_improved_infrastructure
-				}
-			}
-			add_base_manpower = 1
-		}
+		ab_building_fort_effect = yes
 		# ]]]
 	}
 
@@ -1940,22 +1745,7 @@ fort_17th = {
 			remove_province_modifier = ned_low_countries_fort_buff_buffed
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					mission_completed = jsn_fortify_korea_2
-				}
-			}
-			add_base_manpower = -1
-		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_modifier = eng_improved_infrastructure
-				}
-			}
-			add_base_manpower = -1
-		}
+		ab_removing_fort_effect = yes
 		# ]]]
 	}
 
@@ -2019,6 +1809,9 @@ stock_exchange = {
 				value = 3
 			}
 		}
+		# AB [[[
+		ab_building_trade_effect = yes
+		# ]]]
 	}
 	on_destroyed = {
 		remove_development_from_building = {
@@ -2026,6 +1819,9 @@ stock_exchange = {
 			type = production
 			value = 3
 		}
+		# AB [[[
+		ab_removing_trade_effect = yes
+		# ]]]
 	}
 	on_obsolete = {
 	}
@@ -2089,6 +1885,9 @@ greatmarket = {
 				value = 4
 			}
 		}
+		# AB [[[
+		ab_building_trade_effect = yes
+		# ]]]
 	}
 	on_destroyed = {
 		remove_development_from_building = {
@@ -2096,6 +1895,9 @@ greatmarket = {
 			type = production
 			value = 4
 		}
+		# AB [[[
+		ab_removing_trade_effect = yes
+		# ]]]
 	}
 	on_obsolete = {
 	}
@@ -2123,14 +1925,7 @@ counting_house = {
 			upgrade_value = 1
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					has_reform = scottish_lawmaker_2_AB
-				}
-			}
-			add_base_production = 1
-		}
+		ab_building_production_effect = yes
 		# ]]]
 	}
 	on_destroyed = {
@@ -2140,19 +1935,7 @@ counting_house = {
 			value = 2
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					has_reform = scottish_lawmaker_2_AB
-				}
-				THIS = {
-					NOT = {
-						nationalism = 0
-					}
-				}
-			}
-			add_base_production = -1
-		}
+		ab_removing_production_effect = yes
 		# ]]]
 	}
 	on_obsolete = {
@@ -2209,14 +1992,7 @@ factory = {
 				value = 3
 			}
 		}
-		if = {
-			limit = {
-				FROM = {
-					has_reform = scottish_lawmaker_2_AB
-				}
-			}
-			add_base_production = 1
-		}
+		ab_building_production_effect = yes
 	}
 	
 	on_destroyed = {
@@ -2225,19 +2001,7 @@ factory = {
 			type = production
 			value = 3
 		}
-		if = {
-			limit = {
-				FROM = {
-					has_reform = scottish_lawmaker_2_AB
-				}
-				THIS = {
-					NOT = {
-						nationalism = 0
-					}
-				}
-			}
-			add_base_production = -1
-		}
+		ab_removing_production_effect = yes
 	}
 	on_obsolete = {
 	}
@@ -2283,14 +2047,7 @@ town_hall = {
 			}
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					has_reform = scottish_lawmaker_1_AB
-				}
-			}
-			add_nationalism = -2
-		}
+		ab_building_courthouse_effect = yes
 		# ]]]
 	}
 	on_destroyed = {
@@ -2301,19 +2058,7 @@ town_hall = {
 		}
 		remove_province_modifier = fra_improved_court_houses_modifier 
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					has_reform = scottish_lawmaker_1_AB
-				}
-				THIS = {
-					NOT = {
-						nationalism = 0
-					}
-				}
-			}
-			add_nationalism = 2
-		}
+		ab_removing_courthouse_effect = yes
 		# ]]]
 	}
 	on_obsolete = {
@@ -2662,22 +2407,7 @@ fort_18th = {
 			}
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					mission_completed = jsn_fortify_korea_2
-				}
-			}
-			add_base_manpower = 1
-		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_modifier = eng_improved_infrastructure
-				}
-			}
-			add_base_manpower = 1
-		}
+		ab_building_fort_effect = yes
 		# ]]]
 	}
 
@@ -2708,22 +2438,7 @@ fort_18th = {
 			remove_province_modifier = ned_low_countries_fort_buff_buffed
 		}
 		# AB [[[
-		if = {
-			limit = {
-				FROM = {
-					mission_completed = jsn_fortify_korea_2
-				}
-			}
-			add_base_manpower = -1
-		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_modifier = eng_improved_infrastructure
-				}
-			}
-			add_base_manpower = -1
-		}
+		ab_removing_fort_effect = yes
 		# ]]]
 	}
 
@@ -2799,22 +2514,7 @@ fort_19th = {
 				duration = -1
 			}
 		}
-		if = {
-			limit = {
-				FROM = {
-					mission_completed = jsn_fortify_korea_2
-				}
-			}
-			add_base_manpower = 1
-		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_modifier = eng_improved_infrastructure
-				}
-			}
-			add_base_manpower = 1
-		}
+		ab_building_fort_effect = yes
 	}
 
 	# THIS = Province, FROM = Destroyer, Will not be called on buildings made obsolete!
@@ -2825,22 +2525,9 @@ fort_19th = {
 			}
 			remove_province_modifier = estate_nobles_development_of_castles_mod
 		}
-		if = {
-			limit = {
-				FROM = {
-					mission_completed = jsn_fortify_korea_2
-				}
-			}
-			add_base_manpower = -1
-		}
-		if = {
-			limit = {
-				FROM = {
-					has_country_modifier = eng_improved_infrastructure
-				}
-			}
-			add_base_manpower = -1
-		}
+		# AB [[[
+		ab_removing_fort_effect = yes
+		# ]]]
 	}
 
 	# THIS = Province, FROM = Destroyer, Will not be called on buildings destroyed!
@@ -3458,7 +3145,7 @@ state_house = {
 	keep_trigger = {
 		NOT = {
 			area_for_scope_province = {
-				NOT = { province_id = root }
+				NOT = { province_id = ROOT }
 				owner = {
 					tag = ROOT
 				}
