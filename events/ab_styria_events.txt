@@ -1,0 +1,175 @@
+namespace = ab_styria
+
+country_event = {
+	id = ab_styria.1
+	title = ab_styria.1.t
+	desc = ab_styria.1.d
+	picture = HABSBURG_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_styria.1.a
+		give_claims = { area = alsace_area }
+		give_claims = { area = lorraine_area }
+		give_claims = { area = champagne_area }
+		give_claims = { area = wallonia_area }
+		give_claims = { area = flanders_area }
+		
+		custom_tooltip = AB_EMPTY
+		
+		add_power_projection_mission = {
+			amount = 10
+		}
+	}
+}
+
+country_event = {
+	id = ab_styria.2
+	title = ab_styria.2.t
+	desc = ab_styria.2.d
+	picture = EMPEROR_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_styria.2.a
+		
+		183 = {
+			add_base_production = 1
+			add_base_tax = 1
+			add_base_manpower = 1
+		}
+		
+		custom_tooltip = AB_EMPTY
+		
+		add_country_modifier = {
+			name = hab_parade_on_paris
+			duration = 7300
+		}
+	}
+}
+
+country_event = { #Raab
+	id = ab_styria.3
+	title = ab_styria.3.t
+	desc = ab_styria.3.d
+	picture = BYZ_ADVISOR_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = STY
+		has_estate = estate_nobles
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	option = {
+		name = ab_styria.3.a
+		
+		define_advisor = {
+			type = magistrate
+			name = "Franz Anton von Raab"
+			skill = 2
+			cost_multiplier = 0.25
+		}
+		
+		custom_tooltip = AB_EMPTY
+		
+		add_country_modifier = {
+			name = sty_raab_nobility_privileges
+			duration = 5475
+		}
+	}
+}
+
+# Return of the Habsburgs
+country_event = {
+	id = ab_styria.4
+	title = ab_styria.4.t
+	desc = ab_styria.4.d
+	picture = GERMAN_UNIFICATION_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = ab_styria.4.a
+		change_tag = TIR
+		on_change_tag_effect = yes
+		swap_non_generic_missions = yes
+		custom_tooltip = AB_EMPTY
+		tooltip = {
+			define_ruler = {
+				dynasty = "von Habsburg"
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		if = {
+			limit = {
+				has_custom_ideas = no
+			}
+			country_event = { id = ideagroups.1 } #Swap Ideas
+		}
+		custom_tooltip = AB_EMPTY
+		change_government = monarchy
+		add_government_reform = feudalism_reform
+		hidden_effect = {
+			define_ruler = {
+				dynasty = "von Habsburg"
+			}
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				kill_heir = { }
+			}
+		}
+	}
+}
+
+# Return of the Babenbergs
+country_event = {
+	id = ab_styria.5
+	title = ab_styria.5.t
+	desc = ab_styria.5.d
+	picture = GERMAN_UNIFICATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_styria.5.a
+		change_tag = STY
+		on_change_tag_effect = yes
+		swap_non_generic_missions = yes
+		custom_tooltip = AB_EMPTY
+		tooltip = {
+			define_ruler = {
+				dynasty = "von Babenberg"
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		if = {
+			limit = {
+				has_custom_ideas = no
+			}
+			country_event = { id = ideagroups.1 } #Swap Ideas
+		}
+		custom_tooltip = AB_EMPTY
+		change_government = monarchy
+		add_government_reform = feudalism_reform
+		hidden_effect = {
+			define_ruler = {
+				dynasty = "von Babenberg"
+			}
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				kill_heir = { }
+			}
+		}
+	}
+}

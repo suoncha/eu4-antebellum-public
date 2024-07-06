@@ -69,3 +69,128 @@ country_event = {
 		}
 	}
 }
+
+#Branching missions
+country_event = {
+	id = ab_bohemia.3
+	title = "ab_bohemia.3.t"
+	desc = "ab_bohemia.3.d"
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = "ab_bohemia.3.a"
+		set_country_flag = bohemia_slavic_missions
+		custom_tooltip = BOH_SLAVIC_MISSIONS
+		set_in_empire = no
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+		poland_region = {
+			limit = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+
+	option = {
+		name = "ab_bohemia.3.b"
+		set_country_flag = bohemia_germanic_missions
+		custom_tooltip = BOH_GERMANIC_MISSIONS
+		custom_tooltip = BOH_GERMAN_CLAIM
+		hidden_effect = {
+			swap_non_generic_missions = yes
+			every_neighbor_province = {
+				limit = {
+					culture_group = germanic
+					NOT = { owned_by = ROOT }
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+# The Crown of Germany
+country_event = {
+	id = ab_bohemia.4
+	title = ab_bohemia.4.t
+	desc = ab_bohemia.4.d
+	picture = GERMAN_UNIFICATION_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_bohemia.4.a
+		add_prestige_or_monarch_power = { amount = 25 } 
+		add_country_modifier = {
+			name = boh_regnum_teutonicorum
+			duration = -1
+		}
+		picardy_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		champagne_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		lorraine_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		ile_de_france_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		low_countries_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+# West Slavic Commonwealth
+country_event = {
+	id = ab_bohemia.5
+	title = ab_bohemia.5.t
+	desc = ab_bohemia.5.d
+	picture = GERMAN_UNIFICATION_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_bohemia.5.a
+		change_tag = BCM
+		hidden_effect = {
+			complete_mission = boh_commonwealth
+		}
+		set_government_rank = 3
+		swap_free_idea_group = yes
+		add_country_modifier = {
+			name = "boh_commonwealth"
+			duration = -1
+		}
+	}
+}

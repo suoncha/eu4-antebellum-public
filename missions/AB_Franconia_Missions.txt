@@ -1,383 +1,224 @@
-fkn_first_group = {
+ab_franconia_first = {
 	slot = 1
 	generic = no
 	ai = yes
 	potential = {
-		tag = FKN
+		OR = {
+			tag = FKN
+			tag = WBG
+			tag = ROT
+			tag = ANS
+			tag = BAM
+			tag = NUM
+			tag = BYT
+		}
+		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
-	
+
 	fkn_eastwards = {
 	    icon = avoid_fragmentation
 		required_missions = { fkn_army }
 		position = 2
 		
 		provinces_to_highlight = {
-			OR = {
-				area = franconia_area
-				
-			}
+			culture = franconian
 			NOT = { owned_by = ROOT }
 		}
 		
 		trigger = {
-		    franconia_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			num_of_owned_provinces_with = {
+				value = 4
+				culture = franconian
 			}
 		}
 		
 		effect = {
-			add_country_modifier = {
-				name = fkn_salian
-				duration = 7300
+			custom_tooltip = FKN_FRANCONIAN_AUTONOMY
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = franconian
+					}
+					add_local_autonomy = -25
+				}
 			}
-			upper_franconia_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
+			define_advisor = {
+				type = army_reformer
+				skill = 1
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = SAX_CLAIM_NEIGHBOUR
+			hidden_effect = {
+				every_neighbor_province = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_permanent_claim = ROOT	}
+						NOT = { is_core = ROOT	}
+					}
 					add_permanent_claim = ROOT
+				}
 			}
 		}
 	}
 	
 	fkn_franconia = {
-	    icon = mission_unite_home_region
+	    icon = conquer_franconia
 		required_missions = { fkn_eastwards }
 		position = 4
 		
 		provinces_to_highlight = {
-			OR = {
-				area = upper_franconia_area
-				
+			owner = {
+				primary_culture = franconian
+				total_development = ROOT
 			}
-			NOT = { owned_by = ROOT }
 		}
 		
 		trigger = {
-		    upper_franconia_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			custom_trigger_tooltip = {
+				tooltip = FKN_MORE_DEV_THAN_FRANCONIANS
+				NOT = {
+					any_country = {
+						primary_culture = franconian
+						total_development = ROOT
+					}
+				}
 			}
 		}
 		
 		effect = {
-			add_legitimacy = 20
+			custom_tooltip = SWA_EVERY_FRANCONIAN_COUNTRY
+			tooltip = {
+				country_event = { id = ab_swabia.2 days = 5 }
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						primary_culture = franconian
+						NOT = { is_subject_of = ROOT }
+						NOT = { tag = ROOT }
+					}
+					country_event = { id = ab_swabia.2 days = 5 }
+				}
+			}
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
 				name = fkn_franconia
 				duration = 7300
 			}
 			thuringia_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
 			}
 			hesse_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_rhineland_area  = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_rhine_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = ANS
+						was_tag = ANS
+					}
+				}
+				custom_tooltip = FKN_START_AS_ANS_YES
+				add_ruler_modifier = {
+					name = fkn_new_dynasty
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = FKN_START_AS_ANS_NO
+				tooltip = {
+					add_ruler_modifier = {
+						name = fkn_new_dynasty
+						duration = -1
+					}
+				}
 			}
 		}
 	}
-}
-		
 
-fkn_second_group = {
-	slot = 2
-	generic = no
-	ai = yes
-	potential = {
-		tag = FKN
-	}
-	has_country_shield = yes
-	
-	fkn_army = {
-		icon = establish_a_standing_army
-		required_missions = { }
-		position = 1
-		
-		trigger = {
-			army_size_percentage = 0.85
-		}
-		
-		effect = {
-			add_country_modifier = {
-				name = fkn_army
-				duration = 7300
-			}
-			franconia_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
-			}
-			upper_swabia_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
-			}
-			lower_swabia_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
-			}
-			upper_rhineland_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
-			}
-		}
-	}
-	
-	fkn_swabia = {
-	    icon = control_swabia
-		required_missions = { fkn_army }
-		position = 2
-		
-		provinces_to_highlight = {
-			OR = {
-				area = upper_rhineland_area
-				area = lower_swabia_area
-				area = upper_swabia_area
-				
-			}
-			NOT = { owned_by = ROOT }
-		}
-		
-		trigger = {
-		    upper_rhineland_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    lower_swabia_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    upper_swabia_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-		
-		effect = {
-			add_prestige = 15
-			add_adm_power = 100
-			lower_bavaria_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
-			}
-			upper_bavaria_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
-			}
-			switzerland_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
-			}
-		}
-	}
-	
-	fkn_bavaria = {
-	    icon = duchy_of_bavaria
-		required_missions = { fkn_swabia }
-		position = 3
-		
-		provinces_to_highlight = {
-			OR = {
-				area = upper_bavaria_area
-				area = lower_bavaria_area
-				
-			}
-			NOT = { owned_by = ROOT }
-		}
-		
-		trigger = {
-		    lower_bavaria_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		    upper_bavaria_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}	
-
-		effect = {
-			add_country_modifier = {
-				name = fkn_sgermany
-				duration = 9125
-			}
-		}
-	}
-			
 	fkn_ascendant = {
-	    icon = conquer_franconia
+	    icon = glory_to_von_habsburg
 		required_missions = { fkn_franconia }
 		position = 5
 		
 		provinces_to_highlight = {
-			OR = {
-				area = thuringia_area
-				area = hesse_area
-				
-			}
+			culture = franconian
 			NOT = { owned_by = ROOT }
 		}
 		
 		trigger = {
-		    thuringia_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			prestige = 90
+			legitimacy_equivalent = 90
+			stability = 3
+			is_great_power = yes
+		    owns_all_provinces = {
+				culture = franconian
 			}
-		    hesse_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
+			if = {
+				limit = {
+					NOT = { tag = FKN }
+				}
+				NOT = { exists = FKN }
 			}
 		}
 		
 		effect = {
+			add_splendor = 200
 			create_general = { tradition = 75 }
+			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
-				name = fkn_ascendant
+				name = fkn_franconia_ascendant
 				duration = 9125
 			}
+			custom_tooltip = HLV_CHILDREN_OF_ALPS_BONUS
 		}
 	}
-}
-
-fkn_third_group = {
-	slot = 3
-	generic = no
-	ai = yes
-	potential = {
-		tag = FKN
-	}
-	has_country_shield = yes
-	
-	fkn_switzerland = {
-	    icon = reorganize_the_confederacy
-		required_missions = { fkn_swabia }
-		position = 3
-		
-		provinces_to_highlight = {
-			OR = {
-				area = switzerland_area
-				
-			}
-			NOT = { owned_by = ROOT }
-		}
-		
-		trigger = {
-		    switzerland_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-		
-		effect = {
-			add_mil_power = 100
-			tirol_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
-			}
-		}
-	}
-			
-	fkn_tirol = {
-	    icon = claim_tirol
-		required_missions = { fkn_switzerland }
-		position = 4
-		
-		provinces_to_highlight = {
-			OR = {
-				area = tirol_area
-				
-			}
-			NOT = { owned_by = ROOT }
-		}
-		
-		trigger = {
-		    tirol_area = {
-			    type = all
-				country_or_non_sovereign_subject_holds = ROOT
-			}
-		}
-		
-		effect = {
-			add_country_modifier = {
-				name = fkn_tirol
-				duration = 9125
-			}
-		}
-	}
-}
-
-fkn_fourth_group = {
-	slot = 4
-	generic = no
-	ai = yes
-	potential = {
-		tag = FKN
-	}
-	has_country_shield = yes
-
 
 	fkn_capital = {
 		icon = appease_the_estates
 		required_missions = { }
-		position = 1
+		position = 7
 		
 		provinces_to_highlight = {
-			OR = {
-				province_id = 77
-			}
+			is_capital_of = ROOT
 		}
 		
 		trigger = {
-			77 = {
-				owned_by = ROOT
-				development = 20
-				OR = {
-					has_building = temple
-					has_building = cathedral
-				}
-				has_production_building_trigger = yes
-				has_trade_building_trigger = yes
+			capital_scope = {
+				num_of_times_improved = 10
+			}
+			capital_scope = {
+				num_of_buildings_in_province = 5
 			}
 		}
 		
 		effect = {
-			77 = {
-				add_province_modifier = {
-					name = fkn_capital
-					duration = -1
-				}
-			}
-			77 = {
+			capital_scope = {
 				if = {
 					limit = {
 						NOT = { province_has_center_of_trade_of_level = 1 }
@@ -391,141 +232,116 @@ fkn_fourth_group = {
 					add_center_of_trade_level = 1
 				}
 			}
-		}
-	}
-
-	fkn_franconian_prosperity = {
-		icon = mission_high_income
-		required_missions = { fkn_capital }
-
-		provinces_to_highlight = {
-			owned_by = root
-			OR = {
-				AND = {
-					is_capital = yes
-					NOT = { num_of_buildings_in_province = 2 }
-				}
-				NOT = { development = 10 }
-				NOT = { num_of_times_improved_by_owner = 3 }
-			}
-		}
-		
-		trigger = {
 			capital_scope = {
-				num_of_buildings_in_province = 2
-			}
-			num_of_owned_provinces_with = {
-				value = 3
-				development = 10
-				num_of_times_improved_by_owner = 3
-			}
-		}
-		
-		effect = {
-			add_country_modifier = {
-				name = fkn_we_prosper
-				duration = 7300
-			}
-		}
-	}
-	
-	fkn_control_trade = {
-		icon = mission_dominate_home_trade_node
-		required_missions = { fkn_franconian_prosperity }
-		
-		trigger = {
-				1876 = {		# Sind
-					is_strongest_trade_power = ROOT
+				add_province_modifier = {
+					name = fkn_capital
+					duration = -1
 				}
-		}
-		
-		provinces_to_highlight = {
-			OR = {
-				province_id = 1876
 			}
-		}
-		
-		effect = {
-			add_mercantilism = 3
-			add_treasury = 100
-		}
-	}	
-		
-	fkn_patronage_of_the_arts = {
-		icon = mission_early_modern_university
-		required_missions = { fkn_control_trade }
-		
-		trigger = {
-			has_adm_advisor_2 = yes
-			has_dip_advisor_2 = yes
-			has_mil_advisor_2 = yes
-			is_in_deficit = no
-		}
-		
-		effect = {
-			add_country_modifier = {
-				name = fkn_arts_patronised
-				duration = 7300
+			if = {
+				limit = {
+					NOT = {
+						capital_scope = {
+							any_province = {
+								culture_group = germanic
+								higher_development_than = PREV
+							}
+						}
+					}
+				}
+				custom_tooltip = FKN_HIGHEST_DEV_CAPITAL_YES
+				capital_scope = {
+					add_building = university
+				}
+			}
+			else = {
+				custom_tooltip = FKN_HIGHEST_DEV_CAPITAL_NO
+				tooltip = {
+					capital_scope = {
+						add_building = university
+					}
+				}
 			}
 		}
 	}
-	fkn_industrial_revolution = {
-		icon = mission_have_manufactories
-		required_missions = { fkn_patronage_of_the_arts }
+
+	fkn_sanspareil = {
+		icon = imperial_capitals
+		required_missions = { fkn_capital }
+		position = 8
 
 		provinces_to_highlight = {
-			owned_by = root
-			ROOT = {
-				NOT = {
-					num_of_owned_provinces_with = {
-						value = 5
-						has_manufactory_trigger = yes
-						development = 10
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			architect = 3
+			capital_scope = {
+				num_of_buildings_in_province = 7
+			}
+			capital_scope = {
+				num_of_times_expanded_infrastructure = 2
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AB_EXPAND_INFRA_BONUS_DEV
+			set_country_flag = ab_expand_infrastructure_capital_bonus_dev
+			capital_scope = {
+				add_province_modifier = {
+					name = fkn_franconian_palace
+					duration = -1
+				}
+			}
+			set_country_flag = swa_architect_gain_build_time
+			custom_tooltip = SWA_ARCHITECT_SCALING
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = NUM
+						was_tag = NUM
+					}
+				}
+				custom_tooltip = FKN_START_AS_NUM_YES
+				67 = {
+					add_great_project_tier = {
+						type = nurnberg
+						tier = 1
 					}
 				}
 			}
-			OR = {
-				AND = {
-					ROOT = {
-						num_of_owned_provinces_with = {
-							value = 5
-							has_manufactory_trigger = yes
+			else = {
+				custom_tooltip = FKN_START_AS_NUM_NO
+				tooltip = {
+					67 = {
+						add_great_project_tier = {
+							type = nurnberg
+							tier = 1
 						}
 					}
-					has_manufactory_trigger = yes
-					NOT = { development = 10 }
 				}
-				AND = {
-					ROOT = {
-						num_of_owned_provinces_with = {
-							value = 5
-							development = 10
-						}
-					}
-					has_manufactory_trigger = no
-					development = 10
-				}
-				AND = {
-					NOT = {
-						ROOT = {
-							num_of_owned_provinces_with = {
-								value = 5
-								has_manufactory_trigger = yes
-							}
-						}
-					}
-					NOT = {
-						ROOT = {
-							num_of_owned_provinces_with = {
-								value = 5
-								development = 10
-							}
-						}
-					}
-					OR = {
-						has_manufactory_trigger = no
-						NOT = { development = 10 }
-					}
+			}
+		}
+	}
+
+	fkn_industrial_revolution = {
+		icon = saxon_manufacturing
+		required_missions = { fkn_sanspareil }
+		position = 9
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
 				}
 			}
 		}
@@ -533,15 +349,2098 @@ fkn_fourth_group = {
 		trigger = {
 			num_of_owned_provinces_with = {
 				value = 5
-				has_manufactory_trigger = yes
-				development = 10
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
+				}
 			}
 		}
 		
 		effect = {
+			custom_tooltip = FKN_MANUFACTORIES
 			add_country_modifier = {
 				name = fkn_we_produce_stuff
 				duration = 7300
+			}
+			hidden_effect = {		
+                for = {
+                    amount = 5
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								OR = {
+									has_building = mills
+									has_building = farm_estate
+									has_building = tradecompany
+									has_building = plantations
+									has_building = textile
+									has_building = weapons
+									has_building = wharf
+									has_building = furnace
+								}
+							}
+							add_base_production = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+
+	fkn_printing_industry = {
+		icon = mission_book_of_royal_degrees
+		required_missions = { fkn_industrial_revolution fkn_franconian_chivalry }
+		position = 11
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			trade_goods = paper
+			OR = {
+				NOT = { has_building = mills }
+				ROOT = {
+					NOT = {
+						trade_goods_produced_amount = {
+							trade_goods = paper
+							amount = 10
+						}
+					}
+				}
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 3
+				trade_goods = paper
+				has_building = mills
+			}
+			trade_goods_produced_amount = {
+				trade_goods = paper
+				amount = 10
+			}
+		}
+
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			change_price = {
+				trade_goods = paper
+				key = "German Printing Press"
+				value = 0.2
+				duration = -1
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = FKN_PAPER_PROVINCE
+			tooltip = {
+				capital_scope = { upgrade_production_building = yes }
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						trade_goods = paper
+						has_production_building_trigger = yes
+					}
+					upgrade_production_building = yes
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_institution = printing_press
+				}
+				custom_tooltip = FKN_EMBRACED_PRINTING_PRESS_YES
+				add_country_modifier = {
+					name = fkn_improve_literacy
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = FKN_EMBRACED_PRINTING_PRESS_NO
+				tooltip = {
+					add_country_modifier = {
+						name = fkn_improve_literacy
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_franconia_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = FKN
+			tag = WBG
+			tag = ROT
+			tag = ANS
+			tag = BAM
+			tag = NUM
+			tag = BYT
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	fkn_army = {
+		icon = establish_a_standing_army
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			army_size_percentage = 1
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = fkn_army
+				duration = 7300
+			}
+			franconia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_franconia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_swabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_swabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_rhineland_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					tag = FKN
+					NOT = { has_country_flag = formed_franconia_flag }
+				}
+				custom_tooltip = FKN_START_AS_FKN_YES
+				add_country_modifier = {
+					name = fkn_salian
+					duration = 9125
+				}
+			}
+			else = {
+				custom_tooltip = FKN_START_AS_FKN_NO
+				tooltip = {
+					add_country_modifier = {
+						name = fkn_salian
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	fkn_swabia = {
+	    icon = control_swabia
+		required_missions = { fkn_army }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lower_swabia_area
+				area = upper_swabia_area
+				area = upper_rhineland_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 7
+				OR = {
+					area = lower_swabia_area
+					area = upper_swabia_area
+					area = upper_rhineland_area
+				}
+			}
+		}
+		
+		effect = {
+			add_accepted_culture_or_dip_power = {
+				culture = swabian
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = fkn_dissolve_swabia
+				duration = 5475
+			}
+			tirol_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_bavaria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_bavaria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_bavaria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						NOT = { exists = SWA }
+						SWA = {
+							humiliated_by = ROOT
+						}
+					}
+				}
+				custom_tooltip = FKN_SWABIA_NOT_EXIST_YES
+				add_power_projection = {
+					type = mission_rewards_power_projection
+					amount = 25
+				}
+			}
+			else = {
+				custom_tooltip = FKN_SWABIA_NOT_EXIST_NO
+				tooltip = {
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 25
+					}
+				}
+			}
+		}
+	}
+	
+	fkn_bavaria = {
+	    icon = duchy_of_bavaria
+		required_missions = { fkn_franconia fkn_swabia }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = upper_bavaria_area
+				area = lower_bavaria_area
+				area = east_bavaria_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				OR = {
+					area = upper_bavaria_area
+					area = lower_bavaria_area
+					area = east_bavaria_area
+				}
+			}
+		}	
+
+		effect = {
+			add_army_tradition = 10
+			south_german_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_nationalism = -10
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = fkn_sgermany
+				duration = 9125
+			}
+			south_german_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	fkn_south_german_confederation = {
+		icon = centralized_empire
+		required_missions = { fkn_bavaria fkn_switzerland }
+		position = 6
+
+		provinces_to_highlight = {
+			region = south_german_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 30
+				region = south_german_region
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = ab_bavaria.0
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BOH_HRE_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					overlord_of = STY
+				}
+				custom_tooltip = FKN_OVERLORD_STY_YES
+				hidden_effect = {
+					inherit = STY
+				}
+			}
+			else = {
+				custom_tooltip = FKN_OVERLORD_STY_NO
+			}
+		}
+	}
+
+	fkn_embrace_renaissance = {
+		icon = commission_the_mona_lisa
+		required_missions = { fkn_capital }
+		position = 8
+
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			prestige = 40
+			capital_scope = {
+				renaissance = 75
+			}
+			OR = {
+				has_adm_advisor_2 = yes
+				has_dip_advisor_2 = yes
+				has_mil_advisor_2 = yes
+			}
+		}
+
+		effect = {
+			capital_scope = {
+				add_institution_embracement = {
+					which = renaissance
+					value = 25
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = architect
+				skill = 2
+				cost_multiplier = 0.5
+			}
+		}
+	}
+
+	fkn_patronage_of_the_arts = {
+		icon = sponsor_the_arts
+		required_missions = { fkn_embrace_renaissance }
+		position = 9
+		
+		trigger = {
+			artist = 2
+			has_dip_advisor_2 = yes
+			has_mil_advisor_2 = yes
+			is_in_deficit = no
+		}
+		
+		effect = {
+			set_country_flag = artist_give_administrative_efficiency
+			custom_tooltip = BAV_SCALING_INNOVATOR
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = fkn_arts_patronised
+				duration = 7300
+			}
+			custom_tooltip = FKN_PATRONAGE_PRIVILEGE
+			set_country_flag = ab_fkn_improved_patronage
+		}
+	}
+
+	fkn_franconian_chivalry = {
+		icon = chivalry_is_not_dead
+		required_missions = { fkn_patronage_of_the_arts }
+		position = 10
+
+		provinces_to_highlight = {
+			is_capital = yes
+			owner = {
+				NOT = {
+					has_opinion = {
+						who = ROOT
+						value = 75
+					}
+				}
+			}
+		}
+
+		trigger = {
+			calc_true_if = {
+				amount = 20
+				all_known_country = {
+					has_opinion = {
+						who = ROOT
+						value = 75
+					}
+				}
+			}
+			estate_loyalty = {
+				estate = estate_nobles
+				loyalty = 60
+			}
+			custom_trigger_tooltip = {
+				tooltip = AB_AT_LEAST_5_DIP_REP
+				has_global_modifier_value = { 
+					which = diplomatic_reputation
+					value = 5
+				}
+			}
+		}
+
+		effect = {
+			define_advisor = {
+				type = statesman
+				skill = 3
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = FKN_STATESMAN_PRIVILEGE
+			set_country_flag = fkn_statesman_privilege_grant_ae
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = FKN_SPREAD_CHIVALRY
+			hidden_effect = {
+				every_country = {
+					limit = {
+						has_opinion = {
+							who = ROOT
+							value = 75
+						}
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = opinion_chivalric_admirer
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					calc_true_if = {
+						amount = 10
+						all_known_country = {
+							religion_group = muslim
+							has_opinion = {
+								who = ROOT
+								value = 75
+							}
+						}
+					}
+				}
+				custom_tooltip = FKN_FRIENDLY_MUSLIMS_YES
+				add_country_modifier = {
+					name = fkn_abrahamic_tolerance
+					duration = 36500
+				}
+			}
+			else = {
+				custom_tooltip = FKN_FRIENDLY_MUSLIMS_NO
+				tooltip = {
+					add_country_modifier = {
+						name = fkn_abrahamic_tolerance
+						duration = 36500
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_franconia_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = FKN
+			tag = WBG
+			tag = ROT
+			tag = ANS
+			tag = BAM
+			tag = NUM
+			tag = BYT
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	fkn_franconian_prosperity = {
+		icon = develop_our_capital
+		required_missions = { fkn_restore_greater_franconia }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				area = palatinate_area
+				area = franconia_area
+				area = upper_franconia_area
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { num_of_times_improved_by_owner = 3 }
+				is_prosperous = no
+			}
+		}
+		
+		trigger = {
+			palatinate_area = {
+				type = all
+				owned_by = ROOT
+				num_of_times_improved_by_owner = 3
+				is_prosperous = yes
+			}
+			franconia_area = {
+				type = all
+				owned_by = ROOT
+				num_of_times_improved_by_owner = 3
+				is_prosperous = yes
+			}
+			upper_franconia_area = {
+				type = all
+				owned_by = ROOT
+				num_of_times_improved_by_owner = 3
+				is_prosperous = yes
+			}
+		}
+		
+		effect = {
+			change_government_reform_progress = 100
+			palatinate_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				change_culture = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = FKN_EVERY_FRANCONIAN_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = fkn_land_of_prosperity
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = franconian
+					}
+					add_province_modifier = {
+						name = fkn_land_of_prosperity
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+			
+	fkn_tirol = {
+	    icon = claim_tirol
+		required_missions = { fkn_swabia }
+		position = 4
+		
+		provinces_to_highlight = {
+			area = tirol_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 4
+				area = tirol_area
+			}
+		}
+		
+		effect = {
+			73 = {
+				add_base_production = 2
+				add_great_project_tier = {
+					type = ambras_castle
+					tier = 1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = fkn_tirol
+				duration = 9125
+			}
+			switzerland_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			romandie_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	fkn_switzerland = {
+	    icon = reorganize_the_confederacy
+		required_missions = { fkn_tirol }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = switzerland_area
+				area = romandie_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 7
+				OR = {
+					area = switzerland_area
+					area = romandie_area
+				}
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_accepted_culture_or_dip_power = {
+				culture = swiss
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = { exists = ARS }
+				custom_tooltip = AB_IF_ARS_EXISTS_PU_OR_SUBJUGATION_CB_YES
+				if = {
+					limit = {
+						government = monarchy
+					}
+					add_casus_belli = {
+						type = cb_restore_personal_union
+						months = 300
+						target = ARS
+					}
+				}
+				else = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = ARS
+					}
+				}
+			}
+			else = {
+				custom_tooltip = AB_IF_ARS_EXISTS_PU_OR_SUBJUGATION_CB_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						exists = UPB
+						exists = LWB
+					}
+				}
+				custom_tooltip = AB_IF_UPB_OR_LWB_EXISTS_PU_OR_SUBJUGATION_CB_YES
+				hidden_effect = {
+					if = {
+						limit = {
+							exists = UPB
+						}
+						if = {
+							limit = {
+								government = monarchy
+							}
+							add_casus_belli = {
+								type = cb_restore_personal_union
+								months = 300
+								target = UPB
+							}
+						}
+						else = {
+							add_casus_belli = {
+								type = cb_vassalize_mission
+								months = 300
+								target = UPB
+							}
+						}
+					}
+					if = {
+						limit = {
+							exists = LWB
+						}
+						if = {
+							limit = {
+								government = monarchy
+							}
+							add_casus_belli = {
+								type = cb_restore_personal_union
+								months = 300
+								target = LWB
+							}
+						}
+						else = {
+							add_casus_belli = {
+								type = cb_vassalize_mission
+								months = 300
+								target = LWB
+							}
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = AB_IF_UPB_OR_LWB_EXISTS_PU_OR_SUBJUGATION_CB_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							exists = ARS
+							exists = UPB
+							exists = LWB
+						}
+					}
+				}
+				custom_tooltip = AB_IF_ARS_UPB_AND_LWB_NOT_EXISTS_CLAIMS_YES
+			}
+			else = {
+				custom_tooltip = AB_IF_ARS_UPB_AND_LWB_NOT_EXISTS_CLAIMS_NO
+			}
+			tooltip = {
+				west_burgundy_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				bourgogne_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				savoy_dauphine_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				provence_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							OR = {
+								exists = ARS
+								exists = UPB
+								exists = LWB
+							}
+						}
+					}
+					west_burgundy_area = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+					bourgogne_area = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+					savoy_dauphine_area = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+					provence_area = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = ROT
+						was_tag = ROT
+					}
+				}
+				custom_tooltip = FKN_START_AS_ROT_YES
+				add_country_modifier = {
+					name = bav_integrate_the_confederacy
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = FKN_START_AS_ROT_NO
+				tooltip = {
+					add_country_modifier = {
+						name = bav_integrate_the_confederacy
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	fkn_crown_of_arles = {
+		icon = unite_the_realm
+		required_missions = { fkn_switzerland fkn_western_expansion }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				owned_by = ARS
+				area = savoy_dauphine_area
+				area = provence_area
+				area = west_burgundy_area
+				area = bourgogne_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			OR = {
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 10
+					OR = {
+						area = savoy_dauphine_area
+						area = provence_area
+						area = west_burgundy_area
+						area = bourgogne_area
+					}
+				}
+				overlord_of = ARS
+			}
+		}
+
+		effect = {
+			add_mil_power = 200
+			custom_tooltip = AB_EMPTY
+			piedmont_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			liguria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lombardy_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { overlord_of = LWB }
+					NOT = { overlord_of = UPB }
+					NOT = { overlord_of = ARS }
+				}
+				custom_tooltip = BAV_CONQUER_ARLES_YES
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							OR = {
+								culture = burgundian
+								culture = occitain
+							}
+						}
+						add_province_modifier = {
+							name = fkn_integrating_burgundy
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_CONQUER_ARLES_NO
+			}
+			custom_tooltip = BAV_EVERY_BURGUNDIAN_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = fkn_integrating_burgundy
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					overlord_of = LWB
+					overlord_of = UPB
+				}
+				custom_tooltip = BAV_OVERLORD_WELF_YES
+				hidden_effect = {
+					LWB = {
+						inherit = UPB
+						change_tag = ARS
+						swap_non_generic_missions = yes
+						set_country_flag = formed_arles_flag
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_OVERLORD_WELF_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						overlord_of = LWB
+						overlord_of = UPB
+						overlord_of = ARS
+					}
+				}
+				custom_tooltip = BAV_OVERLORD_ARLES_YES
+				hidden_effect = {
+					add_country_modifier = {
+						name = bav_crown_of_arles
+						duration = -1
+						desc = BAV_UNTIL_ARLES_ANNEXED
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_OVERLORD_ARLES_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = bav_crown_of_arles
+					duration = -1
+					desc = BAV_UNTIL_ARLES_ANNEXED
+				}
+			}
+		}
+	}
+
+	fkn_invade_italy = {
+		icon = expand_the_terraferma
+		required_missions = { fkn_crown_of_arles }
+		position = 9
+
+		provinces_to_highlight = {
+			OR = {
+				area = piedmont_area
+				area = liguria_area
+				area = lombardy_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			piedmont_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			liguria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lombardy_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = fkn_conquest_of_italy
+				duration = 9125
+			}
+			custom_tooltip = FKN_CONQUEST_OF_ITALY_BUFF
+			custom_tooltip = AB_EMPTY
+			italy_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+
+	fkn_imperium_francorum = {
+		icon = carolingian_empire
+		required_missions = { fkn_invade_italy fkn_frankish_kingdom }
+		position = 11
+
+		trigger = {
+			tag = FRK
+		}
+
+		effect = {
+			country_event = { id = ab_francia.43 }
+		}
+	}
+}
+
+ab_franconia_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = FKN
+			tag = WBG
+			tag = ROT
+			tag = ANS
+			tag = BAM
+			tag = NUM
+			tag = BYT
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	fkn_restore_greater_franconia = {
+		icon = claim_the_borderlands
+		required_missions = { }
+		position = 1
+
+		provinces_to_highlight = {
+			OR = {
+				area = hesse_area
+				area = thuringia_area
+			}
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 6
+				OR = {
+					area = hesse_area
+					area = thuringia_area
+				}
+			}
+		}
+
+		effect = {
+			hesse_area = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_local_autonomy = -25
+				add_province_modifier = {
+					name = bav_assimilate_culture
+					duration = -1
+				}
+			}
+			thuringia_area = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_local_autonomy = -25
+				add_province_modifier = {
+					name = bav_assimilate_culture
+					duration = -1
+				}
+			}
+			custom_tooltip = BAV_CONVERTING_CULTURE
+			custom_tooltip = AB_EMPTY
+			south_saxony_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_saxony_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bohemia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			erzgebirge_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	fkn_bohemia = {
+		icon = mission_praha
+		required_missions = { fkn_restore_greater_franconia }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				area = bohemia_area
+				area = erzgebirge_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			bohemia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			erzgebirge_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			custom_tooltip = BOH_GERMANIC_CULTURE
+			hidden_effect = {
+				replace_culture_with_effect = {
+					new_culture = Bohemian
+					old_culture_1 = czech
+				}
+				266 = { change_original_culture = Bohemian }
+				267 = { change_original_culture = Bohemian }
+				1771 = { change_original_culture = Bohemian }
+				2970 = { change_original_culture = Bohemian }
+				2967 = { change_original_culture = Bohemian }
+				2968 = { change_original_culture = Bohemian }
+				2970 = { change_original_culture = Bohemian }
+				4724 = { change_original_culture = Bohemian }
+				4725 = { change_original_culture = Bohemian }
+				4978 = { change_original_culture = Bohemian }
+			}
+			custom_tooltip = AB_EMPTY
+			266 = {
+				change_trade_goods = silk
+				add_or_upgrade_production_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						any_rival_country = {
+							dynasty = "Hohenstaufen"
+						}
+						any_enemy_country = {
+							dynasty = "Hohenstaufen"
+						}
+					}
+				}
+				custom_tooltip = BAV_RIVAL_HOHENSTAUFEN_YES
+				hidden_effect = {
+					every_known_country = {
+						limit = {
+							dynasty = "Hohenstaufen"
+						}
+						add_country_modifier = {
+							name = bav_downfall_of_hohenstaufen
+							duration = 7300
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_RIVAL_HOHENSTAUFEN_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = bav_downfall_of_hohenstaufen
+					duration = 7300
+				}
+			}
+		}
+	}
+
+	fkn_control_trade = {
+		icon = sway_cologne
+		required_missions = { }
+		position = 4
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lower_rhineland_area
+				area = north_rhine_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 6
+				OR = {
+					area = lower_rhineland_area
+					area = north_rhine_area
+				}
+			}
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			add_years_of_income = 2
+			custom_tooltip = AB_EMPTY
+			add_accepted_culture_or_dip_power = {
+				culture = hessian
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			westphalia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_westphalia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			alsace_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lorraine_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			wallonia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = WBG
+						was_tag = WBG
+					}
+				}
+				custom_tooltip = FKN_START_AS_WBG_YES
+				lower_rhineland_area = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					add_province_modifier = {
+						name = fkn_boost_the_rhineland_trade
+						duration = -1
+					}
+				}
+				north_rhine_area = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+					add_province_modifier = {
+						name = fkn_boost_the_rhineland_trade
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = FKN_START_AS_WBG_NO
+				tooltip = {
+					lower_rhineland_area = {
+						limit = {
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+						add_province_modifier = {
+							name = fkn_boost_the_rhineland_trade
+							duration = -1
+						}
+					}
+					north_rhine_area = {
+						limit = {
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+						add_province_modifier = {
+							name = fkn_boost_the_rhineland_trade
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+
+	fkn_western_expansion = {
+		icon = the_crown_of_lothair
+		required_missions = { fkn_control_trade }
+		position = 6
+
+		provinces_to_highlight = {
+			OR = {
+				area = alsace_area
+				area = lorraine_area
+				area = wallonia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				OR = {
+					area = alsace_area
+					area = lorraine_area
+					area = wallonia_area
+				}
+			}
+		}
+
+		effect = {
+			change_innovativeness = 5
+			add_country_modifier = {
+				name = fkn_crossing_the_rhine
+				duration = 3650
+			}
+			low_countries_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						is_rival = FRC
+						is_enemy = FRC
+						is_rival = FRA
+						is_enemy = FRA
+					}
+				}
+				custom_tooltip = FKN_FRC_RIVALRY_YES
+				hidden_effect = {
+					if = {
+						limit = {
+							exists = FRA
+						}
+						add_casus_belli = {
+							type = cb_insult
+							months = 300
+							target = FRA
+						}
+					}
+					else = {
+						add_casus_belli = {
+							type = cb_insult
+							months = 300
+							target = FRC
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = FKN_FRC_RIVALRY_NO
+			}
+		}
+	}
+
+	fkn_unite_with_francia = {
+		icon = mission_downfall
+		required_missions = { fkn_western_expansion }
+		position = 8
+
+		provinces_to_highlight = {
+			OR = {
+				owned_by = FRC
+				owned_by = FRA
+			}
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					exists = FRC
+				}
+				army_size = FRC
+				total_development = FRC
+				has_won_war_against = {
+					who = FRC
+					max_years_since = 10
+				}
+			}
+			else_if = {
+				limit = {
+					exists = FRA
+				}
+				army_size = FRA
+				total_development = FRA
+				has_won_war_against = {
+					who = FRA
+					max_years_since = 10
+				}
+			}
+			else = {
+				ile_de_france_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+
+		effect = {
+			set_country_flag = unlocked_frankish_empire_decision
+			custom_tooltip = FKN_UNLOCK_FRANKISH
+			custom_tooltip = AB_EMPTY
+			add_ruler_modifier = {
+				name = swa_imperial_absolutism
+				duration = -1
+			}
+			france_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						exists = FRC
+						exists = FRA
+					}
+				}
+				custom_tooltip = BOH_FRC_CB
+				hidden_effect = {
+					if = {
+						limit = {
+							exists = FRC
+						}
+						add_casus_belli = {
+							type = cb_restore_personal_union
+							months = 300
+							target = FRC
+						}
+					}
+					else_if = {
+						limit = {
+							exists = FRA
+						}
+						add_casus_belli = {
+							type = cb_restore_personal_union
+							months = 300
+							target = FRA
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BOH_FRC_CB_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_country_modifier = fkn_crossing_the_rhine
+				}
+				custom_tooltip = FKN_FRC_SPEEDRUN_YES
+				hidden_effect = {
+					remove_country_modifier = fkn_crossing_the_rhine
+					add_country_modifier = {
+						name = fkn_crossing_the_rhine
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = FKN_FRC_SPEEDRUN_NO
+			}
+		}
+	}
+
+	fkn_frankish_kingdom = {
+		icon = king_of_the_franks
+		required_missions = { fkn_unite_with_francia }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				owned_by = FRC
+				owned_by = FRA
+				region = france_region
+			}
+		}
+		
+		trigger = {
+			OR = {
+				if = {
+					limit = {
+						exists = FRA
+					}
+					overlord_of = FRA
+				}
+				else = {
+					overlord_of = FRC
+				}
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 40
+					region = france_region
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = HLV_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = FKN_perma_pp
+					amount = 10
+				}
+			}
+			add_country_modifier = {
+				name = fkn_kingdom_of_the_franks_mod
+				duration = -1
+			}
+			france_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+ab_franconia_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = FKN
+			tag = WBG
+			tag = ROT
+			tag = ANS
+			tag = BAM
+			tag = NUM
+			tag = BYT
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	fkn_slavic_frontline = {
+		icon = mission_germancentury
+		required_missions = { fkn_restore_greater_franconia }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				area = south_saxony_area
+				area = northern_saxony_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 6
+				OR = {
+					area = south_saxony_area
+					area = northern_saxony_area
+				}
+			}
+		}
+
+		effect = {
+			add_prestige_or_monarch_power = { amount = 25 }
+			add_country_modifier = {
+				name = sax_wendish_crusade
+				duration = 7300
+			}
+			custom_tooltip = SWA_CONVERT_BONUS
+			custom_tooltip = AB_EMPTY
+			mittelmark_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			neumark_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lusatia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	fkn_wendish_crusade = {
+		icon = mission_perun
+		required_missions = { fkn_bohemia fkn_slavic_frontline }
+		position = 4
+
+		provinces_to_highlight = {
+			OR = {
+				area = mittelmark_area
+				area = neumark_area
+				area = lusatia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			mittelmark_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			neumark_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			lusatia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					government = monarchy
+				}
+				custom_tooltip = FKN_RELEASE_BRANDENBURG_PU
+			}
+			else = {
+				custom_tooltip = FKN_RELEASE_BRANDENBURG_VASSAL
+			}
+			hidden_effect = {
+				wendia_region = {
+					limit = { owned_by = ROOT }
+					remove_core = ROOT
+					add_core = BRA
+				}
+				release = BRA
+				if = {
+					limit = {
+						government = monarchy
+					}
+					create_union = BRA
+				}
+				else = {
+					create_march = BRA
+				}
+				BRA = {
+					set_capital = 50
+					change_religion = ROOT
+					change_primary_culture = markish_culture
+					capital_scope = {
+						change_culture = markish_culture
+					}
+					if = {
+						limit = {
+							NOT = { government = monarchy }
+						}
+						change_government = monarchy
+					}
+					add_government_reform = feudalism_reform
+					if = {
+						limit = {
+							NOT = { government_rank = 2 }
+						}
+						set_government_rank = 2
+					}
+					set_country_flag = formed_brandenburg_flag
+					swap_free_idea_group = yes
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = fkn_expansionist_ambition
+				duration = 10950
+			}
+			wendia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = BYT
+						was_tag = BYT
+					}
+				}
+				custom_tooltip = FKN_START_AS_BYT_YES
+				add_country_modifier = {
+					name = swa_crusader_lord
+					duration = -1
+					desc = FKN_UNTIL_BRA_ANNEXED
+				}
+			}
+			else = {
+				custom_tooltip = FKN_START_AS_BYT_NO
+				tooltip = {
+					add_country_modifier = {
+						name = swa_crusader_lord
+						duration = -1
+						desc = FKN_UNTIL_BRA_ANNEXED
+					}
+				}
+			}
+		}
+	}
+
+	fkn_contest_for_dominance = {
+		icon = mission_bloodiron
+		required_missions = { fkn_control_trade }
+		position = 5
+
+		provinces_to_highlight = {
+			region = north_german_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 35
+				region = north_german_region
+			}
+		}
+
+		effect = {
+			north_german_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_nationalism = -10
+			}
+			add_country_modifier = {
+				name = swa_german_hegemony
+				duration = 9125
+			}
+			custom_tooltip = SWA_WIN_WAR_GAIN_STAB
+			custom_tooltip = AB_EMPTY
+			north_german_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_territorial_core = ROOT
+			}
+		}
+	}
+
+	fkn_continental_system = {
+		icon = defeat_the_english
+		required_missions = { fkn_western_expansion fkn_contest_for_dominance }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					region = low_countries_region
+					NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				}
+				province_id = 97
+			}
+		}
+		
+		trigger = {
+			low_countries_region = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			97 = {
+				trade_share = {
+					country = ROOT
+					share = 60
+				}
+			}
+		}
+
+		effect = {
+			set_country_flag = trader_give_production_efficiency
+			custom_tooltip = FKN_TRADER_SCALING
+			custom_tooltip = AB_EMPTY
+			set_country_flag = ab_shipyard_grant_dip
+			custom_tooltip = FKN_BUILD_SHIPYARD_BUILDINGS
+			custom_tooltip = AB_EMPTY
+			97 = {
+				add_unit_construction = {
+					type = heavy_ship
+					amount = 5
+					speed = 0.25
+					cost = 0
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					navy_size = ENG
+					exists = ENG
+				}
+				custom_tooltip = FKN_LARGER_NAVY_THAN_ENG_YES
+				add_navy_tradition = 50
+			}
+			else_if = {
+				limit = {
+					navy_size = GBR
+					exists = GBR
+				}
+				custom_tooltip = FKN_LARGER_NAVY_THAN_ENG_YES
+				add_navy_tradition = 50
+			}
+			else = {
+				custom_tooltip = FKN_LARGER_NAVY_THAN_ENG_NO
+				tooltip = {
+					add_navy_tradition = 50
+				}
+			}
+		}
+	}
+
+	fkn_establish_the_cavalry_corps = {
+		icon = league_of_the_public_weal
+		required_missions = { }
+		position = 8
+
+		trigger = {
+			has_global_modifier_value = { 
+				which = cavalry_power
+				value = 0.1
+			}
+			num_of_cavalry = 15
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = fkn_cavalry_corps
+				duration = -1
+			}
+			custom_tooltip = FKN_WINNING_BATTLE
+		}
+	}
+
+	fkn_blitzkrieg_doctrine = {
+		icon = mission_livonian_intervention
+		required_missions = { fkn_establish_the_cavalry_corps }
+		position = 9
+
+		trigger = {
+			dragoon = 3
+			cavalry_fraction = 0.4
+			monthly_mil = 12
+		}
+
+		effect = {
+			create_general = {
+				tradition = 100
+			}
+			set_country_flag = fkn_scaling_dragoon
+			custom_tooltip = FKN_DRAGOON_SCALING
+			custom_tooltip = AB_EMPTY
+			set_country_flag = unlocked_blitzkrieg
+			custom_tooltip = FKN_UNLOCK_BLITZKRIEG_REFORM
+		}
+	}
+
+	fkn_expand_the_imperial_knights = {
+		icon = mission_holy_horde
+		required_missions = { fkn_frankish_kingdom fkn_blitzkrieg_doctrine }
+		position = 11
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			culture_group = french
+			OR = {
+				has_forcelimit_building_trigger = no
+				has_manpower_building_trigger = no
+			}
+		}
+
+		trigger = {
+			OR = {
+				army_tradition = 75
+				army_professionalism = 0.5
+			}
+			num_of_owned_provinces_with = {
+				value = 15
+				culture_group = french
+				has_forcelimit_building_trigger = yes
+			}
+			num_of_owned_provinces_with = {
+				value = 15
+				culture_group = french
+				has_manpower_building_trigger = yes
+			}
+			num_of_cavalry = 50
+		}
+
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_country_modifier = {
+				name = fkn_frankish_imperial_knights
+				duration = -1
+			}
+			set_country_flag = ab_barrack_grant_extra_manpower_flag
+			custom_tooltip = IVR_BUILDING_BARRACK
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = barracks
+					}
+					add_province_modifier = {
+						name = ivr_extra_manpower_1
+						duration = -1
+					}
+				}
+				every_owned_province = {
+					limit = {
+						has_building = training_fields
+					}
+					add_province_modifier = {
+						name = ivr_extra_manpower_2
+						duration = -1
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = BAM
+						was_tag = BAM
+					}
+				}
+				custom_tooltip = FKN_START_AS_BAM_YES
+				set_country_flag = unlocked_fkn_holy_knights
+				add_government_reform = fkn_holy_knights
+			}
+			else = {
+				custom_tooltip = FKN_START_AS_BAM_NO
+				tooltip = {
+					add_government_reform = fkn_holy_knights
+				}
 			}
 		}
 	}

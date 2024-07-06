@@ -23,17 +23,15 @@ country_event = {
 		religion = catholic
 		is_defender_of_faith = no	
 		NOT = { has_reform = papacy_reform }
-		# AB {{{
-		OR = {
-			reform_desire = 1
-			# Ante Bellum has less catholic nations leading to a slower
-			# increase in overall reform desire, make it enable to spawn
-			# starting in 1520
-			is_year = 1520
-		}
-		# }}}
+		reform_desire = 1
 		capital_scope = {
-			continent = europe
+			OR = {
+				region = north_german_region
+				region = south_german_region
+				region = low_countries_region
+				region = france_region 
+				region = italy_region
+			}
 		}
 		any_owned_province = {
 			can_have_center_of_reformation_trigger = {
@@ -43,7 +41,7 @@ country_event = {
 	}
 	
 	mean_time_to_happen = {
-		months = 4000
+		months = 2000
 		
 		modifier = {
 			factor = 2
@@ -51,11 +49,15 @@ country_event = {
 			OR = {
 				culture_group = germanic
 				culture_group = scandinavian
-				# AB {{{
-				# replaces british culture
 				culture_group = west_germanic
-				# }}}
+				#culture_group = british
+				primary_culture = Anglois
+				#primary_culture = anglois
 				culture_group = west_slavic
+				#primary_culture = czech_new
+				#primary_culture = sorbian_new
+				#primary_culture = schlesian_new
+				#primary_culture = polish_new
 			}
 		}
 		modifier = {
@@ -114,6 +116,15 @@ country_event = {
 			government = theocracy
 		}
 		modifier = {
+			factor = 2
+			has_dlc = "Rule Britannia"	#For Anglicanism
+			OR = {
+				#culture_group = british
+				culture_group = west_germanic
+				primary_culture = Anglois
+			}
+		}
+		modifier = {
 			factor = 8.0
 			OR = {
 				NOT = { exists = PAP }
@@ -154,7 +165,7 @@ country_event = {
 				limit = {
 					NOT = { is_capital = yes }
 				}
-				root = {
+				ROOT = {
 					capital_scope = {
 						change_religion = protestant
 						add_permanent_province_modifier = {

@@ -1,0 +1,115 @@
+country_decisions = {
+
+	ab_germany_bohemia = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			NOT = { has_country_flag = bohemia_formed_germany_flag }
+			has_country_flag = boh_can_form_germany
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 57
+				province_id = 65
+				province_id = 67
+				province_id = 85
+				province_id = 63
+				province_id = 1876
+				province_id = 70
+				province_id = 1874
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }	
+		}
+		
+		allow = {
+			adm_tech = 10
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			is_emperor = no
+			owns_core_province = 57	# Brunswick
+			owns_core_province = 65	# München
+			owns_core_province = 67
+			owns_core_province = 85
+			owns_core_province = 63
+			owns_core_province = 1876
+			owns_core_province = 70
+			owns_core_province = 1874
+
+		}
+		effect = {
+			add_prestige_or_monarch_power = { amount = 25 } 
+			change_tag = GER
+			on_change_tag_effect = yes
+			if = {
+				limit = {
+					hre_size = 1
+				}
+				emperor = {
+					add_opinion = {
+						who = ROOT
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
+				}
+			}
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = bohemia_formed_germany_flag
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_global_flag = NO_CNS
+					}
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+			}
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						is_colonial_nation = yes
+					}
+					# It is OK to fire all of them because the usage
+					# of country_event checks the triggers
+					country_event = { id = colonial_germany.1 }
+					country_event = { id = colonial_germany.2 }
+					country_event = { id = colonial_germany.3 }
+					country_event = { id = colonial_germany.4 }
+					country_event = { id = colonial_germany.5 }
+					country_event = { id = colonial_germany.6 }
+					country_event = { id = colonial_germany.7 }
+					country_event = { id = colonial_germany.8 }
+					country_event = { id = colonial_germany.9 }
+					country_event = { id = colonial_germany.10 }
+					country_event = { id = colonial_germany.11 }
+					country_event = { id = colonial_germany.12 }
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+}

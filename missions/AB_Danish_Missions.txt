@@ -128,7 +128,10 @@ ab_danish_first = {
 				change_culture = anglodanish
 				change_original_culture = anglodanish
 			}
-			add_accepted_culture = anglodanish
+			add_accepted_culture_or_dip_power = {
+				culture = anglodanish
+				dip_reward = yes
+			}
 			add_country_modifier = {
 				name = "dan_union_cultural"
 				duration = -1
@@ -488,11 +491,10 @@ ab_danish_second = {
 			}
 			custom_tooltip = DAN_ENGLAND_CLAIMS
 			hidden_effect = {
-				every_province = {
-					limit = {
-						owned_by = ENG
+				ENG = {
+					every_owned_province = {
+						add_permanent_claim = ROOT
 					}
-					add_permanent_claim = ROOT
 				}
 			}
 			custom_tooltip = DAN_CONVERT
@@ -632,35 +634,23 @@ ab_danish_second = {
 		position = 9
 		
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					trade_goods = fish
-					development = 10
-					NOT = {
-						culture = danish
-					}
-				}
-				amount = 5
+			num_of_owned_provinces_with = {
+				value = 5
+				trade_goods = fish
+				development = 10
+				NOT = { culture = danish }
 			}
-			calc_true_if = {
-				all_owned_province = {
-					trade_goods = grain
-					development = 10
-					NOT = {
-						culture = danish
-					}
-				}
-				amount = 5
+			num_of_owned_provinces_with = {
+				value = 5
+				trade_goods = grain
+				development = 10
+				NOT = { culture = danish }
 			}
-			calc_true_if = {
-				all_owned_province = {
-					trade_goods = livestock
-					development = 10
-					NOT = {
-						culture = danish
-					}
-				}
-				amount = 5
+			num_of_owned_provinces_with = {
+				value = 5
+				trade_goods = livestock
+				development = 10
+				NOT = { culture = danish }
 			}
 		}
 		
@@ -734,23 +724,13 @@ ab_danish_second = {
 			owned_by = ROOT
 			has_port = yes
 			num_free_building_slots = 1
-			NOT = {
-				OR = {
-					has_building = shipyard
-					has_building = grand_shipyard
-				}
-			}
+			has_shipyard_building_trigger = no
 		}
 		
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					OR = {
-						has_building = shipyard
-						has_building = grand_shipyard
-					}
-				}
-				amount = 15
+			num_of_owned_provinces_with = {
+				value = 15
+				has_shipyard_building_trigger = yes
 			}
 		}
 		
@@ -1181,11 +1161,9 @@ ab_danish_third = {
 			1466 = {
 				is_strongest_trade_power = ROOT
 			}
-			calc_true_if = {
-				all_owned_province = {
-					continent = africa
-				}
-				amount = 25
+			num_of_owned_provinces_with = {
+				value = 25
+				continent = africa
 			}
 		}
 		
@@ -1205,14 +1183,12 @@ ab_danish_third = {
 		required_missions = { dan_coromandel }
 	
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					OR = {
-						area = malabar_area
-						area = kanara_area
-					}
+			num_of_owned_provinces_with = {
+				value = 5
+				OR = {
+					area = malabar_area
+					area = kanara_area
 				}
-				amount = 5
 			}
 		}
 		
@@ -1307,15 +1283,15 @@ ab_danish_fourth = {
 							value = 100
 						}
 					}
-				add_army_tradition = 15
+					add_army_tradition = 15
 				}
 			}
 			hidden_effect = {
-			every_province = {
-				limit = { 
+				every_province = {
+					limit = { 
 						culture = swedish
-						NOT = { is_permanent_claim = ROOT	}
-						NOT = { is_core = ROOT	}
+						NOT = { is_permanent_claim = ROOT }
+						NOT = { is_core = ROOT }
 					}
 					add_permanent_claim = ROOT
 				}
@@ -1361,11 +1337,10 @@ ab_danish_fourth = {
 				}
 			}
 			hidden_effect = {
-				every_province = {
-					limit = {
-						owned_by = NOR
+				NOR = {
+					every_owned_province = {
+						add_permanent_claim = ROOT
 					}
-					add_permanent_claim = ROOT
 				}
 			}
 			hidden_effect = {
@@ -1577,28 +1552,13 @@ ab_danish_fourth = {
 		provinces_to_highlight = {
 			region = guinea_region
 			has_discovered = ROOT
-			NOT = {
-				OR = {
-					owned_by = ROOT
-					owner = {
-						is_colonial_nation_of = ROOT
-					}
-				}
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-			calc_true_if = {
-				guinea_region = {
-					type = all
-					OR = {
-						owned_by = ROOT
-						owner = {
-							is_colonial_nation_of = ROOT
-						}
-					}
-				}
-				amount = 3
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 3
+				region = guinea_region
 			}
 		}
 		
@@ -1633,14 +1593,7 @@ ab_danish_fourth = {
 			region = coromandel_region
 			has_discovered = ROOT
 			province_has_center_of_trade_of_level = 1
-			NOT = {
-				OR = {
-					owned_by = ROOT
-					owner = {
-						is_colonial_nation_of = ROOT
-					}
-				}
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
@@ -1650,18 +1603,10 @@ ab_danish_fourth = {
 					share = 25
 				}
 			}
-			calc_true_if = {
-				coromandel_region = {
-					type = all
-					province_has_center_of_trade_of_level = 1
-					OR = {
-						owned_by = ROOT
-						owner = {
-							is_colonial_nation_of = ROOT
-						}
-					}
-				}
-				amount = 6
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 6
+				region = coromandel_region
+				province_has_center_of_trade_of_level = 1
 			}
 		}
 		
@@ -1940,37 +1885,32 @@ ab_danish_fifth3 = {
 		position = 3
 		
 		trigger = {
+			NOT = { active_imperial_incident = any }
 			OR = {
 				emperor = {
 					alliance_with = ROOT
-				}
-				calc_true_if = {
-					amount = 3
-					all_elector = {
-						preferred_emperor = ROOT
-					}
-				}
-				calc_true_if = {
-					amount = 3
-					all_elector = {
-						vassal_of = ROOT
+					has_opinion = {
+						who = ROOT
+						value = 150
 					}
 				}
 				calc_true_if = {
 					amount = 3
 					all_elector = {
 						alliance_with = ROOT
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
 					}
 				}
 			}
 		}
 		
 		effect = {
-			custom_tooltip = DAN_REQUEST
+			custom_tooltip = DAN_REQUEST_BAI
 			hidden_effect = {
-				emperor = {
-					country_event = { id = ab_denmark.11 }
-				}
+				set_imperial_incident = incident_denmark_and_the_empire
 			}
 			custom_tooltip = ENG_ELECTOR_ALLY
 			add_country_modifier = {
@@ -2167,23 +2107,13 @@ ab_danish_fifth4 = {
 		
 		provinces_to_highlight = {
 			owned_by = ROOT
-			NOT = {
-				OR = {
-					has_building = temple
-					has_building = cathedral
-				}
-			}
+			has_tax_building_trigger = no
 		}
 		
 		trigger = {
-			calc_true_if = {
-				all_owned_province = {
-					OR = {
-						has_building = temple
-						has_building = cathedral
-					}
-				}
-				amount = 15
+			num_of_owned_provinces_with = {
+				value = 15
+				has_tax_building_trigger = yes
 			}
 		}
 		
@@ -2193,17 +2123,8 @@ ab_danish_fifth4 = {
 			hidden_effect = {
 				every_province = {
 					limit = {
-						OR = {
-							owned_by = ROOT
-							owner = {
-								is_subject_of = ROOT
-								NOT = { is_subject_of_type = tributary_state }
-							}
-						}
-						OR = {
-							has_building = temple
-							has_building = cathedral
-						}
+						country_or_non_sovereign_subject_holds = ROOT
+						has_tax_building_trigger = yes
 					}
 					add_base_production = 1
 					set_province_flag = ab_production_from_norse_mead
@@ -2244,11 +2165,9 @@ ab_danish_fifth4 = {
 			4144 = {
 				is_core = ROOT
 			}
-			calc_true_if = {
-				all_owned_province = {
-					religion = norse_pagan_reformed
-				}
-				amount = 35
+			num_of_owned_provinces_with = {
+				value = 35
+				religion = norse_pagan_reformed
 			}
 		}
 		
@@ -2292,7 +2211,7 @@ ab_danish_fifth5 = {
 	dan_slesvig = {
 		icon = claim_the_borderlands
 		required_missions = { }
-		position = 5
+		position = 6
 		
 		provinces_to_highlight = {
 			area = holstein_area
@@ -2336,7 +2255,7 @@ ab_danish_fifth5 = {
 	dan_hansa = {
 		icon = mission_bane_of_the_hansa
 		required_missions = { dan_slesvig }
-		position = 6
+		position = 7
 		
 		provinces_to_highlight = {
 			OR = {
@@ -2359,7 +2278,7 @@ ab_danish_fifth5 = {
 			add_years_of_income = 1
 			45 = {
 				add_trade_modifier = {
-					who = root
+					who = ROOT
 					duration = -1
 					power = 10
 					key = dan_hansa_dismantled
@@ -2401,7 +2320,7 @@ ab_danish_fifth5 = {
 	dan_rugen = {
 		icon = mission_passage
 		required_missions = { dan_hansa }
-		position = 7
+		position = 8
 		
 		provinces_to_highlight = {
 			province_id = 4745
@@ -2674,28 +2593,13 @@ ab_danish_fifth5 = {
 		provinces_to_highlight = {
 			superregion = india_superregion
 			has_discovered = ROOT
-			NOT = {
-				OR = {
-					owned_by = ROOT
-					owner = {
-						is_colonial_nation_of = ROOT
-					}
-				}
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-			calc_true_if = {
-				india_superregion = {
-					type = all
-					OR = {
-						owned_by = ROOT
-						owner = {
-							is_colonial_nation_of = ROOT
-						}
-					}
-				}
-				amount = 3
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 3
+				superregion = india_superregion
 			}
 		}
 		
@@ -2706,9 +2610,8 @@ ab_danish_fifth5 = {
 			}
 			custom_tooltip = DAN_COROMANDEL_CLAIM
 			hidden_effect = {
-				every_province = {
+				coromandel_region = {
 					limit = {
-						region = coromandel_region
 						province_has_center_of_trade_of_level = 1
 					}
 					add_permanent_claim = ROOT
@@ -2725,28 +2628,13 @@ ab_danish_fifth5 = {
 		provinces_to_highlight = {
 			superregion = east_indies_superregion
 			has_discovered = ROOT
-			NOT = {
-				OR = {
-					owned_by = ROOT
-					owner = {
-						is_colonial_nation_of = ROOT
-					}
-				}
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-			calc_true_if = {
-				east_indies_superregion = {
-					type = all
-					OR = {
-						owned_by = ROOT
-						owner = {
-							is_colonial_nation_of = ROOT
-						}
-					}
-				}
-				amount = 10
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				superregion = east_indies_superregion
 			}
 		}
 		

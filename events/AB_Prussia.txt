@@ -214,3 +214,121 @@ country_event = {
 		}
 	}
 }
+
+country_event = {
+	id = ab_brapru.9
+	title = ab_brapru.9.t
+	desc = ab_brapru.9.d
+	picture = AB_GERCON_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_brapru.9.a #Prussian Blue
+		set_country_flag = has_overriden_color_flag
+		change_country_color = { 
+			color = { 0 49 83 }
+		}
+	}
+	
+	option = {
+		name = ab_brapru.9.b #Old Vanilla Grey
+		set_country_flag = has_overriden_color_flag
+		change_country_color = { 
+			color = { 143  141  128 }
+		}
+	}
+	
+	option = {
+		name = ab_brapru.9.c #Victoria II Yellow lmfao
+		set_country_flag = has_overriden_color_flag
+		change_country_color = { 
+			color = { 244  231  110 }
+		}
+	}
+}
+
+
+#Germanization
+province_event = {
+	id = ab_brapru.10
+	title = ab_brapru.10.t
+	desc = ab_brapru.10.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 480
+	}
+	
+	trigger = {
+		owner = {
+			has_country_flag = bra_ostsiedlung_flag
+		}
+		OR = {
+			region = wendia_region
+			area = east_prussia_area
+			area = west_prussia_area
+			AND = {
+				area = silesia_area
+				owner = { has_country_flag = bra_silesia_spread }
+			}
+			AND = {
+				region = baltic_region
+				owner = { has_country_flag = pru_baltic_spread }
+			}
+		}
+		NOT = {
+			culture_group = germanic
+		}
+		any_neighbor_province = {
+			owned_by = ROOT
+			culture_group = germanic
+		}
+		religion = ROOT
+	}
+	
+	option = {
+		name = ab_brapru.10.a
+		if = {
+			limit = {
+				region = wendia_region
+			}
+			change_culture = markish_culture
+		}
+		if = {
+			limit = {
+				OR = {
+					area = east_prussia_area
+					area = west_prussia_area
+				}
+			}
+			change_culture = prussian
+		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = bra_silesia_spread
+				}
+				area = silesia_area
+			}
+			change_culture = germanic_silesian
+		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = pru_baltic_spread
+				}
+				region = baltic_region
+				NOT = {
+					OR = {
+						area = east_prussia_area
+						area = west_prussia_area
+					}
+				}
+			}
+			change_culture = baltic_german
+		}
+	}
+}

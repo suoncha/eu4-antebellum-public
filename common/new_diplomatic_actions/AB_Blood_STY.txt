@@ -1,0 +1,98 @@
+# For those totally not corrupt Habsburgs
+fabricate_imperial_conquest_cb = {
+	category = emperor
+
+	require_acceptance = no
+
+	is_visible = {
+		# The 'Emperor tab' is only visible to the Emperor
+		# but just make sure
+		is_emperor = yes
+		has_country_flag = hab_imperial_claims_flag
+	}
+	is_allowed = {
+		if = {
+			limit = {
+				FROM = { is_part_of_hre = no }
+			}
+			custom_trigger_tooltip = {
+				tooltip = AB_HAB_IS_NOT_PART_OF_HRE
+				FROM = { is_part_of_hre = yes }
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_spy_network_in = {
+						who = FROM
+						value = 35
+					}
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = AB_HAB_NEEDS_35_SPY_NETWORK
+				has_spy_network_in = {
+					who = FROM
+					value = 35
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = { imperial_influence = 10 }
+			}
+			custom_trigger_tooltip = {
+				tooltip = AB_HAB_MISSING_10_IMPERIAL_INFLUENCE
+				imperial_influence = 10
+			}
+		}
+		if = {
+			limit = {
+				has_casus_belli = {
+					type = cb_crush_imperial_heretic
+					target = FROM
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = AB_HAB_ALREADY_FABRICATED_CRUSH_IMPERIAL_HERETICS
+				NOT = {
+					has_casus_belli = {
+						type = cb_crush_imperial_heretic
+						target = FROM
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				FROM = { is_subject = yes }
+			}
+			custom_trigger_tooltip = {
+				tooltip = CANNOT_DO_ACTION_TO_SUBJECTS_TT
+				FROM = { is_subject = no }
+			}
+		}
+	}
+	on_accept = {
+		add_spy_network_in = {
+			who = FROM
+			value = -35
+		}
+		add_imperial_influence = -10
+		add_corruption = 2
+		add_casus_belli = {
+			target = FROM
+			type = cb_crush_imperial_heretic
+			months = 60
+		}
+	}
+	on_decline = {
+	}
+
+	ai_will_do = {
+		has_spy_network_in = {
+			who = FROM
+			value = 40
+		}
+	}
+}

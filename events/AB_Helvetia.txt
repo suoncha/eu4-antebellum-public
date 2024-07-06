@@ -1,0 +1,151 @@
+namespace = ab_helvetia
+normal_or_historical_nations = yes
+
+#Helvetia Militarization - Hidden Event
+country_event = {
+	id = ab_helvetia.0
+	title = ab_helvetia.0.t
+	desc = ab_helvetia.0.d
+	picture = CULTURE_eventPicture
+	
+	is_triggered_only = yes
+	hidden = yes
+
+	trigger = {
+		has_government_mechanic = helvetic_militarization_mechanic
+	}
+
+	after = {
+		country_event = {
+			id = ab_helvetia.0
+			days = 30
+		}
+	}
+	
+	option = {
+		name = ab_helvetia.0.a
+		remove_country_modifier = hlv_militarization_1
+		remove_country_modifier = hlv_militarization_2
+		remove_country_modifier = hlv_militarization_3
+		remove_country_modifier = hlv_militarization_4
+		remove_country_modifier = hlv_militarization_5
+		remove_country_modifier = hlv_militarization_6
+		remove_country_modifier = hlv_militarization_7
+		remove_country_modifier = hlv_militarization_8
+		remove_country_modifier = hlv_militarization_9
+		remove_country_modifier = hlv_militarization_10
+		if = {
+			limit = { num_of_mercenaries = 100 }
+			add_country_modifier = {
+				name = hlv_militarization_10
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 90 }
+			add_country_modifier = {
+				name = hlv_militarization_9
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 80 }
+			add_country_modifier = {
+				name = hlv_militarization_8
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 70 }
+			add_country_modifier = {
+				name = hlv_militarization_7
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 60 }
+			add_country_modifier = {
+				name = hlv_militarization_6
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 50 }
+			add_country_modifier = {
+				name = hlv_militarization_5
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 40 }
+			add_country_modifier = {
+				name = hlv_militarization_4
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 30 }
+			add_country_modifier = {
+				name = hlv_militarization_3
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 20 }
+			add_country_modifier = {
+				name = hlv_militarization_2
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 10 }
+			add_country_modifier = {
+				name = hlv_militarization_1
+				duration = -1
+				hidden = yes
+			}
+		}
+	}
+}
+
+#Formation of Helvetia - A Union of the Swiss Cantons
+country_event = {
+	id = ab_helvetia.1
+	title = ab_helvetia.1.t
+	desc = ab_helvetia.1.d
+	picture = GERMAN_UNIFICATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_helvetia.1.a
+		add_prestige = 50
+		on_change_tag_effect = yes
+		if = {
+			limit = {
+				NOT = { government_rank = 2 }
+			}
+			set_government_rank = 2
+		}
+		change_tag = HLV
+		swap_non_generic_missions = yes
+		if = {
+			limit = { has_custom_ideas = no }
+			country_event = { id = ideagroups.1 } #Swap Ideas
+		}
+		add_country_modifier = {
+			name = "centralization_modifier"
+			duration = 7300
+		}
+		add_government_reform = helvetia_confederacy
+	}
+}

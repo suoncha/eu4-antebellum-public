@@ -1,0 +1,58 @@
+ab_spread_republic = {
+    category = 6
+    power_projection = humiliated_rival
+    power_cost_base = 1.0
+    prestige_base = 0.1 
+    ae_base = 0.15 
+    warscore_cap = 90
+    requires_is_allowed = yes
+
+    warscore_cost = {
+        all_provinces = 0.0 
+        no_provinces = 90.0
+        owner_keeps = 0.0
+        conquered = 0.0
+        returned_core = 0.0
+        released_nation = 0.0
+        cancelled_subject = 0.0
+        concede_colonial_region = 0.0
+    }
+
+    is_visible = {
+        always = yes
+    }
+    is_allowed = {
+        always = yes
+    }
+
+    effect = {
+        vassalize = FROM
+        FROM = {
+            every_subject_country = {
+                FROM = {
+                    inherit = PREV
+                }
+            }
+            change_country_color = {
+                country = ROOT
+            }
+            set_country_flag = is_sister_republic
+            if = {
+                limit = {
+                    NOT = {
+                        tag = PAP
+                    }
+                }
+                change_government = republic
+                add_government_reform = sister_republic_reform
+            }
+        }
+    }
+
+    ai_weight = {
+        export_to_variable = {
+            variable_name = ai_value
+            value = 1000
+        }
+    }
+}

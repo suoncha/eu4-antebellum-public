@@ -4,7 +4,9 @@ country_decisions = {
 		major = yes
 		potential = {
 			normal_or_historical_nations = yes
-			
+			# AB [[[ Make major German tags more aggressive and minor German tags less aggressive in claiming Germany
+			ab_not_german_regional_tag_trigger = no
+			# ]]]
 			NOT = { has_country_flag = formed_germany_flag }
 			OR = {
 				ai = no
@@ -14,32 +16,13 @@ country_decisions = {
 			NOT = { tag = PAP }
 			NOT = { tag = HLR }
 			NOT = { tag = ROM }
-			NOT = { tag = AUH }
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 15
-					adm_tech = 20
-				}
-			}
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					NOT = { government = theocracy }
+			NOT = {
+				OR = {
+					tag = BOH
+					was_tag = BOH
 				}
 			}
 			culture_group = germanic
-			NOT = { primary_culture = dutch }
-			is_colonial_nation = no
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
-				}
-			}
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -60,7 +43,6 @@ country_decisions = {
 			is_free_or_tributary_trigger = yes
 			is_nomad = no
 			is_at_war = no
-			is_emperor = no
 			owns_core_province = 57	# Brunswick
 			owns_core_province = 65	# München
 			owns_core_province = 67
@@ -72,11 +54,12 @@ country_decisions = {
 
 		}
 		effect = {
+			add_prestige_or_monarch_power = { amount = 25 } 
 			change_tag = GER
-			restore_country_name_effect = yes
+			on_change_tag_effect = yes
 			emperor = {
 				add_opinion = {
-					who = root
+					who = ROOT
 					modifier = opinion_left_empire
 				}
 			}
@@ -84,12 +67,11 @@ country_decisions = {
 			emperor = {
 				country_event = { id = hre_event.5 }
 			}
-			set_government_rank = 2		
+			# set_government_rank = 2		
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			add_prestige = 25
 			set_country_flag = formed_germany_flag
 			if = {
 				limit = {
@@ -98,6 +80,59 @@ country_decisions = {
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
 			swap_non_generic_missions = yes
+			hidden_effect = {
+				# Remove bra_confederation if we have it
+				if = {
+					limit = {
+						has_country_modifier = bra_confederation
+					}
+					remove_country_modifier = bra_confederation
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						has_country_flag = south_german_confederation_name_override_flag
+						has_country_flag = north_german_confederation_name_override_flag
+					}
+				}
+				restore_country_name = yes
+				clr_country_flag = south_german_confederation_name_override_flag
+				clr_country_flag = north_german_confederation_name_override_flag
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_global_flag = NO_CNS
+					}
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+			}
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						is_colonial_nation = yes
+					}
+					# It is OK to fire all of them because the usage
+					# of country_event checks the triggers
+					country_event = { id = colonial_germany.1 }
+					country_event = { id = colonial_germany.2 }
+					country_event = { id = colonial_germany.3 }
+					country_event = { id = colonial_germany.4 }
+					country_event = { id = colonial_germany.5 }
+					country_event = { id = colonial_germany.6 }
+					country_event = { id = colonial_germany.7 }
+					country_event = { id = colonial_germany.8 }
+					country_event = { id = colonial_germany.9 }
+					country_event = { id = colonial_germany.10 }
+					country_event = { id = colonial_germany.11 }
+					country_event = { id = colonial_germany.12 }
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 1

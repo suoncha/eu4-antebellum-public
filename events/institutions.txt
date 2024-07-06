@@ -75,6 +75,9 @@ country_event = {
 				name = "birthplace_of_the_renaissance"
 				duration = -1
 			}
+			hidden_effect = {
+				save_global_event_target_as = birthplace_of_the_renaissance
+			}
 		}
 		hidden_effect = {
 			every_country = {
@@ -90,6 +93,7 @@ country_event = {
 					ai = no
 					NOT = { tag = ROOT }
 					NOT = { knows_country = ROOT }
+					is_primitive = no
 				}
 				country_event = { id = institution_events.201 }
 			}
@@ -164,7 +168,7 @@ country_event = {
 	
 
 	trigger = {
-		always = yes			#
+		always = no			#
 	}
 
 	mean_time_to_happen = {
@@ -298,6 +302,7 @@ country_event = {
 					ai = no
 					NOT = { tag = ROOT }
 					NOT = { knows_country = ROOT }
+					is_primitive = no
 				}
 				country_event = { id = institution_events.301 }
 			}
@@ -403,7 +408,7 @@ country_event = {
 	
 
 	trigger = {
-		always = yes			#
+		always = no			#
 	}
 
 	mean_time_to_happen = {
@@ -494,6 +499,7 @@ country_event = {
 					ai = no
 					NOT = { tag = ROOT }
 					NOT = { knows_country = ROOT }
+					is_primitive = no
 				}
 				country_event = { id = institution_events.401 }
 			}
@@ -539,6 +545,22 @@ country_event = {
 				add_institution_embracement = {
 					which = "printing_press"
 					value = 25
+				}
+			}
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					has_country_flag = yua_guaranteed_printing_press
+				}
+				capital_scope = {
+					add_institution_embracement = {
+						which = printing_press
+						value = 100
+					}
 				}
 			}
 		}
@@ -617,6 +639,17 @@ country_event = {
 				}
 			}
 		}
+		if = {
+			limit = {
+				has_country_flag = yua_guaranteed_printing_press
+			}
+			capital_scope = {
+				add_institution_embracement = {
+					which = "printing_press"
+					value = 100
+				}
+			}
+		}
 	}
 }
 
@@ -631,7 +664,7 @@ country_event = {
 	
 
 	trigger = {
-		always = yes			#
+		always = no			#
 	}
 
 	mean_time_to_happen = {
@@ -711,6 +744,7 @@ country_event = {
 					ai = no
 					NOT = { tag = ROOT }
 					NOT = { knows_country = ROOT }
+					is_primitive = no
 				}
 				country_event = { id = institution_events.501 }
 			}
@@ -772,7 +806,7 @@ country_event = {
 	
 
 	trigger = {
-		always = yes			#
+		always = no			#
 	}
 
 	mean_time_to_happen = {
@@ -851,8 +885,9 @@ country_event = {
 			every_country = {
 				limit = {
 					ai = no
-					NOT = { knows_country = ROOT }
 					NOT = { tag = ROOT }
+					NOT = { knows_country = ROOT }
+					is_primitive = no
 				}
 				country_event = { id = institution_events.601 }
 			}
@@ -903,7 +938,7 @@ country_event = {
 	
 
 	trigger = {
-		always = yes			#
+		always = no			#
 	}
 
 	mean_time_to_happen = {
@@ -983,8 +1018,9 @@ country_event = {
 			every_country = {
 				limit = {
 					ai = no
-					NOT = { knows_country = ROOT }
 					NOT = { tag = ROOT }
+					NOT = { knows_country = ROOT }
+					is_primitive = no
 				}
 				country_event = { id = institution_events.701 }
 			}
@@ -1035,7 +1071,7 @@ country_event = {
 	
 
 	trigger = {
-		always = yes			#
+		always = no			#
 	}
 
 	mean_time_to_happen = {
@@ -1116,8 +1152,9 @@ country_event = {
 			every_country = {
 				limit = {
 					ai = no
-					NOT = { knows_country = ROOT }
 					NOT = { tag = ROOT }
+					NOT = { knows_country = ROOT }
+					is_primitive = no
 				}
 				country_event = { id = institution_events.801 }
 			}
@@ -1168,7 +1205,7 @@ country_event = {
 	
 
 	trigger = {
-		always = yes			#
+		always = no			#
 	}
 
 	mean_time_to_happen = {
@@ -2411,7 +2448,7 @@ country_event = {
 			area = {
 				limit = {
 					owned_by = ROOT
-					#NOT = { printing_press = 100 }
+					NOT = { printing_press = 100 }
 				}
 				add_institution_embracement = {
 					which = printing_press
@@ -2433,7 +2470,7 @@ country_event = {
 			area = {
 				limit = {
 					owned_by = ROOT
-					NOT = { printing_press = 100 }
+					#NOT = { printing_press = 100 }
 				}
 				add_institution_embracement = {
 					which = printing_press
@@ -3511,7 +3548,7 @@ country_event = {
 }
 
 #######################################
-# Renaissance
+# Nationalism
 #######################################
 country_event = {
 	id = institution_events.100

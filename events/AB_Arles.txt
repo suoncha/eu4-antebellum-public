@@ -9,18 +9,97 @@ country_event = {
 
 	major = yes
 	
-	fire_only_once = yes 
-	
-	
-	trigger = {
-		tag = ARS
-		has_country_flag = formed_arles_flag
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_arles.1.a
-		    	add_stability = 1
-			add_prestige = 15
-				
+		add_legitimacy = 20
+		add_country_modifier = {
+			name = "ars_reunited"
+			duration = 5475
+		}
+		if = {
+			limit = {
+				was_tag = UPB
+			}
+			add_accepted_culture_or_dip_power = { culture = occitain dip_reward = yes }
+		}
+		else_if = {
+			limit = {
+				was_tag = LWB
+			}
+			add_accepted_culture_or_dip_power = { culture = burgundian dip_reward = yes  }
+		}
+	}
+}
+
+#Vegeance for Valencia
+country_event = {
+	id = ab_arles.2
+	title = ab_arles.2.t
+	desc = ab_arles.2.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_arles.2.a
+		if = {
+			limit = {
+				religion = catholic
+			}
+			220 = {
+				change_religion = catholic
+			}
+			custom_tooltip = ARS_CENTER_VALENCIA
+			hidden_effect = {
+				220 = {
+					add_reform_center = catholic
+				}
+				220 = {
+					province_event = {
+						id = ab_francia.38
+						days = 9125
+					}
+				}
+			}
+		}
+		custom_tooltip = FRC_CLEAR_WE
+		hidden_effect = {
+			add_war_exhaustion = -20
+		}
+		add_country_modifier = {
+			name = "ars_avenged_valencia"
+			duration = -1
+		}
+	}
+}
+
+#Fall of Francia
+country_event = {
+	id = ab_arles.3
+	title = ab_arles.3.t
+	desc = ab_arles.3.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_arles.3.a
+		custom_tooltip = LOT_UNLOCK_PALADINS
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		add_ruler_modifier = {
+			name = "lot_ascendant"
+			duration = -1
+		}
+		hidden_effect = {
+			add_country_modifier = {
+				name = "ab_unlock_10_paladins"
+				duration = -1
+			}
+		}
 	}
 }

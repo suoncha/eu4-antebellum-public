@@ -1,0 +1,3184 @@
+ab_tuscan_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = LAN
+					was_tag = PIS
+					was_tag = SIE
+					was_tag = GRS
+					was_tag = LUC
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_connect_cities = {
+		icon = mission_hel
+		required_missions = { tus_renaissance_city }
+		position = 2
+
+		provinces_to_highlight = {
+			area = tuscany_area
+			OR = {
+				NOT = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				NOT = { has_road_building_trigger = yes }	
+			}
+		}
+
+		trigger = {
+			tuscany_area = {
+				type = all
+				has_road_building_trigger = yes
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			tuscany_area = {
+				add_nationalism = -10
+				add_prosperity = 50
+			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = planner
+				discount = yes
+				skill = 3
+			}
+		}
+	}
+
+	tus_tuscan_cities = {
+		icon = mission_wine_monopolies
+		required_missions = { tus_connect_cities }
+		position = 4
+
+		provinces_to_highlight = {
+			area = tuscany_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			NOT = { development = 20 }
+		}
+
+		trigger = {
+			tuscany_area = {
+				type = all
+				development = 20
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			tuscany_area = {
+				add_province_modifier = {
+					name = tus_tuscan_golden_age
+					duration = 1825
+				}
+			}
+			custom_tooltip = TUS_DEVELOP_TO_EXTEND_GOLDEN_AGE
+		}
+	}
+}
+
+ab_tuscan_1_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_locked_italy_1 = {
+		icon = mission_locked_mission
+		required_missions = { tus_tuscan_cities tus_locked_italy_3 }
+		position = 5
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+ab_tuscan_1_unlocked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = LAN
+			was_tag = PIS
+			was_tag = SIE
+			was_tag = GRS
+			was_tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_tuscan_metropole = {
+		icon = conquer_tuscany 
+		required_missions = { tus_tuscan_cities tus_industrialization_of_tuscany }
+		position = 5
+
+		provinces_to_highlight = {
+			area = tuscany_area
+			NOT = {
+				ROOT = {
+					development_in_provinces = {
+						value = 225
+						area = tuscany_area
+					}
+				}
+			}
+		}
+
+		trigger = {
+			development_in_provinces = {
+				value = 225
+				area = tuscany_area
+			}
+		}
+
+		effect = {
+			tuscany_area = {
+				limit = {
+					owned_by = ROOT
+				}
+				ab_add_or_upgrade_road_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = GER_GOLDEN_AGE  
+			hidden_effect = {
+				if = {
+					limit = { has_had_golden_age = yes } 
+					reset_golden_age = yes 
+				}
+				else_if = {
+					limit = { in_golden_age = yes } 
+					extend_golden_age = 360
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_1_tall = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = LAN
+					was_tag = PIS
+					was_tag = SIE
+					was_tag = GRS
+					was_tag = LUC
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_renaissance_men = {
+		icon = reaffirm_civil_values
+		required_missions = { }
+		position = 6
+
+		trigger = {
+			has_institution = renaissance
+			OR = {
+				employed_advisor = {
+					type = artist
+				}
+				employed_advisor = {
+					type = natural_scientist
+				}
+			}
+			prestige = 25
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_arts_and_sciences
+				duration = 9125
+			}
+			change_innovativeness = 10
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					artist = 1
+				}
+				custom_tooltip = RMG_ARTIST_YES
+				hidden_effect = {
+					change_monarch_points_or_power = {
+						points = 1
+						power = dip
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RMG_ARTIST_NO
+			}
+			tooltip = {
+				change_monarch_points_or_power = {
+					points = 1
+					power = dip
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					natural_scientist = 1
+				}
+				custom_tooltip = TUS_EMPLOY_SCIENTIST_YES
+				hidden_effect = {
+					change_monarch_points_or_power = {
+						points = 1
+						power = adm
+					}
+				}
+			}
+			else = {
+				custom_tooltip = TUS_EMPLOY_SCIENTIST_NO
+			}
+			tooltip = {
+				change_monarch_points_or_power = {
+					points = 1
+					power = adm
+				}
+			}
+		}
+	}
+
+	tus_funding_ingenuity = {
+		icon = mission_educated_people
+		required_missions = { tus_renaissance_men }
+		position = 8
+
+		trigger = {
+			innovativeness = 30
+			OR = {
+				has_idea = empiricism 
+				AND = {
+					monthly_adm = 12
+					num_of_estate_agendas_completed = {
+						estate = estate_church
+						value = 5
+					}
+				}
+			}
+		}
+
+		effect = {
+			define_advisor = {
+				type = theologian
+				discount = yes
+				skill = 3
+			}
+			custom_tooltip = AB_EMPTY
+			capital_scope = {
+				add_or_upgrade_university_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = TUS_TAKING_TECH_GRANT_APC
+			set_country_flag = ab_tus_taking_tech_bonus
+		}
+	}
+}
+
+ab_tuscan_1_tall_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_locked_italy_2 = {
+		icon = mission_locked_mission
+		required_missions = { tus_funding_ingenuity }
+		position = 10
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+ab_tuscan_1_tall_unlocked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = LAN
+			was_tag = PIS
+			was_tag = SIE
+			was_tag = GRS
+			was_tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_italian_education = {
+		icon = weimar_classicism
+		required_missions = { tus_funding_ingenuity }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					NOT = {
+						has_building = university
+					}
+					owned_by = ROOT
+				}
+				owner = {
+					is_neighbor_of = ROOT
+					tech_difference = 1
+				}
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 15
+				has_building = university
+			}
+			NOT = {
+				any_neighbor_country = {
+					tech_difference = 1
+				} 
+			}
+		}
+
+		effect = {
+			custom_tooltip = TUS_BUILDING_UNI_BONUS
+			set_country_flag = ab_tus_university_bonus
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = TUS_TAKING_TECH_GRANT_APC_BUFF
+			set_country_flag = ab_tus_taking_tech_bonus_improved
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = university
+					}
+					add_province_modifier = {
+						name = tus_university_buff
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = LAN
+					was_tag = PIS
+					was_tag = SIE
+					was_tag = GRS
+					was_tag = LUC
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_renaissance_city = {
+		icon = florentine_renaissance
+		required_missions = { }
+		position = 1
+
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+
+		trigger = {
+			capital_scope = {
+				renaissance = 100
+			}
+			capital_scope = {
+				num_of_times_improved = 3
+			}
+		}
+
+		effect = {
+			add_prestige_or_monarch_power = {
+				amount = 10
+			}
+			custom_tooltip = AB_EMPTY
+			capital_scope = {
+				add_province_modifier = {
+					name = tus_early_rennaissance_city
+					duration = 3650
+				}
+			}
+			if = {
+				limit = {
+					has_saved_global_event_target = birthplace_of_the_renaissance
+					event_target:birthplace_of_the_renaissance = {
+						owned_by = ROOT
+					}
+				}
+				custom_tooltip = RMG_RENAI_OWN_YES
+				hidden_effect = {
+					event_target:birthplace_of_the_renaissance = {
+						add_province_modifier = {
+							name = tus_hub_of_learning
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RMG_RENAI_OWN_NO
+			}
+			tooltip = {
+				if = {
+					limit = {
+						has_saved_global_event_target = birthplace_of_the_renaissance
+					}
+					event_target:birthplace_of_the_renaissance = {
+						add_province_modifier = {
+							name = tus_hub_of_learning
+							duration = -1
+						}
+					}
+				}
+				else = {
+					capital_scope = {
+						add_province_modifier = {
+							name = tus_hub_of_learning
+							duration = -1
+						}	
+					}
+				}
+			}
+		}
+	}
+
+	tus_great_tuscan_works = {
+		icon = public_works
+		required_missions = { tus_renaissance_city }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 116
+				province_id = 115
+			}
+			NOT = {
+				AND = {
+					province_id = 116
+					has_great_project = {
+						type = santa_maria_del_fiore
+						tier = 2
+					}
+					development = 35
+				}
+			}
+			NOT = {
+				AND = {
+					province_id = 115
+					has_great_project = {
+						type = leaning_tower_of_pisa
+						tier = 2
+					}
+				}
+			}
+		}
+
+		trigger = {
+			OR = {
+				116 = {
+					has_great_project = {
+						type = santa_maria_del_fiore
+						tier = 2
+					}
+					development = 35
+					is_prosperous = yes
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				115 = {
+					has_great_project = {
+						type = leaning_tower_of_pisa
+						tier = 2
+					}
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+
+		effect = {
+			custom_tooltip = TUS_SCALING_ADM_ADVISOR
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					116 = {
+						has_great_project = {
+							type = santa_maria_del_fiore
+							tier = 2
+						}
+						development = 35
+						is_prosperous = yes
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = TUS_FINISH_BY_IMPROVE_SANTA_MARIA_YES
+			}
+			else = {
+				custom_tooltip = TUS_FINISH_BY_IMPROVE_SANTA_MARIA_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					115 = {
+						has_great_project = {
+							type = leaning_tower_of_pisa
+							tier = 2
+						}
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = TUS_FINISH_BY_IMPROVE_PISA_TOWER_YES
+			}
+			else = {
+				custom_tooltip = TUS_FINISH_BY_IMPROVE_PISA_TOWER_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						115 = {
+							has_great_project = {
+								type = leaning_tower_of_pisa
+								tier = 2
+							}
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+					115 = {
+						add_great_project_tier = {
+							type = leaning_tower_of_pisa
+							tier = 1
+						}
+					}
+				}
+				if = {
+					limit = {
+						116 = {
+							has_great_project = {
+								type = santa_maria_del_fiore
+								tier = 2
+							}
+							development = 35
+							is_prosperous = yes
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+					set_country_flag = ab_completed_tus_great_project
+				}
+			}
+		}
+	}
+
+	tus_develop_countryside = {
+		icon = dalmatian_conquest
+		required_missions = { tus_connect_cities }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2978
+				province_id = 5210
+			}
+			OR = {
+				NOT = { has_trade_building_trigger = yes }
+				NOT = { has_production_building_trigger = yes }
+				NOT = { base_production = 10 }
+			}
+		}
+
+		trigger = {
+			2978 = {
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				base_production = 10
+			}
+			5210 = {
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+				base_production = 10
+			}
+		}
+
+		effect = {
+			2978 = {
+				change_trade_goods = cloth
+				add_province_modifier = {
+					name = tus_expanding_industry
+					duration = -1
+				}
+			}
+			5210 = {
+				change_trade_goods = cloth
+				add_province_modifier = {
+					name = tus_expanding_industry
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_2_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_locked_italy_3 = {
+		icon = mission_locked_mission
+		required_missions = { tus_develop_countryside }
+		position = 4
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+ab_tuscan_2_unlocked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = LAN
+			was_tag = PIS
+			was_tag = SIE
+			was_tag = GRS
+			was_tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_industrialization_of_tuscany = {
+		icon = mission_rb_build_furnaces
+		required_missions = { tus_develop_countryside }
+		position = 4
+
+		provinces_to_highlight = {
+			area = tuscany_area
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { has_manufactory_trigger = yes }
+				NOT = { base_production = 15 }
+			}
+		}
+
+		trigger = {
+			tuscany_area = {
+				type = all
+				owned_by = ROOT
+				has_manufactory_trigger = yes
+				base_production = 15
+			}
+		}
+
+		effect = {
+			tuscany_area = {
+				add_province_modifier = {
+					name = tus_industrialize
+					duration = -1
+				}
+			}
+			custom_tooltip = TUS_GOLDEN_AGE_PERMANENT
+			custom_tooltip = AB_EMPTY
+			2978 = {
+				add_base_production = 2
+				change_trade_goods = coal
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_province_modifier = tus_tuscan_golden_age
+					}
+					remove_province_modifier = tus_tuscan_golden_age
+					add_province_modifier = {
+						name = tus_tuscan_golden_age
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_2_alpine = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = LAN
+					was_tag = PIS
+					was_tag = SIE
+					was_tag = GRS
+					was_tag = LUC
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_piedmont_seizure = {
+		icon = prosper_in_piedmont
+		required_missions = { tus_liguria_conquest }
+		position = 5
+
+		provinces_to_highlight = {
+			area = piedmont_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			piedmont_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			102 = {
+				add_province_modifier = {
+					name = tus_fortify_alps
+					duration = -1
+				}
+			}
+			4727 = {
+				add_province_modifier = {
+					name = tus_fortify_alps
+					duration = -1
+				}
+			}
+			103 = {
+				add_province_modifier = {
+					name = tus_fortify_alps
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					103 = {
+						owner = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				custom_tooltip = TUS_VASSAL_OWN_TORINO_YES
+				hidden_effect = {
+					103 = {
+						change_trade_goods = gold
+						add_base_production = 2
+						add_base_tax = 2
+					}
+				}
+			}
+			else = {
+				custom_tooltip = TUS_VASSAL_OWN_TORINO_NO
+			}
+			tooltip = {
+				103 = {
+					change_trade_goods = gold
+					add_base_production = 2
+					add_base_tax = 2
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_2_alpine_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_locked_italy_4 = {
+		icon = mission_locked_mission
+		required_missions = { tus_piedmont_seizure }
+		position = 5
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+ab_tuscan_2_alpine_unlocked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = LAN
+			was_tag = PIS
+			was_tag = SIE
+			was_tag = GRS
+			was_tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_defend_italy = {
+		icon = the_alpine_wall
+		required_missions = { tus_piedmont_seizure }
+		position = 5
+
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			OR = {
+				has_terrain = mountain
+				has_terrain = hills
+			}
+			NOT = {
+				has_fort_building_trigger = yes
+			}
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					has_terrain = mountain
+					has_terrain = hills
+				}
+				has_fort_building_trigger = yes
+				value = 10
+			}
+		}
+
+		effect = {
+			define_advisor = {
+				type = fortification_expert
+				skill = 3
+				discount = yes
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = TUS_UPGRADE_FORT_BONUS
+			capital_scope = {
+				upgrade_fort_building = yes
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							has_terrain = mountain
+							has_terrain = hills
+						}
+						has_fort_building_trigger = yes
+					}
+					upgrade_fort_building = yes
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_2_rome = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = LAN
+					was_tag = PIS
+					was_tag = SIE
+					was_tag = GRS
+					was_tag = LUC
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_mona_lisa_commission = {
+		icon = commission_the_mona_lisa
+		required_missions = { tus_renaissance_men }
+		position = 7
+		
+		trigger = {
+			capital_scope = {
+				has_tax_building_trigger = yes
+			}
+			capital_scope = {
+				is_prosperous = yes
+			}
+			splendor = 200
+		}
+
+		effect = {
+			custom_tooltip = TUS_IMPROVE_ITALIAN_RELATION
+			custom_tooltip = AB_EMPTY
+			capital_scope = {
+				add_province_modifier = {
+					name = tus_mona_lisa
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_global_flag = davinci_spawns
+					}
+				}
+				custom_tooltip = TUS_DAVINCI_YES
+				hidden_effect = {
+					define_advisor = {
+						type = natural_scientist
+						name = "Leonardo da Vinci"
+						culture = tuscan
+						location = capital
+						discount = yes
+						skill = 3
+					}
+					add_dip_power = 50
+					add_mil_power = 50
+					add_adm_power = 50
+					set_global_flag = davinci_spawns
+				}
+			}
+			else = {
+				custom_tooltip = TUS_DAVINCI_NO
+			}
+			tooltip = {
+				define_advisor = {
+					type = natural_scientist
+					name = "Leonardo da Vinci"
+					culture = tuscan
+					location = capital
+					discount = yes
+					skill = 3
+				}
+				add_dip_power = 50
+				add_mil_power = 50
+				add_adm_power = 50
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							region = italy_region
+						}
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = opinion_made_mona_lisa
+					}
+				}
+			}
+		}
+	}
+
+	tus_papal_influencing = {
+		icon = influence_the_church
+		required_missions = { }
+		position = 8
+
+		provinces_to_highlight = {
+			province_id = 118
+		}
+
+		trigger = {
+			religion = catholic
+			OR = {
+				AND = {
+					papal_influence = 50
+					reverse_has_opinion = {
+						who = PAP
+						value = 100
+					}
+				}
+				AND = {
+					PAP = {
+						is_rival = ROOT
+						has_spy_network_from = {
+							who = ROOT
+							value = 40
+						}
+					}
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_papal_influence
+				duration = 3650
+			}
+			if = {
+				limit = {
+					is_excommunicated = yes
+				}
+				custom_tooltip = TUS_IS_EXCOMMUNICATED_YES
+				hidden_effect = {
+					excommunicate = ROOT
+				}
+			}
+			else = {
+				custom_tooltip = TUS_IS_EXCOMMUNICATED_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_country_flag = ab_tuscany_government_guilds_medici
+				}
+				custom_tooltip = TUS_MEDICI_POWER_YES
+				hidden_effect = {
+					country_event = {
+						id = ab_tuscany.6
+					}
+				}
+				
+			}
+			else = {
+				custom_tooltip = TUS_MEDICI_POWER_NO
+			}
+			tooltip = {
+				country_event = {
+					id = ab_tuscany.6
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_2_rome_locked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_locked_italy_5 = {
+		icon = mission_locked_mission
+		required_missions = { tus_locked_italy_7 tus_papal_influencing }
+		position = 9
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+ab_tuscan_2_rome_unlocked = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = LAN
+			was_tag = PIS
+			was_tag = SIE
+			was_tag = GRS
+			was_tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_rule_from_rome = {
+		icon = answer_the_roman_question
+		required_missions = { tus_conquer_the_pope tus_papal_influencing }
+		position = 9
+
+		provinces_to_highlight = {
+			province_id = 118
+		}
+
+		trigger = {
+			118 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			118 = {
+				development = 35
+			}
+			118 = {
+				has_tax_building_trigger = yes
+			}
+			118 = {
+				has_great_project = {
+					type = stpeters_cathedral
+					tier = 2
+				}
+			}
+		}
+
+		effect = {
+			if = {
+				limit = {
+					owns = 118
+				}
+				custom_tooltip = TUS_DIRECTLY_OWN_ROME_YES
+				hidden_effect = {
+					set_capital = 118
+					118 = {
+						add_province_modifier = {
+							name = tus_holy_city
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = TUS_DIRECTLY_OWN_ROME_NO
+			}
+			tooltip = {
+				set_capital = 118
+				118 = {
+					add_province_modifier = {
+						name = tus_holy_city
+						duration = -1
+					}
+				}
+			}
+			if = {
+				limit = {
+					118 = {
+						owner = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				custom_tooltip = TUS_VASSAL_OWN_ROME_YES
+				hidden_effect = {
+					country_event = {
+						id = ab_tuscany.7
+					}
+				}
+			}
+			else = {
+				custom_tooltip = TUS_VASSAL_OWN_ROME_NO
+			}
+			tooltip = {
+				country_event = {
+					id = ab_tuscany.7
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_3_florence_locked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = LAN
+			}
+		}
+		NOT = {
+			OR = {
+				has_country_flag = ab_tuscany_government_peasants
+				has_country_flag = ab_tuscany_government_military
+				has_country_flag = ab_tuscany_government_guilds_medici
+				has_country_flag = ab_tuscany_government_guilds
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_florence_locked = {
+		icon = mission_locked_mission
+		required_missions = { tus_fortify_position }
+		position = 2
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = TUS_FLORENCE_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+
+		effect = {
+			custom_tooltip = TUS_FLORENCE_UNLOCKABLE
+		}
+	}
+
+	tus_florence_locked_2 = {
+		icon = mission_locked_mission
+		required_missions = { tus_florence_locked }
+		position = 3
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = TUS_FLORENCE_UNLOCKABLE
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+
+		effect = {
+			custom_tooltip = TUS_FLORENCE_UNLOCKABLE
+		}
+	}
+}
+
+ab_tuscan_3_florence_mercenary = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = LAN
+			}
+		}
+		has_country_flag = ab_tuscany_government_military
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_florence_mercenary_stable = {
+		icon = confront_the_lombards
+		required_missions = { tus_fortify_position }
+		position = 2
+
+		trigger = {
+			republican_tradition = 90
+			num_of_mercenaries = 16
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_mercenary_captain
+				duration = 5475
+			}
+			custom_tooltip = TUS_WINNING_BATTLE_BONUS
+			set_country_flag = tus_win_battles_grant_republican_tradition
+		}
+	}
+
+	tus_florence_mercenary_expansion = {
+		icon = form_the_swiss_guard
+		required_missions = { tus_florence_mercenary_stable }
+		position = 3
+
+		provinces_to_highlight = {
+			is_capital = yes
+			owner = {
+				army_size = ROOT
+			}
+		}
+
+		trigger = {
+			estate_loyalty = {
+				estate = estate_nobles
+				loyalty = 70
+			}
+			custom_trigger_tooltip = {
+				tooltip = IVR_STRONGEST_EUROPE_ARMY
+				NOT = {
+					any_known_country = {
+						capital_scope = {
+							continent = europe
+						}
+						army_size = ROOT
+					}
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_mercenary_lords
+				duration = -1
+			}
+			add_mil_tech = 1
+		}
+	}
+}
+
+ab_tuscan_3_florence_republic = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = LAN
+			}
+		}
+		OR = {
+			has_country_flag = ab_tuscany_government_guilds_medici
+			has_country_flag = ab_tuscany_government_guilds
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_florence_guild_stable = {
+		icon = hand-picked_bureaucrats
+		required_missions = { tus_fortify_position }
+		position = 2
+
+		trigger = {
+			republican_tradition = 90
+			estate_loyalty = {
+				estate = estate_burghers
+				loyalty = 65
+			}
+		}
+
+		effect = {
+			add_stability_or_adm_power = yes
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = TUS_CHEAPER_BURGHER_LOAN
+			set_country_flag = tus_buff_burgher_loans_flag
+		}
+	}
+
+	tus_florence_banking_masters = {
+		icon = medici_bank_ledgers
+		required_missions = { tus_florence_guild_stable }
+		position = 3
+
+		trigger = {
+			NOT = {
+				inflation = 1
+			}
+			NOT = {
+				corruption = 1
+			}
+			monthly_income = 100
+			num_of_estate_privileges = {
+				estate = estate_burghers
+				value = 4
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_banking_masters
+				duration = -1
+			}
+			if = {
+				limit = {
+					commerceministry = 0
+					full_idea_group = trade_ideas
+				}
+				custom_tooltip = TUS_MINISTRY_COMMERCE_YES
+				hidden_effect = {
+					capital_scope = {
+						add_building = commerceministry
+					}
+				}
+			}
+			else = {
+				custom_tooltip = TUS_MINISTRY_COMMERCE_NO
+				tooltip = {
+					capital_scope = {
+						add_building = commerceministry
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_3_florence_peasants = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = LAN
+			}
+		}
+		has_country_flag = ab_tuscany_government_peasants
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_florence_peasants_stable = {
+		icon = republican_yearnings
+		required_missions = { tus_fortify_position }
+		position = 2
+
+		trigger = {
+			republican_tradition = 90
+			calc_true_if = {
+				all_subject_country = {
+					has_reform = sister_republic_reform
+				}
+				amount = 3
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_peasant_stability
+				duration = 12775
+			}
+			custom_tooltip = TUS_EVERY_SISTER_REPUBLIC
+			tooltip = {
+				add_liberty_desire = -35
+				add_historical_friend = ROOT
+			}
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						has_reform = sister_republic_reform
+					}
+					add_liberty_desire = -35
+					add_historical_friend = ROOT
+				}
+			}
+		}
+	}
+
+	tus_florence_challenge_hegemony = {
+		icon = immaculate_government
+		required_missions = { tus_florence_peasants_stable }
+		position = 3
+
+		trigger = {
+			is_great_power = yes
+			OR = {
+				government_rank = 3
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+					value = 50
+					continent = europe
+				}
+			}
+			calc_true_if = {
+				all_known_country = {
+					has_spy_network_from = {
+						who = ROOT
+						value = 35
+					}
+					NOT = {
+						has_government_attribute = is_peasants_republic
+					}
+				}
+				amount = 3
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_peasant_leader
+				duration = -1
+			}
+			custom_tooltip = TUS_EVERY_GREAT_POWER
+			tooltip = {
+				country_event = {
+					id = ab_tuscany.5
+				}
+			}
+			hidden_effect = {
+				every_known_country = {
+					limit = {
+						is_great_power = yes
+						NOT = { tag = ROOT }
+					}
+					country_event = {
+						id = ab_tuscany.5
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_3_minors = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = PIS
+					was_tag = SIE
+					was_tag = GRS
+					was_tag = LUC
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_minors_first = {
+		icon = balance_of_power
+		required_missions = { tus_fortify_position }
+		position = 2
+
+		provinces_to_highlight = {
+			is_capital = yes
+			NOT = {
+				owner = {
+					has_opinion = {
+						who = ROOT
+						value = 120
+					}
+				}
+			}
+		}
+
+		trigger = {
+			calc_true_if = {
+				all_known_country = {
+					has_opinion = {
+						who = ROOT
+						value = 120
+					}
+				}
+				amount = 3
+			}
+		}
+
+		effect = {
+			capital_scope = {
+				add_base_manpower = 3
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = tus_foreign_influence
+				duration = 3650
+			}
+			define_advisor = {
+				type = visionary
+				skill = 2
+				discount = yes
+			}
+		}
+	}
+
+	tus_minors_second = {
+		icon = levee_the_arno
+		required_missions = { tus_minors_first }
+		position = 3
+
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+			NOT = {
+				higher_development_than = 116
+			}
+		}
+
+		trigger = {
+			capital_scope = {
+				higher_development_than = 116
+			}
+			splendor = 200
+		}
+
+		effect = {
+			add_adm_tech = 1
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = tus_leader_of_tuscany
+				duration = 18250
+			}
+		}
+	}
+}
+
+ab_tuscan_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = LAN
+					was_tag = PIS
+					was_tag = SIE
+					was_tag = GRS
+					was_tag = LUC
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_liguria_conquest = {
+		icon = end_genoese_competition
+		required_missions = { tus_unite_tuscany }
+		position = 4
+
+		provinces_to_highlight = {
+			area = liguria_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			liguria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			define_advisor = {
+				type = ae_advisor
+				skill = 2
+				discount = yes
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = TUS_UNLOCK_CB_PIEDMONT_LOMBARDY
+			custom_tooltip = AB_EMPTY
+			lombardy_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			piedmont_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					101 = {
+						owner = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				custom_tooltip = TUS_VASSAL_OWN_GENOA_YES
+			}
+			else = {
+				custom_tooltip = TUS_VASSAL_OWN_GENOA_NO
+			}
+			tooltip = {
+				1298 = {
+					add_trade_modifier = {
+						who = ROOT
+						duration = -1
+						power = 15
+						key = STRONG_MERCHANTS
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			hidden_effect = {
+				if = {
+					limit = {
+						101 = {
+							owner = {
+								is_subject_of = ROOT
+							}
+						}
+					}
+					1298 = {
+						add_trade_modifier = {
+							who = ROOT
+							duration = -1
+							power = 15
+							key = STRONG_MERCHANTS
+						}
+					}
+				}
+				every_country = {
+					limit = {
+						capital_scope = {
+							OR = {
+								area = piedmont_area
+								area = lombardy_area
+							}
+						}
+					}
+					ROOT = {
+						add_casus_belli = {
+							target = PREV
+							type = cb_spread_the_republic_florence
+							months = 300
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	tus_iron_crown_lombardy = {
+		icon = kingdom_of_lombardy
+		required_missions = { tus_piedmont_seizure tus_liguria_conquest }
+		position = 6
+
+		provinces_to_highlight = {
+			area = lombardy_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			lombardy_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_mil_power = 100
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = TUS_FORM_ITALY_NO_CORE
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_idea_group = TUS_ideas
+				}
+				custom_tooltip = TUS_HAS_TUSCAN_IDEAS_YES
+				hidden_effect = {
+					set_country_flag = tus_evolved_ideas
+					swap_free_idea_group = yes
+				}
+			}
+			else = {
+				custom_tooltip = TUS_HAS_TUSCAN_IDEAS_NO
+			}
+			custom_tooltip = TUS_EVOLVING_IDEA_1
+		}
+	}
+}
+
+ab_tuscan_3_locked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_locked_italy_6 = {
+		icon = mission_locked_mission
+		required_missions = { tus_iron_crown_lombardy }
+		position = 7
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	tus_locked_italy_7 = {
+		icon = mission_locked_mission
+		required_missions = { tus_dream_of_italia }
+		position = 8
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	tus_locked_italy_8 = {
+		icon = mission_locked_mission
+		required_missions = { tus_locked_italy_7 }
+		position = 10
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+ab_tuscan_3_unlocked = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = LAN
+			was_tag = PIS
+			was_tag = SIE
+			was_tag = GRS
+			was_tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_integrate_the_north = {
+		icon = expand_the_terraferma
+		required_missions = { tus_iron_crown_lombardy }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				area = piedmont_area
+				area = lombardy_area
+				area = liguria_area
+			}
+			NOT = {
+				AND = {
+					has_road_building_trigger = yes
+					has_tax_building_trigger = yes
+					num_of_times_improved = 5
+				}
+			}
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				has_road_building_trigger = yes
+				has_tax_building_trigger = yes
+				num_of_times_improved = 5
+				OR = {
+					area = piedmont_area
+					area = lombardy_area
+					area = liguria_area
+				}
+				value = 10
+			}
+		}
+
+		effect = {
+			change_government_reform_progress = 150
+			custom_tooltip = AB_EMPTY
+			unlock_government_reform = {
+				government_reform = ab_regional_signora_reform
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = TUS_EVERY_NORTH_ITALY_SUBJECT
+			tooltip = {
+				add_country_modifier = {
+					name = tus_tuscan_prosperity
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						capital_scope = {
+							OR = {
+								area = liguria_area
+								area = lombardy_area
+								area = piedmont_area
+							}
+						}
+					}
+					add_country_modifier = {
+						name = tus_tuscan_prosperity
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	tus_conquer_the_pope = {
+		icon = crush_heretic_strongholds
+		required_missions = { tus_dream_of_italia }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lazio_area 
+				province_id = 2977
+				province_id = 119
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			lazio_area = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			2977 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			119 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			118 = {
+				add_province_modifier = {
+					name = tus_great_works_expansion
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					overlord_of = PAP
+				}
+				custom_tooltip = TUS_RENAME_POPE_YES
+			}
+			else = {
+				custom_tooltip = TUS_RENAME_POPE_NO
+			}
+			tooltip = {
+				PAP = {
+					override_country_name = PAP_ROMAN_REPUBLIC_NAME
+					add_country_modifier = {
+						name = tus_subject_modifier
+						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						overlord_of = PAP
+					}
+					PAP = {
+						override_country_name = PAP_ROMAN_REPUBLIC_NAME
+						add_country_modifier = {
+							name = tus_subject_modifier
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+
+	tus_enter_the_religious_wars = {
+		icon = mission_germancentury
+		required_missions = { tus_conquer_the_pope }
+		position = 10
+
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			NOT = {
+				religion = ROOT
+			}
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = obj_religious_league_war_on_winning_side_tooltip
+				has_country_flag = religious_league_war_on_winning_side
+			}
+			religious_unity = 1
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_protection_of_the_faith
+				duration = 12775
+			}
+			custom_tooltip = TUR_CONVERT_HERETIC_SUBJECT
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						religion_group = ROOT
+						NOT = {
+							religion = ROOT
+						}
+					}
+					change_religion = ROOT
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = LAN
+					was_tag = PIS
+					was_tag = SIE
+					was_tag = GRS
+					was_tag = LUC
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_fortify_position = {
+		icon = the_italian_league
+		required_missions = { }
+		position = 1
+
+		trigger = {
+			if = {
+				limit = {
+					OR = {
+						was_tag = LAN
+						tag = LAN
+					}
+				}
+				NOT = {
+					num_of_rebel_armies = 1
+				}
+				NOT = {
+					num_of_rebel_controlled_provinces = 1
+				}
+				custom_trigger_tooltip = {
+					tooltip = TUS_COMPLETED_MEDICI_EVENT
+					OR = {
+						has_country_flag = ab_tuscany_government_peasants
+						has_country_flag = ab_tuscany_government_military
+						has_country_flag = ab_tuscany_government_guilds_medici
+						has_country_flag = ab_tuscany_government_guilds
+					}
+				}
+			}
+			else = {
+				army_size_percentage = 1
+				manpower_percentage = 0.8
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_tuscan_unity
+				duration = 3650
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	tus_unite_tuscany = {
+		icon = tuscan_birthright
+		required_missions = { tus_fortify_position }
+		position = 3
+
+		provinces_to_highlight = {
+			area = tuscany_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			tag = TUS
+		}
+
+		effect = {
+			custom_tooltip = TUS_UNLOCK_CB_EMILIA_LIGUARIA
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							OR = {
+								area = emilia_romagna_area
+								area = liguria_area
+							}
+						}
+					}
+					ROOT = {
+						add_casus_belli = {
+							target = PREV
+							type = cb_spread_the_republic_florence
+							months = 300
+						}
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BOH_HRE_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			emilia_romagna_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			liguria_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	tus_the_po_valley = {
+		icon = develop_the_po_valley
+		required_missions = { tus_conquer_romagna }
+		position = 5
+
+		provinces_to_highlight = {
+			area = po_valley_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			po_valley_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = ab_tuscany.2
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					any_subject_country = {
+						owns_all_provinces = {
+							area = po_valley_area
+						}
+					}
+				}
+				custom_tooltip = TUS_VASSAL_OWN_PO_VALLEY_YES
+			}
+			else = {
+				custom_tooltip = TUS_VASSAL_OWN_PO_VALLEY_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_subject_country = {
+							owns_all_provinces = {
+								area = po_valley_area
+							}
+						}
+					}
+					random_subject_country = {
+						limit = {
+							owns_all_provinces = {
+								area = po_valley_area
+							}
+						}
+						110 = {
+							add_core = PREV
+						}
+					}
+				}
+			}
+		}
+	}
+
+	tus_dream_of_italia = {
+		icon = mission_rule_italy
+		required_missions = { tus_the_po_valley tus_iron_crown_lombardy tus_defeat_venice }
+		position = 7
+
+		trigger = {
+			ab_is_italy_tag_trigger = yes
+		}
+
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 10
+			}
+			country_event = { id = ab_lombardy.3 }
+			custom_tooltip = AB_EMPTY
+			italy_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = { exists = PAP }
+				custom_tooltip = TUS_POPE_EXIST_YES
+				hidden_effect = {	
+					add_casus_belli = {
+						type = cb_spread_the_republic_florence
+						months = 300
+						target = PAP
+					}
+				}
+			}
+			else = {
+				custom_tooltip = TUS_POPE_EXIST_NO
+			}
+			tooltip = {
+				add_casus_belli = {
+					type = cb_spread_the_republic_florence
+					months = 300
+					target = PAP
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_4_locked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_locked_italy_9 = {
+		icon = mission_locked_mission
+		required_missions = { tus_dream_of_italia tus_locked_italy_7 }
+		position = 9
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	tus_locked_italy_10 = {
+		icon = mission_locked_mission
+		required_missions = { tus_locked_italy_9 }
+		position = 11
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+ab_tuscan_4_unlocked = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = LAN
+			was_tag = PIS
+			was_tag = SIE
+			was_tag = GRS
+			was_tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_claim_neapolitan_lands = {
+		icon = union_with_naples
+		required_missions = { tus_dream_of_italia tus_conquer_the_pope }
+		position = 9
+
+		provinces_to_highlight = {
+			OR = {
+				area = apulia_area
+				area = calabria_area 
+				area = naples_area
+				province_id = 120
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			apulia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			calabria_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			naples_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			120 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			if = {
+				limit = {
+					exists = SIC
+				}
+				add_casus_belli = {
+					type = cb_spread_the_republic_florence
+					target = SIC
+				}
+				custom_tooltip = AB_EMPTY
+			}
+			country_event = {
+				id = ab_tuscany.8
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_idea_group = TUS1_ideas
+				}
+				custom_tooltip = TUS_HAS_EVOLVED_TUSCAN_IDEAS_YES
+				hidden_effect = {
+					set_country_flag = tus_evolved_ideas_b
+					swap_free_idea_group = yes
+				}
+			}
+			else = {
+				custom_tooltip = TUS_HAS_EVOLVED_TUSCAN_IDEAS_NO
+			}
+			custom_tooltip = TUS_EVOLVING_IDEA_2
+		}
+	}
+
+	tus_restore_trinacria = {
+		icon = unite_the_two_sicilies
+		required_missions = { tus_claim_neapolitan_lands }
+		position = 11
+		
+		provinces_to_highlight = {
+			OR = {
+				area = western_sicily_area
+				area = sicily_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			western_sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = ab_tuscany.9
+			}
+		}
+	}
+}
+
+ab_tuscan_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				OR = {
+					was_tag = LAN
+					was_tag = PIS
+					was_tag = SIE
+					was_tag = GRS
+					was_tag = LUC
+				}
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_defense_of_tuscany = {
+		icon = alpine_fortifications
+		required_missions = { }
+		position = 1
+
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			NOT = {
+				has_manpower_building_trigger = yes
+			}
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				has_fort_building_trigger = yes
+				value = 5
+			}
+			has_mil_advisor = yes
+		}
+
+		effect = {
+			custom_tooltip = TUS_BUILDING_FORT_BONUS
+			set_country_flag = ab_tus_forts_grant_armyprof
+			custom_tooltip = AB_EMPTY
+			unlock_merc_company = {
+				merc_company = ab_black_band
+			}
+		}
+	}
+
+	tus_the_italian_wars = {
+		icon = swiss_mercenaries 
+		required_missions = { tus_defense_of_tuscany }
+		position = 2
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = TUS_WINNING_25_WARS
+				check_variable = {
+					which = tus_num_of_merc_battles_won_var
+					value = 25
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_mercenary_companies
+				duration = 12775
+			}
+			unlock_government_reform = {
+				government_reform = ab_condottiero_reform
+			}
+		}
+	}
+
+	tus_modernize_mercenaries = {
+		icon = protect_against_austria
+		required_missions = { tus_the_italian_wars }
+		position = 3
+
+		trigger = {
+			OR = {
+				army_professionalism = 0.35
+				army_tradition = 60
+			}
+			innovativeness = 10
+		}
+
+		effect = {
+			unlock_merc_company = {
+				merc_company = ab_arquebus_cavalry
+			}
+			unlock_merc_company = {
+				merc_company = ab_ibernian_tercios
+			}
+			unlock_merc_company = {
+				merc_company = ab_artillery_company
+			}
+		}
+	}
+
+	tus_conquer_romagna = {
+		icon = expand_to_the_south
+		required_missions = { tus_unite_tuscany }
+		position = 4
+
+		provinces_to_highlight = {
+			area = emilia_romagna_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			emilia_romagna_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			113 = {
+				add_province_modifier = {
+					name = tus_adriatic_port
+					duration = 5475
+				}
+			}
+			custom_tooltip = TUS_UNLOCK_CB_VENETIA_PO_VALLEY
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							OR = {
+								area = venetia_area
+								area = po_valley_area
+							}
+						}
+					}
+					ROOT = {
+						add_casus_belli = {
+							target = PREV
+							type = cb_spread_the_republic_florence
+							months = 300
+						}
+					}
+				}
+			}
+			venetia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					any_subject_country = {
+						owns_all_provinces = {
+							area = emilia_romagna_area
+						}
+					}
+				}
+				custom_tooltip = TUS_VASSAL_OWN_EMILIA_YES
+			}
+			else = {
+				custom_tooltip = TUS_VASSAL_OWN_EMILIA_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_subject_country = {
+							owns_all_provinces = {
+								area = emilia_romagna_area
+							}
+						}
+					}
+					random_subject_country = { 
+						limit = {
+							owns_all_provinces = {
+								area = emilia_romagna_area
+							}
+						}
+						add_country_modifier = {
+							name = tus_bulward_revolution
+							duration = -1
+						}
+					}	
+				}
+			}
+		}
+	}
+
+	tus_defeat_venice = {
+		icon = nuova_promissione_ducale
+		required_missions = { tus_conquer_romagna }
+		position = 6
+
+		provinces_to_highlight = {
+			area = venetia_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			venetia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			random_owned_province = {
+				limit = {
+					has_port = yes
+				}
+				create_flagship = {    
+					name = "Signoria"
+					type = galley
+				}
+			}
+			add_prestige_or_monarch_power = {
+				amount = 35
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					any_subject_country = {
+						owns = 112
+					}
+				}
+				custom_tooltip = TUS_VASSAL_OWN_VENICE_YES
+				hidden_effect = {
+					add_country_modifier = {
+						name = tus_venetian_arsenal
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = TUS_VASSAL_OWN_VENICE_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = tus_venetian_arsenal
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+ab_tuscan_5_locked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LAN
+			tag = PIS
+			tag = SIE
+			tag = GRS
+			tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_locked_italy_11 = {
+		icon = mission_locked_mission
+		required_missions = { tus_defeat_venice }
+		position = 7
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	tus_locked_italy_12 = {
+		icon = mission_locked_mission
+		required_missions = { tus_dream_of_italia }
+		position = 8
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+
+	tus_locked_italy_13 = {
+		icon = mission_locked_mission
+		required_missions = { tus_locked_italy_9 }
+		position = 10
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+ab_tuscan_5_unlocked = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		OR = {
+			was_tag = LAN
+			was_tag = PIS
+			was_tag = SIE
+			was_tag = GRS
+			was_tag = LUC
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	tus_italian_economics = {
+		icon = purely_for_commerce
+		required_missions = { tus_defeat_venice }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				area = venetia_area
+				area = emilia_romagna_area
+				area = po_valley_area
+			}
+			NOT = {
+				AND = {
+					has_trade_building_trigger = yes
+					has_production_building_trigger = yes
+				}
+			}
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = venetia_area
+					area = emilia_romagna_area
+					area = po_valley_area
+				}
+				has_trade_building_trigger = yes
+				has_production_building_trigger = yes
+				value = 10
+			}
+			1308 = {
+				is_strongest_trade_power = ROOT
+			}
+			1298 = {
+				is_strongest_trade_power = ROOT
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = tus_economics_union
+				duration = -1
+			}
+			unlock_government_reform = {
+				government_reform = ab_customs_union
+			}
+		}
+	}
+
+	tus_italian_republic = {
+		icon = mission_itarepublic
+		required_missions = { tus_dream_of_italia }
+		position = 8
+
+		provinces_to_highlight = {
+			OR = {
+				area = lombardy_area
+				area = liguria_area
+				area = piedmont_area
+				area = emilia_romagna_area
+				area = po_valley_area
+				area = venetia_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			government_reform_progress = 100
+			custom_trigger_tooltip = {
+				tooltip = TUS_OWN_NORTHERN_ITALY
+				lombardy_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				liguria_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				piedmont_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				emilia_romagna_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				po_valley_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				venetia_area = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+
+		effect = {
+			if = {
+				limit = {
+					has_reform = ab_florentine_merchants_reform
+				}
+				custom_tooltip = TUS_HAS_MERCHANT_REFORM_YES
+			}
+			else = {
+				custom_tooltip = TUS_HAS_MERCHANT_REFORM_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_reform = ab_florentine_military_reform
+				}
+				custom_tooltip = TUS_HAS_MILITARY_REFORM_YES
+			}
+			else = {
+				custom_tooltip = TUS_HAS_MILITARY_REFORM_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_reform = ab_florentine_peasants_reform
+				}
+				custom_tooltip = TUS_HAS_PEASANT_REFORM_YES
+			}
+			else = {
+				custom_tooltip = TUS_HAS_PEASANT_REFORM_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_reform = ab_florentine_merchants_reform
+					}
+					add_government_reform = ab_tuscan_merchants_reform
+				}
+				else_if = {
+					limit = {
+						has_reform = ab_florentine_military_reform
+					}
+					add_government_reform = ab_tuscan_military_reform	
+				}
+				else_if = {
+					limit = {
+						has_reform = ab_florentine_peasants_reform
+					}
+					add_government_reform = ab_tuscan_peasants_reform	
+				}
+			}
+		}
+	}
+
+	tus_southern_growth = {
+		icon = develop_naples
+		required_missions = { tus_claim_neapolitan_lands }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				area = apulia_area
+				area = calabria_area 
+				area = naples_area
+				province_id = 120
+			}
+			NOT = {
+				AND = {
+					base_manpower = 6
+					religion = ROOT
+				}
+			}
+		}
+
+		trigger = {
+			apulia_area = {
+				type = all
+				base_manpower = 6
+				religion = ROOT
+			}
+			calabria_area = {
+				type = all
+				base_manpower = 6
+				religion = ROOT
+			}
+			naples_area = {
+				type = all
+				base_manpower = 6
+				religion = ROOT
+			}
+			120 = {
+				base_manpower = 6
+				religion = ROOT
+			}
+		}
+
+		effect = {
+			custom_tooltip = TUS_EVERY_SOUTH_ITALY
+			tooltip = {
+				add_province_modifier = {
+					name = tus_expansion_of_the_south
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_province = {
+					limit = {
+						OR = {
+							province_id = 120	
+							area = naples_area
+							area = calabria_area
+							area = apulia_area
+						}
+					}
+					add_province_modifier = {
+						name = tus_expansion_of_the_south
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}

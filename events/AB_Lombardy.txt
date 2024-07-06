@@ -1,0 +1,127 @@
+namespace = ab_lombardy
+
+#Timed Mission Unlock
+country_event = {
+	id = ab_lombardy.1
+	title = ab_lombardy.1.t
+	desc = ab_lombardy.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_lombardy.1.a
+		set_country_flag = lom_mission_unlocked
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Timed Mission Fail
+country_event = {
+	id = ab_lombardy.2
+	title = ab_lombardy.2.t
+	desc = ab_lombardy.2.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		is_year = 1460
+		OR = {
+			tag = LOM
+			was_tag = LOM
+		}
+		has_country_flag = lom_mission_unlocked
+		NOT = {
+			mission_completed = lom_golden_age
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = lom_mission_unlocked
+			set_country_flag = lom_mission_failed
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_lombardy.2.a
+	}
+}
+
+#Unification of Italy
+country_event = {
+	id = ab_lombardy.3
+	title = ab_lombardy.3.t
+	desc = ab_lombardy.3.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_lombardy.3.a
+		add_legitimacy = 25
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		add_ruler_modifier = {
+			name = "lom_padre"
+			duration = -1
+		}
+	}
+}
+
+#Fall of Sicily
+country_event = {
+	id = ab_lombardy.4
+	title = ab_lombardy.4.t
+	desc = ab_lombardy.4.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_lombardy.4.a
+		add_prestige_or_monarch_power = {
+			amount = 25
+		}
+		add_ruler_modifier = {
+			name = "lom_liberator"
+			duration = -1
+		}
+		custom_tooltip = SWA_CONVERT_BONUS
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = LOM_INSPIRING_LEADER
+	}
+}
+
+#Italian Empire
+country_event = {
+	id = ab_lombardy.5
+	title = ab_lombardy.5.t
+	desc = ab_lombardy.5.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = ab_lombardy.5.a
+		custom_tooltip = LOM_PP
+		hidden_effect = {
+			add_power_projection = {
+				type = ITAEMPIRE_perma_pp
+				amount = 25
+			}
+		}
+		custom_tooltip = ITA_UNLOCK_RENAME
+		set_country_flag = ita_can_rename_to_italian_empire
+	}
+}

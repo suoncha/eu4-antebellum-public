@@ -1,15 +1,6 @@
 economic_hegemon = {
 	allow = {
 		is_great_power = yes
-		if = {
-			limit = {
-				NOT = { has_country_flag = halve_hegemony_requirements }
-			}
-			monthly_income = 1000 
-		}
-		else = { monthly_income = 500 } 
-		NOT = { any_other_great_power = { monthly_income = root } }
-		NOT = { has_country_modifier = lost_hegemony }
 		# AB [[[
 		if = {
 			limit = {
@@ -23,33 +14,28 @@ economic_hegemon = {
 					tooltip = AB_Shahi_complete_economic
 					has_country_flag = AB_claimed_economic_hegemon_mission_reward
 				}
-				AND = {
-					if = {
-						limit = {
-							NOT = { has_country_flag = halve_hegemony_requirements }
-						}
-						monthly_income = 1000 
+				if = {
+					limit = {
+						NOT = { has_country_flag = halve_hegemony_requirements }
 					}
-					else = { monthly_income = 500 } 
-					NOT = { 
-						any_other_great_power = { monthly_income = root } 
-					}
+					monthly_income = 1000 
 				}
+				else = { monthly_income = 500 } 
 			}
 		}
 		else = {
 			if = {
 				limit = {
 					NOT = { has_country_flag = halve_hegemony_requirements }
+					NOT = { has_country_flag = halve_economic_hegemon_flag }
 				}
 				monthly_income = 1000 
 			}
 			else = { monthly_income = 500 } 
-			NOT = { 
-				any_other_great_power = { monthly_income = root } 
-			}
 		}
 		# ]]]
+		NOT = { any_other_great_power = { monthly_income = root } }
+		NOT = { has_country_modifier = lost_hegemony }
 	}
 	
 	base = {

@@ -1,0 +1,37 @@
+namespace = ab_bavaria
+normal_or_historical_nations = yes
+
+#South German Confederation
+country_event = {
+	id = ab_bavaria.0
+	title = ab_bavaria.0.t
+	desc = ab_bavaria.0.d
+	picture = GERMAN_UNIFICATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_bavaria.0.a
+		override_country_name = SOUTH_GERMAN_CONFEDERATION
+		set_country_flag = south_german_confederation_name_override_flag
+		custom_tooltip = AB_EMPTY
+		unlock_government_reform = {
+			government_reform = bav_south_german_confederation
+		}
+		custom_tooltip = AB_EMPTY
+		add_government_reform = bav_south_german_confederation
+		hidden_effect = {
+			capital_scope = {
+				set_seat_in_parliament = yes
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		north_german_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}

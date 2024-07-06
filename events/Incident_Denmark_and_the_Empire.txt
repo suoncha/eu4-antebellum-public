@@ -1,0 +1,64 @@
+namespace = denmark_and_the_empire
+
+country_event = {
+	id = denmark_and_the_empire.1
+	title = denmark_and_the_empire.1.t
+	desc = denmark_and_the_empire.1.d
+	picture = VIKING_KING_eventPicture
+
+	is_triggered_only = yes
+	fire_only_once = yes
+	major = yes
+
+	option = {
+		name = denmark_and_the_empire.1.a
+		DNK = {
+			set_in_empire = yes
+			add_opinion = {
+				who = emperor
+				modifier = opinion_DNK_allowed_entry
+			}
+		}
+	}
+	option = {
+		name = denmark_and_the_empire.1.b
+		DNK = {
+			holstein_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = DNK
+			}
+			weser_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = DNK
+			}
+			44 = {
+				if = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }	
+					}
+					add_permanent_claim = DNK
+				}
+			}
+			45 = {
+				if = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }	
+					}
+					add_permanent_claim = DNK
+				}
+			}
+			add_opinion = {
+				who = emperor
+				modifier = opinion_DNK_denied_entry
+			}
+		}
+	}
+}

@@ -43,3 +43,11 @@
 	NDefines.NAIEconomy.LOAN_REPAYMENT_SAVINGS_PRIORITY = 1000
 	NDefines.NAIEconomy.LOAN_REPAYMENT_SAVINGS_PRIORITY_WARTIME = 0
 	NDefines.NAI.DEFENDER_OF_FAITH_BASE_AI_DESIRE = 1
+	NDefines.NDiplomacy.AE_DIFFERENT_RELIGION = -0.2
+	NDefines.NDiplomacy.AE_SAME_RELIGION_GROUP = 0.1
+	NDefines.NDiplomacy.AE_INFIDEL_CONQUEST = 0.5
+	-- We keep track of them manually so countries like Lithuania and Francia
+	-- can spawn them via Mission Tree, but to avoid Protestant and Reformed
+	-- can't set more than 3
+	NDefines.NReligion.MAX_CHRISTIAN_RELIGIOUS_CENTERS = 20
+	

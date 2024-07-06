@@ -441,9 +441,9 @@ country_event = {
 	}
 	option = {		# Give more control to the Guilds
 		name = ab_francia.11.c
-		grant_all_mana = {
-			mana = 35
-		}
+		add_adm_power = 35
+		add_dip_power = 35
+		add_mil_power = 35
 	}
 }
 
@@ -689,43 +689,6 @@ country_event = {
 		name = ab_francia.18.a
 	}
 	
-}
-
-#Leave Empire
-country_event = {
-	id = ab_francia.19
-	title = ab_francia.19.t
-	desc = ab_francia.19.d
-	picture = HRE_eventPicture
-
-	fire_only_once = yes
-	
-	trigger = {
-		tag = FRC 
-		has_regency = no
-		has_consort_regency = no
-		is_lesser_in_union = no
-		is_emperor = no
-		is_part_of_hre = yes
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	option = {
-		name = ab_francia.19.a
-		ai_chance = { factor = 100 }
-		add_prestige = 25
-		add_legitimacy = -25
-		set_in_empire = no
-	}
-	option = {
-		name = ab_francia.19.b
-		ai_chance = { factor = 0 }
-		add_prestige = -25
-		add_legitimacy = 25
-	}
 }
 
 #Astolfo 1
@@ -1058,19 +1021,6 @@ country_event = {
 			}
 			add_permanent_claim = ROOT
 		}
-		custom_tooltip = FRC_CENTRALIZE
-		tooltip = {
-			custom_tooltip = add_5_crown_land_share
-		}
-		hidden_effect = {
-			IF = {
-				limit = { has_reform = fracurtail }
-				change_estate_land_share = {
-					estate = all
-					share = -5
-				}
-			}
-		}
 	}
 
 }
@@ -1307,4 +1257,520 @@ country_event = {
 		name = ab_francia.35.a
 	}
 	
+}
+
+#Legacy of the Normans
+country_event = {
+	id = ab_francia.36
+	title = ab_francia.36.t
+	desc = ab_francia.36.d
+	picture = AB_NORMAN_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_francia.36.a
+		hidden_effect = {
+			set_country_flag = frc_english_focus
+			swap_non_generic_missions = yes
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+
+	option = {
+		name = ab_francia.36.b
+		hidden_effect = {
+			set_country_flag = frc_sicilian_focus
+			swap_non_generic_missions = yes
+		}
+		sicily_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		western_sicily_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+}
+
+#Fate of Francia
+country_event = {
+	id = ab_francia.37
+	title = ab_francia.37.t
+	desc = ab_francia.37.d
+	picture = AB_CHARLEMAGNE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_francia.37.a
+		hidden_effect = {
+			set_country_flag = frc_frankish_focus
+			swap_non_generic_missions = yes
+		}
+		wallonia_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		lower_rhineland_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		piedmont_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		liguria_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		lombardy_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+
+	option = {
+		name = ab_francia.37.b
+		hidden_effect = {
+			set_country_flag = frc_hre_focus
+			swap_non_generic_missions = yes
+		}
+		ai_chance = {
+			factor = 50
+		}
+	}
+	
+}
+
+#Remove Center
+province_event = {
+	id = ab_francia.38
+	title = none
+	desc = none
+	picture = none
+	hidden = yes	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_reform_center = catholic
+	}
+	
+	option = { }
+}
+
+#The Crown of Iberia
+country_event = {
+	id = ab_francia.40
+	title = ab_francia.40.t
+	desc = ab_francia.40.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_francia.40.a
+		add_adm_power = 200
+		iberia_region = {
+			add_province_modifier = { 
+				name = frc_consolidate_iberia
+				duration = 7300
+			}
+		}
+	}
+	
+	option = {
+		name = ab_francia.40.b
+		trigger = {
+			is_emperor = yes
+		}
+		custom_tooltip = FRK_SHATTER_IBERIA
+		hidden_effect = {
+			alentejo_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = GAL
+				cede_province = GAL
+			}
+			beieras_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = GAL
+				cede_province = GAL
+			}
+			galicia_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = GAL
+				cede_province = GAL
+			}
+			GAL = {
+				set_in_empire = yes
+				change_religion = ROOT
+				capital_scope = {
+					change_religion = ROOT
+				}
+				add_truce_with = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_liberated_iberian_princes
+				}
+				set_government_rank = 1
+			}
+
+			castille_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = CAS
+				cede_province = CAS
+			}
+			toledo_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = CAS
+				cede_province = CAS
+			}
+			lower_andalucia_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = CAS
+				cede_province = CAS
+			}
+			upper_andalucia_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = CAS
+				cede_province = CAS
+			}
+			CAS = {
+				set_in_empire = yes
+				change_religion = ROOT
+				capital_scope = {
+					change_religion = ROOT
+				}
+				add_truce_with = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_liberated_iberian_princes
+				}
+				set_government_rank = 1
+			}
+
+			extremadura_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = LON
+				cede_province = LON
+			}
+			leon_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = LON
+				cede_province = LON
+			}
+			LON = {
+				set_in_empire = yes
+				change_religion = ROOT
+				capital_scope = {
+					change_religion = ROOT
+				}
+				add_truce_with = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_liberated_iberian_princes
+				}
+				set_government_rank = 1
+			}
+
+			valencia_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = VAL
+				cede_province = VAL
+			}
+			VAL = {
+				set_in_empire = yes
+				change_religion = ROOT
+				capital_scope = {
+					change_religion = ROOT
+				}
+				add_truce_with = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_liberated_iberian_princes
+				}
+				set_government_rank = 1
+			}
+
+			aragon_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = ARA
+				cede_province = ARA
+			}
+			ARA = {
+				set_in_empire = yes
+				change_religion = ROOT
+				capital_scope = {
+					change_religion = ROOT
+				}
+				add_truce_with = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_liberated_iberian_princes
+				}
+				set_government_rank = 1
+			}
+
+			asturias_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = ASU
+				cede_province = ASU
+			}
+			ASU = {
+				set_in_empire = yes
+				change_religion = ROOT
+				capital_scope = {
+					change_religion = ROOT
+				}
+				add_truce_with = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_liberated_iberian_princes
+				}
+				set_government_rank = 1
+			}
+
+			catalonia_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = CAT
+				cede_province = CAT
+			}
+			CAT = {
+				set_in_empire = yes
+				change_religion = ROOT
+				capital_scope = {
+					change_religion = ROOT
+				}
+				add_truce_with = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_liberated_iberian_princes
+				}
+				set_government_rank = 1
+			}
+
+			basque_country = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = NAV
+				cede_province = NAV
+			}
+			NAV = {
+				set_in_empire = yes
+				change_religion = ROOT
+				capital_scope = {
+					change_religion = ROOT
+				}
+				add_truce_with = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_liberated_iberian_princes
+				}
+				set_government_rank = 1
+			}
+
+			baleares_area = {
+				remove_core = ROOT
+				remove_claim = ROOT
+				add_core = MJO
+				cede_province = MJO
+			}
+			MJO = {
+				set_in_empire = yes
+				change_religion = ROOT
+				capital_scope = {
+					change_religion = ROOT
+				}
+				add_truce_with = ROOT
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_liberated_iberian_princes
+				}
+				set_government_rank = 1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_francia.40.c
+		trigger = {
+			NOT = {
+				exists = IBE
+			}
+		}
+		custom_tooltip = FRK_IBERIA_RELEASE
+		hidden_effect = {	
+			iberia_region = {
+				limit = { owned_by = ROOT }
+				remove_core = ROOT
+				add_core = IBE
+			}
+			release = IBE
+			create_union = IBE
+			IBE = {
+				add_treasury = 1000
+				add_manpower = 10
+				add_stability = 1
+			}
+		}
+	}
+	
+}
+
+#Avenging Valencia
+country_event = {
+	id = ab_francia.41
+	title = ab_francia.41.t
+	desc = ab_francia.41.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_francia.41.a
+		custom_tooltip = FRC_CLEAR_WE
+		hidden_effect = {
+			add_war_exhaustion = -20
+		}
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+		add_ruler_modifier = { 
+			name = frc_avenger_of_valencia
+			duration = -1
+		}
+		iberia_region = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+#Imperium Romanum
+country_event = {
+	id = ab_francia.42
+	title = ab_francia.42.t
+	desc = ab_francia.42.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_francia.42.a
+		change_monarch_points_or_power = {
+			points = 2
+			power = dip
+		}
+		add_country_modifier = {
+			name = "frc_romanum"
+			duration = -1
+		}
+		custom_tooltip = FRC_CLAIMS_ALL_EUROPE
+		hidden_effect = {
+			every_province = {
+				limit = {
+					OR = {
+						superregion = europe_superregion
+						superregion = eastern_europe_superregion
+					}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+#Imperium Francorum
+country_event = {
+	id = ab_francia.43
+	title = ab_francia.43.t
+	desc = ab_francia.43.d
+	picture = AB_CHARLEMAGNE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_francia.43.a
+		change_monarch_points_or_power = {
+			points = 2
+			power = mil
+		}
+		add_country_modifier = {
+			name = "frc_carolingian"
+			duration = -1
+		}
+		unlock_estate_privilege = {
+			estate_privilege = estate_nobles_frankish_unity
+		}
+	}
+}
+
+#AB Achievement - Maidenless Setup
+country_event = {
+	id = ab_francia.44
+	title = ab_francia.44.t
+	desc = ab_francia.44.d
+	picture = AB_CHARLEMAGNE_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	hidden = yes
+
+	option = {
+		name = ab_francia.44.a
+		set_variable = {
+			which = frc_lothair_heirs_disinherited
+			value = 0
+		}
+	}
 }

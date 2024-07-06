@@ -1,0 +1,2732 @@
+gen_first = {
+	slot = 1
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = GEN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = GEN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_dominante = {
+		icon = overshadow_venice
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			num_of_admirals = 1
+			navy_size_percentage = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gen_dominant
+				duration = 3650
+			}
+			define_advisor = {
+				type = naval_reformer
+				skill = 1
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			baleares_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			corsica_sardinia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					ADU = {
+						NOT = { navy_size = ROOT }
+					}
+					SIC = {
+						NOT = { navy_size = ROOT }
+					}
+				}
+				custom_tooltip = GEN_DOUBLE_MODIFIER
+			}
+			else = {
+				custom_tooltip = GEN_DOUBLE_MODIFIER_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						ADU = {
+							NOT = { navy_size = ROOT }
+						}
+						SIC = {
+							NOT = { navy_size = ROOT }
+						}
+					}
+					remove_country_modifier = gen_dominant
+					add_country_modifier = {
+						name = gen_dominant
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	gen_baleares = {
+		icon = mission_invade_island
+		required_missions = { gen_dominante }
+		position = 4
+		
+		provinces_to_highlight = {
+			area = baleares_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			baleares_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			333 = {
+				add_or_upgrade_shipyard_building = yes
+			}
+			add_country_modifier = {
+				name = gen_exploit
+				duration = 5475
+			}
+			213 = {
+				if = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			220 = {
+				if = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	gen_landfall = {
+		icon = mission_reclaim_andalucia
+		required_missions = { gen_baleares }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 213
+				province_id = 333
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			213 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			333 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			add_prestige_or_monarch_power = {
+				amount = 20
+			}
+			add_ruler_modifier = {
+				name = gen_avenger
+				duration = -1
+			}
+			upper_andalucia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					OR = {
+						is_rival = ADU
+						is_enemy = ADU
+					}
+				}
+				custom_tooltip = GEN_ADU_RIVAL
+			}
+			else = {
+				custom_tooltip = GEN_ADU_RIVAL_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							is_rival = ADU
+							is_enemy = ADU
+						}
+					}
+					ADU = {
+						add_stability = -1
+					}
+				}
+			}
+		}
+	}
+
+	gen_blockade = {
+		icon = mission_disrupt_portuguese_trade
+		required_missions = { gen_landfall }
+		position = 6
+		
+		provinces_to_highlight = {
+			area = upper_andalucia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			upper_andalucia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			create_explorer = { tradition = 50 }
+			add_country_modifier = {
+				name = gen_beyond
+				duration = 7300
+			}
+			lower_andalucia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_morocco_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	gen_gibraltar = {
+		icon = mission_retake_ceuta
+		required_missions = { gen_blockade }
+		position = 8
+		
+		provinces_to_highlight = {
+			OR = {
+				area = northern_morocco_area
+				area = lower_andalucia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = northern_morocco_area
+					area = lower_andalucia_area
+				}
+				value = 6
+			}
+		}
+		
+		effect = {
+			226 = {
+				add_or_upgrade_fort_building = yes
+			}
+			1751 = {
+				add_or_upgrade_fort_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			1293 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 20
+					key = gen_gibraltar
+				}
+			}
+			if = {
+				limit = {
+					has_country_modifier = gen_beyond
+				}
+				custom_tooltip = GEN_BEYOND
+			}
+			else = {
+				custom_tooltip = GEN_BEYOND_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_modifier = gen_beyond
+					}
+					remove_country_modifier = gen_beyond
+					add_country_modifier = {
+						name = gen_beyond
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+gen_first_italy_locked = {
+	slot = 1
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_locked1 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_new_world }
+		position = 10
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked2 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked1 }
+		position = 11
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked8 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked2 }
+		position = 13
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+gen_first_italy_unlocked_first = {
+	slot = 1
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		was_tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_caribbean = {
+		icon = mission_caribbean_cn
+		required_missions = { gen_new_world }
+		position = 10
+		
+		provinces_to_highlight = {
+			region = carribeans_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = carribeans_region
+				value = 5
+			}
+		}
+		
+		effect = {
+			custom_tooltip = ENG_COLONISTS
+			hidden_effect = {
+				random_owned_province = {
+					limit = {
+						is_colony = yes
+						colonial_region = colonial_the_carribean
+					}
+					add_colonysize = 250
+				}
+			}
+			add_country_modifier = {
+				name = gen_trade_natives
+				duration = 5475
+			}
+		}
+	}
+	
+	gen_pirates = {
+		icon = mission_pirate_flag
+		required_missions = { gen_caribbean }
+		position = 11
+		
+		provinces_to_highlight = {
+			region = carribeans_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = carribeans_region
+				value = 20
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GEN_SUBJECT
+			tooltip = {
+				custom_tooltip = GEN_CN_MODIFIER
+			}
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						is_colonial_nation_of = ROOT
+						capital_scope = { region = carribeans_region }
+					}
+					add_country_modifier = {
+						name = gen_caribbean
+						duration = -1
+					}
+				}
+			}
+			panama_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	gen_panama = {
+		icon = mission_colonize_panama
+		required_missions = { gen_pirates }
+		position = 13
+		
+		provinces_to_highlight = {
+			province_id = 835
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			835 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GEN_PANAMA
+			set_country_flag = panama_canal_no_tech_requirements
+			835 = {
+				add_province_modifier = {
+					name = gen_marvel
+					duration = 9125
+				}
+			}
+		}
+	}
+}
+
+gen_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = GEN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = GEN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	gen_cagliari = {
+		icon = seize_sardinia
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			province_id = 2986
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			2986 = {
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			2986 = {
+				remove_core = SIC
+			}
+			add_country_modifier = {
+				name = gen_prepare
+				duration = 5475
+			}
+			sicily_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			western_sicily_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	gen_sicily = {
+		icon = arb_sicily
+		required_missions = { gen_cagliari gen_dominante }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = sicily_area
+				area = western_sicily_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+			western_sicily_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			custom_tooltip = GEN_RECLAMATION
+			tooltip = {
+				add_province_modifier = {
+					name = gen_reclamation
+					duration = 7300
+				}
+			}
+			custom_tooltip = GEN_CORES
+			hidden_effect = {
+				every_province = {
+					limit = {
+						region = italy_region
+						is_core = SIC
+						NOT = { owned_by = ROOT }
+					}
+					add_territorial_core = ROOT
+				}
+				sicily_area = {
+					add_province_modifier = {
+						name = gen_reclamation
+						duration = 7300
+					}
+				}
+				western_sicily_area = {
+					add_province_modifier = {
+						name = gen_reclamation
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+}
+
+gen_second_italy_locked_first = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_locked4 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_sicily }
+		position = 4
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked5 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked4 }
+		position = 5
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+gen_second_italy_unlocked_first = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		was_tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	gen_combat = {
+		icon = mission_combat_barbary_piracy
+		required_missions = { gen_sicily }
+		position = 4
+		
+		trigger = {
+			354 = {
+				owner = {
+					ROOT = {
+						navy_size = PREV
+					}
+				}
+			}
+			2954 = {
+				owner = {
+					ROOT = {
+						navy_size = PREV
+					}
+				}
+			}
+			341 = {
+				owner = {
+					ROOT = {
+						navy_size = PREV
+					}
+				}
+			}
+			338 = {
+				owner = {
+					ROOT = {
+						navy_size = PREV
+					}
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 338
+				province_id = 341
+				province_id = 2954
+				province_id = 354
+			}
+		}
+		
+		effect = {
+			create_admiral = { tradition = 50 }
+			add_country_modifier = {
+				name = "gen_end"
+				duration = 5475
+			}
+			338 = {
+				if = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			341 = {
+				if = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			2954 = {
+				if = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			354 = {
+				if = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	gen_end = {
+		icon = mission_raid_christian_trade
+		required_missions = { gen_combat }
+		position = 5
+		
+		trigger = {
+			owns = 338
+			owns = 341
+			owns = 2954
+			owns = 354
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 338
+				province_id = 341
+				province_id = 2954
+				province_id = 354
+			}
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "gen_corsairs"
+				duration = -1
+			}
+			341 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			if = {
+				limit = {
+					341 = {
+						trade_share = {
+							country = ROOT
+							share = 50
+						}
+					}
+				}
+				custom_tooltip = GEN_TUNIS_SHARE
+				tooltip = {
+					add_country_modifier = {
+						name = "gen_safe"
+						duration = 7300
+					}
+				}
+			}
+			else = {
+				custom_tooltip = GEN_TUNIS_SHARE_NO
+				tooltip = {
+					add_country_modifier = {
+						name = "gen_safe"
+						duration = 7300
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						341 = {
+							trade_share = {
+								country = ROOT
+								share = 50
+							}
+						}
+					}
+					add_country_modifier = {
+						name = "gen_safe"
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+}
+
+gen_second_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = GEN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = GEN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	gen_canaries = {
+		icon = mission_claim_the_canaries
+		required_missions = { gen_blockade }
+		position = 7
+		
+		provinces_to_highlight = {
+			area = macaronesia_area
+			NOT = { owned_by = ROOT }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 2
+				area = macaronesia_area
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gen_colonies
+				duration = 7300
+			}
+			define_advisor = {
+				type = colonist
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	gen_new_world = {
+		icon = mission_explore_the_world
+		required_missions = { gen_canaries }
+		position = 9
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = miss_discover_eastern_america
+				colonial_eastern_america = { has_discovered = ROOT }
+			}
+			custom_trigger_tooltip = {
+				tooltip = miss_discover_caribbean
+				colonial_the_carribean = { has_discovered = ROOT }
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "the_unknown_frontier"
+				duration = 5475
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							capital_scope = {
+								OR = {
+									superregion = europe_superregion
+									superregion = eastern_europe_superregion				
+								}
+							}
+							any_province = {
+								OR = {
+									continent = north_america
+									continent = south_america
+								}
+								has_discovered = PREV
+							}
+						}
+					}
+				}
+				custom_tooltip = GEN_FIRST_DISCOVER
+				tooltip = {
+					define_explorer = {
+						shock = 5
+						fire = 5
+						manuever = 4
+						siege = 4
+						name = "Cristoffa Corombo"
+					}
+				}
+			}
+			else = {
+				custom_tooltip = GEN_FIRST_DISCOVER_NO
+				tooltip = {
+					define_explorer = {
+						shock = 5
+						fire = 5
+						manuever = 4
+						siege = 4
+						name = "Cristoffa Corombo"
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								capital_scope = {
+									OR = {
+										superregion = europe_superregion
+										superregion = eastern_europe_superregion
+									}
+								}
+								any_province = {
+									OR = {
+										continent = north_america
+										continent = south_america
+									}
+									has_discovered = PREV
+								}
+							}
+						}
+					}
+					define_explorer = {
+						shock = 5
+						fire = 5
+						manuever = 4
+						siege = 4
+						name = "Cristoffa Combo"
+					}
+				}
+			}
+		}
+	}
+}
+
+gen_second_italy_locked_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_locked9 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_new_world }
+		position = 10
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked10 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked1 }
+		position = 10
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked11 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked10 }
+		position = 10
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked12 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked11 }
+		position = 10
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}	
+}
+
+gen_second_italy_unlocked_second = {
+	slot = 2
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		was_tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_reform_colonial_admin = {
+		icon = mission_taula_de_canvi
+		required_missions = { gen_new_world }
+		position = 10
+		
+		trigger = {
+			calc_true_if = {
+				all_subject_country = {
+					is_colonial_nation = yes
+					has_opinion = {
+						who = ROOT 
+						value = 150 
+					}
+					NOT = { liberty_desire = 10 } 
+					total_development = 100
+				}
+				amount = 3
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GEN_COLONIAL_CHARTER
+			set_country_flag = ab_upgrade_colonial_charters
+			if = {
+				limit = {
+					colonialministry = 1
+				}
+				custom_tooltip = GEN_MINISTRY_YES
+			}
+			else = {
+				custom_tooltip = GEN_MINISTRY_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						colonialministry = 1
+					}
+					every_owned_province = {
+						limit = {
+							is_colony = yes
+						}
+						add_colonysize = 200
+					}
+				}
+			}
+		}
+	}
+	
+	gen_mexico = {
+		icon = mission_colonize_the_caribbean
+		required_missions = { gen_caribbean }
+		position = 11
+		
+		provinces_to_highlight = {
+			region = mexico_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = mexico_region
+				value = 5
+			}
+		}
+		
+		effect = {
+			custom_tooltip = GEN_MEXICO_CB
+			mexico_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_claim = ROOT
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						mexico_region = {
+							region = balkan_region
+						}
+					}
+					reverse_add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+	gen_aztec_gold = {
+		icon = mission_entrepot_of_india
+		required_missions = { gen_mexico }
+		position = 12
+		
+		provinces_to_highlight = {
+			region = mexico_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = mexico_region
+				value = 20
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = gen_treasure_fleets
+				duration = 7300
+			}
+			mexico_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						trade_goods = gold
+						value = 4
+					}
+				}
+				custom_tooltip = GEN_GOLD_YES
+				tooltip = {
+					add_inflation = -3
+				}
+			}
+			else = {
+				custom_tooltip = GEN_GOLD_NO
+				tooltip = {
+					add_inflation = -3
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+							trade_goods = gold
+							value = 4
+						}
+					}
+					add_inflation = -3
+				}
+			}
+		}
+	}
+	
+	gen_tomatoes = {
+		icon = mission_tomatoes
+		required_missions = { gen_aztec_gold }
+		position = 12
+		
+		provinces_to_highlight = {
+			region = mexico_region
+			OR = {
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+				NOT = { has_production_building_trigger = yes }
+				NOT = { has_manufactory_trigger = yes }
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = mexico_region
+				has_production_building_trigger = yes
+				has_manufactory_trigger = yes
+				value = 10
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gen_italian_cuisine
+				duration = -1
+			}
+			custom_tooltip = GEN_TOMATO_PRODUCTION
+			hidden_effect = {
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
+							limit = {
+								region = italy_region
+							}
+							add_base_production = 1
+						}
+					"
+				}
+			}
+		}
+	}
+}
+
+gen_third = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = GEN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = GEN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_tuscany = {
+		icon = conquer_tuscany
+		required_missions = { gen_coastline }
+		position = 2
+		
+		provinces_to_highlight = {
+			area = tuscany_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				area = tuscany_area
+				value = 4
+			}
+		}
+		
+		effect = {
+			change_innovativeness = 3
+			add_country_modifier = {
+				name = "lom_home_renaissance"
+				duration = 5475
+			}
+			central_italy_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					any_owned_province = {
+						is_institution_origin = renaissance
+					}
+				}
+				custom_tooltip = LOM_RENAI_YES
+			}
+			else = {
+				custom_tooltip = LOM_RENAI_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_owned_province = {
+							is_institution_origin = renaissance
+						}
+					}
+					remove_country_modifier = lom_home_renaissance
+					add_country_modifier = {
+						name = "lom_home_renaissance"
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	gen_liberate_south = {
+		icon = complete_the_risorgimento
+		required_missions = { gen_sicily }
+		position = 4
+		
+		provinces_to_highlight = {
+			region = italy_region
+			owner = {
+				religion_group = muslim
+			}
+		}
+		
+		trigger = {
+			NOT = {
+				any_province = {
+					region = italy_region
+					owner = {
+						religion_group = muslim
+					}
+				}
+			}
+		}
+		
+		effect = {
+			change_ruler_stat = {
+				type = mil
+				amount = 2
+			}
+			add_ruler_modifier = {
+				name = "lom_liberator"
+				duration = -1
+			}
+			if = {
+				limit = {
+					NOT = {
+						exists = SIC
+					}
+				}
+				custom_tooltip = GEN_NO_SICILY_YES
+				tooltip = {
+					add_prestige_or_monarch_power = {
+						amount = 25
+					}
+				}
+			}
+			else = {
+				custom_tooltip = GEN_NO_SICILY_NO
+				tooltip = {
+					add_prestige_or_monarch_power = {
+						amount = 25
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							exists = SIC
+						}
+					}
+					add_prestige_or_monarch_power = {
+						amount = 25
+					}
+				}
+			}
+		}
+	}
+	
+	gen_genoese_renaissance = {
+		icon = republican_yearnings
+		required_missions = { }
+		position = 7
+		
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+		
+		trigger = {
+			prestige = 40
+			capital_scope = {
+				renaissance = 75
+			}
+			OR = {
+				has_adm_advisor_2 = yes
+				has_dip_advisor_2 = yes
+				has_mil_advisor_2 = yes
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_institution_embracement = {
+					which = renaissance
+					value = 25
+				}
+			}
+			define_advisor = {
+				type = architect
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	gen_reform_the_republic = {
+		icon = medici_bank_ledgers
+		required_missions = { gen_genoese_renaissance }
+		position = 9
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			has_courthouse_building_trigger = no 
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_courthouse_building_trigger = yes 
+				value = 10
+			}
+			has_final_tier_reforms_trigger = yes 
+		}
+		
+		effect = { 
+			add_republican_tradition = 25
+			add_country_modifier = {
+				name = fra_proper_legal_systems_modifier
+				duration = 9125 
+			}
+			custom_tooltip = frc_every_court_house_tt
+			hidden_effect = {
+				set_country_flag = fra_courthouse_bonus_flag
+				every_owned_province = {
+					limit = {
+						has_courthouse_building_trigger = yes
+					}
+					add_province_modifier = {
+						name = fra_improved_court_houses_modifier
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+}
+
+gen_third_italy_locked = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_locked13 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_new_world }
+		position = 10
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked14 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked13 }
+		position = 11
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked15 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked14 }
+		position = 13
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+gen_third_italy_unlocked_second = {
+	slot = 3
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		was_tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	gen_explore_the_jungle = {
+		icon = mission_iberian_conquistador
+		required_missions = { gen_new_world }
+		position = 10
+		
+		provinces_to_highlight = {
+			OR = {
+				region = colombia_region
+				region = brazil_region
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					region = colombia_region
+					region = brazil_region
+				}
+				value = 5
+			}
+		}
+		
+		effect = {
+			create_conquistador = { tradition = 60 }
+			add_country_modifier = {
+				name = "adu_mainland"
+				duration = 5475
+			}
+		}
+	}
+
+	gen_river_of_silver = {
+		icon = mission_african_gold
+		required_missions = { gen_explore_the_jungle }
+		position = 11
+		
+		provinces_to_highlight = {
+			region = la_plata_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = la_plata_region
+				value = 10
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = gen_colonies
+				duration = 7300
+			}
+			define_advisor = {
+				type = colonist
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+
+	gen_southern_domination = {
+		icon = mission_samerica
+		required_missions = { gen_river_of_silver }
+		position = 13
+		
+		provinces_to_highlight = {
+			continent = south_america
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_subject_country = {
+					is_colonial_nation = yes
+					capital_scope = {
+						continent = south_america
+					}
+					total_development = 50
+				}
+				amount = 4
+			}
+		}
+
+		effect = {
+			custom_tooltip = FRC_COLONIST_MODIFIER
+			set_country_flag = ab_colonist_modifier
+			define_advisor = {
+				type = colonist
+				skill = 3
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+}
+
+gen_fourth = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = GEN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = GEN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_coastline = {
+		icon = secure_the_republic
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			owns = 102
+			owns = 2980
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 102
+				province_id = 2980
+			}
+			NOT = {
+				owned_by = ROOT
+			}
+		}
+		
+		effect = {
+			create_general = { tradition = 40 }
+			add_country_modifier = {
+				name = "gen_italian_wars"
+				duration = 5475
+			}
+			define_advisor = {
+				type = ae_advisor
+				skill = 1
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = LOM_EMPTY
+			emilia_romagna_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			piedmont_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lombardy_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			tuscany_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	gen_romagna = {
+		icon = expand_to_the_south
+		required_missions = { gen_north gen_tuscany }
+		position = 3
+		
+		provinces_to_highlight = {
+			area = emilia_romagna_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				area = emilia_romagna_area
+				value = 4
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			emilia_romagna_area = {
+				add_nationalism = -10
+			}
+			lazio_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	gen_republic = {
+		icon = mission_itarepublic
+		required_missions = { gen_romagna gen_venice }
+		position = 5
+		
+		provinces_to_highlight = {
+			area = emilia_romagna_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			ab_is_italy_tag_trigger = yes
+		}
+		
+		effect = {
+			change_ruler_stat = {
+				type = dip
+				amount = 2
+			}
+			add_ruler_modifier = {
+				name = "gen_father_republic"
+				duration = -1
+			}
+			italy_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	gen_the_proud_city = {
+		icon = end_genoese_competition
+		required_missions = { }
+		position = 6
+		
+		provinces_to_highlight = {
+			province_id = 101
+		}
+		
+		trigger = {
+			owns = 101
+			101 = {
+				development = 35
+			}
+			101 = {
+				has_tax_building_trigger = yes
+			}
+			101 = {
+				has_trade_building_trigger = yes
+			}
+			101 = {
+				has_production_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			101 = {
+				add_base_production = 2
+			}
+			101 = {
+				upgrade_trade_building = yes
+			}
+			if = {
+				limit = {
+					NOT = {
+						101 = {
+							is_prosperous = yes
+						}
+					}
+				}
+				custom_tooltip = GEN_PROSPERITY_YES
+			}
+			else = {
+				custom_tooltip = GEN_PROSPERITY_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							101 = {
+								is_prosperous = yes
+							}
+						}
+					}
+					101 = {
+						add_prosperity = 100
+					}
+				}
+			}
+		}
+	}
+	
+	gen_dominate_the_markets = {
+		icon = purely_for_commerce
+		required_missions = { gen_the_proud_city }
+		position = 7
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_trade_building_trigger = no
+				NOT = { base_production = 6 }
+			}
+		}
+		
+		trigger = {
+			mercantilism = 30
+			num_of_owned_provinces_with = {
+				value = 10
+				base_production = 6
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				has_trade_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			set_country_flag = enable_special_trader_flag 
+			custom_tooltip = GEN_TRADER_SCALING
+			define_advisor = {
+				type = trader
+				skill = 3
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+	
+	gen_la_superba = {
+		icon = a_real_roman_empire
+		required_missions = { gen_dominate_the_markets gen_genoese_renaissance }
+		position = 8
+		
+		provinces_to_highlight = {
+			region = italy_region
+			higher_development_than = 101
+		}
+		
+		trigger = {
+			share_of_starting_income = 5
+			NOT = {
+				any_province = {
+					region = italy_region
+					higher_development_than = 101
+				}
+			}
+		}
+		
+		effect = {
+			set_country_flag = gen_developing_genoa
+			custom_tooltip = GEN_LA_SUPERBA
+			if = {
+				limit = {
+					NOT = {
+						any_province = {
+							continent = europe
+							higher_development_than = 101
+						}
+					}
+				}
+				custom_tooltip = GEN_EUROPE_DEV_YES
+				tooltip = {
+					add_splendor = 300
+				}
+			}
+			else = {
+				custom_tooltip = GEN_EUROPE_DEV_NO
+				tooltip = {
+					add_splendor = 300
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_province = {
+								continent = europe
+								higher_development_than = 101
+							}
+						}
+					}
+					add_splendor = 300
+				}
+			}
+		}
+	}
+	
+	gen_mare_nostrum = {
+		icon = mission_rb_mediterranean_authority
+		required_missions = { gen_la_superba gen_merchant_fleet }
+		position = 9
+
+		provinces_to_highlight = {
+			is_capital = yes
+			owner = {
+				any_owned_province = {
+					has_port = yes
+					sea_zone = {
+						OR = {
+							area = western_mediterrenean_area
+							area = eastern_mediterrenean_area
+						}
+					}
+				}
+				navy_size = ROOT
+			}
+		}
+		
+		trigger = {
+			OR = {
+				full_idea_group = trade_ideas
+				monthly_income = 100
+				mercantilism = 50
+			}
+			custom_trigger_tooltip = {
+				tooltip = AB_MARE_NOSTRUM
+				NOT = {
+					any_known_country = {
+						any_owned_province = {
+							has_port = yes
+							sea_zone = {
+								OR = {
+									area = western_mediterrenean_area
+									area = eastern_mediterrenean_area
+								}
+							}
+						}
+						navy_size = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = ENG_COT_UPGRADE
+			set_country_flag = enable_upgrading_centers_of_trade_dev
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = ENG_TRADE_INCOME
+			tooltip = {
+				add_years_of_income = 1
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						trade_income_percentage = 0.5
+					}
+					add_years_of_income = 1
+				}
+			}
+		}
+	}
+}
+
+gen_fourth_italy_locked = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_locked16 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked18 }
+		position = 11
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked17 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked16 }
+		position = 13
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+gen_fourth_italy_unlocked = {
+	slot = 4
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		was_tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	gen_sail_around_africa = {
+		icon = mission_kon_greatest_power_kongo
+		required_missions = { gen_bases_in_africa }
+		position = 11
+		
+		provinces_to_highlight = {
+			region = south_africa_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = south_africa_region
+				value = 5
+			}
+		}
+		
+		effect = {
+			create_explorer = { tradition = 75 }
+			add_country_modifier = {
+				name = bav_colonial_investment
+				duration = 9125
+			}
+			custom_tooltip = GEN_CLAIM_MALACCA
+			hidden_effect = {
+				malaya_region = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+						province_has_center_of_trade_of_level = 1
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					1177 = {
+						owned_by = ROOT
+						is_city = yes
+					}
+				}
+				custom_tooltip = GEN_OWN_CAPE_YES
+				1177 = {
+					add_or_upgrade_trade_building = yes
+					add_or_upgrade_production_building = yes
+				}
+			}
+			else = {
+				custom_tooltip = GEN_OWN_CAPE_NO
+				tooltip = {
+					1177 = {
+						add_or_upgrade_trade_building = yes
+						add_or_upgrade_production_building = yes
+					}
+				}
+			}
+		}
+	}
+	
+	gen_spice_isles = {
+		icon = mission_dominate_persian_gulf
+		required_missions = { gen_sail_around_africa }
+		position = 13
+		
+		provinces_to_highlight = {
+			superregion = east_indies_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				superregion = east_indies_superregion
+				value = 5
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 5
+            add_country_modifier = {
+                name = "dan_indian_trade"
+				duration = 5475
+			}
+			custom_tooltip = DAN_TRADE_BONUS
+			tooltip = {
+				add_years_of_income = 1.5
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							trading_bonus = {
+								trade_goods = cloves
+								value = yes
+							}
+							trading_bonus = {
+								trade_goods = spices
+								value = yes
+							}
+						}
+					}
+					add_years_of_income = 1.5
+				}
+			}
+		}
+	}
+}
+
+gen_fifth = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = GEN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = GEN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	gen_north = {
+		icon = mission_italian_conquest
+		required_missions = { gen_coastline }
+		position = 2
+		
+		provinces_to_highlight = {
+			OR = { 
+				area = piedmont_area
+				area = lombardy_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 6
+				OR = {
+					area = piedmont_area
+					area = lombardy_area
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_AE
+			add_country_modifier = {
+				name = lom_north_italy
+				duration = 5475
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							region = italy_region
+						}
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -10
+						apply_calc = no
+					}
+				}
+			}
+			po_valley_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			venetia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	gen_venice = {
+		icon = venture_captains
+		required_missions = { gen_north }
+		position = 4
+		
+		provinces_to_highlight = {
+			area = venetia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			venetia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT	
+			}
+		}
+		
+		effect = {
+			add_republican_tradition = 20
+			add_country_modifier = {
+				name = gen_dismantled
+				duration = -1
+			}
+			custom_tooltip = GEN_CORES_VENICE
+			hidden_effect = {
+				every_province = {
+					limit = {
+						is_core = VEN
+						NOT = { owned_by = ROOT }
+					}
+					add_territorial_core = ROOT
+				}
+			}
+		}
+	}	
+}
+
+gen_fifth_italy_locked_first = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_locked6 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_venice }
+		position = 5
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked7 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked6 }
+		position = 5
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+gen_fifth_italy_unlocked_first = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		was_tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_adriatic = {
+		icon = capture_adriatic_ports
+		required_missions = { gen_venice }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = { 
+				province_id = 4738
+				province_id = 130
+				province_id = 4753
+				province_id = 136
+				province_id = 137
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 3
+				OR = {
+					province_id = 4738
+					province_id = 130
+					province_id = 4753
+					province_id = 136
+					province_id = 137
+				}
+			}
+		}
+		
+		effect = {
+			add_navy_tradition = 20
+			add_country_modifier = {
+				name = "gen_adriatic_con"
+				duration = 7300
+			}
+			albania_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			aegean_archipelago_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					137 = {
+						trade_share = {
+							country = ROOT
+							share = 50
+						}
+					}
+				}
+				custom_tooltip = GEN_TRADE_BONUS
+			}
+			else = {
+				custom_tooltip = GEN_TRADE_BONUS_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						137 = {
+							trade_share = {
+								country = ROOT
+								share = 50
+							}
+						}
+					}
+					add_years_of_trade_income = {
+						years = 1
+						custom_tooltip = eng_trade_income
+					}
+				}
+			}
+		}
+	}
+	
+	gen_arsenal = {
+		icon = expand_the_arsenal
+		required_missions = { gen_adriatic }
+		position = 6
+		
+		provinces_to_highlight = {
+			province_id = 112
+		}
+		
+		trigger = {
+			owns = 112
+			112 = {
+				has_great_project = {
+					type = venetian_arsenal_gp
+					tier = 2
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = AB_ENG_MARINES
+			hidden_effect = {
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+				capital_scope = {
+					marine_infantry = ROOT
+				}
+			}
+			add_country_modifier = {
+				name = "gen_arsenal"
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+gen_fifth_unlocked_second = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		OR = {
+			tag = GEN
+			AND = {
+				ab_is_italy_tag_trigger = yes
+				was_tag = GEN
+			}
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	gen_merchant_fleet = {
+		icon = mission_aragonese_navy
+		required_missions = { }
+		position = 8
+		
+		provinces_to_highlight = {
+			province_id = 101
+		}
+		
+		trigger = {
+			num_of_light_ship = 20
+			101 = { 
+				trade_share = {
+					country = ROOT 
+					share = 50
+				}
+			}
+		}
+		
+		effect = {
+			create_scaling_admiral = yes
+			custom_tooltip = GEN_PRIVILEGE_UPGRADE
+		}
+	}	
+}
+
+gen_fifth_italy_locked_second = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	gen_locked18 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_new_world }
+		position = 10
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked19 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked18 }
+		position = 11
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+	
+	gen_locked20 = {
+	    icon = mission_locked_mission
+		required_missions = { gen_locked16 }
+		position = 12
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = LOM_UNLOCKABLE2
+				has_country_flag = crn_you_cant_get_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = LOM_UNLOCKABLE2
+		}
+	}
+}
+
+gen_fifth_italy_unlocked_second = {
+	slot = 5
+	generic = no #if a mission without generic = yes wants this slot then it overrides this.
+	ai = yes
+	potential = {
+		ab_is_italy_tag_trigger = yes
+		was_tag = GEN
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	gen_bases_in_africa = {
+		icon = mission_west_african_ports
+		required_missions = { gen_new_world }
+		position = 10
+		
+		provinces_to_highlight = {
+			region = guinea_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = guinea_region
+				value = 5
+			}
+		}
+		
+		effect = {
+			add_mercantilism = 3
+			add_country_modifier = {
+				name = "tur_trading_cities"
+				duration = 9125
+			}
+			custom_tooltip = TUR_DEV_CENTER
+			custom_tooltip = GEN_GUINEA_CLAIM
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = guinea_region
+					}
+					every_neighbor_province = {
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+	gen_venture_inland = {
+		icon = mission_invade_kanem
+		required_missions = { gen_bases_in_africa }
+		position = 10
+		
+		provinces_to_highlight = {
+			region = niger_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = niger_region
+				value = 10
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			add_country_modifier = {
+				name = "dan_scramble"
+				duration = 9125
+			}
+			custom_tooltip = DAN_INLAND
+		}
+	}
+	
+	gen_entrepot_of_india = {
+		icon = mission_indian_trade_company
+		required_missions = { gen_sail_around_africa }
+		position = 11
+		
+		provinces_to_highlight = {
+			superregion = india_superregion
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				superregion = india_superregion
+				value = 3
+			}
+		}
+		
+		effect = {
+            add_country_modifier = {
+                name = "dan_indian_trade"
+				duration = 5475
+			}
+			custom_tooltip = DAN_COROMANDEL_CLAIM
+			hidden_effect = {
+				coromandel_region = {
+					limit = {
+						province_has_center_of_trade_of_level = 1
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+	
+}

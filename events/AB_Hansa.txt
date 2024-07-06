@@ -1,0 +1,39 @@
+namespace = ab_hansa
+
+#Germanization - Hansa Version
+province_event = {
+	id = ab_hansa.0
+	title = ab_hansa.0.t
+	desc = ab_hansa.0.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+	}
+	
+	trigger = {
+		OR = {
+			AND = {
+				region = wendia_region
+				owner = { has_country_flag = hansa_germanization_wendia_flag }
+			}
+			AND = {
+				region = baltic_region
+				owner = { has_country_flag = hansa_germanization_baltic_flag }
+			}
+		}
+		NOT = { culture_group = germanic }
+		any_neighbor_province = {
+			owned_by = ROOT
+			culture_group = germanic
+		}
+		religion = ROOT
+	}
+	
+	option = {
+		name = ab_hansa.0.a
+		change_culture = baltic_german
+	}
+}

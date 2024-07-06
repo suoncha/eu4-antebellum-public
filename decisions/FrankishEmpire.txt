@@ -4,34 +4,17 @@ country_decisions = {
 		major = yes
 		potential = {
 			normal_or_historical_nations = yes
-			
 			NOT = { has_country_flag = formed_frankish_empire_flag }
 			OR = {
 				ai = no
 				is_playing_custom_nation = no
 			}
 			NOT = { exists = FRK }
-			NOT = { tag = PAP }
-			NOT = { tag = HLR }
 			OR = {
 				tag = FRC
 				tag = MFC
 				tag = EFC
-			}
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 15
-				}
-			}
-			is_colonial_nation = no
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
-				}
+				has_country_flag = unlocked_frankish_empire_decision
 			}
 		}
 		provinces_to_highlight = {
@@ -52,31 +35,57 @@ country_decisions = {
 				province_id = 97
 				
 			}
-			OR = {
-				NOT = { owned_by = ROOT }
-				NOT = { is_core = ROOT }
-			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		allow = {
 			adm_tech = 10
 			is_free_or_tributary_trigger = yes
 			is_at_war = no
-			owns_core_province = 183
-			owns_core_province = 168
-			owns_core_province = 175
-			owns_core_province = 200
-			owns_core_province = 205
-			owns_core_province = 101
-			owns_core_province = 104
-			owns_core_province = 118
-			owns_core_province = 134
-			owns_core_province = 67
-			owns_core_province = 1876
-			owns_core_province = 1878
-			owns_core_province = 1874
-			owns_core_province = 97
+		    183 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    168 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    175 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    200 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    205 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    101 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    104 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    118 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    134 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    67 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    1876 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    1878 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    1874 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    97 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
 		}
 		effect = {
+			add_prestige_or_monarch_power = { amount = 25 } 
 			if = {
 				limit = {
 					is_part_of_hre = yes
@@ -85,7 +94,7 @@ country_decisions = {
 				}
 				emperor = {
 					add_opinion = {
-						who = root
+						who = ROOT
 						modifier = opinion_left_empire
 					}
 				}
@@ -95,7 +104,6 @@ country_decisions = {
 				}
 			}
 			change_tag = FRK
-			add_prestige = 25
 			set_country_flag = formed_frankish_empire_flag
 			if = {
 				limit = {
@@ -103,7 +111,14 @@ country_decisions = {
 				}
 				set_government_rank = 3
 			}
-			custom_tooltip = cosmetic_tag_info
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
 			if = {
 				limit = {
 					NOT = { tag = FRC }

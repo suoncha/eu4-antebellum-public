@@ -1,0 +1,492 @@
+incident_imperial_entrance = {
+	event = imperial_entrance.2
+	default_option = 0
+
+	can_stop = {
+		OR = {
+			NOT = { exists = LOT }
+			LOT = { 
+				is_subject = yes
+				overlord = {
+					is_part_of_hre = no
+				}
+			}
+			LOT = { is_part_of_hre = yes }
+		}
+	}
+
+	0 = { # Let them in
+		factor = 2
+		modifier = {
+			factor = 100
+			OR = {
+				ai_attitude = {
+					who = LOT
+					attitude = attitude_friendly
+				}
+				ai_attitude = {
+					who = LOT
+					attitude = attitude_loyal
+				}
+				ai_attitude = {
+					who = LOT
+					attitude = attitude_allied
+				}
+			}
+		}
+		modifier = {
+			factor = 1000
+			dynasty = LOT
+		}
+		# Force Francia if it is emperor to accept, as a logical conclusion
+		# of losing in the war
+		modifier = {
+			factor = 1000
+			tag = FRC
+			is_emperor = yes
+		}
+	}
+	1 = { # Refuse entry
+		factor = 1
+		modifier = {
+			factor = 100
+			OR = {
+				ai_attitude = {
+					who = LOT
+					attitude = attitude_rivalry
+				}
+				ai_attitude = {
+					who = LOT
+					attitude = attitude_hostile
+				}
+				ai_attitude = {
+					who = LOT
+					attitude = attitude_threatened
+				}
+				ai_attitude = {
+					who = LOT
+					attitude = attitude_outraged
+				}
+				ai_attitude = {
+					who = LOT
+					attitude = attitude_disloyal
+				}
+				ai_attitude = {
+					who = LOT
+					attitude = attitude_rebellious
+				}
+			}
+		}
+	}
+}
+
+incident_denmark_and_the_empire = {
+	event = denmark_and_the_empire.1
+	default_option = 0
+
+	can_stop = {
+		OR = {
+			NOT = { exists = DNK }
+			DNK = { 
+				is_subject = yes
+				overlord = {
+					NOT = { is_part_of_hre = yes }
+				}
+			}
+			DNK = { is_part_of_hre = yes }
+		}
+	}
+
+	0 = { # Allow entry
+		factor = 1
+		modifier = {
+			factor = 100
+			OR = {
+				ai_attitude = {
+					who = DNK
+					attitude = attitude_friendly
+				}
+				ai_attitude = {
+					who = DNK
+					attitude = attitude_loyal
+				}
+				ai_attitude = {
+					who = DNK
+					attitude = attitude_allied
+				}
+			}
+		}
+	}
+	1 = { # Refuse entry
+		factor = 1
+		modifier = {
+			factor = 100
+			OR = {
+				ai_attitude = {
+					who = DNK
+					attitude = attitude_rivalry
+				}
+				ai_attitude = {
+					who = DNK
+					attitude = attitude_hostile
+				}
+				ai_attitude = {
+					who = DNK
+					attitude = attitude_threatened
+				}
+				ai_attitude = {
+					who = DNK
+					attitude = attitude_outraged
+				}
+				ai_attitude = {
+					who = DNK
+					attitude = attitude_disloyal
+				}
+				ai_attitude = {
+					who = DNK
+					attitude = attitude_rebellious
+				}
+			}
+		}
+	}
+}
+
+incident_wendish_threat = {
+	event = wendish_threat.2
+	default_option = 0
+
+	can_stop = {
+		OR = {
+			NOT = { exists = WEE }
+			WEE = {
+				is_subject = yes
+				overlord = {
+					is_part_of_hre = yes
+				}
+			}
+		}
+	}
+
+	0 = { # Give them support
+		factor = 1
+		modifier = {
+			factor = 2
+			ai_attitude = {
+				who = WEE
+				attitude = attitude_rivalry
+			}
+			ai_attitude = {
+				who = WEE
+				attitude = attitude_hostile
+			}
+			ai_attitude = {
+				who = WEE
+				attitude = attitude_threatened
+			}
+			ai_attitude = {
+				who = WEE
+				attitude = attitude_outraged
+			}
+			ai_attitude = {
+				who = WEE
+				attitude = attitude_neutral
+			}
+		}
+		modifier = {
+			factor = 4
+			WEE = {
+				any_owned_province = {
+					is_part_of_hre = yes
+				}
+				any_subject_country = {
+					any_owned_province = {
+						is_part_of_hre = yes
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 1000
+			WEE = {
+				any_claimed_province = {
+					owned_by = ROOT
+				}
+			}
+		}
+		modifier = {
+			factor = 1000
+			OR = {
+				has_idea_group = religious_ideas
+				AND = {
+					NOT = { has_idea_group = humanist_ideas }
+					any_neighbor_province = {
+						OR = {
+							religion = slavic_pagan
+							religion = reformed_slavic
+						}
+					}
+				}
+			}
+		}
+	}
+
+	1 = { # Do not worry about it
+		factor = 1
+		modifier = {
+			factor = 3
+			OR = {
+				ai_attitude = {
+					who = WEE
+					attitude = attitude_friendly
+				}
+				ai_attitude = {
+					who = WEE
+					attitude = attitude_allied
+				}
+				has_idea_group = humanist_ideas
+			}
+		}
+		modifier = {
+			factor = 10000
+			OR = {
+				AND = {	
+					is_subject_of = WEE
+					ai_attitude = {
+						who = WEE
+						attitude = attitude_loyal
+					}
+				}
+				alliance_with = WEE
+			}
+		}
+	}
+}
+
+incident_fate_of_francia = {
+	event = fate_of_francia.2
+	default_option = 0
+
+	can_stop = {
+		OR = {
+			# Already left of their own volition
+			FRC = { is_part_of_hre = no }
+			# If they become emperor again
+			FRC = { is_emperor = yes }
+			# Francia does not exist anymore
+			NOT = { exists = FRC }
+			# Francia is a subject of an Imperial Prince
+			AND = {
+				FRC = {
+					is_subject = yes
+					overlord = {
+						is_part_of_hre = yes
+					}
+				}
+			}
+		}
+	}
+
+	0 = { # Kick them out
+		factor = 1
+		modifier = {
+			factor = 1.2
+			OR = {
+				culture_group = west_germanic
+				culture_group = germanic
+				culture_group = latin
+			}
+			ai_attitude = {
+				who = FRC
+				attitude = attitude_neutral
+			}
+		}
+		modifier = {
+			factor = 3
+			OR = {
+				ai_attitude = {
+					who = FRC
+					attitude = attitude_rivalry
+				}
+				ai_attitude = {
+					who = FRC
+					attitude = attitude_hostile
+				}
+				ai_attitude = {
+					who = FRC
+					attitude = attitude_threatened
+				}
+				ai_attitude = {
+					who = FRC
+					attitude = attitude_outraged
+				}
+				ai_attitude = {
+					who = FRC
+					attitude = attitude_rebellious
+				}
+			}
+		}
+	}
+	1 = { # Keep them in
+		factor = 1
+		modifier = {
+			factor = 1.6
+			NOT = {
+				OR = {
+					culture_group = west_germanic
+					culture_group = germanic
+					culture_group = latin
+				}
+			}
+			ai_attitude = {
+				who = FRC
+				attitude = attitude_neutral
+			}
+		}
+		modifier = {
+			factor = 3
+			OR = {
+				ai_attitude = {
+					who = FRC
+					attitude = attitude_friendly
+				}
+				ai_attitude = {
+					who = FRC
+					attitude = attitude_allied
+				}
+				ai_attitude = {
+					who = FRC
+					attitude = attitude_loyal
+				}
+			}
+		}
+	}
+}
+
+incident_hussite_dissension = {
+	event = hussite_dissension.1
+	default_option = 1
+	
+	can_stop = {
+		always = no
+	}
+	
+	0 = { # stay protestant
+		factor = 1
+		modifier = {
+			factor = 50
+			religion = protestant
+		}
+	}
+	
+	1 = { # religion treaty
+		factor = 1
+		modifier = {
+			factor = 50
+			OR = {
+				religion = catholic
+				religion = reformed
+				has_idea_group = humanist_ideas
+			}
+		}
+	}
+	
+	2 = { # change hre religion to hussite
+		factor = 1
+		modifier = {
+			factor = 100
+			religion = hussite
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				religion = hussite
+			}
+		}
+	}
+}
+
+incident_anglican_demands = {
+	event = anglican_demands.1
+	default_option = 1
+	
+	can_stop = {
+		always = no
+	}
+	
+	0 = { # stay protestant
+		factor = 1
+		modifier = {
+			factor = 50
+			religion = protestant
+		}
+	}
+	
+	1 = { # religion treaty
+		factor = 1
+		modifier = {
+			factor = 50
+			OR = {
+				religion = catholic
+				religion = reformed
+				has_idea_group = humanist_ideas
+			}
+		}
+	}
+	
+	2 = { # change hre religion to anglican
+		factor = 1
+		modifier = {
+			factor = 100
+			religion = anglican
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				religion = anglican
+			}
+		}
+	}
+}
+
+incident_gaelic_opposition = {
+	event = gaelic_opposition.1
+	default_option = 1
+	
+	can_stop = {
+		always = no
+	}
+	
+	0 = { # stay protestant
+		factor = 1
+		modifier = {
+			factor = 50
+			religion = protestant
+		}
+	}
+	
+	1 = { # religion treaty
+		factor = 1
+		modifier = {
+			factor = 50
+			OR = {
+				religion = catholic
+				religion = reformed
+				has_idea_group = humanist_ideas
+			}
+		}
+	}
+	
+	2 = { # change hre religion to gaelic
+		factor = 1
+		modifier = {
+			factor = 100
+			religion = gaelic_ab
+		}
+		modifier = {
+			factor = 0
+			NOT = {
+				religion = gaelic_ab
+			}
+		}
+	}
+}

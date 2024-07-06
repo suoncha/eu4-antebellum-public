@@ -1,0 +1,675 @@
+namespace = ab_tuscany
+normal_or_historical_nations = yes
+
+country_event = {
+	id = ab_tuscany.1
+	title = ab_tuscany.1.t
+	desc = ab_tuscany.1.d
+	picture = KING_ASSASSINATION_eventPicture
+
+	trigger = {
+		tag = LAN
+	}
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = dont_elect_now_ok
+		}
+	}
+
+	major_trigger = {
+		capital_scope = {
+			region = italy_region
+		}
+	}
+
+	option = {
+		name = ab_tuscany.1.a #The Trade guilds vote to oust the Medici. The Cerchi have taken over!
+		add_republican_tradition = -25
+		kill_ruler = yes
+		define_ruler = {
+			name = "Lucas Cerchi"
+			adm = 5
+			dip = 3
+			mil = 2
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = particularist_rebels
+				size = 1
+			}
+		}
+		set_country_flag = ab_tuscany_government_guilds
+		clr_country_flag = dont_elect_now_ok
+		swap_non_generic_missions = yes
+	}
+	
+
+	option = { #The Military, led by General Frederico Bianchi, take control.
+		name = ab_tuscany.1.b
+		add_republican_tradition = -25
+		kill_ruler = yes
+		define_ruler = {
+			name = "Frederico Bianchi"
+			adm = 3
+			dip = 2
+			mil = 5
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = particularist_rebels
+				size = 1
+			}
+		}
+		set_country_flag = ab_tuscany_government_military
+		add_government_reform = ab_florentine_military_reform
+		clr_country_flag = dont_elect_now_ok
+		swap_non_generic_missions = yes
+	}
+
+	option = {
+		name = ab_tuscany.1.c #A Peasant Rabble, led by a young Ronaldo di Ferenze, overthrows the guilds!
+		add_republican_tradition = -25
+		kill_ruler = yes
+		define_ruler = {
+			name = "Ronaldo di Ferenze"
+			adm = 2
+			dip = 5
+			mil = 3
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = particularist_rebels
+				size = 2
+			}
+		}
+		set_country_flag = ab_tuscany_government_peasants
+		add_government_reform = ab_florentine_peasants_reform
+		clr_country_flag = dont_elect_now_ok
+		swap_non_generic_missions = yes
+	}
+
+	option = {
+		name = ab_tuscany.1.e #The House of Medici will stand tall!
+		add_stability = -1
+		add_republican_tradition = -25
+		add_ruler_modifier = {
+			name = tus_defender_of_the_medici
+			duration = -1
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = particularist_rebels
+				size = 2
+			}
+		}
+		set_country_flag = ab_tuscany_government_guilds_medici
+		clr_country_flag = dont_elect_now_ok
+		swap_non_generic_missions = yes
+	}
+}
+
+country_event = {
+	id = ab_tuscany.2
+	title = ab_tuscany.2.t
+	desc = ab_tuscany.2.d
+	picture = CITY_VIEW_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_tuscany.2.a
+		109 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+			add_building_construction = {
+				building = cathedral
+				speed = 1.5
+				cost = 0
+			}
+		}
+	}
+}
+
+#The Theft of the Mona Lisa
+country_event = {
+	id = ab_tuscany.3
+	title = ab_tuscany.3.t
+	desc = ab_tuscany.3.d
+	picture = ARTWORK_eventPicture
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		FROM = {
+			has_province_modifier = tus_mona_lisa
+			NOT = { owned_by = ROOT }
+			NOT = {
+				owner = {
+					OR = {
+						is_in_war = {
+							defenders = PREV
+							defenders = ROOT
+						}
+						is_in_war = {
+							attackers = PREV
+							attackers = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	immediate = {
+		hidden_effect = {
+			FROM = {
+				save_global_event_target_as = mona_lia_province
+				remove_province_modifier = tus_mona_lisa
+			}
+		}
+	}
+	
+	option = {
+		name = ab_tuscany.3.a
+		add_prestige = 10
+		hidden_effect = {
+			FROM = {
+				owner = {
+					country_event = {
+						id = ab_tuscany.4
+					}
+				}
+			}
+		}
+		custom_tooltip = AB_STOLEN_MONA_LISA
+		capital_scope = {
+			add_permanent_province_modifier = {
+				name = tus_mona_lisa
+				duration = -1
+			}
+		}
+	}
+}
+
+#The Theft of the Mona Lisa
+country_event = {
+	id = ab_tuscany.4
+	title = ab_tuscany.4.t
+	desc = ab_tuscany.4.d
+	picture = ARTWORK_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_tuscany.4.a
+		custom_tooltip = AB_STOLEN_MONA_LISA
+		add_prestige = -5
+	}
+	
+	after = {
+		clear_global_event_target = mona_lia_province
+	}
+}
+
+#Agitating from the Peasants
+country_event = {
+	id = ab_tuscany.5
+	title = ab_tuscany.5.t
+	desc = ab_tuscany.5.d
+	picture = MARCHING_PEASANTS_eventPicture
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_tuscany.5.a
+		add_stability = -1
+		random_owned_province = {
+			spawn_rebels = {
+				type = anti_tax_rebels
+				size = 3
+				win = yes
+			}
+		}
+		random_owned_province = {
+			spawn_rebels = {
+				type = anti_tax_rebels
+				size = 3
+				win = yes
+			}
+		}
+	}
+}
+
+#Medici Trolling
+country_event = {
+	id = ab_tuscany.6
+	title = ab_tuscany.6.t
+	desc = ab_tuscany.6.d
+	picture = BAD_POPE_eventPicture
+
+	is_triggered_only = yes
+
+	major = yes
+
+	option = {
+		name = ab_tuscany.6.a
+		add_dip_power = -100
+		transfer_papal_controller = ROOT
+		PAP = {
+			add_opinion = {
+				who = ROOT
+				modifier = opinion_loyal_pope
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = TUS_CATHOLIC_COUNTRY_DECREASE_OPINION
+		hidden_effect = {
+			every_country = {
+				limit = {
+					NOT = { tag = PAP }
+					religion = catholic
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_stole_papacy
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_tuscany.6.b
+		add_dip_power = 100
+		PAP = {
+			add_opinion = {
+				who = ROOT
+				modifier = opinion_loyal_pope
+			}
+		}
+	}
+}
+
+#The Fate of Rome
+country_event = {
+	id = ab_tuscany.7
+	title = ab_tuscany.7.t
+	desc = ab_tuscany.7.d
+	picture = BAD_POPE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_tuscany.7.a
+		118 = {
+			owner = {
+				remove_core = PREV
+				add_liberty_desire = 33
+			}
+			cede_province = ROOT
+			add_core = ROOT
+			custom_tooltip = AB_EMPTY
+			add_province_modifier = {
+				name = tus_holy_city
+				duration = -1
+			}
+		}
+		set_capital = 118
+	}
+
+	option = {
+		name = ab_tuscany.7.b
+		add_country_modifier = {
+			name = tus_holy_protector
+			duration = -1
+		}
+	}
+}
+
+country_event = {
+	id = ab_tuscany.8
+	title = ab_tuscany.8.t
+	desc = ab_tuscany.8.d
+	picture = SIEGE_PRAGUE_CASTLE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_tuscany.8.a
+		custom_tooltip = TUS_RELEASE_ALL_OF_NEAPOLITANS
+		trigger = {
+			OR = {
+				NOT = { exists = NAP }
+				NAP = {
+					is_subject_of = ROOT
+				}
+			}
+			OR = {
+				NOT = { exists = BNV }
+				BNV = {
+					is_subject_of = ROOT
+				}
+			}
+			OR = {
+				NOT = { exists = API }
+				API = {
+					is_subject_of = ROOT
+				}
+			}
+			OR = {
+				NOT = { exists = CAP }
+				CAP = {
+					is_subject_of = ROOT
+				}
+			}
+			OR = {
+				NOT = { exists = SLR }
+				SLR = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					OR = {
+						NOT = { exists = NAP }
+						NAP = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				release = NAP
+				vassalize = NAP	
+				4734 = {
+					add_core = NAP
+					cede_province = NAP
+				}
+				121 = {
+					add_core = NAP
+					cede_province = NAP
+				}
+				NAP = {
+					change_country_color = {
+						country = ROOT
+					}
+					set_country_flag = is_sister_republic
+					change_government = republic
+					add_government_reform = sister_republic_reform
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = { exists = BNV }
+						BNV = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				release = BNV
+				vassalize = BNV	
+				4733 = {
+					add_core = BNV
+					cede_province = BNV
+				}
+				2985 = {
+					add_core = BNV
+					cede_province = BNV
+				}
+				BNV = {
+					change_country_color = {
+						country = ROOT
+					}
+					set_country_flag = is_sister_republic
+					change_government = republic
+					add_government_reform = sister_republic_reform
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = { exists = API }
+						API = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				release = API
+				vassalize = API	
+				1933 = {
+					add_core = API
+					cede_province = API
+				}
+				122 = {
+					add_core = API
+					cede_province = API
+				}
+				API = {
+					change_country_color = {
+						country = ROOT
+					}
+					set_country_flag = is_sister_republic
+					change_government = republic
+					add_government_reform = sister_republic_reform
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = { exists = CAP }
+						CAP = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				release = CAP
+				vassalize = CAP	
+				4975 = {
+					add_core = CAP
+					cede_province = CAP
+				}
+				CAP = {
+					change_country_color = {
+						country = ROOT
+					}
+					set_country_flag = is_sister_republic
+					change_government = republic
+					add_government_reform = sister_republic_reform
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						NOT = { exists = SLR }
+						SLR = {
+							is_subject_of = ROOT
+						}
+					}
+				}
+				release = SLR
+				vassalize = SLR	
+				calabria_area = {
+					add_core = SLR
+					cede_province = SLR
+				}
+				2983 = {
+					add_core = SLR
+					cede_province = SLR
+				}
+				SLR = {
+					change_country_color = {
+						country = ROOT
+					}
+					set_country_flag = is_sister_republic
+					change_government = republic
+					add_government_reform = sister_republic_reform
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_tuscany.8.b
+		custom_tooltip = TUS_RELEASE_ONLY_NAPLES
+		trigger = {
+			OR = {
+				NOT = { exists = NAP }
+				NAP = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+		hidden_effect = {
+			release = NAP
+			vassalize = NAP	
+			every_owned_province = {
+				limit = {
+					culture = neapolitan
+				}
+				add_core = NAP
+				cede_province = NAP
+			}
+			NAP = {
+				change_country_color = {
+					country = ROOT
+				}
+				set_country_flag = is_sister_republic
+				change_government = republic
+				add_government_reform = sister_republic_reform
+			}
+		}
+	}
+
+	option = {
+		name = ab_tuscany.8.c
+		custom_tooltip = TUS_EVERY_NEAPOLITAN_PROVINCE
+		tooltip = {
+			add_province_modifier = {
+				name = tus_neapolitan_gain
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					culture = neapolitan
+				}
+				add_province_modifier = {
+					name = tus_neapolitan_gain
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+country_event = {
+	id = ab_tuscany.9
+	title = ab_tuscany.9.t
+	desc = ab_tuscany.9.d
+	picture = BYZ_ADVISOR_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_tuscany.9.a
+		trigger = {
+			NOT = { exists = TRC }
+			SIC = {
+				is_subject_of = ROOT
+			}
+		}
+		SIC = {
+			change_tag = TRC
+			change_primary_culture = trinacrian
+			change_religion = ROOT
+			# Restore the sister republic color
+			hidden_effect = {
+				set_country_flag = has_eyalet_color # Enables decision to restore color
+				set_country_flag = has_overriden_color_flag
+				change_country_color = {
+					country = overlord
+				}
+			}
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			swap_non_generic_missions = yes
+			set_country_flag = formed_trinacria_flag
+		}
+		add_country_modifier = {
+			name = tus_defeat_of_the_heathen
+			duration = 3650
+		}
+		125 = {
+			add_great_project_tier = {
+				type = palermo
+				tier = 2
+			}
+		}
+	}
+
+	option = {
+		name = ab_tuscany.9.b
+		trigger = {
+			NOT = { exists = TRC }
+			NOT = {
+				SIC = {
+					is_subject_of = ROOT
+				}
+			}
+		}
+		western_sicily_area = {
+			add_core = TRC
+		}
+		sicily_area = {
+			add_core = TRC
+		}
+		release = TRC
+		vassalize = TRC
+		TRC = {
+			change_country_color = {
+				country = ROOT
+			}
+			set_country_flag = is_sister_republic
+			change_government = republic
+			add_government_reform = sister_republic_reform
+		}
+		add_country_modifier = {
+			name = tus_defeat_of_the_heathen
+			duration = 3650
+		}
+		125 = {
+			add_great_project_tier = {
+				type = palermo
+				tier = 2
+			}
+		}
+	}
+	
+	option = {
+		name = ab_tuscany.9.c
+		add_country_modifier = {
+			name = tus_defeat_of_the_heathen
+			duration = 3650
+		}
+		125 = {
+			add_great_project_tier = {
+				type = palermo
+				tier = 2
+			}
+		}
+	}
+}

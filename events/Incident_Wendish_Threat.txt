@@ -1,0 +1,84 @@
+namespace = wendish_threat
+
+country_event = {
+	id = wendish_threat.1
+	title = wendish_threat.1.t
+	desc = wendish_threat.1.d
+	picture = HRE_eventPicture
+
+	fire_only_once = yes
+	major = yes
+
+	trigger = {
+		is_neighbor_of = WEE
+		is_part_of_hre = yes
+		NOT = { active_imperial_incident = any }
+		WEE = {
+			OR = {
+				is_subject = no
+				AND = {
+					is_subject = yes
+					overlord = {
+						NOT = { is_part_of_hre = yes }
+					}
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 6
+	}
+
+	option = { # Invoke the Imperial Diet
+		name = wendish_threat.1.a
+		set_imperial_incident = incident_wendish_threat
+	}
+}
+
+country_event = {
+	id = wendish_threat.2
+	title = wendish_threat.2.t
+	desc = wendish_threat.2.d
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+	fire_only_once = yes
+	major = yes
+
+	option = { # Give them support
+		name = wendish_threat.2.a
+
+		custom_tooltip = ALL_NEIGHBORS_OF_WENDIA_WILL_GET
+		tooltip = {
+			# Some cool bonuses (TBD)
+		}
+		hidden_effect = {
+			WEE = {
+				every_neighbor_country = {
+					limit = { is_part_of_hre = yes }
+				}
+				# Cool bonuses go here (TBD)
+				# opinion bonus for addressing the Wendish Threat
+				add_opinion = {
+					who = emperor
+					modifier = opinion_addressed_wendish_threat
+				}
+			}
+		}
+	}
+
+	option = { # Do not give them support
+		name = wendish_threat.2.b
+		every_country = {
+			limit = {
+				is_neighbor_of = WEE
+			}
+			# opinion malus for not addressing the Wendish Threat
+			add_opinion = {
+				who = emperor
+				modifier = opinion_did_NOT_address_wendish_threat
+			}
+		}
+	}
+}

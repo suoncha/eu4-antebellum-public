@@ -52,6 +52,7 @@ country_event = {
 	option = { # Convert to Hussite
 		ai_chance = { factor = 90 }
 		name = flavor_boh.1.a
+		set_country_flag = boh_has_picked_hussite_missions
 		set_country_flag = hussite_regency_mission_flag
 		if = {
 			limit = {
@@ -96,54 +97,9 @@ country_event = {
 		# }}}
 	}
 	
-	option = { # Hussite King, Catholic nation - tolerance option
-		ai_chance = { factor = 10 }
-		set_country_flag = hussite_regency_mission_flag
-		name = flavor_boh.1.c
-		add_papal_influence = -100
-		if = {
-			limit = {
-				has_regency = no
-			}
-			tooltip = {
-				kill_ruler = yes
-			}
-		}
-		if = {
-			limit = {
-				has_heir = yes
-			}
-			remove_heir = {}
-		}
-		define_ruler = {
-			name = "Jirí"
-			dynasty = "z Podebrad"
-			adm = 5
-			dip = 4
-			mil = 3
-			religion = hussite
-		}
-		if = {
-			limit = {
-				has_states_general_mechanic = yes
-			}
-			change_statists_vs_orangists = 1
-		}
-		# AB {{{
-		# We have less catholic countries so lets increase from original 0.005
-		add_reform_desire = 0.01
-		# }}}
-		add_ruler_modifier = {
-			name = "boh_hussite_king"
-			duration = -1
-		}
-		PAP = {
-			country_event = { id = flavor_boh.9 }
-		}
-	}
-	
 	option = { # Fight them
 		name = flavor_boh.1.b
+		set_country_flag = boh_has_picked_catholic_missions
 		set_country_flag = hussite_regency_mission_flag
 		266 = {
 			spawn_rebels = {
@@ -167,7 +123,7 @@ country_event = {
 			add_papal_influence = 10
 			PAP = {
 				add_opinion = {
-					who = root
+					who = ROOT
 					modifier = boh_papal_reconciled
 				}
 			}
@@ -265,7 +221,7 @@ country_event = {
 			add_papal_influence = 5
 			PAP = {
 				add_opinion = {
-					who = root
+					who = ROOT
 					modifier = boh_papal_reconciled
 				}
 			}
@@ -561,25 +517,39 @@ country_event = {
 		}
 		add_prestige = 10
 		add_church_power = 10
-		# AB [[[
-		if = {
-			limit = {
-				has_country_modifier = boh_isolation
-			}
-			remove_country_modifier = boh_isolation
-		}
-		# ]]]
 	}
 	
 	option = { # Switch to Protestant
 		ai_chance = {
 			factor = 80
+			# AB {{{
+			# Do not switch if we have a large
+			# enough hussite following
+			modifier = {
+				factor = 0.01
+				calc_true_if = {
+					amount = 8
+					all_country = {
+						religion = hussite
+					}
+				}	
+			}
+			# }}}
 		}
 		trigger = {
 			religion = hussite
 		}
 		name = "flavor_boh.7.b"
+		# Put this flag **before** changing religion
+		# as the act of changing religion causes the
+		# 'Pick your school' event to pop up, it needs
+		# the global flag to be set before.
+		set_global_flag = hussite_school_spawned
 		change_religion = protestant
+		set_religious_school = {
+			group = christian
+			school = hussite_school
+		}
 		every_owned_province = {
 			limit = {
 				religion = hussite
@@ -650,6 +620,11 @@ country_event = {
 		name = flavor_boh.8.a
 		ai_chance = { factor = 90 }	
 		change_religion = protestant
+		set_global_flag = hussite_school_spawned
+		set_religious_school = {
+			group = christian
+			school = hussite_school
+		}
 		if = {
 			limit = {
 				emperor = { religion = catholic }
@@ -661,7 +636,7 @@ country_event = {
 					months = 1200
 				}
 				add_opinion = {
-					who = root
+					who = ROOT
 					modifier = boh_protestant_king
 				}										
 			}
@@ -679,7 +654,7 @@ country_event = {
 				months = 1200
 			}	
 			add_opinion = {
-				who = root
+				who = ROOT
 				modifier = boh_protestant_king
 			}							
 		}
@@ -715,7 +690,7 @@ country_event = {
 		FROM = {
 			country_event = { id = flavor_boh.10 }
 			add_opinion = {
-				who = root
+				who = ROOT
 				modifier = boh_heretic_hussite
 			}
 		}
@@ -731,7 +706,7 @@ country_event = {
 		FROM = {
 			country_event = { id = flavor_boh.11 }
 			add_opinion = {
-				who = root
+				who = ROOT
 				modifier = boh_papal_reconciled
 			}
 		}
@@ -892,3 +867,81 @@ country_event = {
 		custom_tooltip = BOH_isolation
 		}
 	}
+	
+country_event = {
+	id = flavor_boh.15
+	title = flavor_boh.15.t
+	desc = flavor_boh.15.d
+	picture = RELIGION_eventPicture
+	
+	mean_time_to_happen = {
+		months = 2
+	}
+	
+	fire_only_once = yes
+	
+	trigger = {
+		tag = BOH 
+		religion = hussite
+		is_religion_enabled = protestant
+	}
+	
+	option = {
+		name = flavor_boh.15.a
+		remove_country_modifier = boh_isolation
+	}
+}
+
+#The Aftermath of the Hussite Wars
+country_event = {
+	id = flavor_boh.22
+	title = flavor_boh.22.t
+	desc = flavor_boh.22.d
+	picture = {	
+		trigger = {
+			has_dlc = "Emperor"
+		}
+		picture = HUSSITE_eventPicture
+	}
+	picture = {	
+		trigger = {
+			NOT = { has_dlc = "Emperor" }
+		}
+		picture = BATTLE_eventPicture
+	}
+	
+	immediate = {
+		hidden_effect = {
+			bohemia_area = {
+				add_devastation = 50
+			}
+			erzgebirge_area = {
+				add_devastation = 20
+			}
+			moravia_area = {
+				add_devastation = 20
+			}
+			if = {
+				limit = {
+					has_dlc = "Winds of Change"
+				}
+				add_country_modifier = {
+					name = boh_hussite_destruction
+					duration = 10950
+				}
+			}
+		}
+	}
+
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_boh.22.a
+		custom_tooltip = boh_starting_event_devastation
+				add_country_modifier = {
+					name = boh_hussite_destruction
+					duration = 10950
+					desc = boh_complete_mission
+				}
+	}
+}

@@ -1,0 +1,70 @@
+country_decisions = {
+	
+	ab_center_counter_reformation = {
+		major = yes
+		ai_will_do = {
+			factor = 100
+		}
+		potential = {
+			religion = catholic
+			has_country_modifier = counter_reformation
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_at_war = no
+			papal_influence = 50
+			capital_scope = {
+				religion = catholic
+			}
+			capital_scope = {
+				is_reformation_center = no
+			}
+			current_age = age_of_reformation
+			#custom_trigger_tooltip = {
+			#	tooltip = AB_NOT_2_CENTERS
+			#	NOT = {
+			#		calc_true_if = {
+			#			any_province = {
+			#				is_reformation_center = yes
+			#				religion = catholic
+			#			}
+			#			amount = 2
+			#		}
+			#	}
+			#}
+			custom_trigger_tooltip = {
+				tooltip = AB_HAS_SPAWNED_MORE_THAN_2_COUNTER_REFORMATION_CENTRES
+				REB = {
+					NOT = {
+						check_variable = {
+							which = ab_counter_reformation_center_spawned_count_var
+							value = 2
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			add_papal_influence = -50
+			custom_tooltip = AB_COUNTER_REFORMATION
+			hidden_effect = {
+				capital_scope = {
+					add_reform_center = catholic
+				}
+				capital_scope = {
+					province_event = {
+						id = ab_lithuania.11
+						days = 9125
+					}
+				}
+				REB = {
+					change_variable = {
+						which = ab_counter_reformation_center_spawned_count_var
+						value = 1
+					}
+				}
+			}
+		}
+	}
+	
+}

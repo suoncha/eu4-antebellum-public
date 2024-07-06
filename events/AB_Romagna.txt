@@ -1,0 +1,263 @@
+namespace = ab_romagna
+normal_or_historical_nations = yes
+
+#Romagna Coalition - Alliance of Parma & Ravenna against Romagna
+country_event = {
+	id = ab_romagna.0
+	title = ab_romagna.0.t
+	desc = ab_romagna.0.d
+	picture = ITALIAN_wars_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	after = {
+		set_country_flag = had_romagna_coalition
+	}
+	
+	option = {
+		name = ab_romagna.0.a
+		trigger = {
+			ai = no
+		}
+		if = {
+			limit = {
+				tag = PAR
+			}
+			hidden_effect = {
+				remove_rival = RVN
+				add_opinion = {
+					who = RVN
+					modifier = opinion_rmg_romagna_coalition
+				}
+				RVN = {
+					remove_rival = ROOT
+					add_historical_friend = ROOT
+				}
+			}
+			create_alliance = RVN
+			add_historical_friend = RVN
+			RVN = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_rmg_romagna_coalition
+				}
+			}
+		}
+		else = {
+			hidden_effect = {
+				remove_rival = PAR
+				add_opinion = {
+					who = PAR
+					modifier = opinion_rmg_romagna_coalition
+				}
+				PAR = {
+					remove_rival = ROOT
+					add_historical_friend = ROOT
+				}
+			}
+			create_alliance = PAR
+			add_historical_friend = PAR
+			PAR = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_rmg_romagna_coalition
+				}
+			}
+		}
+	}
+
+	# AI only, no need to localize this
+	option = {
+		name = ab_romagna.0.b
+		trigger = {
+			ai = yes
+		}
+		if = {
+			limit = {
+				tag = PAR
+			}
+			RVN = {
+				country_event = {
+					id = ab_romagna.1
+				}
+			}
+		}
+		else = {
+			PAR = {
+				country_event = {
+					id = ab_romagna.1
+				}
+			}
+		}
+	}
+}
+
+#Romagna Coalition - AI Sending the request
+country_event = {
+	id = ab_romagna.1
+	title = ab_romagna.1.t
+	desc = ab_romagna.1.d
+	picture = ITALIAN_wars_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+
+	after = {
+		set_country_flag = had_romagna_coalition
+	}
+	
+	option = {
+		name = ab_romagna.1.a
+		if = {
+			limit = {
+				tag = PAR
+			}
+			hidden_effect = {
+				remove_rival = RVN
+				add_opinion = {
+					who = RVN
+					modifier = opinion_rmg_romagna_coalition
+				}
+				RVN = {
+					remove_rival = ROOT
+					add_historical_friend = ROOT
+				}
+			}
+			create_alliance = RVN
+			add_historical_friend = RVN
+			RVN = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_rmg_romagna_coalition
+				}
+			}
+		}
+		else = {
+			hidden_effect = {
+				remove_rival = PAR
+				add_opinion = {
+					who = PAR
+					modifier = opinion_rmg_romagna_coalition
+				}
+				PAR = {
+					remove_rival = ROOT
+					add_historical_friend = ROOT
+				}
+			}
+			create_alliance = PAR
+			add_historical_friend = PAR
+			PAR = {
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_rmg_romagna_coalition
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_romagna.1.b
+		add_prestige = 10
+	}
+}
+
+#Timed Mission Unlock - Parma
+country_event = {
+	id = ab_romagna.4
+	title = ab_romagna.4.t
+	desc = ab_romagna.4.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_romagna.4.a
+		set_country_flag = par_mission_unlocked
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Timed Mission Fail - Parma
+country_event = {
+	id = ab_romagna.5
+	title = ab_romagna.5.t
+	desc = ab_romagna.5.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		is_year = 1500
+		OR = {
+			tag = PAR
+			was_tag = PAR
+		}
+		has_country_flag = par_mission_unlocked
+		NOT = { mission_completed = rmg_lion_of_parma }
+	}
+	
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = par_mission_unlocked
+			set_country_flag = par_mission_failed
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_romagna.5.a
+	}
+}
+
+#Timed Mission Unlock - Ravenna
+country_event = {
+	id = ab_romagna.6
+	title = ab_romagna.6.t
+	desc = ab_romagna.6.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_romagna.6.a
+		set_country_flag = rvn_mission_unlocked
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Timed Mission Fail - Ravenna
+country_event = {
+	id = ab_romagna.7
+	title = ab_romagna.7.t
+	desc = ab_romagna.7.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		is_year = 1500
+		OR = {
+			tag = RVN
+			was_tag = RVN
+		}
+		has_country_flag = rvn_mission_unlocked
+		NOT = { mission_completed = rmg_legacy_of_west_rome }
+	}
+	
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = rvn_mission_unlocked
+			set_country_flag = rvn_mission_failed
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_romagna.7.a
+	}
+}

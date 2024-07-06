@@ -30,6 +30,18 @@ ab_can_confirm_branch = {
 			always = no
 		}
 	}
+	else_if = {
+		limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = BOH_RELIGION
+				batch = $batch$
+			}
+		}
+		custom_trigger_tooltip = {
+			tooltip = AB_BOH_RELIGION_cannot_confirm_tt
+			always = no
+		}
+	}
 	else = {
 		hidden_trigger = { always = yes }
 	}
@@ -52,6 +64,13 @@ ab_has_branching_missions = {
 		# 100k special
 		## Albania
 		has_mission = alb_faith
+		# Blood and Iron
+		## Bohemia
+		has_mission = boh_hussites_return # Catholic/Hussite
+		has_mission = boh_place # Slavic/Germanised
+		## Francia
+		has_mission = frc_normandy # Sicilian/English
+		has_mission = frc_western_realm # Frankish/HRE
 	}
 	# ]]]
 }
@@ -87,6 +106,12 @@ ab_can_preview_missions = {
 			ab_can_preview_mission_of_key = { key = AB_SCO_ALBA_GAELDOM_SCOTLAND }
 			## Albania
 			ab_can_preview_mission_of_key = { key = AB_ALB }
+			## Bohemia
+			ab_can_preview_mission_of_key = { key = BOH_RELIGION }
+			ab_can_preview_mission_of_key = { key = BOH_EXPANSION }
+			## Francia
+			ab_can_preview_mission_of_key = { key = FRC_HRE_FRANKISH }
+			ab_can_preview_mission_of_key = { key = FRC_SICILIAN_ENGLISH }
 			# ]]]
 		}
 	}
@@ -189,6 +214,46 @@ ab_has_selected_a_branch = {
 					key = AB_ALB
 					batch = $batch$
 				}
+			}
+			AND = {
+				OR = {
+					has_country_flag = boh_catholic_missions
+					has_country_flag = boh_hussite_missions
+				}
+				ab_can_preview_mission_of_key_and_batch = {
+					key = BOH_RELIGION
+					batch = $batch$
+				}
+			}
+			AND = {
+				OR = {
+					has_country_flag = bohemia_slavic_missions
+					has_country_flag = bohemia_germanic_missions
+				}
+				ab_can_preview_mission_of_key_and_batch = {
+					key = BOH_EXPANSION
+					batch = $batch$
+				}
+			}
+			AND = {
+				OR = {
+					has_country_flag = frc_hre_focus
+					has_country_flag = frc_frankish_focus
+				}
+				ab_can_preview_mission_of_key_and_batch = {
+					key = FRC_HRE_FRANKISH
+					batch = $batch$
+					}
+			}
+			AND = {
+				OR = {
+					has_country_flag = frc_english_focus
+					has_country_flag = frc_sicilian_focus
+				}
+				ab_can_preview_mission_of_key_and_batch = {
+					key = FRC_SICILIAN_ENGLISH
+					batch = $batch$
+					}
 			}
 			# ]]]
 		}
@@ -296,6 +361,34 @@ ab_currently_selected_branch_1 = {
 			}
 			has_country_flag = alb_illyrian_path
 		}
+		AND = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = BOH_RELIGION
+				batch = $batch$
+			}
+			has_country_flag = boh_catholic_missions
+		}
+		AND = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = BOH_EXPANSION
+				batch = $batch$
+			}
+			has_country_flag = bohemia_slavic_missions
+		}
+		AND = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = FRC_HRE_FRANKISH
+				batch = $batch$
+			}
+			has_country_flag = frc_hre_focus
+		}
+		AND = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = FRC_SICILIAN_ENGLISH
+				batch = $batch$
+			}
+			has_country_flag = frc_sicilian_focus
+		}
 		# ]]]
 	}
 }
@@ -350,6 +443,34 @@ ab_currently_selected_branch_2 = {
 				batch = $batch$
 			}
 			has_country_flag = alb_latin_path
+		}
+		AND = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = BOH_RELIGION
+				batch = $batch$
+			}
+			has_country_flag = boh_hussite_missions
+		}
+		AND = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = BOH_EXPANSION
+				batch = $batch$
+			}
+			has_country_flag = bohemia_germanic_missions
+		}
+		AND = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = FRC_HRE_FRANKISH
+				batch = $batch$
+			}
+			has_country_flag = frc_frankish_focus
+		}
+		AND = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = FRC_SICILIAN_ENGLISH
+				batch = $batch$
+			}
+			has_country_flag = frc_english_focus
 		}
 		# ]]]
 	}

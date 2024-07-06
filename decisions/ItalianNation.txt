@@ -4,17 +4,18 @@ country_decisions = {
 		major = yes
 		potential = {
 			normal_or_historical_nations = yes
-			
 			NOT = { has_country_flag = formed_italy_flag }
 			OR = {
 				ai = no
 				is_playing_custom_nation = no
 			}
-			NOT = { exists = ITA }
 			NOT = { tag = PAP }
 			NOT = { tag = HLR }
 			NOT = { tag = SIC }
 			NOT = { tag = ITL }
+			NOT = { exists = ITA }
+			NOT = { exists = ITR }
+			NOT = { exists = ITT }
 			culture_group = latin
 			OR = {
 				ai = no
@@ -36,12 +37,12 @@ country_decisions = {
 			OR = {
 				AND = {
 					region = italy_region
-					root = {
+					ROOT = {
 						NOT = {
 							num_of_owned_provinces_with = {
 								value = 20
 								region = italy_region
-								is_core = root
+								is_core = ROOT
 							}
 						}
 						owns_core_province = 101	
@@ -65,22 +66,41 @@ country_decisions = {
 			}
 		}
 		allow = {
-			adm_tech = 10
 			is_free_or_tributary_trigger = yes
 			is_at_war = no
-			owns_core_province = 101	# Genoa
-			owns_core_province = 104	# Milan
-			owns_core_province = 116	# Firenze
-			owns_core_province = 112
-			owns_core_province = 103
-			owns_core_province = 113
-			num_of_owned_provinces_with = {
-				value = 20
-				region = italy_region
-				is_core = root
+			if = {
+				limit = {
+					NOT = {
+						mission_completed = tus_iron_crown_lombardy
+					}
+				}
+				owns_core_province = 101	# Genoa
+				owns_core_province = 104	# Milan
+				owns_core_province = 116	# Firenze
+				owns_core_province = 112
+				owns_core_province = 103
+				owns_core_province = 113
+				num_of_owned_provinces_with = {
+					value = 20
+					region = italy_region
+					is_core = root
+				}
+			}
+			else = {
+				101 = { country_or_non_sovereign_subject_holds = ROOT } #Genoa
+				104 = { country_or_non_sovereign_subject_holds = ROOT } #Genoa
+				116 = { country_or_non_sovereign_subject_holds = ROOT } #Genoa
+				112 = { country_or_non_sovereign_subject_holds = ROOT } #Genoa
+				103 = { country_or_non_sovereign_subject_holds = ROOT } #Genoa
+				113 = { country_or_non_sovereign_subject_holds = ROOT } #Genoa
+				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with  = {
+					value = 20
+					region = italy_region
+				}
 			}
 		}
 		effect = {
+			add_prestige = 25
 			if = {
 				limit = {
 					is_part_of_hre = yes
@@ -89,7 +109,7 @@ country_decisions = {
 				}
 				emperor = {
 					add_opinion = {
-						who = root
+						who = ROOT
 						modifier = opinion_left_empire
 					}
 				}
@@ -104,19 +124,46 @@ country_decisions = {
 				}
 				set_government_rank = 2
 			}
-			change_tag = ITA
-			italy_region = {
+			if = {
 				limit = {
-					NOT = { owned_by = ROOT }
+					government = monarchy
 				}
-				add_permanent_claim = ITA
+				change_tag = ITA
 			}
-			add_prestige = 25
+			else_if = {
+				limit = {
+					government = theocracy
+				}
+				change_tag = ITT
+			}
+			else_if = {
+				limit = {
+					government = republic
+				}
+				change_tag = ITR
+			}
+			else = {
+				change_tag = ITA
+			}
+			hidden_effect = {
+				every_subject_country = {
+					limit = {
+						has_country_flag = is_sister_republic
+					}
+					change_country_color = {
+						country = ROOT
+					}
+				}
+			}
 			if = {
 				limit = { has_custom_ideas = no }
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
 			swap_non_generic_missions = yes
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
 			set_country_flag = formed_italy_flag
 		}
 		ai_will_do = {
@@ -128,13 +175,15 @@ country_decisions = {
 		major = yes
 		potential = {
 			normal_or_historical_nations = yes
+			tag = PAP
+			NOT = { has_country_flag = is_kingdom_of_god_flag }
 			OR = {
 				ai = no
 				is_playing_custom_nation = no
 			}
 			NOT = { exists = ITA }
-			tag = PAP
-			NOT = { has_country_flag = is_kingdom_of_god_flag }
+			NOT = { exists = ITR }
+			NOT = { exists = ITT }
 			OR = {
 				ai = no
 				AND = {

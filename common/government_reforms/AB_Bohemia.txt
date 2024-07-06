@@ -2,7 +2,10 @@ wenceslas = {
 	icon = "wenceslas"
 	allow_normal_conversion = no
 	potential = {
-		tag = BOH
+		OR = {
+			tag = BOH
+			tag = BCM
+		}
 		NOT = { has_country_flag = bohemia_abolished }
 		is_lesser_in_union = no
 	}
@@ -31,7 +34,14 @@ bohmining = {
 	icon = "bohmining"
 	allow_normal_conversion = yes
 	potential = {
-		tag = BOH
+		OR = {
+			tag = BOH
+			tag = BCM
+			AND = {
+				tag = GER
+				was_tag = BOH
+			}
+		}
 	}
 	modifiers = {
 		production_efficiency = 0.05
@@ -43,13 +53,24 @@ bohmining = {
 }
 
 bohgunner = {
-	icon = "bohgunner"
+	icon = "abwagenburg"
 	allow_normal_conversion = yes
 	potential = {
-		tag = BOH
+		OR = {
+			tag = BOH
+			tag = BCM
+			AND = {
+				tag = GER
+				was_tag = BOH
+			}
+		}
+	}
+	custom_attributes = {
+		gain_025_army_tradition_per_battle_won_in_home_territory = yes
 	}
 	modifiers = {
-		fire_damage = 0.1
+		morale_damage_received = -0.1
+		max_hostile_attrition = 2
 	}
 	ai = {
 		factor = 300
@@ -60,7 +81,14 @@ bohsnem = {
 	icon = "bohsnem"
 	allow_normal_conversion = yes
 	potential = {
-		tag = BOH
+		OR = {
+			tag = BOH
+			tag = BCM
+			AND = {
+				tag = GER
+				was_tag = BOH
+			}
+		}
 	}
 	modifiers = {
 		governing_capacity_modifier = 0.1
@@ -70,12 +98,14 @@ bohsnem = {
 	}
 }
 
-
 bohelection = {
 	icon = "bohelection"
 	allow_normal_conversion = yes
 	potential = {
-		tag = BOH
+		OR = {
+			tag = BOH
+			tag = BCM
+		}
 		has_reform = wenceslas
 		NOT = { has_country_flag = bohemia_abolished }
 	}

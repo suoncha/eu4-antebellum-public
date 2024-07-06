@@ -1,0 +1,47 @@
+southern_vs_northern_french_mechanic = {
+	available = {
+	}
+
+	powers = {
+		southernfrenchness = {
+			gui = southern_vs_northern_french_gov_mech
+			max = 100
+			min = -100
+			base_monthly_growth = 0
+			scaled_modifier = {
+				trigger = {
+					has_government_power = { 
+						mechanic_type = southern_vs_northern_french_mechanic
+						power_type = southernfrenchness
+						value = 0
+					}
+				}
+				modifier = {
+					infantry_power = 0.15
+					artillery_power = 0.1
+					fort_maintenance_modifier = -0.25
+				}
+				start_value = 0
+				end_value = 100	
+			}
+			reverse_scaled_modifier = {
+				trigger = {
+					NOT = {
+						has_government_power = { 
+							mechanic_type = southern_vs_northern_french_mechanic
+							power_type = southernfrenchness
+							value = 0
+						}
+					}
+				}
+				modifier = {
+					cavalry_power = 0.2
+					naval_morale = 0.15
+					global_colonial_growth = 25
+				}
+				start_value = -100
+				end_value = 0
+			}
+		}
+	}
+}

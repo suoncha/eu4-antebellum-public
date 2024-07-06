@@ -1,0 +1,73 @@
+country_decisions = {
+
+	switzerland_nation = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			ab_not_german_regional_tag_trigger = yes
+			NOT = { has_country_flag = formed_switzerland_flag }
+			OR = {
+				ai = no
+				is_playing_custom_nation = no
+			}
+			NOT = { exists = SWI }
+			primary_culture = swiss
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 165
+				province_id = 1870
+				province_id = 1873
+				province_id = 4720
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			is_at_war = no
+			is_free_or_tributary_trigger = yes
+			is_nomad = no			
+			NOT = { exists = SWI }
+			owns_core_province = 165
+			owns_core_province = 1870
+			owns_core_province = 1873
+			owns_core_province = 4720
+		}
+		effect = {
+			change_tag = SWI
+			on_change_tag_effect = yes
+			switzerland_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			romandie_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			add_prestige = 25
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			if = {
+				limit = {
+					NOT = { government = republic }
+				}
+				change_government = republic
+			}
+			add_government_reform = united_cantons_reform
+			set_country_flag = formed_switzerland_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

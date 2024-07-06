@@ -1,7 +1,7 @@
 namespace = ab_lot
 normal_or_historical_nations = yes
 
-
+#Pre-1.9 Imperial Entrance
 country_event = {
 	id = ab_lot.1
 	title = ab_lot.1.t
@@ -31,6 +31,7 @@ country_event = {
 	}
 }
 
+#Return of the Hohenstaufens
 country_event = {
 	id = ab_lot.2
 	title = ab_lot.2.t
@@ -40,13 +41,19 @@ country_event = {
 	fire_only_once = yes
 	
 	trigger = {
-		tag = LOT
+		OR = {
+			tag = LOT
+			was_tag = LOT
+		}
 		has_heir = no
 		has_government_attribute = heir
 		is_free_or_tributary_trigger = yes
 		government = monarchy
 		NOT = { 
 			dynasty = "Hohenstaufen" 
+		}
+		any_country = {
+			dynasty = "Hohenstaufen"
 		}
 	}
 
@@ -67,3 +74,121 @@ country_event = {
 		}
 	}
 }
+
+#The West Has Fallen - Conquest of France
+country_event = {
+	id = ab_lot.3
+	title = ab_lot.3.t
+	desc = ab_lot.3.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+	
+	option = {
+		name = ab_lot.3.a
+		custom_tooltip = LOT_EVOLVING_IDEA_1
+			custom_tooltip = LOT_UNLOCK_PALADINS
+			change_monarch_points_or_power = {
+				points = 1
+				power = mil
+			}
+			add_ruler_modifier = {
+				name = "lot_ascendant"
+				duration = -1
+			}
+		hidden_effect = {
+			add_country_modifier = {
+				name = "ab_unlock_10_paladins"
+				duration = -1
+			}
+			set_country_flag = lot_evolved_ideas
+			if = {
+				limit = {
+					tag = LOT
+				}
+				swap_free_idea_group = yes
+			}
+			else_if = {
+				limit = {
+					OR = {
+						tag = FRK
+						tag = MFC
+					}
+				}
+				add_country_modifier = {
+					name = lot_evolving_modifier
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+#Regnum Teutonicorum - Conquest of Germany
+country_event = {
+	id = ab_lot.4
+	title = ab_lot.4.t
+	desc = ab_lot.4.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+	
+	option = {
+		name = ab_lot.4.a
+		add_ruler_personality = strict_personality
+		change_monarch_points_or_power = {
+			points = 1
+			power = dip
+		}
+		add_country_modifier = {
+			name = "lot_reforge"
+			duration = 9125
+		}
+	}
+}
+
+#The Crown of Italy - Conquest of Italy
+country_event = {
+	id = ab_lot.5
+	title = ab_lot.5.t
+	desc = ab_lot.5.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+
+	major = yes
+	
+	option = {
+		name = ab_lot.5.a
+		if = {
+			limit = {
+				ROOT = {
+					is_emperor = yes
+				}
+			}
+			add_imperial_influence = 20
+		}
+		else = {
+			add_dip_power = 200
+		}
+		add_country_modifier = {
+			name = lot_kingdom_italy
+			duration = -1
+		}
+		italy_region = {
+			limit = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = FRC_UNLOCK_ITALY_RELEASE
+		set_country_flag = frc_unlock_release_italy
+	}
+}
+

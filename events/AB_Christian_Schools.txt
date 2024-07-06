@@ -1,0 +1,314 @@
+namespace = ab_christianschools
+normal_or_historical_nations = yes
+
+#Lollard Spawn
+country_event = {
+	id = ab_christianschools.1
+	title = ab_christianschools.1.title
+	desc = ab_christianschools.1.desc
+	picture = HARBOUR_eventPicture
+
+	is_triggered_only = yes
+	
+	# Make sure only protestants get it
+	trigger = {
+		religion = protestant
+	}
+
+	option = { # Be lutheran
+		name = ab_christianschools.1.a
+		set_religious_school = {
+			group = christian
+			school = lutheran_school
+		}
+		ai_chance = {
+			factor = 20
+			modifier = {
+				# Never pick this school if your overlord is another school
+				factor = 0
+				is_subject = yes
+				overlord = {
+					religion = protestant
+					NOT = { 
+						religious_school = {
+							group = christian
+							school = lutheran_school
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { # Be the first lollard
+		name = ab_christianschools.1.b
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = lollard_school_not_present_tt
+				NOT = { has_global_flag = lollard_school_spawned }
+			}
+			capital_scope = {
+				region = british_isles_region
+			}
+			is_subject = no
+		}
+		highlight = yes
+		set_global_flag = lollard_school_spawned
+		add_church_power = 20
+		set_religious_school = {
+			group = christian
+			school = lollard_school
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { # Adopt lollardism
+		name = ab_christianschools.1.c
+		trigger = {
+			has_global_flag = lollard_school_spawned
+		}
+		set_religious_school = {
+			group = christian
+			school = lollard_school
+		}
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 60
+				capital_scope = {
+					region = british_isles_region
+				}
+			}
+			modifier = {
+				factor = 0
+				is_subject = yes
+				overlord = {
+					religion = protestant
+					NOT = { 
+						religious_school = {
+							group = christian
+							school = lollard_school
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { # Be the first Waldesian
+		name = ab_christianschools.1.d
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = waldesian_school_not_present_tt
+				NOT = { has_global_flag = waldensian_school_spawned }
+			}
+			capital_scope = {
+				OR = {
+					region = france_region
+					region = italy_region
+				}
+			}
+			is_subject = no
+		}
+		highlight = yes
+		set_global_flag = waldensian_school_spawned
+		add_church_power = 20
+		set_religious_school = {
+			group = christian
+			school = waldensian_school
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { # Adopt Waldesianism
+		name = ab_christianschools.1.e
+		trigger = {
+			has_global_flag = waldensian_school_spawned
+		}
+		set_religious_school = {
+			group = christian
+			school = waldensian_school
+		}
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 60
+				capital_scope = {
+					OR = {
+						region = france_region
+						region = italy_region
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				is_subject = yes
+				overlord = {
+					religion = protestant
+					NOT = { 
+						religious_school = {
+							group = christian
+							school = waldensian_school
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { # Be the first Hussite
+		name = ab_christianschools.1.f
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = hussite_school_not_present_tt
+				NOT = { has_global_flag = hussite_school_spawned }
+			}
+			capital_scope = {
+				area = bohemia_area
+			}
+			is_subject = no
+		}
+		highlight = yes
+		set_global_flag = hussite_school_spawned
+		add_church_power = 20
+		set_religious_school = {
+			group = christian
+			school = hussite_school
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { # Adopt Hussitism
+		name = ab_christianschools.1.g
+		trigger = {
+			has_global_flag = hussite_school_spawned
+		}
+		set_religious_school = {
+			group = christian
+			school = hussite_school
+		}
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 60
+				capital_scope = {
+					area = bohemia_area
+				}
+			}
+			modifier = {
+				factor = 0
+				is_subject = yes
+				overlord = {
+					religion = protestant
+					NOT = { 
+						religious_school = {
+							group = christian
+							school = hussite_school
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+# Reformed options
+country_event = {
+	id = ab_christianschools.2
+	title = ab_christianschools.2.t
+	desc = ab_christianschools.2.d
+	picture = HARBOUR_eventPicture
+	
+	is_triggered_only = yes
+	trigger = {
+		religion = reformed
+	}
+	
+	option = { # Become a Calvinist
+		name = ab_christianschools.2.a
+		set_religious_school = {
+			group = christian
+			school = calvinist_school
+		}
+		ai_chance = {
+			factor = 20
+			modifier = {
+				# Never pick this school if your overlord is another school
+				factor = 0
+				is_subject = yes
+				overlord = {
+					religion = reformed
+					NOT = { 
+						religious_school = {
+							group = christian
+							school = calvinist_school
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = { # Become the first Puritan
+		name = ab_christianschools.2.b
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = puritan_school_not_present_tt
+				NOT = { has_global_flag = puritan_school_spawned }
+			}
+			capital_scope = {
+				region = british_isles_region
+			}
+			is_subject = no
+		}
+		highlight = yes
+		set_global_flag = puritan_school_spawned
+		add_fervor = 20
+		set_religious_school = {
+			group = christian
+			school = puritan_school
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = { # Become a Puritan
+		name = ab_christianschools.2.c
+		trigger = {
+			has_global_flag = puritan_school_spawned
+		}
+		set_religious_school = {
+			group = christian
+			school = puritan_school
+		}
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 60
+				capital_scope = {
+					region = british_isles_region
+				}
+			}
+			modifier = {
+				factor = 0
+				is_subject = yes
+				overlord = {
+					religion = reformed
+					NOT = {
+						religious_school = {
+							group = christian
+							school = puritan_school
+						}
+					}
+				}
+			}
+		}
+	}
+}

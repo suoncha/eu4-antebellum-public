@@ -144,7 +144,7 @@ koj_first_group = {
 			custom_tooltip = KOJ_SCALING
 			custom_tooltip = AB_EMPTY
 			358 = {
-				add_or_upgrade_tax_building = yes
+				upgrade_tax_building = yes
 			}
 			custom_tooltip = AB_EMPTY
 			add_country_modifier = {
@@ -1324,9 +1324,50 @@ ab_koj_third_unlocked_second = {
 		}
 		
 		effect = {
-			change_primary_culture = Outremer
-			capital_scope = {
-				change_culture = Outremer
+			if = {
+				limit = {
+					culture_group = french
+				}
+				change_primary_culture = Outremer
+				capital_scope = {
+					change_culture = Outremer
+				}
+			}
+			else_if = {
+				limit = {
+					culture_group = latin
+				}
+				change_primary_culture = Outremer_latin
+				capital_scope = {
+					change_culture = Outremer_latin
+				}
+			}
+			else_if = {
+				limit = {
+					culture_group = germanic
+				}
+				change_primary_culture = Outremer_germanic
+				capital_scope = {
+					change_culture = Outremer_germanic
+				}
+			}
+			else_if = {
+				limit = {
+					culture_group = iberian
+				}
+				change_primary_culture = Outremer_iberian
+				capital_scope = {
+					change_culture = Outremer_iberian
+				}
+			}
+			else_if = {
+				limit = {
+					culture_group = united_germanic
+				}
+				change_primary_culture = Outremer_united_germanic
+				capital_scope = {
+					change_culture = Outremer_united_germanic
+				}
 			}
 			custom_tooltip = KOJ_CULTURE_SPREAD
 			custom_tooltip = OTR_TRUE_FAITH
@@ -1989,12 +2030,14 @@ koj_fourth_group = {
 		}
 		
 		trigger = {
-			num_of_owned_provinces_with = {
-				value = 5
-				num_of_times_improved = 3
-				has_production_building_trigger = yes
-				region = mashriq_region
-				has_terrain = drylands
+			calc_true_if = {
+				all_owned_province = {
+					num_of_times_improved = 3
+					has_production_building_trigger = yes
+					region = mashriq_region
+					has_terrain = drylands
+				}
+				amount = 5
 			}
 		}
 		
@@ -2209,11 +2252,12 @@ koj_fifth_group = {
 		}
 		
 		trigger = {
-			num_of_owned_provinces_with = {
-				value = 5
-				
-				num_of_times_improved = 5
-				has_fort_building_trigger = yes
+			calc_true_if = {
+				all_owned_province = {
+					num_of_times_improved = 5
+					has_fort_building_trigger = yes
+				}
+				amount = 5
 			}
 		}
 		

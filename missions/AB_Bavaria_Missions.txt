@@ -1,0 +1,2174 @@
+ab_bavaria_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BAV
+			tag = REG
+			tag = PSS
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	bav_glass_straubing = {
+		icon = bohemian_crystal
+		required_missions = { emp_bav_cultural_center }
+		position = 2
+
+		provinces_to_highlight = {
+			province_id = 2956
+		}
+
+		trigger = {
+			2956 = {
+				owned_by = ROOT
+			}
+			2956 = {
+				base_production = 10
+			}
+			2956 = {
+				has_production_building_trigger = yes
+			}
+		}
+
+		effect = {
+			set_country_flag = artist_give_administrative_efficiency
+			change_price = {
+				trade_goods = glass
+				key = "Glass Works of Straubing"
+				value = 0.25
+				duration = 18250
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BAV_SCALING_INNOVATOR
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = artist
+				skill = 3
+				cost_multiplier = 0.5
+			}
+		}
+	}
+
+	bav_recover_army = {
+		icon = mission_pol_varna_aftermath
+		required_missions = { }
+		position = 4
+
+		trigger = {
+			army_size_percentage = 0.8
+			manpower_percentage = 1
+		}
+
+		effect = {
+			create_general = {
+				tradition = 50
+			}
+			add_country_modifier = {
+				name = bav_call_for_unification
+				duration = 3650
+			}
+			lower_bavaria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_bavaria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_bavaria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_swabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_swabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_rhineland_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	bav_unite_bavarians = {
+		icon = unite_the_wittelsbachs
+		required_missions = { bav_recover_army }
+		position = 6
+
+		provinces_to_highlight = {
+			culture = bavarian
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			owns_all_provinces = {
+				culture = bavarian
+			}
+		}
+
+		effect = {
+			custom_tooltip = BAV_INTEGRATE_BAVARIAN
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = bavarian
+					}
+					add_nationalism = -20
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = bav_bavarian_expansion
+				duration = 7300
+			}
+			austria_proper_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			inner_austria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					exists = TIR
+				}
+				add_casus_belli = {
+					type = cb_vassalize_mission
+					months = 300
+					target = TIR
+				}
+			}
+			else = {
+				tirol_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						is_rival = STY
+						is_enemy = STY
+					}
+				}
+				custom_tooltip = BAV_RIVAL_STYRIA_YES
+				hidden_effect = {
+					add_country_modifier = {
+						name = bav_babenberg_rivalry
+						duration = 3650
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_RIVAL_STYRIA_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = bav_babenberg_rivalry
+					duration = 3650
+				}
+			}
+		}
+	}
+
+	bav_tirol = {
+		icon = end_the_habsburgs
+		required_missions = { bav_unite_bavarians }
+		position = 7
+
+		provinces_to_highlight = {
+			area = tirol_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 4
+				area = tirol_area
+			}
+		}
+
+		effect = {
+			tirol_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				change_culture = ROOT
+				add_province_modifier = {
+					name = faster_integration
+					duration = 9125
+				}
+			}
+			switzerland_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			romandie_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					overlord_of = TIR
+				}
+				custom_tooltip = BAV_OVERLORD_TIR_YES
+				hidden_effect = {
+					inherit = TIR
+					tirol_area = {
+						limit = {
+							owned_by = ROOT
+						}
+						add_province_modifier = {
+							name = faster_integration
+							duration = 9125
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_OVERLORD_TIR_NO
+			}
+		}
+	}
+
+	bav_helvetia = {
+		icon = reorganize_the_confederacy
+		required_missions = { bav_tirol }
+		position = 8
+
+		provinces_to_highlight = {
+			culture = swiss
+			NOT = { owned_by = ROOT }
+		}
+
+		trigger = {
+			owns_all_provinces = {
+				culture = swiss
+			}
+		}
+
+		effect = {
+			add_accepted_culture_or_dip_power = {
+				culture = swiss
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = bav_integrate_the_confederacy
+				duration = -1
+			}
+			if = {
+				limit = { exists = ARS }
+				custom_tooltip = AB_IF_ARS_EXISTS_PU_OR_SUBJUGATION_CB_YES
+				if = {
+					limit = {
+						government = monarchy
+					}
+					add_casus_belli = {
+						type = cb_restore_personal_union
+						months = 300
+						target = ARS
+					}
+				}
+				else = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = ARS
+					}
+				}
+			}
+			else = {
+				custom_tooltip = AB_IF_ARS_EXISTS_PU_OR_SUBJUGATION_CB_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						exists = UPB
+						exists = LWB
+					}
+				}
+				custom_tooltip = AB_IF_UPB_OR_LWB_EXISTS_PU_OR_SUBJUGATION_CB_YES
+				hidden_effect = {
+					if = {
+						limit = {
+							exists = UPB
+						}
+						if = {
+							limit = {
+								government = monarchy
+							}
+							add_casus_belli = {
+								type = cb_restore_personal_union
+								months = 300
+								target = UPB
+							}
+						}
+						else = {
+							add_casus_belli = {
+								type = cb_vassalize_mission
+								months = 300
+								target = UPB
+							}
+						}
+					}
+					if = {
+						limit = {
+							exists = LWB
+						}
+						if = {
+							limit = {
+								government = monarchy
+							}
+							add_casus_belli = {
+								type = cb_restore_personal_union
+								months = 300
+								target = LWB
+							}
+						}
+						else = {
+							add_casus_belli = {
+								type = cb_vassalize_mission
+								months = 300
+								target = LWB
+							}
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = AB_IF_UPB_OR_LWB_EXISTS_PU_OR_SUBJUGATION_CB_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						OR = {
+							exists = ARS
+							exists = UPB
+							exists = LWB
+						}
+					}
+				}
+				custom_tooltip = AB_IF_ARS_UPB_AND_LWB_NOT_EXISTS_CLAIMS_YES
+			}
+			else = {
+				custom_tooltip = AB_IF_ARS_UPB_AND_LWB_NOT_EXISTS_CLAIMS_NO
+			}
+			tooltip = {
+				west_burgundy_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				bourgogne_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				savoy_dauphine_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				provence_area = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							OR = {
+								exists = ARS
+								exists = UPB
+								exists = LWB
+							}
+						}
+					}
+					west_burgundy_area = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+					bourgogne_area = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+					savoy_dauphine_area = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+					provence_area = {
+						limit = {
+							NOT = { is_core = ROOT }
+							NOT = { is_permanent_claim = ROOT }
+						}
+						add_permanent_claim = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	bav_welfs = {
+		icon = unite_the_realm
+		required_missions = { bav_helvetia }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				area = savoy_dauphine_area
+				area = provence_area
+				area = west_burgundy_area
+				area = bourgogne_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				OR = {
+					area = savoy_dauphine_area
+					area = provence_area
+					area = west_burgundy_area
+					area = bourgogne_area
+				}
+			}
+		}
+
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			add_mil_power = 200
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { overlord_of = LWB }
+					NOT = { overlord_of = UPB }
+					NOT = { overlord_of = ARS }
+				}
+				custom_tooltip = BAV_CONQUER_ARLES_YES
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							OR = {
+								culture = burgundian
+								culture = occitain
+							}
+						}
+						add_province_modifier = {
+							name = bav_assimilate_culture
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_CONQUER_ARLES_NO
+			}
+			custom_tooltip = BAV_EVERY_BURGUNDIAN_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = bav_assimilate_culture
+					duration = -1
+				}
+			}
+			custom_tooltip = BAV_CONVERTING_CULTURE
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					overlord_of = LWB
+					overlord_of = UPB
+				}
+				custom_tooltip = BAV_OVERLORD_WELF_YES
+				hidden_effect = {
+					LWB = {
+						inherit = UPB
+						change_tag = ARS
+						swap_non_generic_missions = yes
+						set_country_flag = formed_arles_flag
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_OVERLORD_WELF_NO
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						overlord_of = LWB
+						overlord_of = UPB
+						overlord_of = ARS
+					}
+				}
+				custom_tooltip = BAV_OVERLORD_ARLES_YES
+				hidden_effect = {
+					add_country_modifier = {
+						name = bav_crown_of_arles
+						duration = -1
+						desc = BAV_UNTIL_ARLES_ANNEXED
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_OVERLORD_ARLES_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = bav_crown_of_arles
+					duration = -1
+					desc = BAV_UNTIL_ARLES_ANNEXED
+				}
+			}
+		}
+	}
+}
+
+ab_bavaria_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BAV
+			tag = REG
+			tag = PSS
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	emp_bav_cultural_center = {
+		icon = develop_our_capital
+		required_missions = { }
+		position = 1
+
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+		}
+
+		trigger = {
+			capital_scope = {
+				num_of_times_improved = 10
+			}
+			capital_scope = {
+				num_of_buildings_in_province = 5
+			}
+		}
+
+		effect = {
+			capital_scope = {
+				if = {
+					limit = {
+						province_has_center_of_trade_of_level = 1
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else = {
+					add_base_tax = 1
+					add_base_production = 1
+					add_base_manpower = 1
+				}
+				add_province_modifier = {
+					name = bav_rising_bavaria
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						tag = REG
+						was_tag = REG
+					}
+				}
+				custom_tooltip = BAV_START_AS_REG_YES
+				hidden_effect = {
+					2957 = {
+						change_trade_goods = silk
+						add_or_upgrade_production_building = yes
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_START_AS_REG_NO
+			}
+			tooltip = {
+				2957 = {
+					change_trade_goods = silk
+					add_or_upgrade_production_building = yes
+				}
+			}
+		}
+	}
+
+	emp_bav_splendour = {
+		icon = regal_splendour
+		required_missions = { emp_bav_cultural_center }
+		position = 3
+
+		trigger = {
+			total_development = 300
+			OR = {
+				in_golden_age = yes
+				has_had_golden_age = yes
+			}
+			prestige = 75
+			power_projection = 25
+			legitimacy_equivalent = 100
+		}
+
+		effect = {
+			add_prestige_or_monarch_power = {
+				amount = 25
+			}
+			add_country_modifier = {
+				name = bav_splendorous_bavaria
+				duration = 7300
+			}
+			custom_tooltip = GER_GOLDEN_AGE 
+			hidden_effect = {
+				if = {
+					limit = { has_had_golden_age = yes } 
+					reset_golden_age = yes 
+				}
+				else_if = {
+					limit = { in_golden_age = yes } 
+					extend_golden_age = 360
+				}
+			}
+		}
+	}
+
+	emp_bav_oktoberfest_mission = {
+		icon = establish_oktoberfest
+		required_missions = { emp_bav_splendour }
+		position = 5
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			trade_goods = grain
+			NOT = { has_building = farm_estate }
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 7
+				has_building = farm_estate
+				trade_goods = grain
+			}
+			trade_goods_produced_amount = {
+				trade_goods = grain
+				amount = 25
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = bav_oktoberfest
+				duration = 36500
+			}
+			custom_tooltip = BAV_RANDOM_GRAIN
+			tooltip = {
+				add_province_modifier = {
+					name = bav_established_oktoberfest
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				for = {
+                    amount = 7
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								has_building = farm_estate
+								trade_goods = grain
+							}
+							add_province_modifier = {
+								name = bav_established_oktoberfest
+								duration = -1
+							}
+                        }
+                    "
+                }
+			}
+		}
+	}
+
+	bav_styria = {
+		icon = humiliate_austria
+		required_missions = { bav_unite_bavarians }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				area = austria_proper_area
+				area = inner_austria_area
+				owned_by = STY
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				OR = {
+					area = austria_proper_area
+					area = inner_austria_area
+				}
+			}
+		}
+
+		effect = {
+			custom_tooltip = BAV_EVERY_AUSTRIAN_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = bav_assimilate_culture
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = austrian
+					}
+					add_province_modifier = {
+						name = bav_assimilate_culture
+						duration = -1
+					}
+				}
+			}
+			custom_tooltip = BAV_CONVERTING_CULTURE
+			custom_tooltip = AB_EMPTY
+			carinthia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			venetia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bohemia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			erzgebirge_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						NOT = { exists = STY }
+						STY = {
+							humiliated_by = ROOT
+						}
+					}
+				}
+				custom_tooltip = BAV_STYRIA_NOT_EXIST_YES
+				hidden_effect = {
+					add_prestige_or_monarch_power = {
+						amount = 25
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_STYRIA_NOT_EXIST_NO
+			}
+			tooltip = {
+				add_prestige_or_monarch_power = {
+					amount = 25
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_country_modifier = bav_babenberg_rivalry
+				}
+				custom_tooltip = BAV_STYRIA_SPEEDRUN_YES
+				hidden_effect = {
+					remove_country_modifier = bav_babenberg_rivalry
+					add_country_modifier = {
+						name = bav_babenberg_rivalry
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_STYRIA_SPEEDRUN_NO
+			}
+		}
+	}
+
+	emp_bav_italian_sun = {
+		icon = mission_control_venice
+		position = 8
+		required_missions = { bav_styria }
+
+		provinces_to_highlight = {
+			OR = {
+				area = venetia_area
+				area = carinthia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 7
+				OR = {
+					area = venetia_area
+					area = carinthia_area
+				}
+			}
+		}
+		
+		effect = {
+			add_dip_power = 100
+			if = {
+				limit = {
+					NOT = { max_sailors = 1000 }
+				}
+				add_sailors = 1000
+			}
+			else = {
+				add_yearly_sailors = 10
+			}
+			add_country_modifier = {
+				name = bav_italian_coast
+				duration = 7300
+			}
+			add_mercantilism_or_monarch_power = { amount = 5 }
+		}
+	}
+
+	bav_venice_trade = {
+		icon = overshadow_venice
+		required_missions = { emp_bav_italian_sun }
+		position = 9
+
+		provinces_to_highlight = {
+			province_id = 112
+		}
+
+		trigger = {
+			112 = {
+				trade_share = {
+					country = ROOT
+					share = 60
+				}
+			}
+			num_of_light_ship = 20
+		}
+
+		effect = {
+			add_navy_tradition = 20
+			add_country_modifier = {
+				name = slv_adriatic_domination
+				duration = 9125
+			}
+			add_years_of_trade_income = {
+				years = 2
+				custom_tooltip = ars_trade_income
+			}
+		}
+	}
+}
+
+ab_bavaria_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BAV
+			tag = REG
+			tag = PSS
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	bav_council_eight = {
+		icon = mission_educated_people
+		required_missions = { emp_bav_cultural_center }
+		position = 2
+
+		trigger = {
+			government_reform_progress = 100
+			stability = 2
+			crown_land_share = 40
+		}
+
+		effect = {
+			custom_tooltip = add_5_crown_land_share
+			hidden_effect = {
+				change_estate_land_share = {
+					estate = all
+					share = -5
+				}
+			}
+			unlock_government_reform = {
+				government_reform = bav_council_of_eight
+			}
+		}
+	}
+
+	emp_bav_illuminati_mission = {
+		icon = deal_with_the_illuminati
+		position = 4
+		required_missions = { bav_council_eight }
+
+		trigger = {
+			OR = {
+				AND = {
+					estate_loyalty = {
+						estate = estate_burghers
+						loyalty = 80
+					}
+					estate_influence = {
+						estate = estate_burghers
+						influence = 50
+					}
+				}
+				AND = {
+					estate_loyalty = {
+						estate = estate_church
+						loyalty = 80
+					}
+					estate_loyalty = {
+						estate = estate_nobles
+						loyalty = 80
+					}
+					NOT = {
+						estate_influence = {
+							estate = estate_burghers
+							influence = 5
+						}
+					}
+				}
+			}
+		}
+
+		effect = {
+			if = {
+				limit = {
+					estate_loyalty = {
+						estate = estate_church
+						loyalty = 80
+					}
+					estate_loyalty = {
+						estate = estate_nobles
+						loyalty = 80
+					}
+					NOT = {
+						estate_influence = {
+							estate = estate_burghers
+							influence = 5
+						}
+					}
+				}
+				custom_tooltip = BAV_BACKING_CLERGY_YES
+				set_country_flag = bav_clergy_land_right_buff
+			}
+			else = {
+				custom_tooltip = BAV_BACKING_CLERGY_NO
+			}
+			custom_tooltip = BAV_POWERFUL_ESTATE
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					estate_loyalty = {
+						estate = estate_burghers
+						loyalty = 80
+					}
+					estate_influence = {
+						estate = estate_burghers
+						influence = 50
+					}
+				}
+				custom_tooltip = BAV_BACKING_BURGHERS_YES
+				set_country_flag = bav_burgher_land_right_buff
+			}
+			else = {
+				custom_tooltip = BAV_BACKING_BURGHERS_NO
+			}
+			custom_tooltip = BAV_POWERFUL_ILLUMINATI
+		}
+	}
+
+	emp_bav_cultural_dominance = {
+		icon = bavarian_cultural_dominance
+		required_missions = { emp_bav_oktoberfest_mission emp_bav_illuminati_mission emp_bav_center_of_counter_reformation }
+		position = 6
+
+		provinces_to_highlight = {
+			OR = {
+				region = south_german_region
+				region = north_german_region
+			}
+			OR = {
+				culture = bavarian
+				any_province = {
+					is_capital_of = ROOT
+					NOT = { higher_development_than = PREV }
+				}
+			}
+		}
+
+		trigger = {
+			primary_culture = bavarian
+			development_in_provinces = {
+				value = 500
+				culture = bavarian
+			}
+			custom_trigger_tooltip = {
+				tooltip = AB_emp_bav_cultural_dominance_trigger_tooltip
+				capital_scope = {
+					south_german_region = {
+						type = all
+						OR = {
+							owned_by = ROOT
+							NOT = { higher_development_than = PREV }
+						}
+					}
+					north_german_region = {
+						type = all
+						OR = {
+							owned_by = ROOT
+							NOT = { higher_development_than = PREV }
+						}
+					}
+				}
+			}
+		}
+
+		effect = {
+			change_innovativeness = 10
+			add_country_modifier = {
+				name = bav_boarisch_als_leitkultur
+				duration = -1
+			}
+			custom_tooltip = BAV_EVERY_BAVARIAN
+			tooltip = {
+				add_base_production = 2
+				add_base_manpower = 1
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = bavarian
+					}
+					add_base_production = 2
+					add_base_manpower = 1
+				}
+			}
+		}
+	}
+
+	bav_salt_mine = {
+		icon = mission_dalaskogen
+		required_missions = { bav_unite_bavarians }
+		position = 7
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			trade_goods = salt
+			OR = {
+				NOT = { culture = bavarian }
+				has_production_building_trigger = no
+				NOT = { has_building = wharf }
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 3
+				culture = bavarian
+				trade_goods = salt
+				has_production_building_trigger = yes
+				has_building = wharf
+			}
+		}
+
+		effect = {
+			add_years_of_income = 2
+			change_price = {
+				trade_goods = salt
+				key = "Salt Mines of Bavaria"
+				value = 0.1
+				duration = -1
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BAV_SALT_PROVINCE
+			tooltip = {
+				upgrade_production_building = yes
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						trade_goods = salt
+						has_production_building_trigger = yes
+					}
+					upgrade_production_building = yes
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = PSS
+						was_tag = PSS
+					}
+				}
+				custom_tooltip = BAV_START_AS_PSS_YES
+				hidden_effect = {
+					4709 = {
+						add_province_modifier = {
+							name = bav_salt_city
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_START_AS_PSS_NO
+			}
+			tooltip = {
+				4709 = {
+					add_province_modifier = {
+						name = bav_salt_city
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	bav_bohemia = {
+		icon = bohemian_borderlands
+		required_missions = { bav_styria }
+		position = 8
+
+		provinces_to_highlight = {
+			OR = {
+				area = bohemia_area
+				area = erzgebirge_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			bohemia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			erzgebirge_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			custom_tooltip = BAV_EVERY_CZECH_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = bav_assimilate_culture
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = czech
+					}
+					add_province_modifier = {
+						name = bav_assimilate_culture
+						duration = -1
+					}
+				}
+			}
+			custom_tooltip = BAV_CONVERTING_CULTURE
+			custom_tooltip = AB_EMPTY
+			moravia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			slovakia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			transdanubia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						any_rival_country = {
+							dynasty = "Hohenstaufen"
+						}
+						any_enemy_country = {
+							dynasty = "Hohenstaufen"
+						}
+					}
+				}
+				custom_tooltip = BAV_RIVAL_HOHENSTAUFEN_YES
+				hidden_effect = {
+					every_known_country = {
+						limit = {
+							dynasty = "Hohenstaufen"
+						}
+						add_country_modifier = {
+							name = bav_downfall_of_hohenstaufen
+							duration = 7300
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_RIVAL_HOHENSTAUFEN_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = bav_downfall_of_hohenstaufen
+					duration = 7300
+				}
+			}
+		}
+	}
+
+	bav_buffer = {
+		icon = protect_against_the_turks
+		required_missions = { bav_bohemia }
+		position = 10
+
+		provinces_to_highlight = {
+			OR = {
+				area = moravia_area
+				area = slovakia_area
+				area = transdanubia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			moravia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			slovakia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			transdanubia_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		effect = {
+			add_army_professionalism = 0.1
+			custom_tooltip = BAV_BULWARK_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = bav_bulwark_of_catholicism
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = moravia_area
+							area = slovakia_area
+							area = transdanubia_area
+						}
+					}
+					add_province_modifier = {
+						name = bav_bulwark_of_catholicism
+						duration = -1
+					}
+				}
+			}
+			custom_tooltip = BAV_FORT_BUILDING
+			hidden_effect = {
+                for = {
+                    amount = 5
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								has_fort_building_trigger = yes
+							}
+							add_base_manpower = 2
+                        }
+                    "
+                }
+			}
+		}
+	}
+}
+
+ab_bavaria_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BAV
+			tag = REG
+			tag = PSS
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	emp_bav_be_good_at_religion = {
+		icon = show_piety
+		required_missions = { }
+		position = 1
+
+		trigger = {
+			religion = catholic
+			papal_influence = 100
+			OR = {
+				theologian = 1
+				inquisitor = 1
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = bav_piety_shown
+				duration = 7300
+			}
+			define_advisor = {
+				type = papal_advisor
+				skill = 2
+				cost_multiplier = 0.25
+			}
+		}
+	}
+
+	bav_defender_catholic = {
+		icon = shield_of_christendom
+		required_missions = { emp_bav_be_good_at_religion }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 118
+				owned_by = PAP
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			if = {
+				limit = {
+					exists = PAP
+				}
+				PAP = {
+					alliance_with = ROOT
+					has_opinion = {
+						who = ROOT
+						value = 150
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						118 = {
+							owner = {
+								religion = ROOT
+								NOT = { tag = ROOT }
+								NOT = { is_subject_of = ROOT }
+							}
+						}
+					}
+					118 = {
+						owner = {
+							alliance_with = ROOT
+							has_opinion = {
+								who = ROOT
+								value = 150
+							}
+						}
+					}
+				}
+				else = {
+					118 = {
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+			}
+			num_of_cardinals = 1
+			is_defender_of_faith = yes
+		}
+
+		effect = {
+			if = {
+				limit = {
+					exists = PAP
+				}
+				add_historical_friend = PAP
+				add_country_modifier = {
+					name = koj_holy_alliance
+					desc = koj_papal_alliance
+					duration = -1
+				}
+			}
+			else = {
+				add_dip_power = 200
+			}
+			add_country_modifier = {
+				name = bav_shield_of_christianity
+				duration = 10950
+			}
+		}
+	}
+	
+	emp_bav_center_of_counter_reformation = {
+		icon = spread_piety
+		required_missions = { bav_defender_catholic }
+		position = 5
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_tax_building_trigger = no
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = emp_bav_center_of_counter_reformation_tooltip2
+				had_global_flag = {
+					flag = reformation_started
+					days = 18250
+				}
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				has_tax_building_trigger = yes
+			}
+			has_country_modifier = counter_reformation
+		}
+
+		effect = {
+			custom_tooltip = BAV_SPREAD_FAITH
+			hidden_effect = {
+				every_country = {
+					limit = {
+						religion = catholic
+					}
+					add_opinion = {
+						who = ROOT
+						modifier = opinion_defender_of_catholicism
+					}
+				}
+			}
+			add_country_modifier = {
+				name = bav_piety_spread
+				duration = 7300
+			}
+			custom_tooltip = BAV_RANDOM_CHURCH
+			tooltip = {
+				capital_scope = {
+					add_or_upgrade_tax_building = yes
+				}
+			}
+			hidden_effect = {
+				for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								has_tax_building_trigger = yes
+							}
+							upgrade_tax_building = yes
+                        }
+                    "
+                }
+			}
+		}
+	}
+
+	bav_catholic_empire = {	
+		icon = counter_reformation
+		required_missions = { emp_bav_center_of_counter_reformation }
+		position = 6
+
+		trigger = {
+			OR = {
+				NOT = { hre_size = 1 }
+				AND = {
+					hre_religion = catholic
+					hre_religion_locked = yes
+				}
+			}
+		}
+
+		effect = {
+			change_government_reform_progress = 200
+			add_splendor = 500
+			add_country_modifier = {
+				name = bav_triump_of_the_true_faith
+				duration = -1
+			}
+			add_absolutism = 20
+		}
+	}
+
+	bav_saxony = {
+		icon = mission_germancentury
+		required_missions = { bav_south_germany }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				area = thuringia_area
+				area = braunschweig_area
+				area = south_saxony_area
+				area = northern_saxony_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 11
+				OR = {
+					area = thuringia_area
+					area = braunschweig_area
+					area = south_saxony_area
+					area = northern_saxony_area
+				}
+			}
+		}
+
+		effect = {
+			north_german_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_local_autonomy = -25
+			}
+			add_country_modifier = {
+				name = hlv_war_germany
+				duration = 9125
+			}
+			if = {
+				limit = {
+					tag = BAV
+					NOT = { has_country_flag = formed_bavaria_flag }
+				}
+				custom_tooltip = BAV_START_AS_BAV_YES
+				hidden_effect = {
+					add_country_modifier = {
+						name = bav_fear_the_south
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_START_AS_BAV_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = bav_fear_the_south
+					duration = -1
+				}
+			}
+		}
+	}
+
+	bav_blood_and_iron = {
+		icon = mission_bloodiron
+		required_missions = { bav_saxony bav_rhine }
+		position = 9
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 57
+				province_id = 65
+				province_id = 67
+				province_id = 85
+				province_id = 63
+				province_id = 1876
+				province_id = 70
+				province_id = 1874
+			}
+			NOT = { owned_by = ROOT }	
+		}
+
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = SAX_ALL_GERMANY
+				owns_core_province = 57
+				owns_core_province = 65
+				owns_core_province = 67
+				owns_core_province = 85
+				owns_core_province = 63
+				owns_core_province = 1876
+				owns_core_province = 70
+				owns_core_province = 1874
+			}
+		}
+
+		effect = {
+			change_monarch_points_or_power = {
+				points = 2
+				power = mil
+			}
+			add_country_modifier = {
+				name = sax_unifier_of_germany
+				duration = 7300
+			}
+			custom_tooltip = HLV_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = HAS_perma_pp
+					amount = 10
+				}
+			}
+		}
+	}
+}
+
+ab_bavaria_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BAV
+			tag = REG
+			tag = PSS
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	emp_bav_standing_army = {
+		icon = establish_a_standing_army
+		required_missions = { }
+		position = 1
+
+		trigger = {
+			army_tradition = 50
+			army_size = 30
+			NOT = { num_of_mercenaries = 1 }
+		}
+		
+		effect = {
+			capital_scope = {
+				add_base_manpower = 2
+			}
+			add_country_modifier = {
+				name = bav_professional_army
+				duration = 7300
+			}
+			custom_tooltip = HLV_CHILDREN_OF_ALPS_BONUS
+		}
+	}
+
+	bav_reichswehr = {
+		icon = mission_pol_raise_noble_host
+		required_missions = { emp_bav_standing_army }
+		position = 2
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_manpower_building_trigger = no
+				has_forcelimit_building_trigger = no
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				has_manpower_building_trigger = yes
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				has_forcelimit_building_trigger = yes
+			}
+		}
+
+		effect = {
+			create_general = {
+				tradition = 100
+			}
+			add_country_modifier = {
+				name = bav_formation_of_reichswehr
+				duration = -1
+			}
+			set_country_flag = ab_barrack_grant_extra_manpower_flag
+			custom_tooltip = IVR_BUILDING_BARRACK
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = barracks
+					}
+					add_province_modifier = {
+						name = ivr_extra_manpower_1
+						duration = -1
+					}
+				}
+				every_owned_province = {
+					limit = {
+						has_building = training_fields
+					}
+					add_province_modifier = {
+						name = ivr_extra_manpower_2
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	bav_bavarian_valor = {
+		icon = fra_refine_bombards
+		required_missions = { bav_reichswehr }
+		position = 3
+
+		trigger = {
+			army_professionalism = 0.6
+			army_tradition = 100
+			has_global_modifier_value = { 
+				which = land_morale
+				value = 0.2
+			}
+		}
+
+		effect = {
+			add_mil_tech = 1
+			set_country_flag = bav_scaling_mil_advisor_flag
+			custom_tooltip = BAV_SCALING_MILITARY_ADVISOR
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							capital_scope = {
+								continent = europe
+							}
+							army_size = ROOT
+						}
+					}
+				}
+				custom_tooltip = BAV_LARGEST_ARMY_YES
+				set_country_flag = fra_enable_mil_hegemony_flag 
+			}
+			else = {
+				custom_tooltip = BAV_LARGEST_ARMY_NO
+			}
+		}
+	}
+
+	bav_swabia = {
+		icon = mission_barbarossa
+		required_missions = { }
+		position = 4
+
+		provinces_to_highlight = {
+			OR = {
+				area = lower_swabia_area
+				area = upper_swabia_area
+				area = upper_rhineland_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 7
+				OR = {
+					area = lower_swabia_area
+					area = upper_swabia_area
+					area = upper_rhineland_area
+				}
+			}
+		}
+
+		effect = {
+			add_army_tradition = 10
+			south_german_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_nationalism = -10
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = bav_legacy_of_barbarossa
+				duration = 5475
+			}
+			alsace_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			palatinate_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			franconia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_franconia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	bav_south_germany = {
+		icon = centralized_empire
+		required_missions = { bav_swabia }
+		position = 6
+
+		provinces_to_highlight = {
+			region = south_german_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 30
+				region = south_german_region
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = ab_bavaria.0
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BOH_HRE_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					accepted_culture = franconian
+				}
+				custom_tooltip = BAV_ACCEPTED_FRANCONIAN_YES
+				hidden_effect = {
+					add_country_modifier = {
+						name = hlv_subjugate_franconians
+						duration = 7300
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_ACCEPTED_FRANCONIAN_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = hlv_subjugate_franconians
+					duration = 7300
+				}
+			}
+		}
+	}
+
+	bav_rhine = {
+		icon = sway_cologne
+		required_missions = { bav_south_germany }
+		position = 8
+
+		provinces_to_highlight = {
+			OR = {
+				area = lower_rhineland_area
+				area = north_rhine_area
+				area = hesse_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 9
+				OR = {
+					area = lower_rhineland_area
+					area = north_rhine_area
+					area = hesse_area
+				}
+			}
+		}
+
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 0.5
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = lom_industrial_economys
+				duration = 5475
+			}
+			frisia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			holland_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			brabant_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_brabant_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					exists = HOL
+				}
+				if = {
+					limit = {
+						HOL = {
+							dynasty = ROOT
+						}
+					}
+					add_casus_belli = {
+						type = cb_restore_personal_union
+						months = 300
+						target = HOL
+					}
+				}
+				else = {
+					add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = HOL
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					overlord_of = KOL
+				}
+				custom_tooltip = BAV_OVERLORD_KOL_YES
+				hidden_effect = {
+					country_event = { id = new_flavour_bav.11 }
+				}
+			}
+			else = {
+				custom_tooltip = BAV_OVERLORD_KOL_NO
+			}
+			tooltip = {
+				country_event = { id = new_flavour_bav.11 }
+			}
+		}
+	}
+
+	emp_bav_netherlands = {
+		icon = bavarian_netherlands
+		position = 10
+		required_missions = { bav_rhine }
+
+		provinces_to_highlight = {
+			OR = {
+				area = frisia_area
+				area = holland_area
+				area = brabant_area
+				area = north_brabant_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				OR = {
+					area = frisia_area
+					area = holland_area
+					area = brabant_area
+					area = north_brabant_area
+				}
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = bav_bavarian_netherlands
+				duration = 18250
+			}
+			set_country_flag = bav_land_of_commerce_buff
+			custom_tooltip = BAV_LAND_OF_COMMERCE_PRIVILEGE
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = { num_of_colonists = 1 }
+				}
+				custom_tooltip = BAV_NOT_HAVE_COLONIST_YES
+				hidden_effect = {
+					add_country_modifier = {
+						name = trc_unknown
+						duration = 9125
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BAV_NOT_HAVE_COLONIST_NO
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = trc_unknown
+					duration = 9125
+				}
+			}
+			if = {
+				limit = {
+					overlord_of = HOL
+				}
+				custom_tooltip = BAV_OVERLORD_HOL_YES
+				hidden_effect = {
+					inherit = HOL
+				}
+			}
+			else = {
+				custom_tooltip = BAV_OVERLORD_HOL_NO
+			}
+		}
+	}
+}

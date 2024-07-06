@@ -27,6 +27,30 @@ estate_church_land_rights = {
 		trigger = { has_government_mechanic = russian_modernization_mechanic }
 		modifier = { monthly_russian_modernization = -0.03 }
 	}
+	# AB [[[
+	conditional_modifier = {
+		trigger = {
+			OR = {
+				has_country_modifier = rmg_powerful_estate
+				AND = {
+					has_country_flag = rhl_unifier_of_germany
+					has_country_modifier = sax_unifier_of_germany
+				}
+			}
+		}
+		modifier = {
+			country_admin_power = 1
+			max_absolutism = 5
+		}
+	}
+	conditional_modifier = {
+		trigger = { has_country_flag = bav_clergy_land_right_buff }
+		modifier = {
+			governing_capacity = 150
+			max_absolutism = 5
+		}
+	}
+	# ]]]
 	ai_will_do = {
 		factor = 5
 		modifier = {
@@ -1484,10 +1508,18 @@ estate_church_for_the_faith = {
 	}
 	conditional_modifier = {
 		trigger = {
-			has_government_attribute = free_expansionist_zealotry
+			OR = {
+				has_government_attribute = free_expansionist_zealotry
+				# AB [[[
+				has_country_flag = bra_expansionist_zealotry_buff
+				# ]]]
+			}
 		}
 		modifier = {
 			max_absolutism = 5
+			# AB [[[
+			warscore_cost_vs_other_religion = -0.1
+			# ]]]
 		}
 	}
 	penalties = {
@@ -1913,6 +1945,15 @@ estate_church_one_faith_one_culture = {
 	influence = 0.1
 	loyalty = 0.05
 	land_share = 5
+	# AB [[[
+	conditional_modifier = {
+		trigger = { has_country_flag = rmg_religious_culture_flag }
+		modifier = {
+			global_missionary_strength = 0.03
+			max_absolutism = 5
+		}
+	}
+	# ]]]
 	is_valid = {
 	}
 	can_select = {
@@ -2070,6 +2111,18 @@ estate_church_one_faith_one_culture = {
 		trigger = { has_government_mechanic = russian_modernization_mechanic }
 		modifier = { monthly_russian_modernization = -0.03 }
 	}
+	
+	# AB [[[
+	loyalty_scaled_conditional_modifier = {
+		trigger = {
+			has_country_flag = sty_buffed_religious_culture_flag
+		}
+		modifier = {
+			manpower_in_own_culture_provinces = 0.2
+		}
+	}
+	# ]]]
+
 	cooldown_years = 15
 	ai_will_do = {
 		factor = 10
@@ -2101,7 +2154,6 @@ estate_church_one_faith_one_culture = {
 		}
 	}
 }
-
 
 ###FETISHIST PRIVILEGES###
 #Privilege to enable cults for heirs

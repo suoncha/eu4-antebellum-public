@@ -4,6 +4,7 @@ country_decisions = {
 		major = yes
 		potential = {
 			normal_or_historical_nations = yes
+			ab_is_italy_tag_trigger = no
 			NOT = { has_country_flag = formed_trinacria_flag }
 			OR = {
 				ai = no
@@ -14,7 +15,6 @@ country_decisions = {
 			NOT = { tag = HLR }
 			NOT = { tag = SIC }
 			NOT = { tag = ITL }
-			NOT = { tag = ITA }
 			OR = {
 				tag = SLR
 				tag = API
@@ -58,39 +58,23 @@ country_decisions = {
 			owns_core_province = 121
 		}
 		effect = {
-			if = {
-				limit = {
-					is_part_of_hre = yes
-					is_elector = no
-					is_emperor = no
-				}
-				emperor = {
-					add_opinion = {
-						who = root
-						modifier = opinion_left_empire
-					}
-				}
-				set_in_empire = no
-				emperor = {
-					country_event = { id = hre_event.5 }
-				}
-			}
 			add_prestige = 25
 			change_tag = TRC
+			change_primary_culture = trinacrian
 			if = {
 				limit = {
 					NOT = { government_rank = 2 }
 				}
 				set_government_rank = 2
 			}
-			TRC = {
-				set_capital = 125
-			}
 			if = {
 				limit = { has_custom_ideas = no }
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
-			swap_non_generic_missions = yes
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
 			set_country_flag = formed_trinacria_flag
 		}
 		ai_will_do = {

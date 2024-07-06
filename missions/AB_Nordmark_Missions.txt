@@ -3,7 +3,14 @@ ab_nordmark_first = {
 	generic = no
 	ai = yes
 	potential = {
-		tag = NRD
+		OR = {
+			tag = NRD
+			tag = THU
+			tag = GOS
+			tag = DRE
+			tag = BRA
+			tag = PRU
+		}
 		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
@@ -23,41 +30,55 @@ ab_nordmark_first = {
 				province_id = 1775
 				
 			}
-			NOT = { owned_by = ROOT }
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
-		    4786 = {
-				owned_by = ROOT
-			}
-		    53 = {
-				owned_by = ROOT
-			}
-		    46 = {
-				owned_by = ROOT
-			}
-		    2996 = {
-				owned_by = ROOT
-			}
-		    1857 = {
-				owned_by = ROOT
-			}
-		    1775 = {
-				owned_by = ROOT
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = { 
+					province_id = 4786
+					province_id = 53
+					province_id = 46
+					province_id = 2996
+					province_id = 1857
+					province_id = 1775
+				}
+				value = 4
 			}
 		}
 		
 		effect = {
+			add_sailors = 1000
 			add_country_modifier = {
-				name = nrd_dismantled
+				name = brapru_obotrite_shipyards
 				duration = 7300
+			}
+			random_province = {
+				limit = {
+					has_port = yes
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_unit_construction = {
+					type = light_ship
+					amount = 5
+					speed = 0.25
+					cost = 0
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			holstein_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
 			}
 		}
 	}
 	
 	nrd_convert = {
 		icon = mission_hands_praying
-		required_missions = { nrd_obotrites }
+		required_missions = { nrd_obotrites nrd_veleti }
 		position = 4
 		
 		trigger = {
@@ -67,29 +88,273 @@ ab_nordmark_first = {
 			}
 		}
 		
+		provinces_to_highlight = {
+			country_or_non_sovereign_subject_holds = ROOT
+			NOT = {
+				religion = ROOT
+			}
+		}
+		
 		effect = {
-			add_country_modifier = {
-				name = nrd_convert
-				duration = 7300
+			add_papal_influence = 20
+			add_church_power = 50
+			add_fervor = 20
+			define_advisor = {
+				type = theologian
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.25
 			}
 		}
 	}
+	
+	bra_arkona = {
+		icon = mission_rb_control_state_religion
+		required_missions = { nrd_convert }
+		position = 5
 		
+		trigger = {
+			4745 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			4745 = {
+				religion = ROOT
+			}
+			4745 = {
+				has_tax_building_trigger = yes
+			}
+		}
+
+		provinces_to_highlight = {
+			province_id = 4745
+		}
+		
+		effect = {
+			country_event = { id = ab_brapru.8 }
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							primary_culture = Wendish
+						}
+					}
+				}
+				custom_tooltip = BRA_NO_WENDS_YES
+				tooltip = {
+					add_prestige_or_monarch_power = {
+						amount = 20
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BRA_NO_WENDS_NO
+				tooltip = {
+					add_prestige_or_monarch_power = {
+						amount = 20
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								primary_culture = Wendish
+							}
+						}
+					}
+					add_prestige_or_monarch_power = {
+						amount = 20
+					}
+				}
+			}
+		}
+	}
 }	
 
+ab_brandenburg_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BRA
+			tag = PRU
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	bra_conquer_silesia = {
+		icon = take_silesia
+		required_missions = { nrd_brandenburg }
+		position = 6
+		
+		provinces_to_highlight = {
+			area = silesia_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+		    silesia_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			custom_tooltip = BRA_SILESIA_CULTURE
+			set_country_flag = bra_silesia_spread
+		}
+		
+	}
+	
+	bra_piasts = {
+		icon = mission_pol_throne_bohemia
+		required_missions = { bra_conquer_silesia }
+		position = 7
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = wielkopolska_area
+					area = kuyavia_area
+				}
+				value = 6
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = wielkopolska_area
+				area = kuyavia_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_yearly_manpower = 1.5
+			add_country_modifier = {
+				name = brapru_reunite_christian_poland
+				duration = 7300
+			}
+			poland_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	bra_crown_of_poland = {
+		icon = mission_the_polish_throne
+		required_missions = { bra_piasts }
+		position = 8
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = poland_region
+				value = 25
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = poland_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			set_country_flag = can_release_polish_union
+			custom_tooltip = LIT_POLAND
+			tooltip = {
+				add_country_modifier = {
+					name = "litc_crown"
+					duration = -1
+					desc = litc_crown_poland
+				}
+			}
+			ruthenia_region = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+}
+
+ab_prussia_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = PRU
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	pru_ruthenian_crusade = {
+		icon = mission_rule_ruthenia
+		required_missions = { bra_crown_of_poland pru_defeat_lithuanians }
+		position = 10
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = ruthenia_region
+				value = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = ruthenia_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.1
+			set_country_flag = bra_expansionist_zealotry_buff
+			custom_tooltip = SWA_HOLY_WAR_ESTATE_BUFF
+			ruthenia_region = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}	
+}
 
 ab_nordmark_second = {
 	slot = 2
 	generic = no
 	ai = yes
 	potential = {
-		tag = NRD
+		OR = {
+			tag = NRD
+			tag = THU
+			tag = GOS
+			tag = DRE
+			tag = BRA
+			tag = PRU
+		}
 		NOT = { map_setup = map_setup_random }
 	}
 	has_country_shield = yes
 	
 	nrd_protectors = {
-		icon = switzerland_and_the_empire
+		icon = mission_united_knight_order
 		required_missions = { }
 		position = 1
 		
@@ -104,11 +369,11 @@ ab_nordmark_second = {
 				duration = 7300
 			}
 			mittelmark_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
+			    limit = {
+				        NOT = { is_core = ROOT}
+						NOT = {owned_by = ROOT}
+					}
+				add_permanent_claim = ROOT
 			}
 			4786 = {
 				if = {
@@ -168,16 +433,13 @@ ab_nordmark_second = {
 	}
 	
 	nrd_veleti = {
-		icon = mission_unite_home_region
+		icon = mission_wendia
 		required_missions = { nrd_protectors }
 		position = 3
 		
 		provinces_to_highlight = {
-			OR = {
-				area = mittelmark_area
-				
-			}
-			NOT = { owned_by = ROOT }
+			area = mittelmark_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
@@ -188,64 +450,98 @@ ab_nordmark_second = {
 		}
 		
 		effect = {
-			add_prestige = 15
+			add_prestige_or_monarch_power = {
+				amount = 10
+			}
 			add_adm_power = 100
 			lusatia_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			neumark_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			hinter_pommern_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			vorpommern_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
 			}
 		}
 	}
 	
-	nrd_lusatia = {
-		icon = mission_landsknecht_soldier
+	nrd_neumark = {
+		icon = mission_perun
 		required_missions = { nrd_veleti }
 		position = 4
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = lusatia_area
+					area = neumark_area
+				}
+				value = 4
+			}
+		}
 		
 		provinces_to_highlight = {
 			OR = {
 				area = lusatia_area
-				
+				area = neumark_area
 			}
-			NOT = { owned_by = ROOT }
-		}
-		
-		trigger = {
-		    lusatia_area = {
-			    type = all
+			NOT = {
 				country_or_non_sovereign_subject_holds = ROOT
 			}
 		}
 		
 		effect = {
+			custom_tooltip = SAX_WENDISH
 			add_country_modifier = {
 				name = "nrd_claiming"
 				duration = 5475
 			}
 			neumark_area = {
-			        limit = {
-					        NOT = { is_core = ROOT}
-							NOT = {owned_by = ROOT}
-						}
-					add_permanent_claim = ROOT
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = Wendish
+					}
+					add_nationalism = -10
+				}
 			}
 		}
 	}
 	
 	nrd_brandenburg = {
 		icon = electorate_of_brandenburg
-		required_missions = { nrd_lusatia }
+		required_missions = { nrd_neumark nrd_gryfs }
 		position = 5
 		
 		provinces_to_highlight = {
-			OR = {
-				area = neumark_area
-				
-			}
-			NOT = { owned_by = ROOT }
+			area = neumark_area
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
 		}
 		
 		trigger = {
@@ -256,9 +552,1256 @@ ab_nordmark_second = {
 		}
 		
 		effect = {
-			add_prestige = 15
-			add_legitimacy = 15
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 20
+			}
+			change_monarch_points_or_power = {
+				points = 2
+				power = mil
+			}
+			add_ruler_modifier = {
+				name = "nrd_northern_crusader"
+				duration = -1
+			}
+			silesia_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			kuyavia_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			wielkopolska_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			west_prussia_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			east_prussia_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+ab_brandenburg_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BRA
+			tag = PRU
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	bra_ostsiedlung = {
+		icon = mission_settlers_north_america
+		required_missions = { nrd_brandenburg }
+		position = 6
+		
+		trigger = {
+			NOT = { average_autonomy_above_min = 10 }
+			stability = 2
+			dip_power = 200
+			religious_unity = 0.75
+		}
+		
+		effect = {
+			add_dip_power = -200
+			set_country_flag = bra_ostsiedlung_flag
+			custom_tooltip = BRA_OSTSIEDLUNG
+		}
+	}
+	
+	pru_found_marienburg = {
+	    icon = mission_marienburg
+		required_missions = { bra_conquer_pruthenia }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 1841
+		}
+		
+		trigger = {
+			1841 = {
+				owned_by = ROOT
+			}
+			1841 = {
+				base_manpower = 8
+			}
+			1841 = {
+				religion = ROOT
+			}
+			1841 = {
+				culture_group = ROOT
+			}
+			1841 = {
+				has_fort_building_trigger = yes
+			}
+		}
+		
+		effect = {
+		    1841 = {
+				upgrade_fort_building = yes
+			}
+			1841 = {
+				add_great_project_tier = {
+					type = malbork_castle
+					tier = 1
+				}
+			}
+		}
+	}
+}
+
+ab_prussia_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = PRU
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	pru_defeat_lithuanians = {
+		icon = mission_rb_conquer_the_highlands
+		required_missions = { bra_rise_of_prussia }
+		position = 9
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = lithuania_area
+					area = samogitia_area
+				}
+				value = 7
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lithuania_area
+				area = samogitia_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
 			add_mil_power = 100
+			add_country_modifier = {
+				name = "pru_continue_crusades"
+				duration = 5475
+			}
+			define_advisor = {
+				type = commandant
+				skill = 3
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			ruthenia_region = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = {owned_by = ROOT}
+				}
+				add_claim = ROOT
+			}
+		}
+	}
+	
+	pru_baltic_security = {
+		icon = mission_baltic_empire
+		required_missions = { pru_defeat_lithuanians }
+		position = 11
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = baltic_region
+				value = 25
+			}
+		}
+		
+		provinces_to_highlight = {
+			region = baltic_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			set_country_flag = pru_baltic_spread
+			custom_tooltip = PRU_BALTEN_CULTURE_SPREAD
+			add_country_modifier = {
+				name = "pru_sustain_ostsiedlung"
+				duration = 5475
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							OR = {
+								religion = reformed_baltic
+								religion = reformed_slavic
+								religion = slavic_pagan
+								religion = baltic_pagan
+							}
+						}
+					}
+				}
+				custom_tooltip = PRU_DOUBLE_MODIFIER_YES
+			}
+			else = {
+				custom_tooltip = PRU_DOUBLE_MODIFIER_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_country = {
+								OR = {
+									religion = reformed_baltic
+									religion = reformed_slavic
+									religion = slavic_pagan
+									religion = baltic_pagan
+								}
+							}
+						}
+					}
+					remove_country_modifier = pru_sustain_ostsiedlung
+					add_country_modifier = {
+						name = "pru_sustain_ostsiedlung"
+						duration = 10950
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_nordmark_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NRD
+			tag = THU
+			tag = GOS
+			tag = DRE
+			tag = BRA
+			tag = PRU
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	bra_blockade_hansa = {
+		icon = mission_rb_control_the_hansa
+		required_missions = { }
+		position = 2
+		
+		trigger = { 
+			navy_size = HAS
+		}
+		
+		provinces_to_highlight = {
+			owned_by = HAS
+		}
+		
+		effect = {
+			create_admiral = {
+				tradition = 40
+			}
+			add_country_modifier = {
+				name = "nrd_blockade_hansa"
+				duration = 7300
+			}
+			45 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT    }
+						NOT = { is_core = ROOT    }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			44 = {
+				if = {
+					limit = {
+						NOT = { is_permanent_claim = ROOT    }
+						NOT = { is_core = ROOT    }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+			if = {
+				limit = {
+					num_of_galley = 10
+				}
+				custom_tooltip = BRA_NAVAL_MIGHT_YES
+				tooltip = {
+					add_country_modifier = {
+						name = "nrd_naval_might"
+						duration = 7300
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BRA_NAVAL_MIGHT_NO
+				tooltip = {
+					add_country_modifier = {
+						name = "nrd_naval_might"
+						duration = 7300
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						num_of_galley = 10
+					}
+					add_country_modifier = {
+						name = "nrd_naval_might"
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	bra_control_the_straits = {
+		icon = mission_conquer_sweden
+		required_missions = { bra_blockade_hansa }
+		position = 3
+		
+		trigger = { 
+			45 = {
+				trade_share = {
+					country = ROOT
+					share = 50
+				}
+			}
+		}
+		
+		provinces_to_highlight = {
+			province_id = 45
+		}
+		
+		effect = {
+			add_years_of_income = 1
+			45 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = 10950
+					power = 30
+					key = STRONG_MERCHANTS
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = trader
+				skill = 3
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	nrd_gryfs = {
+		icon = mission_the_gryf
+		required_missions = { nrd_veleti }
+		position = 4
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = hinter_pommern_area
+					area = vorpommern_area
+				}
+				value = 6
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = hinter_pommern_area
+				area = vorpommern_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			custom_tooltip = BRA_COT_MERC
+			add_country_modifier = {
+				name = "nrd_baltic_ambition"
+				duration = 9125
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						province_has_center_of_trade_of_level = 1
+					}
+					ROOT = {
+						add_mercantilism = 1
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_brandenburg_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BRA
+			tag = PRU
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	bra_conquer_pruthenia = {
+		icon = mission_king_of_eastern_europe
+		required_missions = { nrd_brandenburg }
+		position = 6
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = east_prussia_area
+					area = west_prussia_area
+				}
+				value = 6
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = east_prussia_area
+				area = west_prussia_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			west_prussia_area = {
+				add_base_manpower = 1
+			}
+			east_prussia_area = {
+				add_base_manpower = 1
+			}
+			add_country_modifier = {
+				name = "bra_baltic_crusaders"
+				duration = 9125
+			}
+		    baltic_region = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					owns = 43
+				}
+				custom_tooltip = BRA_OWN_DANZIG_YES
+				tooltip = {
+					add_years_of_trade_income = {
+						years = 1
+						custom_tooltip = eng_trade_income
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BRA_OWN_DANZIG_NO
+				tooltip = {
+					add_years_of_trade_income = {
+						years = 1
+						custom_tooltip = eng_trade_income
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						owns = 43
+					}
+					add_years_of_trade_income = {
+						years = 1
+						custom_tooltip = eng_trade_income
+					}
+				}
+			}
+		}
+	}
+	
+	bra_rise_of_prussia = {
+		icon = mission_prussian_kaiserreich
+		required_missions = { bra_conquer_pruthenia }
+		position = 8
+		
+		trigger = {
+			tag = PRU
+		}
+		
+		effect = {
+			custom_tooltip = PRU_RANDOM_MANPOWER
+			if = { 
+				limit = { 
+					has_dlc = "Rights of Man" 
+					NOT = { num_of_ruler_traits = { amount = 3 } }
+				}				
+				add_ruler_personality = strict_personality
+			}
+			add_country_modifier = {
+				name = "pru_rise_of_prussia"
+				duration = 9125
+			}
+			hidden_effect = {
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
+							limit = {
+								culture_group = germanic
+							}
+							add_base_manpower = 1
+						}
+					"
+				}
+			}
+		}
+	}
+}
+
+ab_nordmark_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NRD
+			tag = THU
+			tag = GOS
+			tag = DRE
+			tag = BRA
+			tag = PRU
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	bra_show = {
+		icon = mission_germancentury
+		required_missions = { }
+		position = 1
+		
+		trigger = { 
+			custom_trigger_tooltip = {
+				tooltip = obj_humiliate_rival_tooltip
+				has_country_flag = humiliated_rival
+			}
+			army_size_percentage = 1
+		}
+		
+		effect = {
+			create_general = { tradition = 40 }
+			add_country_modifier = {
+				name = "pru_expansion"
+				duration = 7300
+			}
+		    south_saxony_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		    thuringia_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		    northern_saxony_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		    lower_saxony_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					SAX = {
+						humiliated_by = ROOT
+					}
+				}
+				custom_tooltip = BRA_SAX_HUM_YES
+				tooltip = {
+					add_country_modifier = {
+						name = "bra_new_saxon_overlord"
+						duration = 7300
+					}
+				}
+			}
+			else = {
+				custom_tooltip = BRA_SAX_HUM_NO
+				tooltip = {
+					add_country_modifier = {
+						name = "bra_new_saxon_overlord"
+						duration = 7300
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						SAX = {
+							humiliated_by = ROOT
+						}
+					}
+					add_country_modifier = {
+						name = "bra_new_saxon_overlord"
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	bra_push = {
+		icon = the_imperial_border
+		required_missions = { bra_show }
+		position = 3
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = lower_saxony_area
+					area = northern_saxony_area
+					area = thuringia_area
+					area = south_saxony_area
+				}
+				value = 8
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = lower_saxony_area
+				area = northern_saxony_area
+				area = thuringia_area
+				area = south_saxony_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			custom_tooltip = BRA_AE
+			westphalia_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			braunschweig_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			weser_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			hesse_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -10
+						apply_calc = no
+					}
+				}
+			}
+		}
+	}
+	
+	bra_west = {
+		icon = westphalian_conquest
+		required_missions = { bra_push }
+		position = 4
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = braunschweig_area
+					area = hesse_area
+					area = westphalia_area
+					area = weser_area
+				}
+				value = 10
+			}
+		}
+		
+		provinces_to_highlight = {
+			OR = {
+				area = braunschweig_area
+				area = hesse_area
+				area = westphalia_area
+				area = weser_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		effect = {
+			north_german_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_nationalism = -10
+			}
+			add_country_modifier = {
+				name = "pru_west"
+				duration = 7300
+			}
+			lower_rhineland_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			north_rhine_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			palatinate_area = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	bra_rhine = {
+		icon = rhineland_conquest
+		required_missions = { bra_west }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = north_rhine_area
+				area = lower_rhineland_area
+				area = palatinate_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = north_rhine_area
+					area = lower_rhineland_area
+					area = palatinate_area
+				}
+				value = 8
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 0.5
+				trigger = {
+					has_production_building_trigger = yes
+				}
+				custom_tooltip = INCOME_FROM_WORKSHOPS_DESC
+			}
+			add_country_modifier = {
+				name = lom_industrial_economys
+				duration = 5475
+			}
+		}
+	}
+}
+
+ab_brandenburg_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BRA
+			tag = PRU
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	bra_north = {
+		icon = mission_germany
+		required_missions = { bra_rhine }
+		position = 6
+		
+		provinces_to_highlight = {
+			owner = {
+				is_part_of_hre = yes
+				OR = {
+					total_development = ROOT
+					army_size = ROOT
+				}
+			}
+		}
+		
+		trigger = {
+			legitimacy = 90
+			prestige = 90
+			NOT = {
+				any_country = {
+					is_part_of_hre = yes
+					total_development = ROOT
+				}
+			}
+			NOT = {
+				any_country = {
+					is_part_of_hre = yes
+					army_size = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_brapru.3 }
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = "bra_confederation"
+				duration = -1
+				desc = "bra_until_we_form_germany"
+			}
+			set_in_empire = no
+		    south_german_region = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+		    north_german_region = {
+				limit = {
+					NOT = { is_core = ROOT}
+					NOT = { owned_by = ROOT}
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BRA_CONFEDERATION
+		}
+	}
+	
+	pru_found_konigsberg = {
+	    icon = develop_konigsberg
+		required_missions = { bra_conquer_pruthenia }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 41
+		}
+		
+		trigger = {
+			41 = {
+				owned_by = ROOT
+			}
+			41 = {
+				development = 20
+			}
+			41 = {
+				religion = ROOT
+			}
+			41 = {
+				culture_group = ROOT
+			}
+			41 = {
+				has_tax_building_trigger = yes
+			}
+			41 = {
+				has_trade_building_trigger = yes
+			}
+			41 = {
+				has_production_building_trigger = yes
+			}
+		}
+		
+		effect = {
+		    41 = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+			}
+			41 = {
+				add_province_modifier = {
+					name = "boh_pearl_baltics"
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+ab_brandenburg_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = BRA
+			tag = PRU
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+	
+	bra_control_barlin = {
+		icon = mission_eastern_european_city
+		required_missions = { }
+		position = 6
+		
+		provinces_to_highlight = {
+			province_id = 50
+		}
+		
+		trigger = {
+			50 = {
+				owned_by = ROOT
+			}
+			50 = {
+				religion = ROOT
+			}
+			50 = {
+				NOT = {
+					devastation = 1
+				}
+			}
+			50 = {
+				NOT = {
+					nationalism = 1
+				}
+			}
+		}
+		
+		effect = {
+			50 = {
+				if = {
+					limit = {
+						NOT = {
+							culture = markish_culture
+						}
+					}
+					change_culture = markish_culture
+				}
+			}
+			50 = {
+				move_capital_effect = yes
+			}
+			50 = {
+				change_province_name = "Berlin"
+				rename_capital = "Berlin"
+			}
+			50 = {
+				add_province_modifier = {
+					name = "bra_new_capital_berlin"
+					duration = 3650
+				}
+			}
+		}
+	}
+	
+	bra_expand_new_capital = {
+		icon = renovate_berlin
+		required_missions = { bra_control_barlin }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 50
+		}
+		
+		trigger = {
+			50 = {
+				owned_by = ROOT
+			}
+			50 = {
+				development = 25
+			}
+			50 = {
+				has_tax_building_trigger = yes
+			}
+			50 = {
+				has_trade_building_trigger = yes
+			}
+			50 = {
+				has_production_building_trigger = yes
+			}
+			50 = {
+				has_road_building_trigger = yes
+			}
+		}
+		
+		effect = {
+			50 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			50 = {
+				add_province_modifier = {
+					name = "bra_clear_the_forests"
+					duration = -1
+				}
+			}
+			50 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+		}
+	}
+	
+	bra_commemorate = {
+		icon = the_balance_of_power
+		required_missions = { bra_expand_new_capital }
+		position = 8
+		
+		provinces_to_highlight = {
+			owner = {
+				primary_culture = Wendish
+			}
+		}
+		
+		trigger = {
+			NOT = {
+				any_country = {
+					primary_culture = Wendish
+				}
+			}
+			prestige = 60
+			army_tradition = 60
+			OR = {
+				advisor = architect
+				advisor = planner
+			}
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 20 }
+			50 = {
+				add_great_project_tier = {
+					type = brandenburg_gate
+					tier = 1
+				}
+			}
+		}
+	}
+}
+
+ab_prussia_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = PRU
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	emp_brapru_army_reforms_1 = {
+		icon = professional_army
+		required_missions = { }
+		position = 9
+
+		trigger = {
+			if = {
+				limit = {
+					has_dlc = "Cradle of Civilization"
+				}
+				army_professionalism = 0.50
+			}
+			else = {
+				army_tradition = 70
+			}
+		}
+
+		effect = {
+			set_country_flag = brapru_army_reforms_1
+			country_event = { id = flavor_brapru.2 }
+		}
+	}
+	
+	emp_brapru_army_reforms_2 = {
+		icon = army_reforms
+		required_missions = { emp_brapru_army_reforms_1 }
+		position = 10
+
+		trigger = {
+			has_global_modifier_value = {
+				which = discipline
+				value = 0.15
+				extra_shortcut = yes
+			}
+			OR = {
+				full_idea_group = quality_ideas
+				full_idea_group = quantity_ideas
+				full_idea_group = offensive_ideas
+				full_idea_group = defensive_ideas
+				monthly_mil = 12
+			}
+			land_forcelimit = 100
+			OR = { 
+				army_tradition = 90
+				army_professionalism = 0.7
+			}
+		}
+
+		effect = {
+			set_country_flag = brapru_army_reforms_2
+			country_event = { id = flavor_brapru.6 }
+			if = {
+				limit = { 
+					has_dlc = "Domination" 
+					OR = {
+						tag = PRU
+						tag = GER 
+						has_country_flag = access_to_prussian_militarization_flag #For the modders
+					}
+					has_reform = prussian_monarchy
+				}
+				custom_tooltip = pru_access_normal_militarization_tt
+				set_country_flag = enable_second_mil_level_flag
+				regenerate_government_mechanics = yes
+			}
+		}
+	}
+	
+	emp_brapru_army_reforms_3 = {
+		icon = an_army_with_a_state
+		required_missions = { emp_brapru_army_reforms_2 }
+		position = 11
+
+		trigger = {
+			land_forcelimit = 200
+			if = {
+				limit = {
+					has_dlc = "Cradle of Civilization"
+				}
+				army_professionalism = 1
+			}
+			else = {
+				army_tradition = 95
+			}					
+		}
+		
+		effect = {
+			set_country_flag = brapru_army_reforms_3
+			country_event = { id = flavor_brapru.29 }
+			if = {
+				limit = {
+					has_dlc = "Cradle of Civilization"
+				}
+				add_country_modifier = {
+					name = "pru_space_marines"
+					duration = -1
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = "pru_space_marines_2"
+					duration = -1
+				}
+			}
+			if = {
+				limit = { 
+					has_dlc = "Domination" 
+					OR = {
+						tag = PRU
+						tag = GER 
+						has_country_flag = access_to_prussian_militarization_flag #For the modders
+					}
+					has_reform = prussian_monarchy
+				}
+				custom_tooltip = pru_access_advanced_militarization_tt
+				clr_country_flag = enable_second_mil_level_flag
+				set_country_flag = enable_third_mil_level_flag
+				regenerate_government_mechanics = yes
+			}
 		}
 	}
 }

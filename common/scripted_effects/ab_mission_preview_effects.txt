@@ -18,6 +18,7 @@ ab_enable_branching_mission_review = {
 	}
 }
 
+
 ab_select_current_missions = {
 	hidden_effect = {
 		if = {
@@ -118,6 +119,42 @@ ab_select_current_branch = {
 		}
 		ab_select_current_missions = { key = AB_ALB }
 	}
+	if = {
+		limit = { 
+			ab_can_preview_mission_of_key_and_batch = {
+				key = BOH_RELIGION
+				batch = $batch$
+			} 
+		}
+		ab_select_current_missions = { key = BOH_RELIGION }
+	}
+	if = {
+		limit = { 
+			ab_can_preview_mission_of_key_and_batch = {
+				key = BOH_EXPANSION
+				batch = $batch$
+			} 
+		}
+		ab_select_current_missions = { key = BOH_EXPANSION }
+	}
+	if = {
+		limit = { 
+			ab_can_preview_mission_of_key_and_batch = {
+				key = FRC_HRE_FRANKISH
+				batch = $batch$
+			} 
+		}
+		ab_select_current_missions = { key = FRC_HRE_FRANKISH }
+	}
+	if = {
+		limit = { 
+			ab_can_preview_mission_of_key_and_batch = {
+				key = FRC_SICILIAN_ENGLISH
+				batch = $batch$
+			} 
+		}
+		ab_select_current_missions = { key = FRC_SICILIAN_ENGLISH }
+	}
 	# ]]]
 }
 
@@ -200,6 +237,47 @@ ab_clear_all_branching_flags = {
 		clr_country_flag = alb_illyrian_path
 		clr_country_flag = alb_latin_path
 	}
+	# BOH
+	if = {
+	    limit = { 
+			ab_can_preview_mission_of_key_and_batch = { 
+				key = BOH_RELIGION
+				batch = $batch$ 
+			} 
+		}
+	    clr_country_flag = boh_catholic_missions
+	    clr_country_flag = boh_hussite_missions
+	}
+	if = {
+	    limit = { 
+			ab_can_preview_mission_of_key_and_batch = { 
+				key = BOH_EXPANSION
+				batch = $batch$ 
+			} 
+		}
+	    clr_country_flag = bohemia_slavic_missions
+	    clr_country_flag = bohemia_germanic_missions
+	}
+	if = {
+	    limit = { 
+			ab_can_preview_mission_of_key_and_batch = { 
+				key = FRC_HRE_FRANKISH
+				batch = $batch$ 
+			} 
+		}
+	    clr_country_flag = frc_hre_focus
+	    clr_country_flag = frc_frankish_focus
+	}
+	if = {
+	    limit = { 
+			ab_can_preview_mission_of_key_and_batch = { 
+				key = FRC_SICILIAN_ENGLISH
+				batch = $batch$ 
+			} 
+		}
+	    clr_country_flag = frc_english_focus
+	    clr_country_flag = frc_sicilian_focus
+	}
 	# ]]]
 }
 
@@ -276,6 +354,58 @@ ab_preview_mission_branch_1 = {
 		set_country_flag = alb_illyrian_path
 		custom_tooltip = alb_illyrian_path_preview_tt
 	}
+	## BOH
+	if = {
+	    limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = BOH_RELIGION
+				batch = $batch$
+			}
+		}
+	    set_country_flag = boh_catholic_missions
+	    custom_tooltip = boh_catholic_missions_preview_tt
+	}
+	if = {
+	    limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = BOH_EXPANSION
+				batch = $batch$
+			}
+		}
+	    set_country_flag = bohemia_slavic_missions
+	    custom_tooltip = bohemia_slavic_missions_preview_tt
+	}
+	## FRC
+	if = {
+	    limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = AB_LIT
+				batch = $batch$
+			}
+		}
+	    set_country_flag = lithuania_pagan_path
+	    custom_tooltip = lithuania_pagan_path_preview_tt
+	}
+	if = {
+	    limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = FRC_HRE_FRANKISH
+				batch = $batch$
+			}
+		}
+	    set_country_flag = frc_hre_focus
+	    custom_tooltip = frc_hre_focus_preview_tt
+	}
+	if = {
+	    limit = {
+			ab_can_preview_mission_of_key_and_batch = {
+				key = FRC_SICILIAN_ENGLISH
+				batch = $batch$
+			}
+		}
+	    set_country_flag = frc_sicilian_focus
+	    custom_tooltip = frc_sicilian_focus_preview_tt
+	}
 	# ]]]
 }
 
@@ -351,6 +481,48 @@ ab_preview_mission_branch_2 = {
 		}
 		set_country_flag = alb_latin_path
 		custom_tooltip = alb_latin_path_preview_tt
+	}
+	## BOH
+	if = {
+	    limit = {
+			ab_can_preview_mission_of_key_and_batch = { 
+				key = BOH_RELIGION
+				batch = $batch$
+			}
+		}
+	    set_country_flag = boh_hussite_missions
+	    custom_tooltip = boh_hussite_missions_preview_tt
+	}
+	if = {
+	    limit = {
+			ab_can_preview_mission_of_key_and_batch = { 
+				key = BOH_EXPANSION
+				batch = $batch$
+			}
+		}
+	    set_country_flag = bohemia_germanic_missions
+	    custom_tooltip = bohemia_germanic_missions_preview_tt
+	}
+	## FRC
+	if = {
+        limit = {
+			ab_can_preview_mission_of_key_and_batch = { 
+				key = FRC_HRE_FRANKISH
+				batch = $batch$
+			}
+		}
+        set_country_flag = frc_frankish_focus
+        custom_tooltip = frc_frankish_focus_preview_tt
+	}
+	if = {
+	    limit = {
+			ab_can_preview_mission_of_key_and_batch = { 
+				key = FRC_SICILIAN_ENGLISH
+				batch = $batch$
+			}
+		}
+	    set_country_flag = frc_english_focus
+	    custom_tooltip = frc_english_focus_preview_tt
 	}
 	# ]]]
 }
@@ -702,6 +874,94 @@ ab_select_current_missions_AB_ALB = {
 		add_country_modifier = {
 			name = alb_champion
 			duration = -1
+		}
+	}
+}
+
+ab_select_current_missions_BOH_RELIGION = {}
+ab_select_current_missions_BOH_EXPANSION = {
+
+	if = {
+		limit = {
+			has_country_flag = bohemia_germanic_missions
+		}
+		# To avoid dumb stuff
+		custom_tooltip = AB_EMPTY
+
+		custom_tooltip = BOH_GERMAN_CLAIM
+		hidden_effect = {
+			every_neighbor_province = {
+				limit = {
+					culture_group = germanic
+					NOT = { owned_by = ROOT }
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+ab_select_current_missions_FRC_HRE_FRANKISH = {
+	if = {
+		limit = { has_country_flag = frc_frankish_focus }
+		custom_tooltip = AB_EMPTY
+		
+		wallonia_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		lower_rhineland_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		piedmont_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		liguria_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+		lombardy_area = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT	}
+				NOT = { is_core = ROOT	}
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+ab_select_current_missions_FRC_SICILIAN_ENGLISH = {
+	if = {
+		limit = { has_country_flag = frc_sicilian_focus }
+		custom_tooltip = AB_EMPTY
+		
+		sicily_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		western_sicily_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
 		}
 	}
 }

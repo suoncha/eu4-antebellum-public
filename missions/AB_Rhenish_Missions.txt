@@ -1,0 +1,2681 @@
+ab_rhineland_first = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LUX
+			tag = TRI
+			tag = BRG
+			tag = AAC
+			tag = KOL
+			tag = KLE
+			tag = NSA
+			tag = MAI
+			tag = FRN
+			tag = HES
+			tag = RVA
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rhl_claim_westphalia = {
+		icon = westphalian_conquest
+		required_missions = { rhl_enforce_sovereignty }
+		position = 2
+
+		provinces_to_highlight = {
+			OR = {
+				area = westphalia_area
+				area = north_westphalia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 4
+				OR = {
+					area = westphalia_area
+					area = north_westphalia_area
+				}
+			}
+		}
+		
+		effect = {
+			add_accepted_culture_or_dip_power = {
+				culture = hannoverian
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = { 
+				name = rhl_integrated_westphalia
+				duration = -1 
+			}
+			weser_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_saxony_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			braunschweig_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					owns = 82
+				}
+				custom_tooltip = RHL_OWN_WESTFALEN_YES
+				country_event = { id = westphalian_mission_events.1 }
+			}
+			else = {
+				custom_tooltip = RHL_OWN_WESTFALEN_NO
+				tooltip = {
+					country_event = { id = westphalian_mission_events.1 }
+				}
+			}
+		}
+	}
+
+	rhl_hanseatic_trade_ports = {
+		icon = mission_rb_hanseatic_east
+		required_missions = { rhl_claim_westphalia }
+		position = 4
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1874
+				province_id = 44
+				province_id = 45
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		
+		trigger = {
+			owns_core_province = 1874
+			owns_core_province = 44
+			owns_core_province = 45
+		}
+
+		effect = {
+			if = {
+				limit = {
+					NOT = { max_sailors = 1000 }
+				}
+				add_sailors = 1000
+			}
+			else = {
+				add_yearly_sailors = 10
+			}
+			add_country_modifier = {
+				name = han_hansa_cities_mod
+				duration = 7300
+			}
+			holstein_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mecklenburg_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			vorpommern_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rhl_rule_the_waves = {
+		icon = mission_rb_grow_the_channel
+		required_missions = { rhl_hanseatic_trade_ports }
+		position = 6
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			has_port = yes
+			has_shipyard_building_trigger = no
+		}
+		
+		trigger = {
+			navy_size_percentage = 0.85
+			num_of_owned_provinces_with = {
+				value = 10
+				has_shipyard_building_trigger = yes
+			}
+		}
+
+		effect = {
+			create_explorer = { tradition = 50 }
+			45 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = 18250
+					power = 35
+					key = han_naval_dominance_trade_mod
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rhl_unlock_hansa_doctrine
+			custom_tooltip = RHL_UNLOCK_HANSA_DOCTRINE
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = RVA
+						was_tag = RVA
+					}
+				}
+				custom_tooltip = RHL_START_AS_RVA_YES
+				add_country_modifier = {
+					name = rhl_rising_trade_power
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_RVA_NO
+				tooltip = {
+					add_country_modifier = {
+						name = rhl_rising_trade_power
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rhl_rhenish_trade_supremacy = {
+		icon = return_visby_to_the_league
+		required_missions = { }
+		position = 8
+
+		provinces_to_highlight = {
+			province_id = 1876
+			NOT = {
+				trade_share = {
+					country = ROOT
+					share = 50
+				}
+			}
+		}
+		
+		trigger = {
+			1876 = {
+				trade_share = {
+					country = ROOT
+					share = 50
+				}
+			}
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			add_country_modifier = { 
+				name = efficienct_merchants 
+				duration = 7300
+			}
+			define_advisor = {
+				type = trader
+				skill = 2
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	rhl_dominate_german_trade = {
+		icon = dominant_economy
+		required_missions = { rhl_rhenish_trade_supremacy }
+		position = 9
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					owned_by = ROOT
+					province_has_center_of_trade_of_level = 1
+					NOT = { province_has_center_of_trade_of_level = 2 }
+				}
+				AND = {
+					OR = {
+						province_id = 1876
+						province_id = 1872
+						province_id = 63
+					}
+					NOT = {
+						trade_share = {
+							country = ROOT
+							share = 80
+						}
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				culture_group = germanic
+				province_has_center_of_trade_of_level = 2
+			}
+			1876 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			1872 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+			63 = {
+				trade_share = {
+					country = ROOT
+					share = 80
+				}
+			}
+		}
+		
+		effect = {
+			add_years_of_trade_income = {
+				years = 2
+				custom_tooltip = ars_trade_income
+			}
+			set_country_flag = enable_special_trader_flag 
+			custom_tooltip = GEN_TRADER_SCALING
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = "tur_trading_cities"
+				duration = 9125
+			}
+			custom_tooltip = TUR_DEV_CENTER
+		}
+	}
+
+	rhl_military_industry = {
+		icon = mission_iron_and_copper
+		required_missions = { rhl_ruhrgebiet }
+		position = 10
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				trade_goods = iron
+				trade_goods = copper
+			}
+			OR = {
+				has_production_building_trigger = no
+				NOT = { base_production = 6 }
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 6
+				OR = {
+					trade_goods = iron
+					trade_goods = copper
+				}
+				base_production = 6
+				has_production_building_trigger = yes
+			}
+		}
+
+		effect = {
+			add_mil_power = 100
+			change_price = {
+				trade_goods = iron
+				key = "Weapon Manufacturer"
+				value = 0.25
+				duration = -1
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rhl_weapon_manufacturer_of_germany
+				duration = -1
+			}
+			if = {
+				limit = {
+					OR = {
+						tag = NSA
+						was_tag = NSA
+					}
+				}
+				custom_tooltip = RHL_START_AS_NSA_YES
+				83 = {
+					add_province_modifier = {
+						name = rhl_nassau_copper_mine
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_NSA_NO
+				tooltip = {
+					83 = {
+						add_province_modifier = {
+							name = rhl_nassau_copper_mine
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+
+	rhl_industrial_revolution = {
+		icon = mission_rb_build_furnaces
+		required_missions = { rhl_military_industry }
+		position = 12
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				AND = {
+					trade_goods = iron
+					NOT = {
+						has_building = weapons
+						base_production = 10
+					}
+				}
+				NOT = {
+					OR = {
+						has_building = mills
+						has_building = farm_estate
+						has_building = tradecompany
+						has_building = plantations
+						has_building = textile
+						has_building = weapons
+						has_building = wharf
+						has_building = furnace
+					}
+				}
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 1
+				trade_goods = iron
+				has_building = weapons
+				base_production = 10
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				OR = {
+					has_building = mills
+					has_building = farm_estate
+					has_building = tradecompany
+					has_building = plantations
+					has_building = textile
+					has_building = weapons
+					has_building = wharf
+					has_building = furnace
+				}
+			}
+		}
+
+		effect = {
+			if = {
+				limit = {
+					any_owned_province = {
+						trade_goods = iron
+						has_building = weapons
+						base_production = 10
+					}
+				}
+				random_owned_province = {
+					limit = {
+						trade_goods = iron
+						has_building = weapons
+						base_production = 10
+					}
+					change_trade_goods = coal
+				}
+				custom_tooltip = AB_EMPTY
+			}
+			else_if = {
+				limit = {
+					any_owned_province = {
+						trade_goods = iron
+					}
+				}
+				tooltip = {
+					random_owned_province = {
+						limit = {
+							trade_goods = iron
+						}
+						change_trade_goods = coal
+					}
+				}
+				custom_tooltip = AB_EMPTY
+			}
+			custom_tooltip = LOM_MANUFACTORIES
+			add_country_modifier = {
+				name = fkn_we_produce_stuff
+				duration = 10950
+			}
+			hidden_effect = {		
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								OR = {
+									has_building = mills
+									has_building = farm_estate
+									has_building = tradecompany
+									has_building = plantations
+									has_building = textile
+									has_building = weapons
+									has_building = wharf
+									has_building = furnace
+								}
+							}
+							add_base_production = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+}
+
+ab_rhineland_second = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LUX
+			tag = TRI
+			tag = BRG
+			tag = AAC
+			tag = KOL
+			tag = KLE
+			tag = NSA
+			tag = MAI
+			tag = FRN
+			tag = HES
+			tag = RVA
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rhl_enforce_sovereignty = {
+		icon = mission_among_the_great_powers
+		required_missions = { }
+		position = 1
+				
+		trigger = {
+			army_size_percentage = 0.85
+			num_of_generals = 1
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = han_dominant_in_northern_germany
+				duration = 3650
+			}
+			westphalia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			north_westphalia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = SAX_CLAIM_NEIGHBOUR
+			hidden_effect = {
+				every_neighbor_province = {
+					limit = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_permanent_claim = ROOT	}
+						NOT = { is_core = ROOT	}
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	rhl_legacy_of_widukind = {
+		icon = mission_germancentury
+		required_missions = { rhl_claim_westphalia rhl_unite_rhineland }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				area = braunschweig_area
+				area = thuringia_area
+				area = northern_saxony_area
+				area = south_saxony_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 11
+				OR = {
+					area = braunschweig_area
+					area = thuringia_area
+					area = northern_saxony_area
+					area = south_saxony_area
+				}
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = rhl_claimed_the_saxon_mines
+				duration = 7300
+			}
+			custom_tooltip = RHL_DEVELOP_IRON
+			custom_tooltip = AB_EMPTY
+			mittelmark_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lusatia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = HES
+						was_tag = HES
+					}
+				}
+				custom_tooltip = RHL_START_AS_HES_YES
+				add_ruler_personality = legendary_conqueror_personality
+				add_ruler_modifier = {
+					name = rhl_hessian_glory
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_HES_NO
+				tooltip = {
+					add_ruler_personality = legendary_conqueror_personality
+					add_ruler_modifier = {
+						name = rhl_hessian_glory
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rhl_eastern_reach = {
+		icon = mission_wendia
+		required_missions = { rhl_hanseatic_trade_ports rhl_legacy_of_widukind }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				area = mittelmark_area
+				area = mecklenburg_area
+				area = vorpommern_area
+				area = lusatia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 11
+				OR = {
+					area = mittelmark_area
+					area = mecklenburg_area
+					area = vorpommern_area
+					area = lusatia_area
+				}
+			}
+		}
+
+		effect = {
+			custom_tooltip = RHL_CHRISTIANIZE_EAST
+			tooltip = {
+				add_province_modifier = {
+					name = rhl_christianize_the_east
+					duration = 7300
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture_group = west_slavic
+					}
+					add_province_modifier = {
+						name = rhl_christianize_the_east
+						duration = 7300
+					}
+				}
+			}
+			define_advisor = {
+				type = inquisitor
+				skill = 2
+				cost_multiplier = 0.5
+			}
+			set_country_flag = bra_ostsiedlung_flag
+			custom_tooltip = BRA_OSTSIEDLUNG
+		}
+	}
+
+	rhl_north_german_confederation = {
+		icon = a.e.i.o.u.
+		required_missions = { rhl_eastern_reach }
+		position = 6
+
+		provinces_to_highlight = {
+			OR = {
+				culture = hessian
+				culture = hannoverian
+				culture = lower_saxon
+				culture = saxon
+				culture = markish_culture
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 45
+				OR = {
+					culture = hessian
+					culture = hannoverian
+					culture = lower_saxon
+					culture = saxon
+					culture = markish_culture
+				}
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = ab_rhineland.0
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BOH_HRE_AE
+			hidden_effect = {
+				every_country = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_aggressive_expansion = {
+						who = ROOT
+						value = -20
+						apply_calc = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					owns_all_provinces = {
+						culture = czech
+					}
+				}
+				custom_tooltip = RHL_OWN_CZECH_YES
+				hidden_effect = {
+					replace_culture_with_effect = {
+						new_culture = Bohemian
+						old_culture_1 = czech
+					}
+					266 = { change_original_culture = Bohemian }
+					267 = { change_original_culture = Bohemian }
+					1771 = { change_original_culture = Bohemian }
+					2970 = { change_original_culture = Bohemian }
+					2967 = { change_original_culture = Bohemian }
+					2968 = { change_original_culture = Bohemian }
+					2970 = { change_original_culture = Bohemian }
+					4724 = { change_original_culture = Bohemian }
+					4725 = { change_original_culture = Bohemian }
+					4978 = { change_original_culture = Bohemian }
+				}
+			}
+			else = {
+				custom_tooltip = RHL_OWN_CZECH_NO
+			}
+		}
+	}
+
+	rhl_north_sea_power = {
+		icon = mission_baltic_empire
+		required_missions = { rhl_rule_the_waves rhl_reign_over_the_dutchs }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						province_id = 45
+						province_id = 23
+						province_id = 97
+					}
+					NOT = { is_strongest_trade_power = ROOT }
+				}
+				owner = {
+					any_owned_province = {
+						sea_zone = {
+							area = north_sea_area
+						}
+					}
+					num_of_heavy_ship = ROOT
+				}
+			}
+		}
+
+		trigger = {
+			45 = {
+				is_strongest_trade_power = ROOT
+			}
+			23 = {
+				is_strongest_trade_power = ROOT
+			}
+			97 = {
+				is_strongest_trade_power = ROOT
+			}
+			custom_trigger_tooltip = {
+				tooltip = RHL_STRONGEST_NAVY_NORTH_SEA
+				NOT = {
+					any_country = {
+						any_owned_province = {
+							sea_zone = {
+								area = north_sea_area
+							}
+						}
+						num_of_heavy_ship = ROOT
+					}
+				}
+			}
+		}
+
+		effect = {
+			custom_tooltip = HLV_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = RHL_perma_pp
+					amount = 10
+				}
+			}
+			add_country_modifier = {
+				name = rhl_north_sea_power
+				duration = 36500
+			}
+			custom_tooltip = RHL_NAVAL_BARRAGE
+		}
+	}
+
+	rhl_ruhrgebiet = {
+		icon = promote_urbanization
+		required_missions = { rhl_rhenish_trade_supremacy rhl_splendor_herrenhausen }
+		position = 9
+
+		provinces_to_highlight = {
+			OR = {
+				province_id = 2975
+				province_id = 69
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { development = 25 }
+				NOT = { has_tax_building_trigger = yes }
+				NOT = { has_production_building_trigger = yes }
+				NOT = { has_trade_building_trigger = yes }
+			}
+		}
+
+		trigger = {
+			2975 = {
+				owned_by = ROOT
+				development = 25
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+			69 = {
+				owned_by = ROOT
+				development = 25
+				has_tax_building_trigger = yes
+				has_production_building_trigger = yes
+				has_trade_building_trigger = yes
+			}
+		}
+
+		effect = {
+			change_price = {
+				trade_goods = silk
+				key = "German Silk Monopoly"
+				value = 0.15
+				duration = -1
+			}
+			custom_tooltip = AB_EMPTY
+			2975 = {
+				change_trade_goods = silk
+				add_province_modifier = {
+					name = rhl_metropolises_of_ruhr_valley
+					duration = -1
+				}
+			}
+			69 = {
+				change_trade_goods = silk
+				add_province_modifier = {
+					name = rhl_metropolises_of_ruhr_valley
+					duration = -1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					2975 = {
+						owned_by = ROOT
+						development = 35
+					}
+					69 = {
+						owned_by = ROOT
+						development = 35
+					}
+				}
+				custom_tooltip = RHL_EMPOWER_RUHR_YES
+				hidden_effect = {
+					2975 = {
+						remove_province_modifier = rhl_metropolises_of_ruhr_valley
+						add_province_modifier = {
+							name = rhl_metropolises_of_ruhr_valley_buffed
+							duration = -1
+						}
+					}
+					69 = {
+						remove_province_modifier = rhl_metropolises_of_ruhr_valley
+						add_province_modifier = {
+							name = rhl_metropolises_of_ruhr_valley_buffed
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RHL_EMPOWER_RUHR_NO
+			}
+		}
+	}
+
+	rhl_rhenish_economic_hub = {
+		icon = saxon_manufacturing
+		required_missions = { rhl_military_industry rhl_ruhrgebiet rhl_agricultural_revolution }
+		position = 11
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			culture = hessian
+		}
+
+		trigger = {
+			development_in_provinces = {
+				value = 250
+				culture = hessian
+			}
+		}
+
+		effect = {
+			add_years_of_income = 5
+			custom_tooltip = RHL_EVERY_RHENISH
+			tooltip = {
+				add_province_modifier = {
+					name = rhl_rhenish_economic_hub_modifier
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = hessian
+					}
+					add_province_modifier = {
+						name = rhl_rhenish_economic_hub_modifier
+						duration = -1
+					}
+				}
+			}
+			set_country_flag = rhl_unlock_planner_bonus
+			custom_tooltip = RHL_SCALING_PLANNER
+		}
+	}
+
+	rhl_center_of_europe = {
+		icon = mission_european_politics
+		required_missions = { rhl_industrial_revolution rhl_rhenish_economic_hub rhl_producing_jewelry }
+		position = 13
+
+		provinces_to_highlight = {
+			OR = {
+				area = lower_rhineland_area
+				area = north_rhine_area
+				area = hesse_area
+			}
+			NOT = {
+				owned_by = ROOT
+				development = 30
+				num_of_buildings_in_province = 7
+			}
+		}
+
+		trigger = {
+			lower_rhineland_area = {
+				type = all
+				owned_by = ROOT
+				development = 30
+				num_of_buildings_in_province = 7
+			}
+			north_rhine_area = {
+				type = all
+				owned_by = ROOT
+				development = 30
+				num_of_buildings_in_province = 7
+			}
+			hesse_area = {
+				type = all
+				owned_by = ROOT
+				development = 30
+				num_of_buildings_in_province = 7
+			}
+		}
+
+		effect = {
+			set_country_flag = rhl_unlock_architect_bonus
+			custom_tooltip = RHL_SCALING_ARCHITECT
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RHL_EVERY_CENTER_EUROPE_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = rhl_european_economic_hub
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = lower_rhineland_area
+							area = north_rhine_area
+							area = hesse_area
+						}
+					}
+					add_province_modifier = {
+						name = rhl_european_economic_hub
+						duration = -1
+					}
+				}
+			}
+			set_country_flag = halve_economic_hegemon_flag
+			custom_tooltip = RHL_ECONOMIC_HEGEMON_BONUS
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							capital_scope = {
+								OR = {
+									superregion = europe_superregion
+									superregion = eastern_europe_superregion
+								}
+							}
+							total_development = ROOT
+						}
+					}
+				}
+				custom_tooltip = RHL_GREATEST_DEV_EUROPE_YES
+				add_adm_tech = 1
+			}
+			else = {
+				custom_tooltip = RHL_GREATEST_DEV_EUROPE_NO
+				tooltip = {
+					add_adm_tech = 1
+				}
+			}
+		}
+	}
+}
+
+ab_rhineland_third = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LUX
+			tag = TRI
+			tag = BRG
+			tag = AAC
+			tag = KOL
+			tag = KLE
+			tag = NSA
+			tag = MAI
+			tag = FRN
+			tag = HES
+			tag = RVA
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rhl_unite_rhineland = {
+		icon = balance_of_power
+		required_missions = { rhl_enforce_sovereignty }
+		position = 2
+
+		provinces_to_highlight = {
+			owner = {
+				primary_culture = hessian
+				total_development = ROOT
+			}
+		}
+
+		trigger = {
+			tag = RHL
+			custom_trigger_tooltip = {
+				tooltip = RHL_MORE_DEV_THAN_RHENISHES
+				NOT = {
+					any_country = {
+						primary_culture = hessian
+						total_development = ROOT
+					}
+				}
+			}
+		}
+
+		effect = {
+			country_event = {
+				id = ab_rhineland.1
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RHL_EVERY_RHENISH
+			tooltip = {
+				add_nationalism = -20
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture = hessian
+					}
+					add_nationalism = -20
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						is_rival = FKN
+						is_enemy = FKN
+					}
+				}
+				custom_tooltip = RHL_RIVAL_FKN_YES
+				hidden_effect = {
+					FKN = {
+						add_country_modifier = {
+							name = rhl_rhenish_threat
+							duration = 3650
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RHL_RIVAL_FKN_NO
+				FKN = {
+					add_country_modifier = {
+						name = rhl_rhenish_threat
+						duration = 3650
+					}
+				}
+			}
+		}
+	}
+
+	rhl_invade_the_lowlands = {
+		icon = mission_spanish_netherlands
+		required_missions = { rhl_unite_rhineland }
+		position = 4
+
+		provinces_to_highlight = {
+			region = low_countries_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 6
+				region = low_countries_region
+			}
+		}
+
+		effect = {
+			change_price = {
+				trade_goods = cloth
+				key = "Steal the Flemish Cloth"
+				value = 0.25
+				duration = 36500
+			}
+			custom_tooltip = RHL_INVADE_FLEMISH
+			tooltip = {
+				add_or_upgrade_production_building = yes
+			}
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								trade_goods = cloth
+							}
+							add_or_upgrade_production_building = yes
+						}
+					"
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			low_countries_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rhl_reign_over_the_dutchs = {
+		icon = interest_of_holland
+		required_missions = { rhl_invade_the_lowlands }
+		position = 6
+
+		provinces_to_highlight = {
+			region = low_countries_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			owns = 97
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = low_countries_region
+			}
+		}
+
+		effect = {
+			97 = {
+				add_great_project_tier = {
+					type = dutch_polders
+					tier = 1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			add_accepted_culture_or_dip_power = {
+				culture = dutch
+				dip_reward = yes
+			}
+			custom_tooltip = AB_EMPTY
+			set_country_flag = rmg_monetary_policy_no_power_cost_flag
+			custom_tooltip = RMG_MONETARY_POLICY_NO_POWER
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = LUX
+						was_tag = LUX
+					}
+				}
+				custom_tooltip = RHL_START_AS_LUX_YES
+				hidden_effect = {
+					for = {
+						amount = 5
+						effect = "
+							random_owned_province = {
+								limit = {
+									trade_goods = cloth
+									region = low_countries_region
+								}
+								change_trade_goods = silk
+							}
+						"
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_LUX_NO
+			}
+		}
+	}
+
+	rhl_splendor_herrenhausen = {
+		icon = mission_early_modern_university
+		required_missions = { }
+		position = 8
+
+		provinces_to_highlight = {
+			is_capital_of = ROOT
+			NOT = {
+				development = 25
+				has_tax_building_trigger = yes
+				has_road_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+			capital_scope = {
+				development = 25
+			}
+			capital_scope = {
+				has_tax_building_trigger = yes
+			}
+			capital_scope = {
+				has_road_building_trigger = yes
+			}
+		}
+
+		effect = {
+			add_splendor = 300
+			capital_scope = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = han_herrenhausen_gardens_mod
+				duration = 7300
+			}
+		}
+	}
+
+	rhl_dusseldorf = {
+		icon = the_great_city_of_buda
+		required_missions = { rhl_splendor_herrenhausen }
+		position = 9
+
+		provinces_to_highlight = {
+			province_id = 84
+		}
+
+		trigger = {
+			84 = {
+				owned_by = ROOT
+			}
+			84 = {
+				development = 30
+			}
+			84 = {
+				num_of_buildings_in_province = 5
+			}
+		}
+
+		effect = {
+			84 = {
+				change_province_name = "Düsseldorf"
+				rename_capital = "Düsseldorf"
+				custom_tooltip = AB_EMPTY
+				add_or_upgrade_courthouse_building = yes
+				custom_tooltip = AB_EMPTY
+				add_province_modifier = {
+					name = rhl_dusseldorf_province
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						tag = BRG
+						was_tag = BRG
+					}
+				}
+				custom_tooltip = RHL_START_AS_BRG_YES
+				84 = {
+					change_trade_goods = gems
+					add_province_modifier = {
+						name = rhl_gems_of_rhineland
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_BRG_NO
+				tooltip = {
+					84 = {
+						change_trade_goods = gems
+						add_province_modifier = {
+							name = rhl_gems_of_rhineland
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+
+	rhl_agricultural_revolution = {
+		icon = mission_pol_breadbasket_europe
+		required_missions = { rhl_ruhrgebiet }
+		position = 10
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				trade_goods = grain
+				trade_goods = livestock
+			}
+			OR = {
+				has_production_building_trigger = no
+				NOT = { base_production = 6 }
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 10
+				OR = {
+					trade_goods = grain
+					trade_goods = livestock
+				}
+				base_production = 6
+				has_production_building_trigger = yes
+			}
+		}
+
+		effect = {
+			custom_tooltip = RHL_TEN_FOOD_PROVINCE
+			tooltip = {
+				upgrade_production_building = yes
+			}
+			hidden_effect = {		
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								OR = {
+									trade_goods = grain
+									trade_goods = livestock
+								}
+								has_production_building_trigger = yes
+							}
+							upgrade_production_building = yes
+                        }
+                    "
+                }
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rhl_sustainable_food_storage
+				duration = 18250
+			}
+			if = {
+				limit = {
+					OR = {
+						tag = TRI
+						was_tag = TRI
+					}
+				}
+				custom_tooltip = RHL_START_AS_TRI_YES
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							trade_goods = grain
+						}
+						add_province_modifier = {
+							name = rhl_trierian_grain
+							duration = -1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_TRI_NO
+			}
+			tooltip = {
+				add_province_modifier = {
+					name = rhl_trierian_grain
+					duration = -1
+				}
+			}
+		}
+	}
+
+	rhl_kasseler_optics = {
+		icon = bohemian_crystal
+		required_missions = { }
+		position = 11
+
+		provinces_to_highlight = {
+			province_id = 1762
+		}
+
+		trigger = {
+			1762 = {
+				owned_by = ROOT
+			}
+			1762 = {
+				base_production = 10
+			}
+			1762 = {
+				has_production_building_trigger = yes
+			}
+		}
+
+		effect = {
+			change_innovativeness = 5
+			1762 = {
+				if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 1 }
+					}
+					center_of_trade = 1
+				}
+				else_if = {
+					limit = {
+						NOT = { province_has_center_of_trade_of_level = 3 }
+					}
+					add_center_of_trade_level = 1
+				}
+				if = {
+					limit = {
+						NOT = { has_building = mills }
+					}
+					add_building = mills
+				}
+				else = {
+					add_base_production = 3
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rhl_kasseler_optics_modifier
+				duration = 9125
+			}
+		}
+	}
+
+	rhl_producing_jewelry = {
+		icon = mission_jewelry
+		required_missions = { rhl_kasseler_optics }
+		position = 12
+
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					owned_by = ROOT
+					trade_goods = glass
+					OR = {
+						NOT = { base_production = 10 }
+						NOT = { has_production_building_trigger = yes }
+					}
+				}
+				trade_goods = gold
+			}
+		}
+
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 4
+				trade_goods = glass
+				base_production = 10
+				has_production_building_trigger = yes
+			}
+			OR = {
+				any_ally = {
+					any_owned_province = { 
+						trade_goods = gold 
+					}
+					has_opinion = {
+						who = ROOT 
+						value = 150 
+					}
+				}
+				any_owned_province = {
+					trade_goods = gold 
+					base_production = 5
+				}
+			}
+		}
+
+		effect = {
+			define_advisor = {
+				type = treasurer
+				skill = 3
+				cost_multiplier = 0.1
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rhl_luxurious_innovation
+				duration = -1
+			}
+			if = {
+				limit = {
+					any_owned_province = {
+						trade_goods = gold 
+						base_production = 5
+					}
+				}
+				custom_tooltip = HAS_OWN_GOLD_YES
+				random_owned_province = {
+					limit = {
+						trade_goods = gold
+						base_production = 5
+					}
+					add_base_tax = 2
+					add_base_production = 2
+					add_base_manpower = 2
+					add_province_modifier = {
+						name = hsa_center_of_mineral_trade
+						duration = -1 
+					}
+				}
+			}
+			else = {
+				custom_tooltip = HAS_OWN_GOLD_NO
+				tooltip = {
+					random_owned_province = {
+						add_base_tax = 2
+						add_base_production = 2
+						add_base_manpower = 2
+						add_province_modifier = {
+							name = hsa_center_of_mineral_trade
+							duration = -1 
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					any_ally = {
+						any_owned_province = { 
+							trade_goods = gold 
+						}
+						has_opinion = {
+							who = ROOT 
+							value = 150 
+						}
+					}
+				}
+				custom_tooltip = HAS_ALLY_GOLD_YES
+				random_ally = {
+					limit = {
+						any_owned_province = {
+							trade_goods = gold
+						}
+					}
+					random_owned_province = {
+						limit = {
+							trade_goods = gold
+						}
+						add_province_modifier = {
+							name = hsa_valuable_mineral_deposits_modifier
+							duration = 9125
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = HAS_ALLY_GOLD_NO
+				tooltip = {
+					random_known_country = {
+						limit = {
+							any_owned_province = {
+								trade_goods = gold
+							}
+						}
+						random_owned_province = {
+							limit = {
+								trade_goods = gold
+							}
+							add_province_modifier = {
+								name = hsa_valuable_mineral_deposits_modifier
+								duration = 9125
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+ab_rhineland_fourth = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LUX
+			tag = TRI
+			tag = BRG
+			tag = AAC
+			tag = KOL
+			tag = KLE
+			tag = NSA
+			tag = MAI
+			tag = FRN
+			tag = HES
+			tag = RVA
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rhl_modernize_fortresses = {
+		icon = fixed_garrison_system
+		required_missions = { rhl_remilitarization_of_the_rhineland }
+		position = 2
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			province_has_current_tech_fort_trigger = no
+		}
+
+		trigger = {
+			OR = {
+				fortification_expert = 2
+				has_mil_advisor_3 = yes
+			}
+			num_of_owned_provinces_with = {
+				value = 10
+				province_has_current_tech_fort_trigger = yes
+			}
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = rhl_walled_cities
+				duration = -1
+			}
+			set_country_flag = rhl_scaling_fort_engineer_flag
+			custom_tooltip = RHL_SCALING_FORT_ENGINEER
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = KLE
+						was_tag = KLE
+					}
+				}
+				custom_tooltip = RHL_START_AS_KLE_YES
+				set_country_flag = kle_unlock_general_bonus
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_KLE_NO
+			}
+		}
+	}
+
+	rhl_end_salian_rule = {
+		icon = conquer_franconia
+		required_missions = { rhl_unite_rhineland }
+		position = 3
+
+		provinces_to_highlight = {
+			OR = {
+				area = palatinate_area
+				area = franconia_area
+				area = upper_franconia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 6
+				OR = {
+					area = palatinate_area
+					area = franconia_area
+					area = upper_franconia_area
+				}
+			}
+		}
+
+		effect = {
+			add_yearly_manpower = 2
+			north_german_region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_local_autonomy = -25
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = hlv_war_germany
+				duration = 5475
+			}
+			south_german_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						is_rival = SWA
+						is_enemy = SWA
+						is_rival = BAV
+						is_enemy = BAV
+					}
+				}
+				custom_tooltip = RHL_SOUTHERN_RIVALRY_YES
+				hidden_effect = {
+					remove_country_modifier = hlv_war_germany
+					add_country_modifier = {
+						name = hlv_war_germany
+						duration = 9125
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RHL_SOUTHERN_RIVALRY_NO
+			}
+		}
+	}
+
+	rhl_secure_rhine = {
+		icon = control_swabia
+		required_missions = { rhl_end_salian_rule }
+		position = 5
+
+		provinces_to_highlight = {
+			OR = {
+				area = lower_swabia_area
+				area = upper_swabia_area
+				area = upper_rhineland_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 7
+				OR = {
+					area = lower_swabia_area
+					area = upper_swabia_area
+					area = upper_rhineland_area
+				}
+			}
+		}
+
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 20 }
+			add_country_modifier = {
+				name = fkn_dissolve_swabia
+				duration = 5475
+			}
+			lower_swabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_swabia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_rhineland_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = AAC
+						was_tag = AAC
+					}
+				}
+				custom_tooltip = RHL_START_AS_AAC_YES
+				set_country_flag = aac_unlock_cathedral_flag
+				1878 = {
+					add_province_modifier = {
+						name = rhl_seat_of_emperor
+						duration = -1
+					}
+				}
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_AAC_NO
+				tooltip = {
+					1878 = {
+						add_province_modifier = {
+							name = rhl_seat_of_emperor
+							duration = -1
+						}
+					}
+				}
+			}
+			custom_tooltip = RHL_AAC_UNLOCK_GREAT_PROJECT
+		}
+	}
+
+	rhl_enemy_of_rhineland = {
+		icon = mission_hundred_years_war
+		required_missions = { rhl_reign_over_the_dutchs rhl_secure_rhine }
+		position = 7
+
+		provinces_to_highlight = {
+			OR = {
+				owner = {
+					culture_group = french
+					army_size = ROOT
+				}
+				AND = {
+					owned_by = ROOT
+					OR = {
+						area = lower_rhineland_area
+						area = palatinate_area
+						area = upper_rhineland_area
+					}
+					NOT = {
+						province_has_current_tech_fort_trigger = yes
+						base_manpower = 6
+					}
+				}
+			}
+		}
+
+		trigger = {
+			lower_rhineland_area = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 6
+			}
+			palatinate_area = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 6
+			}
+			upper_rhineland_area = {
+				owned_by = ROOT
+				province_has_current_tech_fort_trigger = yes
+				base_manpower = 6
+			}
+			custom_trigger_tooltip = {
+				tooltip = RHL_STRONGER_THAN_FRENCH
+				NOT = {
+					any_country = {
+						culture_group = french
+						army_size = ROOT
+					}
+				}
+			}
+		}
+
+		effect = {
+			set_country_flag = rhl_building_fort
+			custom_tooltip = HLV_FORTS
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = RHL_EVERY_FRENCH_BORDER_PROVINCE
+			tooltip = {
+				add_province_modifier = {
+					name = rhl_fortify_the_french_border
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = lower_rhineland_area
+							area = palatinate_area
+							area = upper_rhineland_area
+						}
+					}
+					add_province_modifier = {
+						name = rhl_fortify_the_french_border
+						duration = -1
+					}
+				}
+			}
+			if = {
+				limit = {
+					government = monarchy
+				}
+				if = {
+					limit = {
+						exists = LOT
+					}
+					custom_tooltip = BOH_LOTCB
+					hidden_effect = {
+						add_casus_belli = {
+							type = cb_restore_personal_union
+							months = 300
+							target = LOT
+						}
+					}
+				}
+				else = {
+					custom_tooltip = BOH_LOTCB_NO
+					tooltip = {
+						add_casus_belli = {
+							type = cb_restore_personal_union
+							months = 300
+							target = LOT
+						}
+					}
+				}
+			}
+			else = {
+				if = {
+					limit = {
+						exists = LOT
+					}
+					custom_tooltip = SWA_LOTCB_NOT_MONARCHY_YES
+					hidden_effect = {
+						add_casus_belli = {
+							type = cb_vassalize_mission
+							months = 300
+							target = LOT
+						}
+					}
+				}
+				else = {
+					custom_tooltip = SWA_LOTCB_NOT_MONARCHY_NO
+					tooltip = {
+						add_casus_belli = {
+							type = cb_vassalize_mission
+							months = 300
+							target = LOT
+						}
+					}
+				}
+			}
+		}
+	}
+
+	rhl_peace_of_westphalia = {
+		icon = mission_sword_of_the_reformation
+		required_missions = { rhl_religious_matter }
+		position = 9
+		
+		trigger = {
+			if = {
+				limit = {
+					hre_size = 1
+				}
+				custom_trigger_tooltip = {
+					tooltip = westphalia_peace_trigger_tt
+					OR = {
+						hre_religion_treaty = yes
+						AND = {
+							hre_religion_locked = yes
+							emperor = { religion = ROOT }
+						}
+					}
+				}
+			}
+			else = {
+				is_at_war = no
+				num_of_cities = 80
+			}
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					hre_religion_treaty = yes
+				}
+				custom_tooltip = RHL_WESTPHALIA_PEACE_YES
+				add_country_modifier = { 
+					name = westphalia_religious_peace_mod 
+					duration = -1 
+				}
+			}
+			else = {
+				custom_tooltip = RHL_WESTPHALIA_PEACE_NO
+				tooltip = {
+					add_country_modifier = { 
+						name = westphalia_religious_peace_mod 
+						duration = -1 
+					}
+				}
+			}
+			if = {
+				limit = {
+					hre_religion_locked = yes
+					emperor = { religion = ROOT }
+				}
+				custom_tooltip = RHL_WESTPHALIA_WAR_YES
+				add_country_modifier = { 
+					name = westphalia_religious_supermacy_mod 
+					duration = -1 
+				}
+			}
+			else = {
+				custom_tooltip = RHL_WESTPHALIA_WAR_NO
+				tooltip = {
+					add_country_modifier = { 
+						name = westphalia_religious_supermacy_mod 
+						duration = -1 
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						hre_religion_treaty = yes
+					}
+					add_country_modifier = { 
+						name = westphalia_religious_peace_mod 
+						duration = -1 
+					}
+				}
+				else = {
+					add_country_modifier = { 
+						name = westphalia_religious_supermacy_mod 
+						duration = -1 
+					}
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						tag = KOL
+						was_tag = KOL
+					}
+				}
+				custom_tooltip = RHL_START_AS_KOL_YES
+				set_country_flag = kol_unlock_cathedral_flag
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_KOL_NO
+			}
+		}
+	}
+
+	rhl_fine_german_print = {
+		icon = mission_court_education
+		required_missions = { }
+		position = 10
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			trade_goods = paper
+			OR = {
+				NOT = { base_production = 10 }
+				NOT = { has_production_building_trigger = yes }
+			}
+		}
+
+		trigger = {
+			has_institution = renaissance
+			num_of_owned_provinces_with = {
+				value = 4
+				trade_goods = paper
+				base_production = 10
+				has_production_building_trigger = yes
+			}
+		}
+
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			change_price = {
+				trade_goods = paper
+				key = "German Printing Press"
+				value = 0.2
+				duration = -1
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = FKN_PAPER_PROVINCE
+			tooltip = {
+				capital_scope = { upgrade_production_building = yes }
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						trade_goods = paper
+						has_production_building_trigger = yes
+					}
+					upgrade_production_building = yes
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_institution = printing_press
+				}
+				custom_tooltip = FKN_EMBRACED_PRINTING_PRESS_YES
+				add_country_modifier = {
+					name = fkn_improve_literacy
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = FKN_EMBRACED_PRINTING_PRESS_NO
+				tooltip = {
+					add_country_modifier = {
+						name = fkn_improve_literacy
+						duration = -1
+					}
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						tag = MAI
+						was_tag = MAI
+					}
+				}
+				custom_tooltip = RHL_START_AS_MAI_YES
+				add_country_modifier = {
+					name = rhl_mainzian_administration
+					duration = -1
+				}
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_MAI_NO
+				tooltip = {
+					add_country_modifier = {
+						name = rhl_mainzian_administration
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+
+	rhl_a_new_currency = {
+		icon = mam_harness_spice_trade
+		required_missions = { rhl_fine_german_print }
+		position = 12
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_tax_building_trigger = yes
+				has_courthouse_building_trigger = yes
+			}
+		}
+
+		trigger = {
+			NOT = { inflation = 1 }
+			NOT = { corruption = 1 }
+			monthly_income = 150
+			num_of_owned_provinces_with = {
+				value = 20
+				has_tax_building_trigger = yes
+			}
+			num_of_owned_provinces_with = {
+				value = 20
+				has_courthouse_building_trigger = yes
+			}
+		}
+
+		effect = {
+			change_government_reform_progress = 100
+			set_country_flag = rhl_unlock_treasurer_bonus
+			custom_tooltip = RHL_SCALING_TREASURER
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rhl_paper_money
+				duration = 9125
+			}
+		}
+	}
+
+	rhl_invest_in_education = {
+		icon = mission_educated_people
+		required_missions = { rhl_technocratic_support }
+		position = 13
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = { has_building = university }
+		}
+
+		trigger = {
+			scholar = 3
+			num_of_owned_provinces_with = {
+				value = 10
+				has_building = university
+			}
+		}
+
+		effect = {
+			add_prestige_or_monarch_power = { amount = 25 }
+			custom_tooltip = IVR_UNIVERSITIES
+			tooltip = {
+				add_province_modifier = {
+					name = ivr_modern_mindset_province
+					duration = -1
+				}
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = university
+					}
+					add_province_modifier = {
+						name = ivr_modern_mindset_province
+						duration = -1
+					}
+				}
+			}
+			custom_tooltip = AQT_BUILDING_UNIVERSITY_BONUS
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = university
+					}
+					add_base_tax = 1
+				}
+			}
+		}
+	}
+}
+
+ab_rhineland_fifth = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = LUX
+			tag = TRI
+			tag = BRG
+			tag = AAC
+			tag = KOL
+			tag = KLE
+			tag = NSA
+			tag = MAI
+			tag = FRN
+			tag = HES
+			tag = RVA
+		}
+		NOT = { map_setup = map_setup_random }
+	}
+	has_country_shield = yes
+
+	rhl_remilitarization_of_the_rhineland = {
+		icon = mission_hessian_jaeger_corps
+		required_missions = { }
+		position = 1
+
+		trigger = {
+			OR = {
+				army_professionalism = 0.2
+				army_tradition = 50
+			}
+			army_size = 25
+		}
+
+		effect = {
+			create_general = {
+				tradition = 60
+			}
+			add_country_modifier = {
+				name = rhl_remilitarization_of_the_rhineland_modifier
+				duration = 7300
+			}
+			custom_tooltip = RHL_REMILITARIZATION
+		}
+	}
+
+	rhl_finest_of_germany = {
+		icon = the_russian_campaign
+		required_missions = { rhl_remilitarization_of_the_rhineland }
+		position = 3
+
+		trigger = {
+			OR = {
+				army_professionalism = 0.4
+				army_tradition = 100
+			}
+			OR = {
+				has_global_modifier_value = { 
+					which = discipline
+					value = 0.1
+				}
+				has_global_modifier_value = { 
+					which = land_morale
+					value = 0.2
+				}
+			}
+			army_size = 75
+		}
+
+		effect = {
+			add_power_projection = {
+				type = mission_rewards_power_projection
+				amount = 25
+			}
+			unlock_government_reform = {
+				government_reform = rhl_imperial_guards
+				tooltip = yes
+			}
+			hidden_effect = { add_government_reform = rhl_imperial_guards }
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					NOT = {
+						any_country = {
+							capital_scope = {
+								continent = europe
+							}
+							army_size = ROOT
+						}
+					}
+				}
+				custom_tooltip = RHL_LARGEST_ARMY_YES
+				add_mil_tech = 1
+			}
+			else = {
+				custom_tooltip = RHL_LARGEST_ARMY_NO
+				tooltip = {
+					add_mil_tech = 1
+				}
+			}
+		}
+	}
+
+	rhl_conquer_bavaria = {
+		icon = duchy_of_bavaria
+		required_missions = { rhl_end_salian_rule }
+		position = 4
+
+		provinces_to_highlight = {
+			OR = {
+				area = upper_bavaria_area
+				area = lower_bavaria_area
+				area = east_bavaria_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 8
+				OR = {
+					area = upper_bavaria_area
+					area = lower_bavaria_area
+					area = east_bavaria_area
+				}
+			}
+		}
+
+		effect = {
+			change_monarch_points_or_power = {
+				points = 1
+				power = adm
+			}
+			change_monarch_points_or_power = {
+				points = 1
+				power = dip
+			}
+			add_country_modifier = {
+				name = swa_bavaria
+				duration = 7300
+			}
+			upper_bavaria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			lower_bavaria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			east_bavaria_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rhl_blood_and_iron = {
+		icon = mission_bloodiron
+		required_missions = { rhl_secure_rhine rhl_conquer_bavaria }
+		position = 6
+
+		provinces_to_highlight = {
+			region = south_german_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 30
+				region = south_german_region
+			}
+		}
+
+		effect = {
+			change_monarch_points_or_power = {
+				points = 2
+				power = mil
+			}
+			add_country_modifier = {
+				name = sax_unifier_of_germany
+				duration = 7300
+			}
+			set_country_flag = rhl_unifier_of_germany
+			custom_tooltip = RMG_POWERFUL_ESTATE
+			custom_tooltip = AB_EMPTY
+			south_german_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+
+	rhl_religious_matter = {
+		icon = religious_resolution
+		required_missions = { }
+		position = 8
+
+		trigger = {
+			OR = {
+				religion = reformed
+				religion = protestant
+				religion = hussite
+				council_position = concilatory
+				council_position = harsh
+			}
+		}
+
+		effect = {
+			add_dip_power = 50
+			define_advisor = {
+				type = theologian
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.25
+			}
+		}
+	}
+
+	rhl_faith_and_press = {
+		icon = subiaco_press
+		required_missions = { rhl_fine_german_print rhl_religious_matter }
+		position = 11
+
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				NOT = { religion = ROOT }
+				NOT = { printing_press = 100 }
+			}
+		}
+
+		trigger = {
+			religious_unity = 1
+			has_institution = printing_press
+			reform_level = 5
+		}
+
+		effect = {
+			add_country_modifier = {
+				name = rhl_new_ideas
+				duration = 7300
+			}
+			unlock_government_reform = {
+				government_reform = rhl_atheist_ideas
+				tooltip = yes
+			}
+			hidden_effect = { add_government_reform = rhl_atheist_ideas }
+		}
+	}
+
+	rhl_technocratic_support = {
+		icon = mission_bridge_the_heresy
+		required_missions = { }
+		position = 12
+
+		trigger = {
+			has_adm_advisor_2 = yes
+			has_dip_advisor_2 = yes
+			has_mil_advisor_2 = yes
+			is_in_deficit = no
+		}
+
+		effect = {
+			change_government_reform_progress = 50
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = rhl_technocratic_support
+				duration = 9125
+			}
+			set_country_flag = artist_give_administrative_efficiency
+			custom_tooltip = BAV_SCALING_INNOVATOR
+		}
+	}
+
+	rhl_technology_of_hochofen = {
+		icon = mission_plc_edict_education
+		required_missions = { rhl_technocratic_support }
+		position = 13
+
+		provinces_to_highlight = {
+			owner = {
+				OR = {
+					technology_group = western
+					technology_group = eastern
+				}
+				tech_difference = 1
+			}
+		}
+
+		trigger = {
+			innovativeness = 30
+			NOT = {
+				any_country = {
+					OR = {
+						technology_group = western
+						technology_group = eastern
+					}
+					tech_difference = 1
+				} 
+			}
+		}
+
+		effect = {
+			change_innovativeness = 10
+			custom_tooltip = TUS_BUILDING_UNI_BONUS
+			set_country_flag = ab_tus_university_bonus
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_building = university
+					}
+					add_province_modifier = {
+						name = tus_university_buff
+						duration = -1
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = TUS_TAKING_TECH_GRANT_APC
+			set_country_flag = ab_tus_taking_tech_bonus
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					OR = {
+						tag = FRN
+						was_tag = FRN
+					}
+				}
+				custom_tooltip = RHL_START_AS_FRN_YES
+				set_country_flag = frn_unlock_adm_advisor_bonus
+			}
+			else = {
+				custom_tooltip = RHL_START_AS_FRN_NO
+			}
+		}
+	}
+}

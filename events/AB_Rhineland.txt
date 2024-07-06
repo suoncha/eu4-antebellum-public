@@ -1,0 +1,107 @@
+namespace = ab_rhineland
+normal_or_historical_nations = yes
+
+#North German Confederation
+country_event = {
+	id = ab_rhineland.0
+	title = ab_rhineland.0.t
+	desc = ab_rhineland.0.d
+	picture = GERMAN_UNIFICATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_rhineland.0.a
+		override_country_name = NORTH_GERMAN_CONFEDERATION
+		set_country_flag = north_german_confederation_name_override_flag
+		custom_tooltip = AB_EMPTY
+		unlock_government_reform = {
+			government_reform = rhl_confederation_reform
+			tooltip = yes
+		}
+		custom_tooltip = AB_EMPTY
+		hidden_effect = {
+			add_government_reform = rhl_confederation_reform
+		}
+		hidden_effect = {
+			capital_scope = {
+				set_seat_in_parliament = yes
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		south_german_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+#Rise of Rhineland
+country_event = {
+	id = ab_rhineland.1
+	title = ab_rhineland.1.t
+	desc = ab_rhineland.1.d
+	picture = REFORM_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_rhineland.1.a
+		add_stability_or_adm_power = yes
+		custom_tooltip = AB_EMPTY
+		north_brabant_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		brabant_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		wallonia_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		palatinate_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		upper_franconia_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		franconia_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		custom_tooltip = RHL_CLAIM_SAXON
+		hidden_effect = {
+			every_province = {
+				limit = {
+					culture = saxon
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}

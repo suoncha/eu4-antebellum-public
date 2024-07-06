@@ -1,0 +1,103 @@
+namespace = ab_slovenia
+normal_or_historical_nations = yes
+
+country_event = {
+	id = ab_slovenia.1
+	title = "ab_slovenia.1.t"
+	desc = "ab_slovenia.1.d"
+	picture = GOOD_WITH_MONARCH_eventPicture
+
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_slovenia.1.a
+		add_legitimacy = 20
+		custom_tooltip = SLV_CARANTANIAN_CULTURE
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = "slv_rebirth_of_carantania"
+			duration = -1
+		}
+		set_country_flag = slv_carantanian_culture_spread
+		hidden_effect = {
+			change_primary_culture = carantanian
+			set_ruler_culture = carantanian
+			set_heir_culture = carantanian
+			every_owned_province = {
+				limit = {
+					culture = slovene
+				}
+				change_culture = carantanian
+				change_original_culture = carantanian
+			}
+		}
+	}
+}
+
+province_event = {
+	id = ab_slovenia.2
+	title = ab_slovenia.2.t
+	desc = ab_slovenia.2.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+	}
+	
+	trigger = {
+		owner = {
+			has_country_flag = slv_carantanian_culture_spread
+		}
+		OR = {
+			area = tirol_area
+			area = inner_austria_area
+			area = austria_proper_area
+			area = east_bavaria_area
+		}
+		any_neighbor_province = {
+			culture = carantanian
+		}
+	}
+	
+	option = {
+		name = ab_slovenia.2.a
+		change_culture = carantanian
+		change_original_culture = carantanian
+	}
+}
+
+country_event = {
+	id = ab_slovenia.3
+	title = "ab_slovenia.3.t"
+	desc = "ab_slovenia.3.d"
+	picture = GOOD_WITH_MONARCH_eventPicture
+
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_slovenia.3.a
+		custom_tooltip = SLV_SAMOS_EMPIRE_RENAME
+		custom_tooltip = SLV_EVOLVING_IDEA_2
+		add_country_modifier = {
+			name = "slv_samos_empire"
+			duration = -1
+		}
+		set_country_flag = slv_evolved_ideas2
+		hidden_effect = {
+			if = {
+				limit = {
+					tag = SLC
+				}
+				country_event = {
+					id = ideagroups.1
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,82 @@
+namespace = imperial_entrance
+
+country_event = {
+	id = imperial_entrance.1
+	title = imperial_entrance.1.t
+	desc = imperial_entrance.1.d
+
+	picture = HRE_eventPicture
+
+	fire_only_once = yes
+	is_triggered_only = yes
+	major = yes
+
+	option = { #Start the Incident
+		name = imperial_entrance.1.a
+		set_imperial_incident = incident_imperial_entrance
+	}
+}
+
+country_event = {
+	id = imperial_entrance.2
+	title = imperial_entrance.2.t
+	desc = imperial_entrance.2.d
+
+	picture = HRE_eventPicture
+
+	fire_only_once = yes
+	is_triggered_only = yes
+	major = yes
+
+	option = { # Let them into the empire
+		name = imperial_entrance.2.a
+		ai_chance = {
+			factor = 100
+		}
+		custom_tooltip = imperial_entrance_LOT_entry_benefits_tt
+		tooltip = {
+			LOT = {
+				add_country_modifier = {
+					name = lot_enter
+					duration = 7300
+				}
+			}
+		}
+		hidden_effect = {
+			LOT = {
+				set_in_empire = yes
+				add_prestige = 25
+				add_legitimacy = 25
+				add_country_modifier = {
+					name = "lot_enter"
+					duration = 7300
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOT = { historical_rival_with = LOT }
+			}
+			emperor = {
+				reverse_add_opinion = {
+					who = LOT
+					modifier = opinion_LOT_allowed_entry
+				}
+			}
+		}
+	}
+	option = { # Refuse their entry
+		name = imperial_entrance.2.b
+		ai_chance = {
+			factor = 0
+		}
+		emperor = {
+			add_prestige = -10
+			add_imperial_influence = -10
+			reverse_add_opinion = {
+				who = LOT
+				modifier = opinion_LOT_denied_entry
+			}
+		}
+	}
+}

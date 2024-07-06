@@ -1,6 +1,38 @@
 namespace = ab_swabia
 normal_or_historical_nations = yes
 
+#A Hohenstaufen Ruler?
+country_event = {
+	id = ab_swabia.0
+	title = ab_swabia.0.t
+	desc = ab_swabia.0.d
+	picture = FREDERICK_V_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_swabia.0.a
+		define_ruler = {
+			dynasty = "Hohenstaufen"
+			ADM = 4
+			DIP = 6
+			MIL = 3
+		}
+		add_ruler_modifier = {
+			name = swa_old_dynasty_swabia
+			duration = -1
+		}
+	}
+
+	option = {
+		name = ab_swabia.0.b
+		add_prestige_or_monarch_power = { amount = 25 }
+		add_ruler_modifier = {
+			name = swa_new_dynasty_swabia
+			duration = -1
+		}
+	}
+}
 
 #Return of the Hussites
 country_event = {
@@ -22,14 +54,167 @@ country_event = {
 
 	is_triggered_only = yes
 
-	fire_only_once = yes
-
 	option = {
 		name = ab_swabia.1.a
-		    	add_casus_belli = {
-					type = cb_restore_personal_union
-					months = 300
-					target = BOH
+		if = {
+			limit = {
+				government = monarchy
+			}
+			add_casus_belli = {
+				type = cb_restore_personal_union
+				months = 300
+				target = BOH
+			}
+		}
+		else = {
+			add_casus_belli = {
+				type = cb_vassalize_mission
+				months = 300
+				target = BOH
+			}
+		}
+	}
+}
+
+# Franconian countries join the leader of the Franconian League
+country_event = {
+	id = ab_swabia.2
+	title = ab_swabia.2.t
+	desc = ab_swabia.2.d
+	picture = CONQUEST_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = { # Accepted to be vassalized
+		name = ab_swabia.2.a
+		ai_chance = {
+			factor = 1.5
+			modifier = {
+				factor = 0.5
+				NOT = {
+					has_opinion = {
+						who = FROM
+						value = 50
+					}
 				}
+			}
+			modifier = {
+				factor = 2
+				has_opinion = {
+					who = FROM
+					value = 100
+				}
+			}
+			modifier = {
+				factor = 2
+				has_opinion = {
+					who = FROM
+					value = 150
+				}
+			}
+			modifier = {
+				factor = 0.5
+				num_of_cities = 3
+			}
+			modifier = {
+				factor = 0.1
+				num_of_cities = 5
+			}
+		}
+		FROM = {
+			tooltip = {
+				vassalize = ROOT
+			}
+			hidden_effect = {
+				country_event = {
+					id = ab_swabia.4
+				}
+			}
+		}
+	}
+
+	option = { # Nah
+		name = ab_swabia.2.b
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				has_opinion = {
+					who = FROM
+					value = 120
+				}
+				NOT = { num_of_cities = 3 }
+			}
+		}
+		add_prestige_or_monarch_power = { amount = 10 }
+		FROM = {
+			country_event = {
+				id = ab_swabia.3
+			}
+		}
+	}
+}
+
+# Franconian countries join the leader of the Franconian League - They said no
+country_event = {
+	id = ab_swabia.3
+	title = ab_swabia.3.t
+	desc = ab_swabia.3.d
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_swabia.3.a
+		add_casus_belli = {
+			type = cb_vassalize_mission
+			months = 300
+			target = FROM
+		}
+	}
+}
+
+# Franconian countries join the leader of the Franconian League - They said yes
+country_event = {
+	id = ab_swabia.4
+	title = ab_swabia.4.t
+	desc = ab_swabia.4.d
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			if = {
+				limit = {
+					NOT = { has_country_modifier = swa_franconian_league }
+				}
+				add_country_modifier = {
+					name = swa_franconian_league
+					duration = 5475
+				}
+				FROM = {
+					set_country_flag = swa_franconian_league_first_vassal
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_swabia.4.a
+		vassalize = FROM
+		if = {
+			limit = {
+				FROM = {
+					has_country_flag = swa_franconian_league_first_vassal
+				}
+			}
+			tooltip = {
+				add_country_modifier = {
+					name = swa_franconian_league
+					duration = 5475
+				}
+			}
+		}
 	}
 }
