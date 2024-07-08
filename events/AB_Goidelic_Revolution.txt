@@ -43,6 +43,34 @@ country_event = {
 				set_country_flag = ab_goidelic_union
 			}
 		}
+		# Get a province to start the revolution, the province will be the capital,
+		# if the capital is outside the british isles use a random province in
+		# the british isles.
+		if = {
+			limit = {
+				OR = {
+					capital_scope = {
+						region = british_isles_region
+					}
+					NOT = {
+						any_owned_province = {
+							region = british_isles_region
+						}
+					}
+				}
+			}
+			capital_scope = {
+				save_event_target_as = start_of_goidelic_revolution_province
+			}
+		}
+		else = {
+			random_owned_province = {
+				limit = {
+					region = british_isles_region
+				}
+				save_event_target_as = start_of_goidelic_revolution_province
+			}
+		}
 	}
 	
 	option = {
@@ -102,7 +130,7 @@ country_event = {
 			}
 			set_consort_culture = goidelic
 		}
-		capital_scope = {
+		event_target:start_of_goidelic_revolution_province = {
 			change_culture = goidelic
 			change_original_culture = goidelic
 			hidden_effect = {
