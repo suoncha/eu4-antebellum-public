@@ -50,16 +50,17 @@ country_event = {
 		name = wendish_threat.2.a
 
 		custom_tooltip = ALL_NEIGHBORS_OF_WENDIA_WILL_GET
-		tooltip = {
-			# Some cool bonuses (TBD)
-		}
 		hidden_effect = {
-			WEE = {
-				every_neighbor_country = {
-					limit = { is_part_of_hre = yes }
+			every_country = {
+				limit = {
+					is_neighbor_of = WEE
+					is_part_of_hre = yes
 				}
-				# Cool bonuses go here (TBD)
-				# opinion bonus for addressing the Wendish Threat
+				add_yearly_manpower = 1
+				add_country_modifier = {
+					name = wendish_fortifications
+					duration = 7300
+				}
 				add_opinion = {
 					who = emperor
 					modifier = opinion_addressed_wendish_threat
@@ -73,6 +74,7 @@ country_event = {
 		every_country = {
 			limit = {
 				is_neighbor_of = WEE
+				is_part_of_hre = yes
 			}
 			# opinion malus for not addressing the Wendish Threat
 			add_opinion = {

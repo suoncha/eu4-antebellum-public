@@ -367,9 +367,13 @@ country_event = {
 			FRC = {
 				every_subject_country = {
 					limit = {
-						has_country_flag = fate_of_francia_hre_member
+						OR = {
+							has_country_flag = fate_of_francia_hre_member
+							is_part_of_hre = yes
+						}
 					}
 					grant_independence = yes
+					set_in_empire = yes
 				}
 			}
 		}
@@ -438,6 +442,7 @@ country_event = {
 								is_core = PREV_PREV
 							}
 						}
+						NOT = { has_province_flag = fate_of_francia_returned_to_empire }
 					}
 				}
 				random_province = {
@@ -469,6 +474,7 @@ country_event = {
 					cede_province = event_target:get_border_province
 					add_core = event_target:get_border_province
 					clr_province_flag = fate_of_francia_retain_province
+					set_province_flag = fate_of_francia_returned_to_empire
 				}
 			}
 
@@ -484,6 +490,7 @@ country_event = {
 								is_part_of_hre = yes
 							}
 							country_or_non_sovereign_subject_holds = FRC
+							NOT = { has_province_flag = fate_of_francia_returned_to_empire }
 						}
 					}
 				}
@@ -496,6 +503,7 @@ country_event = {
 								is_part_of_hre = yes
 							}
 							country_or_non_sovereign_subject_holds = FRC
+							NOT = { has_province_flag = fate_of_francia_returned_to_empire }
 						}
 					}
 					random_core_province = {
@@ -510,6 +518,7 @@ country_event = {
 						cede_province = PREV
 						add_core = PREV
 						clr_province_flag = fate_of_francia_retain_province
+						set_province_flag = fate_of_francia_returned_to_empire
 					}
 				}
 			}
@@ -532,6 +541,7 @@ country_event = {
 								}
 							}
 						}
+						NOT = { has_province_flag = fate_of_francia_returned_to_empire }
 					}
 				}
 				random_province = {
@@ -550,6 +560,7 @@ country_event = {
 								}
 							}
 						}
+						NOT = { has_province_flag = fate_of_francia_returned_to_empire }
 					}
 					random_neighbor_province = {
 						limit = {
@@ -568,6 +579,7 @@ country_event = {
 					set_in_empire = yes
 					cede_province = event_target:get_border_province
 					clr_province_flag = fate_of_francia_retain_province
+					set_province_flag = fate_of_francia_returned_to_empire
 				}
 			}
 
@@ -582,6 +594,7 @@ country_event = {
 								is_part_of_hre = yes
 							}
 							country_or_non_sovereign_subject_holds = FRC
+							NOT = { has_province_flag = fate_of_francia_returned_to_empire }
 						}
 					}
 				}
@@ -594,6 +607,7 @@ country_event = {
 								is_part_of_hre = yes
 							}
 							country_or_non_sovereign_subject_holds = FRC
+							NOT = { has_province_flag = fate_of_francia_returned_to_empire }
 						}
 					}
 					random_claimed_province = {
@@ -607,6 +621,7 @@ country_event = {
 						set_in_empire = yes
 						cede_province = PREV
 						clr_province_flag = fate_of_francia_retain_province
+						set_province_flag = fate_of_francia_returned_to_empire
 					}
 				}
 			}
@@ -628,6 +643,13 @@ country_event = {
 					cost = 0
 				}
 				clr_province_flag = fate_of_francia_retain_province
+			}
+
+			every_province = {
+				limit = {
+					has_province_flag = fate_of_francia_returned_to_empire
+				}
+				clr_province_flag = fate_of_francia_returned_to_empire
 			}
 		}
 	}
