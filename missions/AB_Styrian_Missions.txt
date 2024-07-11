@@ -1171,43 +1171,44 @@ tir_branch_2 = {
 			tir_bribing_the_electors
 		}
 
-		trigger = {  
-			if = {
-				limit = {
-					hre_size = 1
-				}
+		trigger = {
+			OR = {
 				is_emperor = yes
-			}
-			else = {
-				num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
-					region = south_german_region
-					value = 20
+				AND = {
+					NOT = { hre_size = 1 }
+					num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+						region = south_german_region
+						value = 20
+					}
 				}
 			}
 		} 
 
-		effect = {  
-			if = {
-				limit = {
-					hre_size = 1
-				}
-				custom_tooltip = HAB_UNLOCK_FABRICATING_IMPERIAL_CLAIMS
-				set_country_flag = hab_imperial_claims_flag
-			}
-			else = {
-				add_prestige_or_monarch_power = { amount = 10 } #I will not think of an alternative 'shiny' where the HRE magically dies
-			}
-			
-			custom_tooltip = AB_EMPTY
-			
+		effect = {
+			add_prestige_or_monarch_power = { amount = 10 }
 			add_imperial_influence = 10
+
 			custom_tooltip = AB_EMPTY
+			
 			north_german_region = {
 				limit = {
 					NOT = { is_core = ROOT }
 					NOT = { is_permanent_claim = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+
+			custom_tooltip = AB_EMPTY
+
+			if = {
+				limit = {
+					is_emperor = yes
+				}
+				custom_tooltip = YES_HAB_UNLOCK_FABRICATING_IMPERIAL_CLAIMS
+				set_country_flag = hab_imperial_claims_flag
+			}
+			else = {
+				custom_tooltip = NO_HAB_UNLOCK_FABRICATING_IMPERIAL_CLAIMS
 			}
 		} 
 	}
@@ -1770,13 +1771,16 @@ tir_branch_3 = {
 			}
 		} 
 
-		trigger = {  
-			calc_true_if = {
-				all_country = {
-					is_elector = yes
-					preferred_emperor = ROOT
+		trigger = { 
+			OR = {
+				NOT = { hre_size = 1 }
+				calc_true_if = {
+					all_country = {
+						is_elector = yes
+						preferred_emperor = ROOT
+					}
+					amount = 4
 				}
-				amount = 4
 			}
 		} 
 
