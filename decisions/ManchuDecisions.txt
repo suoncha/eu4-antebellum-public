@@ -264,25 +264,24 @@ country_decisions = {
 				limit = { has_custom_ideas = no }
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
-			hidden_effect = {
-				every_subject_country = {
-					limit = {
+			# If Pre-set CNs are not disabled and we have Colonial Nations
+			# are enabled then trigger the event
+			if = {
+				limit = {
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
 						is_colonial_nation = yes
 					}
-					# It is OK to fire all of them because the usage
-					# of country_event checks the triggers
-					country_event = { id = colonial_jin.1 }
-					country_event = { id = colonial_jin.2 }
-					country_event = { id = colonial_jin.3 }
-					country_event = { id = colonial_jin.4 }
-					country_event = { id = colonial_jin.5 }
-					country_event = { id = colonial_jin.6 }
-					country_event = { id = colonial_jin.7 }
-					country_event = { id = colonial_jin.8 }
-					country_event = { id = colonial_jin.9 }
-					country_event = { id = colonial_jin.10 }
-					country_event = { id = colonial_jin.11 }
-					country_event = { id = colonial_jin.12 }
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = jin }
+					}
 				}
 			}
 		}
@@ -414,25 +413,22 @@ country_decisions = {
 				limit = { has_custom_ideas = no }
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
-			hidden_effect = {
-				every_subject_country = {
-					limit = {
+			if = {
+				limit = {
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
 						is_colonial_nation = yes
 					}
-					# It is OK to fire all of them because the usage
-					# of country_event checks the triggers
-					country_event = { id = colonial_qing.1 }
-					country_event = { id = colonial_qing.2 }
-					country_event = { id = colonial_qing.3 }
-					country_event = { id = colonial_qing.4 }
-					country_event = { id = colonial_qing.5 }
-					country_event = { id = colonial_qing.6 }
-					country_event = { id = colonial_qing.7 }
-					country_event = { id = colonial_qing.8 }
-					country_event = { id = colonial_qing.9 }
-					country_event = { id = colonial_qing.10 }
-					country_event = { id = colonial_qing.11 }
-					country_event = { id = colonial_qing.12 }
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = qing }
+					}
 				}
 			}
 		}

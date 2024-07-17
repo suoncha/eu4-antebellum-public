@@ -1042,54 +1042,49 @@ on_raid_coast = {
 }
 
 on_colonial_nation_established = {
-	country_event = { id = colonial_germany.1 days = 21 }
-	country_event = { id = colonial_germany.2 days = 21 }
-	country_event = { id = colonial_germany.3 days = 21 }
-	country_event = { id = colonial_germany.4 days = 21 }
-	country_event = { id = colonial_germany.5 days = 21 }
-	country_event = { id = colonial_germany.6 days = 21 }
-	country_event = { id = colonial_germany.7 days = 21 }
-	country_event = { id = colonial_germany.8 days = 21 }
-	country_event = { id = colonial_germany.9 days = 21 }
-	country_event = { id = colonial_germany.10 days = 21 }
-	country_event = { id = colonial_germany.11 days = 21 }
-	country_event = { id = colonial_germany.12 days = 21 }
-	country_event = { id = colonial_brittany.1 days = 21 }
-	country_event = { id = colonial_brittany.2 days = 21 }
-	country_event = { id = colonial_brittany.3 days = 21 }
-	country_event = { id = colonial_brittany.4 days = 21 }
-	country_event = { id = colonial_brittany.5 days = 21 }
-	country_event = { id = colonial_brittany.6 days = 21 }
-	country_event = { id = colonial_brittany.7 days = 21 }
-	country_event = { id = colonial_brittany.8 days = 21 }
-	country_event = { id = colonial_brittany.9 days = 21 }
-	country_event = { id = colonial_brittany.10 days = 21 }
-	country_event = { id = colonial_brittany.11 days = 21 }
-	country_event = { id = colonial_brittany.12 days = 21 }
-	country_event = { id = colonial_italy.1 days = 21 }
-	country_event = { id = colonial_italy.2 days = 21 }
-	country_event = { id = colonial_italy.3 days = 21 }
-	country_event = { id = colonial_italy.4 days = 21 }
-	country_event = { id = colonial_italy.5 days = 21 }
-	country_event = { id = colonial_italy.6 days = 21 }
-	country_event = { id = colonial_italy.7 days = 21 }
-	country_event = { id = colonial_italy.8 days = 21 }
-	country_event = { id = colonial_italy.9 days = 21 }
-	country_event = { id = colonial_italy.10 days = 21 }
-	country_event = { id = colonial_italy.11 days = 21 }
-	country_event = { id = colonial_italy.12 days = 21 }
-	country_event = { id = colonial_byzantium.1 days = 21 }
-	country_event = { id = colonial_byzantium.2 days = 21 }
-	country_event = { id = colonial_byzantium.3 days = 21 }
-	country_event = { id = colonial_byzantium.4 days = 21 }
-	country_event = { id = colonial_byzantium.5 days = 21 }
-	country_event = { id = colonial_byzantium.6 days = 21 }
-	country_event = { id = colonial_byzantium.7 days = 21 }
-	country_event = { id = colonial_byzantium.8 days = 21 }
-	country_event = { id = colonial_byzantium.9 days = 21 }
-	country_event = { id = colonial_byzantium.10 days = 21 }
-	country_event = { id = colonial_byzantium.11 days = 21 }
-	country_event = { id = colonial_byzantium.12 days = 21 }
+	if = {
+		limit = {
+			NOT = { has_global_flag = NO_CNS }
+		}
+		if = {
+			limit = {
+				FROM = {
+					tag = GER
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = germany delay = yes }
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					OR = {
+						tag = BRI
+						AND = {
+							tag = GLL
+							was_tag = BRI
+						}
+					}
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = brittany delay = yes }
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					ab_is_italy_tag_trigger = yes
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = italy delay = yes }
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					tag = BYZ
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = byzantium delay = yes }
+		}
+	}
 }
 
 on_tech_taken = { #ROOT - Country, executed after on_tech_taken!
