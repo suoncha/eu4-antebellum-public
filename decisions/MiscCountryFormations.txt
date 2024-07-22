@@ -3,15 +3,22 @@ country_decisions = {
 		major = yes
 		potential = {
 			normal_or_historical_nations = yes
-			
+			#was_never_end_game_tag_trigger = yes
 			NOT = { has_country_flag = formed_greece_flag }
 			OR = {
 				ai = no
 				is_playing_custom_nation = no
 			}
+			OR = {
+				is_free_or_tributary_trigger = yes
+				ai = no
+			}
+			NOT = { tag = HLR }
+			# AB [[[
 			NOT = { tag = HLE }
 			NOT = { tag = MAC }
 			NOT = { tag = NCI }
+			# ]]]
 			NOT = { tag = PAP }
 			NOT = { tag = TUR }
 			NOT = { tag = BYZ }
@@ -82,6 +89,7 @@ country_decisions = {
 		}
 		effect = {
 			change_tag = GRE
+			on_change_tag_effect = yes
 			remove_non_electors_emperors_from_empire_effect = yes
 			if = {
 				limit = {
@@ -154,7 +162,7 @@ country_decisions = {
 		major = yes
 		potential = {
 			normal_or_historical_nations = yes
-			
+			#was_never_end_game_tag_trigger = yes
 			owns = 370
 			owns = 371
 			NOT = { has_country_flag = formed_iceland } #Only once
@@ -163,8 +171,12 @@ country_decisions = {
 				is_playing_custom_nation = no
 			}
 			OR = {
+				is_free_or_tributary_trigger = yes
 				ai = no
-				NOT = { num_of_cities = 5 }
+			}
+			OR = {
+				ai = no
+				NOT = { num_of_cities = 6 }
 			}
 			NOT = { tag = HLR }
 			NOT = { tag = ROM }
@@ -192,7 +204,7 @@ country_decisions = {
 			}
 		}
 		allow = {
-			NOT = { num_of_cities = 5 }
+			NOT = { num_of_cities = 6 }
 			is_at_war = no
 			owns_core_province = 371
 			owns_core_province = 370
@@ -231,6 +243,7 @@ country_decisions = {
 				}
 			}		
 			change_tag = ICE
+			on_change_tag_effect = yes
 			set_country_flag = formed_iceland
 			if = {
 				limit = { NOT = { primary_culture = norwegian } }
