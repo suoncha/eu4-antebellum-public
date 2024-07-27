@@ -614,64 +614,20 @@ country_event = {
 		custom_tooltip = BYZ_CONVERT
 		set_country_flag = byz_can_convert_turks
 		custom_tooltip = BYZ_EAST_ROME_RENAME
-	}
-	
-}
-
-#CC1
-country_event = {
-	id = ab_byzantium.17
-	title = ab_byzantium.17.t
-	desc = ab_byzantium.17.d
-	picture = AB_BYZANTIUM_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		has_country_flag = byz_can_convert_turks
-	}
-	
-	option = {
-		name = ab_byzantium.17.a
-		every_owned_province = {
-			limit = {
-				region = anatolia_region
-				NOT = {
-					culture = greek
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					region = anatolia_region
+					NOT = { culture = greek }
+				}
+				add_province_modifier = {
+					name = byz_cc
+					duration = -1
 				}
 			}
-			add_province_modifier = {
-				name = byz_cc
-				duration = -1
-			}
 		}
 	}
-}
-
-#CC2
-country_event = {
-	id = ab_byzantium.18
-	title = ab_byzantium.18.t
-	desc = ab_byzantium.18.d
-	picture = AB_BYZANTIUM_eventPicture
 	
-	hidden = yes
-	
-	trigger = {
-		has_country_flag = byz_can_convert_turks
-	}
-	
-	option = {
-		name = ab_byzantium.18.a
-		every_owned_province = {
-			limit = {
-				region = anatolia_region
-				culture_group = byzantine
-				has_province_modifier = byz_cc
-			}
-			remove_province_modifier = byz_cc
-		}
-	}
 }
 
 #CC2

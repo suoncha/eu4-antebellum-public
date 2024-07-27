@@ -92,6 +92,17 @@ ab_on_province_owner_change_update_modifiers_effect = {
 			duration = -1
 		}
 	}
+	if = {
+		limit = {
+			owner = { has_country_flag = byz_can_convert_turks }
+			region = anatolia_region
+			NOT = { culture = greek }
+		}
+		add_province_modifier = {
+			name = byz_cc
+			duration = -1
+		}
+	}
 }
 
 ab_on_trade_good_changed_government_effect = {
@@ -382,6 +393,13 @@ ab_on_province_culture_changed_effect = {
 		add_base_manpower = 1
 		add_base_production = 1
 		set_province_flag = alb_converted_bonus
+	}
+	if = {
+		limit = {
+			has_province_modifier = byz_cc
+			culture = greek
+		}
+		remove_province_modifier = byz_cc
 	}
 }
 
