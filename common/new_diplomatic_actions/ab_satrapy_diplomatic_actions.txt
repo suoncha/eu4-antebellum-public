@@ -53,11 +53,17 @@ promote_vassal_to_satrapy = {
 		}
 		if = {
 			limit = {
-				FROM = { has_reform = celestial_empire }
+				FROM = { OR = {
+					has_reform = MIN_celestial_empire
+					has_reform = celestial_empire
+				}  }
 			}
 			custom_trigger_tooltip = {
 				tooltip = FROM_IS_CELESTIAL_EMPIRE
-				FROM = { NOT = { has_reform = celestial_empire } }
+				FROM = { NOT = { OR = {
+					has_reform = MIN_celestial_empire
+					has_reform = celestial_empire
+				} } }
 			}
 		}
 		if = {

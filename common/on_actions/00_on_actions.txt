@@ -16,7 +16,10 @@ on_startup = {
 	}
 	else = {
 		if = {
-			limit = { has_reform = celestial_empire }
+			limit = { OR = {
+				has_reform = MIN_celestial_empire
+				has_reform = celestial_empire
+			} }
 			save_global_event_target_as = EmperorOfChina
 		}
 	}
@@ -1709,17 +1712,32 @@ on_mandate_of_heaven_gained = {
 			OR = {
 				NOT = { government = monarchy }
 				government = tribal
+				
 			}
 		}
 		change_government_to_monarchy = yes
 	}
-	add_government_reform = celestial_empire
-	set_mandate = 60
-	set_meritocracy = 60
-	add_country_modifier = {
-		name = new_mandate_holder
-		duration = 9125
+	if = {
+		limit = {
+			has_country_flag = persian_admin_2
+		}
+		add_government_reform = MIN_celestial_empire
+		set_mandate = 60
+		set_meritocracy = 60
+		add_country_modifier = {
+			name = new_mandate_holder
+			duration = 9125
+		}
 	}
+	else = {
+		add_government_reform = celestial_empire
+		set_mandate = 60
+		set_meritocracy = 60
+		add_country_modifier = {
+			name = new_mandate_holder
+			duration = 9125
+		}
+	}	
 	1816 = {
 		if = {
 			limit = {

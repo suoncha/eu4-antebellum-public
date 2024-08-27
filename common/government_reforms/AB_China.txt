@@ -190,6 +190,72 @@ min_persian_admin_republic = {
 	}
 }
 
+MIN_celestial_empire = {
+	icon = "celestial_empire"
+	allow_normal_conversion = no
+	potential = {
+		if = {
+			limit = {
+				has_dlc = "Mandate of Heaven"
+			}
+			is_emperor_of_china = yes
+			has_country_flag = persian_admin_2
+		}
+		else = {
+			OR = {
+				has_reform = MIN_celestial_empire
+				has_country_flag = persian_admin_2
+				AND = {
+					culture_group = east_asian
+					num_of_cities = 50
+				}
+			}
+		}
+		NOT = { has_global_flag = empire_of_china_dismantled }
+	}
+	legacy_equivalent = celestial_empire_legacy
+	allow_force_tributary = no
+	valid_for_nation_designer = no
+	nation_designer_cost = 10
+	lock_level_when_selected = yes
+	factions = {
+		temples
+		enuchs
+		bureaucrats
+	}
+
+	fixed_rank = 3
+	start_territory_to_estates = 0.9
+	modifiers = {
+		tolerance_heathen = 3
+		discipline = 0.05
+		max_absolutism = -15
+		governing_capacity = 500
+	}
+	ai = {
+		factor = 1000 # should always be picked if available
+	}
+
+	custom_attributes = {
+		locked_government_type = yes
+		enables_plutocratic_idea_group = yes
+		enables_aristocratic_idea_group = no
+		# AB {{{
+		# has_unify_china_cb = yes
+		# }}}
+	}
+
+	conditional = {
+		allow = { has_dlc = "Mandate of Heaven" }
+		has_meritocracy = yes
+		factions = {}
+	}
+	conditional = {
+		allow = { has_dlc = "Res Publica" }
+		is_elective = yes
+	}
+}
+
 chinese_republic = {
 	icon = "rocrepublic"
 	allow_normal_conversion = no
