@@ -537,37 +537,33 @@ ab_hansa_conquest_second = {
 		}
 		
 		trigger = {
-			if = {
-				limit = {
-					exists = SWE
-				}
-				OR = {
-					AND = {
-						NOT = { alliance_with = SWE }
-						SWE = {
-							NOT = {
-								has_opinion = {
-									who = ROOT
-									value = -100
-								}
-							}
-						}
-					}
-					AND = {
-						alliance_with = SWE
-						SWE = {
+			OR = {
+				AND = {
+					NOT = { alliance_with = SWE }
+					SWE = {
+						NOT = {
 							has_opinion = {
 								who = ROOT
-								value = 150
+								value = -100
 							}
 						}
 					}
 				}
-			}
-			else = {
-				skaneland_area = {
-					type = all
-					country_or_non_sovereign_subject_holds = ROOT
+				AND = {
+					alliance_with = SWE
+					SWE = {
+						has_opinion = {
+							who = ROOT
+							value = 150
+						}
+					}
+				}
+				AND = {
+					NOT = { exists = SWE }
+					skaneland_area = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
 				}
 			}
 		}

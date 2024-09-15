@@ -326,6 +326,19 @@ on_war_won = {
 		which = num_of_wars_won_var
 		value = 1
 	}
+	if = {
+		limit = {
+			NOT = {
+				can_be_overlord = nahuatl_tributary
+			}
+		}
+		every_subject_country = {
+			limit = {
+				is_subject_of_type = nahuatl_tributary
+			}
+			grant_independence = yes
+		}
+	}
 }
 
 # country
@@ -1232,6 +1245,17 @@ on_death_election = {
 		elections.800	# Lottery election
 		flavor_tus.16 #Savonarola Leaves This World
 	}
+	if = {
+		limit = { has_country_flag = ven_lichking_rulers_flag }
+		add_ruler_modifier = {
+			name = ven_plague_doctors_modifier
+			duration = -1
+			hidden = yes
+		}
+	}
+	set_country_flag = INC_republic_death
+	country_event = { id = flavor_inc.27 }
+	clr_country_flag = INC_republic_death
 }
 
 # country
@@ -1696,16 +1720,17 @@ on_mandate_of_heaven_gained = {
 	}
 	# AB [[[
 	# Not good
-	#if = {
-	#	limit = { 
-	#		has_dlc = "Domination" 
-	#		NOT = { primary_culture = mongol }
-	#		NOT = { primary_culture = chahar }
-	#		NOT = { primary_culture = khalkha }
-	#		NOT = { primary_culture = oirats }
-	#	}
-	#	swap_non_generic_missions = yes 
-	#}
+	# if = {
+	# 	limit = { 
+	# 		has_dlc = "Domination" 
+	# 		NOT = { primary_culture = mongol }
+	# 		NOT = { primary_culture = chahar }
+	# 		NOT = { primary_culture = khalkha }
+	# 		NOT = { primary_culture = oirats }
+	# 		has_domination_eoc_missions_available = yes
+	# 	}
+	# 	swap_non_generic_missions = yes 
+	# }
 	# ]]]
 	if = {
 		limit = {
@@ -4541,7 +4566,6 @@ on_province_owner_change = {
 			add_province_modifier = {
 				name = ned_seven_provinces_organization_positive_modifier
 				duration = -1
-				hidden = yes
 			}
 		}
 		else_if = {
@@ -4552,7 +4576,6 @@ on_province_owner_change = {
 			add_province_modifier = {
 				name = ned_seven_provinces_organization_negative_modifier
 				duration = -1
-				hidden = yes
 			}
 		}
 	}
@@ -4809,73 +4832,21 @@ on_province_owner_change = {
             duration = -1
         }
 	}
-	# if = {
-	# 	limit = {
-	# 		owner = {
-	# 			mission_completed = feo_gothic_invasion
-	# 		}
-	# 	}
-	# 	if = {
-	# 		limit = {
-	# 			134 = {
-	# 				country_or_non_sovereign_subject_holds = ROOT
-	# 			}
-	# 		}
-	# 		add_country_modifier = {
-	# 			name = feo_vienna
-	# 			duration = -1
-	# 			hidden = yes
-	# 		}
-	# 	}
-	# 	if = {
-	# 		limit = {
-	# 			266 = {
-	# 				country_or_non_sovereign_subject_holds = ROOT
-	# 			}
-	# 		}
-	# 		add_country_modifier = {
-	# 			name = feo_prague
-	# 			duration = -1
-	# 			hidden = yes
-	# 		}
-	# 	}
-	# 	if = {
-	# 		limit = {
-	# 			45 = {
-	# 				country_or_non_sovereign_subject_holds = ROOT
-	# 			}
-	# 		}
-	# 		add_country_modifier = {
-	# 			name = feo_lubeck
-	# 			duration = -1
-	# 			hidden = yes
-	# 		}
-	# 	}
-	# 	if = {
-	# 		limit = {
-	# 			1878 = {
-	# 				country_or_non_sovereign_subject_holds = ROOT
-	# 			}
-	# 		}
-	# 		add_country_modifier = {
-	# 			name = feo_aachen
-	# 			duration = -1
-	# 			hidden = yes
-	# 		}
-	# 	}
-	# 	if = {
-	# 		limit = {
-	# 			85 = {
-	# 				country_or_non_sovereign_subject_holds = ROOT
-	# 			}
-	# 		}
-	# 		add_country_modifier = {
-	# 			name = feo_cologne
-	# 			duration = -1
-	# 			hidden = yes
-	# 		}
-	# 	}
-	# }
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = enable_gothic_invasion_cb_flag
+			}
+			OR = {
+				region = north_german_region
+				region = south_german_region
+			}
+		}
+		add_province_modifier = {
+			name = feo_return_to_gothic_ways
+			duration = -1
+		}
+	}
 }
 
 # country
@@ -5488,14 +5459,14 @@ on_create_vassal = {
 # ROOT = Country establishing it
 # First province in state is set
 on_holy_order_established = {
-	# ROOT = {
-	# 	if = {
-	# 		limit = {
-	# 			has_country_flag = ven_establish_scuola_effect_flag
-	# 		}
-	# 		change_innovativeness = 1
-	# 	}
-	# }
+	ROOT = {
+		if = {
+			limit = {
+				has_country_flag = ven_establish_scuola_effect_flag
+			}
+			change_innovativeness = 1
+		}
+	}
 }
 
 # When a minority is expelled to a colony
@@ -6059,44 +6030,46 @@ on_expanded_infrastructure = {
 		add_base_production = 1
 		add_base_manpower = 1
 	}
-	# if = {
-	# 	limit = {
-	# 		has_province_flag = feo_expand_infrastructure_gold_income
-	# 	}
-	# 	FROM = {
-	# 		add_years_of_owned_provinces_production_income = {
-	# 			years = 2
-	# 			trigger = {
-	# 				province_id = 1766
-	# 			}
-	# 		}
-	# 	}
-	# 	1766 = { clr_province_flag = feo_expand_infrastructure_gold_income}
-	# }
-	# if = {
-	# 	limit = {
-	# 		has_province_flag = azt_tenochtitlan_expand_infrastructure_flag
-	# 	}
-	# 	FROM = {
-	# 		change_government_reform_progress = 10
-	# 	}
-	# }
-	# if = {
-	# 	limit = {
-	# 		FROM = {
-	# 			has_country_flag = MUG_upgrade_expanding_infrastructure
-	# 		}
-	# 	}
-	# 	area = {
-	# 		limit = {
-	# 			owned_by = FROM
-	# 		}
-	# 		add_province_modifier = {
-	# 			name = MUG_expanded_infrastructure
-	# 			duration = 7300
-	# 		}
-	# 	}
-	# }
+	if = {
+		limit = {
+			has_province_flag = feo_expand_infrastructure_gold_income
+		}
+		FROM = {
+			add_years_of_owned_provinces_production_income = {
+				years = 2
+				trigger = {
+					province_id = 1766
+				}
+			}
+		}
+		1766 = { clr_province_flag = feo_expand_infrastructure_gold_income}
+	}
+	if = {
+		limit = {
+			has_province_flag = azt_tenochtitlan_expand_infrastructure_flag
+		}
+		FROM = {
+			change_government_reform_progress = 10
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = MUG_upgrade_expanding_infrastructure
+			}
+		}
+		area = {
+			limit = {
+				owned_by = FROM
+			}
+			add_province_modifier = {
+				name = MUG_expanded_infrastructure
+				duration = 7300
+			}
+		}
+	}
+}
+on_expanded_infrastructure_removed = {
 }
 
 #ROOT = province that was centralized in
@@ -6117,21 +6090,6 @@ on_centralized_state = {
 		owner = {
 			add_adm_power = 25
 			change_government_reform_progress = 25
-		}
-	}
-	if = {
-		limit = {
-			owner = { has_government_attribute = centralize_state_development }
-		}
-		area = {
-			limit = {
-				owned_by = ROOT
-			}
-			random_list = {
-				1 = { add_base_tax = 1 }
-				1 = { add_base_production = 1 }
-				1 = { add_base_manpower = 1 }
-			}
 		}
 	}
 	if = {
