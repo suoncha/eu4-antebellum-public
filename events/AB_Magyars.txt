@@ -104,3 +104,225 @@ country_event = {
 		}
 	}
 }
+
+country_event = {
+	id = magyar_events.5
+	title = "magyar_events.5.t"
+	desc = "magyar_events.5.d"
+	picture = HORDE_ON_HORSEBACK_eventPicture
+	
+	is_triggered_only = yes
+	
+	fire_only_once = yes
+	
+	option = {
+		name = magyar_events.5.a
+		ai_chance = { factor = 100 }
+		add_adm_power = -100
+		add_dip_power = -100
+		transdanubia_area = {
+			add_devastation = 50
+		}
+		if = {
+			limit = {
+				primary_culture = magyar_culture
+			}
+			transdanubia_area = {
+				type = all
+				change_culture = magyar_culture
+			}
+		}
+		else = {
+			transdanubia_area = {
+				type = all
+				change_culture = dunavian_culture
+			}
+		}
+		transdanubia_area = {
+			type = all
+			change_religion = ROOT
+		}
+	}
+	
+	option = {
+		name = magyar_events.5.b
+		ai_chance = { factor = 0 }
+		add_accepted_culture_or_dip_power = {
+			culture = Pannonian
+			dip_reward = yes
+		}
+		transdanubia_area = {
+			type = all
+			add_prosperity = 50
+		}
+	}
+}
+
+#Coruler choice
+country_event = {
+	id = magyar_events.6
+	title = magyar_events.6.t
+	desc = magyar_events.6.d
+	picture = NOMAD_ESTATE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = magyar_events.6.a
+		random_list = { 
+			20 = { 
+				add_ruler_modifier = {
+					name = "just_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "righteous_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "wellconnected_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "calm_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "midas_coruler"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = magyar_events.6.b
+		random_list = { 
+			20 = { 
+				add_ruler_modifier = {
+					name = "freethinker_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "careful_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "navigator_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "entrepreneur_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "industrious_coruler"
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = magyar_events.6.c
+		random_list = { 
+			20 = { 
+				add_ruler_modifier = {
+					name = "martial_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "inspiring_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "strict_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "conqueror_coruler"
+					duration = -1
+				}
+			}
+			20 = { 
+				add_ruler_modifier = {
+					name = "fierce_coruler"
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+#A New Capital
+country_event = {
+	id = magyar_events.7
+	title = "magyar_events.7.t"
+	desc = "magyar_events.7.d"
+	picture = CITY_DEVELOPMENT_eventPicture
+	
+	trigger = {
+		OR = {
+			tag = MGY
+			was_tag = MGY
+		}
+		owns_core_province = 153
+		mission_completed = mgy_conquest_of_the_homeland
+		NOT = {
+			capital = 153
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = magyar_events.7.a
+		ai_chance = { factor = 100 }
+		add_adm_power = -100
+		set_capital = 153
+		153 = {
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
+		}
+		153 = {
+			center_of_trade = 1
+		}
+	}
+	
+	option = {
+		name = magyar_events.7.b
+		ai_chance = { factor = 0 }
+		capital_scope = {
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
+		}
+	}
+}
