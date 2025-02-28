@@ -1848,14 +1848,50 @@ sax_fifth_group_tall = {
 		position = 8
 
 		provinces_to_highlight = {
-			owned_by = ROOT
-			culture = saxon
+			if = {
+				limit = {
+					primary_culture = lower_saxon
+				}
+				owned_by = ROOT
+				culture = lower_saxon
+			}
+			else_if = {
+				limit = {
+					primary_culture = hannoverian
+				}
+				owned_by = ROOT
+				culture = hannoverian
+			}
+			else = {
+				owned_by = ROOT
+				culture = lower_saxon
+			}
 		}
 
 		trigger = {
-			development_in_provinces = {
-				value = 160
-				culture = saxon
+			if = {
+				limit = {
+					primary_culture = lower_saxon
+				}
+				development_in_provinces = {
+					value = 160
+					culture = lower_saxon
+				}
+			}
+			else_if = {
+				limit = {
+					primary_culture = hannoverian
+				}
+				development_in_provinces = {
+					value = 160
+					culture = hannoverian
+				}	
+			}
+			else = {
+				development_in_provinces = {
+					value = 160
+					culture = lower_saxon
+				}
 			}
 		}
 		
@@ -1869,7 +1905,7 @@ sax_fifth_group_tall = {
 			hidden_effect = {
 				every_owned_province = {
 					limit = {
-						culture = saxon
+						culture = lower_saxon
 					}
 					change_culture = ROOT
 					add_base_tax = 1
