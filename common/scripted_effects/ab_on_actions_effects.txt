@@ -1152,14 +1152,20 @@ ab_on_monarch_death_effect = {
 		}
 		country_event = { id = magyar_events.6 }
 	}
+	# While it looks more natural to check if we have the flag
+	# and deleting it, there is a problem that events do not trigger
+	# inside an 'else = {}' block in a scripted effect.
+	#
+	# So we have to check the inverse and leave the flag clearing
+	# for the else = {} block.
 	if = {
 		limit = {
-			has_ruler_flag = eng_heir_in_waiting
+			NOT = { has_ruler_flag = eng_heir_in_waiting }
 		}
-		clr_ruler_flag = eng_heir_in_waiting
+		country_event = { id = antebellum_england.1 }
 	}
 	else = {
-		country_event = { id = antebellum_england.1 }
+		clr_ruler_flag = eng_heir_in_waiting
 	}
 	if = {
 		limit = {
