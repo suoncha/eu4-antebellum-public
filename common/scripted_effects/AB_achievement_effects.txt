@@ -4755,6 +4755,57 @@ ab_achievement_row3_col6_effect = {
 ab_achievement_row3_col7_effect = {
     custom_tooltip = AB_LONGDASHLINE
 	if = {
+		limit = {
+			ab_achiev_page = { page = 1 }
+		}
+		custom_tooltip = AB_UNDOING_CIVILIZATION_ACHIVEMENT
+		custom_tooltip = AB_LONGDASHLINE
+		if = {
+			limit = {
+				has_country_flag = achiev_undoing_civilization
+			}
+			custom_tooltip = AB_ACHIEVEMENT_COMPLETED
+		}
+		else = {
+			if = {
+				limit = {
+					custom_trigger_tooltip = {
+						tooltip = AB_HAS_UNCIVILIZED_ADU
+						has_country_flag = smi_tribalized_andalusia
+					}
+				}
+				custom_tooltip = AB_UNCIVILIZED_ADU_YES
+			}
+			else = {
+				custom_tooltip = AB_UNCIVILIZED_ADU_NO
+			}
+			if = {
+				limit = {
+					custom_trigger_tooltip = {
+						tooltip = AB_HAS_UNCIVILIZED_ENG
+						has_country_flag = smi_tribalized_england
+					}
+				}
+				custom_tooltip = AB_UNCIVILIZED_ENG_YES
+			}
+			else = {
+				custom_tooltip = AB_UNCIVILIZED_ENG_NO
+			}
+			if = {
+				limit = {
+					custom_trigger_tooltip = {
+						tooltip = AB_HAS_UNCIVILIZED_FRC
+						has_country_flag = smi_tribalized_francia
+					}
+				}
+				custom_tooltip = AB_UNCIVILIZED_FRC_YES
+			}
+			else = {
+				custom_tooltip = AB_UNCIVILIZED_FRC_NO
+			}
+		}
+	}
+	else_if = {
         limit = {
             ab_achiev_page = { page = 6 }
         }
@@ -4864,6 +4915,34 @@ ab_achievement_row3_col7_effect = {
 ab_achievement_row4_col1_effect = {
     custom_tooltip = AB_LONGDASHLINE
 	if = {
+		limit = {
+			ab_achiev_page = { page = 1 }
+		}
+		custom_tooltip = AB_DENORSE_THE_NORSE_ACHIVEMENT
+		custom_tooltip = AB_LONGDASHLINE
+		if = {
+			limit = {
+				has_country_flag = achiev_denorse_the_norse
+			}
+			custom_tooltip = AB_ACHIEVEMENT_COMPLETED
+		}
+		else = {
+			if = {
+				limit = {
+					NOT = { 
+						any_province = {
+							religion = norse_pagan_reformed
+						}
+					}
+				}
+				custom_tooltip = AB_NORSE_YES
+			}
+			else = {
+				custom_tooltip = AB_NORSE_NO
+			}
+		}
+	}
+	else_if = {
         limit = {
             ab_achiev_page = { page = 6 }
         }
@@ -4942,6 +5021,42 @@ ab_achievement_row4_col1_effect = {
 ab_achievement_row4_col2_effect = {
     custom_tooltip = AB_LONGDASHLINE
 	if = {
+		limit = {
+			ab_achiev_page = { page = 1 }
+		}
+		custom_tooltip = AB_WE_ARE_NORDIC_ACHIVEMENT
+		custom_tooltip = AB_LONGDASHLINE
+		if = {
+			limit = {
+				has_country_flag = achiev_we_are_nordic
+			}
+			custom_tooltip = AB_ACHIEVEMENT_COMPLETED
+		}
+		else = {
+			if = {
+				limit = {
+					NOT = { is_year = 1500 }
+				}
+				custom_tooltip = AB_1500_YES
+			}
+			else = {
+				custom_tooltip = AB_1500_NO
+			}
+			if = {
+				limit = {
+					scandinavia_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = AB_SCANDI_YES
+			}
+			else = {
+				custom_tooltip = AB_SCANDI_NO
+			}
+		}
+	}
+	else_if = {
         limit = {
             ab_achiev_page = { page = 6 }
         }
@@ -4993,18 +5108,148 @@ ab_achievement_row4_col2_effect = {
 
 ab_achievement_row4_col3_effect = {
     custom_tooltip = AB_LONGDASHLINE
+	if = {
+		limit = {
+			ab_achiev_page = { page = 1 }
+		}
+		custom_tooltip = AB_HAKKA_PAALLE_ACHIVEMENT
+		custom_tooltip = AB_LONGDASHLINE
+
+		if = {
+			limit = {
+				num_of_cavalry = 250
+			}
+			custom_tooltip = AB_HAS_250_CAVALRY_YES
+		}
+		else = {
+			custom_tooltip = AB_HAS_250_CAVALRY_NO
+		}
+		if = {
+			limit = {
+				NOT = { num_of_infantry = 1 }
+			}
+			custom_tooltip = AB_HAS_NO_INFANTRY_YES
+		}
+		else = {
+			custom_tooltip = AB_HAS_NO_INFANTRY_NO
+		}
+		if = {
+			limit = {
+				NOT = { num_of_loans = 1 }
+			}
+			custom_tooltip = AB_HAS_NO_LOANS_YES
+		}
+		else = {
+			custom_tooltip = AB_HAS_NO_LOANS_NO
+		}
+		if = {
+			limit = {
+				is_in_deficit = no
+			}
+			custom_tooltip = AB_HAS_NO_DEFICIT_YES
+		}
+		else = {
+			custom_tooltip = AB_HAS_NO_DEFICIT_NO
+		}
+	}
 }
 
 ab_achievement_row4_col4_effect = {
     custom_tooltip = AB_LONGDASHLINE
+	if = {
+		limit = {
+			ab_achiev_page = { page = 1 }
+		}
+		custom_tooltip = AB_GUARDIANS_OF_THE_GROVES_ACHIVEMENT
+		custom_tooltip = AB_LONGDASHLINE
+
+		if = {
+			limit = {
+				num_of_owned_provinces_with = {
+					OR = {
+						has_terrain = woods
+						has_terrain = forest
+					}
+					development = 20
+					value = 20
+				}
+			}
+			custom_tooltip = AB_20_DEV_FOREST_OR_WOODS_YES
+		}
+		else = {
+			custom_tooltip = AB_20_DEV_FOREST_OR_WOODS_NO
+		}
+	}
 }
 
 ab_achievement_row4_col5_effect = {
     custom_tooltip = AB_LONGDASHLINE
+	if = {
+		limit = {
+			ab_achiev_page = { page = 1 }
+		}
+		custom_tooltip = AB_ANCENSTRAL_VENGEANCE_ACHIVEMENT
+		custom_tooltip = AB_LONGDASHLINE
+
+		if = {
+			limit = {
+				has_country_flag = achiev_ancenstral_vengeance
+			}
+			custom_tooltip = AB_ACHIEVEMENT_COMPLETED
+		}
+		else = {
+			if = {
+				limit = {
+					check_variable = {
+						which = num_of_force_converted_countries
+						value = 10
+					}
+				}
+				custom_tooltip = AB_FORCE_CONVERT_10_GERMANICS_YES
+			}
+			else = {
+				custom_tooltip = AB_FORCE_CONVERT_10_GERMANICS_NO
+			}
+		}
+	}
 }
 
 ab_achievement_row4_col6_effect = {
     custom_tooltip = AB_LONGDASHLINE
+	if = {
+		limit = {
+			ab_achiev_page = { page = 1 }
+		}
+		custom_tooltip = AB_GOLD_OF_THE_NORTH_ACHIVEMENT
+		custom_tooltip = AB_LONGDASHLINE
+
+		if = {
+			limit = {
+				has_country_flag = achiev_gold_of_the_north
+			}
+			custom_tooltip = AB_ACHIEVEMENT_COMPLETED
+		}
+		else = {
+			if = {
+				limit = {
+					baltic_region = {
+						type = all
+						OR = {
+							has_port = no
+							AND = {
+								has_port = yes
+								trade_goods = gems
+							}
+						}
+					}
+				}
+				custom_tooltip = AB_BALTIC_GEMS_YES
+			}
+			else = {
+				custom_tooltip = AB_BALTIC_GEMS_NO
+			}
+		}
+	}
 }
 
 ab_achievement_row4_col7_effect = {

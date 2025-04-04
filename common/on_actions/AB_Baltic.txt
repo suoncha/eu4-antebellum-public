@@ -1,0 +1,109 @@
+on_province_culture_converted = {
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = lva_culture_convert
+			}
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_province_flag = lva_converted_culture_bonus
+				}
+				culture = latvian
+			}
+			set_province_flag = lva_converted_culture_bonus
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
+		}
+	}
+}
+
+on_battle_won_country = {
+	if = {
+		limit = {
+			has_country_modifier = lva_blessing_perkunas
+			FROM = {
+				religion_group = christian
+			}
+		}
+		add_army_tradition = 0.25
+	}
+}
+
+on_scorch_earth = {
+	if = {
+		limit = {
+			ROOT = {
+				has_country_modifier = prr_plunder_germany
+			}
+			FROM = {
+				OR = {
+					region = north_german_region
+					region = south_german_region
+				}
+			}
+		}
+		ROOT = {
+			add_treasury = 25
+		}
+	}
+}
+
+on_adm_development = {
+	if = { 
+		limit = {
+			region = baltic_region
+			has_port = yes
+			NOT = {
+				trade_goods = gems
+			}
+			owner = {
+				has_reform = blt_amber_trade_charter
+			}
+		}
+		random_list = { 
+			95 = { } 
+			5 = { change_trade_goods = gems } 
+		}
+	}
+}
+
+on_dip_development = {
+	if = { 
+		limit = {
+			region = baltic_region
+			has_port = yes
+			NOT = {
+				trade_goods = gems
+			}
+			owner = {
+				has_reform = blt_amber_trade_charter
+			}
+		}
+		random_list = { 
+			95 = { } 
+			5 = { change_trade_goods = gems } 
+		}
+	}
+}
+
+on_mil_development = {
+	if = { 
+		limit = {
+			region = baltic_region
+			has_port = yes
+			NOT = {
+				trade_goods = gems
+			}
+			owner = {
+				has_reform = blt_amber_trade_charter
+			}
+		}
+		random_list = { 
+			95 = { } 
+			5 = { change_trade_goods = gems } 
+		}
+	}
+}

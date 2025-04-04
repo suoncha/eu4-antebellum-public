@@ -1,0 +1,68 @@
+po_ab_tribalize = {
+	category = 6
+	power_cost_base = 0.535 
+	prestige_base = 0.134 
+	ae_base = 0.269 
+	warscore_cost = {
+  	  all_provinces = 0.0 
+   	 no_provinces = 0.0 
+  	  owner_keeps = 0.8 
+  	  conquered = 0.0 
+ 	   returned_core = 0.0 
+  	  released_nation = 0.0 
+  	  cancelled_subject = 0.0 
+   	 concede_colonial_region = 0.0 
+	}
+	warscore_cap = -1
+	requires_demand_independence = yes
+	is_make_subject = yes
+	requires_is_allowed = no
+
+	is_visible = {
+		has_country_flag = smi_unlocked_tribalization
+	}
+	is_allowed = {
+		ROOT = {
+			government = tribal
+		}
+	}
+	effect = {
+		FROM = {
+			if = {
+				limit = {
+					NOT = { has_reform = papacy_reform }
+					NOT = {
+						has_reform = MIN_celestial_empire
+					}
+					NOT = {
+						has_reform = celestial_empire
+					}
+					NOT = { has_reform = shogunate }
+				}
+				if = {
+					limit = { NOT = { government = tribal } }
+					change_government = tribal
+				}
+				add_government_reform = tribal_kingdom
+			}
+			if = {
+				limit = { tag = ADU }
+				set_country_flag = smi_tribalized_andalusia
+			}
+			if = {
+				limit = { tag = ENG }
+				set_country_flag = smi_tribalized_england
+			}
+			if = {
+				limit = { tag = FRC }
+				set_country_flag = smi_tribalized_francia
+			}
+		}
+	}
+	ai_weight = { # Defaults to always evaluate to 0
+		export_to_variable = {
+			variable_name = ai_value # Mandatory to have entry called "ai_value". Its value at the end of the ai_weight scope is what will be used
+			value = 50
+		}
+	}
+}

@@ -1,0 +1,1146 @@
+SMI_missions_1 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		tag = SMI
+	}
+	has_country_shield = yes
+
+	smi_strike_against_the_norse = {
+		icon = mission_norse_faith
+		position = 2
+		required_missions = { smi_warriors_of_sapmi }
+		
+		provinces_to_highlight = {
+			culture = norwegian
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				culture = norwegian
+				value = 5
+			}
+		}
+		
+		effect = {
+			add_war_exhaustion = -3
+			define_advisor = {
+				type = army_reformer
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = SMI_CLAIM_NORWAY
+			hidden_effect = {
+				every_province = {
+					limit = {
+						culture = norwegian
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+
+	smi_dismantle_norway = {
+		icon = mission_longships
+		position = 4
+		required_missions = { smi_strike_against_the_norse }
+		
+		provinces_to_highlight = {
+			culture = norwegian
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				culture = norwegian
+				value = 10
+			}
+		}
+		
+		effect = {
+			custom_tooltip = SMI_NORSE_CONQUEST
+			add_country_modifier = {
+				name = "smi_legacy_of_conquest"
+				duration = 7300
+			}
+			scandinavia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture_group = scandinavian
+					}
+					add_local_autonomy = -25
+					add_nationalism = -10
+				}
+			}
+		}
+	}
+	
+	smi_the_viking_dawn = {
+		icon = mission_devastate_christianity
+		position = 6
+		required_missions = { smi_ascendant_kalevalia }
+		
+		provinces_to_highlight = {
+			region = scandinavia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = scandinavia_region
+				value = 30
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "smi_arctic_dominion"
+				duration = -1
+			}
+			if = {
+				limit = {
+					scandinavia_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = SMI_SCANDINAVIA_YES
+				tooltip = {
+					add_army_tradition_or_mil_power = { amount = 30 }
+				}
+			}
+			else = {
+				custom_tooltip = SMI_SCANDINAVIA_NO
+				tooltip = {
+					add_army_tradition_or_mil_power = { amount = 30 }
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						scandinavia_region = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+					add_army_tradition_or_mil_power = { amount = 30 }
+				}
+			}
+		}
+	}
+}
+
+SMI_missions_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		tag = SMI
+	}
+	has_country_shield = yes
+
+	smi_warriors_of_sapmi = {
+		icon = mission_native_build_army_mission
+		position = 1
+		required_missions = { }
+		
+		trigger = {
+			OR = {
+				army_size_percentage = 0.9
+				manpower_percentage = 0.9
+			}
+			num_of_generals = 1
+		}
+		
+		effect = {
+			create_general_with_pips = {
+				tradition = 40
+				add_shock = 1
+			}
+			add_country_modifier = {
+				name = "lva_tribal_host"
+				duration = 5475
+			}
+			give_claims = { area = bothnia_area }
+			give_claims = { area = finland_area }
+			custom_tooltip = CLAIM_NEIGHBOUR_AREA
+			hidden_effect = {
+				every_owned_province = {
+					every_neighbor_province = {
+						area = {
+							limit = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_permanent_claim = ROOT    }
+								NOT = { is_core = ROOT    }
+							}
+							add_permanent_claim = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	smi_stronghold_of_christianity = {
+		icon = mission_swedish_great_power
+		position = 3
+		required_missions = { smi_strike_against_the_norse }
+		
+		provinces_to_highlight = {
+			culture = swedish
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				culture = swedish
+				value = 8
+			}
+		}
+		
+		effect = {
+			add_mil_power = 100
+			add_country_modifier = {
+				name = "smi_turning_the_tide"
+				duration = 7300
+			}
+			scandinavia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						exists = SWE
+					}
+				}
+				custom_tooltip = SMI_NO_SWEDEN_YES
+				tooltip = {
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 25
+					}
+				}
+			}
+			else = {
+				custom_tooltip = SMI_NO_SWEDEN_NO
+				tooltip = {
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 25
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							exists = SWE
+						}
+					}
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 25
+					}
+				}
+			}
+		}
+	}
+	
+	smi_ascendant_kalevalia = {
+		icon = mission_baltic_empire
+		position = 5
+		required_missions = { smi_stronghold_of_christianity smi_into_the_baltics smi_dismantle_norway  }
+		
+		trigger = {
+			tag = SLU
+		}
+		
+		effect = {
+			set_country_flag = smi_can_become_horde
+			custom_tooltip = SMI_BECOME_HORDE
+			set_country_flag = smi_unlocked_tribalization
+			custom_tooltip = SMI_TRIBALIZE_CB
+			custom_tooltip = CLAIM_NEIGHBOUR_AREA
+			hidden_effect = {
+				every_owned_province = {
+					every_neighbor_province = {
+						area = {
+							limit = {
+								NOT = { owned_by = ROOT }
+								NOT = { is_permanent_claim = ROOT    }
+								NOT = { is_core = ROOT    }
+							}
+							add_permanent_claim = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	smi_fury_of_the_north = {
+		icon = mission_furyofthenorth
+		position = 7
+		required_missions = { smi_ascendant_kalevalia }
+		
+		trigger = {
+			total_development = 500
+		}
+		
+		effect = {
+			change_ruler_stat = {
+				type = mil
+				amount = 2
+			}
+			custom_tooltip = HORDES_UNLOCK_REAVER_RULER_PERSONALITY
+			set_country_flag = unlocked_reaver_personality_flag
+			custom_tooltip = AB_EMPTY
+			norrland_area = {
+				add_base_manpower = 3
+			}
+		}
+	}
+	
+	smi_the_winds_of_winter = {
+		icon = mission_windsofwinter
+		position = 9
+		required_missions = { smi_fury_of_the_north }
+		
+		trigger = {
+			total_development = 1000
+		}
+		
+		effect = {
+			custom_tooltip = HORDES_IF_RULER_WINS_100_BATTLES_WHILST_CONQUEROR_GAIN_LEGENDARY_CONQUEROR
+			set_country_flag = hordes_legendary_conqueror_battles_flag
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = MON_CLAIM_EUROPE
+			hidden_effect = {
+				europe_superregion = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+				eastern_europe_superregion = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
+		}
+	}
+	
+}
+
+SMI_missions_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		tag = SMI
+	}
+	has_country_shield = yes
+	
+	smi_finns = {
+		icon = mission_conquer_finland
+		position = 2
+		required_missions = { smi_warriors_of_sapmi }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = finland_area
+				area = bothnia_area
+				province_id = 30
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = finland_area
+					area = bothnia_area
+					province_id = 30
+				}
+				value = 6
+			}
+		}
+		
+		effect = {
+			add_accepted_culture_or_dip_power_stated = { culture = finnish dip_reward = yes }
+			add_country_modifier = {
+				name = "smi_finnic_union"
+				duration = 7300
+			}
+			give_claims = { area = estonia_ingria_area }
+			give_claims = { area = curonia_area }
+			give_claims = { area = livonia_area }
+			give_claims = { area = karelia_area }
+			give_claims = { area = north_karelia }
+			give_claims = { area = pomor_area }
+			give_claims = { area = laponia_area }
+		}
+	}
+	
+	smi_liberate_karelia = {
+		icon = mission_the_finns
+		position = 3
+		required_missions = { smi_finns }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = karelia_area
+				area = north_karelia
+				area = pomor_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = karelia_area
+					area = north_karelia
+					area = pomor_area
+				}
+				value = 8
+			}
+		}
+		
+		effect = {
+			add_dip_power = 100
+			add_country_modifier = {
+				name = "smi_convert_karelians"
+				duration = 7300
+			}
+			give_claims = { area = arkhangelsk_area }
+			give_claims = { area = novgorod_area }
+			give_claims = { area = beloozero_area }
+			if = {
+				limit = {
+					total_development = NOV
+				}
+				custom_tooltip = SMI_DEV_YES
+				tooltip = {
+					add_mil_power = 100
+				}
+			}
+			else = {
+				custom_tooltip = SMI_DEV_NO
+				tooltip = {
+					add_mil_power = 100
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						total_development = NOV
+					}
+					add_mil_power = 100
+				}
+			}
+		}
+	}
+	
+	smi_into_the_baltics = {
+		icon = mission_the_livonians
+		position = 4
+		required_missions = { smi_liberate_karelia }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = estonia_ingria_area
+				area = curonia_area
+				area = livonia_area
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				OR = {
+					area = estonia_ingria_area
+					area = curonia_area
+					area = livonia_area
+				}
+				value = 8
+			}
+		}
+		
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_church_pagan_reconciliation
+			}
+			custom_tooltip = AB_EMPTY
+			baltic_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	smi_the_baltic_union = {
+		icon = mission_conquer_baltic_region
+		position = 6
+		required_missions = { smi_ascendant_kalevalia }
+		
+		provinces_to_highlight = {
+			region = baltic_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = baltic_region
+				value = 20
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "smi_baltic_union"
+				duration = -1
+			}
+			if = {
+				limit = {
+					baltic_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				custom_tooltip = SMI_BALTIC_YES
+				tooltip = {
+					add_yearly_manpower = 3
+				}
+			}
+			else = {
+				custom_tooltip = SMI_BALTIC_NO
+				tooltip = {
+					add_yearly_manpower = 3
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						baltic_region = {
+							type = all
+							country_or_non_sovereign_subject_holds = ROOT
+						}
+					}
+					add_yearly_manpower = 3
+				}
+			}
+		}
+	}
+}
+
+SMI_missions_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		tag = SMI
+	}
+	has_country_shield = yes
+	
+	smi_tame_the_reindeer = {
+		icon = mission_tame_reindeer
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			religion = ROOT
+			culture = ROOT
+			trade_goods = fur
+			NOT = {
+				num_of_times_improved = 3
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				trade_goods = fur
+				culture = ROOT
+				religion = ROOT
+				num_of_times_improved = 3
+				value = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = smi_taming_the_reindeer
+				duration = 9125
+			}
+			add_army_tradition_or_mil_power = {
+				amount = 10
+			}
+		}
+	}
+	
+	smi_the_reindeer_cavalry = {
+		icon = mission_reindeer_cavalry
+		required_missions = { smi_tame_the_reindeer }
+		position = 2
+		
+		trigger = {
+			army_tradition = 40
+			num_of_cavalry = 12
+			has_global_modifier_value = {
+				which = cavalry_power
+				value = 0.3
+			}
+		}
+		
+		effect = {
+			add_army_professionalism = 0.05
+			add_country_modifier = {
+				name = smi_reindeer_cavalry
+				duration = -1
+			}
+			custom_tooltip = FIN_DRAGOON
+		}
+	}
+
+	smi_shrine_of_ukko = {
+		icon = mission_ukko
+		required_missions = { smi_protect_the_sacred_lands }
+		position = 3
+		
+		provinces_to_highlight = {
+			province_id = 4151
+		}
+		
+		trigger = {
+			4151 = {
+				has_great_project = {
+					type = shrine_ukko
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			add_ruler_modifier = {
+				name = smi_ukko_champion
+				duration = -1
+			}
+			add_prestige_or_monarch_power = {
+				amount = 20
+			}
+		}
+	}
+	
+	smi_pacify_novgorod = {
+		icon = mission_novgorod_the_great
+		position = 4
+		required_missions = { smi_liberate_karelia }
+		
+		provinces_to_highlight = {
+			OR = {
+				area = novgorod_area
+				province_id = 310
+			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			310 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				area = novgorod_area
+				value = 4
+			}
+		}
+		
+		effect = {
+			add_treasury = 500
+			add_country_modifier = {
+				name = rus_seize_wealth
+				duration = 5475
+			}
+			custom_tooltip = MGY_RUSSIA_CB
+			russia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						exists = NOV
+					}
+				}
+				custom_tooltip = SMI_NOVGOROD_YES
+				tooltip = {
+					add_treasury = 500
+				}
+			}
+			else = {
+				custom_tooltip = SMI_NOVGOROD_NO
+				tooltip = {
+					add_treasury = 500
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							exists = NOV
+						}
+					}
+					add_treasury = 500
+				}
+			}
+		}
+	}
+	
+	smi_devastate_the_rus = {
+		icon = mission_fall_of_third_rome
+		position = 5
+		required_missions = { smi_pacify_novgorod }
+		
+		provinces_to_highlight = {
+			region = russia_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				region = russia_region
+				value = 25
+			}
+		}
+		
+		effect = {
+			custom_tooltip = MGY_RUTHENIA_CB
+			add_country_modifier = {
+				name = hordes_cossacks
+				duration = -1
+			}
+			ruthenia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							region = ruthenia_region
+						}
+					}
+					reverse_add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+	smi_preserve_our_heritage = {
+		icon = mission_the_sami
+		required_missions = { smi_sapmi_revival }
+		position = 7
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			culture = ROOT
+			NOT = { development = 10 }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				development = 10
+				culture = ROOT
+				value = 5
+			}
+			has_institution = renaissance
+			prestige = 60
+		}
+		
+		effect = {
+			norrland_area = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			add_country_modifier = {
+				name = smi_northern_light
+				duration = 9125
+			}
+		}
+	}
+	
+	smi_enlightenment = {
+		icon = mission_engelbrekt
+		required_missions = { smi_preserve_our_heritage }
+		position = 8
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			culture = ROOT
+			NOT = { development = 10 }
+		}
+		
+		trigger = {
+			university = 10
+			OR = {
+				monthly_dip = 12
+				DIP = 5
+			}
+			has_adm_advisor_3 = yes
+			has_mil_advisor_3 = yes
+			has_mil_advisor_3 = yes
+		}
+		
+		effect = {
+			custom_tooltip = FKN_PATRONAGE_PRIVILEGE
+			set_country_flag = ab_fkn_improved_patronage
+			custom_tooltip = AB_EMPTY
+			capital_scope = {
+				add_institution_embracement = {
+					which = enlightenment
+					value = 25
+				}
+			}
+		}
+	}
+
+}
+
+SMI_missions_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		tag = SMI
+	}
+	has_country_shield = yes
+	
+	smi_noaidi = {
+		icon = mission_passage
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+			estate_loyalty = {
+				estate = estate_church
+				loyalty = 60
+			}
+			num_of_estate_privileges = {
+				estate = estate_church
+				value = 4
+			}
+		}
+		
+		effect = {
+			define_advisor = {
+				type = inquisitor
+				skill = 1
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			custom_tooltip = AB_EMPTY
+			add_estate_loyalty = {
+				estate = estate_church
+				loyalty = 10
+			}
+		}
+	}
+	
+	smi_protect_the_sacred_lands = {
+		icon = mission_native_church
+		required_missions = { smi_noaidi }
+		position = 2
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			religion = ROOT
+			NOT = { has_tax_building_trigger = yes }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_tax_building_trigger = yes
+				religion = ROOT
+				value = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = smi_old_ways
+				duration = 7300
+			}
+			custom_tooltip = SMI_TAX_DEV
+			hidden_effect = {
+				for = {
+					amount = 5
+					effect = "
+						random_owned_province = {
+							limit = {
+								religion = ROOT
+								has_tax_building_trigger = yes
+							}
+							add_base_tax = 1
+						}
+					"
+				}
+			}
+		}
+	}
+	
+	smi_reform_the_faith = {
+		icon = mission_suomenusko
+		required_missions = { smi_protect_the_sacred_lands }
+		position = 4
+		
+		trigger = {
+			religion = reformed_suomi
+		}
+		
+		effect = {
+			custom_tooltip = LVA_CHURCH_POWER
+			custom_tooltip = SMI_PROVINCE_FLIP
+			hidden_effect = {
+				add_church_power = 50
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
+							limit = {
+								religion = suomi_pagan
+							}
+							change_religion = reformed_suomi
+						}
+					"
+				}
+			}
+		}
+	}
+	
+	smi_destroy_the_oppressors = {
+		icon = mission_devastate_christianity
+		required_missions = { smi_reform_the_faith }
+		position = 5
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			NOT = {
+				religion = ROOT
+			}
+		}
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = smi_christian_army
+				NOT = {
+					any_country = {
+						religion_group = christian
+						capital_scope = {
+							continent = europe
+						}
+						army_size = root
+					}
+				}
+			}
+			num_of_owned_provinces_with = {
+				religion = ROOT
+				value = 50
+			}
+		}
+		
+		effect = {
+			set_country_flag = hun_pp_on_heathen_wars
+			custom_tooltip = hun_winning_wars_against_heathens_tt
+		}
+	}
+	
+	smi_sapmi_revival = {
+		icon = mission_extent_yasak_to_the_east
+		required_missions = { }
+		position = 6
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			culture = ROOT
+			NOT = { development = 5 }
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				development = 5
+				culture = ROOT
+				value = 5
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_prosperity = 100
+			}
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = planner
+				skill = 1
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	smi_forest = {
+		icon = mission_forest
+		required_missions = { smi_sapmi_revival }
+		position = 7
+		
+		provinces_to_highlight = {
+			has_terrain = woods
+			owned_by = ROOT
+			NOT = {
+				num_of_times_improved_by_owner = 3
+			}
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					has_terrain = woods
+					num_of_times_improved_by_owner = 3
+				}
+				amount = 6
+			}
+		}
+		
+		effect = {
+			unlock_estate_privilege = {
+				estate_privilege = estate_burghers_lit_deforestation
+			}
+		}
+	}
+	
+	smi_fur = {
+		icon = mission_collect_yasak
+		position = 8
+		required_missions = { smi_forest }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			trade_goods = fur
+			NOT = { has_trade_building_trigger = yes }
+			NOT = { base_production = 5 }
+		}
+		
+		trigger = {
+			calc_true_if = {
+				all_owned_province = {
+					trade_goods = fur
+					has_trade_building_trigger = yes
+					base_production = 5
+				}
+				amount = 8
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 3
+				trigger = {
+					trade_goods = fur
+				}
+				custom_tooltip = MONOPOLY_INCOME_FUR_DESC
+			}
+			add_country_modifier = {
+				name = rus_fur_market
+				duration = 5475
+			}
+			custom_tooltip = RUS_FUR
+		}
+	}
+	
+	smi_white_sea = {
+		icon = mission_protect_white_sea_trade
+		required_missions = { smi_fur }
+		position = 9
+		
+		provinces_to_highlight = {
+			province_id = 1652
+		}
+		
+		trigger = {
+			1652 = {
+				is_strongest_trade_power = ROOT
+			}
+			1652 = {
+				trade_share = {
+					country = ROOT
+					share = 50
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = RUS_UPGRADE_TRADE
+			add_country_modifier = {
+				name = "rus_secured_white_sea"
+				duration = 3650
+			}
+			define_advisor = {
+				type = trader
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+			hidden_effect = {
+				for = {
+					amount = 3
+					effect = "
+						random_owned_province = {
+							limit = {
+								has_building = marketplace
+							}
+							remove_building = marketplace
+							add_building = trade_depot
+						}
+					"
+				}
+			}
+		}
+	}
+	
+}

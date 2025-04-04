@@ -1,0 +1,42 @@
+namespace = ab_pruthenia
+normal_or_historical_nations = yes
+
+#Balto-Germanic Culture
+province_event = {
+	id = ab_pruthenia.1
+	title = ab_pruthenia.1.t
+	desc = ab_pruthenia.1.d
+	picture = AB_BYZFALL_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+		modifier = {
+			factor = 0.5
+			owner = { mission_completed = prr_eradicate_the_cross }
+		}
+	}
+	
+	trigger = {
+		owner = {
+			has_country_flag = prr_baltogerman_culture
+		}
+		OR = {
+			region = north_german_region
+			region = south_german_region
+		}
+		religion = ROOT
+		NOT = {
+			culture = Balto-German
+		}
+		any_neighbor_province = {
+			culture = Balto-German
+		}
+	}
+	
+	option = {
+		name = ab_pruthenia.1.a
+		change_culture = Balto-German
+	}
+}

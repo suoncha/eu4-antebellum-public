@@ -430,7 +430,7 @@ ger_first_group = {
 			#estate privilege here for sure
 			custom_tooltip = GER_enable_the_customs_union_estate_privilege
 			
-			custom_tooltip = " "
+			custom_tooltip = AB_EMPTY
 			
 			add_years_of_owned_provinces_production_income = {
 				years = 3
@@ -440,14 +440,12 @@ ger_first_group = {
 				custom_tooltip = GER_from_3_years_of_prod_income
 			}
 			
-			custom_tooltip = " "
+			custom_tooltip = AB_EMPTY
 			
-			complex_dynamic_effect = {
-				first_custom_tooltip = GER_if_we_have_a_treasurer
-				first_limit = "
-					advisor = treasurer
-				"
-				first_effect = "
+			if = {
+				limit = { advisor = treasurer }
+				custom_tooltip = AB_GER_HAVE_TREASURER_YES
+				hidden_effect = {
 					add_years_of_owned_provinces_production_income = {
 						years = 1.5
 						trigger = {
@@ -455,7 +453,19 @@ ger_first_group = {
 						}
 						custom_tooltip = GER_from_1.5_years_of_prod_income
 					}
-				"
+				}
+			}
+			else = {
+				custom_tooltip = AB_GER_HAVE_TREASURER_NO
+			}
+			tooltip = {
+				add_years_of_owned_provinces_production_income = {
+					years = 1.5
+					trigger = {
+						always = yes
+					}
+					custom_tooltip = GER_from_1.5_years_of_prod_income
+				}
 			}
 		}
 	}

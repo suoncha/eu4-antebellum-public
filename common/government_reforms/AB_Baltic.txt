@@ -1,0 +1,184 @@
+est_harmony = {
+	icon = "polclergy"
+	allow_normal_conversion = yes
+	potential = {
+		OR = {
+			tag = EST
+			was_tag = EST
+		}
+	}
+	custom_attributes = {
+		can_reform_religion_without_ideas = yes
+	}
+	modifiers = {
+		tolerance_heretic = 1
+		tolerance_heathen = 1
+		tolerance_own = 1
+	}
+}
+
+blt_amber_trade_charter = {
+	icon = "bltamber"
+	allow_normal_conversion = yes
+	potential = {
+		capital_scope = {
+			region = baltic_region
+		}
+	}
+	custom_attributes = {
+		baltic_amber_on_development = yes
+	}
+	trigger = {
+		any_owned_province = {
+			has_great_project = {
+				type = amber_coast
+				tier = 1
+			}
+		}
+	}
+	modifiers = {
+		trade_efficiency = 0.1
+		trade_steering = 0.1
+	}
+}
+
+blt_pulka_system = {
+	icon = "bltpulka"
+	allow_normal_conversion = yes
+	potential = {
+		capital_scope = {
+			region = baltic_region
+		}
+		OR = {
+			religion_group = pagan
+			religion_group = reformed_pagan
+		}
+	}
+	custom_attributes = {
+		ahmudan_system = yes
+	}
+	modifiers = {
+		fort_maintenance_modifier = -0.1
+		garrison_damage = 0.2
+	}
+}
+
+blt_forest_warfare = {
+	icon = "bltforest"
+	allow_normal_conversion = yes
+	potential = {
+		capital_scope = {
+			region = baltic_region
+		}
+		OR = {
+			religion_group = pagan
+			religion_group = reformed_pagan
+		}
+	}
+	modifiers = {
+		global_defender_dice_roll_bonus = 1
+		hostile_attrition = 2
+		max_hostile_attrition = 2
+	}
+}
+
+prr_pruthenian_warchiefdom = {
+	icon = "enghousecarls"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	legacy_equivalent = feudal_monarchy
+	potential = {
+		is_revolutionary = no
+		OR = {
+			tag = PRR
+			was_tag = PRR
+		}
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 0
+	allow_convert = no
+	modifiers = {
+		country_military_power = 1
+		army_tradition = 1
+	}
+	government_abilities = {
+        holy_fury_mechanic
+    }
+}
+
+est_council_of_chiefs = {
+	icon = "self_governing_colony_government"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	legacy_equivalent = feudal_monarchy
+	potential = {
+		is_revolutionary = no
+		OR = {
+			tag = EST
+			was_tag = EST
+		}
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 0
+	allow_convert = no
+	modifiers = {
+		global_unrest = -1
+		num_accepted_cultures = 1
+	}
+	conditional = {
+		allow = { 
+			OR = {
+				has_dlc = "Common Sense"
+				has_dlc = "Domination"
+			}
+		}
+		has_parliament = yes
+		custom_attributes = {
+			halved_parliament_bribes = yes
+		}
+	}
+}
+
+krz_tsardom_of_krievzeme = {
+	icon = "byzantine_rule"
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	legacy_equivalent = feudal_monarchy
+	potential = {
+		is_revolutionary = no
+		OR = {
+			tag = KRZ
+			was_tag = KRZ
+		}
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 0
+	allow_convert = no
+	modifiers = {
+		global_manpower_modifier = 0.20
+		yearly_absolutism = 0.5
+		global_autonomy = -0.05
+		governing_capacity = 350
+		has_streltsy = yes
+		allowed_streltsy_fraction = 0.2
+	}
+	conditional = {
+		allow = { has_dlc = "Third Rome" }
+		claim_states = yes
+	}
+	conditional = {
+		allow = { 
+			has_dlc = "Third Rome" 
+			NOT = { has_dlc = "Domination" }
+		}
+		government_abilities = {
+			russian_mechanic
+		}
+	}
+	conditional = {
+		allow = { has_dlc = "Domination" }
+		government_abilities = {
+			russian_mechanic
+		}
+	}
+}

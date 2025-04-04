@@ -1,0 +1,199 @@
+namespace = ab_baltic_achiev
+normal_or_historical_nations = yes
+
+
+#Undoing Civilization
+country_event = {
+	id = ab_baltic_achiev.1
+	title = ab_baltic_achiev.1.t
+	desc = ab_baltic_achiev.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		ai = no
+		ironman = yes
+		tag = SMI
+		has_country_flag = smi_tribalized_andalusia
+		has_country_flag = smi_tribalized_england
+		has_country_flag = smi_tribalized_francia
+	}
+
+	option = {
+		name = ab_achiev.1.a
+		set_country_flag = achiev_undoing_civilization
+	}
+}
+
+#De-Norse the Norse
+country_event = {
+	id = ab_baltic_achiev.2
+	title = ab_baltic_achiev.2.t
+	desc = ab_baltic_achiev.2.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		ai = no
+		ironman = yes
+		
+		religion = suomi_pagan
+
+		NOT = {
+			any_province = {
+				religion = norse_pagan_reformed
+			}
+		}
+	}
+
+	option = {
+		name = ab_achiev.1.a
+		set_country_flag = achiev_denorse_the_norse
+	}
+}
+
+#We are Nordic!
+country_event = {
+	id = ab_baltic_achiev.3
+	title = ab_baltic_achiev.3.t
+	desc = ab_baltic_achiev.3.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		ai = no
+		ironman = yes
+		
+		tag = EST
+		NOT = { is_year = 1500 }
+		scandinavia_region = {
+			type = all
+			country_or_non_sovereign_subject_holds = ROOT
+		}
+
+	}
+
+	option = {
+		name = ab_achiev.1.a
+		set_country_flag = achiev_we_are_nordic
+	}
+}
+
+#Hakkaa Päälle
+country_event = {
+	id = ab_baltic_achiev.4
+	title = ab_baltic_achiev.4.t
+	desc = ab_baltic_achiev.4.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		ai = no
+		ironman = yes
+		
+		tag = FIN
+		num_of_cavalry = 200
+		NOT = { num_of_infantry = 1 }
+		NOT = { num_of_loans = 1 }
+		is_in_deficit = no
+	}
+
+	option = {
+		name = ab_achiev.1.a
+		set_country_flag = achiev_hakka_paalle
+	}
+}
+
+#Guardians of the Groves
+country_event = {
+	id = ab_baltic_achiev.5
+	title = ab_baltic_achiev.5.t
+	desc = ab_baltic_achiev.5.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		ai = no
+		ironman = yes
+		
+		tag = LVA
+		num_of_owned_provinces_with = {
+			OR = {
+				has_terrain = woods
+				has_terrain = forest
+			}
+			development = 20
+			value = 20
+		}
+	}
+
+	option = {
+		name = ab_achiev.1.a
+		set_country_flag = achiev_guardians_of_the_groves
+	}
+}
+
+#Ancestral Vengeance
+country_event = {
+	id = ab_baltic_achiev.6
+	title = ab_baltic_achiev.6.t
+	desc = ab_baltic_achiev.6.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		ai = no
+		ironman = yes
+		
+		tag = PRR
+		check_variable = {
+			which = num_of_force_converted_countries
+			value = 10
+		}
+	}
+
+	option = {
+		name = ab_achiev.1.a
+		set_country_flag = achiev_ancenstral_vengeance
+	}
+}
+
+#Gold of the North
+country_event = {
+	id = ab_baltic_achiev.7
+	title = ab_baltic_achiev.7.t
+	desc = ab_baltic_achiev.7.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		ai = no
+		ironman = yes
+		
+		tag = RIG
+		has_reform = blt_amber_trade_charter
+
+		baltic_region = {
+			type = all
+			OR = {
+				has_port = no
+				AND = {
+					has_port = yes
+					trade_goods = gems
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_achiev.1.a
+		set_country_flag = achiev_gold_of_the_north
+	}
+}
