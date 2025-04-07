@@ -34,8 +34,8 @@ FIN_missions_1 = {
 		effect = {
 			add_adm_power = 75
 			add_country_modifier = {
-				name = "fin_sami"
-				duration = 7300
+				name = est_sapmi
+				duration = -1
 			}
 		}
 	}
@@ -72,15 +72,25 @@ FIN_missions_1 = {
 		}
 		effect = {
 			unlock_estate_privilege = {
-				estate_privilege = estate_burghers_forest_expansion
+				estate_privilege = estate_burghers_lit_deforestation
 			}
-			laponia_area = {
-				add_local_autonomy = -100
-				add_base_manpower = 2
-			}
-			norrland_area = {
-				add_local_autonomy = -100
-				add_base_manpower = 2
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = swe_forest_expansion_ct
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = scandinavia_region
+						has_climate = arctic
+					}
+					add_province_modifier = {
+						name = swe_arctic_expansion
+						duration = -1
+					}
+				}
+				scandinavia_region = {
+					limit = { owned_by = ROOT }
+					add_prosperity = 10
+				}
 			}
 		}
 	}
@@ -451,15 +461,13 @@ FIN_missions_2 = {
 		}
 		
 		effect = {
-			add_prestige = 25
-			baltic_region = {
-				limit = {
-					country_or_non_sovereign_subject_holds = ROOT
-				}
-				add_province_modifier = {
-					name = "fin_amber_road"
-					duration = 9125
-				}
+			unlock_estate_privilege = {
+				estate_privilege = estate_church_pagan_reconciliation
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = est_baltofinnic
+				duration = -1
 			}
 			skaneland_area = {
 				limit = {
@@ -580,7 +588,10 @@ FIN_missions_3 = {
 		}
 		
 		effect = {
-			create_general = { tradition = 35 }
+			create_general_with_pips = {
+				tradition = 40
+				add_shock = 1
+			}
 			add_country_modifier = {
 				name = "fin_convert"
 				duration = 5475
@@ -598,6 +609,29 @@ FIN_missions_3 = {
 					NOT = { is_core = ROOT }
 				}
 				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					total_development = NOV
+				}
+				custom_tooltip = SMI_DEV_YES
+				tooltip = {
+					add_mil_power = 100
+				}
+			}
+			else = {
+				custom_tooltip = SMI_DEV_NO
+				tooltip = {
+					add_mil_power = 100
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						total_development = NOV
+					}
+					add_mil_power = 100
+				}
 			}
 		}
 	}
@@ -680,7 +714,7 @@ FIN_missions_3 = {
 							value = 100
 						}
 					}
-				add_army_tradition = 15
+					add_army_tradition = 15
 				}
 			}
 			hidden_effect = {

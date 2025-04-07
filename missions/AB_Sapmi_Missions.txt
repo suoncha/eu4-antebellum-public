@@ -1029,7 +1029,10 @@ SMI_missions_5 = {
 		position = 7
 		
 		provinces_to_highlight = {
-			has_terrain = woods
+			OR = {
+				has_terrain = woods
+				has_terrain = forest
+			}
 			owned_by = ROOT
 			NOT = {
 				num_of_times_improved_by_owner = 3
@@ -1039,7 +1042,10 @@ SMI_missions_5 = {
 		trigger = {
 			calc_true_if = {
 				all_owned_province = {
-					has_terrain = woods
+					OR = {
+						has_terrain = woods
+						has_terrain = forest
+					}
 					num_of_times_improved_by_owner = 3
 				}
 				amount = 6
@@ -1049,6 +1055,24 @@ SMI_missions_5 = {
 		effect = {
 			unlock_estate_privilege = {
 				estate_privilege = estate_burghers_lit_deforestation
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = swe_forest_expansion_ct
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						region = scandinavia_region
+						has_climate = arctic
+					}
+					add_province_modifier = {
+						name = swe_arctic_expansion
+						duration = -1
+					}
+				}
+				scandinavia_region = {
+					limit = { owned_by = ROOT }
+					add_prosperity = 10
+				}
 			}
 		}
 	}
