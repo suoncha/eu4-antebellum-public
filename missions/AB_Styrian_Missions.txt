@@ -770,14 +770,21 @@ ab_austria_2 = {
 		} 
 
 		effect = {  
+			create_general_with_pips = { tradition = 40 add_shock = 1 }
+			custom_tooltip = AB_EMPTY
 			give_claims = { area = austria_proper_area }
 			give_claims = { area = inner_austria_area }
 			give_claims = { area = tirol_area }
 			give_claims = { area = carinthia_area }
-			
-			custom_tooltip = AB_EMPTY
-			
-			create_general_with_pips = { tradition = 40 add_shock = 1 }
+			76 = {
+				if = {
+					limit = {
+						NOT = { is_core = ROOT }
+						NOT = { is_permanent_claim = ROOT }
+					}
+					add_permanent_claim = ROOT
+				}
+			}
 		} 
 	}
 
