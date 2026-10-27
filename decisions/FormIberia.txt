@@ -1,0 +1,105 @@
+country_decisions = {
+
+	iberian_nation = {
+		major = yes
+		potential = {
+			culture_group = iberian
+			religion_group = christian
+			is_colonial_nation = no
+			NOT = { exists = IBE }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 213	# Barcelona
+				province_id = 214	# Arag�n
+				province_id = 215	# Castilla La Vieja
+				province_id = 216	# Salamanca
+				province_id = 219	# Toledo
+				province_id = 220	# Valencia
+				province_id = 231
+				province_id = 227
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			culture_group = iberian
+			religion_group = christian
+			owns_core_province = 213	# Barcelona
+			owns_core_province = 214	# Arag�n
+			owns_core_province = 215	# Castilla La Vieja
+			owns_core_province = 216	# Salamanca
+			owns_core_province = 219	# Toledo
+			owns_core_province = 220	# Valencia
+			owns_core_province = 231
+			owns_core_province = 227
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			change_tag = IBE
+			swap_non_generic_missions = yes
+			remove_non_electors_emperors_from_empire_effect = yes
+			if = {
+				limit = { NOT = { government_rank = 2 } }
+				set_government_rank = 2
+			}
+			if = {
+				limit = {
+					has_custom_ideas = no
+					OR = {
+						ai = no
+						AND = {
+							ai = yes
+							has_idea_group = default_ideas
+						}
+					}
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			hidden_effect = {
+				country_event = {
+					id = ab_achiev.1
+				}
+				iberia_region = {
+					limit = {
+						NOT = { area = alentejo_area }
+						NOT = { area = beieras_area }
+					}
+					add_permanent_claim = IBE
+				}
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			set_country_flag = formed_iberia_flag
+			add_prestige = 25
+			if = {
+				limit = {
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = iberia }
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+}
+	

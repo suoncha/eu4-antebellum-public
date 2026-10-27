@@ -3,43 +3,13 @@ country_decisions = {
 	ruthenian_nation = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			was_never_end_game_tag_trigger = yes
-			NOT = { has_country_flag = formed_ruthenia_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			OR = {
-				is_free_or_tributary_trigger = yes
-				ai = no
-			}
-			NOT = { tag = PAP }
-			NOT = { tag = HLR }	
-			NOT = { tag = HTM }	
-			NOT = { tag = ZAZ }	
-			NOT = { exists = UKR }
-			AND = {
-				culture_group = east_slavic
-				NOT = {
-					primary_culture = Litvin
-				}
-			}
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 3
-				}
-			}
+			culture_group = east_slavic
 			is_colonial_nation = no
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
-				}
-			}
+			NOT = { primary_culture = Litvin }
+			NOT = { tag = HTM }
+			NOT = { tag = ZAZ }
+			NOT = { exists = UKR }
+			NOT = { was_tag = UKR }
 		}
 		provinces_to_highlight = {
 			OR = {	
@@ -65,12 +35,8 @@ country_decisions = {
 			}
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
-			is_at_war = no
-			NOT = {
-				has_country_modifier = rus_tatar_yoke
-			}
+			culture_group = east_slavic
+			NOT = { has_country_modifier = rus_tatar_yoke }
 			if = {
 				limit = {
 					ai = yes
@@ -80,7 +46,7 @@ country_decisions = {
 						region = russia_region
 						region = ruthenia_region
 					}
-					value = 55
+					value = 45
 				}
 			}
 			else = {
@@ -100,10 +66,21 @@ country_decisions = {
 				owns_core_province = 314
 				owns_core_province = 310
 			}
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
+			hidden_effect = {
+				save_global_event_target_as = ab_formertag_ukr
+			}
 			add_prestige = 25
 			change_tag = UKR
+			if = {
+				limit = {
+					NOT = { was_tag = NOV }
+				}
+				set_country_flag = ab_is_rome_heir
+			}
 			set_government_rank = 3
 			swap_non_generic_missions = yes
 			remove_non_electors_emperors_from_empire_effect = yes
@@ -125,7 +102,6 @@ country_decisions = {
 					add_government_reform = tsardom
 				}
 			}
-			set_country_flag = formed_ruthenia_flag
 			if = {
 				limit = { has_custom_ideas = no }
 				country_event = { id = ideagroups.1 } #Swap Ideas
@@ -135,6 +111,11 @@ country_decisions = {
 				duration = 7300
 			}
 			country_event = { id = ab_rus.2 }
+			hidden_effect = {
+				country_event = {
+					id = ab_achiev.20
+				}
+			}
 		}
 		ai_importance = 500		
 	}

@@ -1,0 +1,291 @@
+country_decisions = {
+	netherlands_nation = {
+		major = yes
+		potential = {
+			OR = {
+				primary_culture = dutch
+				primary_culture = flemish
+				primary_culture = frisian
+			}
+			NOT = { has_country_flag = ab_is_ned_flag }
+			NOT = { exists = NED }
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 95 # Breda
+				province_id = 97 # Amsterdam
+				province_id = 98 # Utrecht
+				province_id = 99 # Gelre
+				province_id = 4383 # Den Haag
+				province_id = 1744 # Antwerp
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			if = {
+				limit = {
+					NOT = { has_country_flag = ned_ignore_tech_requirement_netherlands }
+				}
+				adm_tech = 10
+			}
+			owns_core_province = 95 # Breda
+			owns_core_province = 98 # Utrecht
+			owns_core_province = 99 # Gelre
+			owns_core_province = 4383 # Den Haag
+			owns_core_province = 97 # Amsterdam
+			owns_core_province = 1744
+			is_at_war = no
+			is_subject = no
+		}
+	 	effect = {
+			change_tag = NED
+			set_country_flag = ab_is_ned_flag
+			if = {
+				limit = {
+					is_elector = no
+					is_emperor = no
+				}
+				set_in_empire = no
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							is_part_of_hre = yes
+						}
+						set_in_empire = no
+					}
+				}
+			}
+			on_change_tag_effect = yes
+			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					NOT = { has_global_flag = NO_CNS }
+					any_subject_country = {
+						is_colonial_nation = yes
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = AB_TURN_CNS_INTO_PRESET_CNS
+				hidden_effect = {
+					every_subject_country = {
+						limit = {
+							is_colonial_nation = yes
+						}
+						ab_swap_to_preset_cn_tag = { tag = netherlands }
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_custom_ideas = no
+					NOT = { has_idea_group = NED_ideas }
+				}
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			custom_tooltip = AB_EMPTY
+			low_countries_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { province_id = 1931 }
+				}
+				add_permanent_claim = NED
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400
+	}
+
+	form_frisia = {
+		major = yes
+		potential = {
+			has_country_flag = can_form_unl
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 1931
+				province_id = 4382
+				province_id = 100
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			primary_culture = frisian
+			owns_core_province = 1931
+			owns_core_province = 4382
+			owns_core_province = 100
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			clr_country_flag = can_form_unl
+			if = {
+				limit = {
+					is_part_of_hre = yes
+					is_elector = no
+					is_emperor = no
+				}
+				emperor = {
+					add_opinion = {
+						who = root
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
+				}
+			}
+			change_tag = FII
+			custom_tooltip = cosmetic_tag_info
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_united_netherlands = {
+		major = yes
+		potential = {
+			has_country_flag = can_form_unl
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 97
+				province_id = 4383
+				province_id = 99
+				province_id = 100
+				province_id = 90
+				province_id = 92
+				province_id = 94
+				
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			tag = NED
+			owns_core_province = 97
+			owns_core_province = 4383
+			owns_core_province = 99
+			owns_core_province = 100
+			owns_core_province = 90
+			owns_core_province = 92
+			owns_core_province = 94
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			clr_country_flag = can_form_unl
+			if = {
+				limit = {
+					is_part_of_hre = yes
+					is_elector = no
+					is_emperor = no
+				}
+				emperor = {
+					add_opinion = {
+						who = root
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
+				}
+			}
+			change_tag = UNN
+			custom_tooltip = cosmetic_tag_info
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	form_united_kingdoms = {
+		major = yes
+		potential = {
+			has_country_flag = ned_unlock_ukn
+		}
+		provinces_to_highlight = {
+			OR = {
+				province_id = 97
+				province_id = 4383
+				province_id = 99
+				province_id = 100
+				province_id = 90
+				province_id = 92
+				province_id = 94
+				province_id = 236
+				province_id = 234
+				province_id = 243
+				province_id = 245
+			}
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
+		}
+		allow = {
+			tag = NED
+			owns_core_province = 97
+			owns_core_province = 4383
+			owns_core_province = 99
+			owns_core_province = 100
+			owns_core_province = 90
+			owns_core_province = 92
+			owns_core_province = 94
+			owns_core_province = 236
+			owns_core_province = 234
+			owns_core_province = 243
+			owns_core_province = 245
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			clr_country_flag = ned_unlock_ukn
+			if = {
+				limit = {
+					is_part_of_hre = yes
+					is_elector = no
+					is_emperor = no
+				}
+				emperor = {
+					add_opinion = {
+						who = root
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
+				}
+			}
+			add_prestige = 25
+			change_tag = UKN
+			on_change_tag_effect = yes
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

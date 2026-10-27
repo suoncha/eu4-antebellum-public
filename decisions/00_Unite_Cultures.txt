@@ -1,0 +1,350 @@
+country_decisions = {
+
+	ab_unite_culture_group = {
+		major = yes
+		potential = {
+			ai = no
+			IF = { 
+				limit = { 
+					tag = SCA 
+				}
+				OR = { 
+						mission_completed = ab_swe_king
+						is_institution_enabled = enlightenment
+				}
+			}
+			else = {
+				NOT = { has_country_flag = ab_united_cultures_flag }
+				is_institution_enabled = enlightenment
+			}	
+		}
+		provinces_to_highlight = {
+			culture_group = ROOT
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+		allow = {
+			ai = no
+			IF = { 
+				limit = { 
+					tag = SCA 
+				}
+				OR = { 
+						mission_completed = ab_swe_king
+						is_institution_enabled = enlightenment
+				}
+			}
+			else = {
+				hidden_trigger = {
+				NOT = { has_country_flag = ab_united_cultures_flag }
+				}
+				is_institution_enabled = enlightenment
+			}	
+			dip_power = 200
+			stability = 3
+			owns_all_provinces = {
+				culture_group = ROOT
+				NOT = { continent = north_america }
+				NOT = { continent = south_america }
+				NOT = { continent = oceania }
+			}
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			set_country_flag = ab_united_cultures_flag
+			add_dip_power = -200
+			if = {
+				limit = {
+					culture_group = tartar
+				}
+				change_primary_culture = tatar_culture
+				custom_tooltip = UNITE_TATAR_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = east_slavic
+				}
+				change_primary_culture = russian_culture
+				custom_tooltip = UNITE_RUSSIANS_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = germanic
+				}
+				change_primary_culture = german_culture
+				custom_tooltip = UNITE_GERMAN_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = japanese_g
+				}
+				change_primary_culture = japanese_culture
+				custom_tooltip = UNITE_JAPANESE_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = french
+				}
+				change_primary_culture = french_culture
+				custom_tooltip = UNITE_FRENCH_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = latin
+				}
+				change_primary_culture = italian_culture
+				custom_tooltip = UNITE_ITALIAN_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = iberian
+				}
+				change_primary_culture = iberian_culture
+				custom_tooltip = UNITE_IBERIAN_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = altaic
+				}
+				change_primary_culture = turanian_culture
+				custom_tooltip = UNITE_TURANIAN_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = scandinavian
+				}
+				change_primary_culture = scandinavian_culture
+				custom_tooltip = UNITE_SCANDINAVIAN_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = romanian_culture_group
+				}
+				change_primary_culture = romanian
+				custom_tooltip = UNITE_ROMANIAN_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = east_asian
+				}
+				change_primary_culture = chinese_culture
+				custom_tooltip = UNITE_CHINESE_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = iranian
+				}
+				change_primary_culture = persian
+				custom_tooltip = UNITE_IRANIAN_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = Mongolian
+				}
+				change_primary_culture = mongol
+				custom_tooltip = UNITE_MONGOL_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = tibetan_group
+				}
+				change_primary_culture = tibetan
+				custom_tooltip = UNITE_TIBETAN_CULTURE
+			}
+			else_if = {
+				limit = {
+					culture_group = turko_semitic
+				}
+				# VIKTOR TODO: change in 1.10
+				change_primary_culture = al_misr_arabic
+				custom_tooltip = UNITE_ARABIC_CULTURE
+			}
+			add_country_modifier = {
+				name = ab_cultural_union
+				duration = -1
+			}
+			hidden_effect = {
+				set_heir_culture = ROOT
+				set_ruler_culture = ROOT
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						culture_group = tartar
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = tatar_culture
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = east_slavic
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = russian_culture
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = germanic
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = german_culture
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = japanese_g
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = japanese_culture
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = french
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = french_culture
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = iberian
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = iberian_culture
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = altaic
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = turanian_culture
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = scandinavian
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = scandinavian_culture
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = romanian_culture_group
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = romanian
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = east_asian
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = chinese_culture
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = iranian
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = persian
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = Mongolian
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = mongol
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = tibetan_group
+					}
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = tibetan
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = turko_semitic
+					}
+					# VIKTOR TODO: change in 1.10
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = al_misr_arabic
+					}
+				}
+				# Fallback
+				else = {
+					every_province = {
+						limit = {
+							culture_group = ROOT
+						}
+						change_culture = ROOT
+					}
+				}
+				every_country = {
+					limit = {
+						culture_group = ROOT
+					}
+					change_primary_culture = ROOT
+					set_heir_culture = ROOT
+					set_ruler_culture = ROOT
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		ai_importance = 400	
+	}
+}

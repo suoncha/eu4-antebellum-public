@@ -1,0 +1,34 @@
+country_decisions = {
+
+	steal_imperial_money = {
+		major = yes
+		potential = {
+			is_emperor = yes
+			has_country_flag = hab_corrupt_emperor_flag
+		}
+		allow = {
+			is_emperor = yes
+			imperial_influence = 5
+			custom_trigger_tooltip = {
+				tooltip = AB_HAS_NOT_STOLEN_IMPERIAL_MONEY_IN_10_YEARS
+				NOT = { has_country_modifier = hab_steal_money_timer }
+			}
+		}
+		effect = {
+			add_corruption = 2
+			add_imperial_influence = -5
+			custom_tooltip = AB_EMPTY
+			add_years_of_income = 1
+			hidden_effect = {
+				add_country_modifier = {
+					name = hab_steal_money_timer
+					duration = -1
+					hidden = yes
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 10
+		}
+	}
+}

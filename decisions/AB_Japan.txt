@@ -1,0 +1,84 @@
+country_decisions = {
+
+	reform_shogunate = {
+		major = yes
+		potential = {
+			has_country_flag = formed_shogunate_flag
+			NOT = { has_country_flag = reformed_shogunate_flag }
+		}
+		provinces_to_highlight = {
+			region = japan_region
+			NOT = { owned_by = ROOT }
+		}
+		allow = {
+			hidden_trigger = {
+				has_country_flag = formed_shogunate_flag
+			}
+			japan_region = {
+				type = all
+				owned_by = ROOT
+			}
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			custom_tooltip = REFORMED_SHOGUNATE
+			custom_tooltip = SHOGUN_MILITARIZATION
+			set_country_flag = reformed_shogunate_flag
+			add_government_reform = reformed_shogunate
+			regenerate_government_mechanics = yes
+			hidden_effect = {
+				ab_update_preset_cn_colors = yes
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	restore_house_of_yamato = {
+		potential = {
+			has_country_flag = jap_yamato_dynasty
+		}
+		allow = {
+			hidden_trigger = {
+				has_country_flag = jap_yamato_dynasty
+			}
+			legitimacy_equivalent = 90
+			dip_power = 100
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			clr_country_flag = jap_yamato_dynasty
+			add_dip_power = -100
+			define_heir = {
+				dynasty = Yamato
+				culture = japanese
+				change_adm = 1
+				change_dip = 1
+				change_mil = 1
+				claim = 100
+			}
+		}
+		ai_importance = 400
+	}
+
+	convert_to_islam_japan = {
+		potential = {
+			has_country_flag = japan_can_convert_to_islam
+			NOT = { religion = sunni }
+		}
+		allow = {
+		}
+		effect = {
+			clr_country_flag = japan_can_convert_to_islam
+			change_religion = sunni
+			add_country_modifier = {
+				name = "japan_conversion_sunni"
+				duration = 9125
+			}
+		}
+		ai_importance = 400
+	}
+}

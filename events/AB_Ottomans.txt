@@ -14,34 +14,37 @@ country_event = {
 	
 	trigger = {
 		tag = BYZ
-		NOT = {
-			mission_completed = byzantium_crisis
-		}
-		corruption = 1
-		num_of_loans = 1
-		owns = 4779
-		owns = 149
-		owns = 4705
-		owns = 151
-		4779 = {
-			controlled_by = BYZ
-		}
-		149 = {
-			controlled_by = BYZ
-		}
-		4705 = {
-			controlled_by = BYZ
-		}
-		151 = {
-			controlled_by = BYZ
-		}
-		NOT = {
-			estate_loyalty = {
-				estate = estate_burghers
-				loyalty = 30
+		NOT = { has_country_flag = ab_game_rules_ottomans_disabled }
+		if = {
+			limit = {
+				NOT = { has_country_flag = ab_game_rules_ottomans_enabled }
 			}
-		}
-		ai = no
+			NOT = { mission_completed = byzantium_crisis }
+			corruption = 1
+			num_of_loans = 1
+			owns = 4779
+			owns = 149
+			owns = 4705
+			owns = 151
+			4779 = {
+				controlled_by = BYZ
+			}
+			149 = {
+				controlled_by = BYZ
+			}
+			4705 = {
+				controlled_by = BYZ
+			}
+			151 = {
+				controlled_by = BYZ
+			}
+			NOT = {
+				estate_loyalty = {
+					estate = estate_burghers
+					loyalty = 30
+				}
+			}
+		}	
 	}
 	
 	mean_time_to_happen = {
@@ -50,7 +53,10 @@ country_event = {
 	
 	option = {
 		name = ab_ottoman.1.a
-		ai_chance = { factor = 100 }
+		trigger = {
+			NOT = { has_country_flag = ab_game_rules_ottomans_enabled }
+		}
+		ai_chance = { factor = 90 }
 		add_estate_loyalty = {
 			estate = estate_burghers
 			loyalty = -20
@@ -66,7 +72,7 @@ country_event = {
 	
 	option = {
 		name = ab_ottoman.1.b
-		ai_chance = { factor = 0 }
+		ai_chance = { factor = 10 }
 		highlight = yes
 		custom_tooltip = TUR_REVOLT
 		hidden_effect = {

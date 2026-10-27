@@ -1,0 +1,129 @@
+incident_baltic_and_the_empire = {
+	event = teuton_event.8
+	default_option = 1
+
+	can_stop = {
+		if = {
+			limit = {
+				exists = TEU
+			}
+			OR = {
+				NOT = { exists = TEU }
+				TEU = { 
+					is_subject = yes
+				}
+				TEU = {
+					is_part_of_hre = yes
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				exists = LIV
+			}
+			OR = {
+				NOT = { exists = LIV }
+				LIV = { 
+					is_subject = yes
+				}
+				LIV = {
+					is_part_of_hre = yes
+				}
+			}
+		}
+	}
+
+	0 = { # Allow entry
+		factor = 1
+		modifier = {
+			factor = 100
+			OR = {
+				religion = catholic
+				ai_attitude = {
+					who = event_target:balticOrder
+					attitude = attitude_friendly
+				}
+				ai_attitude = {
+					who = event_target:balticOrder
+					attitude = attitude_loyal
+				}
+				ai_attitude = {
+					who = event_target:balticOrder
+					attitude = attitude_allied
+				}
+			}
+		}
+	}
+	
+	1 = { # Allow entry under heavy restrictions
+		factor = 5
+		modifier = {
+			factor = 100
+			event_target:balticOrder = {
+				total_development = 30
+			}
+		}
+		modifier = {
+			factor = 2
+			NOT = {
+				emperor = {
+					is_rival = event_target:balticOrder
+				}
+			}
+		}
+		modifier = {
+			factor = 2
+			NOT = {
+				event_target:balticOrder = {
+					is_rival = emperor
+				}
+			}
+		}
+		modifier = {
+			factor = 10
+			is_neighbor_of = event_target:balticOrder
+		}
+	}
+	
+	2 = { # Refuse entry
+		factor = 1
+		modifier = {
+			factor = 100
+			OR = {
+				NOT = { religion = catholic }
+				any_owned_province = {
+					OR = {
+						is_claim = event_target:balticOrder
+						is_permanent_claim = event_target:balticOrder
+						is_core = event_target:balticOrder
+					}
+				}
+				is_rival = event_target:balticOrder
+				ai_attitude = {
+					who = event_target:balticOrder
+					attitude = attitude_rivalry
+				}
+				ai_attitude = {
+					who = event_target:balticOrder
+					attitude = attitude_hostile
+				}
+				ai_attitude = {
+					who = event_target:balticOrder
+					attitude = attitude_threatened
+				}
+				ai_attitude = {
+					who = event_target:balticOrder
+					attitude = attitude_outraged
+				}
+				ai_attitude = {
+					who = event_target:balticOrder
+					attitude = attitude_disloyal
+				}
+				ai_attitude = {
+					who = event_target:balticOrder
+					attitude = attitude_rebellious
+				}
+			}
+		}
+	}
+}

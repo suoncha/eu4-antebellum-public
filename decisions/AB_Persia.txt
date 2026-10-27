@@ -1,0 +1,62 @@
+country_decisions = {
+	
+	persia_rum = {
+		major = yes
+		
+		potential = {
+			ai = no
+			has_country_flag = per_released_rum
+			NOT = { exists = RUM }
+		}
+		allow = {
+		}
+		effect = {
+			custom_tooltip = PERSIA_RUM
+			add_country_modifier = {
+				name = per_client
+				duration = -1
+			}
+			hidden_effect = {
+				anatolia_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RUM
+					remove_core = ROOT
+				}
+				release = RUM
+				create_march = RUM
+				RUM = {
+					add_manpower = 10
+					add_treasury = 100
+					add_liberty_desire = -50
+					change_religion = ROOT
+					set_dynasty = "Sarukhanid"
+					change_primary_culture = turkish_iranian
+					swap_non_generic_missions = yes
+					swap_free_idea_group = yes
+					if = {
+						limit = {
+							ROOT = { tag = PER } 
+						}
+						add_government_reform = zoroastrian_rum
+					}
+					else_if = {
+						limit = {
+							ROOT = { tag = PRC }
+						}
+						add_government_reform = christian_rum
+					}
+					else = {
+						add_government_reform = ottoman_government
+					}
+				}
+			}
+			clr_country_flag = per_released_rum
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+	
+}

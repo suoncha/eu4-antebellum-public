@@ -1,78 +1,35 @@
-on_startup = {
-	if = {
-		limit = {
-			tag = BOH
-			NOT = {
-				has_country_flag = boh_hussite_aftermath_flag
-			}
-		}
-		set_country_flag = boh_hussite_aftermath_flag
-		country_event = { id = flavor_boh.22 }
-	}
-	# AB-BAI [[[
-	REB = {
-		if = {
-			limit = {
-				NOT = { has_global_flag = ab_set_up_cor_vars }
-			}
-			set_variable = {
-				which = ab_counter_reformation_center_spawned_count_var
-				value = 0
-			}
-			set_variable = {
-				which = ab_protestant_center_spawned_count_var
-				value = 0
-			}
-			set_variable = {
-				which = ab_reformed_center_spawned_count_var
-				value = 0
-			}
-			set_global_flag = ab_set_up_cor_vars
-		}
-		if = {
-			limit = {
-				tag = LAN
-				NOT = { has_global_flag = ab_tus_setup_win_counter }
-			}
-			set_variable = {
-				which = tus_num_of_merc_battles_won_var
-				value = 0
-			}
-			set_global_flag = ab_tus_setup_win_counter
-		}
-	}
-	if = {
-		limit = {
-			tag = LAN
-		}
-		country_event = {
-			id = ab_tuscany.1
-			days = 180
-			random = 180
-		}
-	}
-	if = {
-		limit = {
-			ai = no
-			ironman = yes
-		}
-		set_variable = {
-			which = ab_achievement_page_var
-			value = 1
-		}
-		if = {
-			limit = {
-				tag = FRC
-			}
-			country_event = {
-				id = ab_francia.44
-			}
-		}
-	}
-	# ]]]
+on_monthly_pulse = {
+    if = {
+        limit = {
+            has_reform = helvetia_confederacy
+        }
+        country_event = {
+            id = ab_germany.4
+        }
+    }
 }
 
 # country
+on_core = {
+	if = {
+		limit = {
+			province_id = 118
+			current_age = age_of_discovery
+			FROM = {
+				owns = 118
+				culture_group = latin
+				government = republic
+			}
+			NOT = { has_global_flag = AB_FORMED_RMR }
+		}
+		FROM = {
+			country_event = {
+				id = roman_republic.0
+			}
+		}
+	}
+}
+
 on_war_won = {
 	# AB-BAI {{{
 	if = {
@@ -157,12 +114,12 @@ on_war_won = {
 	}
 	if = {
 		limit = {
-			has_country_modifier = rmg_army_academy
+			has_country_flag = rmg_winning_war_ae
 		}
 		every_neighbor_country = {
 			add_aggressive_expansion = {
 				who = ROOT
-				value = -10
+				value = -3
 				apply_calc = no
 			}
 		}
@@ -173,7 +130,37 @@ on_war_won = {
 		}
 		add_stability_or_adm_power = yes
 	}
-	# }}}
+    if = {
+        limit = {
+            tag = PAP
+            FROM = {
+                tag = event_target:europa_crusade_target
+            }
+        }
+        country_event = {
+            id = ab_papal.15
+        }
+    }
+    # ]]]
+}
+
+on_war_ended = {
+    if = {
+        limit = {
+            has_country_modifier = pap_europa_crusade_helper
+        }
+        remove_country_modifier = pap_europa_crusade_helper
+    }
+    if = {
+        limit = {
+            FROM = {
+                has_country_modifier = pap_europa_crusade_helper
+            }
+        }
+        FROM = {
+            remove_country_modifier = pap_europa_crusade_helper
+        }
+    }
 }
 
 # country
@@ -267,10 +254,74 @@ on_religion_change = {
 			clr_country_flag = switching_religion_to_clear_school
 		}
 	}
+
+    # Fall of Islam
+    if = {
+        limit = {
+            has_country_modifier = pap_fall_of_islam
+            NOT = { religion_group = muslim }
+        }
+        remove_country_modifier = pap_fall_of_islam
+    }
+    else_if = {
+        limit = {
+            has_country_modifier = pap_abrahamic_tolerance
+            NOT = { religion = catholic }
+        }
+        remove_country_modifier = pap_abrahamic_tolerance
+    }
+    if = {
+        limit = {
+            has_global_flag = AB_FATE_OF_ISLAM_DESTRUCTION
+            religion_group = muslim
+        }
+        add_country_modifier = {
+            name = pap_fall_of_islam
+            duration = -1
+        }
+    }
+    else_if = {
+        limit = {
+            has_global_flag = AB_FATE_OF_ISLAM_TOLERANCE
+            religion = catholic
+        }
+        add_country_modifier = {
+            name = pap_abrahamic_tolerance
+            duration = -1
+        }
+    }
 }
 
 on_adm_development = {
 	# AB-BAI (put in the above scripted effect when we merge)
+    if = {
+        limit = {
+            owner = {
+                mission_completed = ned_baltic_colonies
+            }
+            NOT = {
+                culture = ROOT
+            }
+            NOT = {
+                religion = ROOT
+            }
+            region = baltic_region
+            has_port = yes
+            province_has_center_of_trade_of_level = 1
+            NOT = {
+                has_province_flag = ned_converted_baltic_province
+            }
+        }
+        random_list = {
+            10 = {
+                set_province_flag = ned_converted_baltic_province
+                change_culture = ROOT
+                change_religion = ROOT
+                add_base_production = 3
+            }
+            90 = { }
+        }
+    }
 	if = { 
 		limit = {
 			AND = {
@@ -290,6 +341,18 @@ on_adm_development = {
 			90 = { } 
 		}
 	}
+    if = { 
+        limit = {
+            region = low_countries_region
+            owner = {
+                mission_completed = ned_dutch_metropolises
+            }
+        }
+        random_list = { 
+            10 = { add_base_tax = 1 } 
+            90 = { } 
+        }
+    }
 	if = {
 		limit = {
 			owner = { has_reform = aquitain_kingdom_reform }
@@ -366,6 +429,46 @@ on_adm_development = {
 
 on_dip_development = {
 	# AB-BAI (put in the above scripted effect when we merge)
+    if = {
+        limit = {
+            owner = {
+                mission_completed = ned_baltic_colonies
+            }
+            NOT = {
+                culture = ROOT
+            }
+            NOT = {
+                religion = ROOT
+            }
+            region = baltic_region
+            has_port = yes
+            province_has_center_of_trade_of_level = 1
+            NOT = {
+                has_province_flag = ned_converted_baltic_province
+            }
+        }
+        random_list = {
+            10 = {
+                set_province_flag = ned_converted_baltic_province
+                change_culture = ROOT
+                change_religion = ROOT
+                add_base_production = 3
+            }
+            90 = { }
+        }
+    }
+    if = { 
+        limit = {
+            region = low_countries_region
+            owner = {
+                mission_completed = ned_dutch_metropolises
+            }
+        }
+        random_list = { 
+            10 = { add_base_production = 1 } 
+            90 = { } 
+        }
+    }
 	if = { 
 		limit = { 
 			owner = { has_country_modifier = lot_expand_industry } 
@@ -497,6 +600,46 @@ on_dip_development = {
 
 on_mil_development = {
 	# AB-BAI (put in the above scripted effect when we merge)
+	if = {
+		limit = {
+			owner = {
+				mission_completed = ned_baltic_colonies
+			}
+			NOT = {
+				culture = ROOT
+			}
+			NOT = {
+				religion = ROOT
+			}
+			region = baltic_region
+			has_port = yes
+			province_has_center_of_trade_of_level = 1
+			NOT = {
+				has_province_flag = ned_converted_baltic_province
+			}
+		}
+		random_list = {
+			10 = {
+				set_province_flag = ned_converted_baltic_province
+				change_culture = ROOT
+				change_religion = ROOT
+				add_base_production = 3
+			}
+			90 = { }
+		}
+	}
+	if = { 
+		limit = {
+			region = low_countries_region
+			owner = {
+				mission_completed = ned_dutch_metropolises
+			}
+		}
+		random_list = { 
+			10 = { add_base_manpower = 1 } 
+			90 = { } 
+		}
+	}
 	if = { 
 		limit = {
 			AND = {
@@ -823,6 +966,25 @@ on_province_culture_changed = {
 		}
 		remove_province_modifier = swa_germano_italic_unity
 	}
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_nobles_integrate_rus
+			}
+			has_owner_accepted_culture = no
+			culture_group = east_slavic
+		}
+		add_province_modifier = {
+			name = teu_integrate_rus_prov
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = {
+			has_province_modifier = teu_integrate_rus_prov
+		}
+		remove_province_modifier = teu_integrate_rus_prov
+	}
 }
 
 #ROOT = province that was centralized in
@@ -1026,6 +1188,16 @@ on_battle_won_country = {
 			duration = 180
 		}
 	}
+	if = {
+		limit = {
+			has_country_flag = unlock_teu_holy_horde
+		}
+		remove_country_modifier = teu_winning_battle
+		add_country_modifier = {
+			name = teu_winning_battle
+			duration = 60
+		}
+	}
 }
 
 on_raid_coast = {
@@ -1050,10 +1222,10 @@ on_colonial_nation_established = {
 		if = {
 			limit = {
 				FROM = {
-					OR = {
-						tag = GER
-						tag = EFC
-					}
+                    OR = {
+                        tag = GER
+                        tag = EFC
+                    }
 				}
 			}
 			ab_swap_to_preset_cn_tag = { tag = germany delay = yes }
@@ -1087,6 +1259,30 @@ on_colonial_nation_established = {
 				}
 			}
 			ab_swap_to_preset_cn_tag = { tag = byzantium delay = yes }
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					has_country_flag = ab_is_ned_flag
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = netherlands delay = yes }
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					tag = LOT
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = lotharingia delay = yes }
+		}
+		else_if = {
+			limit = {
+				FROM = {
+					tag = PAP
+				}
+			}
+			ab_swap_to_preset_cn_tag = { tag = papal delay = yes }
 		}
 	}
 }
@@ -1163,6 +1359,15 @@ on_annexed = {
 			remove_country_modifier = swa_crusader_lord
 		}
 	}
+	if = {
+		limit = {
+			FROM = {
+				tag = PLN
+			}
+			has_country_modifier = teu_brothers_in_faith
+		}
+		remove_country_modifier = teu_brothers_in_faith
+	}
 }
 
 on_raze = {
@@ -1171,6 +1376,11 @@ on_raze = {
 			province_id = 105
 		}
 		set_country_flag = ab_achiev_razed_parma
+		hidden_effect = {
+			country_event = {
+				id = ab_achiev.106
+			}
+		}
 	}
 }
 
@@ -1519,6 +1729,34 @@ on_siege_won_province = {
 		}
 		add_permanent_claim = controller
 	}
+	if = {
+		limit = {
+			controller = {
+				tag = REB
+			}
+			has_owner_religion = no
+			has_province_flag = religious_fanatics
+			NOT = { has_province_modifier = religious_violence }
+			NOT = { has_province_modifier = religious_massacre }
+		}
+		province_event = {
+			id = french_wars_of_religion.7
+		}
+	}
+	if = {
+		limit = {
+			controller = {
+				tag = REB
+			}
+			has_owner_religion = yes
+			has_province_flag = heretic_fanatics
+			NOT = { has_province_modifier = religious_violence }
+			NOT = { has_province_modifier = religious_massacre }
+		}
+		province_event = {
+			id = french_wars_of_religion.9
+		}
+	}
 }
 
 on_siege_won_country = {
@@ -1573,6 +1811,111 @@ on_province_owner_change = {
 			duration = -1
 		}
 	}
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_nobles_frankish_unity
+			}
+			has_owner_accepted_culture = no
+			OR = {
+				culture_group = french
+				culture_group = latin
+				culture_group = germanic
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					has_country_flag = fkn_buff_frankish_unity
+				}
+			}
+			add_province_modifier = {
+				name = lot_frankish_unity_buffed
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = lot_frankish_unity
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_burghers_italo_balkan_unity
+			}
+			has_owner_accepted_culture = no
+			OR = {
+				culture_group = south_slavic
+				culture_group = byzantine
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					mission_completed = rmg_balkan_metropolises
+				}
+			}
+			add_province_modifier = {
+				name = rmg_balkan_unity_buffed
+				duration = -1
+			}
+		}
+		else = {
+			add_province_modifier = {
+				name = rmg_balkan_unity
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_nobles_germano_italic_unity
+			}
+			has_owner_accepted_culture = no
+			OR = {
+				culture_group = latin
+				culture_group = germanic
+			}
+		}
+		add_province_modifier = {
+			name = swa_germano_italic_unity
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_estate_privilege = estate_nobles_integrate_rus
+			}
+			has_owner_accepted_culture = no
+			culture_group = east_slavic
+		}
+		add_province_modifier = {
+			name = teu_integrate_rus_prov
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			province_id = 118
+			current_age = age_of_discovery
+			owner = {
+				is_core = 118
+				culture_group = latin
+				government = republic
+			}
+			NOT = { has_global_flag = AB_FORMED_RMR }
+		}
+		owner = {
+			country_event = {
+				id = roman_republic.0
+			}
+		}
+	}
 }
 
 on_heir_disinherited = {
@@ -1586,6 +1929,241 @@ on_heir_disinherited = {
 		change_variable = {
 			which = frc_lothair_heirs_disinherited
 			value = 1
+		}
+		country_event = {
+			id = ab_achiev.111
+		}
+	}
+}
+
+on_alliance_broken = {
+	if = {
+		limit = {
+			has_country_modifier = pap_christianization_of_japan
+			FROM = {
+				has_country_flag = pap_christianization_japan_flag
+			}
+		}
+		remove_country_modifier = pap_christianization_of_japan
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = pap_christianization_of_japan
+			}
+			has_country_flag = pap_christianization_japan_flag
+		}
+		FROM = {
+			remove_country_modifier = pap_christianization_of_japan
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = pap_christianization_of_china
+			FROM = {
+				has_country_flag = pap_christianization_china_flag
+			}
+		}
+		remove_country_modifier = pap_christianization_of_china
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = pap_christianization_of_china
+			}
+			has_country_flag = pap_christianization_china_flag
+		}
+		FROM = {
+			remove_country_modifier = pap_christianization_of_china
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = pap_holy_alliance
+			FROM = {
+				OR = {
+					tag = KOJ
+					tag = OTR
+				}
+			}
+		}
+		remove_country_modifier = pap_holy_alliance
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = pap_holy_alliance
+			}
+			OR = {
+				tag = KOJ
+				tag = OTR
+			}
+		}
+		FROM = {
+			remove_country_modifier = pap_holy_alliance
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				has_country_modifier = pap_alliance_francia
+				has_country_modifier = pap_alliance_francia_buffed
+			}
+			FROM = {
+				tag = FRC
+			}
+		}
+		remove_country_modifier = pap_alliance_francia
+		remove_country_modifier = pap_alliance_francia_buffed
+	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_country_modifier = pap_alliance_francia
+					has_country_modifier = pap_alliance_francia_buffed
+				}
+			}
+			tag = FRC
+		}
+		FROM = {
+			remove_country_modifier = pap_alliance_francia
+			remove_country_modifier = pap_alliance_francia_buffed
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				has_country_modifier = pap_russian_alliance
+				has_country_modifier = pap_russian_alliance_buffed
+			}
+			FROM = {
+				OR = {
+					tag = VOL
+					tag = UKR
+				}
+				religion = catholic
+			}
+		}
+		remove_country_modifier = pap_russian_alliance
+		remove_country_modifier = pap_russian_alliance_buffed
+	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_country_modifier = pap_russian_alliance
+					has_country_modifier = pap_russian_alliance_buffed
+				}
+			}
+			OR = {
+				tag = VOL
+				tag = UKR
+			}
+			religion = catholic
+		}
+		FROM = {
+			remove_country_modifier = pap_russian_alliance
+			remove_country_modifier = pap_russian_alliance_buffed
+		}
+	}
+	if = {
+		limit = {
+			OR = {
+				has_country_modifier = pap_teutonic_alliance
+				has_country_modifier = pap_teutonic_alliance_buffed
+			}
+			FROM = {
+				OR = {
+					tag = DNZ
+					tag = TEU
+				}
+			}
+		}
+		remove_country_modifier = pap_teutonic_alliance
+		remove_country_modifier = pap_teutonic_alliance_buffed
+	}
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_country_modifier = pap_teutonic_alliance
+					has_country_modifier = pap_teutonic_alliance_buffed
+				}
+			}
+			OR = {
+				tag = DNZ
+				tag = TEU
+			}
+		}
+		FROM = {
+			remove_country_modifier = pap_teutonic_alliance
+			remove_country_modifier = pap_teutonic_alliance_buffed
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = ven_holyalliance
+			FROM = {
+				OR = {
+					tag = KOJ
+					tag = OTR
+				}
+			}
+		}
+		remove_country_modifier = ven_holyalliance
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = ven_holyalliance
+			}
+			OR = {
+				tag = KOJ
+				tag = OTR
+			}
+		}
+		FROM = {
+			remove_country_modifier = ven_holyalliance
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = ven_unholy_alliance
+			FROM = {
+				tag = SIC
+			}
+		}
+		remove_country_modifier = ven_unholy_alliance
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = ven_unholy_alliance
+			}
+			tag = SIC
+		}
+		FROM = {
+			remove_country_modifier = ven_unholy_alliance
+		}
+	}
+}
+
+on_new_term_election = {
+	if = {
+		limit = {
+			has_country_flag = ven_election_mana
+		}
+		random_list = {
+			33 = {
+				add_adm_power = 50
+			}
+			33 = {
+				add_dip_power = 50
+			}
+			33 = {
+				add_mil_power = 50
+			}
 		}
 	}
 }

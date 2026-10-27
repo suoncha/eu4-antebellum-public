@@ -13,6 +13,8 @@ metropoliskiev = {
 		tolerance_own = 1
 		church_loyalty_modifier = 0.05
 		manpower_in_true_faith_provinces= 0.1
+		has_streltsy = yes
+		allowed_streltsy_fraction = 0.1
 	}
 	conditional = {
 		allow = { has_dlc = "Third Rome" }
@@ -60,7 +62,13 @@ russloboda = {
 	potential = {
 		is_revolutionary = no
 		government = monarchy
-		culture_group = east_slavic
+		OR = {
+			culture_group = east_slavic
+			AND = {
+				tag = ROM
+				was_tag = UKR
+			}
+		}
 	}
 	modifiers = {
 		culture_conversion_cost = -0.1
@@ -73,8 +81,11 @@ russloboda = {
 	ai = {
 		factor = 1
 	}
-	trigger = { 
-		tag = UKR
+	trigger = {
+		OR = {
+			tag = UKR
+			was_tag = UKR
+		}
 	}
 }
 
@@ -84,7 +95,13 @@ rusmestnichestvo = {
 	potential = {
 		is_revolutionary = no
 		government = monarchy
-		culture_group = east_slavic
+		OR = {
+			culture_group = east_slavic
+			AND = {
+				tag = ROM
+				was_tag = UKR
+			}
+		}
 	}
 	custom_attributes = {
 		seizing_land_no_rebels_from_estate_nobles = yes
@@ -126,7 +143,13 @@ russtreletsky = {
 	potential = {
 		is_revolutionary = no
 		government = monarchy
-		culture_group = east_slavic
+		OR = {
+			culture_group = east_slavic
+			AND = {
+				tag = ROM
+				was_tag = UKR
+			}
+		}
 	}
 	modifiers = {
 		infantry_cost = -0.1
@@ -222,7 +245,13 @@ rustsar = {
 	potential = {
 		is_revolutionary = no
 		government = monarchy
-		culture_group = east_slavic
+		OR = {
+			culture_group = east_slavic
+			AND = {
+				tag = ROM
+				was_tag = UKR
+			}
+		}
 	}
 	modifiers = {
 		years_of_nationalism = -5
@@ -409,6 +438,8 @@ principality_vol = {
 		global_unrest = -1
 		global_tax_modifier = 0.05
 		governing_capacity = 100
+		has_streltsy = yes
+		allowed_streltsy_fraction = 0.1
 	}
 
 	conditional = {

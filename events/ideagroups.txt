@@ -1468,7 +1468,7 @@ country_event = {
 	trigger = {
 		has_idea_group = religious_ideas
 		NOT = { religion = jewish } #Has no heretic religions
-		NOT = { has_reform = papacy_reform }
+		NOT = { tag = PAP }
 		NOT = { has_reform = leading_clergy_reform }
 		OR = {
 			NOT = { religion = catholic }
@@ -7812,7 +7812,7 @@ country_event = {
 	trigger = {
 		has_idea_group = humanist_ideas
 		NOT = { religion = jewish } #Has no heretic religions
-		NOT = { has_reform = papacy_reform }
+		NOT = { tag = PAP }
 		NOT = { has_reform = leading_clergy_reform }
 		OR = {
 			NOT = { religion = catholic }
@@ -9089,14 +9089,6 @@ country_event = {
 		name = ideagroups.1.a	#Yes Please!
 		ai_chance = { factor = 1 }
 		trigger = { has_custom_ideas = no }
-		hidden_effect = {
-			if = {
-				limit = {
-					has_idea_group = norse_ideas
-				}
-				set_country_flag = refused_norse_ideas
-			}
-		}
 		swap_free_idea_group = yes		#keep progress
 	}
 	option = {
@@ -9120,20 +9112,6 @@ country_event = {
 		ai_chance = { factor = 1 }
 		trigger = { has_custom_ideas = no }
 		swap_free_idea_group = yes		#keep progress
-	}
-	option = {
-		name = ideagroups.1.b#No, we cannot abandon our roots.
-		#No Effect
-		hidden_effect = {
-			if = {
-				limit = {
-					primary_culture = norse
-					religion = norse_pagan_reformed
-				}
-				set_country_flag = refused_norse_ideas
-			}
-		}
-		ai_chance = { factor = 0 }
 	}
 }
 
@@ -9850,7 +9828,7 @@ country_event = {
 				1 = {
 					trigger = {
 						government = theocracy
-						NOT = { has_reform = papacy_reform }
+						NOT = { tag = PAP }
 						has_government_attribute = heir
 					}
 					set_country_flag = noble_man_a_new_theocrat

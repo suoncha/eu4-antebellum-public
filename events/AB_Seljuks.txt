@@ -21,56 +21,27 @@ country_event = {
 			}
 			add_permanent_claim = ROOT
 		}
-		ai_chance = {
-			factor = 1
-		}
+		swap_non_generic_missions = yes
 	}
 	
 	option = {
 		name = ab_seljuk.1.b
-		custom_tooltip = SELJUK_TURAN
 		set_country_flag = seljuk_turan
-		hidden_effect = {
-			swap_non_generic_missions = yes
-			crimea_region = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = {  is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
+		crimea_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = {  is_permanent_claim = ROOT }
 			}
-			caucasia_region = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = {  is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			ruthenia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
-				}
-				add_claim = ROOT
-			}
-			russia_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
-				}
-				add_claim = ROOT
-			}
-			ural_region = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
-				}
-				add_permanent_claim = ROOT
-			}
+			add_permanent_claim = ROOT
 		}
-		ai_chance = {
-			factor = 1
+		caucasia_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = {  is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
 		}
+		swap_non_generic_missions = yes
 	}
 }
 
@@ -86,13 +57,32 @@ country_event = {
 	option = {
 		name = ab_seljuk.2.a
 		change_tag = TRN
-		hidden_effect = {
-			override_country_name = TRN
-		}
+		override_country_name = TRN
+		change_primary_culture = turanian_culture
+		custom_tooltip = UNITE_TURANIAN_CULTURE
+		custom_tooltip = AB_EMPTY
 		swap_free_idea_group = yes
 		add_country_modifier = {
-			name = "sel_turan"
+			name = sel_turan
 			duration = -1
+		}
+		hidden_effect = {
+			every_province = {
+				limit = {
+					culture_group = altaic
+				}
+				change_culture = turanian_culture
+			}
+			set_heir_culture = turanian_culture
+			set_ruler_culture = turanian_culture
+			every_country = {
+				limit = {
+					culture_group = altaic
+				}
+				change_primary_culture = turanian_culture
+				set_heir_culture = turanian_culture
+				set_ruler_culture = turanian_culture
+			}
 		}
 	}
 	
@@ -111,16 +101,16 @@ country_event = {
 		name = ab_seljuk.3.a
 		custom_tooltip = SEL_TAJ
 		add_ruler_modifier = {
-			name = "sel_sultan"
+			name = sel_sultan
 			duration = -1
 		}
-			india_superregion  = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
-				}
-				add_permanent_claim = ROOT
+		india_superregion  = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT }
+				NOT = { is_core = ROOT }
 			}
+			add_permanent_claim = ROOT
+		}
 		hidden_effect = {
 			524 = {
 				change_religion = ROOT
@@ -131,131 +121,6 @@ country_event = {
 			}
 		}
 	}
-	
-}
-
-#Convert Beyliks
-province_event = {
-	id = ab_seljuk.4
-	title = ab_seljuk.4.t
-	desc = ab_seljuk.4.d
-	picture = AB_BYZFALL_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		owner = {
-			mission_completed = seljuk_dominate_beyliks
-		}
-		culture = turkish
-		NOT = {
-			religion = sunni
-		}
-		NOT = { has_province_modifier = seluk_convert }
-	}
-	
-	option = {
-		name = ab_seljuk.4.a
-		add_province_modifier = {
-			name = "seluk_convert"
-			duration = -1
-		}
-	}
-	
-}
-
-
-#Convert Beyliks 2
-province_event = {
-	id = ab_seljuk.5
-	title = ab_seljuk.5.t
-	desc = ab_seljuk.5.d
-	picture = AB_BYZFALL_eventPicture
-	
-	hidden = yes
-	
-	trigger = {
-		owner = {
-			mission_completed = seljuk_dominate_beyliks
-		}
-		culture = turkish
-		religion = sunni
-		has_province_modifier = seluk_convert
-	}
-	
-	option = {
-		name = ab_seljuk.3.a
-		remove_province_modifier = seluk_convert
-	}
-	
-}
-
-#Persia
-country_event = {
-	id = ab_seljuk.6
-	title = ab_seljuk.6.t
-	desc = ab_seljuk.6.d
-	picture = AB_PERSIA_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ab_seljuk.6.a
-		persia_region = {
-			add_devastation = 50
-		}
-		set_government_rank = 3
-		persia_region = {
-			add_province_modifier = {
-				name = seljuk_islamization
-				duration = -1
-			}
-		}
-		khorasan_region = {
-			limit = {
-				NOT = { is_core = ROOT }
-				NOT = { is_permanent_claim = ROOT }
-			}
-			add_permanent_claim = ROOT
-		}
-	}
-	
-}
-
-# Protector of the Pilgrimage
-country_event = {
-	id = ab_seljuk.7
-	title = ab_seljuk.7.t
-	desc = ab_seljuk.7.d
-	picture = HAJJ_eventPicture
-	
-	fire_only_once = yes
-	
-	trigger = {
-		OR = {
-			tag = SEL
-			was_tag = SEL
-			tag = RUM
-		}
-		is_at_war = no
-		owns = 361
-		owns = 358
-		owns = 382
-		owns = 379
-		religion_group = muslim
-	}
-	
-	mean_time_to_happen = {
-		months = 12
-	}
-
-	option = {
-		name = ab_seljuk.7.a
-		add_adm_power = 200
-		add_prestige = 25
-		add_legitimacy = 25
-		add_piety = 0.25
-	}
 }
 
 # Fate of the Patriarchate
@@ -265,9 +130,7 @@ country_event = {
 	desc = ab_seljuk.8.d
 	picture = ORTHODOX_eventPicture
 	
-	
 	fire_only_once = yes
-
 	
 	trigger ={
 		OR = {
@@ -283,7 +146,6 @@ country_event = {
 	mean_time_to_happen = {
 		months = 120
 	}
-	
 	
 	option = {		# Allow the Patriarchate to exist and keep the current Patriarch
 		name = ab_seljuk.8.a
@@ -303,16 +165,7 @@ country_event = {
 	}
 	option = {		# Close down the Patriarchate and confiscate its properties
 		name = ab_seljuk.8.b
-		ai_chance = {
-			factor = 50
-			modifier = {
-				factor = 0.5
-				any_neighbor_country = {
-					religion = orthodox
-					army_size = TUR
-				}
-			}
-		}
+		ai_chance = { factor = 50 }
 		add_years_of_income = 0.5
 		capital_scope = {
 			add_base_tax = 1
@@ -348,7 +201,6 @@ country_event = {
 	mean_time_to_happen = {
 		months = 300
 	}
-	
 	
 	option = {		# Great Army Reform
 		name = "flavor_tur.EVTOPTA3354"
@@ -386,7 +238,6 @@ country_event = {
 	desc = ab_seljuk.10.d
 	picture = UNIVERSITY_eventPicture
 	
-	
 	fire_only_once = yes
 
 	trigger = {
@@ -404,7 +255,6 @@ country_event = {
 		months = 100
 	}
 	
-	
 	option = {		# Found the Enderun
 		name = "flavor_tur.EVTOPTA3357"
 		add_years_of_income = -0.10
@@ -413,7 +263,6 @@ country_event = {
 			name = enderun_academy
 			duration = 3650
 		}
-		
 	}
 	option = {		# Expand the Timariot System instead
 		name = "flavor_tur.EVTOPTB3357"
@@ -422,54 +271,6 @@ country_event = {
 			name = expanded_timariot_system
 			duration = 3650
 		}		
-	}
-}
-
-#Akgunid formed Rum - return to Theocracy
-country_event = {
-	id = ab_seljuk.11
-	title = ab_seljuk.11.t
-	desc = ab_seljuk.11.d
-	picture = AB_SELJUK_eventPicture
-	
-	fire_only_once = yes
-
-	trigger = {
-		tag = RUM
-		was_tag = AKG
-	}
-	
-	option = {
-		name = ab_seljuk.11.a
-		change_government = theocracy
-		add_government_reform = akgunid_reform
-	}
-	option = {
-		name = ab_seljuk.11.b
-	}
-}
-
-#Zangid formed Rum - return to Republic
-country_event = {
-	id = ab_seljuk.12
-	title = ab_seljuk.12.t
-	desc = ab_seljuk.12.d
-	picture = AB_SELJUK_eventPicture
-	
-	fire_only_once = yes
-
-	trigger = {
-		tag = RUM
-		was_tag = ZNG
-	}
-	
-	option = {
-		name = ab_seljuk.12.a
-		change_government = republic
-		add_government_reform = zangid_republic
-	}
-	option = {
-		name = ab_seljuk.12.b
 	}
 }
 

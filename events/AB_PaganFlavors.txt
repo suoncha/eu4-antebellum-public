@@ -1,0 +1,808 @@
+##By Chronometry
+namespace = ab_mpf
+
+### HELLENIC ###
+#Studying the Classics (eventually grants monarch skills)
+country_event = {
+	id = ab_mpf.1
+	title = ab_mpf.1.t
+	desc = ab_mpf.1.d
+	picture = BIG_BOOK_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = hellenic #at least these make sense, thanks parm
+			religion = reformed_hellenic
+		}
+		NOT = { has_ruler_flag = ab_mpf_studied_classics }
+		NOT = { has_ruler_flag = ab_mpf_classical_education }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_ruler_flag = ab_mpf_studied_classics
+		}
+	}
+
+	after = {
+		hidden_effect = {
+			country_event = {
+				id = ab_mpf.2
+				days = 1825
+			}
+		}
+	}
+
+	option = { #Philosophy of State (ADM)
+		name = ab_mpf.1.a
+		set_ruler_flag = ab_mpf_classical_adm
+		custom_tooltip = ab_mpf_classical_adm_tt
+	}
+
+	option = { #Rhetoric (DIP)
+		name = ab_mpf.1.b
+		set_ruler_flag = ab_mpf_classical_dip
+		custom_tooltip = ab_mpf_classical_dip_tt
+	}
+
+	option = { #Study Great Conquerors (MIL)
+		name = ab_mpf.1.c
+		set_ruler_flag = ab_mpf_classical_mil
+		custom_tooltip = ab_mpf_classical_mil_tt
+	}
+}
+
+#Fruits of Education
+country_event = {
+	id = ab_mpf.2
+	title = ab_mpf.2.t
+	desc = ab_mpf.2.d
+	picture = BIG_BOOK_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = hellenic
+			religion = reformed_hellenic
+		}
+		has_ruler_flag = ab_mpf_studied_classics
+	}
+
+	immediate = {
+		hidden_effect = {
+			set_ruler_flag = ab_mpf_classical_education #you have ONE field of study and NOTHING ELSE
+		}
+	}
+
+	option = {
+		name = ab_mpf.2.a
+		trigger = {
+			has_ruler_flag = ab_mpf_classical_adm
+		}
+		change_monarch_points_or_power = {
+			points = 1
+			power = adm
+		}
+	}
+
+	option = {
+		name = ab_mpf.2.b
+		trigger = {
+			has_ruler_flag = ab_mpf_classical_dip
+		}
+		change_monarch_points_or_power = {
+			points = 1
+			power = dip
+		}
+	}
+
+	option = {
+		name = ab_mpf.2.c
+		trigger = {
+			has_ruler_flag = ab_mpf_classical_mil
+		}
+		change_monarch_points_or_power = {
+			points = 1
+			power = mil
+		}
+	}
+}
+
+#Festival to honour the gods (choose a bonus from current blessings/personal deity)
+country_event = {
+	id = ab_mpf.3
+	title = ab_mpf.3.t
+	desc = ab_mpf.3.d
+	picture = FEAST_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = hellenic
+			religion = reformed_hellenic
+		}
+		NOT = { has_country_modifier = ab_mpf_recent_hellenic_festival }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = ab_mpf_recent_hellenic_festival
+				duration = 1825
+				hidden = yes
+			}
+		}
+	}
+
+	#oh boy here we go.
+	option = { #Zeus
+		name = ab_mpf.3.a
+		trigger = {
+			OR = {
+				has_personal_deity = zeus_deity
+				has_church_aspect = aspect_zeus
+			}
+		}
+		add_country_modifier = {
+			name = ab_mpf_zeus_festival
+			duration = 1825
+		}
+	}
+	option = { #Poseidon
+		name = ab_mpf.3.b
+		trigger = {
+			OR = {
+				has_personal_deity = poseidon_deity
+				has_church_aspect = aspect_poseidon
+			}
+		}
+		add_country_modifier = {
+			name = ab_mpf_poseidon_festival
+			duration = 1825
+		}
+	}
+	option = { #Demeter
+		name = ab_mpf.3.c
+		trigger = {
+			OR = {
+				has_personal_deity = demeter_deity
+				has_church_aspect = aspect_demeter
+			}
+		}
+		add_country_modifier = {
+			name = ab_mpf_demeter_festival
+			duration = 1825
+		}
+	}
+	option = { #Ares
+		name = ab_mpf.3.e
+		trigger = {
+			OR = {
+				has_personal_deity = ares_deity
+				has_church_aspect = aspect_ares
+			}
+		}
+		add_country_modifier = {
+			name = ab_mpf_ares_festival
+			duration = 1825
+		}
+	}
+	option = { #Hera
+		name = ab_mpf.3.f
+		trigger = {
+			OR = {
+				has_personal_deity = hera_deity
+				has_church_aspect = aspect_hera
+			}
+		}
+		add_country_modifier = {
+			name = ab_mpf_hera_festival
+			duration = 1825
+		}
+	}
+	option = { #Apollo
+		name = ab_mpf.3.g
+		trigger = {
+			OR = {
+				has_personal_deity = apollo_deity
+				has_church_aspect = aspect_apollo
+			}
+		}
+		add_country_modifier = {
+			name = ab_mpf_apollo_festival
+			duration = 1825
+		}
+	}
+	option = { #Athena
+		name = ab_mpf.3.h
+		trigger = {
+			has_church_aspect = aspect_athena
+		}
+		add_country_modifier = {
+			name = ab_mpf_athena_festival
+			duration = 1825
+		}
+	}
+	option = { #Artemis
+		name = ab_mpf.3.i
+		trigger = {
+			has_church_aspect = aspect_artemis
+		}
+		add_country_modifier = {
+			name = ab_mpf_artemis_festival
+			duration = 1825
+		}
+	}
+	#Plouton doesn't get a festival, they don't want to catch his attention
+	option = { #Failsafe if you somehow aren't worshipping any gods. No points for dithering!
+		name = ab_mpf.3.j
+		trigger = {
+			NOT = {
+				OR = {
+					has_personal_deity = zeus_deity
+					has_church_aspect = aspect_zeus
+					has_personal_deity = poseidon_deity
+					has_church_aspect = aspect_poseidon
+					has_personal_deity = demeter_deity
+					has_church_aspect = aspect_demeter
+					has_personal_deity = ares_deity
+					has_church_aspect = aspect_ares
+					has_personal_deity = hera_deity
+					has_church_aspect = aspect_hera
+					has_personal_deity = apollo_deity
+					has_church_aspect = aspect_apollo
+					has_church_aspect = aspect_athena
+					has_church_aspect = aspect_artemis
+				}
+			}
+		}
+		custom_tooltip = ab_mpf_lackluster_festival_tt
+		add_country_modifier = {
+			name = ab_mpf_lackluster_festival
+			duration = 1825
+		}
+	}
+}
+
+#Parthenon related events - restoration and rededication to Athena
+country_event = {
+	id = ab_mpf.4
+	title = ab_mpf.4.t
+	desc = ab_mpf.4.d
+	picture = BYZ_ATHENS_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_mpf.4.a
+		custom_tooltip = ab_mpf_parthenon_restoration_process_tt
+	}
+}
+
+country_event = {
+	id = ab_mpf.5
+	title = ab_mpf.5.t
+	desc = ab_mpf.5.d
+	picture = BYZ_ATHENS_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_mpf.5.a
+		custom_tooltip = ab_mpf_parthenon_restored_tt
+		custom_tooltip = AB_EMPTY
+		add_prestige_or_monarch_power = { amount = 20 }
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = ab_mpf_restored_parthenon
+			duration = -1
+		}
+	}
+}
+
+#Events for the Oracle at Delphi (Temple of Apollo)
+country_event = {
+	id = ab_mpf.6
+	title = ab_mpf.6.t
+	desc = ab_mpf.6.d
+	picture = SIERRA_DE_LA_PLATA_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_mpf.6.a
+		custom_tooltip = ab_mpf_oracle_restoration_tt
+	}
+}
+
+country_event = {
+	id = ab_mpf.7
+	title = ab_mpf.7.t
+	desc = ab_mpf.7.d
+	picture = SIERRA_DE_LA_PLATA_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_mpf.7.a
+		custom_tooltip = ab_mpf_oracle_restored_tt
+		custom_tooltip = AB_EMPTY
+		add_prestige_or_monarch_power = { amount = 20 }
+		custom_tooltip = AB_EMPTY
+		add_country_modifier = {
+			name = ab_mpf_restored_apollo
+			duration = -1
+		}
+	}
+}
+
+#Dedicating Jerusalem to Zeus makes Abrahamics MAD
+country_event = {
+	id = ab_mpf.8
+	title = ab_mpf.8.t
+	desc = ab_mpf.8.d
+	picture = BYZ_JERUSALEM_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_mpf.8.a
+		379 = {
+			add_province_modifier = {
+				name = ab_mpf_jerusalem_enraged
+				duration = 10950 #30 years
+			}
+			spawn_rebels = {
+				type = jewish_rebels
+				size = 2
+			}
+		}
+	}
+}
+
+### NORSE ###
+# Raise New Runestone
+country_event = {
+	id = ab_mpf.9
+	title = ab_mpf.9.t
+	desc = ab_mpf.9.d
+	picture = RUNESTONE_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = norse_pagan_reformed #PDX why are you like this
+			religion = reformed_norse
+		}
+		NOT = { has_country_modifier = ab_mpf_raised_new_runestone }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = ab_mpf_raised_new_runestone
+				duration = 3650
+				hidden = yes
+			}
+		}
+	}
+
+	option = { #In honour of the gods
+		name = ab_mpf.9.a
+		add_years_of_income = -0.5
+		add_church_power = 25
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+	}
+
+	option = { #In honour of an ancestor
+		name = ab_mpf.9.b
+		add_years_of_income = -0.5
+		add_legitimacy = 10
+		add_scaled_republican_tradition = 5
+		add_horde_unity = 10
+		add_devotion = 10
+		add_meritocracy = 10 #honestly if this was relevant i'd be really impressed
+	}
+
+	option = { #In honour of myself! :humble:
+		name = ab_mpf.9.c
+		add_years_of_income = -0.5
+		add_prestige = 15
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -5
+		}
+	}
+
+	option = { #We're too broke to raise a new stone right now
+		name = ab_mpf.9.e
+		add_prestige = -10
+	}
+}
+
+#A-Viking We Will Go
+country_event = {
+	id = ab_mpf.10
+	title = ab_mpf.10.t
+	desc = ab_mpf.10.d
+	picture = VIKINGS_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = norse_pagan_reformed
+			religion = reformed_norse
+		}
+		NOT = { has_country_modifier = ab_mpf_viking_timer }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	after = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = ab_mpf_viking_timer
+				duration = 1825
+			}
+		}
+	}
+		
+	option = { #We could use them in the army
+		name = ab_mpf.10.a
+		add_country_modifier = {
+			name = ab_mpf_vikings_in_the_army #manpower recovery
+			duration = 1825
+		}
+	}
+
+	option = { #Encourage them to become merchants
+		name = ab_mpf.10.b
+		add_country_modifier = {
+			name = ab_mpf_viking_merchants #trade efficiency
+			duration = 1825
+		}
+	}
+
+	option = { #The colonial life should sate their wanderlust
+		name = ab_mpf.10.c
+		trigger = {
+			num_of_colonists = 1
+		}
+		highlight = yes
+		add_country_modifier = {
+			name = ab_mpf_viking_colonists #settler growth
+			duration = 1825
+		}
+	}
+}
+
+#A Grand Blot
+country_event = {
+	id = ab_mpf.11
+	title = ab_mpf.11.t
+	desc = ab_mpf.11.d
+	picture = NORSE_TEMPLE_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = norse_pagan_reformed
+			religion = reformed_norse
+		}
+		NOT = { has_country_modifier = ab_mpf_held_grand_blot }
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = ab_mpf_held_grand_blot
+				duration = 3285 #9 years
+				hidden = yes
+			}
+		}
+	}
+
+	option = { #A couple of animal sacrifices will suffice this time
+		name = ab_mpf.11.a
+		add_years_of_income = -0.2
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -10
+		}
+	}
+
+	option = { #Offer the finest of our herds and flocks to the gods
+		name = ab_mpf.11.b
+		add_years_of_income = -0.6
+		add_prestige = 15
+	}
+
+	option = { #Let's sacrifice some criminals, no-one will miss them
+		name = ab_mpf.11.c
+		trigger = {
+			church_power = 50
+		}
+		highlight = yes
+		add_church_power = -50
+		add_years_of_income = -0.3
+		add_country_modifier = {
+			name = ab_mpf_sacrificed_criminals #unrest down, no-one wants to cause trouble and get sacrificed
+			duration = 1825
+		}
+	}
+}
+
+### SLAVIC ###
+#Jarilo Festival
+country_event = {
+	id = ab_mpf.12
+	title = ab_mpf.12.t
+	desc = ab_mpf.12.d
+	picture = FEAST_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = slavic_pagan
+			religion = reformed_slavic
+		}
+		NOT = { has_country_modifier = ab_mpf_jarilo_festival }
+		is_month = 1
+		NOT = { is_month = 5 } #February to May, because spring festival
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = { #Where Jarilo walks, there your field gives birth
+		name = ab_mpf.12.a
+		add_country_modifier = {
+			name = ab_mpf_jarilo_festival
+			duration = 1825
+		}
+	}
+}
+
+#Perun's Wrath
+country_event = {
+	id = ab_mpf.13
+	title = ab_mpf.13.t
+	desc = ab_mpf.13.d
+	picture = BATTLE_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			religion = slavic_pagan
+			religion = reformed_slavic
+		}
+		NOT = { has_country_modifier = ab_mpf_peruns_lightning }
+		is_at_war = yes
+		any_war_enemy_country = {
+			NOT = {
+				OR = {
+					religion = slavic_pagan
+					religion = reformed_slavic
+				}
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = { #Perun has shown us his favour!
+		name = ab_mpf.13.a
+		add_country_modifier = {
+			name = ab_mpf_peruns_lightning
+			duration = 1825
+		}
+	}
+}
+
+### ZOROASTRIAN ###
+#Iranian New Years! Singing, dancing, leaping over fires, good food!
+country_event = {
+	id = ab_mpf.14
+	title = ab_mpf.14.t
+	desc = ab_mpf.14.d
+	picture = MYSTICS_DANCING_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		religion_group = zoroastrian_group
+		is_month = 2
+		NOT = { is_month = 3 } #Nowruz takes place around March
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = { #Sorkhi-ye to az man...
+		name = ab_mpf.14.a
+		add_prestige = 5
+		add_country_modifier = {
+			name = ab_mpf_zoro_new_year
+			duration = 365
+		}
+	}
+}
+
+#Pilgrimages to holy sites
+country_event = {
+	id = ab_mpf.15
+	title = ab_mpf.15.t
+	desc = ab_mpf.15.d
+	picture = MYSTIC_IN_PRAYER_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		religion_group = zoroastrian_group
+		OR = {
+			owns = 421
+			owns = 4430
+			owns = 2223
+			owns = 441
+			owns = 2235
+		}
+	}
+
+	option = {
+		name = ab_mpf.15.a
+		trigger = {
+			calc_true_if = {
+				owns = 421
+				owns = 4430
+				owns = 2223
+				owns = 441
+				owns = 2235
+				amount = 1
+			}
+			NOT = {
+				calc_true_if = {
+					owns = 421
+					owns = 4430
+					owns = 2223
+					owns = 441
+					owns = 2235
+					amount = 2
+				}
+			}
+		}
+		custom_tooltip = ab_mpf_zoro_pilgrims_tt
+		add_years_of_income = 0.2
+	}
+
+	option = {
+		name = ab_mpf.15.b
+		trigger = {
+			calc_true_if = {
+				owns = 421
+				owns = 4430
+				owns = 2223
+				owns = 441
+				owns = 2235
+				amount = 2
+			}
+			NOT = {
+				calc_true_if = {
+					owns = 421
+					owns = 4430
+					owns = 2223
+					owns = 441
+					owns = 2235
+					amount = 3
+				}
+			}
+		}
+		custom_tooltip = ab_mpf_zoro_pilgrims_tt
+		add_years_of_income = 0.4
+		add_prestige = 5
+	}
+
+	option = {
+		name = ab_mpf.15.c
+		trigger = {
+			calc_true_if = {
+				owns = 421
+				owns = 4430
+				owns = 2223
+				owns = 441
+				owns = 2235
+				amount = 3
+			}
+			NOT = {
+				calc_true_if = {
+					owns = 421
+					owns = 4430
+					owns = 2223
+					owns = 441
+					owns = 2235
+					amount = 4
+				}
+			}
+		}
+		custom_tooltip = ab_mpf_zoro_pilgrims_tt
+		add_years_of_income = 0.6
+		add_prestige = 10
+	}
+
+	option = {
+		name = ab_mpf.15.e
+		trigger = {
+			calc_true_if = {
+				owns = 421
+				owns = 4430
+				owns = 2223
+				owns = 441
+				owns = 2235
+				amount = 4
+			}
+			NOT = {
+				calc_true_if = {
+					owns = 421
+					owns = 4430
+					owns = 2223
+					owns = 441
+					owns = 2235
+					amount = 5
+				}
+			}
+		}
+		custom_tooltip = ab_mpf_zoro_pilgrims_tt
+		add_years_of_income = 0.8
+		add_prestige = 15
+	}
+
+	option = {
+		name = ab_mpf.15.f
+		trigger = {
+			calc_true_if = {
+				owns = 421
+				owns = 4430
+				owns = 2223
+				owns = 441
+				owns = 2235
+				amount = 5
+			}
+		}
+		custom_tooltip = ab_mpf_zoro_pilgrims_tt
+		add_years_of_income = 1
+		add_prestige = 20
+	}
+}

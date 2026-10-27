@@ -1,0 +1,119 @@
+incident_republican_france = {
+	# This is the Incident event, it is used 
+	event = ab_france.101
+	default_option = 0
+
+	# These are the conditions in which the Imperial Incident will
+	# stop before the vote can reach a conclusion
+	can_stop = {
+		OR = {
+			# France has become a monarchy again
+			FRA = { government = monarchy }
+			# France does not exist anymore
+			NOT = { exists = FRA }
+		}
+	}
+
+	# Between 0..N are the options for votes
+	0 = { # Intervene in France
+
+		# This is the default chance, and each modifier is applied
+		# in order to reduce or increase the chance that a member
+		# of the HRE votes for this option
+		factor = 1
+		# For example, do not intervene if you are a Republic
+		modifier = {
+			factor = 0
+			tag = FRA
+		}
+		modifier = {
+			factor = 0
+			government = republic
+		}
+		modifier = {
+			factor = 3
+			government = monarchy
+		}
+		modifier = {
+			factor = 3
+			OR = {
+				ai_attitude = {
+					who = FRA
+					attitude = attitude_rivalry
+				}
+				ai_attitude = {
+					who = FRA
+					attitude = attitude_hostile
+				}
+				ai_attitude = {
+					who = FRA
+					attitude = attitude_threatened
+				}
+				ai_attitude = {
+					who = FRA
+					attitude = attitude_outraged
+				}
+				ai_attitude = {
+					who = FRA
+					attitude = attitude_rebellious
+				}
+			}
+		}
+		modifier = {
+			factor = 10
+			alliance_with = emperor
+		}
+		modifier = {
+			factor = 10
+			marriage_with = emperor
+		}
+		modifier = {
+			factor = 10
+			OR = {
+				tag = GUY
+				tag = BOU
+				tag = TOU
+				tag = NEV
+			}
+		}
+	}
+	1 = { # Do not intervene
+		factor = 1
+		modifier = {
+			factor = 1.6
+			NOT = {
+				OR = {
+					culture_group = west_germanic
+					culture_group = germanic
+					culture_group = latin
+				}
+			}
+			ai_attitude = {
+				who = FRA
+				attitude = attitude_neutral
+			}
+		}
+		modifier = {
+			factor = 3
+			OR = {
+				ai_attitude = {
+					who = FRA
+					attitude = attitude_friendly
+				}
+				ai_attitude = {
+					who = FRA
+					attitude = attitude_allied
+				}
+				ai_attitude = {
+					who = FRA
+					attitude = attitude_loyal
+				}
+				government = republic
+			}
+		}
+		modifier = {
+			factor = 10
+			tag = FRI
+		}
+	}
+}

@@ -32,8 +32,10 @@ country_event = {
 
 	option = {	# We will stand for the Pope!
 		name = flavor_sca.1.a
-		custom_tooltip = sca_unlock_catholic_missions_tt
 		trigger = { religion_group = christian }
+		custom_tooltip = sca_unlock_catholic_missions_tt
+		set_country_flag = sca_unlock_catholic_missions
+		swap_non_generic_missions = yes
 		if = {
 			limit = { NOT = { religion = catholic } }
 			add_stability = -2
@@ -80,22 +82,6 @@ country_event = {
 				change_religion = catholic
 			}
 		}
-		hidden_effect = {
-			set_country_flag = sca_unlock_catholic_missions
-			clr_country_flag = sca_unlock_protestant_missions
-			clr_country_flag = sca_unlock_norse_missions
-			clr_country_flag = sca_unlock_humanist_missions
-			if = {
-				limit = {
-					OR = {
-						has_mission = swe_the_theologian_discussions
-						has_mission = dan_the_age_of_reformation
-						has_mission = nor_religious_path_mission
-					}
-				}
-				swap_non_generic_missions = yes
-			}
-		}
 		ai_chance = {
 			factor = 1
 			modifier = {
@@ -122,6 +108,8 @@ country_event = {
 		name = flavor_sca.1.d
 		trigger = { NOT = { religion = norse_pagan_reformed } }
 		custom_tooltip = sca_unlock_humanist_missions_tt
+		set_country_flag = sca_unlock_humanist_missions
+		swap_non_generic_missions = yes
 		custom_tooltip = flavor_sca.1.d.tt
 		hidden_effect = {
 			every_known_country = {
@@ -134,20 +122,6 @@ country_event = {
 					who = ROOT
 					modifier = swe_is_not_for_us
 				}
-			}
-			set_country_flag = sca_unlock_humanist_missions
-			clr_country_flag = sca_unlock_catholic_missions
-			clr_country_flag = sca_unlock_protestant_missions
-			clr_country_flag = sca_unlock_norse_missions
-			if = {
-				limit = {
-					OR = {
-						has_mission = swe_the_theologian_discussions
-						has_mission = dan_the_age_of_reformation
-						has_mission = nor_religious_path_mission
-					}
-				}
-				swap_non_generic_missions = yes
 			}
 		}
 		ai_chance = {
@@ -184,7 +158,7 @@ country_event = {
 			limit = { has_government_attribute = education_focus_enabled }
 			if = {
 				limit = {
-					NOT = { has_reform = papacy_reform }
+					NOT = { tag = PAP }
 					has_government_attribute = heir
 				}
 				add_ruler_modifier = {
@@ -207,7 +181,7 @@ country_event = {
 			limit = { has_government_attribute = education_focus_enabled }
 			if = {
 				limit = {
-					NOT = { has_reform = papacy_reform }
+					NOT = { tag = PAP }
 					has_government_attribute = heir
 				}
 				add_ruler_modifier = {
@@ -230,7 +204,7 @@ country_event = {
 			limit = { has_government_attribute = education_focus_enabled }
 			if = {
 				limit = {
-					NOT = { has_reform = papacy_reform }
+					NOT = { tag = PAP }
 					has_government_attribute = heir
 				}
 				add_ruler_modifier = {

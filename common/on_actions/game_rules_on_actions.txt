@@ -1,0 +1,107 @@
+on_monthly_pulse = {
+    if = {
+        limit = {
+            has_global_flag = AB_COLORED_SUBJECT_ALL
+            is_subject = yes
+			is_colonial_nation = no
+        }
+        change_country_color = {
+            country = overlord
+        }
+    }
+    else_if = {
+        limit = {
+            has_global_flag = AB_COLORED_SUBJECT_VASSAL
+            OR = {
+                is_vassal = yes
+                is_march = yes
+            }
+        }
+        change_country_color = {
+            country = overlord
+        }
+    }
+    else_if = {
+        limit = {
+            has_global_flag = AB_COLORED_SUBJECT_PU
+            is_subject_of_type = personal_union
+        }
+        change_country_color = {
+            country = overlord
+        }
+    }
+    else_if = {
+        limit = {
+            has_global_flag = AB_COLORED_SUBJECT_TRIBUTARY
+            is_subject_of_type = tributary_state
+        }
+        change_country_color = {
+            country = overlord
+        }
+    }
+}
+
+on_dependency_gained = {
+    if = {
+        limit = {
+            has_global_flag = AB_COLORED_SUBJECT_ALL
+            FROM = {
+                is_subject = yes
+                is_colonial_nation = no
+            }
+        }
+        FROM = {
+            change_country_color = {
+                country = overlord
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            has_global_flag = AB_COLORED_SUBJECT_VASSAL
+            FROM = {
+                OR = {
+                    is_vassal = yes
+                    is_march = yes
+                }
+            }
+        }
+        FROM = {
+            change_country_color = {
+                country = overlord
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            has_global_flag = AB_COLORED_SUBJECT_PU
+            FROM = {
+                is_subject_of_type = personal_union
+            }
+        }
+        FROM = {
+            change_country_color = {
+                country = overlord
+            }
+        }
+    }
+    else_if = {
+        limit = {
+            has_global_flag = AB_COLORED_SUBJECT_TRIBUTARY
+            FROM = {
+                is_subject_of_type = tributary_state
+            }
+        }
+        FROM = {
+            change_country_color = {
+                country = overlord
+            }
+        }
+    }
+}
+
+on_dependency_lost = {
+    FROM = {
+        restore_country_color = yes
+    }
+}

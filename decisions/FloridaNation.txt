@@ -3,84 +3,26 @@ country_decisions = {
 	florida_nation = {
 		major = yes
 		potential = {
+			is_former_colonial_nation = yes
 			NOT = { has_country_flag = changed_from_colonial_nation }
-			was_never_end_game_tag_trigger = yes
-			is_nomad = no
-			is_random_new_world = no
-			NOT = { tag = HLR }
-			NOT = { tag = PAP }
-			OR = {
-				is_former_colonial_nation = yes
-				is_colonial_nation = yes
-				AND = {
-					NOT = {
-						OR = {
-							technology_group = north_american
-							technology_group = mesoamerican
-							technology_group = andean
-							technology_group = high_american
-							technology_group = south_american
-						}
-					}
-					capital_scope = {
-						OR = {
-							colonial_region = colonial_eastern_america
-							colonial_region = colonial_louisiana
-						}
-						is_core = ROOT
-					}
-				}
-			}
-			OR = {
-				colonial_eastern_america = {
-					owned_by = ROOT
-				}
-				colonial_louisiana = {
-					owned_by = ROOT
-				}
-			}
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 3	
-				}
+			NOT = { exists = FLO }
+			capital_scope = {
+				region = southeast_america_region
 			}
 		}
 		provinces_to_highlight = {
-			OR = {
-				area = florida_area
-				area = north_florida_area
-				area = west_florida_area
-			}
-			OR = {
-				NOT = { owned_by = ROOT }
-				NOT = { is_core = ROOT }
-				is_city = no
-			}
+			region = southeast_america_region
+			NOT = { owned_by = ROOT }
 		}
 		allow = {
-			adm_tech = 10
-			is_free_or_tributary_trigger = yes
+			is_former_colonial_nation = yes
 			is_at_war = no
-			capital_scope = {
-				OR = {
-					colonial_region = colonial_eastern_america
-					colonial_region = colonial_louisiana
-				}
+			is_subject = no
+			num_of_owned_provinces_with = {
+				value = 5
+				region = southeast_america_region
 				is_core = ROOT
 			}
-			num_of_owned_provinces_with = {
-				value = 3
-				OR = {
-					area = florida_area
-					area = north_florida_area
-					area = west_florida_area
-				}
-				is_core = root
-				is_city = yes
-			}
-			NOT = { exists = FLO }
 		}
 		effect = {
 			hidden_effect = {

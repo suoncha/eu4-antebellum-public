@@ -1,0 +1,96 @@
+namespace = ab_netherlands
+normal_or_historical_nations = yes
+
+province_event = {
+	id = ab_netherlands.1
+	title = ab_netherlands.1.t
+	desc = ab_netherlands.1.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 240
+	}
+	
+	trigger = {
+		owner = {
+			has_country_flag = ned_afrikkans_spread
+		}
+		OR = { 
+			is_owned_by_trade_company = yes
+			is_core = ROOT
+		}
+		region = south_africa_region
+		religion = ROOT
+		NOT = {
+			culture = Afrikaans
+		}
+		any_neighbor_province = {
+			culture = Afrikaans
+		}
+	}
+	
+	option = {
+		name = ab_netherlands.1.a
+		change_culture = Afrikaans
+	}
+}
+
+#BranchingMissions
+country_event = {
+	id = ab_netherlands.2
+	title = ab_netherlands.2.t
+	desc = ab_netherlands.2.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_netherlands.2.a
+		set_country_flag = ned_baltic_focus
+		create_admiral = { tradition = 80 }
+		add_country_modifier = {
+			name = ned_build_dutch_fleet
+			duration = 7300
+		}
+		swap_non_generic_missions = yes
+	}
+	
+	option = {
+		name = ab_netherlands.2.b
+		set_country_flag = ned_british_focus
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 20
+		}
+		add_country_modifier = {
+			name = ned_build_dutch_fleet
+			duration = 7300
+		}
+		swap_non_generic_missions = yes
+	}
+
+	option = {
+		name = ab_netherlands.2.c
+		set_country_flag = ned_german_focus
+		add_army_tradition_or_mil_power = { amount = 15 }
+		add_country_modifier = {
+			name = ned_inland_expansion
+			duration = 7300
+		}
+		swap_non_generic_missions = yes
+	}
+
+	option = {
+		name = ab_netherlands.2.e
+		set_country_flag = ned_dutch_focus
+		add_stability_or_adm_power = yes
+		add_country_modifier = {
+			name = ned_inland_expansion
+			duration = 7300
+		}
+		swap_non_generic_missions = yes
+	}
+}

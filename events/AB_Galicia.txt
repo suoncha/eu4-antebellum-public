@@ -1,0 +1,137 @@
+namespace = galician_event
+normal_or_historical_nations = yes
+
+
+country_event = {
+	id = galician_event.1
+	title = galician_event.1.t
+	desc = galician_event.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = galician_event.1.a
+		custom_tooltip = galicia_event_info
+		ai_chance = {
+			factor = 100
+		}
+		PAP = {
+			country_event = {
+				id = galician_event.2
+			}
+		}
+	}
+	
+	option = {
+		name = galician_event.1.b
+		ai_chance = {
+			factor = 0
+		}
+		VOL = {
+			set_country_flag = VOL_pope_reject
+		}
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+country_event = {
+	id = galician_event.2
+	title = galician_event.2.t
+	desc = galician_event.2.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = galician_event.2.a
+		add_prestige = 15
+		add_adm_power = -75
+		custom_tooltip = PAP_GALICIA_CONVERT
+		ai_chance = {
+			factor = 99
+		}
+		VOL = {
+			country_event = {
+				id = galician_event.3
+			}
+		}
+	}
+	
+	option = {
+		name = galician_event.2.b
+		trigger = {
+			ai = no
+		}
+		add_prestige = -15
+		custom_tooltip = PAP_GALICIA_LOCK
+		ai_chance = {
+			factor = 1
+		}
+		VOL = {
+			country_event = {
+				id = galician_event.4
+			}
+		}
+	}
+}
+
+country_event = {
+	id = galician_event.3
+	title = galician_event.3.t
+	desc = galician_event.3.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = galician_event.3.a
+		ai_chance = {
+			factor = 99
+		}
+		VOL = {
+			change_religion = catholic
+		}
+		capital_scope = {
+			change_religion = catholic
+		}
+		add_government_reform = principality_vol
+		# So people don't think the opinion modifiers
+		# are part of the government reform
+		custom_tooltip = AB_EMPTY
+		every_known_country = {
+			limit = {
+				religion = orthodox
+				primary_culture = ruthenian
+			}
+			add_opinion = {
+				who = root
+				modifier = opinion_kingdom_rus
+			}
+		}
+		VOL = {
+			set_country_flag = completed_galician_event
+		}
+		PAP = {
+			add_opinion = {
+				who = root
+				modifier = opinion_magyar_catholic
+			}
+		}
+	}
+}
+
+country_event = {
+	id = galician_event.4
+	title = galician_event.4.t
+	desc = galician_event.4.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = galician_event.4.a
+	}
+}

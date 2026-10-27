@@ -1,0 +1,3518 @@
+NCI_missions_1_stratocracy_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+		NOT = {
+			has_government_attribute = enables_stratocratic_missions
+		}
+	}
+	has_country_shield = yes
+	
+	nci_placeholder1 = {
+		icon = mission_locked_mission
+		position = 1
+		required_missions = { }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = NCI_MISSIONS_LOCKED
+				has_country_flag = glh_you_wont_complete_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_MISSIONS_LOCKED
+		}
+	}
+	
+	nci_placeholder2 = {
+		icon = mission_locked_mission
+		position = 2
+		required_missions = { nci_placeholder1 }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = NCI_MISSIONS_LOCKED
+				has_country_flag = glh_you_wont_complete_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_MISSIONS_LOCKED
+		}
+	}
+	
+	nci_placeholder3 = {
+		icon = mission_locked_mission
+		position = 3
+		required_missions = { nci_placeholder2 }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = NCI_MISSIONS_LOCKED
+				has_country_flag = glh_you_wont_complete_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_MISSIONS_LOCKED
+		}
+	}
+	
+	nci_placeholder4 = {
+		icon = mission_locked_mission
+		position = 4
+		required_missions = { nci_placeholder3 }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = NCI_MISSIONS_LOCKED
+				has_country_flag = glh_you_wont_complete_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_MISSIONS_LOCKED
+		}
+	}
+	
+	nci_placeholder5 = {
+		icon = mission_locked_mission
+		position = 5
+		required_missions = { nci_placeholder4 }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = NCI_MISSIONS_LOCKED
+				has_country_flag = glh_you_wont_complete_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_MISSIONS_LOCKED
+		}
+	}
+	
+}
+	
+NCI_missions_1_stratocracy_unlocked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+		has_government_attribute = enables_stratocratic_missions
+	}
+	has_country_shield = yes
+	
+	nicene_stratocratic = {
+		icon = mission_stratocracy
+		required_missions = { }
+		position = 1
+	
+		trigger = {
+			has_reform = nicene_stratocracy
+			estate_influence = { estate = estate_nobles influence = 80 }
+			OR = {
+				num_of_estate_privileges = {
+					estate = estate_nobles
+					value = 4
+				}
+				num_of_estate_agendas_completed = {
+					estate = estate_nobles
+					value = 3
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NICENE_ADVISOR
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = "nicaea_nobles"
+				duration = 7300
+			}
+		}
+	}
+	
+	nicene_infrastructure = {
+		icon = mission_militarycamp
+		required_missions = { nicene_stratocratic }
+		position = 2
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				OR = {
+					has_building = barracks
+					has_building = training_fields
+				}
+				OR = {
+					has_building = regimental_camp
+					has_building = conscription_center
+				}
+			}
+		}
+		
+		trigger = {
+			has_reform = nicene_stratocracy
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = barracks
+						has_building = training_fields
+					}
+				}
+				amount = 10
+			}
+			calc_true_if = {
+				all_owned_province = {
+					OR = {
+						has_building = regimental_camp
+						has_building = conscription_center
+					}
+				}
+				amount = 10
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_BONUS_DEV
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = NCI_MIL_UPGRADE_2
+			hidden_effect = {
+				save_militarization = yes
+				set_country_flag = nicene_mil2
+				regenerate_government_mechanics = yes
+				restore_militarization = yes
+			}
+		}
+	}
+	
+	nicene_education = {
+		icon = unite_the_realm
+		required_missions = { nicene_infrastructure }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 317
+				AND = {
+					owned_by = ROOT
+					NOT = {
+						has_building = university
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			has_reform = nicene_stratocracy
+			university = 10
+			317 = {
+				has_great_project = {
+					type = nicene_academy
+					tier = 3
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NICENE_MILITARIZATION_DISCOUNT
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = NICENE_EDUCATION
+		}
+	}
+	
+	nicene_strategos = {
+		icon = mission_strategos
+		required_missions = { nicene_education }
+		position = 4
+		
+		trigger = {
+			has_reform = nicene_stratocracy
+			OR = {
+				mil = 6
+				monthly_mil = 12
+			}
+			absolutism = 80
+			army_tradition = 100
+		}
+		
+		effect = {
+			add_mil_tech = 1
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = NCI_GRAND_TACTICIAN
+		}
+	}
+	
+	nicene_eclipse = {
+		icon = peace_in_europe
+		required_missions = { nicene_strategos }
+		position = 5
+		
+		trigger = {
+			has_reform = nicene_stratocracy
+			custom_trigger_tooltip = {
+				tooltip = NICENE_ARMY
+				NOT = {
+					any_country = {
+						capital_scope = { continent = europe }
+						army_size = ROOT
+					}
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_MIL_UPGRADE_3
+			hidden_effect = {
+				save_militarization = yes
+				clr_country_flag = nicene_mil2
+				set_country_flag = nicene_mil3
+				regenerate_government_mechanics = yes
+				restore_militarization = yes
+			}
+		}
+	}
+}
+
+NCI_missions_1_2 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	nicene_hellespont = {
+		icon = mission_dominate_home_trade_node
+		required_missions = { }
+		position = 6
+		
+		provinces_to_highlight = {
+			province_id = 151
+		}
+		
+		trigger = {
+			num_of_centers_of_trade = 6
+			151 = {
+				trade_share = {
+					country = ROOT
+					share = 50
+				}
+			}
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 3 }
+			151 = {
+				add_province_modifier = {
+					name = "byzantium_toll"
+					duration = 18250
+				}
+			}
+			custom_tooltip = add_25_dip_per_privilege_burghers
+			hidden_effect = {
+				for_privilege_given_to_estate = {
+					estate = burghers
+					max_privileges = 6
+					effect = "add_dip_power = 25"
+				}
+			}
+		}
+	}
+	
+	nicene_queen_cities = {
+		icon = mission_queencities
+		required_missions = { nicene_hellespont }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 151
+		}
+		
+		trigger = {
+			151 = {
+				development = 50
+			}
+			151 = {
+				highest_value_trade_node = yes
+			}
+		}
+		
+		effect = {
+			151 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			151 = {
+				add_province_modifier = {
+					name = "byzantium_queen"
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					151 = {
+						NOT = {
+							any_province = {
+								higher_development_than = PREV
+							}
+						}
+					}
+				}
+				custom_tooltip = BYZ_TOP_DEV_YES
+				add_splendor = 100
+			}
+			else = {
+				custom_tooltip = BYZ_TOP_DEV_NO
+				tooltip = {
+					add_splendor = 100
+				}
+			}
+		}
+	}
+	
+	nicene_megalopolis = {
+		icon = mission_megalopolis
+		required_missions = { nicene_queen_cities }
+		position = 9
+		
+		provinces_to_highlight = {
+			province_id = 151
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { development = 65 }
+				NOT = { num_of_buildings_in_province = 10 }
+			}
+		}
+		
+		trigger = {
+			151 = {
+				owned_by = ROOT
+				development = 65
+				num_of_buildings_in_province = 10
+			}
+		}
+		
+		effect = {
+			151 = {
+				add_province_modifier = {
+					name = BYZ_megalopolis_modifier_1
+					duration = -1
+				}
+			}
+			
+			custom_tooltip = BYZ_modifier_will_double
+			
+			custom_tooltip = " "
+			
+			add_country_modifier = {
+				name = BYZ_monarch_reigns_in_byzantium
+				duration = -1
+			}
+		}
+	}
+	
+	nicene_faith = {
+		icon = mission_hands_praying
+		required_missions = { }
+		position = 10
+		
+		trigger = {
+			OR = {
+				is_year = 1470
+				custom_trigger_tooltip = {
+					tooltip = NCI_FINISHED_CHAIN
+					has_country_flag = nci_finished_hellenic_chain
+				}
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_UPDATE_MISSIONS
+			hidden_effect = {
+				ab_enable_branching_mission_review = {
+					key = NCI_RELIGION
+					ai_event_id = ab_nicaea.16
+				}
+			}
+		}
+	}
+	
+}
+	
+NCI_missions_1_religious_locked = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+		NOT = { has_country_flag = nci_orthodox_path }
+		NOT = { has_country_flag = nci_hellenic_path }
+	}
+	has_country_shield = yes
+	
+	nci_branching1 = {
+		icon = mission_unknown_mission
+		position = 11
+		required_missions = { nicene_faith }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = NCI_MISSIONS_BRANCHING
+				has_country_flag = glh_you_wont_complete_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_MISSIONS_BRANCHING
+		}
+	}
+	
+	nci_branching2 = {
+		icon = mission_unknown_mission
+		position = 12
+		required_missions = { nci_branching1 }
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = NCI_MISSIONS_BRANCHING
+				has_country_flag = glh_you_wont_complete_this
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_MISSIONS_BRANCHING
+		}
+	}
+	
+}
+
+NCI_missions_1_religious_unlocked_orthodox = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+		has_country_flag = nci_orthodox_path 
+		NOT = { has_country_flag = nci_hellenic_path }
+	}
+	has_country_shield = yes
+	
+	nicene_shatter_the_roman_illusion = {
+		icon = byz_justinians_ambition
+		position = 11
+		required_missions = { nicene_faith }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			religion = orthodox
+			culture_group = byzantine
+		}
+		
+		trigger = {
+			ab_not_in_mission_preview_mode = { key = NCI_RELIGION }
+			patriarch_authority = 0.5
+			development_in_provinces = {
+				value = 300
+				religion = orthodox
+				culture_group = byzantine
+			}
+		}
+		
+		effect = {
+			define_advisor = {
+				type = inquisitor
+				skill = 3
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.25
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = NCI_GREEK_PROVINCES
+			hidden_effect = {
+				for = {
+					amount = 10
+					effect = "
+						random_owned_province = {
+							limit = {
+								religion = ROOT
+								culture_group = ROOT
+							}
+							add_base_manpower = 1
+						}
+					"
+				}
+			}
+		}
+	}
+	
+	nicene_a_new_patriarchate = {
+		icon = mission_pf_cross
+		position = 12
+		required_missions = { nicene_shatter_the_roman_illusion }
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			religion = orthodox
+			culture_group = byzantine
+			has_state_patriach = yes
+		}
+		
+		trigger = {
+			ab_not_in_mission_preview_mode = { key = NCI_RELIGION }
+			patriarch_authority = 0.9
+			development_in_provinces = {
+				value = 750
+				religion = orthodox
+				culture_group = byzantine
+				has_state_patriach = yes
+			}
+		}
+		
+		effect = {
+			add_patriarch_authority = 0.1
+			add_country_modifier = {
+				name = "nci_new_patriarchate"
+				duration = -1
+			}
+			custom_tooltip = geo_metropolitan_bonus_tt
+			set_country_flag = geo_metropolitan_flag
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_state_patriach = yes
+					}
+					add_province_modifier = {
+						name = geo_consecrated_ground
+						duration = -1
+						hidden = yes
+					}
+				}
+			}
+		}
+	}
+}
+
+NCI_missions_1_religious_unlocked_hellenic = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+		NOT = {
+			has_country_flag = nci_orthodox_path 
+		}
+		has_country_flag = nci_hellenic_path 
+	}
+	has_country_shield = yes
+	
+	nicene_return_of_the_pantheon = {
+		icon = mission_zeus
+		position = 11
+		required_missions = { nicene_faith }
+		
+		provinces_to_highlight = {
+			province_id = 5152
+		}
+		
+		trigger = {
+			ab_not_in_mission_preview_mode = { key = NCI_RELIGION }
+			stability = 1
+			religious_unity = 0.8
+			owns_core_province = 5152
+			5152 = {
+				religion = hellenic
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "nci_head_faith"
+				duration = -1
+			}
+			if = {
+				limit = {
+					5152 = {
+						NOT = {
+							has_great_project = {
+								type = alhambra
+								tier = 1
+							}
+						}
+					}
+				}
+				custom_tooltip = NCI_TEMPLE_YES
+				tooltip = {
+					5152 = {
+						add_great_project_tier = {
+							type = apollo
+							tier = 1
+						}
+					}
+				}
+			}
+			else = {
+				custom_tooltip = NCI_TEMPLE_NO
+				tooltip = {
+					5152 = {
+						add_great_project_tier = {
+							type = apollo
+							tier = 1
+						}
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						5152 = {
+							NOT = {
+								has_great_project = {
+									type = apollo
+									tier = 1
+								}
+							}
+						}
+					}
+					5152 = {
+						add_great_project_tier = {
+							type = apollo
+							tier = 1
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_the_hellenic_reformation = {
+		icon = mission_parthenon
+		position = 12
+		required_missions = { nicene_return_of_the_pantheon }
+		
+		trigger = {
+			ab_not_in_mission_preview_mode = { key = NCI_RELIGION }
+			religion = reformed_hellenic
+			religious_unity = 0.9
+		}
+		
+		effect = {
+			custom_tooltip = NCI_UNLOCK_HEPHAESTUS
+			custom_tooltip = NCI_UNLOCK_HERMES
+		}
+	}
+}
+
+NCI_missions_1_3 = {
+	slot = 1
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	nicene_rebuild_the_library = {
+		icon = found_the_vatican_library
+		required_missions = { nicene_return_to_aegyptos }
+		position = 13
+		
+		trigger = {
+		    358 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			358 = {
+				development = 40
+			}
+			358 = {
+				prosperity = 100
+			}
+			358 = {
+				num_of_buildings_in_province = 5
+			}
+		}
+		
+		effect = {
+			358 = {
+				add_building = university
+			}
+			custom_tooltip = AB_EMPTY
+			358 = {
+				add_province_modifier = {
+					name = nci_library_of_alexandria
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	nicene_restore_the_hellenosphere = {
+		icon = mission_hellenosphere
+		required_missions = { nicene_revive_greek_philosophy }
+		position = 17
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				culture_group = byzantine
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				value = 100
+				culture_group = byzantine
+			}
+		}
+		
+		effect = {
+			set_country_flag = nci_speed_up_cultures
+			custom_tooltip = NCI_SPEED_UP
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = NCI_DEV_CONVERSION
+		}
+	}
+	
+	nicene_fires_of_nationalism = {
+		icon = mission_greekn
+		required_missions = { nicene_restore_the_hellenosphere nicene_educate_the_nation }
+		position = 19
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			culture_group = byzantine
+		}
+		
+		trigger = {
+			has_institution = enlightenment
+			development_in_provinces = {
+				value = 1000
+				culture_group = byzantine
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = nci_greek_nationalism
+				duration = -1
+			}
+			add_yearly_manpower = 5
+		}
+	}
+	
+}
+
+NCI_missions_2 = {
+	slot = 2
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	nicene_battle_for_the_bosphorus = {
+		icon = mission_the_bospborus
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			if = {
+				limit = {
+					ai = yes
+				}
+				navy_size_percentage = 0.6
+			}
+			else = {
+				navy_size_percentage = 1
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = "nicaea_battle"
+				duration = 5475
+			}
+			crimea_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			aegean_archipelago_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						BYZ = {
+							navy_size = ROOT
+						}
+					}
+				}
+				custom_tooltip = NCI_RIVAL_ROME_YES
+				add_country_modifier = {
+					name = nicaea_rival_rome
+					duration = 9125
+				}
+			}
+			else = {
+				custom_tooltip = NCI_RIVAL_ROME_NO
+				tooltip = {
+					add_country_modifier = {
+						name = nicaea_rival_rome
+						duration = 9125
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_reclaim_tauris = {
+		icon = mission_control_the_black_sea
+		required_missions = { nicene_battle_for_the_bosphorus }
+		position = 3
+		
+		provinces_to_highlight = {
+			area = crimea_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 3
+				area = crimea_area
+			}
+		}
+		
+		effect = {
+			285 = {
+				add_trade_node_income = 24
+			}
+			custom_tooltip = tre_empty
+			1322 = {
+				add_trade_modifier = {
+					who = ROOT
+					duration = -1
+					power = 50
+					key = tre_black_sea_domination
+				}
+			}
+		}
+	}
+	
+	nicene_latins = {
+		icon = byz_aegean_islands
+		required_missions = { }
+		position = 5
+		
+		provinces_to_highlight = {
+			area = aegean_archipelago_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			aegean_archipelago_area = { 
+				type = all 
+				country_or_non_sovereign_subject_holds = ROOT 
+			}
+		}
+		
+		effect = {
+			add_mercantilism_or_monarch_power = { amount = 5 }
+			custom_tooltip = AB_EMPTY
+			define_advisor = {
+				type = trader
+				skill = 2
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	nicene_osmans = {
+		icon = mission_the_grand_bazaar
+		required_missions = { nicene_hellespont }
+		position = 7
+		
+		provinces_to_highlight = {
+			province_id = 151
+		}
+		
+		trigger = {
+			treasury = 1500
+			mercantilism = 20
+			num_of_estate_privileges = {
+				estate = estate_burghers
+				value = 4
+			}
+			151 = {
+				has_trade_building_trigger = yes
+			}
+			151 = {
+				NOT = {
+					has_construction = great_project
+				}
+			}
+		}
+		
+		effect = {
+			add_treasury = -1500
+			custom_tooltip = BYZANTIUM_OSMAN
+			custom_tooltip = AB_EMPTY
+			tooltip = {
+				151 = {
+					add_base_production = 3
+				}
+				151 = {
+					add_province_modifier = {
+						name = "byzantium_osman2"
+						duration = -1
+					}
+				}
+			}
+			hidden_effect = {
+				151 = {
+					if = { 
+						limit = { 
+							has_great_project = {
+								type = ottoman_market
+								tier = 1
+							}
+							NOT = {
+								OR = {
+									has_great_project = {
+										type = ottoman_market
+										tier = 2
+									}
+									has_great_project = {
+										type = ottoman_market
+										tier = 3
+									}
+								}
+							}
+						}
+						add_great_project_tier = {
+							type = ottoman_market
+							tier = 1 
+						}
+					}
+					else = {
+						add_base_production = 3
+						add_province_modifier = {
+							name = "byzantium_osman2"
+							duration = -1
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_walls = {
+		icon = byz_reinforce_constantinople
+		required_missions = { nicene_queen_cities }
+		position = 8
+		
+		provinces_to_highlight = {
+			province_id = 151
+		}
+		
+		trigger = {
+			mil_power = 200
+			manpower = 25
+			treasury = 2500
+			advisor = fortification_expert
+			151 = {
+				NOT = {
+					has_construction = great_project
+				}
+			}
+			151 = {
+				NOT = {
+					has_construction = building
+				}
+			}
+		}
+		
+		effect = {
+			add_mil_power = -200
+			add_manpower = -25
+			add_treasury = -2500
+			custom_tooltip = BYZ_CREATE_MONUMENT
+			set_country_flag = byzantine_monument_flag
+			hidden_effect = {
+				151 = {
+					add_great_project = {
+						type = theodosian
+						instant = yes
+					}
+				}
+				151 = {
+					add_great_project_tier = {
+						type = theodosian
+						tier = 3
+					}
+				}
+			}
+		}
+	}
+
+	nicene_secure_jerusalem = {
+		icon = jerusalem
+		required_missions = { nicene_invasion_of_mashriq }
+		position = 11
+		
+		provinces_to_highlight = {
+			area = palestine_area
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			palestine_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_legitimacy = 20
+			add_country_modifier = {
+				name = nci_secured_jerusalem
+				duration = 7300
+			}
+			mecca_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			medina_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			tabuk_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			egypt_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					OR = {
+						religion = hellenic
+						religion = reformed_hellenic
+					}
+				}
+				custom_tooltip = NCI_UNLOCK_TEMPLE_YES
+			}
+			else = {
+				custom_tooltip = NCI_UNLOCK_TEMPLE_NO
+			}
+		}
+	}
+	
+	nicene_return_to_aegyptos = {
+		icon = mission_aegyptos
+		required_missions = { nicene_secure_jerusalem }
+		position = 12
+		
+		provinces_to_highlight = {
+			region = egypt_region
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+		}
+
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = egypt_region
+			}
+		}
+		
+		effect = {
+			add_adm_power = 200
+			egypt_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = nci_restore_aegyptos
+					duration = 7300
+				}
+			}
+			tripolitania_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			fezzan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			dongola_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			red_sea_coast_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			upper_nubia_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nicene_ptolemaic_restoration = {
+		icon = mission_conquer_alexandria
+		required_missions = { nicene_return_to_aegyptos nicene_granary_of_the_mediterranean nicene_rebuild_the_library }
+		position = 14
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					region = egypt_region
+					NOT = {
+						owned_by = ROOT
+					}
+				}
+				AND = {
+					owned_by = ROOT
+					region = egypt_region
+					OR = {
+						nationalism = 1
+						local_autonomy_above_min = 10
+						NOT = { 
+							is_core = ROOT
+						}
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				region = egypt_region
+				NOT = { local_autonomy_above_min = 10 }
+				NOT = { nationalism = 1 }
+				value = 25
+			}
+			358 = { owned_by = ROOT }
+		}
+		
+		effect = {
+			set_country_flag = nci_egyptian_cultures
+			country_event = { id = ab_nicaea.5 }
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = NCI_EGYPT_CULTURES
+		}
+	}
+	
+	nicene_cultural_renaissance = {
+		icon = mission_book_of_royal_degrees
+		required_missions = { }
+		position = 15
+		
+		trigger = {
+			any_owned_province = {
+				renaissance = 100
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_RENAISSANCE_SPREAD
+			tooltip = {
+				add_province_modifier = {
+					name = nci_renaissance
+					duration = 7300
+				}
+			}
+			change_government_reform_progress = 25
+			custom_tooltip = AB_EMPTY
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						culture_group = ROOT
+						religion = ROOT
+					}
+					add_province_modifier = {
+						name = nci_renaissance
+						duration = 7300
+					}
+				}
+			}
+			if = {
+				limit = {
+					any_owned_province = { is_institution_origin = renaissance }
+				}
+				custom_tooltip = eu_own_renaissance_yes
+				tooltip = {
+					add_splendor = 100
+				}
+			}
+			else = {
+				custom_tooltip = eu_own_renaissance_no
+				tooltip = {
+					add_splendor = 100
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_owned_province = { is_institution_origin = renaissance }
+					}
+					add_splendor = 100
+				}
+			}
+		}
+	}
+	
+	nicene_revive_greek_philosophy = {
+		icon = mission_philosophy
+		required_missions = { nicene_cultural_renaissance }
+		position = 16
+		
+		trigger = {
+			has_adm_advisor_2 = yes
+			has_dip_advisor_2 = yes
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = nci_greek_intelligentsia
+				duration = 7300
+			}
+			change_innovativeness = 3
+		}
+	}
+	
+	nicene_modern_statecraft = {
+	    icon = develop_naples
+		required_missions = { nicene_revive_greek_philosophy }
+		position = 17
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_courthouse_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+			crown_land_share = 60
+			num_of_owned_provinces_with = {
+				has_courthouse_building_trigger = yes
+				value = 20
+			}
+			NOT = { average_autonomy_above_min = 5 }
+		}
+		
+		effect = {
+			capital_scope = {
+				add_building = university
+			}
+			custom_tooltip = AB_EMPTY
+			capital_scope = {
+				add_or_upgrade_courthouse_building = yes
+			}
+			custom_tooltip = AB_EMPTY
+			change_government_reform_progress = 50
+		}
+	}
+	
+	nicene_educate_the_nation = {
+	    icon = mission_rb_trinity_college_dublin
+		required_missions = { nicene_modern_statecraft }
+		position = 18
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_building = university
+			}
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					ai = yes
+				}
+				is_year = 1650
+			}
+			else = {
+				university = 10
+				OR = {
+					full_idea_group = innovativeness_ideas
+					innovativeness = 50
+				}
+				has_adm_advisor_3 = yes
+				has_dip_advisor_3 = yes
+				has_mil_advisor_3 = yes
+			}
+		}
+		
+		effect = {
+			set_country_flag = ab_tus_taking_tech_bonus
+			custom_tooltip = TUS_TAKING_TECH_GRANT_APC
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = nci_educated_nation
+				duration = -1
+			}
+		}
+	}
+
+}
+
+NCI_missions_3 = {
+	slot = 3
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	nicene_court = {
+		icon = republican_yearnings
+		required_missions = { }
+		position = 1
+		
+		provinces_to_highlight = {  
+			owned_by = BYZ
+		}
+
+		trigger = {
+			if = {
+				limit = {
+					ai = yes
+				}
+				OR = {
+					has_spy_network_in = {
+						who = BYZ
+						value = 25
+					}
+					is_year = 1447
+				}
+			}
+			else = {
+				OR = {
+					has_spy_network_in = {
+						who = BYZ
+						value = 25
+					}
+					NOT = {
+						exists = BYZ
+					}
+				}
+			}
+		}
+		
+		effect = {
+			add_spy_network_in = {
+				who = BYZ
+				value = 10
+			}
+			add_country_modifier = { 
+				name = nci_defenses_exposed
+				duration = 3650  
+			}
+			if = {
+				limit = {
+					has_spy_network_in = {
+						who = BYZ
+						value = 50
+					}	
+				}
+				custom_tooltip = NCI_SPY_50_YES
+			}
+			else = {
+				custom_tooltip = NCI_SPY_50_NO
+			}
+			if = {
+				limit = {
+					has_spy_network_in = {
+						who = BYZ
+						value = 75
+					}	
+				}
+				custom_tooltip = NCI_SPY_75_YES
+			}
+			else = {
+				custom_tooltip = NCI_SPY_75_NO
+			}
+			if = {
+				limit = {
+					has_spy_network_in = {
+						who = BYZ
+						value = 100
+					}	
+				}
+				custom_tooltip = NCI_SPY_100_YES
+			}
+			else = {
+				custom_tooltip = NCI_SPY_100_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_spy_network_in = {
+							who = BYZ
+							value = 50
+						}	
+					}
+					remove_country_modifier = nci_defenses_exposed
+					add_country_modifier = { 
+						name = nci_defenses_exposed
+						duration = 7300  
+					}
+				}
+				if = {
+					limit = {
+						has_spy_network_in = {
+							who = BYZ
+							value = 75
+						}	
+					}
+					set_country_flag = ab_unlocked_greek_fire
+				}
+				if = {
+					limit = {
+						has_spy_network_in = {
+							who = BYZ
+							value = 100
+						}	
+					}
+					every_province = {
+						limit = {
+							OR = {
+								owned_by = BYZ
+								owner = {
+									is_subject_of = BYZ
+								}
+							}
+						}
+						add_territorial_core = ROOT
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_challenge_the_pretenders = {
+		icon = mission_city_of_the_world's_desire
+		required_missions = { nicene_court nicene_nicene_legions nicene_battle_for_the_bosphorus }
+		position = 3
+		
+		provinces_to_highlight = {
+			OR = {
+				area = thrace_area
+				province_id = 151
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 4
+				area = thrace_area
+			}
+			151 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_nicaea.1 }
+			custom_tooltip = AB_EMPTY
+			macedonia_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_greece_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ionian_islands_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			morea_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nicene_phoenix = {
+		icon = mission_phoenixashes
+		required_missions = { nicene_challenge_the_pretenders nicene_the_last_bastion }
+		position = 4
+		
+		provinces_to_highlight = {
+			owned_by = BYZ
+		}
+		
+		trigger = {
+		    NOT = {
+				exists = BYZ
+			}
+		}
+		
+		effect = {
+			add_ruler_modifier = {
+				name = nci_ashmaker
+				duration = -1
+			}
+			custom_tooltip = NCI_REMOVE_BYZ_CORES
+			hidden_effect = {
+				every_province = {
+					limit = {
+						is_core = BYZ
+					}
+					remove_core = BYZ
+				}
+			}
+		}
+	}
+	
+	nicene_restore_byzantion = {
+		icon = end_the_schism
+		required_missions = { nicene_phoenix }
+		position = 4
+		
+		provinces_to_highlight = {
+			province_id = 151
+		}
+		
+		trigger = {
+			owns_core_province = 151
+			151 = {
+				development = 40
+			}
+			151 = {
+				NOT = {
+					devastation = 10
+				}
+			}
+			151 = {
+				is_core = ROOT
+			}
+		}
+		
+		effect = {
+			151 = {
+				change_province_name = "Byzantion"
+				rename_capital = "Byzantion"
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = BYZ_unlock_bosphorus_toll_decision
+			set_country_flag = BYZ_unlocked_bosphorus_toll
+		}
+	}
+	
+	nicene_empire_of_the_hellenes = {
+		icon = a_real_roman_empire
+		required_missions = { nicene_latins nicene_liberate_greece }
+		position = 6
+		
+		trigger = {
+			stability = 1
+			legitimacy = 90
+			is_at_war = no
+		}
+		
+		effect = {
+			country_event = { id = ab_nicaea.2 }
+			custom_tooltip = AB_EMPTY
+			sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			western_sicily_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			bulgaria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			silistria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			albania_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nicene_resettle_sicily = {
+		icon = arb_sicily
+		required_missions = { nicene_empire_of_the_hellenes }
+		position = 7
+		
+		provinces_to_highlight = {
+			OR = {
+				area = western_sicily_area
+				area = sicily_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+
+		trigger = {
+			sicily_area = {
+				country_or_non_sovereign_subject_holds = ROOT
+				type = all
+			}
+			western_sicily_area = {
+				country_or_non_sovereign_subject_holds = ROOT
+				type = all
+			}
+		}
+		
+		effect = {
+			sicily_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_base_tax = 1
+				change_culture = griko
+			}
+			custom_tooltip = AB_EMPTY
+			western_sicily_area = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_base_tax = 1
+				change_culture = griko
+			}
+			custom_tooltip = AB_EMPTY
+			apulia_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			calabria_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			naples_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			central_italy_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nicene_destroy_rome = {
+		icon = mission_colosseum
+		required_missions = { nicene_resettle_sicily }
+		position = 9
+		
+		provinces_to_highlight = {
+			province_id = 118
+		}
+		
+		trigger = {
+		    controls = 118
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_nicaea.24
+			}
+			if = {
+				limit = {
+					apulia_area = {
+						country_or_non_sovereign_subject_holds = ROOT
+						type = all
+					}
+					calabria_area = {
+						country_or_non_sovereign_subject_holds = ROOT
+						type = all
+					}
+				}
+				custom_tooltip = NCI_GRIKO_YES
+				set_country_flag = byz_griko_culture
+			}
+			else = {
+				custom_tooltip = NCI_GRIKO_NO
+			}
+		}
+	}
+	
+	nicene_dismantle_hre = {
+		icon = humiliate_austria
+		required_missions = { nicene_destroy_rome }
+		position = 10
+		
+		provinces_to_highlight = {
+			is_part_of_hre = yes
+		}
+		
+		trigger = {
+			NOT = { hre_size = 1 }
+			NOT = { exists = HLR }
+		}
+		
+		effect = {
+			change_ruler_stat = {
+				type = mil
+				amount = 3
+			}
+			add_ruler_modifier = {
+				name = nci_vanquisher_of_romans
+				duration = -1
+			}
+			custom_tooltip = LOM_PP
+			hidden_effect = {
+				add_power_projection = {
+					type = FRA_dismantle_hre
+					amount = 25
+				}
+			}
+		}
+	}
+	
+	nicene_triumph_over_the_crescent = {
+		icon = mission_islamic_golden_age
+		required_missions = { nicene_secure_jerusalem }
+		position = 12
+		
+		provinces_to_highlight = {
+			region = arabia_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 10
+				region = arabia_region
+			}
+		}
+		
+		effect = {
+			add_prestige_or_monarch_power = { amount = 30 }
+			custom_tooltip = AB_EMPTY
+			arabia_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = nci_pacifying_nemesis
+					duration = 7300
+				}
+			}
+			custom_tooltip = NCI_ARABIA_CB
+			hidden_effect = {
+				every_country = {
+					limit = {
+						capital_scope = {
+							region = arabia_region
+						}
+					}
+					reverse_add_casus_belli = {
+						type = cb_vassalize_mission
+						months = 300
+						target = ROOT
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			arabia_region = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+			
+	
+	nicene_granary_of_the_mediterranean = {
+		icon = mission_advance_to_the_arabian_sea
+		required_missions = { nicene_return_to_aegyptos }
+		position = 13
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 363
+				province_id = 362
+				province_id = 2316
+				province_id = 4316
+			}
+			NOT = { has_building = farm_estate }
+		}
+		
+		trigger = {
+			if = {
+				limit = {
+					ai = yes
+				}
+				is_year = 1540
+				363 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				4316 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				362 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				2316 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			else = {
+				363 = {
+					has_building = farm_estate
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				4316 = {
+					has_building = farm_estate
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				362 = {
+					has_building = farm_estate
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				2316 = {
+					has_building = farm_estate
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+		
+		effect = {
+			change_price = {
+				trade_goods = grain
+				key = "Egyptian Grain"
+				value = 0.2
+				duration = -1
+			}
+			custom_tooltip = AB_EMPTY
+			egypt_region = {
+				limit = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				add_province_modifier = {
+					name = nci_granary
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					production_leader = {
+						trade_goods = grain
+					}
+				}
+				custom_tooltip = NCI_GRAIN_YES
+				tooltip = {
+					add_years_of_income = 1
+					add_yearly_manpower = 3
+				}
+			}
+			else = {
+				custom_tooltip = NCI_GRAIN_NO
+				tooltip = {
+					add_years_of_income = 1
+					add_yearly_manpower = 3
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						production_leader = {
+							trade_goods = grain
+						}
+					}	
+					add_years_of_income = 1
+					add_yearly_manpower = 3
+				}
+			}
+		}
+	}
+	
+	nicene_refugees = {
+		icon = mission_expel_the_moriscos
+		required_missions = { }
+		position = 16
+		
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = NICENE_REFUGEE
+				has_country_flag = accepted_byzantine_refugees
+			}
+			development_in_provinces = {
+				value = 100
+				culture = greek
+			}
+		}
+		
+		effect = {
+			capital_scope = {
+				add_prosperity = 100
+			}
+			add_country_modifier = {
+				name = nicene_refuge
+				duration = 9125
+			}
+			custom_tooltip = NICENE_DEV_BONUS
+		}
+	}
+	
+	nicene_chaldian_deposits = {
+	    icon = mission_iron_and_copper
+		required_missions = { }
+		position = 17
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 330
+				province_id = 331
+			}
+		}
+		
+		trigger = {
+			OR = {
+				advisor = natural_scientist
+				production_income_percentage = 0.25
+			}
+			owns_core_province = 330
+			330 = {
+				base_production = 8
+			}
+			owns_core_province = 331
+			331 = {
+				base_production = 8
+			}
+		}
+		
+		effect = {
+			add_years_of_income = 0.25
+			330 = {
+				change_trade_goods = gold
+				add_base_production = 2
+			}
+			331 = {
+				change_trade_goods = copper
+				add_base_production = 2
+			}
+		}
+	}
+	
+	nicene_autocrator_of_the_hellenes = {
+		icon = mission_restore_faith_in_the_throne
+		required_missions = { nicene_educate_the_nation }
+		position = 19
+		
+		trigger = {
+			absolutism = 50
+		}
+		
+		effect = {
+			change_ruler_stat = {
+				type = adm
+				amount = 3
+			}
+			custom_tooltip = AB_EMPTY
+			add_country_modifier = {
+				name = nci_autocrator
+				duration = -1
+			}
+		}
+	}
+	
+}
+
+NCI_missions_4 = {
+	slot = 4
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	nicene_nicene_legions = {
+		icon = mission_nicaea
+		required_missions = { }
+		position = 2
+		
+		trigger = {
+			if = {
+				limit = {
+					ai = yes
+				}
+				army_size_percentage = 0.65
+			}
+			else = {
+				army_size_percentage = 1
+			}
+			num_of_generals = 1
+		}
+		
+		effect = {
+			create_general_with_pips = {
+				tradition = 40
+				add_siege = 1
+			}
+			add_country_modifier = {
+				name = "nci_legions"
+				duration = 5475
+			}
+			318 = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			thrace_area = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nicene_the_last_bastion = {
+		icon = mission_pf_soldier
+		required_missions = { nicene_nicene_legions }
+		position = 3
+		
+		provinces_to_highlight = {
+			province_id = 318
+			NOT = {
+				OR = {
+					country_or_non_sovereign_subject_holds = ROOT
+					is_core = ROOT
+				}
+			}
+		}
+		
+		trigger = {
+			318 = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			318 = {
+				is_core = ROOT
+			}
+		}
+		
+		effect = {
+			318 = {
+				add_base_tax = 1
+				add_base_production = 1
+				add_base_manpower = 1
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_country_flag = nci_smyrna_surrendered
+				}
+				custom_tooltip = AB_SMYRNA_YES
+				tooltip = {
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 10
+					}
+				}
+			}
+			else = {
+				custom_tooltip = AB_SMYRNA_NO
+				tooltip = {
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 10
+					}
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						has_country_flag = nci_smyrna_surrendered
+					}
+					add_power_projection = {
+						type = mission_rewards_power_projection
+						amount = 10
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_liberate_greece = {
+		icon = cross_the_pindus
+		required_missions = { nicene_phoenix }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					region = balkan_region
+					culture = greek
+					NOT = {
+						owned_by = ROOT
+					}
+				}
+				AND = {
+					owned_by = ROOT
+					culture = greek
+					region = balkan_region
+					OR = {
+						nationalism = 1
+						local_autonomy_above_min = 10
+						NOT = { 
+							is_core = ROOT
+						}
+					}
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				is_core = ROOT
+				culture = greek
+				region = balkan_region
+				NOT = { local_autonomy_above_min = 10 }
+				NOT = { nationalism = 1 }
+				value = 12
+			}
+		}
+		
+		effect = {
+			add_war_exhaustion = -3
+			add_country_modifier = {
+				name = nci_restoration_of_greece
+				duration = 7300
+			}
+			custom_tooltip = NIC_GREECE_DEV
+			hidden_effect = {
+                for = {
+                    amount = 5
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								culture = greek
+								region = balkan_region
+							}
+							add_base_tax = 1
+							add_base_production = 1
+							add_base_manpower = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+	nicene_the_balkan_frontier = {
+		icon = mission_balkan_conquest
+		required_missions = { nicene_empire_of_the_hellenes }
+		position = 7
+		
+		provinces_to_highlight = {
+			region = balkan_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 30
+				region = balkan_region
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_MILITARIZATION_20
+			custom_tooltip = AB_EMPTY
+			unlock_estate_privilege = {
+				estate_privilege = estate_nobles_balkan_client
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = { has_country_flag = nicene_mil2 }
+						NOT = { has_country_flag = nicene_mil3 }
+					}
+					add_government_power = {
+						mechanic_type = nicene_militarization_mechanic
+						power_type = nicene_militarized_society
+						value = 20
+					}
+				}
+				else_if = {
+					limit = {
+						has_country_flag = nicene_mil2 
+					}
+					add_government_power = {
+						mechanic_type = nicene_militarization_mechanic2
+						power_type = nicene_militarized_society2
+						value = 20
+					}
+				}
+				else_if = {
+					limit = {
+						has_country_flag = nicene_mil3 
+					}
+					add_government_power = {
+						mechanic_type = nicene_militarization_mechanic3
+						power_type = nicene_militarized_society3
+						value = 20
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_sack = {
+		icon = mission_control_venice
+		required_missions = { nicene_the_balkan_frontier nicene_resettle_sicily }
+		position = 8
+		
+		trigger = {
+			controls = 112
+		}
+		
+		provinces_to_highlight = {
+			province_id = 112
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_nicaea.3 }
+		}
+	}
+	
+	nicene_nations_of_caucasia = {
+		icon = mission_the_caucasus_rus
+		required_missions = { nicene_secure_asia_minor }
+		position = 9
+		
+		provinces_to_highlight = {
+			region = caucasia_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = caucasia_region
+			}
+		}
+		
+		effect = {
+			custom_tooltip = NCI_GEORGIAN
+			if = {
+				limit = {
+					accepted_culture = georgian
+				}
+				remove_accepted_culture = georgian
+			}
+			add_accepted_culture = georgian_new
+			hidden_effect = {
+				every_country = {
+					limit = {
+						primary_culture = georgian
+					}
+					change_primary_culture = georgian_new
+					if = {
+						limit = {
+							has_heir = yes
+						}
+						set_heir_culture = georgian_new
+					}
+					if = {
+						limit = {
+							has_consort = yes
+							consort_culture = georgian
+						}
+						set_consort_culture = georgian_new
+					}
+				}
+				every_province = {
+					limit = {
+						culture = georgian
+					}
+					change_culture = georgian_new
+					change_original_culture = georgian_new
+				}
+			}
+			custom_tooltip = NCI_ARMENIAN
+			if = {
+				limit = {
+					accepted_culture = armenian
+				}
+				remove_accepted_culture = armenian
+			}
+			add_accepted_culture = armenian_new
+			hidden_effect = {
+				every_country = {
+					limit = {
+						primary_culture = armenian
+					}
+					change_primary_culture = armenian_new
+					if = {
+						limit = {
+							has_heir = yes
+						}
+						set_heir_culture = armenian_new
+					}
+					if = {
+						limit = {
+							has_consort = yes
+							consort_culture = armenian
+						}
+						set_consort_culture = armenian_new
+					}
+				}
+				every_province = {
+					limit = {
+						culture = armenian
+					}
+					change_culture = armenian_new
+					change_original_culture = armenian_new
+				}
+			}
+		}
+	}
+	
+	nicene_heart_of_persia = {
+		icon = mission_iran
+		required_missions = { nicene_march_on_babylon }
+		position = 12
+		
+		provinces_to_highlight = {
+			region = persia_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 20
+				region = persia_region
+			}
+		}
+		
+		effect = {
+			set_country_flag = nci_persia_cultures
+			custom_tooltip = NCI_PERSIA_CULTURES
+			custom_tooltip = NCI_EMPOWER1
+			khorasan_region  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				remove_country_modifier = nci_legacy_of_alexander1
+				add_country_modifier = {
+					name = nci_legacy_of_alexander2
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					religion = reformed_hellenic
+				}
+				custom_tooltip = NCI_MITHRA_YES
+				custom_tooltip = NCI_UNLOCK_MITHRA
+			}
+			else = {
+				custom_tooltip = NCI_MITHRA_NO
+				custom_tooltip = NCI_UNLOCK_MITHRA
+			}
+		}
+	}
+	
+	nicene_revive_bactria = {
+		icon = mission_che_the_cave_country
+		required_missions = { nicene_macedonian_restoration }
+		position = 14
+		
+		provinces_to_highlight = {
+			OR = {
+				area = termez_area
+				area = kabulistan_area
+				area = ghor_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			termez_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			kabulistan_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+			ghor_area = {
+				type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_nicaea.28
+			}
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = NCI_BACTRIAN_CULTURES
+			custom_tooltip = HLE_EVOLVING_IDEA_1
+			set_country_flag = nci_bactrian_culture
+			hidden_effect = {
+				set_country_flag = hle_evolved_ideas1
+				if = {
+					limit = {
+						tag = HLE
+					}
+					country_event = {
+						id = ideagroups.1
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_revitalize_the_economy = {
+		icon = prosperity_for_all
+		required_missions = { }
+		position = 15
+		
+		provinces_to_highlight = {
+			owned_by = ROOT 
+			NOT = { has_production_building_trigger = yes }
+		}
+		
+		trigger = {
+			share_of_starting_income = 1.5 
+			num_of_owned_provinces_with = {
+				has_production_building_trigger = yes
+				value = 10
+			}
+		}
+		
+		effect = {
+			add_years_of_owned_provinces_production_income = {
+				years = 2
+				trigger = {
+					always = yes
+				}
+				custom_tooltip = eu_from_2_years_of_prod_income
+			}
+			define_advisor = {
+				type = treasurer
+				skill = 2
+				culture = ROOT
+				religion = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	nicene_greek_metropolises = {
+		icon = appease_the_estates
+		required_missions = { nicene_revitalize_the_economy nicene_refugees nicene_connect_the_realm }
+		position = 17
+		
+		provinces_to_highlight = {
+			OR = {
+				province_id = 317
+				province_id = 146
+				province_id = 148
+				province_id = 151
+			}
+		}
+		
+		trigger = {
+		    317 = {
+				owned_by = ROOT
+				development = 30
+			}
+		    146 = {
+				owned_by = ROOT
+				development = 30
+			}
+		    148 = {
+				owned_by = ROOT
+				development = 30
+			}
+		    151 = {
+				owned_by = ROOT
+				development = 30
+			}
+		}
+		
+		effect = {
+			country_event = {
+				id = ab_nicaea.6
+			}
+		}
+	}
+	
+	nicene_engines_of_the_empire = {
+		icon = mission_rb_central_belt_coal_mining
+		required_missions = { nicene_greek_metropolises nicene_chaldian_deposits }
+		position = 18
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_manufactory_trigger = yes
+			}
+		}
+		
+		trigger = {
+			OR = {
+				production_efficiency = 0.2
+				production_income_percentage = 0.2
+			}
+			num_of_owned_provinces_with = {
+				has_manufactory_trigger = yes
+				value = 20
+			}
+			development_in_provinces = {
+				has_manufactory_trigger = yes
+				value = 300
+			}
+		}
+		
+		effect = {
+			custom_tooltip = eu_manufactory_dev
+			add_country_modifier = {
+				name = eu_industrialized_economy
+				duration = 7300
+			}
+			hidden_effect = {		
+                for = {
+                    amount = 10
+                    effect = "
+                        random_owned_province = {
+							limit = {
+								has_manufactory_trigger = yes
+							}
+							add_base_production = 1
+                        }
+                    "
+                }
+			}
+		}
+	}
+	
+	nicene_economic_behemoth = {
+		icon = dominant_economy
+		required_missions = { nicene_engines_of_the_empire }
+		position = 19
+		
+		trigger = {
+			monthly_income = 500
+		}
+		
+		effect = {
+			custom_tooltip = NCI_MANUFACTORIES
+			hidden_effect = {
+				every_owned_province = {
+					limit = {
+						has_manufactory_trigger = yes
+					}
+					add_base_production = 1
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					is_hegemon_of_type = economic_hegemon
+				}
+				custom_tooltip = NCI_HEGEMON_YES
+				tooltip = {
+					add_years_of_income = 3
+				}
+			}
+			else = {
+				custom_tooltip = NCI_HEGEMON_NO
+				tooltip = {
+					add_years_of_income = 3
+				}
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						is_hegemon_of_type = economic_hegemon
+					}
+					add_years_of_income = 3
+				}
+			}
+		}
+	}
+	
+}
+
+NCI_missions_5 = {
+	slot = 5
+	generic = no
+	ai = yes
+	potential = {
+		OR = {
+			tag = NCI
+			AND = {
+				tag = HLE
+				was_tag = NCI
+			}
+		}
+	}
+	has_country_shield = yes
+	
+	nicene_bulwark_of_christianity = {
+		icon = mission_pontic_reconquest
+		required_missions = { }
+		position = 1
+		
+		trigger = {
+		    OR = {
+				army_size = 25
+				num_of_allies = 3
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = nci_shield
+				duration = 7300
+			}
+			aydin_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			germiyan_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			ankara_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			kastamonu_area = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					any_ally = {
+						OR = {
+							is_rival = BYZ
+							is_enemy = BYZ
+						}
+					}
+				}
+				custom_tooltip = NCI_RIVAL_YES
+			}
+			else = {
+				custom_tooltip = NCI_RIVAL_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						any_ally = {
+							OR = {
+								is_rival = BYZ
+								is_enemy = BYZ
+							}
+						}
+					}
+					every_country = {
+						limit = {
+							alliance_with = ROOT
+							OR = {
+								is_rival = BYZ
+								is_enemy = BYZ
+							}
+						}
+						add_trust = {
+							who = ROOT
+							value = 20
+							mutual = yes
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_push_the_frontier = {
+		icon = anatolian_frontier
+		required_missions = { nicene_nicene_legions nicene_bulwark_of_christianity }
+		position = 3
+		
+		provinces_to_highlight = {
+			region = anatolia_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				region = anatolia_region
+			}
+		}
+		
+		effect = {
+			add_adm_power = 100
+			add_country_modifier = {
+				name = nci_recover
+				duration = 7300
+			}
+			karaman_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			rum_area = {
+				limit = {
+					NOT = { owned_by = ROOT }
+					NOT = { is_core = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+	
+	nicene_avenge_manzikert = {
+		icon = per_the_seljuk_successors
+		required_missions = { nicene_push_the_frontier }
+		position = 5
+		
+		provinces_to_highlight = {
+			OR = {
+				area = karaman_area
+				area = rum_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 6
+				OR = {
+					area = rum_area
+					area = karaman_area
+				}
+			}
+		}
+		
+		effect = {
+			country_event = { id = ab_nicaea.4 }
+			custom_tooltip = AB_EMPTY
+			anatolia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					SEL = {
+						NOT = {
+							total_development = ROOT
+						}
+					}
+				}
+				custom_tooltip = NCI_SEL_YES
+			}
+			else = {
+				custom_tooltip = NCI_SEL_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						SEL = {
+							NOT = {
+								total_development = ROOT
+							}
+						}
+					}
+					every_neighbor_country = {
+						add_aggressive_expansion = {
+							who = ROOT
+							value = -20
+							apply_calc = no
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_secure_asia_minor = {
+		icon = mission_niceneanatolia
+		required_missions = { nicene_avenge_manzikert }
+		position = 8
+		
+		provinces_to_highlight = {
+			region = anatolia_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 30
+				region = anatolia_region
+			}
+		}
+		
+		effect = {
+			add_army_tradition_or_mil_power = { amount = 20 }
+			add_country_modifier = {
+				name = nci_war_machine
+				duration = 7300
+			}
+			caucasia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			mashriq_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_neighbor_country = {
+							army_size = ROOT
+						}
+					}
+				}
+				custom_tooltip = NCI_ARMY_YES
+			}
+			else = {
+				custom_tooltip = NCI_ARMY_NO
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						NOT = {
+							any_neighbor_country = {
+								army_size = ROOT
+							}
+						}
+					}
+					if = {
+						limit = {
+							NOT = { has_country_flag = nicene_mil2 }
+							NOT = { has_country_flag = nicene_mil3 }
+						}
+						add_government_power = {
+							mechanic_type = nicene_militarization_mechanic
+							power_type = nicene_militarized_society
+							value = 20
+						}
+					}
+					else_if = {
+						limit = {
+							has_country_flag = nicene_mil2 
+						}
+						add_government_power = {
+							mechanic_type = nicene_militarization_mechanic2
+							power_type = nicene_militarized_society2
+							value = 20
+						}
+					}
+					else_if = {
+						limit = {
+							has_country_flag = nicene_mil3 
+						}
+						add_government_power = {
+							mechanic_type = nicene_militarization_mechanic3
+							power_type = nicene_militarized_society3
+							value = 20
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_invasion_of_mashriq = {
+		icon = arb_unite_arabia
+		required_missions = { nicene_secure_asia_minor }
+		position = 10
+		
+		provinces_to_highlight = {
+			region = mashriq_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 12
+				region = mashriq_region
+			}
+		}
+		
+		effect = {
+			set_country_flag = nci_mashriq_cultures
+			add_country_modifier = {
+				name = "nci_legacy_of_alexander1"
+				duration = -1
+			}
+			custom_tooltip = NCI_MASHRIQ_CULTURES
+		}
+	}
+	
+	nicene_march_on_babylon = {
+		icon = mission_cradle_of_civilization
+		required_missions = { nicene_invasion_of_mashriq }
+		position = 11
+		
+		provinces_to_highlight = {
+			OR = {
+				area = iraq_arabi_area
+				area = basra_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+		    iraq_arabi_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		    basra_area = {
+			    type = all
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = nci_ovethrowing_eranshahr
+				duration = 7300
+			}
+			custom_tooltip = NAZ_RESTORE_MESOPOTAMIA
+			tooltip = {
+				add_province_modifier = {
+					name = "nizzarid_restore_mesopotamia"
+					duration = 7300
+				}
+			}
+			persia_region = {
+				limit = {
+					NOT = { is_core = ROOT }
+					NOT = { is_claim = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				410 = {
+					change_province_name = "Seleukeia"
+					rename_capital = "Seleukeia"
+				}
+				every_owned_province = {
+					limit = {
+						OR = {
+							area = al_jazira_area
+							area = iraq_arabi_area
+							area = basra_area
+						}
+					}
+					add_province_modifier = {
+						name = "nizzarid_restore_mesopotamia"
+						duration = 7300
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_restore_seleucia = {
+		icon = per_expand_our_influence
+		required_missions = { nicene_march_on_babylon }
+		position = 12
+		
+		provinces_to_highlight = {
+			province_id = 410
+		}
+		
+		trigger = {
+			410 = { owned_by = ROOT }
+			410 = {
+				religion = ROOT
+			}
+			410 = {
+				culture_group = byzantine
+			}
+			410 = {
+				development = 30
+			}
+		}
+		
+		effect = {
+			410 = {
+				change_province_name = "Seleukeia"
+				rename_capital = "Seleukeia"
+			}
+			custom_tooltip = AB_EMPTY
+			410 = {
+				add_base_tax = 2
+				add_base_production = 2
+				add_base_manpower = 2
+			}
+			custom_tooltip = AB_EMPTY
+			country_event = {
+				id = ab_nicaea.27
+			}
+		}
+	}
+	
+	nicene_macedonian_restoration = {
+		icon = mission_alexander
+		required_missions = { nicene_heart_of_persia }
+		position = 13
+		
+		provinces_to_highlight = {
+			region = khorasan_region
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 25
+				region = khorasan_region
+			}
+		}
+		
+		effect = {
+			set_country_flag = nci_khorasan_cultures
+			custom_tooltip = NCI_UNLOCK_MACEDONIA
+			custom_tooltip = NCI_KHORASAN_CULTURES
+			custom_tooltip = NCI_EMPOWER2
+			termez_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			northern_sindh_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			sindh_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			multan_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			lahore_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			sind_sagar_area  = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				remove_country_modifier = nci_legacy_of_alexander2
+				add_country_modifier = {
+					name = nci_legacy_of_alexander3
+					duration = -1
+				}
+			}
+		}
+	}
+	
+	nicene_vengeace_for_hydaspes = {
+		icon = mission_conquer_siam
+		required_missions = { nicene_macedonian_restoration }
+		position = 12
+		
+		provinces_to_highlight = {
+			OR = {
+				area = sind_sagar_area
+				area = lahore_area
+				area = multan_area
+				area = sindh_area
+				area = northern_sindh_area
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 15
+				OR = {
+					area = sind_sagar_area
+					area = lahore_area
+					area = multan_area
+					area = sindh_area
+					area = northern_sindh_area
+				}
+			}
+		}
+		
+		effect = {
+			create_general_with_pips = {
+				tradition = 100
+				add_fire = 2
+			}	
+			custom_tooltip = AB_EMPTY
+			add_ruler_modifier = {
+				name = nci_avenger_of_hydaspes
+				duration = -1
+			}
+			custom_tooltip = NCI_HYDASPES
+		}
+	}
+	
+	nicene_surpass_alexander = {
+		icon = mission_indian_empire
+		required_missions = { nicene_vengeace_for_hydaspes }
+		position = 13
+		
+		provinces_to_highlight = {
+			OR = {
+				region = hindusthan_region
+				region = west_india_region
+			}
+			NOT = {
+				country_or_non_sovereign_subject_holds = ROOT
+			}
+		}
+		
+		trigger = {
+			num_of_provinces_owned_or_owned_by_non_sovereign_subjects_with = {
+				value = 50
+					OR = {
+					region = hindusthan_region
+					region = west_india_region
+				}
+			}
+		}
+		
+		effect = {
+			set_country_flag = nci_india_cultures
+			custom_tooltip = NCI_INDIA_CULTURES
+			india_superregion = {
+				limit = {
+					NOT = { is_permanent_claim = ROOT	}
+					NOT = { is_core = ROOT	}
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				if = {
+					limit = {
+						BCT = {
+							is_subject_of = ROOT
+						}
+					}
+					BCT = {
+						set_country_flag = nci_india_cultures
+					}
+				}
+			}
+		}
+	}
+	
+	nicene_connect_the_realm = {
+	    icon = mission_royal_roads
+		required_missions = { }
+		position = 16
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			NOT = {
+				has_road_building_trigger = yes
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_road_building_trigger = yes
+				value = 10
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = nicene_connected
+				duration = 7300
+			}
+			define_advisor = {
+				type = planner
+				skill = 2
+				religion = ROOT
+				culture = ROOT
+				cost_multiplier = 0.5
+			}
+		}
+	}
+	
+	nicene_architects = {
+		icon = mission_halicarnas
+		required_missions = { nicene_greek_metropolises }
+		position = 18
+		
+		provinces_to_highlight = {
+			owned_by = ROOT
+			OR = {
+				has_great_project = {
+					type = any
+					tier = 1
+				}
+				has_great_project = {
+					type = any
+					tier = 2
+				}
+			}
+			NOT = {
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+			}
+		}
+		
+		trigger = {
+			num_of_owned_provinces_with = {
+				has_great_project = {
+					type = any
+					tier = 3
+				}
+				value = 5
+			}
+		}
+		
+		effect = {
+			add_country_modifier = {
+				name = nicene_architects
+				duration = -1
+			}
+			custom_tooltip = NCI_GREAT_PROJECT
+		}
+	}
+			
+}

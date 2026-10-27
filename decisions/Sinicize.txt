@@ -1,89 +1,81 @@
 country_decisions = {
 	sinicize_culture = {
 		potential = {
+			ai = no
 			OR = {
+				culture_group = tibetan_group
 				primary_culture = korean
 				primary_culture = vietnamese
-				primary_culture = zhuang
-				culture_group = tibetan_group
 			}
 		}
 		provinces_to_highlight = {
 			if = {
-				limit = { ROOT = { culture_group = tibetan_group } }
-				culture_group = tibetan_group
+				limit = {
+					ROOT = {
+						culture_group = tibetan_group
+					}
+				}
+				region = tibet_region
 			}
-			else = { culture = ROOT }
-			NOT = { continent = north_america }
-			NOT = { continent = south_america }
-			NOT = { continent = new_world }
-			NOT = { continent = oceania }
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			else_if = {
+				limit = {
+					ROOT = {
+						primary_culture = korean
+					}
+				}
+				region = korea_region
+			}
+			else_if = {
+				limit = {
+					ROOT = {
+						primary_culture = vietnamese
+					}
+				}
+				OR = {
+					area = red_river_delta_area
+					area = vietnam_area
+				}
+			}
+			NOT = { owned_by = ROOT }
 		}
 		allow = {
+			ai = no
 			OR = {
-				development_in_provinces = {
-					culture_group = east_asian
-					value = 300
-				}
-				#custom_trigger_tooltip = {
-				#	tooltip = chinese_culture_group_dominates_in_country
-				#	OR = {
-				#		dominant_culture = manchu_new
-				#		dominant_culture = chihan
-				#		dominant_culture = cantonese
-				#		dominant_culture = jin
-				#		dominant_culture = wu
-				#		dominant_culture = chimin
-				#		dominant_culture = hakka
-				#		dominant_culture = gan
-				#		dominant_culture = xiang
-				#		dominant_culture = sichuanese
-				#		dominant_culture = jianghuai
-				#		dominant_culture = xibei
-				#		dominant_culture = hubei
-				#		dominant_culture = zhongyuan
-				#		dominant_culture = shandong_culture
-				#		dominant_culture = vietnamese_new
-				#		dominant_culture = korean_new
-				#		dominant_culture = tibetan_new
-				#		dominant_culture = altaic_new
-				#		dominant_culture = zhuang_new
-				#	}
-				#}
 				is_emperor_of_china = yes
+				num_of_owned_provinces_with = {
+					value = 10
+					culture_group = east_asian
+				}
 			}
 			if = {
 				limit = {
 					culture_group = tibetan_group
 				}
-				custom_trigger_tooltip = {
-					tooltip = sinicize_culture_at
-					NOT = {
-						any_province = {
-							culture_group = ROOT
-							NOT = { country_or_non_sovereign_subject_holds = ROOT }
-							NOT = { continent = north_america }
-							NOT = { continent = south_america }
-							NOT = { continent = new_world }
-							NOT = { continent = oceania }
-						}
-					}
+				tibet_region = {
+					type = all
+					owned_by = ROOT
 				}
 			}
-			else = {
-				custom_trigger_tooltip = {
-					tooltip = sinicize_culture_tt
-					NOT = {
-						any_province = {
-							culture = ROOT
-							NOT = { country_or_non_sovereign_subject_holds = ROOT }
-							NOT = { continent = north_america }
-							NOT = { continent = south_america }
-							NOT = { continent = new_world }
-							NOT = { continent = oceania }
-						}
-					}
+			else_if = {
+				limit = {
+					primary_culture = korean
+				}
+				korea_region = {
+					type = all
+					owned_by = ROOT
+				}
+			}
+			else_if = {
+				limit = {
+					primary_culture = vietnamese
+				}
+				red_river_delta_area = {
+					type = all
+					owned_by = ROOT
+				}
+				vietnam_area = {
+					type = all
+					owned_by = ROOT
 				}
 			}
 		}
@@ -92,43 +84,37 @@ country_decisions = {
 				limit = {
 					primary_culture = vietnamese
 				}
-				update_entire_culture = {
-					culture = vietnamese
+				replace_culture_with_effect = {
+					new_culture = vietnamese_new
+					old_culture_1 = vietnamese
 				}
 			}
-			if = { #Sinicize Korean
+			else_if = { #Sinicize Korean
 				limit = {
 					primary_culture = korean
 				}
-				update_entire_culture = {
-					culture = korean
+				replace_culture_with_effect = {
+					new_culture = korean_new
+					old_culture_1 = korean
 				}
 			}
-			if = { #Sinicize Zhuang
-				limit = {
-					primary_culture = zhuang
-				}
-				update_entire_culture = {
-					culture = zhuang
-				}
-			}
-			if = { #Sinicize Tibetan
+			else_if = { #Sinicize Tibetan
 				limit = {
 					culture_group = tibetan_group
 				}
-				update_entire_culture_group = {
-					culture = tibetan
-					culture1 = tibetan
-					culture2 = yi
-					culture3 = bai
-					culture4 = miao
-					culture5 = Tangut
+				replace_culture_with_effect = {
+					new_culture = tibetan_new
+					old_culture_1 = Tangut
+					old_culture_2 = yi
+					old_culture_3 = bai
+					old_culture_4 = miao
+					old_culture_5 = tibetan
 				}
 			}
 			custom_tooltip = sinicize_culture_ct
 		}
 		ai_will_do = {
-			factor = 1
+			factor = 0
 		}
 	}
 }

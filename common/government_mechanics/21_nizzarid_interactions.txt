@@ -96,7 +96,7 @@ nizzarid_interaction_mechanic = {
 					}
 				}
 			}
-			cooldown_years = 1
+			cooldown_years = 10
 			ai_chance = {
 				factor = 100	#There is never a reason to say no to money
 			}
@@ -104,36 +104,63 @@ nizzarid_interaction_mechanic = {
 		nizzarid_mil_interaction = {
 			icon = GFX_nizzarid_mil
 			cost_type = nizzarid_mil_power
-			cost = 100
-			trigger = { 
+			trigger = {
 				has_estate = estate_nobles
 				estate_loyalty = {
 					estate = estate_nobles
 					loyalty = 50
 				}
-			}
-			effect = { 
 				if = {
 					limit = {
-						NOT = {
-							army_tradition = 30
-						}
+						has_country_flag = naz_upgrade_mechanic
+					}
+					has_government_power = {
+						mechanic_type = nizzarid_interaction_mechanic
+						power_type = nizzarid_mil_power
+						value = 80
+					}
+				}
+				else = {
+					has_government_power = {
+						mechanic_type = nizzarid_interaction_mechanic
+						power_type = nizzarid_mil_power
+						value = 100
+					}
+				}
+			}
+			effect = {
+				if = {
+					limit = {
+						has_country_flag = naz_upgrade_mechanic
+					}
+					add_government_power = {
+						mechanic_type = nizzarid_interaction_mechanic
+						power_type = nizzarid_mil_power
+						value = -80
+					}
+				}
+				else = {
+					add_government_power = {
+						mechanic_type = nizzarid_interaction_mechanic
+						power_type = nizzarid_mil_power
+						value = -100
+					}
+				}
+				if = {
+					limit = {
+						NOT = { army_tradition = 30 }
 					}
 					create_general = { tradition = 30 }
 				}
 				else_if = {
 					limit = {
-						NOT = {
-							army_tradition = 50
-						}
+						NOT = { army_tradition = 50 }
 					}
 					create_general = { tradition = 50 }
 				}
 				else_if = {
 					limit = {
-						NOT = {
-							army_tradition = 75
-						}
+						NOT = { army_tradition = 75 }
 					}
 					create_general = { tradition = 75 }
 				}
@@ -144,8 +171,24 @@ nizzarid_interaction_mechanic = {
 					name = naz_general
 					duration = 3650
 				}
+				if = {
+					limit = {
+						has_country_flag = naz_buff_conscript_general
+					}
+					custom_tooltip = NAZ_GAIN_MAMLUK
+					hidden_effect = {
+						capital_scope = {
+							for = {
+								amount = 10
+								effect = "
+									mamluks_cavalry = ROOT
+								"
+							}
+						}
+					}
+				}
 			}
-			cooldown_years = 1
+			cooldown_years = 10
 			ai_chance = {
 				factor = 100	#Say yes to manpower
 			}

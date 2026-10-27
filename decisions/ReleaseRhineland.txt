@@ -1,0 +1,207 @@
+country_decisions = {
+	
+	release_rhineland = {
+		major = yes
+		potential = {
+			ai = no
+			has_country_flag = ab_fra_unlock_rhl_release
+		}
+		allow = { 
+			NOT = { exists = RHL }
+			alsace_area = {
+					type = all
+					owned_by = ROOT
+				}
+			palatinate_area = {
+					type = all
+					owned_by = ROOT
+				}
+			lower_rhineland_area = {
+					type = all
+					owned_by = ROOT
+				}
+			upper_rhineland_area = {
+					type = all
+					owned_by = ROOT
+				}
+				upper_swabia_area = {
+					type = all
+					owned_by = ROOT
+				}
+			lower_swabia_area = {
+					type = all
+					owned_by = ROOT
+				}
+			north_rhine_area = {
+					type = all
+					owned_by = ROOT
+				}
+			franconia_area = {
+					type = all
+					owned_by = ROOT
+				}
+			hesse_area = {
+					type = all
+					owned_by = ROOT
+				}
+			westphalia_area = {
+					type = all
+					owned_by = ROOT
+				}
+			north_westphalia_area = {
+					type = all
+					owned_by = ROOT
+				}
+		}
+		provinces_to_highlight = {
+			OR = {
+				area = upper_swabia_area
+				area = lower_swabia_area
+				area = franconia_area
+				area = hesse_area
+				area = upper_rhineland_area
+				area = lower_rhineland_area 
+				area = westphalia_area
+				area = north_westphalia_area
+				area = palatinate_area
+				area = north_rhine_area
+			}
+			owned_by = ROOT
+		}
+		effect = {
+			custom_tooltip = AB_FRA_RELEASE_RHL_PU_TT
+			clr_country_flag = ab_fra_unlock_rhl_release
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = FRA_SUBJECT_SPREAD_RHL
+			hidden_effect = {
+				upper_swabia_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RHL
+					remove_core = ROOT
+				}
+				lower_swabia_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RHL
+					remove_core = ROOT
+				}
+				franconia_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RHL
+					remove_core = ROOT
+				}
+				hesse_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RHL
+					remove_core = ROOT
+				}
+				upper_rhineland_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RHL
+					remove_core = ROOT
+				}
+				lower_rhineland_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RHL
+					remove_core = ROOT
+				}
+				north_rhine_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RHL
+					remove_core = ROOT
+				}
+				westphalia_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RHL
+					remove_core = ROOT
+				}
+				north_westphalia_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RHL
+					remove_core = ROOT
+				}
+				palatinate_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = RHL
+					remove_core = ROOT
+				}
+				release = RHL
+				if = {
+					limit = {
+						ROOT = {
+							government = monarchy
+						}
+					}
+					create_union = RHL
+				}
+				else = {
+					vassalize = RHL
+				}
+				RHL = {
+					set_capital = 1876
+					add_manpower = 10
+					add_treasury = 100
+					add_liberty_desire = -50
+					change_religion = ROOT
+					change_primary_culture = rhenois
+					set_country_flag = fra_subject_culture_spread
+					capital_scope = {
+						change_culture = rhenois
+					}
+					swap_non_generic_missions = yes
+					swap_free_idea_group = yes
+					if = {
+						limit = {
+							ROOT = { government = republic }
+						}
+						change_government = republic
+						add_government_reform = oligarchy_reform
+					}
+					if = {
+						limit = {
+							ROOT = { government = theocracy }
+						}
+						change_government = theocracy
+						add_government_reform = leading_clergy_reform
+					}
+					if = {
+						limit = {
+							ROOT = { government = monarchy }
+						}
+						change_government = monarchy
+						add_government_reform = autocracy_reform
+					}
+					add_government_reform = feudalism_reform
+					if = {
+						limit = {
+							NOT = { government_rank = 2 }
+						}
+						set_government_rank = 2
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+}

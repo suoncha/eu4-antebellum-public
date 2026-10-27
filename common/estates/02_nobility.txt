@@ -3,9 +3,6 @@ estate_nobles = {
 
 	# If true, country will get estate
 	trigger = {
-		#NOT = { has_government_attribute = is_merchant_republic }
-		#NOT = { has_reform = veche_republic }
-		#NOT = { has_reform = trading_city }
 		NOT = { has_government_attribute = disables_estate_nobles }
 		NOT = { has_disabled_estate = { estate = estate_nobles } }
 		OR = {
@@ -24,24 +21,13 @@ estate_nobles = {
 					limit = {
 						NOT = { religion_group = muslim }
 						NOT = { religion = sikhism }
-						NOT = { religion = buddhism }
-						NOT = { religion = vajrayana }
-						NOT = { religion = mahayana }
-						# AB {{{
-						NOT = { mission_completed = ilk_rajput }
-						NOT = { mission_completed = rum_zoroastrian_rajput }
-						NOT = { mission_completed = zun_rajputana }
-						# }}}
+						uses_karma = no
 					}
 					NOT = { has_estate = estate_maratha }
 					NOT = { has_estate = estate_rajput }
 				}
 			}
 		}
-		#OR = {
-		#	NOT = { has_reform = celestial_empire }
-		#	has_dlc = "Mandate of Heaven"
-		#}
 	}
 
 	country_modifier_happy = {
@@ -94,15 +80,6 @@ estate_nobles = {
 			technology_group = eastern
 		}	
 		influence = 5
-	}
-	
-	# Influence modifiers from Events:
-	influence_modifier = {
-		desc = EST_HUN_MAGNATES
-		trigger = {
-			has_ruler_modifier = hun_power_to_magnates
-		}
-		influence = 10
 	}
 	influence_modifier = {
 		desc = EST_VAL_OTHER_ESTATE_IN_POWER
@@ -213,65 +190,32 @@ estate_nobles = {
 				tag = FIN
 				was_tag = FIN
 			}
-			OR = {
-				religion = suomi_pagan
-				religion = reformed_suomi
-			}
-		}
-	}
-	custom_name = {
-		desc = estate_mamluks
-		trigger = {
-			tag = MAM
-		}
-	}
-	custom_name = {
-		desc = estate_imperial_nobility
-		trigger = {
-			has_reform = revolutionary_empire_reform
 		}
 	}
 	custom_name = {
 		desc = estate_dvoryanstvo
 		trigger = {
 			culture_group = east_slavic
-			NOT = {
-				primary_culture = Litvin
-			}
+			NOT = { primary_culture = Litvin }
 		}
 	}
 	custom_name = {
 		desc = estate_wuzurgan
-			trigger = {
-				OR = {
-					tag = PER
-					tag = PRZ
-					tag = PRC
-					tag = PMN
-					tag = SSN
-					tag = SHP
-					tag = KRN
-					tag = ISP
-					tag = ZKD
-					tag = INJ
-					tag = MRV
-					tag = SRN
-					tag = KYN
-					tag = MRH
-				}
-			}
-	}
-	custom_name = {
-		desc = estate_oyo_mesi
 		trigger = {
-			tag = OYO
+			OR = {
+				ab_is_persia_trigger = yes
+				has_reform = persianprince
+				has_reform = persianprincet
+			}
 		}
 	}
 	custom_name = {
 		desc = estate_eugeneis
 		trigger = {
-			tag = BYZ
-			culture_group = byzantine
+			OR = {
+				primary_culture = greek
+				primary_culture = sclavinian
+			}
 		}
 	}
 	custom_name = {
@@ -281,13 +225,6 @@ estate_nobles = {
 				tag = SWE
 				was_tag = SWE
 			}
-		}
-	}
-	custom_name = {
-		desc = estate_nakomse
-		trigger = {
-			primary_culture = mossi
-			religion = shamanism
 		}
 	}
 	custom_name = {
@@ -307,24 +244,15 @@ estate_nobles = {
 		trigger = {
 			OR = {
 				culture_group = east_slavic
+				culture_group = romanian_culture_group
 				primary_culture = bulgarian
-				primary_culture = romanian
-				#culture_group = slavic
 			}
-			#NOT = { primary_culture = polish_new }
 		}
 	}
 	custom_name = {
 		desc = estate_szlachta
 		trigger = {
-			OR = {
-				primary_culture = polish
-				#primary_culture = polish_new
-				# AB [[[
-				# Remove so we can keep using LIT tag with bajorija
-				# primary_culture = lithuanian
-				#
-			}
+			primary_culture = polish
 		}
 	}
 	# AB [[[
@@ -341,24 +269,6 @@ estate_nobles = {
 	}
 	# ]]]
 	custom_name = {
-		desc = estate_timawa
-		trigger = {
-			tag = MAS
-		}
-	}
-	custom_name = {
-		desc = estate_nayaks
-		trigger = {
-			tag = VIJ
-		}
-	}
-	custom_name = {
-		desc = estate_samantas
-		trigger = {
-			tag = ORI
-		}
-	}
-	custom_name = {
 		desc = estate_kshatriyas
 		trigger = {
 			religion = hinduism
@@ -370,15 +280,6 @@ estate_nobles = {
 			OR = {
 				has_reform = MIN_celestial_empire
 				has_reform = celestial_empire
-			}
-		}
-	}
-	custom_name = {
-		desc = estate_mansabdars
-		trigger = {
-			OR = {
-				tag = MUG
-				has_government_attribute = enable_mansabdar_privileges
 			}
 		}
 	}
@@ -401,22 +302,10 @@ estate_nobles = {
 		}
 	}
 	custom_name = {
-		desc = estate_andriana
-		trigger = {
-			tag = MIR
-		}
-	}
-	custom_name = {
 		desc = estate_amirs
 		trigger = {
 			religion_group = muslim
 			NOT = { technology_group = ottoman } #Should possibly be more restricted
-		}
-	}
-	custom_name = {
-		desc = estate_planters
-		trigger = {
-			tag = USA
 		}
 	}
 	custom_name = {
@@ -436,53 +325,11 @@ estate_nobles = {
 		desc = estate_junkers
 		trigger = {
 			OR = {
-				has_reform = prussian_republic_reform
-				has_reform = prussian_monarchy_base
-				has_reform = prussian_monarchy
-				AND = {
-					primary_culture = prussian 
-					tag = GER
-				}
+				tag = PRU
+				was_tag = PRU
+				tag = LVI
+				was_tag = LVI
 			}
-		}
-	}
-	custom_name = {
-		desc = estate_alii
-		trigger = {
-			OR = {
-				capital_scope = {
-					area = northern_polynesia_area
-				}
-				tag = SAM
-			}
-			primary_culture = polynesian
-			religion = animism
-		}
-	}
-	custom_name = {
-		desc = estate_rangatira
-		trigger = {
-			primary_culture = maori
-			religion = animism
-		}
-	}
-	custom_name = {
-		desc = estate_eiki
-		trigger = {
-			tag = TOG
-			primary_culture = polynesian
-			religion = animism
-		}
-	}
-	custom_name = {
-		desc = estate_ratu
-		trigger = {
-			OR = {
-				tag = LAI
-				tag = VIL
-				tag = VNL
-			}
-			religion = animism
 		}
 	}
 	custom_name = {
@@ -493,12 +340,6 @@ estate_nobles = {
 				has_reform = siberian_tribe
 				has_reform = native_basic_reform
 			}
-		}
-	}
-	custom_name = {
-		desc = estate_mani
-		trigger = {
-			tag = KON
 		}
 	}
 	
@@ -517,8 +358,6 @@ estate_nobles = {
 		estate_nobles_strong_duchies
 		estate_nobles_golden_liberty
 		estate_nobles_veto_heir_apparent
-		estate_nobles_nieszawa_privileges
-		estate_nobles_pacta_conventa
 		estate_nobles_monopoly_of_metals
 		estate_nobles_monopoly_of_livestock
 		estate_nobles_monopoly_of_gems
@@ -532,32 +371,13 @@ estate_nobles = {
 		estate_nobles_tribe_unification
 		estate_nobles_tribe_centralization
 		estate_nobles_grant_power_to_the_bashorun
-		estate_nobles_danish_nobility
-		estate_nobles_nobles_instead_of_royal_court
-		estate_nobles_leidang_conscription
-		estate_nobles_carolean_march
-		estate_nobles_carolean_charge
-		estate_nobles_religious_conscription
-		estate_nobles_leidang_mass_conscription
-		estate_nobles_leidang_elite_conscription
-		estate_nobles_sponsor_hussars
 		estate_nobles_mansabdari_cav_maintenance
 		estate_nobles_mansabdari_military_service
 		estate_nobles_mansabdari_royal_rule
-		estate_nobles_mestnichestvo
-		#estate_nobles_early_serfdom
-		#estate_nobles_legalized_serfdom
-		#estate_nobles_total_serfdom
-		#estate_nobles_restricted_serfdom
-		#estate_nobles_devastating_serfdom
-		#estate_nobles_increased_peasant_freedom
-		#estate_nobles_peasant_liberation
 		estate_nobles_rynda
 		estate_nobles_landed_army
 		estate_nobles_factionalist_nobility
 		estate_nobles_consolidated_noble_contracts
-		estate_nobles_english_villeinage
-		estate_nobles_english_copyhold_tenure
 		estate_nobles_development_of_castles
 		estate_nobles_statesman_servitude
 		estate_nobles_royal_court_tasks
@@ -566,8 +386,6 @@ estate_nobles = {
 		estate_nobles_noble_officer_right
 		estate_nobles_expedition_rights
 		estate_nobles_highland_fortifications
-		estate_nobles_emirs_of_baghdad
-		estate_nobles_deteriorating_army
 		estate_nobles_defensive_policy
 		estate_nobles_tofangchi_regiment
 		estate_nobles_tupchi_artillery_corps
@@ -575,27 +393,9 @@ estate_nobles = {
 		estate_nobles_mamlukian_administration
 		estate_nobles_enlist_the_mamluks
 		estate_nobles_vegvar_system
-		estate_nobles_ITA_military_governors
-		estate_nobles_GER_diploma_andreanum
 		estate_nobles_orangist_privileges
-		estate_nobles_MAY_arm_nobles_with_obsidian_blades
 		estate_nobles_MAY_spread_dynastic_influence
 		estate_nobles_AZT_triple_alliance
-		estate_nobles_AZT_warrior_culture
-		estate_nobles_reformatio_sigismundi
-		estate_nobles_basqaq_autonomy
-		estate_nobles_habsburg_disunity
-		estate_nobles_hab_habsburg_connections
-		estate_nobles_imperial_war_leader
-		estate_nobles_melting_pot_of_cultures
-		estate_nobles_hab_von_raab_restructions
-		estate_nobles_TIM_soyurghal_grants
-		estate_nobles_TIM_chagatai_warriors
-		estate_nobles_TIM_appease_the_elites
-		estate_nobles_MUG_development_of_the_subah
-		estate_nobles_four_class_system
-		estate_nobles_hungarian_nobility_privileges
-		estate_nobles_austrian_nobility_privileges
 		# AB [[[
 		estate_nobles_hindu_integration
 		estate_nobles_ghurid_hindu_integration
@@ -605,6 +405,7 @@ estate_nobles = {
 		estate_nobles_nomadic_warriors
 		estate_nobles_frankish_unity
 		estate_nobles_germano_italic_unity
+		estate_nobles_integrate_rus
 		# ]]]
 	}
 

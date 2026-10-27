@@ -1,0 +1,469 @@
+namespace = ab_start
+
+# Startup Setup
+country_event = {
+	id = ab_start.0
+	title = ab_start.0.t
+	desc = ab_start.0.d
+	picture = CULTURE_eventPicture  
+	
+	hidden = yes
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_start.0.a
+		# VIKTOR TODO: Change Jafari & Zaidi in future updates
+		# Muslim Schools - SIC: Ismaili, BAH: Jafari, RAS: Zaidi
+		# Muslim Schools - SIC: Ismaili, BAH: Jafari, RAS: Zaidi
+		SIC = { #Ismailis are disliked by all Sunnis at start.
+			INJ = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+			NAZ = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+			ADU = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+			HSN = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+		}
+		BAH = { #Jafaris are disliked by all Sunnis at start.
+			INJ = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+			NAZ = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+			ADU = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+			HSN = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+		}
+		RAS = { #Zaidis are disliked by all Sunnis at start.
+			INJ = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+			NAZ = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+			ADU = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+			HSN = {
+				set_school_opinion = {
+					who = PREV
+					opinion = -1
+				}
+			}
+		}
+		# DLC Check
+		country_event = { id = ab_start.1 }
+		# Lucky Nations
+		country_event = { id = lucky_nation.0 days = 1 }
+		# AB Game Rules
+		country_event = { id = ab_game_rules_event.0 }
+		# Centers of Reformation
+		REB = {
+			set_variable = {
+				which = ab_counter_reformation_center_spawned_count_var
+				value = 0
+			}
+			set_variable = {
+				which = ab_protestant_center_spawned_count_var
+				value = 0
+			}
+			set_variable = {
+				which = ab_reformed_center_spawned_count_var
+				value = 0
+			}
+		}
+		# Galicia
+		VOL = {
+			country_event = {
+				id = galician_event.1
+				days = 30
+			}
+		}
+		# Injuids
+		430 = {
+			for = {
+				amount = 4
+				effect = "
+					galley = INJ
+					transport = INJ
+					light_ship = INJ
+				"
+			}
+		}
+		# Shapurids
+		SHP = {
+			save_global_event_target_as = ab_formertag_per
+		}
+		# Francia
+		FRC = {
+			save_global_event_target_as = Emperor
+			country_event = {
+				id = ab_frc_disaster_event.0
+				days = 1
+			}
+			country_event = {
+				id = ab_francia.10
+				days = 3000
+			}
+			country_event = {
+				id = ab_francia.11
+				days = 6000
+			}
+			country_event = {
+				id = ab_francia.15
+				days = 35770
+			}
+			country_event = {
+				id = ab_francia.18
+				days = 72270
+			}
+			country_event = {
+				id = ab_francia.23
+			}
+			random_list = { 
+				33 = { 
+					define_advisor = {
+						type = army_reformer
+						name = "Nicolas Morisseau"
+						skill = 1
+						culture = ROOT
+						religion = ROOT
+					}
+				}
+				33 = { 
+					define_advisor = {
+						type = natural_scientist
+						name = "Nicolas Morisseau"
+						skill = 1
+						culture = ROOT
+						religion = ROOT
+					}
+				}
+				33 = { 
+					define_advisor = {
+						type = statesman
+						name = "Nicolas Morisseau"
+						skill = 1
+						culture = ROOT
+						religion = ROOT
+					}
+				}
+			}
+		}
+		# Arles
+		LWB = {
+			country_event = {
+				id = ab_arles.4
+			}
+		}
+		UPB = {
+			country_event = {
+				id = ab_arles.4
+			}
+		}
+		# Scotland
+		SCO = {
+			country_event = {
+				id = ab_scottish.1
+				days = 30
+			}
+		}
+		# Andalusia
+		ADU = {
+			country_event = {
+				id = ab_andalusian_event.0
+				days = 1
+			}
+		}
+		# Byzantium
+		BYZ = {
+			country_event = {
+				id = ab_byzantium.9
+			}
+			country_event = {
+				id = ab_byzantium.1
+				days = 1095
+			}
+			country_event = {
+				id = ab_byzantium.4
+				days = 90
+			}
+			country_event = {
+				id = ab_byzantium.5
+				days = 3300
+			}
+			country_event = {
+				id = ab_byzantium.6
+				days = 1200
+			}
+			country_event = {
+				id = ab_byzantium.32
+				days = 1400
+				random = 200
+			}
+			country_event = {
+				id = ab_byzantium.45
+				days = 1825
+			}
+		}
+		# Nicaea
+		NCI = {
+			country_event = {
+				id = ab_byzantium.33
+				days = 900
+			}
+			country_event = {
+				id = ab_nicaea.0
+				days = 400
+			}
+		}
+		# Denmark
+		DAN = {
+			country_event = {
+				id = ab_denmark.1
+				days = 200
+			}
+		}
+		# England
+		ENG = {
+			country_event = {
+				id = antebellum_england.6
+			}
+		}
+		# Golden Horde
+		GLH = {
+			country_event = {
+				id = ab_ghorde.1
+			}
+		}
+		# Jerusalem
+		KOJ = {
+			country_event = {
+				id = ab_jerusalem.7
+				days = 365
+			}
+		}
+		# Lithuania
+		LIT = {
+			country_event = {
+				id = ab_lithuania.14
+				days = 3650
+			}
+		}
+		# Moravia
+		MVA = {
+			country_event = {
+				id = ab_moravia.1
+				days = 1095
+			}
+			country_event = {
+				id = ab_moravia.19
+				days = 400
+			}
+		}
+		PNN = {
+			country_event = {
+				id = ab_moravia.22
+				days = 45
+			}
+		}
+		# Japan
+		TJJ = {
+			save_global_event_target_as = ab_formertag_jap
+			country_event = {
+				id = ab_toyouji.1
+			}
+		}
+		# Yuan
+		YUA = {
+			save_global_event_target_as = ab_formertag_cle
+			save_global_event_target_as = EmperorOfChina
+			add_faction = temples
+			add_faction = enuchs
+			add_faction = bureaucrats
+			add_faction_influence = {
+				faction = enuchs
+				influence = 45
+			}
+			add_faction_influence = {
+				faction = bureaucrats
+				influence = 25
+			}
+			add_faction_influence = {
+				faction = temples
+				influence = 30
+			}
+			country_event = {
+				id = ab_yuan.1
+			}
+		}
+		# Han
+		HNN = {
+			country_event = {
+				id = ab_maitreya.1
+				days = 60
+			}
+		}
+		# Min
+		MIN = {
+			country_event = {
+				id = ab_min.1
+				days = 3650
+			}
+		}
+		# Ilkhanate
+		ILK = {
+			country_event = {
+				id = ab_ilkhanate.1
+			}
+			country_event = {
+				id = ab_ilkhanate.0
+				days = 1095
+			}
+		}
+		# Bulgaria
+		BUL = {
+			random_list = { 
+				33 = { 
+					define_advisor = {
+						type = statesman
+						name = "Kristiyan Petrov"
+						skill = 1
+						culture = bulgarian
+						religion = orthodox
+					}
+				}
+				33 = { 
+					define_advisor = {
+						type = spymaster
+						name = "Kristiyan Petrov"
+						skill = 1
+						culture = bulgarian
+						religion = orthodox
+					}
+				}
+				33 = { 
+					define_advisor = {
+						type = diplomat
+						name = "Kristiyan Petrov"
+						skill = 1
+						culture = bulgarian
+						religion = orthodox
+					}
+				}
+			}
+		}
+		# Bohemia
+		BOH = {
+			country_event = { id = flavor_boh.22 }
+		}
+		# Florence
+		LAN = {
+			set_variable = {
+				which = tus_num_of_merc_battles_won_var
+				value = 0
+			}
+			country_event = {
+				id = ab_tuscany.1
+				days = 180
+				random = 180
+			}
+		}
+		# Capua
+		CAP = {
+			country_event = {
+				id = ab_capua.1
+			}
+			country_event = {
+				id = ab_capua.6
+				days = 2190
+			}
+			country_event = {
+				id = ab_capua.7
+				days = 2100
+			}
+			country_event = {
+				id = ab_capua.9
+				days = 2260
+			}
+			country_event = {
+				id = ab_capua.10
+				days = 3350
+			}
+		}
+		# Russians
+		every_country = {
+			limit = {
+				culture_group = east_slavic
+				NOT = { tag = ZAZ }
+				NOT = { tag = NOV }
+			}
+			country_event = { id = ab_rus.1 }
+		}
+		NOV = {
+			save_global_event_target_as = ab_formertag_ukr
+		}
+	}
+}
+
+# DLC Check
+country_event = {
+	id = ab_start.1
+	title = ab_start.1.t
+	desc = ab_start.1.d
+	picture = AB_LOTHAIR_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		ai = no
+		has_all_major_dlc = no
+	}
+
+	option = {
+		name = ab_start.1.a
+	}
+}

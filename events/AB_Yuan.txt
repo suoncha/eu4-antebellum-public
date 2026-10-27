@@ -8,13 +8,7 @@ country_event = {
 	desc = ab_yuan.1.d
 	picture = MERITOCRACY_eventPicture
 	
-	fire_only_once = yes
-
-	major = yes
-	
-	trigger = {
-		tag = YUA
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_yuan.1.a
@@ -33,7 +27,6 @@ country_event = {
 	
 	is_triggered_only = yes
 	
-	
 	immediate = {
 		hidden_effect = {
 			add_stability = -6
@@ -42,6 +35,14 @@ country_event = {
 	
 	option = {
 		name = ab_yuan.2.a
+		trigger = {
+			NOT = {
+				OR = {
+					has_country_flag = ab_game_rules_yuan_nestorian
+					has_country_flag = ab_game_rules_yuan_horde
+				}
+			}
+		}
 		ai_chance = { factor = 80 }
 		custom_tooltip = YUAN_DISASTER_CHINESE
 		custom_tooltip = YUAN_DISASTER_INFO
@@ -124,6 +125,14 @@ country_event = {
 	
 	option = {
 		name = ab_yuan.2.b
+		trigger = {
+			NOT = {
+				OR = {
+					has_country_flag = ab_game_rules_yuan_sinicized
+					has_country_flag = ab_game_rules_yuan_nestorian
+				}
+			}
+		}
 		ai_chance = { factor = 5 }
 		set_country_flag = YUA_HORDE
 		hidden_effect = {
@@ -214,6 +223,14 @@ country_event = {
 	
 	option = {
 		name = ab_yuan.2.c
+		trigger = {
+			NOT = {
+				OR = {
+					has_country_flag = ab_game_rules_yuan_sinicized
+					has_country_flag = ab_game_rules_yuan_horde
+				}
+			}
+		}
 		ai_chance = { factor = 15 }
 		set_country_flag = YUA_NESTORIAN
 		custom_tooltip = YUAN_DISASTER_NESTORIAN
@@ -460,30 +477,28 @@ country_event = {
 	option = {
 		name = ab_yuan.7.a
 		custom_tooltip = yua_culture_change
+		add_accepted_culture = mongol
+		add_country_modifier = {
+			name = "yua_china_sinicization"
+			duration = -1
+		}
+		change_technology_group = chinese
+		change_unit_type = chinese
 		hidden_effect = {
 			change_primary_culture = Yuan
 			set_heir_culture = Yuan
 			set_ruler_culture = Yuan
 			every_province = {
 				limit = {
-					culture = chihan
-				}
-				change_culture = Yuan
-			}
-			every_province = {
-				limit = {
-					culture = jin
+					OR = {
+						culture = chihan
+						culture = jin
+					}
 				}
 				change_culture = Yuan
 			}
 		}
-			add_accepted_culture = mongol
-			add_country_modifier = {
-				name = "yua_china_sinicization"
-				duration = -1
-			}
 	}
-
 }
 
 #Festival
@@ -493,73 +508,49 @@ country_event = {
 	desc = ab_yuan.8.d
 	picture = URBANISATION_INCIDENT_eventPicture
 	
-	trigger = {
-		has_country_flag = yua_can_earn_festival_bonus
-		NOT = {
-			has_country_modifier = yua_cant_earn_festival_bonus
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			country_event = {
+				id = ab_yuan.8
+				days = 3650
+			}
 		}
 	}
 	
 	option = {
 		name = ab_yuan.8.a
-			add_years_of_income = -0.25
-			add_country_modifier = { 
-				name = yua_festival_reward_power 
-				duration = 1825 
-			} 
-			hidden_effect = {
-			add_country_modifier = { 
-				name = yua_cant_earn_festival_bonus
-				duration = 3650 
-			} 
+		add_years_of_income = -0.25
+		add_country_modifier = { 
+			name = yua_festival_reward_power 
+			duration = 1825 
 		}
 	}
 
 	option = {
 		name = ab_yuan.8.b
-			add_years_of_income = -0.25
-			add_country_modifier = { 
-				name = yua_festival_reward_speed 
-				duration = 1825 
-			} 
-			hidden_effect = {
-			add_country_modifier = { 
-				name = yua_cant_earn_festival_bonus
-				duration = 3650 
-			} 
+		add_years_of_income = -0.25
+		add_country_modifier = { 
+			name = yua_festival_reward_speed 
+			duration = 1825 
 		}
-
 	}
 
 	option = {
 		name = ab_yuan.8.c
-			add_years_of_income = -0.25
-			add_country_modifier = { 
-				name = yua_festival_reward_shock
-				duration = 1825 
-			} 
-			hidden_effect = {
-			add_country_modifier = { 
-				name = yua_cant_earn_festival_bonus
-				duration = 3650 
-			} 
+		add_years_of_income = -0.25
+		add_country_modifier = { 
+			name = yua_festival_reward_shock
+			duration = 1825 
 		}
-
 	}
 	
 	option = {
 		name = ab_yuan.8.de
-			add_prestige = -10
-			custom_tooltip = YUAN_NO_DISCIPLINE
-			hidden_effect = {
-			add_country_modifier = { 
-				name = yua_cant_earn_festival_bonus
-				duration = 3650 
-			} 
-		}
-
+		add_prestige = -10
+		custom_tooltip = YUAN_NO_DISCIPLINE
 	}
-
 }
 
 #Fall of Kyoto
@@ -575,21 +566,21 @@ country_event = {
 	
 	option = {
 		name = ab_yuan.9.a
-			add_power_projection = {
-				type = mission_rewards_power_projection
-				amount = 25
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 25
+		}
+		add_country_modifier = {
+			name = yua_control_japan
+			duration = -1
+		}
+		japan_region  = {
+			limit = {
+				NOT = { is_permanent_claim = ROOT }
+				NOT = { is_core = ROOT }
 			}
-			add_country_modifier = {
-				name = yua_control_japan
-				duration = -1
-			}
-			japan_region  = {
-				limit = {
-					NOT = { is_permanent_claim = ROOT	}
-					NOT = { is_core = ROOT	}
-				}
-				add_permanent_claim = ROOT
-			}
+			add_permanent_claim = ROOT
+		}
 	}
 
 }
@@ -607,13 +598,12 @@ country_event = {
 	
 	option = {
 		name = ab_yuan.10.a
-			add_mandate = 25
-			add_country_modifier = {
-				name = yua_reunited
-				duration = 9125
-			}
+		add_mandate = 25
+		add_country_modifier = {
+			name = yua_reunited
+			duration = 9125
+		}
 	}
-
 }
 
 #Floppa
@@ -632,12 +622,12 @@ country_event = {
 	
 	option = {
 		name = ab_yuan.11.a
-			add_years_of_income = -0.5
-			custom_tooltip = YUA_FLOP1
-			add_country_modifier = {
-				name = yua_floppa
-				duration = -1
-			}
+		add_years_of_income = -0.5
+		custom_tooltip = YUA_FLOP1
+		add_country_modifier = {
+			name = yua_floppa
+			duration = -1
+		}
 	}
 
 	option = {
@@ -653,42 +643,30 @@ country_event = {
 	desc = ab_yuan.12.d
 	picture = SUFFERING_CHINESE_VILLAGE_eventPicture
 	
-	trigger = {
-		OR = {
-			tag = MGE
-			tag = YUA
-			tag = KHA
-		}
-		controls = 410
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-
+	is_triggered_only = yes
 	fire_only_once = yes
 	
 	option = {
 		name = ab_yuan.12.a
-			custom_tooltip = YUA_BAGHDAD1
-			add_horde_unity = 20
-			add_treasury = 1000
-			410 = {
-				add_devastation = 100
-			}
-			add_country_modifier = {
-				name = yua_second_sack
-				duration = 5475
-			}
+		custom_tooltip = YUA_BAGHDAD1
+		add_horde_unity = 20
+		add_treasury = 1000
+		410 = {
+			add_devastation = 100
+		}
+		add_country_modifier = {
+			name = yua_second_sack
+			duration = 5475
+		}
 	}
 
 	option = {
 		name = ab_yuan.12.b
 		add_dip_power = 100
-			add_country_modifier = {
-				name = yua_spared
-				duration = 9125
-			}
+		add_country_modifier = {
+			name = yua_spared
+			duration = 9125
+		}
 	}
 }
 
@@ -700,13 +678,8 @@ country_event = {
 	picture = CHINESE_GENERAL_eventPicture
 	
 	trigger = {
-		OR = {
-			tag = MGE
-			tag = YUA
-			tag = KHA
-		}
-		controls = 2190
 		capital = 2190
+		uses_horde_unity = yes
 	}
 
 	fire_only_once = yes
@@ -717,12 +690,12 @@ country_event = {
 	
 	option = {
 		name = ab_yuan.13.a
-			add_horde_unity = 10
-			2190 = {
-				add_base_tax = 1
-				add_base_production = 1
-				add_base_manpower = 1
-			}
+		add_horde_unity = 10
+		2190 = {
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
+		}
 		mongolia_region = {
 			add_province_modifier = {
 				name = yua_qaraqorum
@@ -740,38 +713,25 @@ country_event = {
 	desc = ab_yuan.14.d
 	picture = MERITOCRACY_eventPicture
 	
-	trigger = {
-		OR = {
-			tag = MGE
-			tag = YUA
-			tag = KHA
-		}
-		owns = 2207
-	}
-
+	is_triggered_only = yes
 	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 3
-	}
 	
 	option = {
 		name = ab_yuan.14.a
-			add_years_of_income = -3
-			2207 = {
-				add_base_tax = 3
-			}
-			add_country_modifier = {
-				name = yua_observatory
-				duration = -1
-			}
+		add_years_of_income = -3
+		2207 = {
+			add_base_tax = 3
+		}
+		add_country_modifier = {
+			name = yua_observatory
+			duration = -1
+		}
 	}
 	
 	option = {
 		name = ab_yuan.14.b
-			add_prestige = 10
+		add_prestige = 10
 	}
-
 }
 
 #Rus
@@ -785,31 +745,31 @@ country_event = {
 
 	option = {
 		name = ab_yuan.15.a
-			add_treasury = 1000
-			280 = {
-				add_devastation = 100
+		add_treasury = 1000
+		280 = {
+			add_devastation = 100
+		}
+		310 = {
+			add_devastation = 100
+		}
+		add_country_modifier = {
+			name = "mon_tatar_yoke"
+			duration = -1
+		}
+		poland_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
 			}
-			310 = {
-				add_devastation = 100
+			add_permanent_claim = ROOT
+		}
+		baltic_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
 			}
-			add_country_modifier = {
-				name = "mon_tatar_yoke"
-				duration = -1
-			}
-			poland_region = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = { is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
-			baltic_region = {
-				limit = {
-					NOT = { is_core = ROOT }
-					NOT = { is_permanent_claim = ROOT }
-				}
-				add_permanent_claim = ROOT
-			}
+			add_permanent_claim = ROOT
+		}
 	}
 }
 
@@ -829,8 +789,6 @@ country_event = {
 			duration = -1
 		}
 	}
-	
-
 }
 
 #Patriarchates

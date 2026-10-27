@@ -1,6 +1,3 @@
-######################################################################
-# Gaelic rebels. Disgruntled fanatics.
-######################################################################
 gaelic_ab_rebels = {
 
 	color = { 230 175 175 }
@@ -45,7 +42,7 @@ gaelic_ab_rebels = {
 		}
 		modifier = {
 			factor = 0.0
-			NOT = { religion = anglican }
+			NOT = { religion = gaelic_ab }
 		}
 		modifier = {
 			factor = 0.001
@@ -169,10 +166,7 @@ gaelic_ab_rebels = {
 	
 	# Country scope
 	can_negotiate_trigger = {
-		OR = {
-			religion_group = christian
 			dominant_religion = gaelic_ab
-		}
 	}
 	
 	# Country scope
@@ -194,7 +188,7 @@ gaelic_ab_rebels = {
 		}
 		if = {
 			limit = {
-				NOT = { religion_group = christian }
+				NOT = { religion_group = eastern }
 			}
 			add_prestige = -50
 			every_owned_province = {
@@ -224,6 +218,7 @@ gaelic_ab_rebels = {
 				duration = 3650
 			}
 		}
+		
 		else_if = {
 			limit = {
 				NOT = { religion = gaelic_ab }
@@ -236,10 +231,9 @@ gaelic_ab_rebels = {
 			limit = {
 				NOT = { religion = gaelic_ab }
 				NOT = { dominant_religion = gaelic_ab }
-				religion_group = christian
+				religion_group = eastern
 				NOT = { has_country_modifier = heretic_tolerance }
 			}
-			
 			add_country_modifier = {
 				name = "heretic_tolerance"
 				duration = 3650
@@ -264,7 +258,6 @@ gaelic_ab_rebels = {
 				influence = 15
 			}
 		}
-
 		change_estate_land_share = {
 			estate = estate_church
 			share = 10.0

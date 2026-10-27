@@ -2061,32 +2061,6 @@ is_european_trade_node_province = {
 	}
 }
 
-european_trade_node_scope = {
-	1293 = { $trigger$ }
-	1295 = { $trigger$ }
-	1298 = { $trigger$ }
-	1308 = { $trigger$ }
-	137 = { $trigger$ }
-	1320 = { $trigger$ }
-	1322 = { $trigger$ }
-	280 = { $trigger$ }
-	153 = { $trigger$ }
-	134 = { $trigger$ }
-	61 = { $trigger$ }
-	45 = { $trigger$ }
-	1876 = { $trigger$ }
-	186 = { $trigger$ }
-	1269 = { $trigger$ }
-	1276 = { $trigger$ }
-	1975 = { $trigger$ }
-	1926 = { $trigger$ }
-	33 = { $trigger$ }
-	1652 = { $trigger$ }
-	1082 = { $trigger$ }
-	464 = { $trigger$ }
-	262 = { $trigger$ }
-}
-
 #Province scope
 is_indian_trade_node_province = {
 	OR = {
@@ -2264,6 +2238,9 @@ num_of_completed_idea_groups_adm = {
 		full_idea_group = administrative_ideas
 		full_idea_group = humanist_ideas
 		full_idea_group = infrastructure_ideas
+		# AB [[[
+		full_idea_group = state_governance_ideas
+		# ]]]
 		amount = $amount$
 	}
 }
@@ -2278,6 +2255,11 @@ num_of_completed_idea_groups_dip = {
 		full_idea_group = maritime_ideas
 		full_idea_group = influence_ideas
 		full_idea_group = court_ideas
+		# AB [[[
+		full_idea_group = imperial_ideas
+		full_idea_group = celestial_ideas
+		full_idea_group = globaldomination_ideas
+		# ]]]
 		amount = $amount$
 	}
 }
@@ -2296,6 +2278,9 @@ num_of_completed_idea_groups_mil = {
 		full_idea_group = horde_gov_ideas
 		full_idea_group = plutocracy_ideas
 		full_idea_group = mercenary_ideas
+		# AB [[[
+		full_idea_group = professional_ideas
+		# ]]]
 		amount = $amount$
 	}
 }
@@ -3270,12 +3255,6 @@ has_points_for_livonian_trade_monarchy = {
 		value = 3
 	}
 }
-has_points_for_livonian_constitutional_monarchy = {
-	is_variable_equal = {
-		which = liv_adm
-		value = 3
-	}
-}
 has_points_for_livonian_theocratic_monarchy = {
 	check_variable = {
 		which = liv_adm
@@ -3336,20 +3315,6 @@ has_points_for_livonian_absolute_monarchy = {
 	check_variable = {
 		which = liv_adm
 		value = 4
-	}
-}
-has_points_for_livonian_enlightened_monarchy = {
-	is_variable_equal = {
-		which = liv_adm
-		value = 2
-	}
-	is_variable_equal = {
-		which = liv_dip
-		value = 2
-	}
-	is_variable_equal = {
-		which = liv_mil
-		value = 2
 	}
 }
 
@@ -4424,7 +4389,7 @@ has_not_locked_first_tier_reform = {
 	NOT = { has_reform = self_governing_colony_government }
 	NOT = { has_reform = trade_company_government }
 	NOT = { has_reform = english_parliamentary_republic_government }
-	NOT = { has_reform = papacy_reform }
+	NOT = { tag = PAP }
 	NOT = { has_reform = caliphate_theocracy_reform }
 	NOT = { has_reform = fifth_monarchists_reform }
 	NOT = { has_reform = great_mongol_state_reform }	
@@ -4588,55 +4553,6 @@ has_unified_islam = {
 }
 
 has_completed_all_persian_missions = {
-	custom_trigger_tooltip = {
-		tooltip = has_completed_all_persian_missions_tt
-		mission_completed = per_reform_our_defenses
-		mission_completed = per_master_of_india
-		mission_completed = per_create_the_tupchi
-		OR = {
-			AND = {
-				mission_completed = per_a_new_eranshahr
-				mission_completed = per_an_asha_empire
-			}
-			AND = {
-				OR = {
-					mission_completed = per_unify_islam
-					mission_completed = per_great_shia_empire
-				}
-				mission_completed = per_indomitable_lion
-				mission_completed = per_language_of_poetry
-			}
-		}
-		OR = {
-			AND = {
-				has_mission = per_tab_legacy_of_eranshahr
-				mission_completed = per_tab_legacy_of_eranshahr
-			}
-			AND = {
-				has_mission = per_qqq_legacy_of_the_seljuk
-				mission_completed = per_qqq_legacy_of_the_seljuk
-			}
-			AND = {
-				has_mission = per_tim_legacy_of_timur
-				mission_completed = per_tim_legacy_of_timur
-			}
-			AND = {
-				has_mission = per_arl_legacy_of_the_safavid
-				mission_completed = per_arl_legacy_of_the_safavid
-			}
-			AND = {
-				NOT = { has_mission = per_tab_legacy_of_eranshahr }
-				NOT = { has_mission = per_qqq_legacy_of_the_seljuk }
-				NOT = { has_mission = per_tim_legacy_of_timur }
-				NOT = { has_mission = per_arl_legacy_of_the_safavid }
-			}
-		}
-		mission_completed = per_riches_of_asia
-		mission_completed = per_enlightened_rule
-		mission_completed = per_the_tofangchi
-		mission_completed = per_balance_of_power
-		mission_completed = per_establish_the_qurchi
-	}
 }
 
 has_any_ongoing_construction = {
@@ -4731,23 +4647,6 @@ has_reformed_inti_religion_trigger = {
 			value = 5
 		}
 	}
-}
-
-INC_every_part_of_route = {
-	820 = { $trigger$ }
-	817 = { $trigger$ }
-	2824 = { $trigger$ }
-	813 = { $trigger$ }
-	2825 = { $trigger$ }
-	2827 = { $trigger$ }
-	811 = { $trigger$ }
-	810 = { $trigger$ }
-	808 = { $trigger$ }
-	2829 = { $trigger$ }
-	804 = { $trigger$ }
-	2831 = { $trigger$ }
-	797 = { $trigger$ }
-	795 = { $trigger$ }
 }
 
 INC_part_of_the_route = {

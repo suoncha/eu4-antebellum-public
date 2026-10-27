@@ -105,7 +105,7 @@ province_event = {
 	id = ab_lithuania.5
 	title = ab_lithuania.5.t
 	desc = ab_lithuania.5.d
-	picture = AB_BYZFALL_eventPicture
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
 	
 	hidden = yes
 	
@@ -138,15 +138,11 @@ country_event = {
 	id = ab_lithuania.6
 	title = ab_lithuania.6.t
 	desc = ab_lithuania.6.d
-	picture = AB_BYZFALL_eventPicture
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
 	
 	hidden = yes
 	
 	trigger = {
-		OR = {
-			tag = LTV
-			was_tag = LTV
-		}
 		mission_completed = lit_baptize_poland
 		senior_union_with = POL
 		NOT = {
@@ -172,154 +168,19 @@ country_event = {
 	id = ab_lithuania.7
 	title = ab_lithuania.7.t
 	desc = ab_lithuania.7.d
-	picture = AB_BYZFALL_eventPicture
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
 	
 	hidden = yes
 	
 	trigger = {
-		OR = {
-			tag = LTV
-			was_tag = LTV
-		}
-		mission_completed = lit_baptize_poland
+		has_country_modifier = lit_crown
 		NOT = {
 			senior_union_with = POL
 		}
-		has_country_modifier = lit_crown
 	}
 	
 	immediate = {
 		remove_country_modifier = lit_crown
-	}
-	
-	option = {
-		name = ab_lithuania.7.a
-	}
-}
-
-#Mission 1
-country_event = {
-	id = ab_lithuania.8
-	title = ab_lithuania.8.t
-	desc = ab_lithuania.8.d
-	picture = AB_BYZFALL_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = LIT
-		ai = yes
-		is_year = 1446
-		NOT = {
-			mission_completed = lit_infiltrate
-		}
-	}
-	
-	immediate = {
-		complete_mission = lit_infiltrate
-		add_country_modifier = {
-			name = lit_justified
-			duration = 5475
-		}
-		livonia_area = {
-			limit = {
-				NOT = { is_core = ROOT }
-				NOT = { is_permanent_claim = ROOT }
-			}
-			add_permanent_claim = ROOT
-		}
-	}
-	
-	option = {
-		name = ab_lithuania.7.a
-	}
-}
-
-#Mission 2
-country_event = {
-	id = ab_lithuania.9
-	title = ab_lithuania.9.t
-	desc = ab_lithuania.9.d
-	picture = AB_BYZFALL_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = LIT
-		ai = yes
-		is_year = 1460
-		NOT = {
-			mission_completed = lit_marshes
-		}
-		mission_completed = lit_countryside
-		calc_true_if = {
-			all_owned_province = {
-				has_terrain = marsh
-			}
-			amount = 5
-		}
-	}
-	
-	immediate = {
-		complete_mission = lit_marshes
-		add_country_modifier = {
-			name = lit_draining
-			duration = 5475
-		}
-		hidden_effect = {
-			every_owned_province = {
-				limit = {
-					has_terrain = marsh
-				}
-				add_province_modifier = {
-					name = lit_marsh_negate
-					duration = -1
-				}
-			}
-		}
-		define_advisor = {
-			type = architect
-			skill = 2
-			religion = ROOT
-			culture = ROOT
-			cost_multiplier = 0.5
-		}
-	}
-	
-	option = {
-		name = ab_lithuania.7.a
-	}
-}
-
-#Help 1
-country_event = {
-	id = ab_lithuania.10
-	title = ab_lithuania.10.t
-	desc = ab_lithuania.10.d
-	picture = AB_BYZFALL_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = LIT
-		ai = yes
-		is_year = 1446
-	}
-	
-	immediate = {
-		east_prussia_area = {
-			limit = {
-				NOT = { is_core = ROOT }
-				NOT = { is_permanent_claim = ROOT }
-			}
-			add_claim = ROOT
-		}
 	}
 	
 	option = {
@@ -405,17 +266,13 @@ country_event = {
 	id = ab_lithuania.14
 	title = ab_lithuania.14.t
 	desc = ab_lithuania.14.d
-	picture = AB_BYZFALL_eventPicture
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
 	
+	is_triggered_only = yes
 	hidden = yes
-	
-	fire_only_once = yes
-	
+
 	trigger = {
-		tag = LIT
 		ai = yes
-		is_year = 1455
-		is_at_war = no
 	}
 	
 	immediate = {

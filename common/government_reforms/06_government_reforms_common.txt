@@ -1917,6 +1917,12 @@ cavalry_warfare_reform = {
 	allow_normal_conversion = yes
 	potential = {
 		NOT = { has_unlocked_government_reform = { government_reform = legacy_of_the_seljuk_reform } }
+		NOT = {
+			OR = {
+				culture_group = turko_semitic
+				primary_culture = bedouin_arabic
+			}
+		}
 	}
 	trigger = {
 		if = {
@@ -3177,7 +3183,6 @@ gendarmes_reform = {
 			has_country_flag = fra_unlock_gendarmes
 			# Missions that unlock this reform
 			has_mission = ivr_enlist_the_franks
-			has_mission = fra_form_gendarmes
 		}
 		# ]]]
 	}
@@ -3352,7 +3357,7 @@ royal_marines_reform = {
 		has_dlc = "Domination"
 		OR = {
 			primary_culture = english
-			primary_culture = anglois
+			primary_culture = Anglois
 		}
 	}
 	trigger = {
@@ -4591,10 +4596,6 @@ modernized_furusiyya_reform = {
 	removed_effect = {
 		remove_country_modifier = mam_disc_troops_modifier
 	}
-
-	custom_attributes = {
-		advisors_generate_innovativeness = yes
-	}
 	
 	ai = {
 		factor = 1
@@ -4665,13 +4666,6 @@ state_madrasas_reform = {
 	modifiers = {
 		same_religion_advisor_cost = -0.2
 		yearly_government_power = 0.33
-	}
-
-	conditional = {
-		allow = { has_dlc = "Rule Britannia" }
-		custom_attributes = {
-			advisors_generate_innovativeness = yes
-		}
 	}
 	
 	ai = {
@@ -5256,7 +5250,7 @@ seven_provinces_reform = {
 	allow_normal_conversion = yes
 
 	potential = {
-		tag = NED
+		has_country_flag = ab_is_ned_flag
 	}
 
 	modifiers = {
@@ -5277,7 +5271,6 @@ seven_provinces_reform = {
 				add_province_modifier = {
 					name = ned_seven_provinces_organization_positive_modifier
 					duration = -1
-					hidden = yes
 				}
 			}
 			every_owned_province = {
@@ -5288,7 +5281,6 @@ seven_provinces_reform = {
 				add_province_modifier = {
 					name = ned_seven_provinces_organization_negative_modifier
 					duration = -1
-					hidden = yes
 				}
 			}
 		}
@@ -5321,7 +5313,7 @@ modern_economics_reform = {
 	allow_normal_conversion = yes
 
 	potential = {
-		tag = NED
+		has_country_flag = ab_is_ned_flag
 	}
 
 	modifiers = {
@@ -5343,7 +5335,7 @@ support_state_reform = {
 	allow_normal_conversion = yes
 
 	potential = {
-		tag = NED
+		has_country_flag = ab_is_ned_flag
 		has_reform = dutch_republic
 	}
 
@@ -5365,7 +5357,7 @@ orangist_stadholders_reform = {
 	allow_normal_conversion = yes
 
 	potential = {
-		tag = NED
+		has_country_flag = ab_is_ned_flag
 		has_reform = dutch_republic
 	}
 

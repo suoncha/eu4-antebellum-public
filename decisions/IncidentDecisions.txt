@@ -1,4 +1,59 @@
 country_decisions = {
+	shadow_kingdom_decision = {
+		major = yes
+		potential = {
+			is_emperor = yes
+			has_global_flag = emperor_trying_to_avert_shadow_kingdom
+		}
+		provinces_to_highlight = {
+			owner = {
+				is_shadow_kingdom_eligible_trigger = yes
+				will_leave_for_shadow_kingdom_trigger = yes
+			}
+		}
+		allow = {
+			is_emperor = yes
+			hidden_trigger = {
+				has_global_flag = emperor_trying_to_avert_shadow_kingdom
+			}
+			custom_trigger_tooltip = {
+				tooltip = has_reined_in_all_italians_early
+				NOT = {
+					any_country = {
+						will_leave_for_shadow_kingdom_trigger = yes
+						is_shadow_kingdom_eligible_trigger = yes
+					}
+				}
+			}
+		}
+		effect = {
+			every_country = {
+				limit = {
+					is_shadow_kingdom_eligible_trigger = yes
+					will_leave_for_shadow_kingdom_trigger = yes
+					OR = {
+						is_subject = no
+						AND = {
+							is_subject = yes
+							overlord = { # overlord chooses for their vassals if eligible to leave themselves
+								NOT = {
+									is_part_of_hre = yes
+									capital_scope = { region = italy_region }
+								}
+							}
+						}
+					}
+				}
+				custom_tooltip = shadow_kingdom_will_leave_info_decision_tt
+			}
+			country_event = {
+				id = shadow_kingdom.3
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
 	great_peasants_war_emperor_decision = {
 		major = yes
 		potential = {
@@ -6,6 +61,7 @@ country_decisions = {
 			is_emperor = yes
 		}		
 		allow = {
+			is_emperor = yes
 			NOT = { active_imperial_incident = any }
 			custom_trigger_tooltip = {
 				tooltip = high_peasant_score_emperor_tt # need X score. current score is Y.
@@ -40,6 +96,7 @@ country_decisions = {
 			is_part_of_hre = yes
 		}		
 		allow = {
+			has_reform = peasants_republic
 			NOT = { active_imperial_incident = any }
 			custom_trigger_tooltip = {
 				tooltip = high_peasant_score__peasant_tt # need X score. current score is Y.

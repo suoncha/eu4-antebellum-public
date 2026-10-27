@@ -7,19 +7,19 @@ country_event = {
 	picture = HRE_eventPicture
 
 	major = yes
+	fire_only_once = yes
 
 	mean_time_to_happen = {
 		months = 3
 	}
 
 	trigger = {
-		NOT = { has_global_flag = had_fate_of_francia_incident }
 		is_emperor = yes
 		NOT = { active_imperial_incident = any }
 		# Francia can't kick itself out
 		NOT = { tag = FRC }
-		exists = FRC
 		FRC = {
+			exists = yes
 			is_part_of_hre = yes
 			# The emperor might be at war with Francia
 			NOT = { war_with = emperor }
@@ -91,9 +91,9 @@ country_event = {
 		name = fate_of_francia.2.a
 
 		custom_tooltip = fate_of_francia_kicked_out_retain_provinces
-		custom_tooltip = ab_empty
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = fate_of_francia_francia_disputes
-		custom_tooltip = ab_empty
+		custom_tooltip = AB_EMPTY
 		hidden_effect = {
 			FRC = {
 				# Event that allows Francia to dispute the emperorship
@@ -127,19 +127,14 @@ country_event = {
 
 	option = {
 		name = fate_of_francia.2.b
-
-		custom_tooltip = fate_of_francia_frankish_win_benefits
-		hidden_effect = {
-			FRC = {
-				add_prestige = 50
-				add_legitimacy = 50
-				add_country_modifier = {
-					name = frc_carolingian_authority
-					duration = 7300
-				}
+		FRC = {
+			add_prestige = 50
+			add_legitimacy = 50
+			add_country_modifier = {
+				name = frc_carolingian_authority
+				duration = 18250
 			}
 		}
-
 		FRC = {
 			add_opinion = {
 				who = emperor
@@ -168,9 +163,9 @@ country_event = {
 			casus_belli = cb_fate_of_francia
 			who = emperor
 		}
-		custom_tooltip = ab_empty
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = fate_of_francia_call_the_princes
-		custom_tooltip = ab_empty
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = fate_of_francia_win_war_benefits
 		custom_tooltip = fate_of_francia_become_emperor
 		custom_tooltip = fate_of_francia_rejoin_empire
@@ -179,7 +174,7 @@ country_event = {
 			add_legitimacy = 50
 			add_country_modifier = {
 				name = frc_carolingian_authority
-				duration = 7300
+				duration = 18250
 			}
 		}
 		# Give every Imperial Prince a decision
@@ -291,15 +286,18 @@ country_event = {
 				set_in_empire = yes
 				clr_country_flag = fate_of_francia_hre_member
 			}
-			# Reset the fate_of_francia_supported_the_carolingians flag
+			# Reset the fate_of_francia_carolingian_timer modifier
 			# so it starts the 60 year timer wherein Francia CANNOT
 			# demand unlawful territory
 			every_country = {
 				limit = {
-					has_country_flag = fate_of_francia_supported_the_carolingians
+					has_country_modifier = fate_of_francia_carolingian_timer
 				}
-				clr_country_flag = fate_of_francia_supported_the_carolingians
-				set_country_flag = fate_of_francia_supported_the_carolingians
+				add_country_modifier = {
+					name = fate_of_francia_carolingian_timer
+					duration = 21900
+					hidden = yes
+				}
 			}
 		}
 		custom_tooltip = fate_of_francia_become_emperor
@@ -308,7 +306,7 @@ country_event = {
 		add_legitimacy = 50
 		add_country_modifier = {
 			name = frc_carolingian_authority
-			duration = 7300
+			duration = 18250
 		}
 		hidden_effect = {
 			# Have set_emperor here because the tooltip is bad
@@ -319,6 +317,7 @@ country_event = {
 				}
 				clr_province_flag = fate_of_francia_retain_province
 			}
+			add_imperial_influence = 100
 		}
 	}
 }
@@ -358,12 +357,13 @@ country_event = {
 			add_legitimacy = 50
 			add_country_modifier = {
 				name = defender_of_the_empire
-				duration = 7300
+				duration = 18250
 			}
 		}
 
 		custom_tooltip = free_carolingian_imperial_subjects
 		hidden_effect = {
+			add_imperial_influence = 100
 			FRC = {
 				every_subject_country = {
 					limit = {
@@ -374,6 +374,7 @@ country_event = {
 					}
 					grant_independence = yes
 					set_in_empire = yes
+					restore_country_color = yes	
 				}
 			}
 		}
@@ -713,15 +714,29 @@ country_event = {
 			}
 		}
 		join_all_defensive_wars_of = emperor
-		custom_tooltip = ab_empty
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = fate_of_francia.6.emperor_support_rewards
 		# The emperor will look the other way as we expand our domain
 		# in the empire (they will be unable to ask for unlawful territory)
 		hidden_effect = {
-			set_country_flag = fate_of_francia_supported_the_emperor
+			add_country_modifier = {
+				name = fate_of_francia_emperor_timer
+				duration = 21900
+				hidden = yes
+			}
 		}
-		custom_tooltip = ab_empty
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = fate_of_francia.6.imperial_victory_tooltip
+		tooltip = {
+			emperor = {
+				add_prestige = 50
+				add_legitimacy = 50
+				add_country_modifier = {
+					name = defender_of_the_empire
+					duration = 18250
+				}
+			}
+		}
 	}
 	option = {
 		name = fate_of_francia.6.c
@@ -754,15 +769,29 @@ country_event = {
 			}
 		}
 		join_all_offensive_wars_of = FRC
-		custom_tooltip = ab_empty
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = fate_of_francia.6.francia_support_rewards
 		# Francia (if he wins) will look the other way as we expand our domain
 		# in the empire (they will be unable to ask for unlawful territory)
 		hidden_effect = {
-			set_country_flag = fate_of_francia_supported_the_carolingians
+			add_country_modifier = {
+				name = fate_of_francia_carolingian_timer
+				duration = 21900
+				hidden = yes
+			}
 		}
-		custom_tooltip = ab_empty
+		custom_tooltip = AB_EMPTY
 		custom_tooltip = fate_of_francia.6.carolingian_victory_tooltip
+		tooltip = {
+			FRC = {
+				add_prestige = 50
+				add_legitimacy = 50
+				add_country_modifier = {
+					name = frc_carolingian_authority
+					duration = 18250
+				}
+			}
+		}
 	}
 }
 
@@ -777,6 +806,16 @@ country_event = {
 	option = {
 		name = fate_of_francia.7.a
 		custom_tooltip = fate_of_francia_imperial_victory
+		tooltip = {
+			emperor = {
+				add_prestige = 50
+				add_legitimacy = 50
+				add_country_modifier = {
+					name = defender_of_the_empire
+					duration = 18250
+				}
+			}
+		}
 	}
 }
 
@@ -837,6 +876,7 @@ country_event = {
 
 		custom_tooltip = fate_of_francia_provinces_leave_empire
 		hidden_effect = {
+			add_imperial_influence = -100
 			every_province = {
 				limit = {
 					country_or_non_sovereign_subject_holds = FRC

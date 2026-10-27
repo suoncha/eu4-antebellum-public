@@ -3,6 +3,47 @@
 
 #Heir and consort titles are generally kept simple for clarity unless there is something special in particular that can be used.
 
+roman_republic = {
+	rank = {
+		1 = RES_PUBLICA
+		2 = RES_PUBLICA
+		3 = RES_PUBLICA
+	}
+
+	ruler_male = {
+		1 = CONSUL
+		2 = GRAND_CONSUL
+		3 = GREAT_CONSUL
+	}
+
+	ruler_female = {
+		1 = CONSULESS
+		2 = GRAND_CONSULESS
+		3 = GREAT_CONSULESS
+	}
+
+	consort_male = {
+		1 = CONSORT
+		2 = CONSORT
+		3 = CONSORT
+	}
+
+	consort_female = {
+		1 = CONSORT
+		2 = CONSORT
+		3 = CONSORT
+	}
+	
+	trigger = {
+		government = republic
+		OR = {
+			tag = RMR
+			was_tag = RMR
+		}
+		has_reform = ab_roman_republic
+	}
+}
+
 persian_satrapy = {
 	# NOTE(howard): would like to use separate file but 00 is the first one
 	#  processed and we need to get this processed before everything else
@@ -804,6 +845,30 @@ iberian_kingdom = {
 	}
 }
 
+iberian_kingdom_most_catholic = {
+	rank = {
+		1 = DUCHY
+		2 = KINGDOM
+		3 = EMPIRE
+	}
+
+	ruler_male = {
+		1 = CAT_DUQUE
+		2 = CAT_REY
+		3 = CAT_EMPERADOR
+	}
+
+	ruler_female = {
+		1 = CAT_DUQUESA
+		2 = CAT_REINA
+		3 = CAT_EMPERATRIZ
+	}
+
+	trigger = {
+		has_country_flag = ibe_most_catholic_monarchs
+	}
+}
+
 magyar_horde = {
 	rank = {
 		1 = HORDE
@@ -1232,10 +1297,7 @@ islamic_caliphate = {
 	}
 
 	trigger = {
-		OR = {
-			has_country_modifier = unified_islam
-			has_country_modifier = hsn_ayyubid_caliphate
-		}
+		has_country_modifier = unified_islam
 	}
 }
 
@@ -2351,7 +2413,7 @@ gov_papal_government_elector = {
 	}
 	
 	trigger = {
-		has_reform = papacy_reform
+		tag = PAP
 			is_elector = yes
 	}
 }
@@ -4165,6 +4227,10 @@ byzantine_monarchy = {
 			# AB [[[
 			tag = HLE
 			tag = NCI
+			tag = SUC
+			tag = AEG
+			tag = BCT
+			tag = MAC
 			# ]]]
 		}
 	}

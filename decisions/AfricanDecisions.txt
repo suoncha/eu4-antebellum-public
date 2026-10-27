@@ -1,0 +1,38 @@
+country_decisions = {
+
+	switch_permanent_scholar = {
+		potential = {
+			ai = no
+			religion_group = muslim
+			OR = {
+				has_country_flag = enabled_baseline_invite_scholar
+				has_country_flag = enabled_baseline_invite_scholar_no_priv
+			}
+			NOT = { has_country_flag = swaps_scholar_flag }
+		}
+		allow = {
+			ai = no
+			piety = 0.25
+			custom_trigger_tooltip = {
+				tooltip = decision_once_every_twenty_years
+				OR = {
+					NOT = { has_country_flag = switched_permanent_scholar_cooldown }
+					had_country_flag = {
+						flag = switched_permanent_scholar_cooldown
+						days = 7300
+					}
+				}
+			}
+		}
+		effect = {
+			add_piety = -0.25
+			set_country_flag = swaps_scholar_flag
+			clr_country_flag = switched_permanent_scholar_cooldown
+			set_country_flag = switched_permanent_scholar_cooldown
+			country_event = { id = muslim_school_events.24 }
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+}

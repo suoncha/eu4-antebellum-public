@@ -1,0 +1,130 @@
+country_decisions = {
+	
+	release_anglia = {
+		major = yes
+		potential = {
+			ai = no
+			has_country_flag = AB_FRA_unlock_ang_release
+		}
+		
+		allow = {
+			NOT = { exists = ANG }
+			NOT = { exists = ENG }
+			NOT = { exists = GBR }
+			NOT = { exists = DLM }
+			NOT = { exists = GDL }
+			NOT = { exists = ABO }
+			NOT = { exists = UKN }
+			cornwall_area = {
+				type = all
+				owned_by = ROOT
+			}
+			wessex_area = {
+				type = all
+				owned_by = ROOT
+			}
+			home_counties_area = {
+				type = all
+				owned_by = ROOT
+			}
+			east_anglia_area = {
+				type = all
+				owned_by = ROOT
+			}
+			east_midlands_area = {
+				type = all
+				owned_by = ROOT	
+			}
+			west_midlands_area = {
+				type = all
+				owned_by = ROOT	
+			}
+			yorkshire_area = {
+				type = all
+				owned_by = ROOT	
+			}
+			scottish_marches_area = {
+				type = all
+				owned_by = ROOT	
+			}
+		}
+
+		provinces_to_highlight = {
+			region = british_isles_region
+			owned_by = ROOT
+		}
+
+		effect = {
+			custom_tooltip = AB_FRA_RELEASE_ANG_PU_TT
+			clr_country_flag = AB_FRA_unlock_ang_release
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = FRA_SUBJECT_SPREAD_ANG
+			hidden_effect = {
+				british_isles_region = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = ANG
+					remove_core = ROOT
+				}
+				release = ANG
+				if = {
+					limit = {
+						ROOT = {
+							government = monarchy
+						}
+					}
+					create_union = ANG
+				}
+				else = {
+					vassalize = ANG
+				}
+				ANG = {
+					override_country_name = AB_ANGLIA
+					set_capital = 236
+					add_manpower = 10
+					add_treasury = 100
+					add_liberty_desire = -50
+					change_religion = ROOT
+					change_primary_culture = Anglois
+					set_country_flag = fra_subject_culture_spread
+					capital_scope = {
+						change_culture = Anglois
+					}
+					swap_non_generic_missions = yes
+					swap_free_idea_group = yes
+					if = {
+						limit = {
+							ROOT = { government = republic }
+						}
+						change_government = republic
+						add_government_reform = oligarchy_reform
+					}
+					if = {
+						limit = {
+							ROOT = { government = theocracy }
+						}
+						change_government = theocracy
+						add_government_reform = leading_clergy_reform
+					}
+					if = {
+						limit = {
+							ROOT = { government = monarchy }
+						}
+						change_government = monarchy
+						add_government_reform = autocracy_reform
+					}
+					if = {
+						limit = {
+							NOT = { government_rank = 2 }
+						}
+						set_government_rank = 2
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+}

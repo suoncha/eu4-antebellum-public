@@ -1,0 +1,164 @@
+
+
+########################################
+# Yet more Flavor Events for Vijayanagar
+#
+# written by Daniel Tolman
+########################################
+namespace = flavor_vij
+
+#Pulicat
+country_event = {
+	id = flavor_vij.17
+	title = "flavor_vij.17.t"
+	desc = "flavor_vij.17.d"
+	picture = MERCHANTS_TALKING_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	option = {
+		name = "flavor_vij.17.a" #Ok
+		add_dip_power = 25
+		539 = {
+			add_province_modifier = {
+				name = "pulicat_booming"
+				duration = 3650
+			}
+		}
+	}
+}
+
+#Tirupati Temple Complex
+country_event = {
+	id = flavor_vij.18
+	title = "flavor_vij.18.t"
+	desc = "flavor_vij.18.d"
+	picture = CITY_VIEW_eventPicture
+	
+	is_triggered_only = yes
+	fire_only_once = yes
+	
+	option = {
+		name = "flavor_vij.18.a" #Let us patronize this temple
+		trigger = {
+			NOT = {
+				has_country_flag = tirupati_flag
+			}
+		}
+		add_adm_power = -50
+		1949 = {
+			add_province_modifier = {
+				name = "tirupati_tirumala_temple_complex"
+				duration = -1
+			}
+		}
+	}
+	
+	option = {
+		name = "flavor_vij.18.b" #We shall make a more modest contribution
+		trigger = {
+			NOT = {
+				has_country_flag = tirupati_flag
+			}
+		}
+		add_prestige = 10
+	}
+	option = {
+		name = "flavor_vij.18.a" #Let us patronize this temple
+		trigger = {
+			has_country_flag = tirupati_flag
+		}
+		1949 = {
+			add_province_modifier = {
+				name = "tirupati_tirumala_temple_complex"
+				duration = -1
+			}
+		}
+	}
+}
+
+# Chakulya Imperial Capital
+country_event = {
+	id = flavor_vij.20
+	title = "flavor_vij.20.t"
+	desc = "flavor_vij.20.d"
+	picture = 9_Vaisya_Estate_eventPicture
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Dharma"
+	}
+	mean_time_to_happen = {
+		days = 1
+	}
+	option = { # keep capital in Vijayanagar
+		name = "flavor_vij.20.a"
+		trigger = {
+			capital = 541
+		}
+		541 = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+	}
+	option = { # move capital to Bidar, rename to Kalyana
+		name = "flavor_vij.20.b"
+		trigger = {
+			owns = 1948
+		}
+		1948 = {
+			move_capital_effect = yes
+			change_province_name = "Kalyana"
+			rename_capital = "Kalyana"
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+	}
+	option = { # keep capital where it is if not vijayanagar
+		name = "flavor_vij.20.c"
+		trigger = {
+			NOT = {
+				capital = 541
+			}
+		}
+		capital_scope = {
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 2
+		}
+	}
+}
+
+# City of Victory
+country_event = {
+	id = flavor_vij.21
+	title = "flavor_vij.21.t"
+	desc = "flavor_vij.21.d"
+	picture = 1_Brahmin_Estate__eventPicture
+	
+	fire_only_once = yes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Dharma"
+	}
+	mean_time_to_happen = {
+		days = 1
+	}
+	option = {
+		name = "flavor_vij.21.a"
+		set_government_rank = 3
+		capital_scope = {
+			add_province_modifier = {
+				name = "city_of_victory_modifier"
+				duration = -1
+			}
+		}
+	}
+}

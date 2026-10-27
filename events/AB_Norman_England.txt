@@ -6,7 +6,7 @@ province_event = {
 	id = ab_norman_england.1
 	title = ab_norman_england.1.t
 	desc = ab_norman_england.1.d
-	picture = AB_BYZFALL_eventPicture
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
 	
 	hidden = yes
 	
@@ -16,10 +16,7 @@ province_event = {
 	
 	trigger = {
 		owner = {
-			OR = {
-				mission_completed = nrm_cultural
-				mission_completed = frc_heptarchy
-			}
+			culture_group = french
 		}
 		culture = english
 		any_neighbor_province = {
@@ -126,6 +123,7 @@ country_event = {
 	
 	option = {
 		name = ab_norman_england.4.a
+		set_country_flag = angevin_rename
 		change_tag = DLM
 		swap_free_idea_group = yes
 		set_government_rank = 3
@@ -141,6 +139,9 @@ country_event = {
 			}
 		}
 		hidden_effect = {
+			country_event = {
+				id = ab_achiev.76
+			}
 			every_owned_province = {
 				limit = {
 					OR = {
@@ -943,4 +944,65 @@ country_event = {
 		set_country_flag = ang_prevent_accident
 		custom_tooltip = ANG_ACCIDENT
 	}
+}
+
+#The Ambition of Duke Richard
+country_event = {
+	id = ab_norman_england.15
+	title = ab_norman_england.15.t
+	desc = ab_norman_england.15.d
+	picture = AB_HEPTARCH_eventPicture
+	
+	trigger = {
+		tag = NRM
+		navy_size_percentage = 1
+	}
+	
+	mean_time_to_happen = {
+		months = 40
+	}
+	
+	fire_only_once = yes
+	
+	option = {
+		name = ab_norman_england.15.a
+		add_treasury = -150
+		create_admiral = { tradition = 50 }
+		add_country_modifier = {
+			name = "nrm_second_conquest"
+			duration = 7300
+		}
+		if = {
+			limit = {
+				has_dlc = "Golden Century"
+				has_or_building_flagship = no
+			}
+			custom_tooltip = NRM_MORA
+		}
+		else_if = {
+			limit = {
+				has_dlc = "Golden Century"
+			}
+			custom_tooltip = NRM_MORA_NO
+		}
+		hidden_effect = {
+			if = {
+				limit = {
+					has_dlc = "Golden Century"
+					has_or_building_flagship = no
+				}
+				167 = {
+					create_flagship = {	
+						name = "Mora"
+						type = galley
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_norman_england.15.b
+	}
+
 }

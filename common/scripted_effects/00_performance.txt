@@ -1,0 +1,1085 @@
+performance_on_new_monarch_effect = {
+	if = {
+		limit = {
+			tag = FRC
+			has_disaster = frankish_succession_crisis
+		}
+		set_country_flag = ab_frc_lothair_died
+		country_event = {
+			id = ab_frc_disaster_event.3
+		}
+	}
+}
+
+performance_on_adm_development_effect = {
+	# Byzantium
+	if = {
+		limit = {
+			has_province_modifier = BYZ_megalopolis_modifier_1
+			development = 70
+		}
+		remove_province_modifier = BYZ_megalopolis_modifier_1
+		add_province_modifier = {
+			name = BYZ_megalopolis_modifier_2
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = BYZ_megalopolis_modifier_2
+			development = 75
+		}
+		remove_province_modifier = BYZ_megalopolis_modifier_2
+		add_province_modifier = {
+			name = BYZ_megalopolis_modifier_3
+			duration = -1
+		}
+	}
+	# Cilicia
+	if = {
+		limit = {
+			province_id = 418
+			development = 40
+			owner = {
+				mission_completed = clc_tigran
+			}
+		}
+		change_trade_goods = silk
+	}
+	# China
+	if = {
+		limit = {
+			has_province_modifier = ab_inward_development
+			OR = {
+				development = 25
+				AND = {
+					development = 20
+					superregion = china_superregion
+				}
+			}
+		}
+		remove_province_modifier = ab_inward_development
+	}
+}
+
+performance_on_dip_development_effect = {
+	# Byzantium
+	if = {
+		limit = {
+			has_province_modifier = BYZ_megalopolis_modifier_1
+			development = 70
+		}
+		remove_province_modifier = BYZ_megalopolis_modifier_1
+		add_province_modifier = {
+			name = BYZ_megalopolis_modifier_2
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = BYZ_megalopolis_modifier_2
+			development = 75
+		}
+		remove_province_modifier = BYZ_megalopolis_modifier_2
+		add_province_modifier = {
+			name = BYZ_megalopolis_modifier_3
+			duration = -1
+		}
+	}
+	# Cilicia
+	if = {
+		limit = {
+			province_id = 418
+			development = 40
+			owner = {
+				mission_completed = clc_tigran
+			}
+		}
+		change_trade_goods = silk
+	}
+	# China
+	if = {
+		limit = {
+			has_province_modifier = ab_inward_development
+			OR = {
+				development = 25
+				AND = {
+					development = 20
+					superregion = china_superregion
+				}
+			}
+		}
+		remove_province_modifier = ab_inward_development
+	}
+}
+
+performance_on_mil_development_effect = {
+	# Byzantium
+	if = {
+		limit = {
+			has_province_modifier = BYZ_megalopolis_modifier_1
+			development = 70
+		}
+		remove_province_modifier = BYZ_megalopolis_modifier_1
+		add_province_modifier = {
+			name = BYZ_megalopolis_modifier_2
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = BYZ_megalopolis_modifier_2
+			development = 75
+		}
+		remove_province_modifier = BYZ_megalopolis_modifier_2
+		add_province_modifier = {
+			name = BYZ_megalopolis_modifier_3
+			duration = -1
+		}
+	}
+	# Cilicia
+	if = {
+		limit = {
+			province_id = 418
+			development = 40
+			owner = {
+				mission_completed = clc_tigran
+			}
+		}
+		change_trade_goods = silk
+	}
+	# China
+	if = {
+		limit = {
+			has_province_modifier = ab_inward_development
+			OR = {
+				development = 25
+				AND = {
+					development = 20
+					superregion = china_superregion
+				}
+			}
+		}
+		remove_province_modifier = ab_inward_development
+	}
+}
+
+performance_on_war_won_effect = {
+	if = {
+		limit = {
+			has_country_flag = had_orban
+			FROM = {
+				OR = {
+					tag = BUL
+					tag = BYZ
+					tag = NCI
+					tag = HLE
+				}
+				OR = {
+					employed_advisor = {
+						category = MIL
+						is_male = yes
+						religion = tengri_pagan_reformed
+						culture = hungarian
+						type = fortification_expert
+					}
+					employed_advisor = {
+						category = MIL
+						is_male = yes
+						religion = tengri_pagan_reformed
+						culture = hungarian
+						type = siegeengineer
+					}
+				}
+			}
+		}
+		country_event = {
+			id = ab_byzantium.44
+		}
+	}
+	if = {
+		limit = {
+			tag = GLH
+			ai = yes
+			FROM = {
+				OR = {
+					tag = CRI
+					tag = NOG
+					tag = KAZ
+				}
+			}
+		}
+		inherit = FROM
+	}
+	if = {
+		limit = {
+			has_country_modifier = reaction
+			FROM = {
+				is_revolution_target = yes
+			}
+		}
+		remove_country_modifier = reaction
+	}
+	if = {
+		limit = {
+			has_country_modifier = ahmudan_system_attacker
+			NOT = {
+				is_in_war = {
+					attacker_leader = ROOT
+				}
+			}
+		}
+		remove_country_modifier = ahmudan_system_attacker
+	}
+	if = {
+		limit = {
+			has_country_modifier = ahmudan_system_defender
+			NOT = {
+				is_in_war = {
+					defender_leader = ROOT
+				}
+			}
+		}
+		remove_country_modifier = ahmudan_system_defender
+	}
+}
+
+performance_on_war_lost_effect = {
+	if = {
+		limit = {
+			has_country_modifier = reaction
+			FROM = {
+				is_revolution_target = yes
+			}
+		}
+		remove_country_modifier = reaction
+	}
+	if = {
+		limit = {
+			has_country_modifier = ahmudan_system_attacker
+			NOT = {
+				is_in_war = {
+					attacker_leader = ROOT
+				}
+			}
+		}
+		remove_country_modifier = ahmudan_system_attacker
+	}
+	if = {
+		limit = {
+			has_country_modifier = ahmudan_system_defender
+			NOT = {
+				is_in_war = {
+					defender_leader = ROOT
+				}
+			}
+		}
+		remove_country_modifier = ahmudan_system_defender
+	}
+}
+
+performance_on_explore_coast_effect = {
+	# Vinland
+	if = {
+		limit = {
+			continent = north_america
+			FROM = {
+				religion = norse_pagan_reformed
+			}
+		}
+		FROM = {
+			country_event = {
+				id = ab_denmark.2
+			}
+		}
+	}
+	# India
+	if = {
+		limit = {
+			OR = {
+				province_id = 1361 # Straits of Johor
+				province_id = 1343 # Ganges Delta
+				province_id = 504 # Sind
+				province_id = 1340 # Comorin Cape
+			}
+			FROM = {
+				has_idea = quest_for_the_new_world
+				has_discovered = 1460 # Cape of Good Hope
+			}
+		}
+		FROM = {
+			country_event = {
+				id = ab_performance.7
+			}
+		}
+	}
+	# Japan
+	if = {
+		limit = {
+			region = japan_region
+		}
+		FROM = {
+			country_event = {
+				id = 9000
+			}
+		}
+	}
+}
+
+performance_on_lock_hre_religion = {
+	every_country = {
+		limit = {
+			religion_group = christian
+		}
+		country_event = {
+			id = ab_performance.18
+		}
+	}
+}
+
+performance_on_religion_change = {
+	# Mecca & Medina
+	if = {
+		limit = {
+			religion_group = muslim
+			owns = 384
+			owns = 385
+			NOT = { has_country_modifier = custodian_of_the_two_holy_mosques }
+		}
+		country_event = {
+			id = ab_performance.8
+		}
+	}
+	# Pentarchy
+	else_if = {
+		limit = {
+			uses_patriarch_authority = yes
+			owns = 118
+			owns = 151
+			owns = 2313
+			owns = 379
+			owns = 358
+			NOT = { has_country_modifier = pentarchy_mod }
+		}
+		country_event = {
+			id = ab_performance.16
+		}
+	}
+	# Dominant faith HRE
+	if = {
+		limit = {
+			religion = emperor
+			hre_religion_locked = yes
+			hre_religion = emperor
+		}
+		country_event = {
+			id = ab_performance.18
+		}
+	}
+}
+
+performance_on_culture_promoted = {
+	# Moravia
+	if = {
+		limit = {
+			has_country_flag = slo_panslavism_flag
+		}
+		every_owned_province = {
+			limit = {
+				OR = {
+					culture_group = west_slavic
+					culture_group = east_slavic
+					culture_group = south_slavic
+				}
+				has_owner_accepted_culture = yes
+				has_province_modifier = slo_panslavism_modifier
+			}
+			remove_province_modifier = slo_panslavism_modifier
+		}
+	}
+}
+
+performance_on_culture_demoted = {
+	# Moravia
+	if = {
+		limit = {
+			has_country_flag = slo_panslavism_flag
+		}
+		every_owned_province = {
+			limit = {
+				OR = {
+					culture_group = west_slavic
+					culture_group = east_slavic
+					culture_group = south_slavic
+				}
+				has_owner_accepted_culture = no
+			}
+			add_province_modifier = {
+				name = slo_panslavism_modifier
+				duration = -1
+			}
+		}
+	}
+}
+
+performance_on_province_culture_changed = {
+	# Moravia
+	if = {
+		limit = {
+			owner = { has_country_flag = slo_panslavism_flag }
+			has_owner_accepted_culture = no
+			OR = {
+				culture_group = west_slavic
+				culture_group = east_slavic
+				culture_group = south_slavic
+			}
+		}
+		add_province_modifier = {
+			name = slo_panslavism_modifier
+			duration = -1
+		}
+	}
+}
+
+performance_on_province_religion_changed = {
+	# Xia
+	if = {
+		limit = {
+			owner = { has_country_flag = tgu_nirvana_flag }
+			religion = ROOT
+		}
+		add_province_modifier = {
+			name = ab_nirvana_tangut
+			duration = -1
+		}
+	}
+}
+
+performance_on_consecrate_patriarch = {
+	# Moravia
+	if = {
+		limit = {
+			owner = { has_country_flag = mva_patriarch_bonus }
+		}
+		every_province_in_state = {
+			add_province_modifier = {
+				name = mva_local_patriarch
+				duration = -1
+				hidden = yes
+			}
+		}
+	}
+}
+
+performance_on_province_owner_change_effect = {
+	# Moravia
+	if = {
+		limit = {
+			owner = { has_country_flag = mva_patriarch_bonus }
+			has_state_patriach = yes
+		}
+		add_province_modifier = {
+			name = mva_local_patriarch
+			duration = -1
+			hidden = yes
+		}
+	}
+	if = {
+		limit = {
+			owner = { has_country_flag = slo_panslavism_flag }
+			has_owner_accepted_culture = no
+			OR = {
+				culture_group = west_slavic
+				culture_group = east_slavic
+				culture_group = south_slavic
+			}
+		}
+		add_province_modifier = {
+			name = slo_panslavism_modifier
+			duration = -1
+		}
+	}
+	# Tocharia
+	if = {
+		limit = {
+			owner = {
+				religion = coptic
+			}
+		}
+		if = {
+			limit = { province_id = 2190 }
+			owner = {
+				country_event = { id = ab_tocharia.2 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 700 }
+			owner = {
+				country_event = { id = ab_tocharia.3 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 1836 }
+			owner = {
+				country_event = { id = ab_tocharia.4 }
+			}
+		}
+	}
+	# Xia
+	if = {
+		limit = {
+			owner = { has_country_flag = tgu_nirvana_flag }
+			religion = ROOT
+		}
+		add_province_modifier = {
+			name = ab_nirvana_tangut
+			duration = -1
+		}
+	}
+	# Hordes
+	if = {
+		limit = {
+			province_id = 410
+			owner = {
+				uses_horde_unity = yes
+			}
+		}
+		owner = {
+			country_event = {
+				id = ab_yuan.12
+			}
+		}
+	}
+	if = {
+		limit = {
+			province_id = 2207
+			owner = {
+				uses_horde_unity = yes
+			}
+		}
+		owner = {
+			country_event = {
+				id = ab_yuan.14
+			}
+		}
+	}
+	if = {
+		limit = {
+			region = egypt_region
+			owner = {
+				tag = ILK
+				egypt_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+		owner = {
+			country_event = {
+				id = ab_ilkhanate.4
+			}
+		}
+	}
+	if = {
+		limit = {
+			superregion = india_superregion
+			owner = {
+				has_country_flag = YUA_HORDE
+				india_superregion = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+		}
+		owner = {
+			country_event = {
+				id = ab_yuanhorde.5
+			}
+		}
+	}
+	# China
+	if = {
+		limit = {
+			has_province_modifier = ab_inward_development
+			owner = {
+				NOT = { has_reform = yuainward }
+			}
+		}
+		remove_province_modifier = ab_inward_development
+	}
+	if = {
+		limit = {
+			owner = {
+				has_reform = yuainward
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						region = korea_region
+						NOT = { development = 25 }
+						owner = {
+							has_mission = jsn_koreana
+						}
+					}
+					AND = {
+						superregion = china_superregion
+						NOT = { development = 20 }
+						owner = {
+							NOT = { has_mission = jsn_koreana }
+						}
+					}
+				}
+			}
+			add_province_modifier = {
+				name = ab_inward_development
+				duration = -1
+			}
+		}
+	}
+	# Latin Empire
+	if = {
+		limit = {
+			owner = {
+				OR = {
+					tag = LAT
+					tag = KOJ
+					tag = OTR
+				}
+			}
+		}
+		if = {
+			limit = { province_id = 358 }
+			owner = {
+				country_event = { id = ab_latin.6 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 384 }
+			owner = {
+				country_event = { id = ab_latin.11 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 225 }
+			owner = {
+				country_event = { id = ab_latin.12 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 118 }
+			owner = {
+				country_event = { id = ab_latin.14 }
+			}
+		}
+	}
+	# Coptic
+	if = {
+		limit = {
+			owner = {
+				religion = coptic
+			}
+		}
+		if = {
+			limit = { province_id = 1227 }
+			owner = {
+				country_event = { id = coptic_flavor.1 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 358 }
+			owner = {
+				country_event = { id = coptic_flavor.3 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 419 }
+			owner = {
+				country_event = { id = coptic_flavor.5 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 2313 }
+			owner = {
+				country_event = { id = coptic_flavor.7 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 1234 }
+			owner = {
+				country_event = { id = coptic_flavor.9 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 2315 }
+			owner = {
+				country_event = { id = coptic_flavor.11 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 365 }
+			owner = {
+				country_event = { id = coptic_flavor.13 }
+			}
+		}
+		else_if = {
+			limit = { province_id = 361 }
+			owner = {
+				country_event = { id = coptic_flavor.15 }
+			}
+		}
+	}
+	# Mecca & Medina
+	if = {
+		limit = {
+			OR = {
+				province_id = 384 # Medina
+				province_id = 385 # Mecca
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_country_modifier = custodian_of_the_two_holy_mosques
+				}
+			}
+			FROM = {
+				remove_country_modifier = custodian_of_the_two_holy_mosques
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					religion_group = muslim
+					owns = 384
+					owns = 385
+					NOT = { has_country_modifier = custodian_of_the_two_holy_mosques }
+				}
+			}
+			owner = {
+				country_event = {
+					id = ab_performance.8
+				}
+			}
+		}
+	}
+	# Pentarchy
+	if = {
+		limit = {
+			OR = {
+				province_id = 118
+				province_id = 151
+				province_id = 2313
+				province_id = 379
+				province_id = 358
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_country_modifier = pentarchy_mod
+				}
+			}
+			FROM = {
+				remove_country_modifier = pentarchy_mod
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					uses_patriarch_authority = yes
+					owns = 118
+					owns = 151
+					owns = 2313
+					owns = 379
+					owns = 358
+					NOT = { has_country_modifier = pentarchy_mod }
+				}
+			}
+			owner = {
+				country_event = {
+					id = ab_performance.16
+				}
+			}
+		}
+	}
+	# China Mandate
+	if = {
+		limit = {
+			province_id = 1816 # Beijing
+		}
+		owner = {
+			if = {
+				limit = {
+					is_emperor_of_china = yes
+				}
+				remove_country_modifier = lost_control_of_beijing
+			}
+			else = {
+				event_target:EmperorOfChina = {
+					add_country_modifier = {
+						name = lost_control_of_beijing
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			province_id = 1821 # Nanjing
+		}
+		owner = {
+			if = {
+				limit = {
+					is_emperor_of_china = yes
+				}
+				remove_country_modifier = lost_control_of_nanjing
+			}
+			else = {
+				event_target:EmperorOfChina = {
+					add_country_modifier = {
+						name = lost_control_of_nanjing
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			province_id = 667 # Canton
+		}
+		owner = {
+			if = {
+				limit = {
+					is_emperor_of_china = yes
+				}
+				remove_country_modifier = lost_control_of_canton
+			}
+			else = {
+				event_target:EmperorOfChina = {
+					add_country_modifier = {
+						name = lost_control_of_canton
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	# India Trade Company
+	if = {
+		limit = {
+			superregion = india_superregion
+			owner = {
+				capital_scope = {
+					NOT = { continent = asia }
+					NOT = { continent = oceania }
+				}
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					NOT = { has_country_flag = trade_company }
+					NOT = { tag = NED }
+				}
+			}
+			owner = {
+				set_country_flag = trade_company
+				country_event = {
+					id = ab_performance.32
+				}
+			}
+		}
+	}
+	# Netherland
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = ned_internal_dev_flag
+				has_country_modifier = ned_internal_development
+			}
+			NOT = { region = low_countries_region }
+		}
+		remove_country_modifier = ned_internal_development
+	}
+}
+
+performance_on_dependency_gained_effect = {
+	if = {
+		limit = {
+			religion = catholic
+			ab_is_italy_tag_trigger = no
+			NOT = { tag = HLR }
+			FROM = {
+				tag = PAP
+				OR = {
+					is_part_of_hre = no
+					NOT = { hre_reform_passed = emperor_privilegia_de_non_appelando }
+				}
+			}
+		}
+		country_event = {
+			id = ab_performance.9
+		}
+	}
+}
+
+performance_on_dependency_lost_effect = {
+	if = {
+		limit = {
+			has_country_modifier = papal_subjugation
+			FROM = {
+				tag = PAP
+			}
+		}
+		remove_country_modifier = papal_subjugation
+	}
+}
+
+performance_on_annexed_effect = {
+	if = {
+		limit = {
+			has_country_modifier = papal_subjugation
+			FROM = {
+				tag = PAP
+			}
+		}
+		remove_country_modifier = papal_subjugation
+	}
+	if = {
+		limit = {
+			FROM = {
+				tag = GEO
+			}
+		}
+		country_event = {
+			id = ab_georgia.1
+		}
+	}
+	if = {
+		limit = {
+			tag = GLH
+		}
+		if = {
+			limit = {
+				FROM = {
+					tag = CRI
+				}
+			}
+			country_event = {
+				id = ab_ghorde.6
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					tag = NOG
+				}
+			}
+			country_event = {
+				id = ab_ghorde.7
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					tag = KAZ
+				}
+			}
+			country_event = {
+				id = ab_ghorde.8
+			}
+		}
+	}
+}
+
+performance_on_mandate_of_heaven_gained = {
+	if = {
+		limit = {
+			NOT = { owns = 1816 }
+		}
+		add_country_modifier = {
+			name = lost_control_of_beijing
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { owns = 1821 }
+		}
+		add_country_modifier = {
+			name = lost_control_of_nanjing
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			NOT = { owns = 667 }
+		}
+		add_country_modifier = {
+			name = lost_control_of_canton
+			duration = -1
+		}
+	}
+}
+
+performance_on_mandate_of_heaven_lost = {
+	remove_country_modifier = lost_control_of_beijing
+	remove_country_modifier = lost_control_of_nanjing
+	remove_country_modifier = lost_control_of_canton
+}
+
+performance_on_institution_embracement = {
+	if = {
+		limit = {
+			is_colonial_nation = yes
+			is_year = 1600
+			NOT = { has_country_modifier = colonial_assembly }
+		}
+		add_liberty_desire = 10
+		add_country_modifier = {
+			name = colonial_assembly
+			duration = -1
+		}
+		hidden_effect = {
+			colonial_parent = {
+				country_event = { id = elections.711 days = 3 }
+			}
+		}
+	}
+}
+
+performance_on_capital_moved = {
+	# Persia
+	if = {
+		limit = {
+			has_country_modifier = per_unlocked_immortals
+		}
+		every_owned_province = {
+			remove_province_modifier = per_unlocked_immortals_prov
+			remove_province_modifier = per_unlocked_immortals_prov2
+		}
+		if = {
+			limit = {
+				has_reform = perexpandimmortals
+			}
+			capital_scope = {
+				add_province_modifier = {
+					name = per_unlocked_immortals_prov2
+					duration = -1
+				}
+			}
+		}
+		else = {
+			capital_scope = {
+				add_province_modifier = {
+					name = per_unlocked_immortals_prov
+					duration = -1
+				}
+			}
+		}
+	}
+}

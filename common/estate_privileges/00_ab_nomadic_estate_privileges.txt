@@ -1,0 +1,170 @@
+estate_nomadic_tribes_blood_before_faith = {
+	icon = privilege_religious_diplomats
+	max_absolutism = -5
+	loyalty = 0.05
+	influence = 0.05
+	is_valid = {
+		religion = tengri_pagan_reformed
+		OR = {
+			has_mission = trk_khiva
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nomadic_tribes_blood_before_faith
+			}
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = has_unlocked_estate_nomadic_tribes_blood_before_faith
+			has_unlocked_estate_privilege = {
+				estate_privilege = estate_nomadic_tribes_blood_before_faith
+			}
+		}
+		any_owned_province = {
+			NOT = { province_religion = ROOT }
+			culture_group = altaic
+		}
+	}
+	on_granted = {
+		custom_tooltip = blood_before_faith_gt
+	}
+	on_granted_province = {
+		if = {
+			limit = {
+				culture_group = altaic
+				NOT = {
+					religion = ROOT
+				}
+			}
+			add_province_modifier = {
+				name = blood_before_faith_mod
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_province_modifier = blood_before_faith_mod
+			}
+			remove_province_modifier = blood_before_faith_mod
+		}
+	}
+	on_revoked = {
+		custom_tooltip = blood_before_faith_rk
+	}
+	on_revoked_province = {
+		if = {
+			limit = {
+				has_province_modifier = blood_before_faith_mod
+			}
+			remove_province_modifier = blood_before_faith_mod
+		}
+	}
+	on_invalid = {
+	}
+	on_invalid_province = {
+		if = {
+			limit = {
+				has_province_modifier = blood_before_faith_mod
+			}
+			remove_province_modifier = blood_before_faith_mod
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+	}
+	ai_will_do = {
+		factor = 1000
+		modifier = {
+			factor = 0
+			NOT = {
+				any_owned_province = {
+					NOT = { religion_group = ROOT }
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			is_subject = yes
+			overlord = {
+				religion = ROOT
+				has_idea_group = religious_ideas
+			}
+		}
+	}
+}
+
+estate_nomadic_tribes_nomadic_warriors = {
+	icon = privilege_recruit_minister
+	max_absolutism = -5
+	loyalty = 0.1
+	influence = 0.05
+	is_valid = {
+		OR = {
+			has_country_flag = ab_mnk_steppe_warriors
+			has_mission = mnk_warriors
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = completed_mnk_warriors
+			has_country_flag = ab_mnk_steppe_warriors
+		}
+		custom_trigger_tooltip = {
+			tooltip = not_granted_nomadic_warriors_to_nobles
+			NOT = { has_estate_privilege = estate_nobles_nomadic_warriors }
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+		cavalry_cost = -0.15
+	}
+	modifier_by_land_ownership = {
+		cavalry_power = 0.35
+	}
+	ai_will_do = {
+		factor = 1000
+		modifier = {
+			factor = 0
+			NOT = { crown_land_share = 30 }
+		}
+	}
+}
+
+estate_nobles_nomadic_warriors = {
+	icon = privilege_recruit_minister
+	max_absolutism = -5
+	loyalty = 0.1
+	influence = 0.05
+	is_valid = {
+		OR = {
+			has_country_flag = ab_mnk_steppe_warriors
+			has_mission = mnk_warriors
+		}
+	}
+	can_select = {
+		custom_trigger_tooltip = {
+			tooltip = completed_mnk_warriors
+			has_country_flag = ab_mnk_steppe_warriors
+		}
+		custom_trigger_tooltip = {
+			tooltip = not_granted_nomadic_warriors_to_nomadic_tribes
+			NOT = { has_estate_privilege = estate_nomadic_tribes_nomadic_warriors }
+		}
+	}
+	penalties = {
+	}
+	benefits = {
+		cavalry_cost = -0.15
+	}
+	modifier_by_land_ownership = {
+		cavalry_power = 0.35
+	}
+	ai_will_do = {
+		factor = 1000
+		modifier = {
+			factor = 0
+			NOT = { crown_land_share = 30 }
+		}
+	}
+}

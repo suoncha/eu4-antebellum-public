@@ -3,26 +3,28 @@ country_decisions = {
 	form_celestial_empire = {
 		major = yes
 		potential = {
-			NOT = { has_country_flag = formed_celestial_empire_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			NOT = { exists = CLE }
-			is_colonial_nation = no
 			is_emperor_of_china = yes
+			NOT = { tag = CLE }
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
-			is_at_war = no
 			is_emperor_of_china = yes
+			is_at_war = no
+			is_subject = no
 			custom_trigger_tooltip = {
 				tooltip = AB_ALL_REFORMS
 				ab_china_has_all_reforms = yes
 			}
 		}
 		effect = {
+			hidden_effect = {
+				save_global_event_target_as = ab_formertag_cle
+			}
+			if = {
+				limit = {
+					religion = nestorian
+				}
+				set_country_flag = renamed_heavenly
+			}
 			change_tag = CLE
 			override_country_name = CLE
 			if = {
@@ -31,9 +33,16 @@ country_decisions = {
 				}
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
-			set_country_flag = formed_celestial_empire_flag
 			hidden_effect = {
 				ab_update_preset_cn_colors = yes
+				# Color Choice
+				country_event = {
+					id = ab_revert_formertag.1
+				}
+				# Name Choice
+				country_event = {
+					id = ab_revert_formertag.2
+				}
 			}
 		}
 		ai_will_do = {

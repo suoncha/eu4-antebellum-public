@@ -3,32 +3,8 @@ country_decisions = {
 	form_east_francia = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			NOT = { has_country_flag = formed_east_francia_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			NOT = { exists = EFC }
-			NOT = { tag = PAP }
-			NOT = { tag = HLR }
-			NOT = { tag = FRC }
 			tag = GER
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 15
-				}
-			}
-			is_colonial_nation = no
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
-				}
-			}
+			NOT = { exists = EFC }
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -45,13 +21,13 @@ country_decisions = {
 				province_id = 129
 				province_id = 73
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }	
+			OR = {
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_at_war = no
-			legitimacy = 100
-			prestige = 100
+			tag = GER
 			OR = {
 				dynasty = "Carolingian"
 				is_emperor = yes
@@ -68,6 +44,8 @@ country_decisions = {
 			owns_core_province = 1863
 			owns_core_province = 129
 			owns_core_province = 73
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
 			if = {
@@ -91,6 +69,14 @@ country_decisions = {
 			add_prestige = 25
 			set_country_flag = formed_east_francia_flag
 			custom_tooltip = cosmetic_tag_info
+			if = {
+				limit = {
+					exists = FRC
+				}
+				FRC = {
+					override_country_name = RENAME_WFRANCIA
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 1

@@ -3,40 +3,18 @@ country_decisions = {
 	arab_nation = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			was_never_end_game_tag_trigger = yes
-			NOT = { has_country_flag = formed_arabia_flag }
+			culture_group = turko_semitic #Arabic
+			religion_group = muslim
 			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			OR = {
-				is_free_or_tributary_trigger = yes
-				ai = no
-			}
-			NOT = { exists = ARB }
-			NOT = { tag = HLR }
-			NOT = { tag = PAP }
-			NOT = { tag = TCL }
-			is_colonial_nation = no
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
+				tag = ORM
+				capital_scope = {
+					region = arabia_region
 				}
 			}
-			culture_group = turko_semitic #Arabic
-			NOT = { primary_culture = turkish }
-			NOT = { primary_culture = assyrian }
+			NOT = { exists = ARB }
 		}
 		provinces_to_highlight = {
 			OR = {
-				province_id = 358			#Alexandria
-				province_id = 361			#Cairo
-				province_id = 377			#Aleppo
-				province_id = 379			#Jerusalem
-				province_id = 382			#Damascus
 				province_id = 384			#Medina
 				province_id = 385			#Mecca
 				province_id = 388			#Aden
@@ -45,7 +23,6 @@ country_decisions = {
 				province_id = 394			#Qatif
 				province_id = 400			#Muscat
 				province_id = 403			#Nizwa
-				province_id = 410			#Baghdad
 			}
 			OR = {
 				NOT = { owned_by = ROOT }
@@ -53,20 +30,14 @@ country_decisions = {
 			}
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_at_war = no
+			culture_group = turko_semitic
+			religion_group = muslim
 			if = {
 				limit = {
-					not = { has_country_flag = free_arabia_forming_flag }
+					NOT = { has_country_flag = free_arabia_forming_flag }
 				}
-				adm_tech = 20
+				adm_tech = 10
 			}
-			religion_group = muslim
-			owns_core_province = 358			#Alexandria
-			owns_core_province = 361			#Cairo
-			owns_core_province = 377			#Aleppo
-			owns_core_province = 379			#Jerusalem
-			owns_core_province = 382			#Damascus
 			owns_core_province = 384			#Medina
 			owns_core_province = 385			#Mecca
 			owns_core_province = 388			#Aden
@@ -75,58 +46,42 @@ country_decisions = {
 			owns_core_province = 394			#Qatif
 			owns_core_province = 400			#Muscat
 			owns_core_province = 403			#Nizwa
-			owns_core_province = 410			#Baghdad
+			is_subject = no
+			is_at_war = no
 		}
 		effect = {
-			on_change_tag_effect = yes
-			remove_non_electors_emperors_from_empire_effect = yes
-			if = {
-				limit = {
-					NOT = { government_rank = 3 }
-				}
-				set_government_rank = 3
+			hidden_effect = {
+				save_global_event_target_as = ab_formertag_arb
 			}
-			mashriq_region = {
-				limit = {
-					NOT = { owned_by = ROOT }
-				}
-				add_permanent_claim = ARB
-			}
-			egypt_region = {
-				limit = {
-					NOT = { owned_by = ROOT }
-					NOT = { area = lower_nubia_area }
-				}
-				add_permanent_claim = ARB
-			}
-			arabia_region = {
-				limit = {
-					NOT = { owned_by = ROOT }
-				}
-				add_permanent_claim = ARB
-			}
+			change_tag = ARB
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			add_prestige = 25
-			set_country_flag = formed_arabia_flag
-			change_tag = ARB
-			swap_non_generic_missions = yes
 			if = {
 				limit = { has_custom_ideas = no }
 				country_event = { id = ideagroups.1 } #Swap Ideas
 			}
-			country_event = {
-				id = flavor_ARB.10
+			custom_tooltip = AB_EMPTY
+			arabia_region = {
+				limit = {
+					NOT = { owned_by = ROOT }
+				}
+				add_permanent_claim = ROOT
+			}
+			hidden_effect = {
+				# Color Choice
+				country_event = {
+					id = ab_revert_formertag.1
+				}
+				# Name Choice
+				country_event = {
+					id = ab_revert_formertag.2
+				}
 			}
 		}
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				factor = 0
-				not = { adm_tech = 19 }
-			}
 		}
 		ai_importance = 400
 	}

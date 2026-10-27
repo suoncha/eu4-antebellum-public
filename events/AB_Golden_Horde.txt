@@ -1,20 +1,14 @@
 namespace = ab_ghorde
 normal_or_historical_nations = yes
 
-#Rivals
+#First event
 country_event = {
-	id = ab_ghorde.0
-	title = ab_ghorde.0.t
-	desc = ab_ghorde.0.d
+	id = ab_ghorde.1
+	title = ab_ghorde.1.t
+	desc = ab_ghorde.1.d
 	picture = CHINESE_GENERAL_eventPicture
 	
-	fire_only_once = yes
-	
-	hidden = yes
-	
-	trigger = {
-		tag = GLH
-	}
+	is_triggered_only = yes
 	
 	immediate = {
 		hidden_effect = {
@@ -24,36 +18,8 @@ country_event = {
 				}
 				add_historical_rival = GLH
 			}
-		}
-	}
-	
-	option = {
-		name = ab_ghorde.0.a
-	}
-}
-
-#First event
-country_event = {
-	id = ab_ghorde.1
-	title = ab_ghorde.1.t
-	desc = ab_ghorde.1.d
-	picture = CHINESE_GENERAL_eventPicture
-	
-	fire_only_once = yes
-	
-	immediate = {
-		hidden_effect = {
 			add_stability = -2
 			add_horde_unity = -25
-		}
-	}
-	
-	trigger = {
-		tag = GLH
-	}
-	
-	immediate = {
-		hidden_effect = {
 			add_country_modifier = {
 				name = "gh_army"
 				duration = -1
@@ -65,6 +31,18 @@ country_event = {
 			add_country_modifier = {
 				name = "gh_court_turbulence"
 				duration = -1
+			}
+			country_event = {
+				id = ab_ghorde.3
+				days = 700
+			}
+			country_event = {
+				id = ab_ghorde.4
+				days = 900
+			}
+			country_event = {
+				id = ab_ghorde.5
+				days = 1100
 			}
 		}
 	}
@@ -104,16 +82,7 @@ country_event = {
 	picture = BATTLE_eventPicture
 	
 	major = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GLH
-	}
-	
-	mean_time_to_happen = {
-		months = 25
-	}
+	is_triggered_only = yes
 	
 	immediate = {
 		set_country_flag = glh_crimea
@@ -159,7 +128,6 @@ country_event = {
 	option = {
 		name = ab_ghorde.3.a
 		ai_chance = { factor = 100 }
-		set_country_flag = glh_defeat_crimea
 		declare_war_with_cb = {
 			who = CRI
 			casus_belli = cb_core
@@ -189,16 +157,7 @@ country_event = {
 	picture = BATTLE_eventPicture
 	
 	major = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GLH
-	}
-	
-	mean_time_to_happen = {
-		months = 40
-	}
+	is_triggered_only = yes
 	
 	immediate = {
 		set_country_flag = glh_nogai
@@ -246,7 +205,6 @@ country_event = {
 	option = {
 		name = ab_ghorde.4.a
 		ai_chance = { factor = 100 }
-		set_country_flag = glh_defeat_nogai
 		declare_war_with_cb = {
 			who = NOG
 			casus_belli = cb_core
@@ -276,16 +234,7 @@ country_event = {
 	picture = BATTLE_eventPicture
 	
 	major = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GLH
-	}
-	
-	mean_time_to_happen = {
-		months = 40
-	}
+	is_triggered_only = yes
 	
 	immediate = {
 		set_country_flag = glh_kazan
@@ -321,7 +270,6 @@ country_event = {
 	option = {
 		name = ab_ghorde.5.a
 		ai_chance = { factor = 100 }
-		set_country_flag = glh_defeat_kazan
 		declare_war_with_cb = {
 			who = KAZ
 			casus_belli = cb_core
@@ -351,17 +299,8 @@ country_event = {
 	picture = BATTLE_eventPicture
 	
 	major = yes
-	
 	fire_only_once = yes
-	
-	trigger = {
-		tag = GLH
-		owns = 284
-		has_country_flag = glh_defeat_crimea
-		NOT = {
-			exists = CRI
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_ghorde.6.a
@@ -377,17 +316,8 @@ country_event = {
 	picture = BATTLE_eventPicture
 	
 	major = yes
-	
 	fire_only_once = yes
-	
-	trigger = {
-		tag = GLH
-		owns = 465
-		has_country_flag = glh_defeat_nogai
-		NOT = {
-			exists = NOG
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_ghorde.7.a
@@ -403,17 +333,8 @@ country_event = {
 	picture = BATTLE_eventPicture
 	
 	major = yes
-	
 	fire_only_once = yes
-	
-	trigger = {
-		tag = GLH
-		owns = 1082
-		has_country_flag = glh_defeat_kazan
-		NOT = {
-			exists = KAZ
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_ghorde.8.a
@@ -433,22 +354,33 @@ country_event = {
 	after = {
 		# The AI needs it to convert
 		set_country_flag = glh_can_convert
+		hidden_effect = {
+			country_event = {
+				id = ab_ghorde.10
+				days = 1825
+			}
+		}
 	}
 	
 	option = {
 		name = ab_ghorde.9.a
+		trigger = {
+			NOT = { has_country_flag = ab_game_rules_glh_tataria }
+		}
+		ai_chance = { factor = 30 }
 		custom_tooltip = GLH_HORDE_TREE
 		set_country_flag = glh_horde_tree
 		hidden_effect = {
 			swap_non_generic_missions = yes
 		}
-		ai_chance = {
-			factor = 1
-		}
 	}
 	
 	option = {
 		name = ab_ghorde.9.b
+		trigger = {
+			NOT = { has_country_flag = ab_game_rules_glh_horde }
+		}
+		ai_chance = { factor = 70 }
 		override_country_name = TATARIA
 		custom_tooltip = GLH_EUROPEAN_TREE
 		hidden_effect = {
@@ -464,9 +396,6 @@ country_event = {
 				share = -50
 			}
 		}
-		ai_chance = {
-			factor = 1
-		}
 	}
 }
 
@@ -477,18 +406,7 @@ country_event = {
 	desc = ab_ghorde.10.d
 	picture = RELIGIOUS_MIGRANTS_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 60
-	}
-	
-	major = yes
-	
-	trigger = {
-		tag = GLH
-		has_country_flag = glh_can_convert
-	}
+	is_triggered_only = yes
 
 	after = {
 		if = {
@@ -607,253 +525,5 @@ country_event = {
 				# No ai_event_id because the AI can never get this
 			}
 		}
-	}
-}
-
-
-#AI HELP 1
-country_event = {
-	id = ab_ghorde.11
-	title = ab_ghorde.11.t
-	desc = ab_ghorde.11.d
-	picture = RELIGIOUS_MIGRANTS_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GLH
-		ai = yes
-		NOT = {
-			mission_completed = glh_branching_1
-		}
-		CRI = {
-			is_subject_of_type_with_overlord = { who = GLH type = tributary_state }
-		}
-		CRI = {
-			ai = yes
-		}
-		CRI = {
-			NOT = {
-				liberty_desire = 50
-			}
-		}
-	}
-	
-	option = {
-		name = ab_ghorde.11.a
-		inherit = CRI
-	}
-}
-
-#AI HELP 2
-country_event = {
-	id = ab_ghorde.12
-	title = ab_ghorde.12.t
-	desc = ab_ghorde.12.d
-	picture = RELIGIOUS_MIGRANTS_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GLH
-		ai = yes
-		NOT = {
-			mission_completed = glh_branching_1
-		}
-		KAZ = {
-			is_subject_of_type_with_overlord = { who = GLH type = tributary_state }
-		}
-		KAZ = {
-			ai = yes
-		}
-		KAZ = {
-			NOT = {
-				liberty_desire = 50
-			}
-		}
-	}
-	
-	option = {
-		name = ab_ghorde.12.a
-		inherit = KAZ
-	}
-}
-
-#AI HELP 3
-country_event = {
-	id = ab_ghorde.13
-	title = ab_ghorde.13.t
-	desc = ab_ghorde.13.d
-	picture = RELIGIOUS_MIGRANTS_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GLH
-		ai = yes
-		NOT = {
-			mission_completed = glh_branching_1
-		}
-		NOG = {
-			is_subject_of_type_with_overlord = { who = GLH type = tributary_state }
-		}
-		NOG = {
-			ai = yes
-		}
-		NOG = {
-			NOT = {
-				liberty_desire = 50
-			}
-		}
-	}
-	
-	option = {
-		name = ab_ghorde.13.a
-		inherit = NOG
-	}
-}
-
-#AI HELP 4
-country_event = {
-	id = ab_ghorde.14
-	title = ab_ghorde.14.t
-	desc = ab_ghorde.14.d
-	picture = RELIGIOUS_MIGRANTS_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = GLH
-		ai = yes
-		mission_completed = glh_authority
-		NOT = {
-			mission_completed = glh_branching_1
-		}
-		NOT = {
-			OR = {
-				mission_completed = glh_army
-				mission_completed = glh_succession
-			}
-		}
-	}
-	
-	option = {
-		name = ab_ghorde.14.a
-		if = {
-			limit = {
-				NOT = {
-					mission_completed = glh_army
-				}
-			}
-			complete_mission = glh_army
-			remove_country_modifier = gh_army
-		}
-		if = {
-			limit = {
-				NOT = {
-					mission_completed =  glh_succession
-				}
-			}
-			complete_mission = glh_succession
-			remove_country_modifier = gh_court_turbulence
-		}
-	}
-}
-
-#AI Integrate 1
-country_event = {
-	id = ab_ghorde.15
-	title = ab_ghorde.15.t
-	desc = ab_ghorde.15.d
-	picture = CHINESE_GENERAL_eventPicture
-	
-	fire_only_once = yes
-	
-	hidden = yes
-	
-	trigger = {
-		tag = GLH
-		ai = yes
-		offensive_war_with = CRI
-		war_score_against = {
-			who = CRI
-			value = 90
-		}
-	}
-	
-	immediate = {
-		inherit = CRI
-	}
-	
-	option = {
-		name = ab_ghorde.0.a
-	}
-}
-
-#AI Integrate 2
-country_event = {
-	id = ab_ghorde.16
-	title = ab_ghorde.16.t
-	desc = ab_ghorde.16.d
-	picture = CHINESE_GENERAL_eventPicture
-	
-	fire_only_once = yes
-	
-	hidden = yes
-	
-	trigger = {
-		tag = GLH
-		ai = yes
-		offensive_war_with = NOG
-		war_score_against = {
-			who = NOG
-			value = 90
-		}
-	}
-	
-	immediate = {
-		inherit = NOG
-	}
-	
-	option = {
-		name = ab_ghorde.0.a
-	}
-}
-
-#AI Integrate 3
-country_event = {
-	id = ab_ghorde.17
-	title = ab_ghorde.17.t
-	desc = ab_ghorde.17.d
-	picture = CHINESE_GENERAL_eventPicture
-	
-	fire_only_once = yes
-	
-	hidden = yes
-	
-	trigger = {
-		tag = GLH
-		ai = yes
-		offensive_war_with = KAZ
-		war_score_against = {
-			who = KAZ
-			value = 90
-		}
-	}
-	
-	immediate = {
-		inherit = KAZ
-	}
-	
-	option = {
-		name = ab_ghorde.0.a
 	}
 }

@@ -1,0 +1,1357 @@
+namespace = ab_performance
+
+#Low Religious Unity - Latin Empire 1
+country_event = {
+	id = ab_performance.1
+	title = ab_performance.1.t
+	desc = ab_performance.1.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_government_mechanic = latin_zealotry_mechanic
+		NOT = { has_country_modifier = lat_low_religious_unity }
+		NOT = { religious_unity = 0.5 }
+	}
+	
+	option = {
+		name = ab_performance.1.a
+		add_country_modifier = {
+			name = lat_low_religious_unity
+			duration = -1
+			hidden = yes
+		}
+	}
+}
+
+#Low Religious Unity - Latin Empire 2
+country_event = {
+	id = ab_performance.2
+	title = ab_performance.2.t
+	desc = ab_performance.2.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_government_mechanic = latin_zealotry_mechanic
+		has_country_modifier = lat_low_religious_unity
+		religious_unity = 0.5
+	}
+	
+	option = {
+		name = ab_performance.2.a
+		remove_country_modifier = lat_low_religious_unity
+	}
+}
+
+#Low Religious Unity - Zunist 1
+country_event = {
+	id = ab_performance.3
+	title = ab_performance.3.t
+	desc = ab_performance.3.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_government_mechanic = zunist_radiance_mechanic
+		NOT = { has_country_modifier = zun_low_religious_unity }
+		NOT = { religious_unity = 0.5 }
+	}
+	
+	option = {
+		name = ab_performance.3.a
+		add_country_modifier = {
+			name = zun_low_religious_unity
+			duration = -1
+			hidden = yes
+		}
+	}
+}
+
+#Low Religious Unity - Zunist 2
+country_event = {
+	id = ab_performance.4
+	title = ab_performance.4.t
+	desc = ab_performance.4.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_government_mechanic = zunist_radiance_mechanic
+		has_country_modifier = zun_low_religious_unity
+		religious_unity = 0.5
+	}
+	
+	option = {
+		name = ab_performance.4.a
+		remove_country_modifier = zun_low_religious_unity
+	}
+}
+
+# VIKTOR TODO: add in 1.10
+#Low Religious Unity - Almohad 1
+# country_event = {
+# 	id = ab_performance.5
+# 	title = ab_performance.5.t
+# 	desc = ab_performance.5.d
+# 	picture = CULTURE_eventPicture
+	
+# 	hidden = yes
+	
+# 	trigger = {
+# 		has_government_mechanic = faithful_purification_mechanic
+# 		NOT = { has_country_modifier = amh_low_religious_unity }
+# 		NOT = { religious_unity = 0.5 }
+# 	}
+	
+# 	option = {
+# 		name = ab_performance.5.a
+# 		add_country_modifier = {
+# 			name = amh_low_religious_unity
+# 			duration = -1
+# 			hidden = yes
+# 		}
+# 	}
+# }
+
+# VIKTOR TODO: add in 1.10
+#Low Religious Unity - Almohad 2
+# country_event = {
+# 	id = ab_performance.6
+# 	title = ab_performance.6.t
+# 	desc = ab_performance.6.d
+# 	picture = CULTURE_eventPicture
+	
+# 	hidden = yes
+	
+# 	trigger = {
+# 		has_government_mechanic = faithful_purification_mechanic
+# 		has_country_modifier = amh_low_religious_unity
+# 		religious_unity = 0.5
+# 	}
+	
+# 	option = {
+# 		name = ab_performance.6.a
+# 		remove_country_modifier = amh_low_religious_unity
+# 	}
+# }
+
+#Discovery of East Indian Trade Route
+country_event = {
+	id = ab_performance.7
+	title = ab_performance.7.t
+	desc = ab_performance.7.d
+	picture = GLOBAL_TRADE_eventPicture
+
+	major = yes
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.7.a
+		add_country_modifier = {
+			name = east_indian_trade_route
+			duration = -1
+		}
+	}
+}
+
+#Custodian of the Two Holy Mosques
+country_event = {
+	id = ab_performance.8
+	title = ab_performance.8.t
+	desc = ab_performance.8.d
+	picture = PRAYING_eventPicture
+
+	major = yes
+	major_trigger = {
+		religion_group = muslim
+	}
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = custodian_of_the_two_holy_mosques
+				duration = -1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_performance.8.a
+		tooltip = {
+			add_country_modifier = {
+				name = custodian_of_the_two_holy_mosques
+				duration = -1
+			}
+		}
+		custom_tooltip = AB_PERFORMANCE_8_TT
+	}
+}
+
+#Subjugation of the Papacy
+country_event = {
+	id = ab_performance.9
+	title = ab_performance.9.t
+	desc = ab_performance.9.d
+	picture = ST_PETERS_CHURCH_eventPicture
+
+	major = yes
+	major_trigger = {
+		religion = catholic
+	}
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.9.a
+		add_country_modifier = {
+			name = papal_subjugation
+			duration = -1
+		}
+		custom_tooltip = AB_PERFORMANCE_9_TT
+	}
+}
+
+#Counter-Revolution
+country_event = {
+	id = ab_performance.10
+	title = ab_performance.10.t
+	desc = ab_performance.10.d
+	picture = REVOLUTION_eventPicture
+	
+	trigger = {
+		current_age = age_of_revolutions
+		revolution_target = {
+			capital_scope = {
+				continent = ROOT
+			}
+			NOT = { war_with = ROOT }
+			NOT = { truce_with = ROOT }
+		}
+		NOT = { has_country_modifier = counter_revolution }
+		is_revolutionary = no
+		government = monarchy
+	}
+	
+	option = {
+		name = ab_performance.10.a
+		add_country_modifier_for_age = {
+			name = counter_revolution
+			age = age_of_revolutions
+		}
+		custom_tooltip = AB_PERFORMANCE_10_TT
+	}
+}
+
+#Counter-Revolution - Remove
+country_event = {
+	id = ab_performance.11
+	title = ab_performance.9.t
+	desc = ab_performance.9.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_country_modifier = counter_revolution
+		NOT = {
+			AND = {
+				revolution_target = {
+					capital_scope = {
+						continent = ROOT
+					}
+					NOT = { war_with = ROOT }
+					NOT = { truce_with = ROOT }
+				}
+				is_revolutionary = no
+				government = monarchy
+			}
+		}
+	}
+	
+	option = {
+		name = ab_performance.11.a
+		remove_country_modifier = counter_revolution
+	}
+}
+
+#Reaction
+country_event = {
+	id = ab_performance.12
+	title = ab_performance.12.t
+	desc = ab_performance.12.d
+	picture = REVOLUTION_eventPicture
+	
+	trigger = {
+		current_age = age_of_revolutions
+		revolution_target = {
+			capital_scope = {
+				continent = ROOT
+			}
+			war_with = ROOT
+		}
+		NOT = { has_country_modifier = reaction }
+		is_revolutionary = no
+		government = monarchy
+		
+	}
+	
+	option = {
+		name = ab_performance.12.a
+		remove_country_modifier = counter_revolution
+		add_country_modifier = {
+			name = reaction
+			duration = -1
+			desc = "until the end of the war"
+		}
+	}
+}
+
+#Crusade
+country_event = {
+	id = ab_performance.13
+	title = ab_performance.13.t
+	desc = ab_performance.13.d
+	picture = CRUSADER_HORDE_eventPicture
+	
+	trigger = {
+		religion = catholic
+		crusade_target = {
+			war_with = ROOT
+		}
+		NOT = { has_country_modifier = crusader }
+	}
+	
+	option = {
+		name = ab_performance.13.a
+		add_country_modifier = {
+			name = crusader
+			duration = -1
+			desc = "until the end of the war"
+		}
+	}
+}
+
+#Excommunication
+country_event = {
+	id = ab_performance.14
+	title = ab_performance.14.t
+	desc = ab_performance.14.d
+	picture = PRAYING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.14.a
+		add_country_modifier = {
+			name = excommunication
+			duration = -1
+			desc = "until the excommunication is lifted"
+		}
+	}
+}
+
+#Excommunication - Remove
+country_event = {
+	id = ab_performance.15
+	title = ab_performance.15.t
+	desc = ab_performance.15.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_country_modifier = excommunication
+		is_excommunicated = no
+	}
+	
+	option = {
+		name = ab_performance.15.a
+		remove_country_modifier = excommunication
+	}
+}
+
+#The Pentarchy
+country_event = {
+	id = ab_performance.16
+	title = ab_performance.16.t
+	desc = ab_performance.16.d
+	picture = BYZ_JERUSALEM_eventPicture
+
+	major = yes
+	major_trigger = {
+		religion_group = christian
+	}
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			add_country_modifier = {
+				name = pentarchy_mod
+				duration = -1
+			}
+		}
+	}
+	
+	option = {
+		name = ab_performance.16.a
+		tooltip = {
+			add_country_modifier = {
+				name = pentarchy_mod
+				duration = -1
+			}
+		}
+		custom_tooltip = AB_PERFORMANCE_16_TT
+	}
+}
+
+#War for the Celestial Empire
+country_event = {
+	id = ab_performance.17
+	title = ab_performance.17.t
+	desc = ab_performance.17.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.17.a
+		add_country_modifier = {
+			name = waging_war_for_china
+			duration = 3650
+		}
+	}
+}
+
+#HRE Dominant Religion
+country_event = {
+	id = ab_performance.18
+	title = ab_performance.18.t
+	desc = ab_performance.18.d
+	picture = RELIGIOUS_WARS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.18.a
+		if = {
+			limit = {
+				religion = emperor
+			}
+			add_country_modifier = {
+				name = hre_dominant_religion_mod
+				duration = -1
+			}
+		}
+	}
+}
+
+#The Golden Age of Piracy
+country_event = {
+	id = ab_performance.19
+	title = ab_performance.19.t
+	desc = ab_performance.19.d
+	picture = PIRATE_CAPTAINS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.19.a
+		add_country_modifier = {
+			name = golden_age_of_piracy
+			duration = 18250
+		}
+	}
+}
+
+#Great Peasants War
+country_event = {
+	id = ab_performance.20
+	title = ab_performance.20.t
+	desc = ab_performance.20.d
+	picture = MARCHING_PEASANTS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.20.a
+		add_country_modifier = {
+			name = great_peasants_war_triggered_modifier
+			duration = 7300
+		}
+	}
+}
+
+#Concessions to the Peasantry
+country_event = {
+	id = ab_performance.21
+	title = ab_performance.21.t
+	desc = ab_performance.21.d
+	picture = MARCHING_PEASANTS_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.21.a
+		remove_country_modifier = great_peasants_war_triggered_modifier
+		add_country_modifier = {
+			name = great_peasants_war_concessions_triggered_modifier
+			duration = 18250
+		}
+	}
+}
+
+#The Pope in the Empire - Hidden
+country_event = {
+	id = ab_performance.22
+	title = ab_performance.22.t
+	desc = ab_performance.22.d
+	picture = CULTURE_eventPicture
+
+	fire_only_once = yes
+
+	hidden = yes
+	
+	trigger = {
+		tag = PAP
+		current_age = age_of_discovery
+		is_part_of_hre = yes
+	}
+	
+	option = {
+		name = ab_performance.22.a
+		every_country = {
+			limit = {
+				religion = catholic
+				is_part_of_hre = no
+			}
+			country_event = {
+				id = ab_performance.23
+			}
+		}
+	}
+}
+
+#The Pope in the Empire
+country_event = {
+	id = ab_performance.23
+	title = ab_performance.23.t
+	desc = ab_performance.23.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.23.a
+		add_country_modifier_for_age = {
+			name = pope_in_hre_triggered_modifier
+			age = age_of_discovery
+		}
+	}
+}
+
+#The Pope in the Empire - Remove
+country_event = {
+	id = ab_performance.24
+	title = ab_performance.24.t
+	desc = ab_performance.24.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		has_country_modifier = pope_in_hre_triggered_modifier
+		is_part_of_hre = yes
+	}
+	
+	option = {
+		name = ab_performance.24.a
+		remove_country_modifier = pope_in_hre_triggered_modifier
+	}
+}
+
+#The Italian Wars
+country_event = {
+	id = ab_performance.25
+	title = ab_performance.25.t
+	desc = ab_performance.25.d
+	picture = ITALIAN_wars_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.25.a
+		add_country_modifier = {
+			name = italian_wars_triggered_modifier
+			duration = 18250
+		}
+	}
+}
+
+#Defense of the Empire
+country_event = {
+	id = ab_performance.26
+	title = ab_performance.26.t
+	desc = ab_performance.26.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.26.a
+		add_country_modifier = {
+			name = defense_of_the_empire_modifier
+			duration = 3650
+		}
+	}
+}
+
+#Jewish Yom Kippur
+country_event = {
+	id = ab_performance.27
+	title = ab_performance.27.t
+	desc = ab_performance.27.d
+	picture = BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.27.a
+		add_country_modifier = {
+			name = judaism_yom_kippur_aspect_war_modifier
+			duration = 3650
+		}
+	}
+}
+
+#AI Dev - ADM
+country_event = {
+	id = ab_performance.28
+	title = ab_performance.28.t
+	desc = ab_performance.28.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		ai = yes
+		power_tech = {
+			power = adm
+			value = 950
+		}
+		NOT = {
+			OR = {
+				technology_group = east_african
+				technology_group = central_african
+				technology_group = sub_saharan
+				technology_group = north_american
+				technology_group = mesoamerican
+				technology_group = south_american
+				technology_group = andean
+				technology_group = aboriginal_tech
+				technology_group = polynesian_tech
+				has_reform = siberian_tribe
+			}
+		}
+	}
+	
+	option = {
+		name = ab_performance.28.a
+		set_country_flag = adm_flag
+		set_base_target = {
+			which = base_target
+			base = adm
+		}
+		event_target:base_target = {
+			if = {
+				limit = {
+					NOT = { base_tax = 10 }
+				}
+				add_power = {
+					power = adm
+				}
+				add_next_institution_embracement_scaled = 5
+				add_base_tax = 1
+			}
+		}
+		clr_country_flag = adm_flag
+	}
+}
+
+#AI Dev - DIP
+country_event = {
+	id = ab_performance.29
+	title = ab_performance.29.t
+	desc = ab_performance.29.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		ai = yes
+		power_tech = {
+			power = dip
+			value = 950
+		}
+		NOT = {
+			OR = {
+				technology_group = east_african
+				technology_group = central_african
+				technology_group = sub_saharan
+				technology_group = north_american
+				technology_group = mesoamerican
+				technology_group = south_american
+				technology_group = andean
+				technology_group = aboriginal_tech
+				technology_group = polynesian_tech
+				has_reform = siberian_tribe
+			}
+		}
+	}
+	
+	option = {
+		name = ab_performance.29.a
+		set_country_flag = dip_flag
+		set_base_target = {
+			which = base_target
+			base = dip
+		}
+		clr_country_flag = dip_flag
+		event_target:base_target = {
+			if = {
+				limit = {
+					NOT = { base_production = 10 }
+				}
+				add_power = {
+					power = dip
+				}
+				add_next_institution_embracement_scaled = 5
+				add_base_production = 1
+			}
+		}
+		clr_country_flag = dip_flag
+	}
+}
+
+#AI Dev - MIL
+country_event = {
+	id = ab_performance.30
+	title = ab_performance.30.t
+	desc = ab_performance.30.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		ai = yes
+		power_tech = {
+			power = mil
+			value = 950
+		}
+		NOT = {
+			OR = {
+				technology_group = east_african
+				technology_group = central_african
+				technology_group = sub_saharan
+				technology_group = north_american
+				technology_group = mesoamerican
+				technology_group = south_american
+				technology_group = andean
+				technology_group = aboriginal_tech
+				technology_group = polynesian_tech
+				has_reform = siberian_tribe
+			}
+		}
+	}
+	
+	option = {
+		name = ab_performance.30.a
+		set_country_flag = mil_flag
+		set_base_target = {
+			which = base_target
+			base = mil
+		}
+		event_target:base_target = {
+			if = {
+				limit = {
+					NOT = { base_manpower = 12 }
+				}
+				add_power = {
+					power = mil
+				}
+				add_next_institution_embracement_scaled = 5
+				add_base_manpower = 1
+			}
+		}
+		clr_country_flag = mil_flag
+	}
+}
+
+#AI Dev - Institution
+country_event = {
+	id = ab_performance.31
+	title = ab_performance.31.t
+	desc = ab_performance.31.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	trigger = {
+		# Target
+		ai = yes
+		primitives = no
+		is_lacking_institutions = yes
+		is_at_war = no
+		is_subject = no
+		num_of_cities = 3
+
+		# Mana
+		adm_power = 750
+		dip_power = 750
+		mil_power = 750
+
+		# Province
+		any_owned_province = {
+			is_state_core = ROOT
+			development = 5
+			NOT = { development = 28 }
+			NOT = { has_terrain = glacier }
+			NOT = { has_terrain = desert }
+			NOT = { has_climate = arctic }
+		}
+
+		# Condition
+		all_owned_province = {
+			OR = {
+				NOT = { is_state_core = ROOT }
+				NOT = { current_institution_growth = 0.5 }
+			}
+		}
+	}
+	
+	option = {
+		name = ab_performance.31.a
+		if = {
+			limit = {
+				NOT = { has_institution = feudalism }
+			}
+			spawn_institution = {
+				institution = feudalism
+			}
+			event_target:base_target = {
+				log = "[Root.GetName] spawned feudalism in [This.GetName]"
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = { has_institution = renaissance }
+			}
+			spawn_institution = {
+				institution = renaissance
+			}
+			event_target:base_target = {
+				log = "[Root.GetName] spawned renaissance in [This.GetName]"
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = { has_institution = new_world_i }
+			}
+			spawn_institution = {
+				institution = new_world_i
+			}
+			event_target:base_target = {
+				log = "[Root.GetName] spawned new_world_i in [This.GetName]"
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = { has_institution = printing_press }
+			}
+			spawn_institution = {
+				institution = printing_press
+			}
+			event_target:base_target = {
+				log = "[Root.GetName] spawned printing_press in [This.GetName]"
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = { has_institution = global_trade }
+			}
+			spawn_institution = {
+				institution = global_trade
+			}
+			event_target:base_target = {
+				log = "[Root.GetName] spawned global_trade in [This.GetName]"
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = { has_institution = manufactories }
+			}
+			spawn_institution = {
+				institution = manufactories
+			}
+			event_target:base_target = {
+				log = "[Root.GetName] spawned manufactories in [This.GetName]"
+			}
+		}
+		else_if = {
+			limit = {
+				NOT = { has_institution = enlightenment }
+			}
+			spawn_institution = {
+				institution = enlightenment
+			}
+			event_target:base_target = {
+				log = "[Root.GetName] spawned enlightenment in [This.GetName]"
+			}
+		}
+	}
+}
+
+#East India Company
+country_event = {
+	id = ab_performance.32
+	title = ab_performance.32.t
+	desc = ab_performance.32.d
+	picture = 15_Trade_Company_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.32.a
+		add_years_of_income = 2
+		add_country_modifier = {
+			name = india_trade_co
+			duration = -1
+		}
+	}
+}
+
+#Grand Crusade - Join the Crusade
+country_event = {
+	id = ab_performance.33
+	title = ab_performance.33.t
+	desc = ab_performance.33.d
+	picture = CRUSADER_HORDE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.33.a
+		ai_chance = {
+			factor = 50
+			#We like the target
+			modifier = {
+				factor = 0.01
+				ai_attitude = {
+					who = event_target:grand_crusade_target
+					attitude = attitude_friendly
+				}
+			}
+			#We literally cannot reach the target
+			modifier = {
+				factor = 0.01
+				NOT = {
+					event_target:grand_crusade_target = {
+						capital_scope = {
+							range = ROOT
+						}
+					}
+				}
+			}
+			#We are too poor for that
+			modifier = {
+				factor = 0
+				OR = {
+					is_bankrupt = yes
+					num_of_loans = 4
+				}
+			}
+			#Why should I care?
+			modifier = {
+				factor = 0.25
+				OR = {
+					ruler_has_personality = sinner_personality
+					ruler_has_personality = free_thinker_personality
+					ruler_has_personality = scholar_personality
+					personality = ai_balanced
+				}
+			}
+			#Make peace please!
+			modifier = {
+				factor = 0.01
+				OR = {
+					ruler_has_personality = just_personality
+					personality = ai_diplomat
+				}
+			}
+			#DEUS VULT!
+			modifier = {
+				factor = 2
+				OR = {
+					ruler_has_personality = zealot_personality
+					ruler_has_personality = cruel_personality
+					ruler_has_personality = conqueror_personality
+					personality = ai_militarist
+				}
+			}
+			#We are the Pope. Of course we join!
+			modifier = {
+				factor = 2
+				tag = PAP
+			}
+		}
+		custom_tooltip = join_the_grand_crusade_tt
+		hidden_effect = {
+			join_all_offensive_wars_of = event_target:grand_crusader_war_monger
+		}
+	}
+
+	option = {
+		name = ab_performance.33.b
+		ai_chance = { factor = 50 }
+	}
+}
+
+#Grand Crusade - Defend the Target
+country_event = {
+	id = ab_performance.34
+	title = ab_performance.34.t
+	desc = ab_performance.34.d
+	picture = CRUSADER_HORDE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_performance.34.a
+		ai_chance = {
+			factor = 50
+			#We like the attacker...
+			modifier = {
+				factor = 0.01
+				ai_attitude = {
+					who = event_target:grand_crusader_war_monger
+					attitude = attitude_friendly
+				}
+			}
+			#We literally cannot reach the target
+			modifier = {
+				factor = 0
+				NOT = {
+					event_target:grand_crusade_target = {
+						capital_scope = {
+							range = ROOT
+						}
+					}
+				}
+			}
+			#We are too poor for that
+			modifier = {
+				factor = 0.01
+				OR = {
+					is_bankrupt = yes
+					num_of_loans = 4
+				}
+			}
+			#Why should I care?
+			modifier = {
+				factor = 0.25
+				OR = {
+					ruler_has_personality = sinner_personality
+					ruler_has_personality = free_thinker_personality
+					ruler_has_personality = scholar_personality
+					personality = ai_balanced
+				}
+			}
+			#Make peace please!
+			modifier = {
+				factor = 0.01
+				OR = {
+					ruler_has_personality = just_personality
+					personality = ai_diplomat
+				}
+			}
+			#DEUS VULT!
+			modifier = {
+				factor = 2
+				OR = {
+					ruler_has_personality = zealot_personality
+					ruler_has_personality = cruel_personality
+					ruler_has_personality = conqueror_personality
+					personality = ai_militarist
+				}
+			}
+		}
+		custom_tooltip = defend_the_grand_crusade_target_tt
+		hidden_effect = {
+			join_all_defensive_wars_of = event_target:grand_crusade_target
+		}
+	}
+
+	option = {
+		name = ab_performance.34.b
+		ai_chance = { factor = 50 }
+	}
+}
+
+#Netherland Internal Development - Remove
+country_event = {
+	id = ab_performance.35
+	title = ab_performance.35.t
+	desc = ab_performance.35.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+
+	trigger = {
+		has_country_flag = ned_internal_dev_flag
+		NOT = { has_country_modifier = ned_internal_development }
+		is_at_war = no
+		all_owned_province = {
+			OR = {
+				region = low_countries_region
+				AND = {
+					NOT = { continent = europe }
+					is_owned_by_trade_company = yes
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = ab_performance.35.a
+		add_country_modifier = {
+			name = ned_internal_development
+			duration = -1
+		}
+	}
+}
+
+#Netherland Internal Development - Remove
+country_event = {
+	id = ab_performance.36
+	title = ab_performance.36.t
+	desc = ab_performance.36.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+
+	trigger = {
+		has_country_flag = ned_internal_dev_flag
+		has_country_modifier = ned_internal_development
+		is_at_war = yes
+	}
+	
+	option = {
+		name = ab_performance.36.a
+		remove_country_modifier = ned_internal_development
+	}
+}
+
+# VIKTOR TODO: add in 1.10
+#Jihad - Join the Jihad
+# country_event = {
+# 	id = ab_performance.37
+# 	title = ab_performance.37.t
+# 	desc = ab_performance.37.d
+# 	picture = muslimgfx_LAND_MILITARY_eventPicture
+	
+# 	is_triggered_only = yes
+	
+# 	option = {
+# 		name = ab_performance.37.a
+# 		ai_chance = {
+# 			factor = 50
+# 			#We like the target
+# 			modifier = {
+# 				factor = 0.01
+# 				ai_attitude = {
+# 					who = event_target:AB_jihad_target
+# 					attitude = attitude_friendly
+# 				}
+# 			}
+# 			#We literally cannot reach the target
+# 			modifier = {
+# 				factor = 0.01
+# 				NOT = {
+# 					event_target:AB_jihad_target = {
+# 						capital_scope = {
+# 							range = ROOT
+# 						}
+# 					}
+# 				}
+# 			}
+# 			#We are too poor for that
+# 			modifier = {
+# 				factor = 0
+# 				OR = {
+# 					is_bankrupt = yes
+# 					num_of_loans = 4
+# 				}
+# 			}
+# 			#Why should I care?
+# 			modifier = {
+# 				factor = 0.25
+# 				OR = {
+# 					ruler_has_personality = sinner_personality
+# 					ruler_has_personality = free_thinker_personality
+# 					ruler_has_personality = scholar_personality
+# 					personality = ai_balanced
+# 				}
+# 			}
+# 			#Make peace please!
+# 			modifier = {
+# 				factor = 0.01
+# 				OR = {
+# 					ruler_has_personality = just_personality
+# 					personality = ai_diplomat
+# 				}
+# 			}
+# 			#DEUS VULT!
+# 			modifier = {
+# 				factor = 2
+# 				OR = {
+# 					ruler_has_personality = zealot_personality
+# 					ruler_has_personality = cruel_personality
+# 					ruler_has_personality = conqueror_personality
+# 					personality = ai_militarist
+# 				}
+# 			}
+# 		}
+# 		custom_tooltip = join_the_jihad_tt
+# 		hidden_effect = {
+# 			join_all_offensive_wars_of = event_target:AB_Caliph
+# 		}
+# 	}
+
+# 	option = {
+# 		name = ab_performance.37.b
+# 		ai_chance = { factor = 50 }
+# 	}
+# }
+
+# VIKTOR TODO: add in 1.10
+# country_event = {
+# 	id = ab_performance.38
+# 	title = ab_performance.38.t
+# 	desc = ab_performance.38.d
+# 	picture = muslimgfx_LAND_MILITARY_eventPicture
+	
+# 	is_triggered_only = yes
+	
+# 	option = {
+# 		name = ab_performance.38.a
+# 		ai_chance = {
+# 			factor = 50
+# 			#We like the attacker...
+# 			modifier = {
+# 				factor = 0.01
+# 				ai_attitude = {
+# 					who = event_target:AB_Caliph
+# 					attitude = attitude_friendly
+# 				}
+# 			}
+# 			#We literally cannot reach the target
+# 			modifier = {
+# 				factor = 0
+# 				NOT = {
+# 					event_target:AB_jihad_target = {
+# 						capital_scope = {
+# 							range = ROOT
+# 						}
+# 					}
+# 				}
+# 			}
+# 			#We are too poor for that
+# 			modifier = {
+# 				factor = 0.01
+# 				OR = {
+# 					is_bankrupt = yes
+# 					num_of_loans = 4
+# 				}
+# 			}
+# 			#Why should I care?
+# 			modifier = {
+# 				factor = 0.25
+# 				OR = {
+# 					ruler_has_personality = sinner_personality
+# 					ruler_has_personality = free_thinker_personality
+# 					ruler_has_personality = scholar_personality
+# 					personality = ai_balanced
+# 				}
+# 			}
+# 			#Make peace please!
+# 			modifier = {
+# 				factor = 0.01
+# 				OR = {
+# 					ruler_has_personality = just_personality
+# 					personality = ai_diplomat
+# 				}
+# 			}
+# 			#DEUS VULT!
+# 			modifier = {
+# 				factor = 2
+# 				OR = {
+# 					ruler_has_personality = zealot_personality
+# 					ruler_has_personality = cruel_personality
+# 					ruler_has_personality = conqueror_personality
+# 					personality = ai_militarist
+# 				}
+# 			}
+# 			#We are the Pope. Of course we join!
+# 			modifier = {
+# 				factor = 10
+# 				event_target:AB_jihad_target = {
+# 					religion = catholic
+# 				}
+# 				tag = PAP
+# 			}
+# 		}
+# 		custom_tooltip = defend_the_jihad_target_tt
+# 		hidden_effect = {
+# 			join_all_defensive_wars_of = event_target:AB_jihad_target
+# 		}
+# 	}
+
+# 	option = {
+# 		name = ab_performance.38.b
+# 		ai_chance = { factor = 50 }
+# 	}
+# }
+
+#Crusade - Remove
+country_event = {
+	id = ab_performance.39
+	title = ab_performance.39.t
+	desc = ab_performance.39.d
+	picture = CULTURE_eventPicture
+
+	hidden = yes
+	
+	trigger = {
+		religion = catholic
+		has_country_modifier = crusader
+		OR = {
+			is_at_war = no
+			crusade_target = {
+				NOT = { war_with = ROOT }
+			}
+		}
+	}
+	
+	option = {
+		name = ab_performance.39.a
+		remove_country_modifier = crusader
+	}
+}

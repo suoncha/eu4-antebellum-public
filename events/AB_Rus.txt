@@ -6,7 +6,7 @@ country_event = {
 	id = ab_rus.1
 	title = ab_rus.1.t
 	desc = ab_rus.1.d
-	picture = ABAD7_eventPicture
+	picture = muslimgfx_LAND_MILITARY_eventPicture
 	
 	is_triggered_only = yes
 	
@@ -42,26 +42,34 @@ country_event = {
 	id = ab_rus.2
 	title = ab_rus.2.t
 	desc = ab_rus.2.d
-	picture = ABAD7_eventPicture
+	picture = muslimgfx_LAND_MILITARY_eventPicture
 	
 	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			country_event = { id = ab_rus.11 }
+		}
+	}
 	
 	option = {
 		name = ab_rus.2.a
 		override_country_name = RUS_RUTHENIA
-		country_event = { id = ab_rus.11 }
 	}
 	
 	option = {
 		name = ab_rus.2.b
 		override_country_name = RUS_RUSSIA
-		country_event = { id = ab_rus.11 }
 	}
 	
 	option = {
 		name = ab_rus.2.c
 		override_country_name = RUS_KIEVANRUS
-		country_event = { id = ab_rus.11 }
+	}
+
+	option = {
+		name = ab_rus.2.e
+		override_country_name = RUS_KYIVANRUS
 	}
 	
 	option = {
@@ -213,7 +221,6 @@ country_event = {
 	
 }
 
-
 #The Seat of the Tsar
 country_event = {
 	id = ab_rus.9
@@ -255,42 +262,27 @@ country_event = {
 	
 }
 
-country_event = {
-	id = ab_rus.10
-	title = ab_rus.10.t
-	desc = ab_rus.10.d
-	picture = AB_RUS_eventPicture
-	hidden = yes
-
-	trigger = {
-		has_government_attribute = metropolitans_spread_institution
-		any_owned_province = {
-			has_state_patriach = no
-			has_province_modifier = rus_metropolitan_institution_spread
-		}
-	}
-
-	option = {
-		name = ab_rus.10.a
-		
-		every_owned_province = {
-			limit = {
-				has_state_patriach = no
-				has_province_modifier = rus_metropolitan_institution_spread
-			}
-			remove_province_modifier = rus_metropolitan_institution_spread
-		}
-	}
-}
-
 #Color
 country_event = {
 	id = ab_rus.11
 	title = ab_rus.11.t
 	desc = ab_rus.11.d
-	picture = ABAD7_eventPicture
+	picture = muslimgfx_LAND_MILITARY_eventPicture
 	
 	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			# Color Choice
+			country_event = {
+				id = ab_revert_formertag.1
+			}
+			# Name Choice
+			country_event = {
+				id = ab_revert_formertag.2
+			}
+		}
+	}
 	
 	option = {
 		name = ab_rus.11.a

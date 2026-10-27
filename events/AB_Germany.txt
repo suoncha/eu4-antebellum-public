@@ -8,7 +8,6 @@ country_event = {
 	picture = CULTURE_eventPicture
 	
 	is_triggered_only = yes
-	
 		
 	option = {
 		name = ab_germany.1.a
@@ -69,4 +68,378 @@ country_event = {
 	}
 }
 			
-			
+#Germanization - Hansa Version
+province_event = {
+	id = ab_germany.2
+	title = ab_germany.2.t
+	desc = ab_germany.2.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 380
+	}
+	
+	trigger = {
+		OR = {
+			AND = {
+				region = wendia_region
+				owner = { has_country_flag = hansa_germanization_wendia_flag }
+			}
+			AND = {
+				region = baltic_region
+				owner = { has_country_flag = hansa_germanization_baltic_flag }
+			}
+		}
+		NOT = { culture_group = germanic }
+		any_neighbor_province = {
+			owned_by = ROOT
+			culture_group = germanic
+		}
+		religion = owner
+	}
+	
+	option = {
+		name = ab_germany.2.a
+		change_culture = baltic_german
+	}
+}
+
+#South German Confederation
+country_event = {
+	id = ab_germany.3
+	title = ab_germany.3.t
+	desc = ab_germany.3.d
+	picture = GERMAN_UNIFICATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_germany.3.a
+		override_country_name = SOUTH_GERMAN_CONFEDERATION
+		set_country_flag = south_german_confederation_name_override_flag
+		custom_tooltip = AB_EMPTY
+		unlock_government_reform = {
+			government_reform = bav_south_german_confederation
+		}
+		custom_tooltip = AB_EMPTY
+		add_government_reform = bav_south_german_confederation
+		hidden_effect = {
+			capital_scope = {
+				set_seat_in_parliament = yes
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		north_german_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+#Helvetia Militarization - Hidden Event
+country_event = {
+	id = ab_germany.4
+	title = ab_germany.4.t
+	desc = ab_germany.4.d
+	picture = CULTURE_eventPicture
+	
+	is_triggered_only = yes
+	hidden = yes
+	
+	option = {
+		name = ab_germany.4.a
+		remove_country_modifier = hlv_militarization_1
+		remove_country_modifier = hlv_militarization_2
+		remove_country_modifier = hlv_militarization_3
+		remove_country_modifier = hlv_militarization_4
+		remove_country_modifier = hlv_militarization_5
+		remove_country_modifier = hlv_militarization_6
+		remove_country_modifier = hlv_militarization_7
+		remove_country_modifier = hlv_militarization_8
+		remove_country_modifier = hlv_militarization_9
+		remove_country_modifier = hlv_militarization_10
+		if = {
+			limit = { num_of_mercenaries = 100 }
+			add_country_modifier = {
+				name = hlv_militarization_10
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 90 }
+			add_country_modifier = {
+				name = hlv_militarization_9
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 80 }
+			add_country_modifier = {
+				name = hlv_militarization_8
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 70 }
+			add_country_modifier = {
+				name = hlv_militarization_7
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 60 }
+			add_country_modifier = {
+				name = hlv_militarization_6
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 50 }
+			add_country_modifier = {
+				name = hlv_militarization_5
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 40 }
+			add_country_modifier = {
+				name = hlv_militarization_4
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 30 }
+			add_country_modifier = {
+				name = hlv_militarization_3
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 20 }
+			add_country_modifier = {
+				name = hlv_militarization_2
+				duration = -1
+				hidden = yes
+			}
+		}
+		else_if = {
+			limit = { num_of_mercenaries = 10 }
+			add_country_modifier = {
+				name = hlv_militarization_1
+				duration = -1
+				hidden = yes
+			}
+		}
+	}
+}
+
+#Formation of Helvetia - A Union of the Swiss Cantons
+country_event = {
+	id = ab_germany.5
+	title = ab_germany.5.t
+	desc = ab_germany.5.d
+	picture = GERMAN_UNIFICATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_germany.5.a
+		add_prestige = 50
+		on_change_tag_effect = yes
+		if = {
+			limit = {
+				NOT = { government_rank = 2 }
+			}
+			set_government_rank = 2
+		}
+		change_tag = HLV
+		swap_non_generic_missions = yes
+		if = {
+			limit = { has_custom_ideas = no }
+			country_event = { id = ideagroups.1 } #Swap Ideas
+		}
+		add_country_modifier = {
+			name = "centralization_modifier"
+			duration = 7300
+		}
+		add_government_reform = helvetia_confederacy
+	}
+}
+
+#North German Confederation
+country_event = {
+	id = ab_germany.6
+	title = ab_germany.6.t
+	desc = ab_germany.6.d
+	picture = GERMAN_UNIFICATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_germany.6.a
+		override_country_name = NORTH_GERMAN_CONFEDERATION
+		set_country_flag = north_german_confederation_name_override_flag
+		custom_tooltip = AB_EMPTY
+		unlock_government_reform = {
+			government_reform = rhl_confederation_reform
+			tooltip = yes
+		}
+		custom_tooltip = AB_EMPTY
+		hidden_effect = {
+			add_government_reform = rhl_confederation_reform
+		}
+		hidden_effect = {
+			capital_scope = {
+				set_seat_in_parliament = yes
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		south_german_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+#Rise of Rhineland
+country_event = {
+	id = ab_germany.7
+	title = ab_germany.7.t
+	desc = ab_germany.7.d
+	picture = REFORM_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_germany.7.a
+		add_stability_or_adm_power = yes
+		custom_tooltip = AB_EMPTY
+		north_brabant_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		brabant_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		wallonia_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		palatinate_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		upper_franconia_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		franconia_area = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		custom_tooltip = RHL_CLAIM_SAXON
+		hidden_effect = {
+			every_province = {
+				limit = {
+					culture = saxon
+				}
+				add_permanent_claim = ROOT
+			}
+		}
+	}
+}
+
+#Revival of Marklo
+country_event = {
+	id = ab_germany.8
+	title = ab_germany.8.t
+	desc = ab_germany.8.d
+	picture = HOUSE_OF_TRADE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_germany.8.a
+		2971 = {
+			change_province_name = "Marklo"
+			rename_capital = "Marklo"
+		}
+		2971 = {
+			move_capital_effect = yes
+		}
+		2971 = {
+			add_base_tax = 1
+			add_base_production = 1
+			add_base_manpower = 1
+		}
+		2971 = {
+			add_province_modifier = {
+				name = sax_seat_of_saxon_kings
+				duration = -1
+			}
+		}
+		2971 = {
+			change_trade_goods = cloth
+		}
+	}
+}
+
+#Widukind's Vengeance
+country_event = {
+	id = ab_germany.9
+	title = ab_germany.9.t
+	desc = ab_germany.9.d
+	picture = SIEGE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_germany.9.a
+		183 = {
+			add_devastation = 100
+		}
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 50
+		}
+		add_ruler_modifier = {
+			name = "sax_bane_of_the_franks"
+			duration = -1
+		}
+	}
+}

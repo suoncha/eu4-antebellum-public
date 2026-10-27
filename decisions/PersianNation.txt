@@ -3,46 +3,16 @@ country_decisions = {
 	persian_nation = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			was_never_end_game_tag_trigger = yes
-			NOT = { has_country_flag = formed_persia_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			OR = {
-				ai = no
-				NOT = { exists = PER }
-			}
-			NOT = { tag = MUG }
-			NOT = { tag = TIM }
-			NOT = { tag = PER }
-			NOT = { tag = HLR }
-			NOT = { tag = ROM }
-			NOT = { tag = PAP }
-			NOT = { tag = TUR }
-			NOT = { tag = BYZ }
-			NOT = { tag = ARB }
-			NOT = { tag = ROB }
-			NOT = { tag = ZNN }
-			NOT = { tag = JLR }
-			NOT = { tag = ABS }
 			OR = {
 				has_reform = persianprince
 				has_reform = persianprincet
 			}
-			is_colonial_nation = no
 			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
+				NOT = { has_saved_global_event_target = AB_Persia_target }
+				event_target:AB_Persia_target = {
+					exists = no
 				}
 			}
-			NOT = { exists = PER }
-			NOT = { exists = PRZ }
-			NOT = { exists = PRC }
-			NOT = { exists = PMN }
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -60,10 +30,7 @@ country_decisions = {
 			}
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
-			is_at_war = no
-			is_tribal = no
+			culture_group = iranian
 			if = {
 				limit = {
 					ai = yes
@@ -82,8 +49,14 @@ country_decisions = {
 				owns_core_province = 431
 				owns_core_province = 2218
 			}
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
+			hidden_effect = {
+				save_global_event_target_as = ab_formertag_per
+			}
+			set_country_flag = eranshahr_rename_flag
 			add_prestige = 25
 			if = {
 				limit = {
@@ -103,7 +76,9 @@ country_decisions = {
 				}
 				change_tag = PRC
 			}
-			swap_non_generic_missions = yes
+			hidden_effect = {
+				save_global_event_target_as = AB_Persia_target
+			}
 			remove_non_electors_emperors_from_empire_effect = yes
 			set_government_rank = 3
 			if = {
@@ -119,12 +94,6 @@ country_decisions = {
 				}
 				add_government_reform = persianempire
 			}
-			if = {
-				limit = {
-					has_reform = states_general_reform
-				}
-				remove_government_reform = states_general_reform
-			}
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
@@ -135,10 +104,23 @@ country_decisions = {
 				}
 				change_primary_culture = persian
 			}
-			set_country_flag = formed_persia_flag
 			if = {
 				limit = { has_custom_ideas = no }
 				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			swap_non_generic_missions = yes
+			hidden_effect = {
+				# Color Choice
+				country_event = {
+					id = ab_revert_formertag.1
+				}
+				# Name Choice
+				country_event = {
+					id = ab_revert_formertag.2
+				}
+				country_event = {
+					id = ab_pachiev.15
+				}
 			}
 		}
 		ai_will_do = {

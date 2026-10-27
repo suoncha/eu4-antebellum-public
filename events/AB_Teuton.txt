@@ -1,0 +1,782 @@
+namespace = teuton_event
+normal_or_historical_nations = yes
+
+# Order of the Cross
+country_event = {
+	id = teuton_event.1
+	title = teuton_event.1.t
+	desc = teuton_event.1.d
+	picture = RELIGIOUS_WARS_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.1.a
+		hidden_effect = {
+			PAP = {
+				country_event = {
+					id = teuton_event.2
+					days = 30
+				}
+			}
+		}
+	}
+}
+
+# Order of the Cross - Papal States
+country_event = {
+	id = teuton_event.2
+	title = teuton_event.2.t
+	desc = teuton_event.2.d
+	picture = RELIGIOUS_WARS_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.2.a
+		add_prestige = 5
+		add_reform_desire = -0.02
+		hidden_effect = {
+			FROM = {
+				country_event = {
+					id = teuton_event.3
+					days = 30
+				}
+			}
+		}
+	}
+}
+
+# Papal Approval
+country_event = {
+	id = teuton_event.3
+	title = teuton_event.3.t
+	desc = {
+		trigger = {
+			tag = DNZ
+		}
+		desc = teuton_event.3.d1
+	}
+	desc = {
+		trigger = {
+			tag = RIG
+		}
+		desc = teuton_event.3.d2
+	}
+	picture = POPE_PREACHING_eventPicture
+	
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.3.a
+		if = {
+			limit = {
+				tag = DNZ
+			}
+			change_tag = TEU
+			change_primary_culture = prussian
+			capital_scope = {
+				change_culture = prussian
+			}
+		}
+		else = {
+			change_tag = LIV
+		}		
+		custom_tooltip = AB_EMPTY
+		swap_free_idea_group = yes
+		swap_non_generic_missions = yes
+		custom_tooltip = AB_EMPTY
+		change_government = theocracy
+		add_government_reform = monastic_order_reform
+	}
+}
+
+# Hansa and the Order
+country_event = {
+	id = teuton_event.4
+	title = teuton_event.4.t
+	desc = teuton_event.4.d
+	picture = MERCHANTS_ARGUING_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = TEU
+			tag = LIV
+		}
+		exists = HAS
+		NOT = { war_with = HAS }
+		NOT = { is_rival = HAS }
+		NOT = { is_enemy = HAS }
+	}
+
+	mean_time_to_happen = {
+		months = 120
+	}
+
+	option = {
+		name = teuton_event.4.a
+		create_guarantee = HAS
+		add_historical_friend = HAS
+		hidden_effect = {
+			HAS = {
+				add_historical_friend = ROOT
+			}
+		}
+		add_country_modifier = {
+			name = teu_renewed_hanseatic_relations
+			duration = 7300
+		}
+	}
+
+	option = {
+		name = teuton_event.4.b
+		add_adm_power = 50
+		add_dip_power = 50
+		add_mil_power = 50
+	}
+}
+
+# The Reyse of the Knights
+country_event = {
+	id = teuton_event.5
+	title = teuton_event.5.t
+	desc = teuton_event.5.d
+	picture = TOURNAMENT_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = TEU
+			tag = LIV
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	immediate = {
+		set_country_flag = last_jousting_tournament_held
+	}
+
+	option = {
+		name = teuton_event.5.a
+		add_army_tradition = 15
+		add_yearly_manpower = 0.5
+		add_country_modifier = {
+			name = teu_the_last_reyse
+			duration = 9125
+		}
+	}
+}
+
+# Hussite Downfall
+country_event = {
+	id = teuton_event.6
+	title = teuton_event.6.t
+	desc = teuton_event.6.d
+	picture = BATTLE_VISTULA_LAGOON_eventPicture
+
+	fire_only_once = yes
+
+	trigger = {
+		OR = {
+			tag = TEU
+			tag = LIV
+		}
+		BOH = {
+			religion = hussite
+			capital_scope = {
+				controlled_by = ROOT
+			}
+		}
+	}
+
+	option = {
+		name = teuton_event.6.a
+		add_power_projection = {
+			type = mission_rewards_power_projection
+			amount = 50
+		}
+		BOH = {
+			capital_scope = {
+				add_devastation = 100
+				add_loot_from_rich_province_general_effect = {
+					LOOTER = ROOT
+				}
+			}
+		}
+	}
+}
+
+# The Baltic and the Empire - The Order Choice
+country_event = {
+	id = teuton_event.7
+	title = teuton_event.7.t
+	desc = teuton_event.7.d
+	picture = HRE_eventPicture
+
+	major = yes
+
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.7.a
+		ai_chance = { factor = 100 }
+		custom_tooltip = TEU_HRE_INCIDENT
+		hidden_effect = {
+			save_global_event_target_as = balticOrder
+			set_imperial_incident = incident_baltic_and_the_empire
+		}
+	}
+	
+	option = {
+		name = teuton_event.7.b
+		ai_chance = { factor = 0 }
+		add_mil_power = 100
+		add_country_modifier = {
+			name = teu_rejects_imperial_protection
+			duration = 18250
+		}
+	}
+}
+
+# The Baltic and the Empire - Imperial Incident
+country_event = {
+	id = teuton_event.8
+	title = teuton_event.8.t
+	desc = teuton_event.8.d
+	picture = EMPEROR_eventPicture
+
+	major = yes
+
+	is_triggered_only = yes
+
+	option = {
+		name = teuton_event.8.a
+		event_target:balticOrder = {
+			add_opinion = {
+				who = emperor
+				modifier = teu_allowed_us_to_join
+			}
+		}
+		custom_tooltip = TEU_NEIGHBOR_HATE_THEM_JOINING
+		hidden_effect = {
+			event_target:balticOrder = {
+				country_event = {
+					id = teuton_event.9
+				}
+				every_neighbor_country = {
+					limit = {
+						is_part_of_hre = yes
+					}
+					add_opinion = {
+						who = emperor
+						modifier = teu_allowed_the_teutons_into_the_hre
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = teuton_event.8.b
+		custom_tooltip = TEU_REGULATIONS
+		hidden_effect = {
+			event_target:balticOrder = {
+				country_event = {
+					id = teuton_event.10
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = teuton_event.8.c
+		hidden_effect = {
+			event_target:balticOrder = {
+				country_event = {
+					id = teuton_event.11
+				}
+			}
+		}
+		emperor = {
+			reverse_add_opinion = {
+				who = event_target:balticOrder
+				modifier = teu_rejected_us_from_joining
+			}
+			add_opinion = {
+				who = event_target:balticOrder
+				modifier = teu_does_not_want_the_order_in_the_hre
+			}
+		}
+	}
+}
+
+# The Baltic and the Empire - Entry Granted
+country_event = {
+	id = teuton_event.9
+	title = teuton_event.9.t
+	desc = teuton_event.9.d
+	picture = DIPLOMACY_SIGNING_eventPicture
+
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.9.a
+		set_in_empire = yes
+	}
+}
+
+# The Baltic and the Empire - Heavy Regulation
+country_event = {
+	id = teuton_event.10
+	title = teuton_event.10.t
+	desc = teuton_event.10.d
+	picture = DIPLOMAT_INTERROGATION_eventPicture
+
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.10.a
+		ai_chance = { factor = 100 }
+		custom_tooltip = TEU_REGULATIONS
+		set_country_flag = ab_teu_joined_hre
+		set_in_empire = yes
+	}
+	
+	option = {
+		name = teuton_event.10.b
+		ai_chance = { factor = 0 }
+		add_opinion = {
+			who = FROM
+			modifier = teu_unfair_conditions
+		}
+		reverse_add_opinion = {
+			who = FROM
+			modifier = teu_rejected_our_offer
+		}
+	}
+}
+
+# The Baltic and the Empire - Entry Denied
+country_event = {
+	id = teuton_event.11
+	title = teuton_event.11.t
+	desc = teuton_event.11.d
+	picture = ACCUSATION_eventPicture
+
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.11.a
+		tooltip = {
+			reverse_add_opinion = {
+				who = FROM
+				modifier = teu_rejected_us_from_joining
+			}
+			add_opinion = {
+				who = FROM
+				modifier = teu_does_not_want_the_order_in_the_hre
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		every_country = {
+			limit = {
+				OR = {
+					is_elector = yes
+					is_emperor = yes
+				}
+			}
+			reverse_add_casus_belli = {
+				type = cb_insult
+				months = 300
+				target = ROOT
+			}
+		}
+	}
+}
+
+# The Baltic and the Empire - The Order Violate the Regulations
+country_event = {
+	id = teuton_event.12
+	title = teuton_event.12.t
+	desc = teuton_event.12.d
+	picture = BATTLE_VISTULA_LAGOON_eventPicture
+
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.12.a
+		set_in_empire = no
+		declare_war = emperor
+	}
+}
+
+# The Livonian Legal System
+country_event = {
+	id = teuton_event.13
+	title = teuton_event.13.t
+	desc = teuton_event.13.d
+	picture = OVEREXTENSION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.13.a
+		add_stability = -1
+		change_government_reform_progress = 50
+		add_splendor = 100
+		add_country_modifier = {
+			name = pru_unified_legal_system
+			duration = -1
+		}
+		set_country_flag = sax_scaling_statesman
+		custom_tooltip = SAX_SCALING_STATEMAN
+	}
+}
+
+# University of Königsberg
+country_event = {
+	id = teuton_event.14
+	title =  teuton_event.14.t
+	desc =  teuton_event.14.d
+	picture = UNIVERSITY_eventPicture
+
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.14.a
+		add_years_of_income = -0.25
+		change_innovativeness = 5
+		41 = {
+			if = {
+				limit = {
+					NOT = { has_building = university }
+				}
+				add_building = university
+			}
+			add_province_modifier = {
+				name = teu_pru_university_of_konigsberg
+				duration = -1
+			}
+		}
+		set_country_flag = teu_scaling_scientist
+		custom_tooltip = TEU_SCALING_SCIENTIST
+	}
+}
+
+# Future of the Order
+country_event = {
+	id = teuton_event.15
+	title = teuton_event.15.t
+	desc = teuton_event.15.d
+	picture = KNIGHTS_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = teuton_event.15.a
+		custom_tooltip = AB_TEU_SECULAR_HORDE_TT
+		hidden_effect = {
+			ab_enable_branching_mission_review = {
+				key = AB_TEU
+				ai_event_id = teuton_event.19
+			}
+		}
+	}
+}
+
+# Germanization
+province_event = {
+	id = teuton_event.16
+	title = teuton_event.16.t
+	desc = teuton_event.16.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 380
+	}
+	
+	trigger = {
+		owner = {
+			has_country_flag = ab_teu_christianize_baltic
+		}
+		region = baltic_region
+		NOT = { culture_group = germanic }
+		any_neighbor_province = {
+			owned_by = ROOT
+			culture_group = germanic
+		}
+		religion = owner
+	}
+	
+	option = {
+		name = teuton_event.16.a
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						tag = TEU
+						was_tag = TEU
+					}
+				}
+			}
+			change_culture = prussian
+		}
+		else = {
+			change_culture = baltic_german
+		}
+	}
+}
+
+# Finnic to Swedish
+province_event = {
+	id = teuton_event.17
+	title = teuton_event.17.t
+	desc = teuton_event.17.d
+	picture = CULTURE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 380
+	}
+	
+	trigger = {
+		owner = {
+			mission_completed = teu_end_vikings
+		}
+		culture_group = Finnic
+		any_neighbor_province = {
+			owned_by = ROOT
+			culture = swedish
+		}
+		religion = owner
+	}
+	
+	option = {
+		name = teuton_event.17.a
+		change_culture = swedish
+	}
+}
+
+# Formation of a Crusader Order
+country_event = {
+	id = teuton_event.18
+	title = teuton_event.18.t
+	desc = teuton_event.18.d
+	picture = KNIGHTS_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = teuton_event.18.a
+		add_country_modifier = {
+			name = teu_baptizers_baltic
+			duration = -1
+		}
+		unlock_government_reform = {
+			government_reform = crusading_kingdom_reform
+		}
+		custom_tooltip = AB_EMPTY
+		add_government_reform = crusading_kingdom_reform
+	}
+}
+
+# Answer the Reformation - AI Helper
+country_event = {
+	id = teuton_event.19
+	title = teuton_event.19.t
+	desc = teuton_event.19.d
+	picture = COURT_eventPicture
+	
+	is_triggered_only = yes
+
+	hidden = yes
+	
+	option = {
+		name = teuton_event.19.a
+		ai_chance = { factor = 33 }
+		set_country_flag = ab_teu_hre_missions
+		if = {
+			limit = {
+				tag = TEU
+			}
+			change_tag = PRU
+			hidden_effect = {
+				country_event = { id = ab_brapru.9 }
+			}
+		}
+		else = {
+			change_tag = LVI
+		}
+		hidden_effect = {
+			unlock_government_reform = {
+				government_reform = prussian_monarchy
+			}
+		}
+		swap_free_idea_group = yes
+		swap_non_generic_missions = yes
+		change_government = monarchy
+		add_government_reform = prussian_monarchy
+		add_papal_influence = 100
+		add_country_modifier = {
+			name = teu_counter_reformist
+			duration = -1
+		}
+	}
+	
+	option = {
+		name = teuton_event.19.b
+		ai_chance = { factor = 33 }
+		set_country_flag = ab_teu_ger_missions
+		if = {
+			limit = {
+				tag = TEU
+			}
+			change_tag = PRU
+			hidden_effect = {
+				country_event = { id = ab_brapru.9 }
+			}
+		}
+		else = {
+			change_tag = LVI
+		}
+		hidden_effect = {
+			unlock_government_reform = {
+				government_reform = prussian_monarchy
+			}
+		}
+		change_religion = protestant
+		swap_free_idea_group = yes
+		swap_non_generic_missions = yes
+		change_government = monarchy
+		add_government_reform = prussian_monarchy
+		capital_scope = {
+			change_religion = protestant
+		}
+		add_country_modifier = {
+			name = gh_conversion
+			duration = 3650
+		}
+		north_german_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_claim = ROOT
+		}
+	}
+	
+	option = {
+		name = teuton_event.19.c
+		ai_chance = { factor = 33 }
+		set_country_flag = ab_teu_horde_missions
+		override_country_name = BALTICORDER
+		swap_non_generic_missions = yes
+		custom_tooltip = TEU_COUNTER_REFORMATION
+		hidden_effect = {
+			capital_scope = {
+				add_reform_center = catholic
+			}
+			REB = {
+				change_variable = {
+					which = ab_counter_reformation_center_spawned_count_var
+					value = 1
+				}
+			}
+		}
+		carpathia_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		ruthenia_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+		russia_region = {
+			limit = {
+				NOT = { is_core = ROOT }
+				NOT = { is_permanent_claim = ROOT }
+			}
+			add_permanent_claim = ROOT
+		}
+	}
+}
+
+# Reform of the [Root.GetAdjective] Army
+country_event = {
+	id = teuton_event.20
+	title = teuton_event.20.t
+	desc = teuton_event.20.d
+	picture = MILITARY_CAMP_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.20.a
+		add_mil_tech = 1
+		add_army_tradition = 20
+		add_army_professionalism = 0.02
+	}
+}
+
+# The End of Roman Legacy
+country_event = {
+	id = teuton_event.21
+	title = teuton_event.21.t
+	desc = teuton_event.21.d
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.21.a
+		change_innovativeness = 10
+		add_country_modifier = {
+			name = teu_defy_the_roman_legacy
+			duration = -1
+		}
+		set_country_flag = frn_unlock_adm_advisor_bonus
+		custom_tooltip = TEU_SCALING_ADM
+	}
+}
+
+# Crusaders of the Steppes
+country_event = {
+	id = teuton_event.22
+	title = teuton_event.22.t
+	desc = teuton_event.22.d
+	picture = CRUSADER_HORDE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = teuton_event.22.a
+		set_country_flag = teu_scaling_dragoon
+		custom_tooltip = TEU_DRAGOON_SCALING
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = TEU_WINNING_BATTLE
+		custom_tooltip = AB_EMPTY
+		set_country_flag = unlock_teu_holy_horde
+		add_government_reform = teu_order_of_steppes
+	}
+}

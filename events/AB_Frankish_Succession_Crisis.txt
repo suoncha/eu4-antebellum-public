@@ -19,55 +19,43 @@ country_event = {
 	option = {
 		name = ab_frc_disaster_event.0.a
 		highlight = yes
-		ai_chance = { factor = 90 }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = frc_game_rule_abdicate
+				NOT = { has_country_flag = ab_game_rules_frankish_abdicate }
+			}
+		}
+		ai_chance = { 
+			factor = 90 
+		}
 		custom_tooltip = FRC_START_DISASTER
 		add_disaster_progress = { disaster = frankish_succession_crisis value = 100 }
 	}
 	
 	option = {
 		name = ab_frc_disaster_event.0.b
-		ai_chance = { factor = 10 }
+		trigger = {
+			custom_trigger_tooltip = {
+				tooltip = frc_game_rule_disaster
+				NOT = { has_country_flag = ab_game_rules_frankish_disaster }
+			}
+		}
+		ai_chance = { 
+			factor = 10 
+		}
+		set_country_flag = ab_frc_lothair_abdicate
 		add_stability = -1
 		add_prestige = -50
 		add_legitimacy = -50
-		change_tag = FRA
-		release_all_subjects = yes
-		set_in_empire = no
-		remove_country_modifier = frc_crisis
 		custom_tooltip = FRC_LOTHAIR_ABDICATE
 		hidden_effect = {
 			every_owned_province = {
 				set_in_empire = no
 			}
+			remove_country_modifier = frc_paladins_modifier
 		}
 		country_event = { 
 			id = ab_frc_disaster_event.3
-		}
-		hidden_effect = {
-			swap_non_generic_missions = yes
-			swap_free_idea_group = yes
-			set_country_flag = FRC_new_ruler
-		}
-		hidden_effect = {
-			remove_country_modifier = ab_cant_stab
-		}
-		hidden_effect = {
-			if = {
-				limit = {
-					has_heir = yes
-				}
-				hidden_effect = {
-					kill_heir = {}
-				}
-			}
-		}
-		hidden_effect = {
-			define_ruler = {
-				ADM = 0
-				DIP = 0
-				MIL = 0
-				regency = yes
-			}
 		}
 	}
 }
@@ -142,9 +130,7 @@ country_event = {
 	picture = GOOD_WITH_MONARCH_eventPicture
 
 	major = yes
-
 	is_triggered_only = yes
-
 	fire_only_once = yes
 
 	option = {
@@ -159,119 +145,78 @@ country_event = {
 country_event = {
 	id = ab_frc_disaster_event.3
 	title = ab_frc_disaster_event.3.t
-	desc = ab_frc_disaster_event.3.d
+	desc = {
+		trigger = {
+			has_country_flag = ab_frc_lothair_abdicate
+		}
+		desc = ab_frc_disaster_event.3.d1
+	}
+	desc = {
+		trigger = {
+			has_country_flag = ab_frc_lothair_defeated
+		}
+		desc = ab_frc_disaster_event.3.d2
+	}
+	desc = {
+		trigger = {
+			has_country_flag = ab_frc_lothair_died
+		}
+		desc = ab_frc_disaster_event.3.d3
+	}
 	picture = GOOD_WITH_MONARCH_eventPicture
 	
+	fire_only_once = yes
 	is_triggered_only = yes
 	
 	major = yes
 
-	option = {
-		name = ab_frc_disaster_event.3.a
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "de Bourbon"
-			claim = 50
+	after = {
+		hidden_effect = {
+			clr_country_flag = ab_frc_lothair_abdicate
+			clr_country_flag = ab_frc_lothair_defeated
+			clr_country_flag = ab_frc_lothair_died
 		}
-		set_government_rank = 2
-		custom_tooltip = FRA_TOOLTIP_BOURBON
 	}
-	
-	option = {
-		name = ab_frc_disaster_event.3.b
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "d'Anjou"
-			claim = 50
-		}
-		set_government_rank = 2
-		custom_tooltip = FRA_TOOLTIP_ANJOU
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.3.c
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "de Valois"
-			claim = 50
-		}
-		set_government_rank = 2
-		custom_tooltip = FRA_TOOLTIP_VALOIS
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.3.de
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "Nibelungen"
-			claim = 50
-		}
-		set_government_rank = 2
-		custom_tooltip = FRA_TOOLTIP_NIBELUNGEN
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.3.e
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			claim = 50
-		}
-		set_government_rank = 2
-		custom_tooltip = FRA_TOOLTIP_RANDOM
-	}
-}
 
-#Trial of Lothair
-country_event = {
-	id = ab_frc_disaster_event.4
-	title = ab_frc_disaster_event.4.t
-	desc = ab_frc_disaster_event.4.d
-	picture = LIBERUM_VETO_eventPicture
-	
-	trigger = {
-		tag = FRA
-		has_country_flag = FRC_trial_lothair
+	immediate = {
+		hidden_effect = {
+			change_tag = FRA
+			# [[[
+			# FIX: doing this somehow sets religious peace which we do not want
+			# so below it set the empire religion back to catholic
+			set_emperor = no
+			set_hre_religion_treaty = no
+			# ]]]
+			set_in_empire = no
+			remove_country_modifier = frc_crisis
+			remove_country_modifier = ab_cant_stab
+			end_disaster = frankish_succession_crisis
+			set_country_flag = had_frankish_succession_crisis
+			swap_non_generic_missions = yes
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				kill_heir = {}
+			}
+			define_ruler = {
+				ADM = 0
+				DIP = 0
+				MIL = 0
+				regency = yes
+			}
+		}
 	}
-	
-	mean_time_to_happen = {
-		months = 2
-	}
-	
+
 	option = {
-		name = ab_frc_disaster_event.4.a
-		custom_tooltip = FRC_LOTHAIR_O1
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.4.b
-		custom_tooltip = FRC_LOTHAIR_O2
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.4.c
-		custom_tooltip = FRC_LOTHAIR_O3
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.4.de
-		custom_tooltip = FRC_LOTHAIR_O4
-		set_country_flag = FRC_04
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.4.e
-		custom_tooltip = FRC_LOTHAIR_O5
-		set_country_flag = FRC_05
+		name = ab_frc_disaster_event.3.g
+		custom_tooltip = AB_FRA1_BRANCHING_TT
+		hidden_effect = {
+			ab_enable_branching_mission_review = {
+				key = FRA1_BRANCHING
+				ai_event_id = ab_france.0
+			}
+		}
 	}
 }
 
@@ -281,6 +226,9 @@ country_event = {
 	title = ab_frc_disaster_event.5.t
 	desc = ab_frc_disaster_event.5.d
 	picture = BATTLE_eventPicture
+
+	fire_only_once = yes
+	hidden = yes
 	
 	trigger = {
 		tag = FRC
@@ -296,399 +244,9 @@ country_event = {
 	
 	option = {
 		name = ab_frc_disaster_event.5.a
-		custom_tooltip = FRC_LOTHAIR_DETHRONED
-		hidden_effect = {
-			set_in_empire = no
+		set_country_flag = ab_frc_lothair_defeated
+		country_event = {
+			id = ab_frc_disaster_event.3
 		}
-		disband_rebels = noble_rebels
-		disband_rebels = pretender_rebels
-		change_tag = FRA
-		swap_non_generic_missions = yes
-		swap_free_idea_group = yes
-		hidden_effect = {
-			kill_ruler = yes
-			if = {
-				limit = {
-					has_heir = yes
-				}
-				hidden_effect = {
-					kill_heir = {}
-				}
-			}
-		}
-		hidden_effect = {
-			define_ruler = {
-				name = "(Regency Council)"
-				ADM = 0
-				DIP = 0
-				MIL = 0
-				regency = yes
-			}
-		}
-		set_country_flag = FRC_new_ruler_defeat
-	}
-}
-
-#Replacement of Lothair
-country_event = {
-	id = ab_frc_disaster_event.6
-	title = ab_frc_disaster_event.6.t
-	desc = ab_frc_disaster_event.6.d
-	picture = GOOD_WITH_MONARCH_eventPicture
-	
-	fire_only_once = yes 
-	
-	immediate = {
-		hidden_effect = {
-			FRA = {
-				set_country_flag = FRC_trial_lothair
-			}
-		}
-	}
-	
-	trigger = {
-		has_country_flag = FRC_new_ruler_defeat
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.6.a
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "Nibelungen"
-			claim = 90
-		}
-		release_all_subjects = yes
-		set_government_rank = 2
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.6.b
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "de Bourgogne"
-			claim = 50
-		}
-		set_government_rank = 2
-		if = {
-			limit = {
-				NEV = {
-					is_subject_of = ROOT
-				}
-			}
-			ROOT = { inherit = NEV }
-		}
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.6.c
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "de Rouergue"
-			claim = 50
-		}
-		set_government_rank = 2
-		if = {
-			limit = {
-				TOU = {
-					is_subject_of = ROOT
-				}
-			}
-			ROOT = { inherit = TOU }
-		}
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.6.de
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "de Rohan"
-			claim = 50
-		}
-		set_government_rank = 2
-		if = {
-			limit = {
-				GUY = {
-					is_subject_of = ROOT
-				}
-			}
-			ROOT = { inherit = GUY }
-		}
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.6.e
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "de Bourbon"
-			claim = 50
-		}
-		set_government_rank = 2
-		if = {
-			limit = {
-				BOU = {
-					is_subject_of = ROOT
-				}
-			}
-			ROOT = { inherit = BOU }
-		}
-	}
-}
-
-#Lothair Dies Heirless
-country_event = {
-	id = ab_frc_disaster_event.7
-	title = ab_frc_disaster_event.7.t
-	desc = ab_frc_disaster_event.7.d
-	picture = BATTLE_eventPicture
-	
-	trigger = {
-		tag = FRC
-		NOT = {
-			has_ruler = "Lothair III"
-		}
-		NOT = {
-			dynasty = "Carolingian"
-		}
-		has_disaster = frankish_succession_crisis
-		has_heir = no
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.7.a
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "Nibelungen"
-			claim = 90
-		}
-		hidden_effect = {
-		disband_rebels = noble_rebels
-		disband_rebels = pretender_rebels
-		change_tag = FRA
-		swap_non_generic_missions = yes
-		swap_free_idea_group = yes
-		set_in_empire = no
-		set_government_rank = 2
-		add_stability = 2
-		GUY = {
-			set_in_empire = no
-		}
-		BOU = {
-			set_in_empire = no
-		}
-		TOU = {
-			set_in_empire = no
-		}
-		NEV = {
-			set_in_empire = no
-		}
-		}
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.7.b
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "de Rohan"
-			claim = 90
-		}
-		hidden_effect = {
-		disband_rebels = noble_rebels
-		disband_rebels = pretender_rebels
-		change_tag = FRA
-		swap_non_generic_missions = yes
-		swap_free_idea_group = yes
-		set_in_empire = no
-		set_government_rank = 2
-		add_stability = 2
-		GUY = {
-			set_in_empire = no
-		}
-		BOU = {
-			set_in_empire = no
-		}
-		TOU = {
-			set_in_empire = no
-		}
-		NEV = {
-			set_in_empire = no
-		}
-		}
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.7.c
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "de Bourbon"
-			claim = 90
-		}
-		hidden_effect = {
-		disband_rebels = noble_rebels
-		disband_rebels = pretender_rebels
-		change_tag = FRA
-		swap_non_generic_missions = yes
-		swap_free_idea_group = yes
-		set_in_empire = no
-		set_government_rank = 2
-		add_stability = 2
-		GUY = {
-			set_in_empire = no
-		}
-		BOU = {
-			set_in_empire = no
-		}
-		TOU = {
-			set_in_empire = no
-		}
-		NEV = {
-			set_in_empire = no
-		}
-		}
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.7.de
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "d'Anjou"
-			claim = 90
-		}
-		hidden_effect = {
-		disband_rebels = noble_rebels
-		disband_rebels = pretender_rebels
-		change_tag = FRA
-		swap_non_generic_missions = yes
-		swap_free_idea_group = yes
-		set_in_empire = no
-		set_government_rank = 2
-		add_stability = 2
-		GUY = {
-			set_in_empire = no
-		}
-		BOU = {
-			set_in_empire = no
-		}
-		TOU = {
-			set_in_empire = no
-		}
-		NEV = {
-			set_in_empire = no
-		}
-		}
-	}
-	
-	option = {
-		name = ab_frc_disaster_event.7.e
-		define_ruler = {
-			adm = 3
-			dip = 3
-			mil = 3
-			dynasty = "de Valois"
-			claim = 90
-		}
-		hidden_effect = {
-		disband_rebels = noble_rebels
-		disband_rebels = pretender_rebels
-		change_tag = FRA
-		swap_non_generic_missions = yes
-		swap_free_idea_group = yes
-		set_in_empire = no
-		set_government_rank = 2
-		add_stability = 2
-		GUY = {
-			set_in_empire = no
-		}
-		BOU = {
-			set_in_empire = no
-		}
-		TOU = {
-			set_in_empire = no
-		}
-		NEV = {
-			set_in_empire = no
-		}
-		}
-	}
-}
-
-#Stab modifier remover if something goes wrong
-country_event = {
-	id = ab_frc_disaster_event.8
-	title = ab_frc_disaster_event.8.t
-	desc = ab_frc_disaster_event.8.d
-	picture = GOOD_WITH_MONARCH_eventPicture
-
-	hidden = yes
-	
-	trigger = {
-		has_country_modifier = ab_cant_stab
-		OR = {
-			mission_completed = frc_downfall
-			mission_completed = adu_downfall
-			tag = FRA
-		}
-	}
-
-	option = {
-		name = ab_frc_disaster_event.8.a
-		remove_country_modifier = ab_cant_stab
-	}
-}
-
-#Heir modifier remover if something goes wrong
-country_event = {
-	id = ab_frc_disaster_event.9
-	title = ab_frc_disaster_event.9.t
-	desc = ab_frc_disaster_event.9.d
-	picture = GOOD_WITH_MONARCH_eventPicture
-
-	hidden = yes
-	
-	trigger = {
-		has_country_modifier = frc_crisis
-		tag = FRA
-	}
-
-	option = {
-		name = ab_frc_disaster_event.8.a
-		remove_country_modifier = frc_crisis
-	}
-}
-	
-#Remove crisis as France
-country_event = {
-	id = ab_frc_disaster_event.10
-	title = ab_frc_disaster_event.10.t
-	desc = ab_frc_disaster_event.10.d
-	picture = GOOD_WITH_MONARCH_eventPicture
-
-	hidden = yes
-	
-	trigger = {
-		has_disaster = frankish_succession_crisis
-		tag = FRA
-	}
-
-	option = {
-		name = ab_frc_disaster_event.8.a
-		end_disaster = frankish_succession_crisis
 	}
 }

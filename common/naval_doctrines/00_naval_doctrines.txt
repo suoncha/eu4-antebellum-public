@@ -27,6 +27,15 @@ fleet_in_being = {
 free_oarsmen = {
 	can_select = {
 		is_primitive = no
+		NOT = {
+			OR = {
+				has_country_flag = ab_unlocked_greek_fire
+				OR = {
+					tag = BYZ
+					was_tag = BYZ
+				}
+			}
+		}
 	}
 
 	cost = 0.1
@@ -109,7 +118,7 @@ wooden_wall = {
 			# AB [[[
 			#culture_group = british
 			primary_culture = english
-			primary_culture = anglois
+			primary_culture = Anglois
 			# ]]]
 		}
 	}
@@ -468,7 +477,10 @@ novgorodian_ushkuiniks = {
 		NOT = { has_country_flag = unlock_norwegian_naval_doctrine }
 		OR = {
 			culture = novgorodian
-			#culture = novgorodian_new
+			AND = { 
+				was_tag = NOV
+				culture = russian_culture
+			}	
 		}
 	}
 
@@ -489,7 +501,7 @@ dvoyane_admiralty = {
 		NOT = { has_country_flag = unlock_norwegian_naval_doctrine }
 		OR = {
 			culture = russian
-			#culture = russian_new
+			culture = russian_culture
 		}
 	}
 
@@ -732,4 +744,28 @@ pacific_voyaging_doctrine = {
 	removed_effect = {}
 	
 	button_gfx = 30
+}
+
+# AB
+
+greek_fire_doctrine = {
+	can_select = {
+		OR = {
+			has_country_flag = ab_unlocked_greek_fire
+			OR = {
+				tag = BYZ
+				was_tag = BYZ
+			}
+		}
+	}
+	
+	cost = 0.1
+	country_modifier = {
+		naval_morale_damage = 0.2
+		own_coast_naval_combat_bonus = 1
+	}
+	effect = {}
+	removed_effect = {}
+	
+	button_gfx = 32
 }

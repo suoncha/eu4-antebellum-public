@@ -3,64 +3,26 @@ country_decisions = {
 	peru_nation = {
 		major = yes
 		potential = {
+			is_former_colonial_nation = yes
 			NOT = { has_country_flag = changed_from_colonial_nation }
-			is_nomad = no
-			
-			is_random_new_world = no
-			NOT = { tag = HLR }
-			NOT = { tag = PAP }
-			OR = {
-				is_former_colonial_nation = yes
-				is_colonial_nation = yes
-				AND = {
-					NOT = {
-						OR = {
-							technology_group = north_american
-							technology_group = mesoamerican
-							technology_group = andean
-							technology_group = high_american
-							technology_group = south_american
-						}
-					}
-					capital_scope = {
-						colonial_region = colonial_peru
-						is_core = ROOT
-					}
-				}
-			}
-			colonial_peru = {
-				owned_by = ROOT
-			}
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 3	
-				}
+			NOT = { exists = PEU }
+			capital_scope = {
+				region = peru_region
 			}
 		}
 		provinces_to_highlight = {
-			colonial_region = colonial_peru
-			OR = {
-				NOT = { owned_by = ROOT }
-				is_city = no
-			}
+			region = peru_region
+			NOT = { owned_by = ROOT }
 		}
 		allow = {
-			adm_tech = 10
-			is_free_or_tributary_trigger = yes
+			is_former_colonial_nation = yes
 			is_at_war = no
-			capital_scope = {
-				colonial_region = colonial_peru
-				is_core = ROOT
-				is_city = yes
-			}
+			is_subject = no
 			num_of_owned_provinces_with = {
-				value = 10
-				colonial_region = colonial_peru
-				is_city = yes
+				value = 5
+				region = peru_region
+				is_core = ROOT
 			}
-			NOT = { exists = PEU }
 		}
 		effect = {
 			

@@ -1,0 +1,177 @@
+country_decisions = {
+
+	abolish_witan = {
+		major = yes
+		potential = {
+			has_reform = saxon_england
+		}
+		
+		allow = {
+			has_reform = saxon_england
+			stability = 3
+			dip_power = 300
+			legitimacy = 100
+			OR = {
+				AND = {
+					NOT = {
+						num_of_estate_privileges = {
+							estate = estate_nobles
+							value = 5
+						}
+					}
+					NOT = {
+						estate_influence = {
+							estate = estate_nobles
+							influence = 60
+						}
+					}
+				}
+				estate_loyalty = {
+					estate = estate_nobles
+					loyalty = 70
+				}
+			}
+			is_at_war = no
+			is_subject = no
+		}
+		
+		effect = {
+			add_stability = -3
+			add_corruption = 5
+			add_dip_power = -300
+			add_government_reform = witenred
+			custom_tooltip = ABOLISH_WITAN_TT
+		}
+		ai_will_do = {
+			factor = 5
+		}
+		ai_importance = 400
+	}
+	
+	england_prison = {
+		potential = {
+			OR = {
+				tag = ENG
+				tag = ANG
+				was_tag = ENG
+				was_tag = ANG
+			}
+			NOT = { has_country_modifier = eng_prison_modifier_prevent }
+		}
+		allow = {
+			has_idea = quest_for_the_new_world
+			adm_power = 100
+		}
+		effect = {
+			add_adm_power = -100
+			add_country_modifier = {
+				name = "eng_prison_modifier"
+				duration = 3650
+			}
+			hidden_effect = {
+				add_country_modifier = {
+					name = "eng_prison_modifier_prevent"
+					duration = 10950
+					hidden = yes
+				}
+			}
+			custom_tooltip = ENG_30_YEARS
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	assemble_house_lords = {
+		major = yes
+		potential = {
+			has_country_modifier = ang_magna
+		}
+		
+		allow = {
+			has_country_modifier = ang_magna
+			stability = 3
+			is_at_war = no
+			NOT = {
+				estate_influence = {
+					estate = estate_nobles
+					influence = 50
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = ANG_MAGNA_50
+				had_country_flag = {
+					flag = ang_magna
+					days = 18250
+				}
+			}
+		}
+		effect = {
+			add_stability = -4
+			remove_country_modifier = ang_magna
+			add_estate_loyalty = {
+				estate = estate_nobles
+				loyalty = -30
+			}
+			random_owned_province = {
+				limit = {
+					culture = ROOT
+				}
+				noble_rebels = 3
+			}
+			random_owned_province = {
+				limit = {
+					culture = ROOT
+				}
+				noble_rebels = 3
+			}
+			add_country_modifier = {
+				name = ang_house_lords
+				duration = -1
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
+	assemble_house_lords2 = {
+		major = yes
+		potential = {
+			has_country_modifier = ang_domesday
+			NOT = { has_country_flag = abolished_db_flag }
+		}
+		
+		allow = {
+			has_country_modifier = ang_domesday
+			stability = 3
+			adm_power = 200
+			is_at_war = no
+			NOT = {
+				estate_influence = {
+					estate = estate_nobles
+					influence = 50
+				}
+			}
+			custom_trigger_tooltip = {
+				tooltip = ANG_DB_50
+				had_country_flag = {
+					flag = ang_domesday
+					days = 18250
+				}
+			}
+		}
+		effect = {
+			set_country_flag = abolished_db_flag
+			add_stability = -1
+			add_adm_power = -200
+			add_country_modifier = {
+				name = ang_house_lords
+				duration = -1
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

@@ -4,16 +4,10 @@ country_decisions = {
 	unite_japan = {
 		major = yes
 		potential = {
-			NOT = { tag = JAP }
-			NOT = { has_country_flag = formed_japan_flag }
-			NOT = { has_government_attribute = prevents_forming_japan }
-			NOT = { was_tag = ANU }
-			
 			has_reform = shogunate
-			any_country = {
-				vassal_of = ROOT
-				has_reform = daimyo
-			}
+			NOT = { has_government_attribute = prevents_forming_japan }
+			NOT = { exists = JAP }
+			has_subject_of_type = daimyo_vassal
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -23,15 +17,17 @@ country_decisions = {
 			NOT = { owned_by = ROOT }
 		}
 		allow = {
-			NOT = { exists = JAP }
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
-			is_at_war = no
-			num_of_cities = 35
+			has_reform = shogunate
 			owns = 1020
 			owns = 1028
+			num_of_cities = 35
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
+			hidden_effect = {
+				save_global_event_target_as = ab_formertag_jap
+			}
 			change_tag = JAP
 			set_country_flag = formed_japan_flag
 			swap_non_generic_missions = yes
@@ -74,6 +70,14 @@ country_decisions = {
 			}
 			hidden_effect = {
 				ab_update_preset_cn_colors = yes
+				# Color Choice
+				country_event = {
+					id = ab_revert_formertag.1
+				}
+				# Name Choice
+				country_event = {
+					id = ab_revert_formertag.2
+				}
 			}
 		}
 		ai_will_do = {
@@ -89,119 +93,44 @@ country_decisions = {
 	united_japan = {
 		major = yes
 		potential = {
-			has_reform = shogunate
-			NOT = { has_country_flag = formed_japan_flag }
-			
+			OR = {
+				has_reform = indep_daimyo
+				AND = {
+					has_reform = shogunate
+					NOT = { has_government_attribute = prevents_forming_japan }
+				}
+			}
 			NOT = { exists = JAP }
-			NOT = { was_tag = ANU }
-			NOT = { has_government_attribute = prevents_forming_japan }
-		}
-		allow = {
-			NOT = { exists = JAP }
-			is_free_or_tributary_trigger = yes
-			owns = 1020
-			owns = 1028
-			all_country = {
-				NOT = {
-					has_reform = daimyo
-				}
-				NOT = {
-					has_reform = indep_daimyo
-				}
-			}
-			is_at_war = no
-		}
-		effect = {
-			change_tag = JAP
-			on_change_tag_effect = yes
-			restore_country_name_effect = yes
-			remove_government_reform = shogunate
-			if = {
-				limit = {
-					government = monarchy
-				}
-				add_government_reform = japanempire
-			}
-			#set_legacy_government = despotic_monarchy
-			set_country_flag = formed_japan_flag
-			set_government_rank = 3
-			add_legitimacy = 100
-			grant_all_mana = {
-				mana = 100
-			}
-			swap_non_generic_missions = yes
-			if = {
-				limit = { has_custom_ideas = no }
-				country_event = { id = ideagroups.1 } #Swap Ideas
-			}
-			# AB
-			if = {
-				limit = {
-					has_country_modifier = tjj_integrate_subjects
-				}
-				remove_country_modifier = tjj_integrate_subjects
-			}
-			hidden_effect = {
-				ab_update_preset_cn_colors = yes
-			}
-		}
-		ai_will_do = {
-			factor = 1
-		}
-	}
-	
-	# United Japan
-	united_japan_daimyo = {
-		major = yes
-		potential = {
-			NOT = { tag = JAP }
-			NOT = { has_country_flag = formed_japan_flag }
-			
-			NOT = { has_reform = shogunate }
-			NOT = { has_reform = celestial_empire }
-			NOT = { has_reform = MIN_celestial_empire }
-			NOT = { has_government_attribute = prevents_forming_japan }
-			culture_group = japanese_g
 		}
 		provinces_to_highlight = {
-			OR = {
-				province_id = 1020
-				province_id = 1028
-			}
+			region = japan_region
 			NOT = { owned_by = ROOT }
 		}
 		allow = {
-			NOT = { exists = JAP }
-			is_free_or_tributary_trigger = yes
+			culture_group = japanese_g
 			owns = 1020
 			owns = 1028
-			all_country = {
-				OR = {
-					tag = ROOT
-					AND = {
-						NOT = { has_reform = daimyo }
-						NOT = { has_reform = indep_daimyo }
-						NOT = { has_reform = shogunate }
-					}
-				}
+			NOT = { has_subject_of_type = daimyo_vassal }
+			all_known_country = { 
+				NOT = { has_reform = indep_daimyo }
 			}
 			is_at_war = no
+			is_subject = no
 		}
 		effect = {
+			hidden_effect = {
+				save_global_event_target_as = ab_formertag_jap
+			}
 			change_tag = JAP
 			on_change_tag_effect = yes
 			restore_country_name_effect = yes
-			set_country_flag = formed_japan_flag
-			remove_non_electors_emperors_from_empire_effect = yes
-			remove_government_reform = daimyo
-			remove_government_reform = indep_daimyo
 			if = {
 				limit = {
 					government = monarchy
 				}
 				add_government_reform = japanempire
 			}
-			#set_legacy_government = despotic_monarchy
+			set_country_flag = formed_japan_flag
 			set_government_rank = 3
 			add_legitimacy = 100
 			grant_all_mana = {
@@ -221,13 +150,20 @@ country_decisions = {
 			}
 			hidden_effect = {
 				ab_update_preset_cn_colors = yes
+				# Color Choice
+				country_event = {
+					id = ab_revert_formertag.1
+				}
+				# Name Choice
+				country_event = {
+					id = ab_revert_formertag.2
+				}
 			}
 		}
 		ai_will_do = {
 			factor = 1
 		}
 	}
-
 	
 	# Sakoku
 	enforce_sakoku_law = {
@@ -235,7 +171,8 @@ country_decisions = {
 			has_country_modifier = western_trade
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
+			has_country_modifier = western_trade
+			is_subject = no
 			stability = 2
 			legitimacy = 75
 			adm_power = 200
@@ -243,24 +180,22 @@ country_decisions = {
 			dip_power = 200
 		}
 		effect = {
-			ROOT = {
+			remove_country_modifier = "western_trade"
+			add_country_modifier = {
+				name = "sakoku_law"
+				duration = -1
+			}
+			set_country_flag = sakoku_law
+			every_subject_country = {
+				limit = {
+					has_country_modifier = western_trade
+				}
 				remove_country_modifier = "western_trade"
 				add_country_modifier = {
 					name = "sakoku_law"
 					duration = -1
 				}
 				set_country_flag = sakoku_law
-				every_subject_country = {
-					limit = {
-						has_country_modifier = western_trade
-					}
-					remove_country_modifier = "western_trade"
-					add_country_modifier = {
-						name = "sakoku_law"
-						duration = -1
-					}
-					set_country_flag = sakoku_law
-				}
 			}
 			set_global_flag = japan_is_closed
 			add_adm_power = -200
@@ -281,67 +216,24 @@ country_decisions = {
 			}
 		}
 	}
-
-	send_western_embassy_mission = {
-		potential = {
-			always = no
-			NOT = {
-				has_global_flag = japan_is_closed
-				has_country_modifier = western_embassy_mission
-			}
-			has_reform = daimyo
-			NOT = { has_institution = global_trade }
-			has_global_flag = japan_has_encountered_the_west
-			any_known_country = {
-				technology_group = western
-				has_institution = global_trade
-			}
-		}
-	
-		allow = {
-			treasury = 200
-			dip_power = 50
-		}
-	
-		effect = {
-			add_country_modifier = {
-				name = western_embassy_mission
-				duration = 3650
-			}
-			add_treasury = -200
-			add_dip_power = -50
-		}
-	}
 	
 	restore_the_shrine_of_ise = {
 		potential = {
 			religion = shinto
 			4359 = {
-				NOT = {
-					has_province_modifier = ise_grand_shrine
-				}
+				owned_by = ROOT
+				NOT = { has_province_modifier = ise_grand_shrine }
 			}
 		}
 		allow = {
+			religion = shinto
 			treasury = 300
-			owns = 4359
-			4359 = {
-				NOT = {
-					has_province_modifier = ise_grand_shrine
-				}
-			}
 		}
 		effect = {
 			add_treasury = -300
 			add_prestige = 20
 			4359 = {
-				if = {
-					limit = {
-						NOT = { religion = shinto }
-						
-					}
-					change_religion = shinto
-				}
+				change_religion = shinto
 				add_permanent_province_modifier = {
 					name = ise_grand_shrine
 					duration = -1
@@ -353,30 +245,24 @@ country_decisions = {
 	the_shogunate = {
 		major = yes
 		potential = {
-			NOT = { tag = JAP }
-			NOT = { has_country_flag = formed_shogunate_flag }
 			has_reform = shogunate
-			any_country = {
-				vassal_of = ROOT
-				has_reform = daimyo
-			}
+			NOT = { has_country_flag = formed_shogunate_flag }
+			has_subject_of_type = daimyo_vassal
+			NOT = { exists = JAP }
 		}
 		allow = {
-			NOT = { exists = JAP }
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
-			is_at_war = no
+			has_reform = shogunate
+			NOT = { num_of_cities = 10 }
 			custom_trigger_tooltip = {
 				tooltip = ab_can_form_shogunate_tt
 				has_government_attribute = can_form_shogunate
 			}
-			NOT = { num_of_cities = 10 }
 			num_of_subjects = 10
 			all_known_country = { 
-				NOT = {
-					has_reform = indep_daimyo
-				}
+				NOT = { has_reform = indep_daimyo }
 			}
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
 			add_prestige = 25

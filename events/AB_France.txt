@@ -1,0 +1,1585 @@
+namespace = ab_france
+
+#Republic v. Monarchy
+country_event = {
+	id = ab_france.0
+	title = ab_france.0.t
+	desc = ab_france.0.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	option = { #Monarchy
+		name = ab_france.0.a
+		add_stability = -1
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = -25
+		}
+		random_province = {
+			limit = {
+				region = france_region
+				owned_by = ROOT
+			}
+			spawn_rebels = {
+				type = pretender_rebels
+				size = 3
+			}
+		}
+		set_country_flag = fra_monarchy_focus
+		swap_non_generic_missions = yes
+		country_event = { id = ab_france.1 }
+		set_government_rank = 2
+		add_government_reform = fraelective
+		hidden_effect = {
+			swap_free_idea_group = yes
+		}
+	}
+
+	option = { #No Gods, No Kings, long live the republic
+		name = ab_france.0.b
+		set_country_flag = fra_communist_focus
+		swap_non_generic_missions = yes
+		define_ruler = {
+			claim = 75
+		}
+		set_government_rank = 2
+		change_government = republic
+		add_government_reform = frarepublic
+		hidden_effect = {
+			set_global_flag = AB_FRA_REPUBLIC_RISE
+			set_variable = {
+				which = fraBattleCount
+				value = 0
+			}
+			swap_free_idea_group = yes
+			every_subject_country = {
+				restore_country_color = yes
+			}
+			release_all_subjects = yes
+		}
+	}
+}
+
+#Elective Monarchy
+country_event = {
+	id = ab_france.1
+	title = ab_france.1.t
+	desc = ab_france.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	trigger = {
+		NOT = { is_subject_of_type = personal_union }
+		NOT = { is_subject_of_type = integrated_personal_union }
+		NOT = { has_country_flag = had_election_event }
+	} 
+
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			set_country_flag = had_election_event
+		}
+	}
+	
+	after = {
+		clr_country_flag = had_election_event
+	}
+
+	option = { #Bourbon
+		name = ab_france.1.a
+		trigger = {
+			NOT = { dynasty = "de Bourbon" }
+		}
+		define_ruler = {
+			dynasty = "de Bourbon"
+			claim = 50
+		}
+		add_ruler_modifier = {
+			name = "ab_fra_bourbon_dynasty"
+			duration = -1
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = fra_inherited_bou
+				}
+				overlord_of = BOU
+			}
+			set_country_flag = fra_inherited_bou
+			inherit = BOU
+		}
+		custom_tooltip = FRA_TOOLTIP_BBON
+	}
+	
+	option = { #Toulouse
+		name = ab_france.1.b
+		trigger = {
+			NOT = { dynasty = "de Toulouse" }
+		}
+		define_ruler = {
+			dynasty = "de Toulouse"
+			claim = 50
+		}
+		add_ruler_modifier = {
+			name = "ab_fra_toulouse_dynasty"
+			duration = -1
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = fra_inherited_guy
+				}
+				overlord_of = GUY
+			}
+			set_country_flag = fra_inherited_guy
+			inherit = GUY
+		}
+		custom_tooltip = FRA_TOOLTIP_TOULOUSE
+	}
+
+	option = { #Bourgogne
+		name = ab_france.1.c
+		trigger = {
+			NOT = { dynasty = "de Bourgogne" }
+		}
+		define_ruler = {
+			dynasty = "de Bourgogne"
+			claim = 50
+		}
+		add_ruler_modifier = {
+			name = "ab_fra_bourgogne_dynasty"
+			duration = -1
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = fra_inherited_nev
+				}
+				overlord_of = NEV
+			}
+			set_country_flag = fra_inherited_nev
+			inherit = NEV
+		}
+		custom_tooltip = FRA_TOOLTIP_BOURGOGNE
+	}
+	
+	option = { #Rouergue
+		name = ab_france.1.e
+		trigger = {
+			NOT = { dynasty = "de Rouergue" }
+		}
+		define_ruler = {
+			dynasty = "de Rouergue"
+			claim = 50
+		}
+		add_ruler_modifier = {
+			name = "ab_fra_rouergue_dynasty"
+			duration = -1
+		}
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = fra_inherited_tou
+				}
+				overlord_of = TOU
+			}
+			set_country_flag = fra_inherited_tou
+			inherit = TOU
+		}
+		custom_tooltip = FRA_TOOLTIP_ROUERGUE
+	}
+
+	option = { #Maintain dynasty
+		name = ab_france.1.f
+		add_absolutism = 5
+		add_legitimacy_or_mil_power = { amount = 10 }
+		if = {
+			limit = {
+				dynasty = "de Bourbon"
+			}
+			add_ruler_modifier = {
+				name = "ab_fra_bourbon_dynasty"
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				dynasty = "de Toulouse"
+			}
+			add_ruler_modifier = {
+				name = "ab_fra_toulouse_dynasty"
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				dynasty = "de Bourgogne"
+			}
+			add_ruler_modifier = {
+				name = "ab_fra_bourgogne_dynasty"
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				dynasty = "de Rouergue"
+			}
+			add_ruler_modifier = {
+				name = "ab_fra_rouergue_dynasty"
+				duration = -1
+			}
+		}
+	}
+}
+
+#Lingua Franca 
+country_event = {
+	id = ab_france.2
+	title = ab_france.2.t
+	desc = ab_france.2.d
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = ab_france.2.a
+		add_country_modifier = {
+			name = ab_fra_lingua_franca
+			duration = -1
+		}
+		custom_tooltip = UNITE_FRENCH_CULTURE
+		hidden_effect = {
+			every_province = {
+				limit = {
+					culture_group = french
+					owned_by = FRA
+					owner = {
+						NOT = { has_country_flag = fra_subject_culture_spread }
+					}
+				}
+				change_culture = french_culture
+			}
+			change_primary_culture = french_culture
+			set_heir_culture = french_culture
+			set_ruler_culture = french_culture
+			every_country = {
+				limit = {
+					culture_group = french
+					NOT = { has_country_flag = fra_subject_culture_spread }
+				}
+				change_primary_culture = french_culture
+				set_heir_culture = french_culture
+				set_ruler_culture = french_culture
+			}
+		}
+	}
+}
+
+#empire_francais
+country_event = {
+	id = ab_france.3
+	title = ab_france.3.t
+	desc = ab_france.3.d
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = ab_france.3.a
+		add_country_modifier = {
+			name = ab_fra_empire_francais
+			duration = -1
+		}
+		set_country_flag = ab_france_absolutism_courthouse
+		custom_tooltip = AB_FRANCE_ABSOLUTISM_COURTHOUSE
+		custom_tooltip = AB_EMPTY
+		set_country_flag = ab_swa_building_roads_bonus
+		custom_tooltip = SWA_BUILDING_ROADS_BONUS
+	}
+}
+
+#baillages reform
+country_event = {
+	id = ab_france.4
+	title = ab_france.4.t
+	desc = ab_france.4.d
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = { 
+		name = ab_france.4.a
+			add_country_modifier = {
+				name = ab_fra_baillages_reform
+				duration = -1
+			}
+			add_stability = 1
+			add_dip_power = -100
+			add_adm_power = -100
+			add_mil_power = -100
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = PER_ADM_SCALING
+			set_country_flag = ab_improved_persian_advisors
+	}
+}
+#Death of Republic - Dictatorship
+country_event  = {
+	id = ab_france.5
+	title = ab_france.5.t
+	desc = ab_france.5.d
+	picture = DEBATE_REPUBLICAN_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_france.5.a
+		set_country_flag = fra_dictatorship_achieved
+		unlock_government_reform = {
+			government_reform = fradictatorialconsulship
+		}
+		hidden_effect = {
+			add_government_reform = fradictatorialconsulship
+		}
+	}
+}
+
+#Peasants Take Over the Republic
+country_event  = {
+	id = ab_france.6
+	title = ab_france.6.t
+	desc = ab_france.6.d
+	picture = MARCHING_PEASANTS_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = ab_france.6.a
+		set_country_flag = ab_fra_win_battles_against_monarchy_check
+		custom_tooltip = FRA_RECOLOR_RED
+		set_country_flag = fra_republic_saved
+		unlock_government_reform = {
+			government_reform = fragrandrepublic
+		}
+		hidden_effect = {
+			add_government_reform = fragrandrepublic
+		}
+		set_country_flag = ab_fra_win_battles_against_monarchy_check
+	}
+}
+
+#Pied-Noir Spread for French Maghreb
+province_event = {
+	id = ab_france.40
+	title = ab_france.40.t
+	desc = ab_france.40.d
+	picture = CULTURE_eventPicture
+
+	hidden = yes
+
+	mean_time_to_happen = {
+		months = 240
+	}
+
+	trigger = {
+		owner = {
+			has_country_flag = ab_fra_pied_noir_culture_spread
+		}
+		region = maghreb_region
+		NOT = { culture_group = french }
+		is_core = ROOT
+	}
+
+	option = {
+		name = ab_france.40.a
+		change_culture = pied_noir_culture
+	}
+}
+
+#French Group Spread for Client States
+province_event = {
+	id = ab_france.41
+	title = ab_france.41.t
+	desc = ab_france.41.d
+	picture = CULTURE_eventPicture
+
+	hidden = yes
+
+	mean_time_to_happen = {
+		months = 240
+	}
+
+	trigger = {
+		owner = {
+			has_country_flag = fra_subject_culture_spread
+			is_subject_of = FRA
+		}
+		NOT = { culture_group = french }
+		any_friendly_coast_border_province = {
+			culture_group = french
+		}
+		is_core = ROOT
+	}
+
+	option = {
+		name = ab_france.41.a
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						tag = ANG
+						was_tag = ANG
+					}
+				}
+			}
+			change_culture = Anglois
+		}
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						tag = ALG
+						was_tag = ALG
+					}
+				}
+			}
+			change_culture = pied_noir_culture
+		}
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						tag = CAT
+						was_tag = CAT
+					}
+				}
+			}
+			change_culture = francatalan
+		}
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						tag = NED
+						was_tag = NED
+					}
+				}
+			}
+			change_culture = batavois
+		}
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						tag = HLV
+						was_tag = HLV
+					}
+				}
+			}
+			change_culture = romandais
+		}
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						tag = RHL
+						was_tag = RHL
+					}
+				}
+			}
+			change_culture = rhenois
+		}
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						tag = ITA
+						was_tag = ITA
+					}
+				}
+			}
+			change_culture = transalpins
+		}
+	}
+}
+
+#French Republic changing color to Red
+country_event = {
+	id = ab_france.50
+	title = ab_france.50.t
+	desc = ab_france.50.d
+	picture = CULTURE_eventPicture
+
+	hidden = yes
+	is_triggered_only = yes
+
+	option = {
+		name = ab_france.50.a
+		if = {
+			limit = {
+				has_country_flag = fra_communist_color_9
+			}
+			set_country_flag = fra_communist_color_10
+			clr_country_flag = fra_communist_color_9
+			clr_country_flag = fra_communist_color_8
+			clr_country_flag = fra_communist_color_7
+			clr_country_flag = fra_communist_color_6
+			clr_country_flag = fra_communist_color_5
+			clr_country_flag = fra_communist_color_4
+			clr_country_flag = fra_communist_color_3
+			clr_country_flag = fra_communist_color_2
+			clr_country_flag = fra_communist_color_1
+			change_country_color = {
+				color = { 200 0 0 }
+			}
+			IF = { 
+				limit = {
+					is_variable_equal = {
+					which = ab_game_rules_colored_subjects_var
+					value = 2
+					}
+				}
+				every_country = {
+						limit = {
+						is_subject_of = FRA
+						}
+						change_country_color = {
+							country = overlord
+						}
+				}
+			} 
+		}
+		else_if = {
+			limit = {
+				has_country_flag = fra_communist_color_8
+			}
+			set_country_flag = fra_communist_color_9
+			change_country_color = {
+				color = { 182 5 21 }
+			}
+			IF = { 
+				limit = {
+					is_variable_equal = {
+					which = ab_game_rules_colored_subjects_var
+					value = 2
+					}
+				}
+				every_country = {
+						limit = {
+						is_subject_of = FRA
+						}
+						change_country_color = {
+							country = overlord
+						}
+				}
+			} 
+		}
+		else_if = {
+			limit = {
+				has_country_flag = fra_communist_color_7
+			}
+			set_country_flag = fra_communist_color_8
+			change_country_color = {
+				color = { 164 10 42 }
+			}
+			IF = { 
+				limit = {
+					is_variable_equal = {
+					which = ab_game_rules_colored_subjects_var
+					value = 2
+					}
+				}
+				every_country = {
+						limit = {
+						is_subject_of = FRA
+						}
+						change_country_color = {
+							country = overlord
+						}
+				}
+			} 
+		}
+		else_if = {
+			limit = {
+				has_country_flag = fra_communist_color_6
+			}
+			set_country_flag = fra_communist_color_7
+			change_country_color = {
+				color = { 146 15 63 }
+			}
+			IF = { 
+				limit = {
+					is_variable_equal = {
+					which = ab_game_rules_colored_subjects_var
+					value = 2
+					}
+				}
+				every_country = {
+						limit = {
+						is_subject_of = FRA
+						}
+						change_country_color = {
+							country = overlord
+						}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = fra_communist_color_5
+			}
+			set_country_flag = fra_communist_color_6
+			change_country_color = {
+				color = { 128 20 84 }
+			}
+			IF = { 
+				limit = {
+					is_variable_equal = {
+					which = ab_game_rules_colored_subjects_var
+					value = 2
+					}
+				}
+				every_country = {
+						limit = {
+						is_subject_of = FRA
+						}
+						change_country_color = {
+							country = overlord
+						}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = fra_communist_color_4
+			}
+			set_country_flag = fra_communist_color_5
+			change_country_color = {
+				color = { 110 25 105 }
+			}
+			IF = { 
+				limit = {
+					is_variable_equal = {
+					which = ab_game_rules_colored_subjects_var
+					value = 2
+					}
+				}
+				every_country = {
+						limit = {
+						is_subject_of = FRA
+						}
+						change_country_color = {
+							country = overlord
+						}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = fra_communist_color_3
+			}
+			set_country_flag = fra_communist_color_4
+			change_country_color = {
+				color = { 92 30 126 }
+			}
+			IF = { 
+				limit = {
+					is_variable_equal = {
+					which = ab_game_rules_colored_subjects_var
+					value = 2
+					}
+				}
+				every_country = {
+						limit = {
+						is_subject_of = FRA
+						}
+						change_country_color = {
+							country = overlord
+						}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = fra_communist_color_2
+			}
+			set_country_flag = fra_communist_color_3
+			change_country_color = {
+				color = { 74 35 147 }
+			}
+			IF = { 
+				limit = {
+					is_variable_equal = {
+					which = ab_game_rules_colored_subjects_var
+					value = 2
+					}
+				}
+				every_country = {
+						limit = {
+						is_subject_of = FRA
+						}
+						change_country_color = {
+							country = overlord
+						}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_flag = fra_communist_color_1
+			}
+			set_country_flag = fra_communist_color_2
+			change_country_color = {
+				color = { 56 40 168 }
+			}
+			IF = { 
+				limit = {
+					is_variable_equal = {
+					which = ab_game_rules_colored_subjects_var
+					value = 2
+					}
+				}
+				every_country = {
+						limit = {
+						is_subject_of = FRA
+						}
+						change_country_color = {
+							country = overlord
+						}
+				}
+			}
+		}
+		else = {
+			set_country_flag = fra_communist_color_1
+			change_country_color = { 
+				color = { 38 45 189 }
+			} 
+			IF = { 
+				limit = {
+					is_variable_equal = {
+					which = ab_game_rules_colored_subjects_var
+					value = 2
+					}
+				}
+				every_country = {
+						limit = {
+						is_subject_of = FRA
+						}
+						change_country_color = {
+							country = overlord
+						}
+				}
+			} 
+			
+		}
+	}
+}
+
+#AI Army v Navy
+country_event = {
+	id = ab_france.60
+	title = ab_france.60.t
+	desc = ab_france.0.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	option = { #Army Focus
+		name = ab_france.60.a
+		set_country_flag = fra_army_focus
+		swap_non_generic_missions = yes
+	}
+
+	option = { #Navy Focus
+		name = ab_france.60.b
+		set_country_flag = fra_navy_focus
+		swap_non_generic_missions = yes
+	}
+}
+
+# This is the event that will start the Imperial Incident
+# it can be triggered randomly, or via a trigger for example
+# when France changes government type to Republican
+country_event = {
+	id = ab_france.100
+	title = ab_france.100.t
+	desc = ab_france.100.d
+	picture = HRE_eventPicture
+
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {
+		is_emperor = yes
+		has_global_flag = AB_FRA_REPUBLIC_RISE
+	}
+
+	mean_time_to_happen = {
+		days = 30
+	}
+
+	# Put here things that you want to happen before the player can make any
+	# changes, you don't want them messing with anything
+	immediate = {
+		hidden_effect = {
+			clr_global_flag = AB_FRA_REPUBLIC_RISE
+		}
+	}
+
+	option = { 
+		name = ab_france.100.a
+		set_imperial_incident = incident_republican_france
+	}
+}
+
+# This event is very special, every option of this event is converted into
+# a vote that can be clicked on the Holy Roman Empire interface
+country_event = {
+	id = ab_france.101
+	title = ab_france.101.t
+	desc = ab_france.101.d
+	picture = HRE_eventPicture
+
+	fire_only_once = yes
+	is_triggered_only = yes
+	major = yes
+
+	option = { #invade France
+		name = ab_france.101.a
+		country_event = {
+			id = ab_france.102
+		}
+		custom_tooltip = AB_EMPTY
+		FRA = {
+			add_opinion = {
+				who = emperor
+				modifier = opinion_imperial_rejection
+			}
+		}
+	}
+
+	option = { #do nothing
+		name = ab_france.101.b
+		FRA = {
+			add_prestige = 25
+			add_republican_tradition = 25
+			add_country_modifier = {
+				name = ab_fra_imperial_recognition
+				duration = 3650
+			}
+			add_opinion = {
+				who = emperor
+				modifier = opinion_imperial_recognition
+			}
+		}
+		emperor = {
+			add_country_modifier = {
+				name = ab_fra_imperial_concede
+				duration = 7300
+			}
+		}
+	}
+}
+
+# Emperor deciding between Balkanizing France or Not
+country_event = {
+	id = ab_france.102
+	title = ab_france.102.t
+	desc = ab_france.102.d
+	picture = HRE_eventPicture
+
+	major = yes
+	is_triggered_only = yes
+
+	option = { #Force the Monarchy
+		name = ab_france.102.a
+		ai_chance = { factor = 70 }
+		custom_tooltip = AB_FRA_REPUBLICAN_INCIDENT_RESTORE
+		set_global_flag = ab_fra_republican_incident_monarchy_choice
+		FRA = {
+			country_event = {
+				id = ab_france.103
+			}
+		}
+	}
+
+	option = { #Balkanize France instead
+		name = ab_france.102.b
+		ai_chance = { factor = 30 }
+		custom_tooltip = AB_FRA_REPUBLICAN_INCIDENT_BALKANIZE
+		set_global_flag = ab_fra_republican_incident_balkanize_choice
+		declare_war_with_cb = {
+			casus_belli = cb_fate_of_france
+			who = FRA
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = AB_FATE_OF_FRANCE_CALL_THE_PRINCES
+		hidden_effect = {
+			# Set this so the game knows we are in a war, this is
+			# removed when any conclusion is reached
+			set_global_flag = fate_of_france_in_war
+			# This must be set to no when the war concludes
+			hre_inheritable = yes
+			# Information event for France
+			FRA = {
+				country_event = {
+					id = ab_france.107
+				}
+			}
+			# Give every Imperial Prince a decision
+			every_country = {
+				limit = {
+					is_part_of_hre = yes
+					is_emperor = no
+					is_subject = no
+				}
+				country_event = {
+					id = ab_france.106
+					days = 1
+					random = 42
+				}
+			}
+			# Lotharingia offer
+			country_event = {
+				id = ab_france.112
+				days = 90
+			}
+		}
+	}
+}
+
+# Emperor Demands Restoration of the Monarchy
+country_event = {
+	id = ab_france.103
+	title = ab_france.103.t
+	desc = ab_france.103.d
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+
+	option = { #Accept the Monarchy
+		name = ab_france.103.a
+		ai_chance = { factor = 0 }
+		custom_tooltip = AB_FRA_REPUBLICAN_INCIDENT_RESTORE_YES
+		hidden_effect = {
+			FRA = {
+				clr_country_flag = fra_communist_focus
+				set_country_flag = fra_monarchy_focus
+				set_government_rank = 2
+				change_government = monarchy
+				add_government_reform = fraelective
+				swap_free_idea_group = yes
+				swap_non_generic_missions = yes
+				set_in_empire = yes
+				country_event = { id = ab_france.1 }
+				add_stability = -1
+				capital_scope = {
+					spawn_rebels = {
+						type = leadered_peasant_rebels
+						size = 2
+					}
+				}
+				every_owned_province = {
+					add_unrest = 5
+				}
+			}
+			emperor = {
+				country_event = {
+					id = ab_france.104
+				}
+			}
+		}
+	}
+
+	option = { #Reject the Monarchy
+		name = ab_france.103.b
+		ai_chance = { factor = 100 }
+		custom_tooltip = AB_FRA_REPUBLICAN_INCIDENT_RESTORE_NO
+		hidden_effect = {
+			emperor = {
+				country_event = {
+					id = ab_france.105
+				}
+			}
+		}
+	}
+}
+
+# Emperor - The French Accept the Restoration of the Monarchy
+country_event = {
+	id = ab_france.104
+	title = ab_france.104.t
+	desc = ab_france.104.d
+	picture = HRE_eventPicture
+
+	major = yes
+	is_triggered_only = yes
+
+	option = { #Accept the Monarchy
+		name = ab_france.104.a
+		add_imperial_influence = 25
+		add_prestige = 25
+		custom_tooltip = AB_FRA_REPUBLICAN_INCIDENT_RESTORE_ACCEPTED
+		clr_global_flag = ab_fra_republican_incident_monarchy_choice
+	}
+}
+
+# Emperor - The French Reject the Restoration of the Monarchy
+country_event = {
+	id = ab_france.105
+	title = ab_france.105.t
+	desc = ab_france.105.d
+	picture = HRE_eventPicture
+
+	major = yes
+	is_triggered_only = yes
+
+	option = { #Declare War 
+		name = ab_france.105.a
+		ai_chance = { factor = 70 }
+		declare_war_with_cb = {
+			casus_belli = cb_fate_of_france
+			who = FRA
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = AB_FATE_OF_FRANCE_CALL_THE_PRINCES
+		hidden_effect = {
+			# Set this so the game knows we are in a war, this is
+			# removed when any conclusion is reached
+			set_global_flag = fate_of_france_in_war
+			# This must be set to no when the war concludes
+			hre_inheritable = yes
+			# Information event for France
+			FRA = {
+				country_event = {
+					id = ab_france.107
+				}
+			}
+			# Give every Imperial Prince a decision
+			every_country = {
+				limit = {
+					is_part_of_hre = yes
+					is_emperor = no
+					is_subject = no
+				}
+				country_event = {
+					id = ab_france.106
+					days = 1
+					random = 42
+				}
+			}
+			# Lotharingia offer
+			country_event = {
+				id = ab_france.112
+				days = 90
+			}
+		}
+	}
+
+	option = { #Back down
+		name = ab_france.105.b
+		ai_chance = { factor = 30 }
+		add_imperial_influence = -25
+		add_prestige = -25
+		clr_global_flag = ab_fra_republican_incident_monarchy_choice
+		custom_tooltip = AB_EMPTY
+		FRA = {
+			add_prestige = 25
+			add_republican_tradition = 25
+			add_country_modifier = {
+				name = ab_fra_imperial_recognition
+				duration = 3650
+			}
+		}
+	}
+}
+
+# the princes react to the war
+country_event = {
+	id = ab_france.106
+	title = ab_france.106.t
+	desc = ab_france.106.d
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+
+	# Only fire for fully sovereign Imperial Princes
+	trigger = {
+		is_part_of_hre = yes
+		is_emperor = no
+		is_subject = no
+	}
+
+	option = { # Stay neutral
+		name = ab_france.106.a
+		trigger = {
+			NOT = { alliance_with = emperor }
+			NOT = { alliance_with = FRA }
+		}
+		ai_chance = { 
+			factor = 50 
+			modifier = {
+				factor = 15
+				government = republic
+			}
+			modifier = {
+				factor = 1000
+				has_reform = free_city
+			}
+		}
+		custom_tooltip = fate_of_france.106.inconclusive_war_tooltip
+	}
+	
+	option = { # Side with the emperor
+		name = ab_france.106.b
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1000
+				alliance_with = emperor
+			}
+			modifier = {
+				factor = 1000
+				marriage_with = emperor
+			}
+			modifier = {
+				factor = 1000
+				OR = {
+					ai_attitude = {
+						who = FRA
+						attitude = attitude_threatened
+					}
+					ai_attitude = {
+						who = emperor
+						attitude = attitude_friendly
+					}
+					ai_attitude = {
+						who = FRA
+						attitude = attitude_outraged
+					}
+					ai_attitude = {
+						who = FRA
+						attitude = attitude_rivalry
+					}
+					ai_attitude = {
+						who = FRA
+						attitude = attitude_hostile
+					}
+				}
+			}
+			modifier = {
+				factor = 2
+				has_opinion = {
+					who = FRA
+					value = -10
+				}
+			}
+			modifier = {
+				factor = 2
+				has_opinion = {
+					who = emperor
+					value = 10
+				}
+			}
+			modifier = {
+				factor = 75
+				OR = {
+					tag = GUY
+					tag = BOU
+					tag = TOU
+					tag = NEV
+				}
+			}
+			modifier = {
+				factor = 5
+				is_elector = yes
+			}
+		}
+		join_all_offensive_wars_of = emperor
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = fate_of_france.106.emperor_support_rewards
+		# The emperor will look the other way as we expand our domain
+		# in the empire (they will be unable to ask for unlawful territory)
+		hidden_effect = {
+			add_country_modifier = {
+				name = fate_of_francia_emperor_timer
+				duration = 21900
+				hidden = yes
+			}
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = fate_of_france.106.imperial_victory_tooltip
+	}
+
+	option = { # Side with France
+		name = ab_france.106.c
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1000
+				alliance_with = FRA
+			}
+			modifier = {
+				factor = 10
+				culture_group = latin
+				government = republic
+			}
+			modifier = {
+				factor = 1000
+				OR = {
+					ai_attitude = {
+						who = emperor
+						attitude = attitude_outraged
+					}
+					ai_attitude = {
+						who = emperor
+						attitude = attitude_rivalry
+					}
+					ai_attitude = {
+						who = emperor
+						attitude = attitude_hostile
+					}
+				}
+			}
+			modifier = {
+				factor = 2
+				has_opinion = {
+					who = FRA
+					value = 10
+				}
+			}
+			modifier = {
+				factor = 2
+				has_opinion = {
+					who = emperor
+					value = -10
+				}
+			}
+			modifier = {
+				factor = 1000
+				tag = FRI
+			}
+		}
+		join_all_defensive_wars_of = FRA
+	}
+}
+
+# France - Emperor Declares War
+country_event = {
+	id = ab_france.107
+	title = ab_france.107.t
+	desc = ab_france.107.d
+	picture = wihgfx_FEMALE_GENERAL_eventPicture
+
+	is_triggered_only = yes
+
+	option = { #To Arms!
+		name = ab_france.107.a
+		add_manpower = 20
+		add_country_modifier = {
+			name = ab_fra_mobilize
+			duration = 1825
+		}
+		define_general = {
+			shock = 3
+			fire = 2
+			manuever = 2
+			siege = 1
+			female = yes
+			name = "Jeanne d'Arc"
+		}
+	}
+}
+
+# French Victory - dismantle HRE 
+country_event = {
+	id = ab_france.108
+	title = ab_france.108.t
+	desc = ab_france.108.d
+	picture = HRE_eventPicture
+
+	major = yes
+	is_triggered_only = yes
+
+	immediate = {
+		clr_global_flag = fate_of_france_in_war
+		clr_global_flag = fate_of_france_decisive_war
+	}
+
+	after = {
+		clr_global_flag = ab_fra_republican_incident_monarchy_choice
+		clr_global_flag = ab_fra_republican_incident_balkanize_choice
+	}
+
+	option = {
+		name = ab_france.108.a
+		dismantle_hre = yes
+		add_prestige = 50
+		add_republican_tradition  = 50
+		add_country_modifier = {
+			name = fra_defeated_empire
+			duration = 7300
+		}
+	}
+}
+
+#Imperial Victory 
+country_event = {
+	id = ab_france.109
+	title = ab_france.109.t
+	desc = {
+		trigger = {
+			has_global_flag = ab_fra_republican_incident_monarchy_choice
+		}
+		desc = ab_france.109.d1
+	}
+	desc = {
+		trigger = {
+			has_global_flag = ab_fra_republican_incident_balkanize_choice
+		}
+		desc = ab_france.109.d2
+	}
+	picture = HRE_eventPicture
+
+	major = yes
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			clr_global_flag = fate_of_france_in_war
+			clr_global_flag = fate_of_france_decisive_war
+			if = {
+				# The war is over, re-enable elective HRE monarchy
+				limit = {
+					NOT = { hre_reform_passed = erbkaisertum }
+				}
+				hre_inheritable = no
+			}
+			add_imperial_influence = 100
+		}
+	}
+
+	after = {
+		clr_global_flag = ab_fra_republican_incident_monarchy_choice
+		clr_global_flag = ab_fra_republican_incident_balkanize_choice
+	}
+
+	option = {
+		name = ab_france.109.a
+		# Add prestige and a modifier to the emperor
+		add_prestige = 50
+		add_legitimacy = 50
+		add_country_modifier = {
+			name = defender_of_the_empire
+			duration = 7300
+		}
+		hidden_effect = {
+			FRA = {
+				clr_country_flag = fra_communist_focus
+				set_country_flag = fra_monarchy_focus
+				set_government_rank = 2
+				change_government = monarchy
+				add_government_reform = fraelective
+				swap_free_idea_group = yes
+				swap_non_generic_missions = yes
+				set_in_empire = yes
+				country_event = { id = ab_france.1 }
+			}
+		}
+		if = {
+			limit = {
+				has_global_flag = ab_fra_republican_incident_balkanize_choice
+			}
+			custom_tooltip = AB_FRA_REPUBLICAN_INCIDENT_BALKANIZED_ENFORCED
+			hidden_effect = {
+				FRA = {
+					set_government_rank = 1
+					release_all_subjects = yes
+					release_all_possible_countries = yes
+				}
+				180 = {
+					add_core = AMG
+					cede_province = AMG
+				}
+				4387 = {
+					add_core = AMG
+					cede_province = AMG
+				}
+				4111 = {
+					add_core = AMG
+					cede_province = AMG
+				}
+				4386 = {
+					add_core = AMG
+					cede_province = AMG
+				}
+				178 = {
+					add_core = ORL
+					cede_province = ORL
+				}
+				177 = {
+					add_core = ORL
+					cede_province = ORL
+				}
+				4695 = {
+					add_core = TOU
+					cede_province = TOU
+				}
+				every_province = {
+					limit = {
+						is_core = FRA
+						NOT = {
+							owned_by = FRA
+						}
+					}
+					remove_core = FRA
+				}
+			}
+		}
+		else = {
+			custom_tooltip = AB_FRA_REPUBLICAN_INCIDENT_RESTORE_ACCEPTED
+		}
+	}
+}
+
+country_event = {
+	id = ab_france.110
+	title = ab_france.110.t
+	desc = ab_france.110.d
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+
+	option = { # The peace of [PeaceTreatyCity.GetName]
+		name = ab_france.110.a
+		custom_tooltip = AB_FRA_REPUBLIC_INCIDENT_WHITE_PEACE
+	}
+}
+
+# Emperor version of above event
+country_event = {
+	id = ab_france.111
+	title = ab_france.110.t
+	desc = ab_france.110.d
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+	major = yes
+	# Don't fire for those nations as they
+	# get their own event
+	major_trigger = {
+		NOT = {
+			OR = {
+				is_emperor = yes
+				is_part_of_hre = yes
+				tag = FRA
+			}
+		}
+	}
+
+	immediate = {
+		hidden_effect = {
+			clr_global_flag = fate_of_france_in_war
+			clr_global_flag = fate_of_france_decisive_war
+			if = {
+				# The war is over, re-enable elective HRE monarchy
+				limit = {
+					NOT = { hre_reform_passed = erbkaisertum }
+				}
+				hre_inheritable = no
+			}
+			add_imperial_influence = -100
+		}
+	}
+
+	after = {
+		clr_global_flag = ab_fra_republican_incident_monarchy_choice
+		clr_global_flag = ab_fra_republican_incident_balkanize_choice
+	}
+
+	option = { # The peace of [PeaceTreatyCity.GetName]
+		name = ab_france.110.a
+		custom_tooltip = AB_FRA_REPUBLIC_INCIDENT_WHITE_PEACE
+	}
+}
+
+# Emperor invite Lotharingia to the War
+country_event = {
+	id = ab_france.112
+	title = ab_france.112.t
+	desc = ab_france.112.d
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+
+	trigger = {
+		LOT = {
+			exists = yes
+			NOT = { war_with = FRA }
+			NOT = { truce_with = FRA }
+		}
+		any_elector = {
+			war_with = ROOT
+			is_in_war = {
+				casus_belli = cb_fate_of_france
+			}
+		}
+	}
+
+	option = {
+		name = ab_france.112.a
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0
+				any_country = {
+					defensive_war_with = emperor
+					truce_with = ROOT
+				}
+			}
+		}
+		random_elector = {
+			limit = {
+				war_with = ROOT
+				is_in_war = {
+					casus_belli = cb_fate_of_france
+				}
+			}
+			elector = no
+		}
+		LOT = {
+			country_event = {
+				id = ab_france.113
+			}
+		}
+	}
+
+	option = {
+		name = ab_france.112.b
+		ai_chance = { factor = 30 }
+		add_prestige = 10
+	}
+}
+
+# Lotharingia offer
+country_event = {
+	id = ab_france.113
+	title = ab_france.113.t
+	desc = ab_france.113.d
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+	major = yes
+
+	option = {
+		name = ab_france.113.a
+		ai_chance = { factor = 70 }
+		set_in_empire = yes
+		elector = yes
+		join_all_offensive_wars_of = emperor
+	}
+
+	option = {
+		name = ab_france.113.b
+		ai_chance = { factor = 30 }
+	}
+}

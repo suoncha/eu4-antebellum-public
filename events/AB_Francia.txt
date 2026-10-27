@@ -69,7 +69,6 @@ country_event = {
 	
 	trigger = {
 		tag = FRC
-		is_year = 1445
 		has_disaster = frankish_succession_crisis
 	}
 	
@@ -234,7 +233,6 @@ country_event = {
 	
 	trigger = {
 		tag = FRC
-		is_year = 1445
 		has_disaster = frankish_succession_crisis
 	}
 	
@@ -363,19 +361,7 @@ country_event = {
 	desc = ab_francia.10.d
 	picture = ECONOMY_eventPicture
 
-	fire_only_once = yes
-
-
-	trigger = {
-		tag = FRC
-		NOT = { is_year = 1500 }
-		owns = 183
-	}
-
-	mean_time_to_happen = {
-		months = 300
-	}
-	
+	is_triggered_only = yes
 	
 	option = {		# Issue it
 		name = ab_francia.10.a
@@ -414,17 +400,8 @@ country_event = {
 	desc = ab_francia.11.d
 	picture = ECONOMY_eventPicture
 	
-	fire_only_once = yes
-	trigger = {
-		tag = FRC
-		NOT = { is_year = 1550 }
-	}
+	is_triggered_only = yes
 	
-	mean_time_to_happen = {
-		months = 300
-	}
-	
-
 	option = {		# Take Control of the Guilds
 		name = ab_francia.11.a
 		if = {
@@ -447,125 +424,6 @@ country_event = {
 	}
 }
 
-# The Commissioning of Versailles
-country_event = {
-	id = ab_francia.12
-	title = ab_francia.12.t
-	desc = ab_francia.12.d
-	picture = UNIVERSITY_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = {		# We need it for the Glory
-		name = "flavor_fra.EVTOPTA3125"
-		add_years_of_income = -0.5
-
-		add_country_modifier = {
-			name = versailles
-			duration = -1
-		}
-
-	}
-	option = {		# Such a project will not benefit us
-		name = "flavor_fra.EVTOPTB3125"
-		add_stability_or_adm_power = yes
-	}
-}
-
-# The Royal Musketeers
-country_event = {
-	id = ab_francia.13
-	title = ab_francia.13.t
-	desc = ab_francia.13.d
-	picture = LAND_MILITARY_eventPicture
-	
-	fire_only_once = yes
-	
-	trigger = {
-		OR = {
-			has_country_flag = fra_musketeers_mission
-			AND = {
-				NOT = { has_mission = emp_fra_establish_the_musketeers }
-				tag = FRA
-				government = monarchy
-				treasury = 300
-				183 = { # Ile-de-France
-					controlled_by = FRA
-					owned_by = FRA
-					is_capital = yes
-					has_siege = no
-					NOT = {
-						has_province_modifier = mousquetaires_du_roi
-					}
-				}
-				has_regency = no
-				mil = 6
-				adm_tech = 25
-				is_year = 1600
-				is_free_or_tributary_trigger = yes
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 200
-	}
-	
-	option = {
-		name = "flavor_fra.EVTOPTA5"
-		add_army_professionalism = 0.1
-		183 = { # Ile-de-France
-			add_province_modifier = {
-				name = mousquetaires_du_roi
-				duration = -1
-			}
-		}
-	}
-}
-
-# Turgot and the Economic Reforms
-country_event = {
-	id = ab_francia.14
-	title = ab_francia.14.t
-	desc = ab_francia.14.d
-	picture = ECONOMY_eventPicture
-
-
-	fire_only_once = yes
-
-	trigger = {
-		tag = FRC
-		is_year = 1750
-	}
-
-	mean_time_to_happen = {
-		months = 150
-	}
-
-	immediate = {
-		set_country_flag = FRA_had_event_3141
-	}
-
-	option = {		# Let him Reform
-		name = "flavor_fra.EVTOPTA3141"
-		if = {
-			limit = {
-				NOT = { has_completed_all_reforms_trigger = yes }
-			}
-			add_reform_progress_small_effect = yes
-		}
-		add_stability = -1
-		add_country_modifier = {
-			name = turgots_economic_reforms
-			duration = -1
-		}
-	}
-	option = {		# Don't Let him Reform
-		name = "flavor_fra.EVTOPTB3141"
-		add_stability_or_adm_power = yes
-	}
-}
-
 #100th anniversary of the Battle of Valencia
 country_event = {
 	id = ab_francia.15
@@ -573,16 +431,7 @@ country_event = {
 	desc = ab_francia.15.d
 	picture = BATTLE_eventPicture
 	
-	trigger = {
-		tag = FRC
-		is_year = 1543
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	fire_only_once = yes 
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_francia.15.a
@@ -674,14 +523,7 @@ country_event = {
 	desc = ab_francia.18.d
 	picture = BATTLE_eventPicture
 	
-	trigger = {
-		tag = FRC
-		is_year = 1643
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
+	is_triggered_only = yes
 	
 	fire_only_once = yes 
 	
@@ -778,35 +620,45 @@ country_event = {
 
 }
 
-#AI Help 1
+#AI Help 2
 country_event = {
-	id = ab_francia.22
-	title = ab_francia.22.t
-	desc = ab_francia.22.d
+	id = ab_francia.23
+	title = ab_francia.23.t
+	desc = ab_francia.23.d
 	picture = GOOD_WITH_MONARCH_eventPicture
 	
 	hidden = yes
 	
+	is_triggered_only = yes
+	
 	trigger = {
-		OR = {
-			tag = FRC
-			was_tag = FRC
-		}
 		ai = yes
-		NRM = {
-			ai = yes
-		}
 	}
 	
-	fire_only_once = yes
-	
 	option = {
-		name = ab_francia.22.a
+		name = ab_francia.23.a
 		if = {
 			limit = {
-				NRM = {
-					ai = yes
+				BRI = { ai = yes }
+			}
+			set_ai_attitude = {
+				attitude = attitude_hostile
+				who = BRI
+			}
+			BRI = {
+				add_opinion = {
+					who = ROOT
+					modifier = ab_expansion_target
 				}
+				reverse_add_opinion = {
+					who = ROOT
+					modifier = ab_expansion_target
+				}
+			}
+		}
+		if = {
+			limit = {
+				NRM = { ai = yes }
 			}
 			set_ai_attitude = {
 				attitude = attitude_hostile
@@ -824,240 +676,6 @@ country_event = {
 			}
 		}
 	}
-
-}
-
-#AI Help 2
-country_event = {
-	id = ab_francia.23
-	title = ab_francia.23.t
-	desc = ab_francia.23.d
-	picture = GOOD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		OR = {
-			tag = FRC
-			was_tag = FRC
-		}
-		ai = yes
-		BRI = {
-			ai = yes
-		}
-	}
-	
-	option = {
-		name = ab_francia.23.a
-		if = {
-			limit = {
-				BRI = {
-					ai = yes
-				}
-			}
-			set_ai_attitude = {
-				attitude = attitude_hostile
-				who = BRI
-			}
-			BRI = {
-				add_opinion = {
-					who = ROOT
-					modifier = ab_expansion_target
-				}
-				reverse_add_opinion = {
-					who = ROOT
-					modifier = ab_expansion_target
-				}
-			}
-		}
-	}
-
-}
-
-#AI Help 3
-country_event = {
-	id = ab_francia.24
-	title = ab_francia.24.t
-	desc = ab_francia.24.d
-	picture = GOOD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		OR = {
-			tag = FRC
-			was_tag = FRC
-		}
-		ai = yes
-		is_year = 1452
-		NOT = {
-			mission_completed = frc_economy
-		}
-		mission_completed = frc_downfall
-	}
-	
-	option = {
-		name = ab_francia.24.a
-		complete_mission = frc_economy
-		add_country_modifier = {
-			name = "frc_economy"
-			duration = 5475
-		}
-		if = {
-			limit = { has_dlc = "Mandate of Heaven" }
-			capital_scope = {
-				add_prosperity = 100 
-			}
-		}
-		remove_country_modifier = frc_advisors_leaving
-	}
-
-}
-
-#AI Help 4
-country_event = {
-	id = ab_francia.25
-	title = ab_francia.25.t
-	desc = ab_francia.25.d
-	picture = GOOD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		OR = {
-			tag = FRC
-			was_tag = FRC
-		}
-		ai = yes
-		is_year = 1452
-		NOT = {
-			mission_completed = frc_subjects
-		}
-		mission_completed = frc_economy
-		mission_completed = frc_manpower
-	}
-	
-	option = {
-		name = ab_francia.25.a
-		complete_mission = frc_subjects
-		add_country_modifier = {
-			name = "fra_subjects"
-			duration = 7300
-		}
-		normandy_area = {
-			limit = {
-				NOT = { is_core = ROOT}
-				NOT = { owned_by = ROOT}
-			}
-			add_permanent_claim = ROOT
-		}
-		brittany_area = {
-			limit = {
-				NOT = { is_core = ROOT}
-				NOT = { owned_by = ROOT}
-			}
-			add_permanent_claim = ROOT
-		}
-	}
-
-}
-
-#AI Help 5
-country_event = {
-	id = ab_francia.26
-	title = ab_francia.26.t
-	desc = ab_francia.26.d
-	picture = GOOD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		OR = {
-			tag = FRC
-			was_tag = FRC
-		}
-		ai = yes
-		is_year = 1460
-		NOT = {
-			mission_completed = frc_centralize
-		}
-		NOT = {
-			any_subject_country = {
-				capital_scope = {
-					region = france_region
-				}
-			}
-		}
-		mission_completed = frc_brittany
-		mission_completed = frc_normandy
-	}
-	
-	option = {
-		name = ab_francia.26.a
-		complete_mission = frc_centralize
-		if = {
-			limit = {
-				has_country_modifier = annexers_legacy
-			}
-			remove_country_modifier = annexers_legacy
-		}
-		add_reform_progress_medium_effect = yes
-		add_country_modifier = {
-			name = frc_centralized
-			duration = -1
-		}
-		france_region = {
-			limit = {
-				NOT = { is_permanent_claim = ROOT	}
-				NOT = { is_core = ROOT	}
-			}
-			add_permanent_claim = ROOT
-		}
-	}
-
-}
-
-#AI Help 6
-country_event = {
-	id = ab_francia.27
-	title = ab_francia.27.t
-	desc = ab_francia.27.d
-	picture = GOOD_WITH_MONARCH_eventPicture
-	
-	hidden = yes
-	
-	fire_only_once = yes
-	
-	trigger = {
-		OR = {
-			tag = FRC
-			was_tag = FRC
-		}
-		ai = yes
-		is_year = 1452
-		NOT = {
-			mission_completed = frc_manpower
-		}
-		mission_completed = frc_downfall
-	}
-	
-	option = {
-		name = ab_francia.27.a
-		complete_mission = frc_manpower
-		add_country_modifier = { 
-			name = frc_replenished_the_frankish_ranks_modifier
-			duration = 7300
-		}
-	}
-
 }
 
 #Fate of Iberia - Iberia
@@ -1215,8 +833,8 @@ country_event = {
 	fire_only_once = yes
 	
 	trigger = {
-		tag = FRC
 		has_country_flag = frc_unlocked_timed
+		NOT = { mission_completed = frc_safeguard_iberia }
 		OR = {
 			NOT = {
 				exists = ASU
@@ -1228,9 +846,6 @@ country_event = {
 				exists = NAV
 			}
 		}
-		NOT = {
-			mission_completed = frc_safeguard_iberia
-		}
 	}
 	
 	option = {
@@ -1241,7 +856,6 @@ country_event = {
 			swap_non_generic_missions = yes
 		}
 	}
-	
 }
 
 #Fate of Iberia - Francia positive response
@@ -1256,7 +870,6 @@ country_event = {
 	option = {
 		name = ab_francia.35.a
 	}
-	
 }
 
 #Legacy of the Normans
@@ -1303,7 +916,6 @@ country_event = {
 			factor = 50
 		}
 	}
-	
 }
 
 #Fate of Francia
@@ -1371,7 +983,6 @@ country_event = {
 			factor = 50
 		}
 	}
-	
 }
 
 #Remove Center
@@ -1750,27 +1361,6 @@ country_event = {
 		}
 		unlock_estate_privilege = {
 			estate_privilege = estate_nobles_frankish_unity
-		}
-	}
-}
-
-#AB Achievement - Maidenless Setup
-country_event = {
-	id = ab_francia.44
-	title = ab_francia.44.t
-	desc = ab_francia.44.d
-	picture = AB_CHARLEMAGNE_eventPicture
-	
-	fire_only_once = yes
-	is_triggered_only = yes
-	
-	hidden = yes
-
-	option = {
-		name = ab_francia.44.a
-		set_variable = {
-			which = frc_lothair_heirs_disinherited
-			value = 0
 		}
 	}
 }

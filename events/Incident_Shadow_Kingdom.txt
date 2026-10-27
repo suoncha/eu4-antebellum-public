@@ -21,10 +21,6 @@ country_event = {
 		normal_or_historical_nations = yes		
 	}
 	
-	mean_time_to_happen = {
-		months = 6
-	}
-	
 	option = {
 		name = "hre_event.4.a"
 		custom_tooltip = shadow_kingdom_warning_tt
@@ -41,6 +37,12 @@ country_event = {
 	
 	fire_only_once = yes
 	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_global_flag = ab_shadow_kingdom_flag
+		}
+	}
 	
 	option = { # we cannot succeed, let them leave
 		ai_chance = {
@@ -51,7 +53,6 @@ country_event = {
 		add_imperial_influence = -20
 		custom_tooltip = shadow_kingdom_emperor_gives_up_tt
 		set_global_flag = italians_leave_hre
-		set_global_flag = ab_shadow_kingdom_flag
 		hidden_effect = {
 			every_country = {
 				limit = {
@@ -85,40 +86,181 @@ country_event = {
 		name = shadow_kingdom.2.b
 		set_global_flag = emperor_trying_to_avert_shadow_kingdom
 		custom_tooltip = ab_shadow_kingdom_incident_tt
-		set_global_flag = ab_shadow_kingdom_flag
-	}
-}
-
-# Time is up for the Emperor
-country_event = {
-	id = shadow_kingdom.3
-	title = shadow_kingdom.3.t
-	desc = {
-		trigger = {
-			any_country = {
-				will_leave_for_shadow_kingdom_trigger = yes
-				is_shadow_kingdom_eligible_trigger = yes
-				OR = {
-					is_subject = no
-					AND = {
-						is_subject = yes
-						overlord = {
-							NOT = {
-								is_part_of_hre = yes
-								capital_scope = { region = italy_region }
-							}
-						}
-					}
+		hidden_effect = {
+			REB = {
+				country_event = {
+					id = shadow_kingdom.6
+					days = 18250
 				}
 			}
 		}
-		desc = shadow_kingdom.3.d # emperor not completely successful
+	}
+}
+
+# The Emperor succeed
+country_event = {
+	id = shadow_kingdom.3
+	title = shadow_kingdom.3.t
+	desc = shadow_kingdom.3.d2
+	picture = HRE_eventPicture
+	
+	major = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_effect = {
+			set_global_flag = italians_leave_hre
+			clr_global_flag = emperor_trying_to_avert_shadow_kingdom
+		}
+	}
+	
+	option = {
+		name = shadow_kingdom.3.b
+		add_imperial_influence = 25
+	}
+}
+
+# Italian country leaves or stays
+country_event = {
+	id = shadow_kingdom.4
+	title = hre_event.1.t
+	desc = {
+		trigger = {
+			has_country_flag = reined_in_for_shadow_kingdom
+		}
+		desc = shadow_kingdom.4.d2
 	}
 	desc = {
 		trigger = {
+			NOT = { has_country_flag = reined_in_for_shadow_kingdom }
+		}
+		desc = hre_event.1.d
+	}
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = { # remain
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1000
+				will_leave_for_shadow_kingdom_trigger = no
+			}
+		}
+		name = hre_event.1.b
+		if = {
+			limit = {
+				NOT = {
+					has_country_flag = reined_in_for_shadow_kingdom
+				}
+			}
+			add_prestige = -20
+			add_country_modifier = {
+				name = submission_to_emperor
+				duration = 7300
+			}
+		}
+	}
+	option = { # leave
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 1000
+				will_leave_for_shadow_kingdom_trigger = yes
+			}
+		}
+		trigger = {
 			NOT = {
+				has_country_flag = reined_in_for_shadow_kingdom
+			}
+		}
+		name = hre_event.1.a
+		set_in_empire = no
+		set_country_flag = permanently_left_hre_flag
+		emperor = {
+			add_opinion = {
+				who = ROOT
+				modifier = hre_country_left
+			}
+		}
+		if = {
+			limit = {
 				any_country = {
-					will_leave_for_shadow_kingdom_trigger = yes
+					is_subject_of = ROOT
+					capital_scope = {
+						region = italy_region
+					}
+					is_part_of_hre = yes
+				}
+			}
+			every_subject_country = {
+				limit = {
+					capital_scope = {
+						region = italy_region
+					}
+					is_part_of_hre = yes
+				}
+				set_in_empire = no
+			}
+		}
+	}
+}
+
+# Event to fire the incident. Or the de facto incident for non-dlc owners
+country_event = {
+	id = shadow_kingdom.5
+	title = hre_event.3.t
+	desc = shadow_kingdom.2.d
+	picture = HRE_eventPicture
+	
+	fire_only_once = yes
+	major = yes
+	
+	trigger = {
+		is_emperor = yes
+		NOT = { has_global_flag = italians_leave_hre }
+		any_country = {
+			is_shadow_kingdom_eligible_trigger = yes
+			NOT = { has_country_flag = reined_in_for_shadow_kingdom }
+		}
+		NOT = { active_imperial_incident = any }
+		# AB [[[
+		# The heathens have been kicked out
+		italy_region = {
+			type = all
+			owner = {
+				NOT = { religion_group = muslim }
+			}
+		}
+		# ]]]
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	option = {
+		name = shadow_kingdom.5.a
+		trigger = {
+			has_dlc = "Emperor"
+		}
+		set_imperial_incident = incident_shadow_kingdom
+	}
+	option = {
+		trigger = {
+			NOT = { has_dlc = "Emperor" }
+		}
+		ai_chance = {
+			factor = 10000
+		}
+		name = shadow_kingdom.2.a
+		add_prestige = -10
+		add_imperial_influence = -20
+		set_global_flag = italians_leave_hre
+		hidden_effect = {
+			every_country = {
+				limit = {
 					is_shadow_kingdom_eligible_trigger = yes
 					OR = {
 						is_subject = no
@@ -131,62 +273,87 @@ country_event = {
 								}
 							}
 						}
-					}
+					}							
+				}
+				country_event = { id = shadow_kingdom.4 }
+			}
+		}
+		every_province = {
+			limit = {
+				is_part_of_hre = yes
+				region = italy_region
+				owner = {
+					is_part_of_hre = no
+				}
+			}
+			set_in_empire = no
+		}
+	}
+	option = {
+		trigger = {
+			NOT = { has_dlc = "Emperor" }
+		}
+		ai_chance = {
+			factor = 0
+		}
+		name = shadow_kingdom.2.b
+		set_global_flag = emperor_trying_to_avert_shadow_kingdom
+		custom_tooltip = ab_shadow_kingdom_incident_tt
+		hidden_effect = {
+			REB = {
+				country_event = {
+					id = shadow_kingdom.6
+					days = 18250
 				}
 			}
 		}
-		desc = shadow_kingdom.3.d2 # emperor completely successful
 	}
+}
+
+# Time is up for the Emperor - Check
+country_event = {
+	id = shadow_kingdom.6
+	title = shadow_kingdom.6.t
+	desc = shadow_kingdom.6.d
 	picture = HRE_eventPicture
 	
-	fire_only_once = yes
-	major = yes
-	
+	is_triggered_only = yes
+	hidden = yes
+
 	trigger = {
-		is_emperor = yes
-		# AB {{{
-		#has_global_flag = emperor_trying_to_avert_shadow_kingdom
-		OR = {
-			has_country_flag = shadow_kingdom_early_success
-			had_global_flag = {
-				flag = emperor_trying_to_avert_shadow_kingdom
-				days = 18250
-			}
-			#is_year = 1490
-		}
-		# }}}
+		hre_size = 1
+		NOT = { has_global_flag = italians_leave_hre }
 	}
 	
-	mean_time_to_happen = {
-		months = 1
+	option = {
+		name = shadow_kingdom.6.a
+		emperor = {
+			country_event = {
+				id = shadow_kingdom.7
+			}
+		}
 	}
+}
+
+# Time is up for the Emperor
+country_event = {
+	id = shadow_kingdom.7
+	title = shadow_kingdom.3.t
+	desc = shadow_kingdom.3.d
+	picture = HRE_eventPicture
+	
+	major = yes
+	is_triggered_only = yes
 	
 	immediate = {
 		hidden_effect = {
 			set_global_flag = italians_leave_hre
+			clr_global_flag = emperor_trying_to_avert_shadow_kingdom
 		}
 	}
 	
 	option = {
 		name = shadow_kingdom.3.a
-		trigger = {
-			any_country = {
-				will_leave_for_shadow_kingdom_trigger = yes
-				is_shadow_kingdom_eligible_trigger = yes
-				OR = {
-					is_subject = no
-					AND = {
-						is_subject = yes
-						overlord = { # overlord chooses for their vassals if eligible to leave themselves
-							NOT = {
-								is_part_of_hre = yes
-								capital_scope = { region = italy_region }
-							}
-						}
-					}
-				}
-			}
-		}
 		custom_tooltip = shadow_kingdom_emperor_gives_up_tt
 		hidden_effect = {
 			every_country = {
@@ -257,228 +424,5 @@ country_event = {
 			}
 			set_in_empire = no
 		}
-	}
-	option = {
-		trigger = {
-			NOT = {
-				any_country = {
-					will_leave_for_shadow_kingdom_trigger = yes
-					is_shadow_kingdom_eligible_trigger = yes
-					OR = {
-						is_subject = no
-						AND = {
-							is_subject = yes
-							overlord = { # overlord chooses for their vassals if eligible to leave themselves
-								NOT = {
-									is_part_of_hre = yes
-									capital_scope = { region = italy_region }
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		name = shadow_kingdom.3.b
-		add_imperial_influence = 25
-		set_global_flag = shadow_kingdom_averted
-	}
-}
-
-# Italian country leaves or stays
-country_event = {
-	id = shadow_kingdom.4
-	title = hre_event.1.t
-	desc = {
-		trigger = {
-			has_country_flag = reined_in_for_shadow_kingdom
-		}
-		desc = shadow_kingdom.4.d2
-	}
-	desc = {
-		trigger = {
-			NOT = { has_country_flag = reined_in_for_shadow_kingdom }
-		}
-		desc = hre_event.1.d
-	}
-	picture = HRE_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = { # remain
-		ai_chance = {
-			factor = 1
-			modifier = {
-				factor = 1000
-				will_leave_for_shadow_kingdom_trigger = no
-			}
-		}
-		name = hre_event.1.b
-		if = {
-			limit = {
-				has_global_flag = emperor_trying_to_avert_shadow_kingdom
-			}
-			emperor = {
-				add_imperial_influence = 5
-			}
-		}
-		if = {
-			limit = {
-				NOT = {
-					has_country_flag = reined_in_for_shadow_kingdom
-				}
-			}
-			add_prestige = -20
-			custom_tooltip = shadow_kingdom_triggered_modifier_tt
-		}
-	}
-	option = { # leave
-		ai_chance = {
-			factor = 1
-			modifier = {
-				factor = 1000
-				will_leave_for_shadow_kingdom_trigger = yes
-			}
-		}
-		trigger = {
-			NOT = {
-				has_country_flag = reined_in_for_shadow_kingdom
-			}
-		}
-		name = hre_event.1.a
-		set_in_empire = no
-		set_country_flag = permanently_left_hre_flag
-		emperor = {
-			add_opinion = {
-				who = ROOT
-				modifier = hre_country_left
-			}
-		}
-		if = {
-			limit = {
-				any_country = {
-					is_subject_of = ROOT
-					capital_scope = {
-						region = italy_region
-					}
-					is_part_of_hre = yes
-				}
-			}
-			every_subject_country = {
-				limit = {
-					capital_scope = {
-						region = italy_region
-					}
-					is_part_of_hre = yes
-				}
-				set_in_empire = no
-			}
-		}
-		if = {
-			limit = {
-				has_global_flag = emperor_trying_to_avert_shadow_kingdom
-			}
-			emperor = {
-				add_imperial_influence = -10
-			}
-		}
-	}
-}
-
-# Event to fire the incident. Or the de facto incident for non-dlc owners
-country_event = {
-	id = shadow_kingdom.5
-	title = hre_event.3.t
-	desc = shadow_kingdom.2.d
-	picture = HRE_eventPicture
-	
-	fire_only_once = yes
-	major = yes
-	
-	trigger = {
-		is_emperor = yes
-		# AB {{{
-		#is_year = 1460
-		# }}}
-		NOT = { has_global_flag = italians_leave_hre }
-		any_country = {
-			is_shadow_kingdom_eligible_trigger = yes
-			NOT = { has_country_flag = reined_in_for_shadow_kingdom }
-		}
-		NOT = { active_imperial_incident = any }
-		# AB {{{
-		# The heathens have been kicked out
-		italy_region = {
-			type = all
-			owner = {
-				NOT = { religion_group = muslim }
-			}
-		}
-		# }}}
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	option = {
-		name = shadow_kingdom.5.a
-		trigger = {
-			has_dlc = "Emperor"
-		}
-		set_imperial_incident = incident_shadow_kingdom
-	}
-	option = {
-		trigger = {
-			NOT = { has_dlc = "Emperor" }
-		}
-		ai_chance = {
-			factor = 10000
-		}
-		name = shadow_kingdom.2.a
-		add_prestige = -10
-		add_imperial_influence = -20
-		set_global_flag = italians_leave_hre
-		hidden_effect = {
-			every_country = {
-				limit = {
-					is_shadow_kingdom_eligible_trigger = yes
-					OR = {
-						is_subject = no
-						AND = {
-							is_subject = yes
-							overlord = { # overlord chooses for their vassals if eligible to leave themselves
-								NOT = {
-									is_part_of_hre = yes
-									capital_scope = { region = italy_region }
-								}
-							}
-						}
-					}							
-				}
-				country_event = { id = shadow_kingdom.4 }
-			}
-		}
-		every_province = {
-			limit = {
-				is_part_of_hre = yes
-				region = italy_region
-				owner = {
-					is_part_of_hre = no
-				}
-			}
-			set_in_empire = no
-		}
-	}
-	option = {
-		trigger = {
-			NOT = { has_dlc = "Emperor" }
-		}
-		ai_chance = {
-			factor = 0
-		}
-		name = shadow_kingdom.2.b
-		set_global_flag = emperor_trying_to_avert_shadow_kingdom
-		custom_tooltip = ab_shadow_kingdom_incident_tt
 	}
 }

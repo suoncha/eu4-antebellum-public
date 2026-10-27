@@ -1,0 +1,139 @@
+namespace = italian_wars
+
+country_event = {
+	id = italian_wars.1
+	title = "italian_wars.1.t"
+	picture = {	
+		trigger = {
+			has_dlc = "Emperor"
+		}
+		picture = ITALIAN_wars_eventPicture
+	}
+	desc = "italian_wars.1.d"
+	
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {
+		current_age = age_of_discovery
+		culture_group = latin
+		capital_scope = { region = italy_region }
+		is_subject = no
+		any_country = {
+			war_with = ROOT
+			religion_group = christian
+			NOT = { culture_group = latin }
+			NOT = { capital_scope = { region = italy_region } }
+			total_development = 150
+			OR = {
+				is_in_war = {
+					attacker_leader = ROOT
+					defender_leader = THIS
+				}
+				is_in_war = {
+					defender_leader = ROOT
+					attacker_leader = THIS
+				}
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+	}
+	
+	immediate = {
+		hidden_effect = {
+			random_country = {
+				limit = {
+					war_with = ROOT
+					religion_group = christian
+					NOT = { culture_group = latin }
+					NOT = { capital_scope = { region = italy_region } }
+					total_development = 150
+					OR = {
+						is_in_war = {
+							attacker_leader = ROOT
+						}
+						is_in_war = {
+							defender_leader = ROOT
+						}
+					}
+				}
+				save_event_target_as = major_power
+			}
+			# AB [[[
+			every_country = {
+				limit = {
+					religion_group = christian
+					capital_scope = {
+						continent = europe
+					}
+				}
+				country_event = {
+					id = ab_performance.25
+				}
+			}
+			REB = {
+				country_event = {
+					id = italian_wars.3
+					days = 18250
+				}
+			}
+			# ]]]
+		}
+	}
+	
+	option = {
+		name = italian_wars.1.a
+		custom_tooltip = italian_wars_tt
+		set_global_flag = italian_wars_global_flag
+	}
+}
+
+# End of the Italian Wars
+country_event = {
+	id = italian_wars.2
+	title = "italian_wars.2.t"
+	picture = {	
+		trigger = {
+			has_dlc = "Emperor"
+		}
+		picture = ITALIAN_wars_eventPicture
+	}
+	desc = "italian_wars.2.d"
+	
+	major = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = italian_wars.2.a
+		custom_tooltip = italian_wars_end_tt
+		clr_global_flag = italian_wars_global_flag
+	}
+}
+
+# End of the Italian Wars - Helper
+country_event = {
+	id = italian_wars.3
+	title = "italian_wars.3.t"
+	picture = CULTURE_eventPicture
+	desc = "italian_wars.3.d"
+	
+	hidden = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = italian_wars.3.a
+		every_country = {
+			limit = {
+				italy_region = {
+					owned_by = ROOT
+				}
+			}
+			country_event = {
+				id = italian_wars.2
+			}
+		}
+	}
+}

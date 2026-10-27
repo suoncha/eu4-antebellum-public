@@ -3,44 +3,12 @@ country_decisions = {
 	scandinavian_nation = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			was_never_end_game_tag_trigger = yes
-			NOT = { has_country_flag = formed_scandinavia_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			OR = {
-				is_free_or_tributary_trigger = yes
-				ai = no
-			}
-			NOT = { exists = SCA }
-			NOT = { tag = NSE }
-			NOT = { tag = PAP }
-			NOT = { tag = HLR }
 			culture_group = scandinavian
-			NOT = {
-				religion = norse_pagan_reformed
-			}
-			NOT = {
-				religion = reformed_norse
-			}
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 10
-					adm_tech = 10
-				}
-			}
+			religion_group = christian
 			is_colonial_nation = no
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
-				}
-			}
+			NOT = { tag = NSE }
+			NOT = { exists = SCA }
+			NOT = { was_tag = SCA }
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -59,15 +27,16 @@ country_decisions = {
 		}
 		allow = {
 			adm_tech = 10
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
-			is_at_war = no
+			culture_group = scandinavian
+			religion_group = christian
 			owns_core_province = 1		# Uppland
 			owns_core_province = 6		# Skane
 			owns_core_province = 7		# Vastergotland
 			owns_core_province = 12		# Sjaelland
 			owns_core_province = 15		# Jylland
 			owns_core_province = 17		# Akershus
+			is_at_war = no
+			is_subject = no
 			num_of_owned_provinces_with = {
 				region = scandinavia_region
 				value = 40
@@ -104,7 +73,6 @@ country_decisions = {
 				duration = 7300
 			}
 			add_prestige = 10
-			set_country_flag = formed_scandinavia_flag
 		}
 		ai_will_do = {
 			factor = 1

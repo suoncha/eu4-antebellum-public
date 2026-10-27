@@ -4,13 +4,7 @@ country_decisions = {
 	form_kingdom_of_prussia = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
 			tag = BRA
-			NOT = { has_country_flag = formed_prussia_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
 			NOT = { exists = PRU }
 		}
 		provinces_to_highlight = {
@@ -31,8 +25,7 @@ country_decisions = {
 			}
 		}
 		allow = {
-			NOT = { exists = PRU }
-			religion_group = christian
+			tag = BRA
 			owns_core_province = 41			# Königsberg
 			OR = {
 				owns_core_province = 43		# Danzig
@@ -42,6 +35,9 @@ country_decisions = {
 		}
 		effect = {
 			change_tag = PRU
+			hidden_effect = {
+				country_event = { id = ab_brapru.9 }
+			}
 			on_change_tag_effect = yes
 			swap_non_generic_missions = yes
 			remove_non_electors_emperors_from_empire_effect = yes
@@ -151,172 +147,10 @@ country_decisions = {
 			capital_scope = {
 				change_culture = prussian
 			}
-			set_country_flag = formed_prussia_flag
 		}
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				factor = 0
-				NOT = { num_of_cities = 10 }
-				NOT = { owns_core_province = 41 }
-			}
 		}
-
-		ai_importance = 1000
-	}
-	
-	# Teutonic Order
-	prussian_nation = {
-		major = yes
-		potential = {
-			normal_or_historical_nations = yes
-			tag = TEU
-			NOT = { has_country_flag = formed_prussia_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			NOT = { exists = PRU }
-		}
-		provinces_to_highlight = {
-			province_id = 41	# Königsberg
-			OR = {
-				NOT = { owned_by = ROOT }
-				NOT = { is_core = ROOT }
-			}
-		}
-		allow = {
-			is_at_war = no
-			OR = {
-				religion_group = christian
-				# }}}
-				if = {
-					limit = { has_dlc = "Lions of the North" }
-					custom_trigger_tooltip = {
-						tooltip = teu_kingdom_prussia_path_ct
-						has_country_flag = teu_prussian_path
-					}
-				}
-			}
-			owns_core_province = 41 # Königsberg
-			41 = { 					# Königsberg
-				is_state = yes
-			}
-			NOT = { exists = PRU }
-		}
-		effect = {
-			41 = {
-				move_capital_effect = yes
-			}
-			change_tag = PRU
-			on_change_tag_effect = yes
-			swap_non_generic_missions = yes
-			east_prussia_area = {
-				limit = {
-					NOT = { owned_by = ROOT }
-				}
-				add_permanent_claim = PRU
-			}
-			west_prussia_area = {
-				limit = {
-					NOT = { owned_by = ROOT }
-				}
-				add_permanent_claim = PRU
-			}
-			add_prestige = 25
-			hidden_effect = {
-				if = {
-					limit = {
-						has_dlc = "Lions of the North"
-						has_country_flag = teu_prussian_path
-					}
-					unlock_government_reform = {
-						government_reform = prussian_monarchy_base
-					}
-					unlock_government_reform = {
-						government_reform = prussian_republic_reform
-					}
-					unlock_government_reform = {
-						government_reform = prussian_theocratic_reform
-					}
-				}
-			}
-			if =  {
-				limit = {
-					is_revolutionary = no
-					NOT = { government = republic }
-				}
-				change_government = monarchy
-				if = {
-					limit = { 
-						has_dlc = "Lions of the North"
-						has_country_flag = teu_prussian_path
-					}
-					unlock_government_reform = {
-						government_reform = prussian_monarchy_base
-					}
-				}
-				add_government_reform = prussian_monarchy_base
-			}
-			else_if = {
-				limit = {
-					government = republic
-					is_revolutionary = no
-				}
-				if = {
-					limit = { 
-						has_dlc = "Lions of the North"
-						has_country_flag = teu_prussian_path
-					}
-					unlock_government_reform = {
-						government_reform = prussian_republic_reform
-					}
-				}
-				add_government_reform = prussian_republic_reform
-			}
-			if = {
-				limit = {
-					has_reform = states_general_reform
-				}
-				remove_government_reform = states_general_reform
-			}
-			every_neighbor_country = {
-				limit = { government = monarchy }
-				add_opinion = { who = ROOT modifier = secularized_monastic_order }
-			}
-			if = {
-				limit = {
-					has_custom_ideas = no
-					NOT = { has_idea_group = PRU_ideas }
-				}
-				country_event = { id = ideagroups.1 } #Swap Ideas
-			}
-			add_country_modifier = {
-				name = "centralization_modifier"
-				duration = 3650
-			}
-			if = {
-				limit = {
-					OR = {
-						is_part_of_hre = no
-						is_elector = yes
-					}
-					is_free_or_tributary_trigger = yes
-					NOT = { government_rank = 2 }
-				}
-				set_government_rank = 2
-			}
-			set_country_flag = formed_prussia_flag
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				NOT = { num_of_cities = 10 }
-				NOT = { owns_core_province = 41 }
-			}
-		}
-
 		ai_importance = 1000
 	}
 }

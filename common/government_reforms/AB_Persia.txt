@@ -8,7 +8,6 @@ persianprince = {
 	potential = {
 		OR = {
 			tag = SSN
-			tag = ZKD
 			tag = KRN
 			tag = ISP
 			tag = SHP
@@ -17,21 +16,9 @@ persianprince = {
 			tag = MRV
 			tag = MRH
 			tag = KYN
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
 		}
 	}
 	trigger = {
-		NOT = {
-			OR = {
-				tag = PER
-				tag = PRZ
-				tag = PRC
-				tag = PMN
-			}
-		}
 	}
 	valid_for_nation_designer = yes
 	nation_designer_cost = 0
@@ -48,12 +35,7 @@ persianempire = {
 	legacy_equivalent = feudal_monarchy
 	maintain_dynasty = yes
 	potential = {
-		OR = {
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
-		}
+		ab_is_persia_trigger = yes
 	}
 	valid_for_nation_designer = yes
 	nation_designer_cost = 0
@@ -78,10 +60,10 @@ persianempire = {
 			leader_land_manuever = 1
 		}
 		altaic = {
-			artillery_cost = -0.1
+			mercenary_discipline = 0.05
 		}
 		baltic = {
-			naval_forcelimit_modifier = 0.05
+			global_missionary_strength = 0.02
 		}
 		west_germanic = {
 			ship_durability = 0.05
@@ -90,22 +72,22 @@ persianempire = {
 			free_leader_pool = 1
 		}
 		byzantine = {
-			legitimacy = 0.25
+			monarch_admin_power = 1
 		}
 		carpathian = {
-			mercenary_cost = -0.1
+			leader_land_shock = 1
 		}
 		caucasian = {
-			mercenary_discipline = 0.05
+			defensiveness = 0.10
 		}
 		gaelic = {
-			shock_damage = 0.05
+			fire_damage_received = -0.10
 		}
 		central_indic = {
 			land_attrition = -0.1
 		}
 		east_asian = {
-			state_maintenance_modifier = -0.2
+			state_governing_cost = -0.1
 		}
 		kongo_group = {
 			heir_chance = 0.5
@@ -120,18 +102,21 @@ persianempire = {
 			global_tax_income = 10
 		}
 		east_slavic = {
-			land_forcelimit_modifier = 0.1
+			global_manpower_modifier = 0.20
 		}
 		eastern_aryan = {
 			production_efficiency = 0.05
 		}
 		evenks = {
-			cavalry_flanking = 0.2
+			trade_range_modifier = 0.10
 		}
 		french = {
-			diplomats = 1
+			improve_relation_modifier = 0.15
 		}
 		germanic = {
+			global_institution_spread = 0.15
+		}
+		united_germanic = {
 			global_institution_spread = 0.15
 		}
 		great_lakes_group = {
@@ -141,10 +126,10 @@ persianempire = {
 			core_creation = -0.1
 		}
 		iberian = {
-			global_colonial_growth = 10
+			global_colonial_growth = 20
 		}
 		iranian = {
-			advisor_cost = -0.1
+			build_cost = -0.10
 		}
 		japanese_g = {
 			land_morale = 0.1
@@ -180,13 +165,13 @@ persianempire = {
 			movement_speed = 0.1
 		}
 		scandinavian = {
-			mil_advisor_cost = -0.1
+			may_perform_slave_raid = yes
 		}
 		southeastasian_group = {
 			development_cost = -0.05
 		}
 		south_slavic = {
-			warscore_cost_vs_other_religion = -0.1
+			infantry_power = 0.1
 		}
 		southern_african = {
 			inflation_reduction = 0.05
@@ -223,13 +208,8 @@ perasawaran = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
-			has_reform = persianempire
+			ab_is_persia_trigger = yes
 			has_reform = persianprince
-			has_reform = persianempiret
 			has_reform = persianprincet
 		}
 	}
@@ -247,14 +227,10 @@ perexpandimmortals = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
-			has_reform = persianempire
+			ab_is_persia_trigger = yes
 			has_reform = persianprince
-			has_reform = persianempiret
 			has_reform = persianprincet
+			has_country_modifier = per_unlocked_immortals
 		}
 	}
 	modifiers = {
@@ -263,11 +239,28 @@ perexpandimmortals = {
 	trigger = {
 		custom_trigger_tooltip = {
 			tooltip = PER_IMMORTAL_MISSION
-			OR = {
-				mission_completed = per_immortals
-				mission_completed = perm_immortals
-				mission_completed = perc_immortals
-				mission_completed = mper_immortals
+			has_country_modifier = per_unlocked_immortals
+		}
+	}
+	effect = {
+		hidden_effect = {
+			capital_scope = {
+				remove_province_modifier = per_unlocked_immortals_prov
+				add_province_modifier = {
+					name = per_unlocked_immortals_prov2
+					duration = -1
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			capital_scope = {
+				remove_province_modifier = per_unlocked_immortals_prov2
+				add_province_modifier = {
+					name = per_unlocked_immortals_prov
+					duration = -1
+				}
 			}
 		}
 	}
@@ -281,12 +274,9 @@ perplacate = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
-			has_reform = persianempire
+			ab_is_persia_trigger = yes
 			has_reform = persianprince
+			has_reform = persianprincet
 		}
 	}
 	modifiers = {
@@ -304,12 +294,9 @@ perrecentralize = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
-			has_reform = persianempire
+			ab_is_persia_trigger = yes
 			has_reform = persianprince
+			has_reform = persianprincet
 		}
 	}
 	modifiers = {
@@ -328,10 +315,7 @@ persianprincet = {
 	has_devotion = yes
 	maintain_dynasty = yes
 	potential = {
-		OR = {
-			tag = ZKD
-			was_tag = ZKD
-		}
+		tag = ZKD
 	}
 	valid_for_nation_designer = yes
 	nation_designer_cost = 0
@@ -350,10 +334,7 @@ persianempiret = {
 	has_devotion = yes
 	maintain_dynasty = yes
 	potential = {
-		OR = {
-			tag = PER
-			tag = PMN
-		}
+		ab_is_persia_trigger = yes
 		was_tag = ZKD
 	}
 	valid_for_nation_designer = yes
@@ -379,10 +360,10 @@ persianempiret = {
 			leader_land_manuever = 1
 		}
 		altaic = {
-			artillery_cost = -0.1
+			mercenary_discipline = 0.05
 		}
 		baltic = {
-			naval_forcelimit_modifier = 0.05
+			global_missionary_strength = 0.02
 		}
 		west_germanic = {
 			ship_durability = 0.05
@@ -391,22 +372,22 @@ persianempiret = {
 			free_leader_pool = 1
 		}
 		byzantine = {
-			legitimacy = 0.25
+			monarch_admin_power = 1
 		}
 		carpathian = {
-			mercenary_cost = -0.1
+			leader_land_shock = 1
 		}
 		caucasian = {
-			mercenary_discipline = 0.05
+			defensiveness = 0.10
 		}
 		gaelic = {
-			shock_damage = 0.05
+			fire_damage_received = -0.10
 		}
 		central_indic = {
 			land_attrition = -0.1
 		}
 		east_asian = {
-			state_maintenance_modifier = -0.2
+			state_governing_cost = -0.1
 		}
 		kongo_group = {
 			heir_chance = 0.5
@@ -421,18 +402,21 @@ persianempiret = {
 			global_tax_income = 10
 		}
 		east_slavic = {
-			land_forcelimit_modifier = 0.1
+			global_manpower_modifier = 0.20
 		}
 		eastern_aryan = {
 			production_efficiency = 0.05
 		}
 		evenks = {
-			cavalry_flanking = 0.2
+			trade_range_modifier = 0.10
 		}
 		french = {
-			diplomats = 1
+			improve_relation_modifier = 0.15
 		}
 		germanic = {
+			global_institution_spread = 0.15
+		}
+		united_germanic = {
 			global_institution_spread = 0.15
 		}
 		great_lakes_group = {
@@ -442,10 +426,10 @@ persianempiret = {
 			core_creation = -0.1
 		}
 		iberian = {
-			global_colonial_growth = 10
+			global_colonial_growth = 20
 		}
 		iranian = {
-			advisor_cost = -0.1
+			build_cost = -0.10
 		}
 		japanese_g = {
 			land_morale = 0.1
@@ -481,13 +465,13 @@ persianempiret = {
 			movement_speed = 0.1
 		}
 		scandinavian = {
-			mil_advisor_cost = -0.1
+			may_perform_slave_raid = yes
 		}
 		southeastasian_group = {
 			development_cost = -0.05
 		}
 		south_slavic = {
-			warscore_cost_vs_other_religion = -0.1
+			infantry_power = 0.1
 		}
 		southern_african = {
 			inflation_reduction = 0.05
@@ -524,12 +508,9 @@ perachaemenid = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
-			has_reform = persianempire
+			ab_is_persia_trigger = yes
 			has_reform = persianprince
+			has_reform = persianprincet
 		}
 	}
 	modifiers = {
@@ -543,12 +524,9 @@ persassanid = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
-			has_reform = persianempire
+			ab_is_persia_trigger = yes
 			has_reform = persianprince
+			has_reform = persianprincet
 		}
 	}
 	modifiers = {
@@ -562,12 +540,9 @@ persatraps = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
-			has_reform = persianempire
+			ab_is_persia_trigger = yes
 			has_reform = persianprince
+			has_reform = persianprincet
 		}
 	}
 	modifiers = {
@@ -582,12 +557,9 @@ perwurzug = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
-			has_reform = persianempire
+			ab_is_persia_trigger = yes
 			has_reform = persianprince
+			has_reform = persianprincet
 		}
 	}
 	modifiers = {
@@ -601,12 +573,9 @@ pershahanshah = {
 	allow_normal_conversion = yes
 	potential = {
 		OR = {
-			tag = PER
-			tag = PRZ
-			tag = PRC
-			tag = PMN
-			has_reform = persianempire
+			ab_is_persia_trigger = yes
 			has_reform = persianprince
+			has_reform = persianprincet
 		}
 	}
 	modifiers = {

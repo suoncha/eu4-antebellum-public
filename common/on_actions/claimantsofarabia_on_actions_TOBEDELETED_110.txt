@@ -1,0 +1,1704 @@
+on_new_monarch = {
+	# Seljuks
+	if = {
+		limit = {
+			has_country_flag = sel_mission_unlocked
+			NOT = { mission_completed = seljuk_arslan_mission }
+		}
+		country_event = {
+			id = ab_seljuk.31
+		}
+	}
+	if = {
+		limit = {
+			mission_completed = seljuk_arslan_mission
+		}
+		add_ruler_personality = arslan_descendant_personality
+	}
+	# Arabia
+	if = {
+		limit = {
+			has_country_flag = ab_bloodline_muhammad
+		}
+		add_ruler_personality = muhammad_descendant_personality
+	}
+	# Ayyubids
+	if = {
+		limit = {
+			mission_completed = hsn_depose_nizzarids
+		}
+		add_ruler_personality = saladin_descendant_personality
+	}
+	if = {
+		limit = {
+			mission_completed = hsn_secure_succession
+		}
+		country_event = {
+			id = ab_ayyubids.8
+		}
+	}
+}
+
+on_adm_development = {
+	# Seljuks
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = sel_center_dev_bonus
+			}
+			OR = {
+				region = mashriq_region
+				region = egypt_region
+				region = arabia_region
+				region = persia_region
+			}
+		}
+		random_list = {
+			10 = { add_base_tax = 1 }
+			90 = { }
+		}
+	}
+	# Assyria
+	if = {
+		limit = {
+			owner = {
+				has_faction = faction_asr_nestorian
+			}
+		}
+		owner = {
+			add_faction_influence = {
+				faction = faction_asr_nestorian
+				influence = 2
+			}
+		}
+	}
+	# Jerusalem
+	if = {
+		limit = {
+			owner = {
+				has_faction = faction_otr_frankish
+			}
+		}
+		owner = {
+			add_faction_influence = {
+				faction = faction_otr_frankish
+				influence = 2
+			}
+		}
+	}
+	# Chorath
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = xbh_dev_arabia
+			}
+			region = arabia_region
+		}
+		random_list = {
+			20 = { add_base_tax = 1 }
+			80 = { }
+		}
+	}
+	# Ayyubids
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = hsn_develop_levant_flag
+			}
+			OR = {
+				region = mashriq_region
+				region = egypt_region
+			}
+		}
+		random_list = {
+			20 = { add_base_tax = 1 }
+			80 = { }
+		}
+	}
+}
+
+on_dip_development = {
+	# Seljuks
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = sel_center_dev_bonus
+			}
+			OR = {
+				region = mashriq_region
+				region = egypt_region
+				region = arabia_region
+				region = persia_region
+			}
+		}
+		random_list = {
+			10 = { add_base_production = 1 }
+			90 = { }
+		}
+	}
+	# Jerusalem
+	if = {
+		limit = {
+			owner = {
+				has_faction = faction_otr_frankish
+			}
+		}
+		owner = {
+			add_faction_influence = {
+				faction = faction_otr_frankish
+				influence = 2
+			}
+		}
+	}
+	# Chorath
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = xbh_dev_arabia
+			}
+			region = arabia_region
+		}
+		random_list = {
+			20 = { add_base_production = 1 }
+			80 = { }
+		}
+	}
+	# Ayyubids
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = hsn_develop_levant_flag
+			}
+			OR = {
+				region = mashriq_region
+				region = egypt_region
+			}
+		}
+		random_list = {
+			20 = { add_base_production = 1 }
+			80 = { }
+		}
+	}
+}
+
+on_mil_development = {
+	# Seljuks
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = sel_center_dev_bonus
+			}
+			OR = {
+				region = mashriq_region
+				region = egypt_region
+				region = arabia_region
+				region = persia_region
+			}
+		}
+		random_list = {
+			10 = { add_base_manpower = 1 }
+			90 = { }
+		}
+	}
+	# Chorath
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = xbh_dev_arabia
+			}
+			region = arabia_region
+		}
+		random_list = {
+			20 = { add_base_manpower = 1 }
+			80 = { }
+		}
+	}
+	# Ayyubids
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = hsn_develop_levant_flag
+			}
+			OR = {
+				region = mashriq_region
+				region = egypt_region
+			}
+		}
+		random_list = {
+			20 = { add_base_manpower = 1 }
+			80 = { }
+		}
+	}
+}
+
+on_advisor_hired = {
+	# Seljuks
+	if = {
+		limit = {
+			has_country_flag = sel_hiring_advisor_bonus
+		}
+		remove_country_modifier = sel_hiring_advisor_mod
+		add_country_modifier = {
+			name = sel_hiring_advisor_mod
+			duration = 1095
+		}
+	}
+	# Nizzarids
+	if = {
+		limit = {
+			has_country_flag = naz_hiring_advisor_bonus
+		}
+		remove_country_modifier = naz_hiring_advisor_mod
+		add_country_modifier = {
+			name = naz_hiring_advisor_mod
+			duration = 1095
+		}
+	}
+	# Assyria
+	if = {
+		limit = {
+			has_faction = faction_asr_nestorian
+		}
+		add_faction_influence = {
+			faction = faction_asr_nestorian
+			influence = 3
+		}
+	}
+	# Chorath
+	if = {
+		limit = {
+			has_country_flag = xbh_hiring_advisor
+			OR = {
+				employed_advisor = {
+					category = ADM
+					religion = sunni
+				}
+				employed_advisor = {
+					category = DIP
+					religion = sunni
+				}
+				employed_advisor = {
+					category = MIL
+					religion = sunni
+				}
+			}
+		}
+		remove_country_modifier = naz_hiring_advisor_mod
+		add_country_modifier = {
+			name = naz_hiring_advisor_mod
+			duration = 180
+		}
+	}
+	# Ayyubids
+	if = {
+		limit = {
+			has_country_flag = hsn_hiring_advisor
+			OR = {
+				employed_advisor = {
+					category = ADM
+					culture = kurdish
+				}
+				employed_advisor = {
+					category = DIP
+					culture = kurdish
+				}
+				employed_advisor = {
+					category = MIL
+					culture = kurdish
+				}
+			}
+		}
+		remove_country_modifier = hsn_hiring_advisor
+		add_country_modifier = {
+			name = hsn_hiring_advisor
+			duration = 730
+		}
+	}
+}
+
+on_adm_advisor_hired = {
+	# Jerusalem
+	if = {
+		limit = {
+			has_faction = faction_otr_haute
+		}
+		add_faction_influence = {
+			faction = faction_otr_haute
+			influence = 3
+		}
+	}
+}
+
+on_mil_advisor_hired = {
+	# Nizzarids
+	if = {
+		limit = {
+			has_faction = faction_niz_haras
+			employed_advisor = {
+				category = MIL
+				culture = al_misr_arabic
+			}
+		}
+		add_faction_influence = {
+			faction = faction_niz_haras
+			influence = 5
+		}
+	}
+}
+
+on_holy_order_established = {
+	# Jerusalem
+	if = {
+		limit = {
+			ROOT = {
+				has_faction = faction_otr_frankish
+			}
+		}
+		ROOT = {
+			add_faction_influence = {
+				faction = faction_otr_frankish
+				influence = 3
+			}
+		}
+	}
+	# Ayyubids
+	if = {
+		limit = {
+			ROOT = {
+				has_government_mechanic = ayyubid_collective_sovereignty_mechanic
+			}
+		}
+		ROOT = {
+			add_government_power = {
+				mechanic_type = ayyubid_collective_sovereignty_mechanic
+				power_type = ayyubid_collective_sovereignty
+				value = 3
+			}
+		}
+	}
+}
+
+on_mercenary_recruited = {
+	# Nizzarids
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_niz_fursan
+			}
+		}
+		if = {
+			limit = {
+				superregion = near_east_superregion
+			}
+			FROM = {
+				add_faction_influence = {
+					faction = faction_niz_fursan
+					influence = 5
+				}
+			}
+		}
+		else = {
+			FROM = {
+				add_faction_influence = {
+					faction = faction_niz_fursan
+					influence = -5
+				}
+			}
+		}
+	}
+	# Jerusalem
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_otr_haute
+			}
+		}
+		FROM = {
+			add_faction_influence = {
+				faction = faction_otr_haute
+				influence = -5
+			}
+		}
+	}
+}
+
+on_siege_won_province = {
+	# Nizzarids
+	if = {
+		limit = {
+			is_capital_of = FROM
+			controller = {
+				war_with = FROM
+				any_hired_mercenary_company = {
+					template = ab_merc_hashshashin
+					location = {
+						province_id = ROOT
+					}
+				}
+			}
+		}
+		random_list = {
+			10 = {
+				owner = {
+					country_event = {
+						id = nizzarid_event.31
+					}
+				}
+				controller = {
+					country_event = {
+						id = nizzarid_event.32
+					}
+				}
+			}
+			90 = { }
+		}
+	}
+}
+
+on_war_won = {
+	# Chorath
+	if = {
+		limit = {
+			FROM = {
+				capital_scope = {
+					superregion = india_superregion
+				}
+			}
+			has_country_modifier = xbh_conquest_india
+		}
+		extend_country_modifier = {
+			name = xbh_conquest_india
+			duration = 180
+		}
+	}
+	# Arabia
+	if = {
+		limit = {
+			has_country_flag = arb_winning_war_reduce_ae
+		}
+		every_neighbor_country = {
+			add_aggressive_expansion = {
+				who = ROOT
+				value = -5
+				apply_calc = no
+			}
+		}
+	}
+}
+
+on_battle_won_unit = {
+	# Nizzarids
+	if = {
+		limit = {
+			is_ruler_commanding_unit = yes
+			unit_owner = {
+				has_faction = faction_niz_haras
+			}
+		}
+		unit_owner = {
+			add_faction_influence = {
+				faction = faction_niz_haras
+				influence = 3
+			}
+		}
+	}
+	# ]]]
+}
+
+on_battle_lost_unit = {
+	# Nizzarids
+	if = {
+		limit = {
+			is_ruler_commanding_unit = yes
+			unit_owner = {
+				has_faction = faction_niz_haras
+			}
+		}
+		unit_owner = {
+			add_faction_influence = {
+				faction = faction_niz_haras
+				influence = -5
+			}
+		}
+	}
+	if = {
+		limit = {
+			is_ruler_commanding_unit = yes
+			enemy_unit = {
+				unit_owner = {
+					has_country_flag = naz_unlock_hashshashin
+				}
+			}
+		}
+		random_list = {
+			10 = {
+				unit_owner = {
+					country_event = {
+						id = nizzarid_event.31
+					}
+					random_war_enemy_country = {
+						limit = {
+							has_country_flag = naz_unlock_hashshashin
+						}
+						country_event = {
+							id = nizzarid_event.32
+						}
+					}
+				}
+			}
+			90 = { }
+		}
+	}
+	# ]]]
+}
+
+on_battle_lost_province = {
+	# Seljuks
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = sel_invasion_of_china
+			}
+			superregion = china_superregion
+			NOT = { religion = sunni }
+		}
+		change_religion = sunni
+	}
+	# Nizzarids
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_niz_ajnad
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_terrain = desert
+					has_terrain = coastal_desert
+					has_terrain = mountain
+				}
+			}
+			FROM = {
+				add_faction_influence = {
+					faction = faction_niz_ajnad
+					influence = 3
+				}
+			}
+		}
+		if = {
+			limit = {
+				cavalry_in_province = 5
+				cavalry_in_province = FROM
+			}
+			FROM = {
+				add_faction_influence = {
+					faction = faction_niz_fursan
+					influence = 3
+				}
+			}
+		}
+	}
+}
+
+on_battle_won_country = {
+	# Seljuks
+	if = {
+		limit = {
+			has_country_flag = sel_janissary_bonus
+			janissary_percentage = 0.25
+		}
+		add_estate_loyalty = {
+			estate = estate_janissaries
+			loyalty = 3
+		}
+	}
+	# Assyria
+	if = {
+		limit = {
+			has_country_flag = nnv_winning_battle
+		}
+		remove_country_modifier = nnv_winning_battle_mod
+		add_country_modifier = {
+			name = nnv_winning_battle_mod
+			duration = 60
+		}
+	}
+	# Jalayirids
+	if = {
+		limit = {
+			has_country_flag = jlr_winning_battle
+		}
+		remove_country_modifier = rmg_winning_battle
+		add_country_modifier = {
+			name = rmg_winning_battle
+			duration = 60
+		}
+	}
+	# Arabia
+	if = {
+		limit = {
+			has_country_flag = arb_winning_war_cav_ability
+		}
+		remove_country_modifier = arb_legions_of_messiah
+		add_country_modifier = {
+			name = arb_legions_of_messiah
+			duration = 60
+		}
+	}
+	# Ayyubids
+	if = {
+		limit = {
+			has_country_flag = hsn_winning_battle
+		}
+		remove_country_modifier = hsn_mamluk_battle
+		add_country_modifier = {
+			name = hsn_mamluk_battle
+			duration = 60
+		}
+	}
+}
+
+on_regiment_recruited = {
+	# Nizzarids
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_niz_ajnad
+			}
+		}
+		if = {
+			limit = {
+				is_state_core = FROM
+			}
+			FROM = {
+				add_faction_influence = {
+					faction = faction_niz_ajnad
+					influence = 1
+				}
+			}
+		}
+		else = {
+			FROM = {
+				add_faction_influence = {
+					faction = faction_niz_ajnad
+					influence = -1
+				}
+			}
+		}
+	}
+}
+
+on_core = {
+	# Jerusalem
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_otr_levantine
+			}
+			religion_group = christian
+		}
+		FROM = {
+			add_faction_influence = {
+				faction = faction_otr_levantine
+				influence = -1
+			}
+		}
+	}
+}
+
+on_province_owner_change = {
+	# Seljuks
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = sel_accepted_all_persian
+			}
+			culture_group = iranian
+			has_owner_accepted_culture = no
+		}
+		add_province_modifier = {
+			name = jlr_persian_trappings
+			duration = -1
+		}
+	}
+	# Nizzarids
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = naz_no_convert_coptic
+			}
+			religion = coptic
+		}
+		add_province_modifier = {
+			name = naz_coptic_intelligentsia_prov
+			duration = -1
+		}
+	}
+	# Assyria
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = nnv_assyrian_persia
+			}
+			culture_group = iranian
+		}
+		add_province_modifier = {
+			name = nnv_spread_of_assyrian
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = nnv_assyrian_anatolia
+			}
+			region = anatolia_region
+			NOT = { culture = assyrian }
+		}
+		add_province_modifier = {
+			name = nnv_spread_of_assyrian
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = nnv_india_thomas_flag
+			}
+			superregion = india_superregion
+		}
+		add_province_modifier = {
+			name = nnv_st_thomas_kingdom
+			duration = -1
+		}
+	}
+	# Chorath
+	if = {
+		limit = {
+			region = arabia_region
+			owner = {
+				has_country_flag = xbh_no_terrain_arabia_cost
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_terrain = mountain
+					has_terrain = coastal_desert
+				}
+			}
+			add_province_modifier = {
+				name = arabic_negate_mountain
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_terrain = desert
+			}
+			add_province_modifier = {
+				name = arabic_negate_desert
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_terrain = coastline
+			}
+			add_province_modifier = {
+				name = arabic_negate_coastline
+				duration = -1
+			}
+		}
+	}
+}
+
+on_province_religion_changed = {
+	# Nizzarids
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = naz_no_convert_coptic
+			}
+			religion = coptic
+		}
+		add_province_modifier = {
+			name = naz_coptic_intelligentsia_prov
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = naz_coptic_intelligentsia_prov
+			NOT = { religion = coptic }
+		}
+		remove_province_modifier = naz_coptic_intelligentsia_prov
+	}
+}
+
+on_province_religion_converted = {
+	# Seljuks
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = sel_convert_steppe
+			}
+		}
+		add_base_production = 1
+	}
+}
+
+on_province_culture_changed = {
+	# Seljuks
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = sel_accepted_all_persian
+			}
+		}
+		if = {
+			limit = {
+				culture_group = iranian
+				NOT = { has_owner_accepted_culture = yes }
+				NOT = { has_province_modifier = jlr_persian_trappings }
+			}
+			add_province_modifier = {
+				name = jlr_persian_trappings
+				duration = -1
+			}
+		}
+		if = {
+			limit = {
+				has_province_modifier = jlr_persian_trappings
+				OR = {
+					NOT = { culture_group = iranian }
+					has_owner_accepted_culture = yes
+				}
+			}
+			remove_province_modifier = jlr_persian_trappings
+		}
+	}
+	# Assyria
+	if = {
+		limit = {
+			has_province_modifier = nnv_spread_of_assyrian
+		}
+		remove_province_modifier = nnv_spread_of_assyrian
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = nnv_assyrian_persia
+			}
+			culture_group = iranian
+		}
+		add_province_modifier = {
+			name = nnv_spread_of_assyrian
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = nnv_assyrian_anatolia
+			}
+			region = anatolia_region
+			NOT = { culture = assyrian }
+		}
+		add_province_modifier = {
+			name = nnv_spread_of_assyrian
+			duration = -1
+		}
+	}
+}
+
+on_culture_promoted = {
+	# Seljuks
+    if = {
+        limit = {
+            has_country_flag = sel_accepted_all_persian
+        }
+        every_owned_province = {
+            limit = {
+                culture_group = iranian
+                has_owner_accepted_culture = yes
+                has_province_modifier = jlr_persian_trappings
+            }
+            remove_province_modifier = jlr_persian_trappings
+        }
+    }
+}
+
+on_culture_demoted = {
+	# Seljuks
+	if = {
+		limit = {
+			has_country_flag = sel_accepted_all_persian
+		}
+		every_owned_province = {
+			limit = {
+				culture_group = iranian
+				has_owner_accepted_culture = no
+				NOT = { has_province_modifier = jlr_persian_trappings }
+			}
+			add_province_modifier = {
+				name = jlr_persian_trappings
+				duration = -1
+			}
+		}
+	}
+}
+
+on_added_to_trade_company = {
+	# Nizzarids
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = naz_trade_company_buff
+			}
+		}
+		add_province_modifier = {
+			name = naz_buff_trade_company_prov
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = naz_trade_company_buff2
+			}
+		}
+		add_province_modifier = {
+			name = naz_buff2_trade_company_prov
+			duration = -1
+		}
+	}
+}
+
+on_removed_from_company = {
+	# Nizzarids
+	if = {
+		limit = {
+			has_province_modifier = naz_buff_trade_company_prov
+		}
+		remove_province_modifier = naz_buff_trade_company_prov
+	}
+	if = {
+		limit = {
+			has_province_modifier = naz_buff2_trade_company_prov
+		}
+		remove_province_modifier = naz_buff2_trade_company_prov
+	}
+}
+
+on_alliance_created = {
+	# Assyria
+	if = {
+		limit = {
+			has_faction = faction_asr_catholic
+			FROM = {
+				religion = catholic
+			}
+		}
+		add_faction_influence = {
+			faction = faction_asr_catholic
+			influence = 5
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_asr_catholic
+			}
+			religion = catholic
+		}
+		FROM = {
+			add_faction_influence = {
+				faction = faction_asr_catholic
+				influence = 5
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_faction = faction_asr_orthodox
+			FROM = {
+				religion = orthodox
+			}
+		}
+		add_faction_influence = {
+			faction = faction_asr_orthodox
+			influence = 5
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_asr_orthodox
+			}
+			religion = orthodox
+		}
+		FROM = {
+			add_faction_influence = {
+				faction = faction_asr_orthodox
+				influence = 5
+			}
+		}
+	}
+	# Jerusalem
+	if = {
+		limit = {
+			has_faction = faction_otr_haute
+		}
+		if = {
+			limit = {
+				FROM = {
+					religion = catholic
+				}
+			}
+			add_faction_influence = {
+				faction = faction_otr_haute
+				influence = 5
+			}
+		}
+		else = {
+			add_faction_influence = {
+				faction = faction_otr_levantine
+				influence = 5
+			}
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_otr_haute
+			}
+		}
+		if = {
+			limit = {
+				religion = catholic
+			}
+			FROM = {
+				add_faction_influence = {
+					faction = faction_otr_haute
+					influence = 5
+				}
+			}
+		}
+		else = {
+			FROM = {
+				add_faction_influence = {
+					faction = faction_otr_levantine
+					influence = 5
+				}
+			}
+		}
+	}
+	# Chorath
+	if = {
+		limit = {
+			has_country_flag = xbh_reconcile_flag
+			NOT = { has_country_modifier = xbh_reconcile_6 }
+			FROM = {
+				religion_group = muslim
+			}
+		}
+		FROM = {
+			set_country_flag = xbh_muslim_ally_tag
+		}
+		if = {
+			limit = {
+				has_country_modifier = xbh_reconcile_5
+			}
+			add_country_modifier = {
+				name = xbh_reconcile_6
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = xbh_reconcile_4
+			}
+			add_country_modifier = {
+				name = xbh_reconcile_5
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = xbh_reconcile_3
+			}
+			add_country_modifier = {
+				name = xbh_reconcile_4
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = xbh_reconcile_2
+			}
+			add_country_modifier = {
+				name = xbh_reconcile_3
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = xbh_reconcile_1
+			}
+			add_country_modifier = {
+				name = xbh_reconcile_2
+				duration = -1
+			}
+		}
+		else = {
+			add_country_modifier = {
+				name = xbh_reconcile_1
+				duration = -1
+			}
+		}
+	}
+	if = {
+		limit = {
+			religion_group = muslim
+			FROM = {
+				has_country_flag = xbh_reconcile_flag
+				NOT = { has_country_modifier = xbh_reconcile_6 }
+			}
+		}
+		set_country_flag = xbh_muslim_ally_tag
+		FROM = {
+			if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_5
+				}
+				add_country_modifier = {
+					name = xbh_reconcile_6
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_4
+				}
+				add_country_modifier = {
+					name = xbh_reconcile_5
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_3
+				}
+				add_country_modifier = {
+					name = xbh_reconcile_4
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_2
+				}
+				add_country_modifier = {
+					name = xbh_reconcile_3
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_1
+				}
+				add_country_modifier = {
+					name = xbh_reconcile_2
+					duration = -1
+				}
+			}
+			else = {
+				add_country_modifier = {
+					name = xbh_reconcile_1
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+on_alliance_broken = {
+	# Chorath
+	if = {
+		limit = {
+			has_country_flag = xbh_reconcile_flag
+			FROM = {
+				religion_group = muslim
+			}
+		}
+		FROM = {
+			clr_country_flag = xbh_muslim_ally_tag
+		}
+		if = {
+			limit = {
+				has_country_modifier = xbh_reconcile_6
+			}
+			remove_country_modifier = xbh_reconcile_6
+			add_country_modifier = {
+				name = xbh_reconcile_5
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = xbh_reconcile_5
+			}
+			remove_country_modifier = xbh_reconcile_5
+			add_country_modifier = {
+				name = xbh_reconcile_4
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = xbh_reconcile_4
+			}
+			remove_country_modifier = xbh_reconcile_4
+			add_country_modifier = {
+				name = xbh_reconcile_3
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = xbh_reconcile_3
+			}
+			remove_country_modifier = xbh_reconcile_3
+			add_country_modifier = {
+				name = xbh_reconcile_2
+				duration = -1
+			}
+		}
+		else_if = {
+			limit = {
+				has_country_modifier = xbh_reconcile_2
+			}
+			remove_country_modifier = xbh_reconcile_2
+			add_country_modifier = {
+				name = xbh_reconcile_1
+				duration = -1
+			}
+		}
+		else = {
+			remove_country_modifier = xbh_reconcile_1
+		}
+	}
+	if = {
+		limit = {
+			religion_group = muslim
+			FROM = {
+				has_country_flag = xbh_reconcile_flag
+			}
+		}
+		clr_country_flag = xbh_muslim_ally_tag
+		FROM = {
+			if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_6
+				}
+				remove_country_modifier = xbh_reconcile_6
+				add_country_modifier = {
+					name = xbh_reconcile_5
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_5
+				}
+				remove_country_modifier = xbh_reconcile_5
+				add_country_modifier = {
+					name = xbh_reconcile_4
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_4
+				}
+				remove_country_modifier = xbh_reconcile_4
+				add_country_modifier = {
+					name = xbh_reconcile_3
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_3
+				}
+				remove_country_modifier = xbh_reconcile_3
+				add_country_modifier = {
+					name = xbh_reconcile_2
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_2
+				}
+				remove_country_modifier = xbh_reconcile_2
+				add_country_modifier = {
+					name = xbh_reconcile_1
+					duration = -1
+				}
+			}
+			else = {
+				remove_country_modifier = xbh_reconcile_1
+			}
+		}
+	}
+	# Ayyubids
+	if = {
+		limit = {
+			has_country_modifier = hsn_greco_kurdish_alliance
+			FROM = {
+				OR = {
+					tag = BYZ
+					was_tag = BYZ
+				}
+			}
+		}
+		remove_country_modifier = hsn_greco_kurdish_alliance
+	}
+	if = {
+		limit = {
+			OR = {
+				tag = BYZ
+				was_tag = BYZ
+			}
+			FROM = {
+				has_country_modifier = hsn_greco_kurdish_alliance
+			}
+		}
+		FROM = {
+			remove_country_modifier = hsn_greco_kurdish_alliance
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = hsn_a_sublime_alliance
+			FROM = {
+				has_country_flag = hsn_is_ally_anatolia
+			}
+		}
+		remove_country_modifier = hsn_a_sublime_alliance
+		FROM = {
+			clr_country_flag = hsn_is_ally_anatolia
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = hsn_is_ally_anatolia
+			FROM = {
+				has_country_modifier = hsn_a_sublime_alliance
+			}
+		}
+		clr_country_flag = hsn_is_ally_anatolia
+		FROM = {
+			remove_country_modifier = hsn_a_sublime_alliance
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = hsn_alliance_shah
+			FROM = {
+				has_country_flag = hsn_is_ally_persia
+			}
+		}
+		remove_country_modifier = hsn_alliance_shah
+		FROM = {
+			clr_country_flag = hsn_is_ally_persia
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = hsn_is_ally_persia
+			FROM = {
+				has_country_modifier = hsn_alliance_shah
+			}
+		}
+		clr_country_flag = hsn_is_ally_persia
+		FROM = {
+			remove_country_modifier = hsn_alliance_shah
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = hsn_alliance_venice
+			FROM = {
+				OR = {
+					tag = VEN
+					was_tag = VEN
+				}
+			}
+		}
+		remove_country_modifier = hsn_alliance_venice
+	}
+	if = {
+		limit = {
+			OR = {
+				tag = VEN
+				was_tag = VEN
+			}
+			FROM = {
+				has_country_modifier = hsn_alliance_venice
+			}
+		}
+		FROM = {
+			remove_country_modifier = hsn_alliance_venice
+		}
+	}
+}
+
+on_royal_marriage = {
+	# Assyria
+	if = {
+		limit = {
+			has_faction = faction_asr_catholic
+			FROM = {
+				religion = catholic
+			}
+		}
+		add_faction_influence = {
+			faction = faction_asr_catholic
+			influence = 3
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_asr_catholic
+			}
+			religion = catholic
+		}
+		FROM = {
+			add_faction_influence = {
+				faction = faction_asr_catholic
+				influence = 3
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_faction = faction_asr_orthodox
+			FROM = {
+				religion = orthodox
+			}
+		}
+		add_faction_influence = {
+			faction = faction_asr_orthodox
+			influence = 3
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_asr_orthodox
+			}
+			religion = orthodox
+		}
+		FROM = {
+			add_faction_influence = {
+				faction = faction_asr_orthodox
+				influence = 3
+			}
+		}
+	}
+	# Jerusalem
+	if = {
+		limit = {
+			has_faction = faction_otr_haute
+		}
+		if = {
+			limit = {
+				FROM = {
+					religion = catholic
+				}
+			}
+			add_faction_influence = {
+				faction = faction_otr_haute
+				influence = 3
+			}
+		}
+		else = {
+			add_faction_influence = {
+				faction = faction_otr_levantine
+				influence = 3
+			}
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_faction = faction_otr_haute
+			}
+		}
+		if = {
+			limit = {
+				religion = catholic
+			}
+			FROM = {
+				add_faction_influence = {
+					faction = faction_otr_haute
+					influence = 3
+				}
+			}
+		}
+		else = {
+			FROM = {
+				add_faction_influence = {
+					faction = faction_otr_levantine
+					influence = 3
+				}
+			}
+		}
+	}
+}
+
+on_religion_change = {
+	# Chorath
+	if = {
+		limit = {
+			has_country_flag = xbh_muslim_ally_tag
+			NOT = { religion_group = muslim }
+		}
+		clr_country_flag = xbh_muslim_ally_tag
+		random_ally = {
+			limit = {
+				has_country_flag = xbh_reconcile_flag
+			}
+			if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_6
+				}
+				remove_country_modifier = xbh_reconcile_6
+				add_country_modifier = {
+					name = xbh_reconcile_5
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_5
+				}
+				remove_country_modifier = xbh_reconcile_5
+				add_country_modifier = {
+					name = xbh_reconcile_4
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_4
+				}
+				remove_country_modifier = xbh_reconcile_4
+				add_country_modifier = {
+					name = xbh_reconcile_3
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_3
+				}
+				remove_country_modifier = xbh_reconcile_3
+				add_country_modifier = {
+					name = xbh_reconcile_2
+					duration = -1
+				}
+			}
+			else_if = {
+				limit = {
+					has_country_modifier = xbh_reconcile_2
+				}
+				remove_country_modifier = xbh_reconcile_2
+				add_country_modifier = {
+					name = xbh_reconcile_1
+					duration = -1
+				}
+			}
+			else = {
+				remove_country_modifier = xbh_reconcile_1
+			}
+		}
+	}
+}
+
+on_annexed = {
+	# Chorath
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = xbh_muslim_ally_tag
+			}
+		}
+		FROM = {
+			clr_country_flag = xbh_muslim_ally_tag
+			random_ally = {
+				limit = {
+					has_country_flag = xbh_reconcile_flag
+				}
+				if = {
+					limit = {
+						has_country_modifier = xbh_reconcile_6
+					}
+					remove_country_modifier = xbh_reconcile_6
+					add_country_modifier = {
+						name = xbh_reconcile_5
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = {
+						has_country_modifier = xbh_reconcile_5
+					}
+					remove_country_modifier = xbh_reconcile_5
+					add_country_modifier = {
+						name = xbh_reconcile_4
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = {
+						has_country_modifier = xbh_reconcile_4
+					}
+					remove_country_modifier = xbh_reconcile_4
+					add_country_modifier = {
+						name = xbh_reconcile_3
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = {
+						has_country_modifier = xbh_reconcile_3
+					}
+					remove_country_modifier = xbh_reconcile_3
+					add_country_modifier = {
+						name = xbh_reconcile_2
+						duration = -1
+					}
+				}
+				else_if = {
+					limit = {
+						has_country_modifier = xbh_reconcile_2
+					}
+					remove_country_modifier = xbh_reconcile_2
+					add_country_modifier = {
+						name = xbh_reconcile_1
+						duration = -1
+					}
+				}
+				else = {
+					remove_country_modifier = xbh_reconcile_1
+				}
+			}
+		}
+	}
+}

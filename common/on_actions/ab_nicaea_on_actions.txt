@@ -1,0 +1,28 @@
+on_siege_won_province = {
+	if = {
+		limit = {
+			controller = {
+				has_ruler_modifier = nci_avenger_of_hydaspes
+			}
+			superregion = india_superregion
+			NOT = { is_permanent_claim = controller }
+		}
+		add_permanent_claim = controller
+	}
+}
+
+# province
+# root = location, from = country that owns it
+# Fired right after the great project is constructed
+on_great_project_constructed = {
+	if = {
+		limit = {
+			from = {
+				mission_completed = nicene_architects
+			}
+		}
+		from = {
+			add_splendor = 100
+		}
+	}
+}

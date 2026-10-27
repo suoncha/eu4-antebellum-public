@@ -3,36 +3,15 @@ country_decisions = {
 	form_baltic = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			NOT = { has_country_flag = formed_baltic_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			NOT = { exists = BLT }
-			NOT = { tag = PAP }
-			NOT = { tag = HLR }
-			NOT = { tag = KRZ }
 			culture_group = baltic
+			NOT = { tag = KRZ }
 			OR = {
-				religion = baltic_pagan
-				religion = reformed_baltic
-			}
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 3
-				}
+                religion = baltic_pagan
+                religion = reformed_baltic
 			}
 			is_colonial_nation = no
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
-				}
-			}
+			NOT = { exists = BLT }
+			NOT = { was_tag = BLT }
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -49,21 +28,19 @@ country_decisions = {
 			}
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
-			is_at_war = no
-			adm_tech = 10
 			owns_core_province = 43
 			owns_core_province = 41
 			owns_core_province = 272
 			owns_core_province = 38
 			owns_core_province = 37
 			owns_core_province = 36
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
-			add_prestige_or_monarch_power = {
-				amount = 25
-			}
+            add_prestige_or_monarch_power = {
+                amount = 25
+            }
 			change_tag = BLT
 			if = {
 				limit = {
@@ -77,7 +54,6 @@ country_decisions = {
 				}
 				set_government_rank = 2
 			}
-			set_country_flag = formed_baltic_flag
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300

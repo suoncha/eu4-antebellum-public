@@ -2,112 +2,208 @@ country_decisions = {
 	
 	release_italy = {
 		major = yes
-		ai_will_do = {
-			factor = 0
-		}
 		potential = {
+			ai = no
 			has_country_flag = frc_unlock_release_italy
-			NOT = { has_country_flag = frc_released_italy }
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_at_war = no
 			NOT = { exists = ITA }
-			NOT = { exists = LOM }
+			NOT = { exists = ITR }
+			NOT = { exists = ITT }
+			piedmont_area = {
+					type = all
+					owned_by = ROOT
+			}
+			lombardy_area = {
+					type = all
+					owned_by = ROOT
+			}
+			po_valley_area = {
+					type = all
+					owned_by = ROOT
+			}
+			tuscany_area = {
+					type = all
+					owned_by = ROOT
+			}
+			emilia_romagna_area = {
+					type = all
+					owned_by = ROOT
+			}
 		}
 		provinces_to_highlight = {
 			OR = {
 				area = piedmont_area
-				area = liguria_area
 				area = lombardy_area
 				area = emilia_romagna_area
 				area = po_valley_area
-				area = venetia_area
 				area = tuscany_area
-				area = corsica_sardinia_area
 			}
 			owned_by = ROOT
 		}
 		effect = {
 			custom_tooltip = FRC_RELEASE_ITA
-			set_country_flag = frc_released_italy
+			clr_country_flag = frc_unlock_release_italy
+			if = {
+				limit = {
+					OR = {
+						tag = FRA
+						was_tag = FRA
+					}
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = FRA_SUBJECT_SPREAD_ITA
+			}
 			hidden_effect = {
 				piedmont_area = {
 					limit = {
 						owned_by = ROOT
 					}
-					add_core = LOM
+					add_core = ITA
 					remove_core = ROOT
 				}
 				liguria_area = {
 					limit = {
 						owned_by = ROOT
 					}
-					add_core = LOM
+					add_core = ITA
 					remove_core = ROOT
 				}
 				lombardy_area = {
 					limit = {
 						owned_by = ROOT
 					}
-					add_core = LOM
+					add_core = ITA
 					remove_core = ROOT
 				}
 				emilia_romagna_area = {
 					limit = {
 						owned_by = ROOT
 					}
-					add_core = LOM
+					add_core = ITA
 					remove_core = ROOT
 				}
 				po_valley_area = {
 					limit = {
 						owned_by = ROOT
 					}
-					add_core = LOM
+					add_core = ITA
 					remove_core = ROOT
 				}
 				venetia_area = {
 					limit = {
 						owned_by = ROOT
 					}
-					add_core = LOM
+					add_core = ITA
 					remove_core = ROOT
 				}
 				tuscany_area = {
 					limit = {
 						owned_by = ROOT
 					}
-					add_core = LOM
+					add_core = ITA
 					remove_core = ROOT
 				}
 				corsica_sardinia_area = {
 					limit = {
 						owned_by = ROOT
 					}
-					add_core = LOM
+					add_core = ITA
 					remove_core = ROOT
 				}
-				release = LOM
-				create_union = LOM
-				LOM = {
+				release = ITA
+				if = {
+					limit = {
+						ROOT = {
+							government = monarchy
+						}
+					}
+					create_union = ITA
+				}
+				else = {
+					vassalize = ITA
+				}
+				ITA = {
 					set_capital = 104
 					add_manpower = 10
 					add_treasury = 100
 					add_liberty_desire = -50
 					change_religion = ROOT
 					change_primary_culture = lombard
-					change_tag = ITA
-					set_country_flag = formed_italy_flag
+					set_country_flag = general_flag_Rome_flag
+					if = {
+						limit = {
+							ROOT = {
+								OR = {
+									tag = FRA
+									was_tag = FRA
+								}
+							}
+						}
+						change_primary_culture = transalpins
+						set_country_flag = fra_subject_culture_spread
+						capital_scope = {
+							change_culture = transalpins
+						}
+					}
 					swap_non_generic_missions = yes
 					swap_free_idea_group = yes
 					if = {
 						limit = {
-							NOT = { government = monarchy }
+							ROOT = { government = republic }
+						}
+						ITA = {
+							change_tag = ITR
+						}
+						ITR = { set_capital = 104
+							add_manpower = 10
+							add_treasury = 100
+							add_liberty_desire = -50
+							change_religion = ROOT
+							change_primary_culture = lombard
+							set_country_flag = general_flag_Rome_flag
+							if = {
+								limit = {
+									ROOT = {
+										OR = {
+											tag = FRA
+											was_tag = FRA
+										}
+									}
+								}
+								change_primary_culture = transalpins
+								set_country_flag = fra_subject_culture_spread
+								capital_scope = {
+									change_culture = transalpins
+								}
+							}
+							swap_non_generic_missions = yes
+							swap_free_idea_group = yes
+							change_government = republic
+							add_government_reform = oligarchy_reform
+						}
+					}
+					if = {
+						limit = {
+							ROOT = { government = theocracy }
+						}
+						change_government = theocracy
+						add_government_reform = leading_clergy_reform
+					}
+					if = {
+						limit = {
+							ROOT = { government = monarchy }
 						}
 						change_government = monarchy
+						add_government_reform = autocracy_reform
 					}
-					add_government_reform = feudalism_reform
+					if = {
+						limit = {
+							NOT = { government_rank = 2 }
+						}
+						set_government_rank = 2
+					}
+
 					if = {
 						limit = {
 							NOT = { government_rank = 2 }
@@ -117,6 +213,8 @@ country_decisions = {
 				}
 			}
 		}
+		ai_will_do = {
+			factor = 0
+		}
 	}
-	
 }

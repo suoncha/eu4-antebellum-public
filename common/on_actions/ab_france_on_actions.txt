@@ -1,0 +1,341 @@
+on_monarch_death = {
+ 	if = {
+		limit = {
+	    	has_reform = fraelective
+		}
+		country_event = {
+			id = ab_france.1
+		}
+  	}
+}
+
+on_alliance_broken = {
+	if = {
+		limit = {
+			has_country_modifier = ab_fra_uneasy_cooperation
+			FROM = {
+				tag = ADU
+			}
+		}
+		remove_country_modifier = ab_fra_uneasy_cooperation
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = ab_fra_uneasy_cooperation
+			}
+			tag = ADU
+		}
+		FROM = {
+			remove_country_modifier = ab_fra_uneasy_cooperation
+		}
+	}
+	if = {
+		limit = {
+			has_country_modifier = ab_fra_holy_concordat
+			FROM = {
+				tag = PAP
+			}
+		}
+		remove_country_modifier = ab_fra_holy_concordat
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_modifier = ab_fra_holy_concordat
+			}
+			tag = PAP
+		}
+		FROM = {
+			remove_country_modifier = ab_fra_holy_concordat
+		}
+	}
+}
+
+on_added_to_trade_company = {
+	if = {
+		limit = {
+			has_country_flag = ab_fra_upgraded_trade_companies
+		}
+		add_province_modifier = {
+			name = ab_fra_upgraded_trade_companies_idea
+			duration = -1
+		}
+	}
+}
+
+on_adm_development = {
+	if = {
+		limit = {
+			region = france_region
+			owner = {
+				has_country_flag = ab_france_region_dev_flag
+			}
+		}
+		random_list = {
+			20 = { 
+				add_base_tax = 1
+			}
+			80 = { }
+		}
+	}
+}
+
+on_dip_development = {
+	if = {
+		limit = {
+			region = france_region
+			owner = {
+				has_country_flag = ab_france_region_dev_flag
+			}
+		}
+		random_list = {
+			20 = { 
+				add_base_production = 1
+			}
+			80 = { }
+		}
+	}
+}
+
+on_mil_development = {
+	if = {
+		limit = {
+			region = france_region
+			owner = {
+				has_country_flag = ab_france_region_dev_flag
+			}
+		}
+		random_list = {
+			20 = { 
+				add_base_manpower = 1
+			}
+			80 = { }
+		}
+	}
+}
+
+# Incident 
+on_war_won = {
+	# AB-FRA {{{
+	if = {
+		limit = {
+			# Check if we are inside the war
+			has_global_flag = fate_of_france_in_war
+			# And that the war was not decisive
+			NOT = { has_global_flag = fate_of_france_decisive_war }
+			# And that the war isn't still ongoing
+			NOT = {
+				is_in_war = {
+					casus_belli = cb_fate_of_france
+				}
+			}
+			# And that the emperor and the FRC are the leaders
+			OR = {
+				AND = {
+					tag = emperor
+					FROM = {
+						tag = FRA
+					}
+				}
+				AND = {
+					tag = FRA
+					FROM = {
+						tag = emperor
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				any_country = {
+					has_reform = free_city
+				}
+			}
+			random_country = {
+				limit = {
+					has_reform = free_city
+				}
+				capital_scope = {
+					save_event_target_as = PeaceTreatyCity
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				any_elector = {
+					exists = yes
+				}
+			}
+			random_elector = {
+				capital_scope = {
+					save_event_target_as = PeaceTreatyCity
+				}
+			}
+		}
+		else = {
+			emperor = {
+				capital_scope = {
+					save_event_target_as = PeaceTreatyCity
+				}
+			}
+		}
+		every_country = {
+			limit = {
+				is_emperor = no
+				OR = {
+					tag = FRA
+					is_part_of_hre = yes
+				}
+			}
+			country_event = {
+				id = ab_france.110
+			}
+		}
+		emperor = {
+			country_event = {
+				id = ab_france.111
+			}
+		} 
+	}
+}
+
+on_battle_won_country = {
+	if = {
+		limit = {
+			has_reform = fragrandrepublic
+			has_country_flag = ab_fra_win_battles_against_monarchy_check
+			FROM = {
+				government = monarchy
+			}
+		}
+		change_variable = {
+			which = fraBattleCount
+			value = 1
+		}
+		if = {
+			limit = {
+				NOT = { has_country_flag = fra_communist_color_10 }
+			}
+			if = {
+				limit = {
+					OR = {
+						AND = {
+							has_country_flag = fra_communist_color_9
+							check_variable = {
+								which = fraBattleCount
+								value = 100
+							}
+						}
+						AND = {
+							has_country_flag = fra_communist_color_8
+							NOT = { has_country_flag = fra_communist_color_9 }
+							check_variable = {
+								which = fraBattleCount
+								value = 90
+							}
+						}
+						AND = {
+							has_country_flag = fra_communist_color_7
+							NOT = { has_country_flag = fra_communist_color_8 }
+							check_variable = {
+								which = fraBattleCount
+								value = 80
+							}
+						}
+						AND = {
+							has_country_flag = fra_communist_color_6
+							NOT = { has_country_flag = fra_communist_color_7 }
+							check_variable = {
+								which = fraBattleCount
+								value = 70
+							}
+						}
+						AND = {
+							has_country_flag = fra_communist_color_5
+							NOT = { has_country_flag = fra_communist_color_6 }
+							check_variable = {
+								which = fraBattleCount
+								value = 60
+							}
+						}
+						AND = {
+							has_country_flag = fra_communist_color_4
+							NOT = { has_country_flag = fra_communist_color_5 }
+							check_variable = {
+								which = fraBattleCount
+								value = 50
+							}
+						}
+						AND = {
+							has_country_flag = fra_communist_color_3
+							NOT = { has_country_flag = fra_communist_color_4 }
+							check_variable = {
+								which = fraBattleCount
+								value = 40
+							}
+						}
+						AND = {
+							has_country_flag = fra_communist_color_2
+							NOT = { has_country_flag = fra_communist_color_3 }
+							check_variable = {
+								which = fraBattleCount
+								value = 30
+							}
+						}
+						AND = {
+							has_country_flag = fra_communist_color_1
+							NOT = { has_country_flag = fra_communist_color_2 }
+							check_variable = {
+								which = fraBattleCount
+								value = 20
+							}
+						}
+						AND = {
+							NOT = { has_country_flag = fra_communist_color_1 }
+							check_variable = {
+								which = fraBattleCount
+								value = 10
+							}
+						}
+					}
+				}
+				country_event = {
+					id = ab_france.50
+				}
+			}
+		}
+	}
+	if = {
+		limit = {
+			has_country_flag = ab_fra_win_battles_against_monarchy
+			FROM = {
+				government = monarchy
+			}
+		}
+		add_army_tradition = 0.1
+	}
+}
+
+on_new_monarch = {
+	# France
+	if = {
+		limit = {
+			has_country_flag = AB_FRA_UNITER_OF_FRANCE_PERSONALITY
+		}
+		add_ruler_personality = rooster_descendant_personality
+	}
+}
+
+on_siege_won_province = {
+	if = {
+		limit = {
+			controller = {
+				has_country_modifier = ab_fra_revolutionary_zeal
+			}
+			region = france_region
+			NOT = { is_core = FRA }
+		}
+		add_territorial_core = controller
+	}
+}

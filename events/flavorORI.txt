@@ -1,0 +1,53 @@
+########################################
+# Events for Orissa
+#
+# written by Henrik Lohmander
+########################################
+
+namespace = flavor_ori
+
+# The Gajapatis and the Cult of Jagganath
+country_event = {
+	id = flavor_ori.1
+	title = flavor_ori.1.t
+	desc = flavor_ori.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = flavor_ori.1.a 
+		trigger = {
+			NOT = {
+				has_country_flag = ori_jagannath_mission_flag
+			}
+		}
+		ai_chance = { factor = 90 }
+		add_years_of_income = -0.1	#Temple donations
+		add_country_modifier = {
+			name = ori_jagannath_cult
+			duration = -1
+		}
+	}
+	option = {
+		name = flavor_ori.1.b 
+		trigger = {
+			NOT = {
+				has_country_flag = ori_jagannath_mission_flag
+			}
+		}
+		ai_chance = { factor = 10 }
+		add_stability_or_adm_power = yes #From keeping the status quo and supporting other deities.
+	}
+	option = {
+		name = flavor_ori.1.a
+		trigger = {
+			has_country_flag = ori_jagannath_mission_flag
+		}
+		add_country_modifier = {
+			name = ori_jagannath_cult_dh
+			duration = -1
+		}
+	}
+	
+}

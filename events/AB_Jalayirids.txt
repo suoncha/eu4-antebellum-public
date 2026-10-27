@@ -54,11 +54,8 @@ country_event = {
 				add_historical_rival = ROOT
 			}
 			remove_heir = {}
-			# Fire the Mongol Traditions after a while
 			country_event = {
 				id = ab_jalayirid.6
-				days = 10
-				random = 5
 			}
 		}
 	}
@@ -103,18 +100,19 @@ country_event = {
 			}
 		}
 		add_country_modifier = {
-			name = "jlr_triumph_cre"
+			name = jlr_triumph_cre
 			duration = -1
+		}
+		persia_region = {
+			add_base_tax = 1
+			add_base_manpower = 1
 		}
 		define_advisor = {
 			type = islamic_advisor
 			skill = 3
-			religion = ROOT
-			culture = ROOT
-			cost_multiplier = 0.25
+			cost_multiplier = 0.1
 		}
 	}
-	
 }
 
 #Paradise Gardens
@@ -129,16 +127,17 @@ country_event = {
 	option = {
 		name = ab_jalayirid.4.a
 		410 = {
-			add_base_tax = 3
-			add_base_production = 3
-			add_base_manpower = 3
+			add_building = university
+			add_great_project_tier = {
+				type = baghdad
+				tier = 1
+			}
 		}
 		add_country_modifier = {
 			name = jlr_paradise
 			duration = -1
 		}
 	}
-	
 }
 
 #Golden Age
@@ -152,14 +151,15 @@ country_event = {
 	
 	option = {
 		name = ab_jalayirid.5.a
-		change_innovativeness = 5
+		add_splendor = 100
 		reset_golden_age = yes
 		add_ruler_modifier = {
 			name = jlr_patron
 			duration = -1
 		}
+		custom_tooltip = eu_refund_mana_on_tech
+		set_country_flag = eu_refund_mana_on_tech
 	}
-	
 }
 
 #Mongol Traditions
@@ -168,11 +168,6 @@ country_event = {
 	title = ab_jalayirid.6.t
 	desc = ab_jalayirid.6.d
 	picture = MUSLIM_SCHOLAR_WRITING_eventPicture
-	
-	trigger = {
-		tag = ABS
-		was_tag = JLR
-	}
 
 	is_triggered_only = yes
 	
@@ -183,5 +178,4 @@ country_event = {
 			duration = -1
 		}
 	}
-	
 }

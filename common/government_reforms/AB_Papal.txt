@@ -2,16 +2,77 @@ mission_expand_orders = {
 	icon = "ibeinqui"
 	allow_normal_conversion = yes
 	potential = {
-		is_revolutionary = no
 		tag = PAP
+		NOT = { has_country_flag = pap_upgrade_mission_expand_orders }
 	}
 	modifiers = {
-		manpower_in_true_faith_provinces= 0.05
+		manpower_in_true_faith_provinces = 0.05
 		establish_order_cost = -0.1
 	}
 	custom_attributes = {
 		enables_latin_sepulchre_holy_order = yes
 		enables_latin_lazarus_holy_order = yes
 		enables_latin_templars_holy_order = yes
+	}
+}
+
+mission_expand_orders_buffed = {
+	icon = "ibeinqui"
+	allow_normal_conversion = yes
+	potential = {
+		tag = PAP
+		has_country_flag = pap_upgrade_mission_expand_orders
+	}
+	modifiers = {
+		colonist_placement_chance = 0.1
+		native_uprising_chance = -0.5
+		manpower_in_true_faith_provinces = 0.05
+		establish_order_cost = -0.1
+	}
+	custom_attributes = {
+		enables_latin_sepulchre_holy_order = yes
+		enables_latin_lazarus_holy_order = yes
+		enables_latin_templars_holy_order = yes
+	}
+}
+
+ab_kingdom_of_god = {
+	icon = "kingdom_of_god"
+	potential = {
+		has_country_flag = unlock_ab_kingdom_of_god
+	}
+	effect = {
+		hidden_effect = {
+			country_event = {
+				id = flavor_sca.2
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			remove_country_modifier = sca_administrative_focus
+			remove_country_modifier = sca_diplomatic_focus
+			remove_country_modifier = sca_military_focus
+			remove_country_modifier = sca_administrative_focus_non_heir
+			remove_country_modifier = sca_diplomatic_focus_non_heir
+			remove_country_modifier = sca_military_focus_non_heir
+		}
+	}
+	modifiers = {
+		monarch_admin_power = 2
+		manpower_in_true_faith_provinces = 0.25
+		tolerance_own = 2
+		prestige_per_development_from_conversion = 0.33
+		devotion = 1
+		appoint_cardinal_cost = -0.3
+		church_influence_modifier = 0.2
+	}
+	papacy = yes
+	allow_normal_conversion = no
+	lock_level_when_selected = yes
+	fixed_rank = 3
+	custom_attributes = {
+		education_focus_enabled = yes
+		locked_government_type = yes
 	}
 }

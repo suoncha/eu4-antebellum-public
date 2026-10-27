@@ -14,33 +14,31 @@ country_decisions = {
 				province_id = 38
 				province_id = 37
 			}
+			NOT = { owned_by = ROOT }
 		}
 		allow = {
 			full_idea_group = religious_ideas
-			calc_true_if = {
-				all_owned_province = {
-					religion = baltic_pagan
-				}
-				amount = 30
-			}
 			owns = 43
 			owns = 41
 			owns = 272
 			owns = 4970
 			owns = 38
 			owns = 37
+			num_of_owned_provinces_with = {
+				value = 30
+				religion = ROOT
+			}
 		}
 		effect = {
+			ab_mpf_consolidate_rites_effect = yes
 			add_stability = -2
 			change_religion = reformed_baltic
-			capital_scope = {
-				change_religion = reformed_baltic
-			}
 			add_country_modifier = {
-				name = "wee_conversion_zeal"
+				name = wee_conversion_zeal
 				duration = 3650
-			}	
+			}
 			custom_tooltip = reform_baltic_subjects_switch_too
+			custom_tooltip = ab_mpf_reform_baltic_provinces
 			hidden_effect = {
 				every_subject_country = {
 					limit = {
@@ -48,15 +46,16 @@ country_decisions = {
 						NOT = { is_subject_of_type = tributary_state }
 					}
 					change_religion = reformed_baltic
-					capital_scope = {
-						change_religion = reformed_baltic
+				}
+				every_province = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+						religion = baltic_pagan
 					}
-					add_country_modifier = {
-						name = wee_conversion_zeal
-						duration = 3650
-					}
+					change_religion = reformed_baltic
 				}
 			}
+			custom_tooltip = AB_EMPTY
 		}
 		ai_will_do = {
 			factor = 1

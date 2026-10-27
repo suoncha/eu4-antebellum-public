@@ -1,0 +1,397 @@
+########################################
+# Events for Kilwa
+#
+# written by Henrik Lohmander
+########################################
+
+namespace = flavor_zan
+normal_or_historical_nations = yes
+
+
+#Events relating to the political instability of Kilwa in the 15th century.
+#Coup of Suleiman and Muhammad al-Mazlum.
+country_event = {
+	id = flavor_zan.5
+	title = flavor_zan.5.t
+	desc = flavor_zan.5.d
+	picture = DEATH_OF_HEIR_eventPicture
+
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	trigger = {
+		tag = ZAN #Will trigger upon first ruler change.
+		OR = {
+			government = monarchy
+			government = tribal
+		}
+		has_government_attribute = heir
+	}
+	
+	option = {
+		name = flavor_zan.5.a #Suleiman takes the throne.
+		ai_chance = { factor = 1 }
+		set_country_flag = zan_plotting_viziers
+		add_stability = -2
+		define_ruler = {
+			name = "Suleiman"
+			dynasty = al-Mawahib
+			claim = 80
+		}
+		if = {
+			limit = {
+				has_states_general_mechanic = yes
+			}
+			change_statists_vs_orangists = 1
+		}
+		#add_legitimacy = -20
+		set_ruler_flag = zan_muhammad_and_suleiman
+		hidden_effect = {
+			define_heir = {
+				claim = 75
+				dynasty = al-Mazlum
+				name = "Muhammad"
+				age = 45
+			}
+		}
+	}
+	option = {
+		name = flavor_zan.5.b #Muhammad al-Muzlum takes the throne.
+		ai_chance = { factor = 0 }
+		set_country_flag = zan_plotting_viziers
+		add_stability = -2
+		define_ruler = {
+			name = "Muhammad"
+			dynasty = "al-Mazlum"
+			claim = 80
+		}
+		if = {
+			limit = {
+				has_states_general_mechanic = yes
+			}
+			change_statists_vs_orangists = 1
+		}
+		#add_legitimacy = -20
+		set_ruler_flag = zan_muhammad_and_suleiman
+		hidden_effect = {
+			define_heir = {
+				claim = 75
+				dynasty = al-Mawahib
+				name = "Suleiman"
+				age = 50
+			}
+		}
+	}
+	option = {
+		name = flavor_zan.5.c #XXXX is our rightful ruler!
+		ai_chance = { factor = 0 }
+		set_country_flag = zan_plotting_viziers
+		add_stability = -1
+		capital_scope = {
+			spawn_rebels = {
+				type = pretender_rebels
+				leader = "Muhammad"
+				leader_dynasty = "al-Mazlum"
+				size = 2
+			}
+		}
+	}
+}
+########################################
+# More events for Kilwa
+#
+# scripted by Ogulcan Yildirim
+# Localization written by Álvaro Sanz
+########################################
+
+#Embassy Events
+#Meet Persian origin
+country_event = {
+	id = flavor_zan.8
+	title = flavor_zan.8.t
+	desc = flavor_zan.8.desc
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {	#Send an ambassador to Persia
+		name = flavor_zan.8.a
+		custom_tooltip = flavor_zan.8.a.tt
+		hidden_effect = {
+			2218 = {
+				owner = {
+					country_event = {
+						id = flavor_zan.9
+					}
+				}
+			}
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				2218 = {
+					owner = {
+						NOT = { tag = PER }
+						NOT = { was_tag = PER }
+						NOT = { culture_group = iranian }
+					}
+				}
+			}
+		}
+	}
+	
+	option = {	#It's not really worth it
+		name = flavor_zan.8.b
+		add_prestige = 20
+		add_legitimacy = 20
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				2218 = {
+					owner = {
+						OR = {
+							tag = PER
+							was_tag = PER
+							culture_group = iranian
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+#A [From.GetAdjective] ambassador meets us
+country_event = {
+	id = flavor_zan.9
+	title = flavor_zan.9.t
+	desc = flavor_zan.9.desc
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {	#Welcome him!
+		name = flavor_zan.9.a
+		FROM = {
+			country_event = {
+				id = flavor_zan.10
+			}
+		}
+		2218 = {
+			add_province_modifier = {
+				name = zan_kilwan_embassy
+				duration = -1
+				desc = zan_embassy_desc
+			}
+		}
+		reverse_add_opinion = {
+			who = FROM
+			modifier = zan_has_embassy
+		}
+		hidden_effect = {
+			save_global_event_target_as = kilwan_embassy_holder
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				NOT = { tag = PER }
+				NOT = { was_tag = PER }
+				NOT = { culture_group = iranian }
+			}
+		}
+	}
+	
+	option = {	#We have no need for diplomacy with Kilwa
+		name = flavor_zan.9.b
+		FROM = {
+			country_event = {
+				id = flavor_zan.11
+			}
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = {
+					tag = PER
+					was_tag = PER
+					culture_group = iranian
+				}
+			}
+		}
+	}
+}
+
+#Persia welcomes our ambassador + embassy
+country_event = {
+	id = flavor_zan.10
+	title = flavor_zan.10.t
+	desc = flavor_zan.10.desc
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_zan.10.a
+		capital_scope = {
+			add_province_modifier = {
+				name = zan_persian_embassy
+				duration = -1
+				desc = zan_embassy_desc
+			}
+		}
+		reverse_add_opinion = {
+			who = FROM
+			modifier = zan_has_embassy
+		}
+		hidden_effect = {
+			set_global_flag = zan_persia_embassy
+			save_global_event_target_as = persian_embassy_holder
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+#Persia expelled the ambassador
+country_event = {
+	id = flavor_zan.11
+	title = flavor_zan.11.t
+	desc = flavor_zan.11.desc
+	picture = ACCUSATION_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_zan.11.a
+		add_opinion = {
+			who = FROM
+			modifier = zan_declined_embassy
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+#Kilwa lost the Persian embassy!
+country_event = {
+	id = flavor_zan.13
+	title = flavor_zan.13.t
+	desc = flavor_zan.13.desc
+	picture = COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_zan.13.a
+		2218 = {
+			remove_province_modifier = zan_kilwan_embassy
+		}
+		FROM = {
+			remove_opinion = {
+				who = ROOT
+				modifier = zan_has_embassy
+			}
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+#Kilwa disbanded the Persian embassy!
+country_event = {
+	id = flavor_zan.14
+	title = flavor_zan.14.t
+	desc = flavor_zan.14.desc
+	picture = COUNTRY_COLLAPSE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_zan.14.a
+		remove_opinion = {
+			who = FROM
+			modifier = zan_has_embassy
+		}
+		reverse_remove_opinion = {
+			who = ROOT
+			modifier = zan_has_embassy
+		}
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+###
+
+#Mogadishu admits defeat
+country_event = {
+	id = flavor_zan.20
+	title = flavor_zan.20.t
+	desc = flavor_zan.20.desc
+	picture = CONQUEST_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_zan.20.a
+		1196 = {
+			if = {
+				limit = { NOT = { province_has_center_of_trade_of_level = 2 } }
+				add_center_of_trade_level = 1
+			}
+			else = {
+				add_base_production = 3
+			}
+			add_prosperity = 100
+		}
+		1205 = {
+			if = {
+				limit = { province_has_center_of_trade_of_level = 2 }
+				add_center_of_trade_level = -1
+			}
+			else = {
+				add_base_production = -2
+			}
+		}
+		add_treasury = 400
+
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+#New maps
+country_event = {
+	id = flavor_zan.21
+	title = flavor_zan.21.t
+	desc = flavor_zan.21.desc
+	picture = MERCHANTS_TALKING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_zan.21.a
+		custom_tooltip = flavor_zim.8.a.tt
+		hidden_effect = {
+			discover_province = 524
+			discover_province = 684
+			discover_province = 584
+			bay_of_bengal_area = { discover_country = ROOT }
+			andaman_sea_area = { discover_country = ROOT }
+			south_china_sea_area = { discover_country = ROOT }
+			east_china_sea_area = { discover_country = ROOT }
+		}
+
+		ai_chance = {
+			factor = 1
+		}
+	}
+}

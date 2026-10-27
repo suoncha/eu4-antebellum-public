@@ -3,18 +3,11 @@ country_decisions = {
 	habsburg_nation = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			ab_not_german_regional_tag_trigger = yes
-			NOT = { has_country_flag = formed_austria_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			NOT = { exists = HAB }
 			OR = {
 				tag = TIR
 				tag = STY
 			}
+			NOT = { exists = HAB }
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -29,12 +22,13 @@ country_decisions = {
 			}
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes		
-			is_at_war = no
+			primary_culture = austrian
 			owns_core_province = 134
 			owns_core_province = 73
 			owns_core_province = 76
 			owns_core_province = 110
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
 			change_tag = HAB
@@ -86,10 +80,14 @@ country_decisions = {
 					add_permanent_claim = HAB
 				}
 			}
-			set_country_flag = formed_austria_flag
+			hidden_effect = {
+				country_event = {
+					id = ab_achiev.24
+				}
+			}
 		}
 		ai_will_do = {
-			factor = 10
+			factor = 1
 		}
 		ai_importance = 400
 	}

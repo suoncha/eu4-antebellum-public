@@ -6,33 +6,21 @@ country_event = {
 	id = ab_latin.1
 	title = ab_latin.1.t
 	desc = ab_latin.1.d
-	picture = AB_BYZFALL_eventPicture
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
 	
 	major = yes
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = BYZ
-		151 = {
-			owned_by = LAT
-		}
-		NOT = {
-			LAT = {
-				has_country_flag = lat_cant_trigger_events
-			}
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_latin.1.a
 		add_stability = -1
 		add_prestige = -25
 		add_legitimacy = -25
-			add_country_modifier = {
-				name = "byz_fallofcapital"
-				duration = 5475
-			}
+		add_country_modifier = {
+			name = "byz_fallofcapital"
+			duration = 5475
+		}
 	}
 }
 
@@ -41,29 +29,20 @@ country_event = {
 	id = ab_latin.2
 	title = ab_latin.2.t
 	desc = ab_latin.2.d
-	picture = AB_BYZFALL_eventPicture
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
 	
 	major = yes
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = LAT
-		151 = {
-			owned_by = LAT
-		}
-		NOT = {
-			LAT = {
-				has_country_flag = lat_cant_trigger_events
-			}
-		}
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_latin.2.a
 		add_prestige = 25
 		set_government_rank = 3
-		set_country_flag = lat_can_pick_emperor
+		country_event = {
+			id = ab_latin.8
+			days = 60
+		}
 	}
 }
 
@@ -99,7 +78,7 @@ country_event = {
 	id = ab_latin.4
 	title = ab_latin.4.t
 	desc = ab_latin.4.d
-	picture = AB_COURT_eventPicture
+	picture = BYZ_COURT_eventPicture
 	
 	is_triggered_only = yes
 	
@@ -134,7 +113,7 @@ country_event = {
 	id = ab_latin.5
 	title = ab_latin.5.t
 	desc = ab_latin.5.d
-	picture = AB_JERUSALEM_eventPicture
+	picture = BYZ_JERUSALEM_eventPicture
 	
 	is_triggered_only = yes
 	
@@ -184,17 +163,7 @@ country_event = {
 	desc = ab_latin.6.d
 	picture = RELIGIOUS_WARS_eventPicture
 	
-	trigger = {
-		tag = LAT
-		358 = {
-			owned_by = LAT
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 1
-	}
-	
+	is_triggered_only = yes
 	fire_only_once = yes
 	
 	option = {
@@ -232,10 +201,10 @@ country_event = {
 	
 	option = {
 		name = ab_latin.7.a
-			add_country_modifier = {
-				name = lat_last_crusade
-				duration = 36500
-			}
+		add_country_modifier = {
+			name = lat_last_crusade
+			duration = 36500
+		}
 	}
 }
 
@@ -244,23 +213,18 @@ country_event = {
 	id = ab_latin.8
 	title = ab_latin.8.t
 	desc = ab_latin.8.d
-	picture = AB_BYZANTIUM_eventPicture
+	picture = BYZ_GOOD_WITH_MONARCH_eventPicture
 	
-	trigger = {
-		tag = LAT
-		has_country_flag = lat_can_pick_emperor
-		NOT = {
-			LAT = {
-				has_country_flag = lat_cant_trigger_events
+	is_triggered_only = yes
+
+	after = {
+		hidden_effect = {
+			country_event = {
+				id = ab_latin.13
+				days = 730
 			}
 		}
 	}
-	
-	mean_time_to_happen = {
-		months = 2
-	}
-	
-	fire_only_once = yes
 	
 	option = {
 		name = ab_latin.8.a
@@ -339,7 +303,7 @@ country_event = {
 	id = ab_latin.9
 	title = ab_latin.9.t
 	desc = ab_latin.9.d
-	picture = AB_HAJJ_eventPicture
+	picture = muslimgfx_HAJJ_eventPicture
 	
 	is_triggered_only = yes 
 	
@@ -400,17 +364,9 @@ country_event = {
 	id = ab_latin.11
 	title = ab_latin.11.t
 	desc = ab_latin.11.d
-	picture = ABAD5_eventPicture
+	picture = muslimgfx_CONQUEST_eventPicture
 	
-	trigger = {
-		tag = LAT
-		owns = 384
-	}
-	
-	mean_time_to_happen = {
-		months = 1
-	}
-	
+	is_triggered_only = yes
 	fire_only_once = yes
 	
 	option = {
@@ -419,10 +375,10 @@ country_event = {
 		384 = {
 			add_devastation = 100
 		}
-			add_country_modifier = {
-				name = "lat_medina"
-				duration = 9125
-			}
+		add_country_modifier = {
+			name = "lat_medina"
+			duration = 9125
+		}
 	}
 }
 
@@ -431,17 +387,9 @@ country_event = {
 	id = ab_latin.12
 	title = ab_latin.12.t
 	desc = ab_latin.12.d
-	picture = ABAD5_eventPicture
+	picture = muslimgfx_CONQUEST_eventPicture
 	
-	trigger = {
-		tag = LAT
-		owns = 225
-	}
-	
-	mean_time_to_happen = {
-		months = 1
-	}
-	
+	is_triggered_only = yes
 	fire_only_once = yes
 	
 	option = {
@@ -451,14 +399,12 @@ country_event = {
 			add_base_production = -4
 			add_base_manpower = -4
 			add_devastation = 100
-			remove_province_modifier = nm_cordoba
 		}
 		379 = {
 			add_base_tax = 2
 			add_base_production = 2
 			add_base_manpower = 2
 		}
-		
 	}
 }
 
@@ -467,18 +413,9 @@ country_event = {
 	id = ab_latin.13
 	title = ab_latin.13.t
 	desc = ab_latin.13.d
-	picture = AB_COURT_eventPicture
+	picture = BYZ_COURT_eventPicture
 	
-	trigger = {
-		tag = LAT
-		religion = catholic
-	}
-	
-	mean_time_to_happen = {
-		months = 24
-	}
-	
-	fire_only_once = yes
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_latin.13.a
@@ -504,24 +441,15 @@ country_event = {
 	desc = ab_latin.14.d
 	picture = POPE_PREACHING_eventPicture
 	
-	trigger = {
-		tag = LAT
-		owns = 118
-	}
-	
-	mean_time_to_happen = {
-		months = 12
-	}
-	
+	is_triggered_only = yes
 	fire_only_once = yes
 	
 	option = {
 		name = ab_latin.14.a
-			add_country_modifier = {
-				name = "lat_baldwins"
-				duration = -1
-			}
-		
+		add_country_modifier = {
+			name = "lat_baldwins"
+			duration = -1
+		}	
 	}
 }	
 

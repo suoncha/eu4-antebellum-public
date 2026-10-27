@@ -16,18 +16,9 @@ country_decisions = {
 				province_id = 315
 				province_id = 18
 			}
+			NOT = { owned_by = ROOT }
 		}
 		allow = {
-			OR = {
-				full_idea_group = religious_ideas
-				has_reform = est_harmony
-			}
-			calc_true_if = {
-				all_owned_province = {
-					religion = suomi_pagan
-				}
-				amount = 30
-			}
 			owns = 35
 			owns = 36
 			owns = 33
@@ -36,18 +27,25 @@ country_decisions = {
 			owns = 1777
 			owns = 315
 			owns = 18
+			num_of_owned_provinces_with = {
+				value = 30
+				religion = ROOT
+			}
+			OR = {
+                full_idea_group = religious_ideas
+                has_reform = est_harmony
+            }
 		}
 		effect = {
+			ab_mpf_consolidate_rites_effect = yes
 			add_stability = -2
 			change_religion = reformed_suomi
-			capital_scope = {
-				change_religion = reformed_suomi
-			}
 			add_country_modifier = {
-				name = "wee_conversion_zeal"
+				name = wee_conversion_zeal
 				duration = 3650
-			}	
+			}
 			custom_tooltip = reform_suomi_subjects_switch_too
+			custom_tooltip = ab_mpf_reform_suomi_provinces
 			hidden_effect = {
 				every_subject_country = {
 					limit = {
@@ -55,15 +53,16 @@ country_decisions = {
 						NOT = { is_subject_of_type = tributary_state }
 					}
 					change_religion = reformed_suomi
-					capital_scope = {
-						change_religion = reformed_suomi
+				}
+				every_province = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+						religion = suomi_pagan
 					}
-					add_country_modifier = {
-						name = wee_conversion_zeal
-						duration = 3650
-					}
+					change_religion = reformed_suomi
 				}
 			}
+			custom_tooltip = AB_EMPTY
 		}
 		ai_will_do = {
 			factor = 1

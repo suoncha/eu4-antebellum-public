@@ -472,10 +472,7 @@ country_event = {
 	major = yes
 	
 	trigger = {
-		OR = {
-			tag = BUR
-			tag = LOT
-		}
+		tag = LOT
 		is_at_war = no
 		NOT = { exists = NED }
 		current_age = age_of_reformation
@@ -595,6 +592,7 @@ country_event = {
 		}
 		event_target:dutch_unification_country = {
 			change_tag = NED
+			set_country_flag = ab_is_ned_flag
 			on_change_tag_effect = yes
 			hidden_effect = {
 				swap_non_generic_missions = yes
@@ -607,87 +605,6 @@ country_event = {
 				}
 			}
 		}
-	}
-}
-
-# The Count of Charolais and the Edict of Blood
-country_event = {
-	id = flavor_bur.14
-	title = "flavor_bur.EVTNAME14"
-	desc = "flavor_bur.EVTDESC14"
-	picture = ANGRY_MOB_eventPicture
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = BUR
-		NOT = { exists = NED }
-		has_country_flag = harsh_dutch
-		owns = 1744
-		owns = 97		
-	}
-	
-	mean_time_to_happen = {
-		months = 60
-	}
-	
-	option = {		# No Concessions
-		name = "flavor_bur.EVTOPTA14"
-		low_countries_region = {
-			limit = {
-				owned_by = BUR
-			}
-			add_unrest = 5
-		}		
-	}
-	option = {		# Don't introduce that Consumption Tax
-		name = "flavor_bur.EVTOPTB14"
-		add_legitimacy = -50
-		add_prestige = -100
-	}
-}
-
-# The Count of Maçon and the Union of Arras
-country_event = {
-	id = flavor_bur.15
-	title = "flavor_bur.EVTNAME15"
-	desc = "flavor_bur.EVTDESC15"
-	picture = DIPLOMACY_eventPicture
-	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = BUR
-		religion = catholic
-		has_country_flag = harsh_dutch
-	}
-	
-	mean_time_to_happen = {
-		months = 60
-	}
-	
-	option = {		# Sign the Union of Arras
-		name = "flavor_bur.EVTOPTA15"
-		low_countries_region = { 
-			limit = {
-				owned_by = BUR
-				NOT= { religion = catholic }
-			}
-			add_unrest = 2
-			add_local_autonomy = 10
-		}
-		add_legitimacy = -50
-		add_prestige = -50
-	}
-	option = {		# No Concessions
-		name = "flavor_bur.EVTOPTB15"
-		low_countries_region = {
-			limit = {
-				owned_by = BUR
-				NOT= { religion = catholic }
-			}		
-			add_unrest = 10
-		}		
 	}
 }
 
@@ -838,184 +755,6 @@ country_event = {
 #new start in a more civilised tongue
 namespace = new_flavour_bur
 
-#The Feast of the Pheasant
-country_event = {
-	id = new_flavour_bur.1
-	title = new_flavour_bur.1.name
-	desc = new_flavour_bur.1.desc
-	picture = FEAST_eventPicture
-	is_triggered_only = yes
-
-	option = {
-		name = new_flavour_bur.1.A
-
-		if = {
-			limit = {
-				NOT = {
-					has_casus_belli = {
-						type = cb_crusade
-						target = TUR
-					}
-				}
-			}
-			add_casus_belli = {
-				type = cb_crusade_pheasants
-				target = TUR
-				months = 60
-			}
-		}
-	}
-}
-
-#The Feast of the Pheasant (Burgundy version)
-country_event = {
-	id = new_flavour_bur.2
-	title = new_flavour_bur.1.name
-	desc = new_flavour_bur.1.desc
-	picture = FEAST_eventPicture
-	is_triggered_only = yes
-
-	option = {
-		name = new_flavour_bur.2.A
-		custom_tooltip = emp_bur_feast_of_pheasants_event_effect_tooltip
-		
-		if = {
-			limit = {
-				NOT = {
-					has_casus_belli = {
-						type = cb_crusade
-						target = TUR
-					}
-				}
-			}
-			add_casus_belli = {
-				type = cb_crusade_pheasants
-				target = TUR
-				months = 60
-			}
-		}
-	}
-}
-
-#The Feast of the Pheasant (Ottoman version)
-country_event = {
-	id = new_flavour_bur.3
-	title = new_flavour_bur.3.name
-	desc = new_flavour_bur.3.desc
-	picture = FEAST_eventPicture
-	is_triggered_only = yes
-
-	option = {
-		name = new_flavour_bur.3.A
-		custom_tooltip = emp_bur_feast_of_pheasants_event_effect_tooltip
-	}
-}
-
-#Lothair's Legacy
-country_event = {
-	id = new_flavour_bur.4
-	title = new_flavour_bur.4.name
-	desc = {
-		trigger = {
-			religion = catholic
-			is_excommunicated = no
-			exists = PAP
-			PAP = {
-				has_opinion = {
-					who = ROOT
-					value = -10
-				}
-			}
-		}
-		desc = new_flavour_bur.4.desc.pope
-	}
-	desc = {
-		trigger = {
-			OR = {
-				NOT = { religion = catholic }
-				is_excommunicated = yes
-				NOT = { exists = PAP }
-				NOT = {
-					PAP = {
-						has_opinion = {
-							who = ROOT
-							value = -10
-						}
-					}
-				}
-			}
-		}
-		desc = new_flavour_bur.4.desc.nopope
-	}
-	picture = GOOD_WITH_MONARCH_eventPicture
-	is_triggered_only = yes
-
-	major = yes
-
-	immediate = {
-		hidden_effect = {
-			if = {
-				limit = {
-					OR = {
-						NOT = { religion = catholic }
-						is_excommunicated = yes
-						NOT = { exists = PAP }
-						NOT = {
-							PAP = {
-								has_opinion = {
-									who = ROOT
-									value = -10
-								}
-							}
-						}
-					}
-				}
-				set_saved_name = {
-					key = bur_bishop_name
-					type = advisor
-				}
-			}
-		}
-	}
-
-	option = {
-		name = new_flavour_bur.4.A
-		change_tag = LOT
-		on_change_tag_effect = yes
-		if = {
-			limit = {
-				NOT = {
-					government_rank = 2
-				}
-			}
-			set_government_rank = 2
-		}
-		add_prestige = 20
-		if = {
-			limit = {
-				has_custom_ideas = no
-			}
-			country_event = { id = ideagroups.1 } #Swap Ideas
-		}
-		swap_non_generic_missions = yes
-		ai_chance = {
-			factor = 1
-		}
-	}
-	
-	option = { #nah
-		name = new_flavour_bur.4.B
-		add_prestige = 20
-
-		ai_chance = {
-			factor = 0
-		}
-	}
-
-	after = {
-		hidden_effect = { clear_saved_name = bur_bishop_name }
-	}
-}
 
 #The Court of [Ruler Name]
 country_event = {
@@ -1027,69 +766,16 @@ country_event = {
 
 	option = {
 		name = new_flavour_bur.5.A
-
 		add_country_modifier = {
 			name = bur_prestigious_duchy_mod
 			duration = -1
 		}
-		if = {
-			# limit = { NOT = { tag = AVE } }
-			add_permanent_power_projection = {
-				type = 25_permanent_power_projection
-				amount = 25
-			}
+		add_permanent_power_projection = {
+			type = 25_permanent_power_projection
+			amount = 25
 		}
 	}
 }
-
-
-#The League of the Public Weal
-country_event = {
-	id = new_flavour_bur.6
-	title = new_flavour_bur.6.name
-	desc = new_flavour_bur.6.desc
-	picture = COURT_eventPicture
-	is_triggered_only = yes
-
-	option = {
-		name = new_flavour_bur.6.A
-
-		tooltip = {
-			ile_de_france_area = {
-				limit = {
-					NOT = { is_core = from }
-					NOT = { is_permanent_claim = from }
-				}
-				add_permanent_claim = from
-			}
-			champagne_area = {
-				limit = {
-					NOT = { is_core = from }
-					NOT = { is_permanent_claim = from }
-				}
-				add_permanent_claim = from
-			}
-			orleans_area = {
-				limit = {
-					NOT = { is_core = from }
-					NOT = { is_permanent_claim = from }
-				}
-				add_permanent_claim = from
-			}
-			every_subject_country = {
-				limit = { capital_scope = { region = france_region } }
-				add_liberty_desire = 50
-			}
-		}
-
-		add_opinion = {
-			who = from
-			modifier = opinion_bur_rebellious_burgundy
-		}
-	}
-}
-
-
 
 #Burgundy is King of the Franks (tell France and the world)
 country_event = {

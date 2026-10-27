@@ -3,32 +3,10 @@ country_decisions = {
 	form_tocharia = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			
-			NOT = { has_country_flag = formed_tocharia_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			NOT = { exists = ILR }
-			NOT = { tag = PAP }
-			NOT = { tag = HLR }
 			primary_culture = Tocharian
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 3
-				}
-			}
 			is_colonial_nation = no
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
-				}
-			}
+			NOT = { exists = TCR }
+			NOT = { was_tag = TCR }
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -42,8 +20,7 @@ country_decisions = {
 			}
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_at_war = no
+			primary_culture = Tocharian
 		    shanshan_area = {
 			    type = all
 				country_or_non_sovereign_subject_holds = ROOT
@@ -56,6 +33,8 @@ country_decisions = {
 			    type = all
 				country_or_non_sovereign_subject_holds = ROOT
 			}
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
 			add_prestige = 25

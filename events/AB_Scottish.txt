@@ -8,18 +8,18 @@ country_event = {
 	desc = ab_scottish.1.d
 	picture = CONQUEST_eventPicture
 	
-	fire_only_once = yes
-	
-	trigger = {
-		tag = SCO
-	}
-	
-	mean_time_to_happen = {
-		months = 1
-	}
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_scottish.1a
+		trigger = {
+			NOT = {
+				OR = {
+					has_country_flag = ab_game_rules_sco_gael
+					has_country_flag = ab_game_rules_sco_brit
+				}
+			}
+		}
 		add_heir_claim = 20
 		hidden_effect = {
 			country_event = {
@@ -32,6 +32,14 @@ country_event = {
 	
 	option = {
 		name = ab_scottish.1b
+		trigger = {
+			NOT = {
+				OR = {
+					has_country_flag = ab_game_rules_sco_albion
+					has_country_flag = ab_game_rules_sco_brit
+				}
+			}
+		}
 		set_heir_culture = highland_scottish
 		hidden_effect = {
 			country_event = {
@@ -44,6 +52,14 @@ country_event = {
 	
 	option = {
 		name = ab_scottish.1c
+		trigger = {
+			NOT = {
+				OR = {
+					has_country_flag = ab_game_rules_sco_gael
+					has_country_flag = ab_game_rules_sco_albion
+				}
+			}
+		}
 		set_heir_culture = english
 		hidden_effect = {
 			country_event = {
@@ -151,6 +167,7 @@ country_event = {
 		}
 	}
 }
+
 country_event = {
 	id = ab_scottish.4
 	title = ab_scottish.4.t
@@ -490,6 +507,7 @@ country_event = {
 		NOT = {
 			has_country_flag = kingdom_scotland
 		}
+		NOT = { is_religion_enabled = gaelic_ab }
 	}
 	
 	fire_only_once = yes 
@@ -616,7 +634,7 @@ country_event = {
 		hidden_effect = {
 			set_country_flag = sco_religion1
 		}
-
+		enable_religion = gaelic_ab
 		change_religion = gaelic_ab
 		custom_tooltip = AB_EMPTY
 
@@ -679,7 +697,7 @@ country_event = {
 		hidden_effect = {
 			set_country_flag = sco_religion1
 		}
-
+		enable_religion = gaelic_ab
 		change_religion = gaelic_ab
 		custom_tooltip = AB_EMPTY
 

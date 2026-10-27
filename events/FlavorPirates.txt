@@ -1,0 +1,93 @@
+###### DHE's to spawn pirate republics ######
+###### by Daniel Tolman ######
+
+namespace = pirates
+
+# The Golden Age of Piracy
+country_event = {
+	id = pirates.20
+	title = "pirates.20.t"
+	picture = PIRATE_CAPTAINS_eventPicture
+	desc = "pirates.20.d"
+
+	major = yes
+
+	fire_only_once = yes
+
+	trigger = {
+		has_dlc = "Golden Century"
+		OR = {
+			any_subject_country = {
+				capital_scope = {
+					region = carribeans_region
+				}
+			}
+			1516 = {
+				privateer_power = { country = ROOT share = 5 }
+			}
+		}
+		OR = {
+			any_country = {
+				truce_with = ROOT
+				OR = {
+					any_subject_country = {
+						capital_scope = {
+							region = carribeans_region
+						}
+					}
+					1516 = {
+						privateer_power = { country = PREV share = 5 }
+					}
+				}
+			}
+			1516 = { # or just have a whole lot of privateers
+				privateer_power = { country = ROOT share = 25 }
+			}
+		}
+		has_privateers = yes
+	}
+	mean_time_to_happen = {
+		months = 3
+	}
+	option = {
+		name = "pirates.20.a"
+		set_global_flag = golden_age_of_piracy
+		custom_tooltip = golden_age_of_piracy_tooltip
+		# AB [[[
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						is_colonial_nation = yes
+						has_idea_group = exploration_ideas
+						has_idea_group = expansion_ideas
+					}
+					1516 = {
+						has_discovered = ROOT
+					}
+				}
+				country_event = {
+					id = ab_performance.19
+				}
+			}
+		}
+		# ]]]
+	}
+}
+
+# [Root.Monarch.GetName] is now a legendary pirate!
+country_event = {
+	id = pirates.25
+	title = pirates.25.t
+	desc = pirates.25.desc
+	picture = SMUGGLERS_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = pirates.25.a
+		make_ruler_to_legendary_pirate = yes
+		ai_chance = {
+			factor = 1
+		}
+	}
+}

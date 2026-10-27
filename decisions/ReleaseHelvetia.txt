@@ -1,0 +1,97 @@
+country_decisions = {
+	
+	release_helvetia = {
+		major = yes
+		potential = {
+			ai = no
+			has_country_flag = ab_fra_unlock_hlv_release
+		}
+		allow = {
+			NOT = { exists = HLV }
+			NOT = { exists = SWI }
+			romandie_area = {
+					type = all
+					owned_by = ROOT
+				}
+				switzerland_area = {
+					type = all
+					owned_by = ROOT
+				}
+		}
+		provinces_to_highlight = {
+			OR = {
+				area = romandie_area
+				area = switzerland_area
+			}
+			owned_by = ROOT
+		}
+		effect = {
+			custom_tooltip = AB_FRA_RELEASE_HLV_MARCH_TT
+			clr_country_flag = ab_fra_unlock_hlv_release
+			custom_tooltip = AB_EMPTY
+			custom_tooltip = FRA_SUBJECT_SPREAD_HLV
+			hidden_effect = {
+				romandie_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = HLV
+					remove_core = ROOT
+				}
+				switzerland_area = {
+					limit = {
+						owned_by = ROOT
+					}
+					add_core = HLV
+					remove_core = ROOT
+				}
+				release = HLV
+				create_march = HLV
+				HLV = {
+					set_capital = 165
+					add_manpower = 10
+					add_treasury = 100
+					add_liberty_desire = -50
+					change_religion = ROOT
+					change_primary_culture = romandais
+					set_country_flag = fra_subject_culture_spread
+					capital_scope = {
+						change_culture = romandais
+					}
+					swap_non_generic_missions = yes
+					swap_free_idea_group = yes
+					if = {
+						limit = {
+							ROOT = { government = republic }
+						}
+						change_government = republic
+						add_government_reform = oligarchy_reform
+					}
+					if = {
+						limit = {
+							ROOT = { government = theocracy }
+						}
+						change_government = theocracy
+						add_government_reform = leading_clergy_reform
+					}
+					if = {
+						limit = {
+							ROOT = { government = monarchy }
+						}
+						change_government = monarchy
+						add_government_reform = autocracy_reform
+					}
+					if = {
+						limit = {
+							NOT = { government_rank = 2 }
+						}
+						set_government_rank = 2
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+}

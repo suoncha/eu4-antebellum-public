@@ -35,11 +35,11 @@ country_event = {
 	}
 }
 
-# Victory of the Protestant League
+# The Emperor Triumphant (Lutheran)
 country_event = {
-	id = religious_leagues.2
-	title = "religious_leagues.2.t"
-	desc = "religious_leagues.2.d"
+	id = religious_leagues.8
+	title = "religious_leagues.8.t"
+	desc = "religious_leagues.8.d"
 	picture = RELIGIOUS_WARS_eventPicture
 	major = yes
 
@@ -47,485 +47,222 @@ country_event = {
 	
 	trigger = {
 		has_dlc = "Art of War"
-		hre_religion = catholic
-		OR = {
-			NOT = { has_country_flag = hre_religion_changed }
-			had_country_flag = { flag = hre_religion_changed days = 30 }
-		}
+		hre_religion = protestant
 	}
 	
 	immediate = {
-		set_country_flag = hre_religion_changed
 		hidden_effect = {
-			#set to treaty first so we can set everything else without elections being called at the wrong time
-			set_hre_religion_treaty = yes
-			set_hre_heretic_religion = catholic
-			set_hre_religion = protestant
-			#now set it to locked once we've completed the tasks
 			set_hre_religion_locked = yes
-			
-			#Check whether Dissensions among the Reformers incident should happen
-			#Needs 2/3 of the Empire to be owned by Reformed princes
-			while = {
-				limit = {
-					any_province = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							religion = reformed
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_reformed_owned }
-					}
-				}
-				1 = { #Stockholm is the global variable substitute
-					change_variable = {
-						which = reformed_hre_member_provinces
-						value = 1
-					}
-				}
-				random_province = {
-					limit = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							religion = reformed
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_reformed_owned }
-					}
-					set_province_flag = hre_post_leaguewar_reformed_owned
-				}
-			}
-			while = {
-				limit = {
-					any_province = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							NOT = { religion = reformed }
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_non_reformed_owned }
-					}
-				}
-				1 = {
-					change_variable = {
-						which = non_reformed_hre_member_provinces
-						value = 1
-					}
-				}
-				random_province = {
-					limit = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							NOT = { religion = reformed }
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_non_reformed_owned }
-					}
-					set_province_flag = hre_post_leaguewar_non_reformed_owned
-				}
-			}
-			every_province = {
-				limit = {
-					is_part_of_hre = yes
-				}
-				clr_province_flag = hre_post_leaguewar_non_reformed_owned
-				clr_province_flag = hre_post_leaguewar_reformed_owned
-			}
-			1 = {
-				set_variable = {
-					which = reformed_others_member_provinces_ratio
-					which = reformed_hre_member_provinces
-				}
-				divide_variable = {
-					which = reformed_others_member_provinces_ratio
-					which = non_reformed_hre_member_provinces
-				}
-				if = {
-					limit = {
-						check_variable = {
-							which = reformed_others_member_provinces_ratio
-							value = 0.8
-						}
-					}
-					set_global_flag = incident_reformer_dissension_can_happen
-				}
-				if = {
-					limit = {
-						check_variable = {
-							which = reformed_others_member_provinces_ratio
-							value = 1
-						}
-					}
-					set_global_flag = incident_reformer_dissension_high_chance
-				}
-			}
-
-			# AB {{{
-			#Check whether Dissensions among the Hussites incident should happen
-			#Needs 2/3 of the Empire to be owned by Hussites princes
-			while = {
-				limit = {
-					any_province = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							religion = hussite
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_hussite_owned }
-					}
-				}
-				1 = { #Stockholm is the global variable substitute
-					change_variable = {
-						which = hussite_hre_member_provinces
-						value = 1
-					}
-				}
-				random_province = {
-					limit = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							religion = hussite
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_hussite_owned }
-					}
-					set_province_flag = hre_post_leaguewar_hussite_owned
-				}
-			}
-			while = {
-				limit = {
-					any_province = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							NOT = { religion = hussite }
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_non_hussite_owned }
-					}
-				}
-				1 = {
-					change_variable = {
-						which = non_hussite_hre_member_provinces
-						value = 1
-					}
-				}
-				random_province = {
-					limit = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							NOT = { religion = hussite }
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_non_hussite_owned }
-					}
-					set_province_flag = hre_post_leaguewar_non_hussite_owned
-				}
-			}
-			every_province = {
-				limit = {
-					is_part_of_hre = yes
-				}
-				clr_province_flag = hre_post_leaguewar_non_hussite_owned
-				clr_province_flag = hre_post_leaguewar_hussite_owned
-			}
-			1 = {
-				set_variable = {
-					which = hussite_others_member_provinces_ratio
-					which = hussite_hre_member_provinces
-				}
-				divide_variable = {
-					which = hussite_others_member_provinces_ratio
-					which = non_hussite_hre_member_provinces
-				}
-				if = {
-					limit = {
-						check_variable = {
-							which = hussite_others_member_provinces_ratio
-							value = 0.8
-						}
-					}
-					set_global_flag = incident_hussite_dissension_can_happen
-				}
-				if = {
-					limit = {
-						check_variable = {
-							which = hussite_others_member_provinces_ratio
-							value = 1
-						}
-					}
-					set_global_flag = incident_hussite_dissension_high_chance
-				}
-			}
-			
-			#Check whether Demands from the Anglicans incident should happen
-			#Needs 2/3 of the Empire to be owned by Anglican princes
-			while = {
-				limit = {
-					any_province = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							religion = anglican
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_anglican_owned }
-					}
-				}
-				1 = { #Stockholm is the global variable substitute
-					change_variable = {
-						which = anglican_hre_member_provinces
-						value = 1
-					}
-				}
-				random_province = {
-					limit = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							religion = anglican
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_anglican_owned }
-					}
-					set_province_flag = hre_post_leaguewar_anglican_owned
-				}
-			}
-			while = {
-				limit = {
-					any_province = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							NOT = { religion = anglican }
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_non_anglican_owned }
-					}
-				}
-				1 = {
-					change_variable = {
-						which = non_anglican_hre_member_provinces
-						value = 1
-					}
-				}
-				random_province = {
-					limit = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							NOT = { religion = anglican }
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_non_anglican_owned }
-					}
-					set_province_flag = hre_post_leaguewar_non_anglican_owned
-				}
-			}
-			every_province = {
-				limit = {
-					is_part_of_hre = yes
-				}
-				clr_province_flag = hre_post_leaguewar_non_anglican_owned
-				clr_province_flag = hre_post_leaguewar_anglican_owned
-			}
-			1 = {
-				set_variable = {
-					which = anglican_others_member_provinces_ratio
-					which = anglican_hre_member_provinces
-				}
-				divide_variable = {
-					which = anglican_others_member_provinces_ratio
-					which = non_anglican_hre_member_provinces
-				}
-				if = {
-					limit = {
-						check_variable = {
-							which = anglican_others_member_provinces_ratio
-							value = 0.8
-						}
-					}
-					set_global_flag = incident_anglican_demands_can_happen
-				}
-				if = {
-					limit = {
-						check_variable = {
-							which = anglican_others_member_provinces_ratio
-							value = 1
-						}
-					}
-					set_global_flag = incident_anglican_demands_high_chance
-				}
-			}
-
-			
-			#Check whether Opposition from the Gaelic incident should happen
-			#Needs 2/3 of the Empire to be owned by Gaelic princes
-			while = {
-				limit = {
-					any_province = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							religion = gaelic_ab
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_gaelic_owned }
-					}
-				}
-				1 = { #Stockholm is the global variable substitute
-					change_variable = {
-						which = gaelic_hre_member_provinces
-						value = 1
-					}
-				}
-				random_province = {
-					limit = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							religion = gaelic_ab
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_gaelic_owned }
-					}
-					set_province_flag = hre_post_leaguewar_gaelic_owned
-				}
-			}
-			while = {
-				limit = {
-					any_province = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							NOT = { religion = gaelic_ab }
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_non_gaelic_owned }
-					}
-				}
-				1 = {
-					change_variable = {
-						which = non_gaelic_hre_member_provinces
-						value = 1
-					}
-				}
-				random_province = {
-					limit = {
-						is_part_of_hre = yes
-						owner = {
-							is_part_of_hre = yes
-							NOT = { religion = gaelic_ab }
-						}
-						NOT = { has_province_flag = hre_post_leaguewar_non_gaelic_owned }
-					}
-					set_province_flag = hre_post_leaguewar_non_gaelic_owned
-				}
-			}
-			every_province = {
-				limit = {
-					is_part_of_hre = yes
-				}
-				clr_province_flag = hre_post_leaguewar_non_gaelic_owned
-				clr_province_flag = hre_post_leaguewar_gaelic_owned
-			}
-			1 = {
-				set_variable = {
-					which = gaelic_others_member_provinces_ratio
-					which = gaelic_hre_member_provinces
-				}
-				divide_variable = {
-					which = gaelic_others_member_provinces_ratio
-					which = non_gaelic_hre_member_provinces
-				}
-				if = {
-					limit = {
-						check_variable = {
-							which = gaelic_others_member_provinces_ratio
-							value = 0.8
-						}
-					}
-					set_global_flag = incident_gaelic_opposition_can_happen
-				}
-				if = {
-					limit = {
-						check_variable = {
-							which = gaelic_others_member_provinces_ratio
-							value = 1
-						}
-					}
-					set_global_flag = incident_gaelic_opposition_high_chance
-				}
-			}
-			# }}}
 		}
 	}
 
 	option = {
-		name = "religious_leagues.2.a"
+		name = "religious_leagues.8.a"
 		tooltip = { 
-			set_hre_heretic_religion = catholic
-			set_hre_religion = protestant	
-			set_hre_religion_locked = yes			
+			set_hre_religion_locked = yes 
 		}
-		if = {
-			limit = {
-				has_dlc = "Emperor"
-				has_global_flag = incident_reformer_dissension_can_happen
-			}
-			custom_tooltip = incident_reformer_dissension_can_happen_tt
-			set_imperial_incident = incident_reformer_dissension
+	}
+}
+
+# The Emperor Triumphant (Calvinist)
+country_event = {
+	id = religious_leagues.9
+	title = "religious_leagues.9.t"
+	desc = "religious_leagues.9.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = reformed
+	}
+	
+	immediate = {
+		hidden_effect = {
+			set_hre_religion_locked = yes
 		}
-		# AB {{{
-		if = {
-			limit = {
-				has_dlc = "Emperor"
-				has_global_flag = incident_hussite_dissension_can_happen
-			}
-			custom_tooltip = incident_hussite_dissension_can_happen_tt
-			set_imperial_incident = incident_hussite_dissension
-		}
-		if = {
-			limit = {
-				has_dlc = "Emperor"
-				has_global_flag = incident_anglican_demands_can_happen
-			}
-			custom_tooltip = incident_anglican_demands_can_happen_tt
-			set_imperial_incident = incident_anglican_demands
-		}
-		if = {
-			limit = {
-				has_dlc = "Emperor"
-				has_global_flag = incident_gaelic_opposition_can_happen
-			}
-			custom_tooltip = incident_gaelic_opposition_can_happen_tt
-			set_imperial_incident = incident_gaelic_opposition
-		}
-		# }}}
-		# this should elect a new emperor
-		set_hre_religion = protestant
 	}
 
-	after = {
-		1 = {
-			set_variable = {
-				which = non_reformed_hre_member_provinces
-				value = 0
-			}
-			set_variable = {
-				which = reformed_hre_member_provinces
-				value = 0
-			}
-			set_variable = {
-				which = reformed_others_member_provinces_ratio
-				value = 0
-			}
-			# AB {{{
-			set_variable = {
-				which = non_hussite_hre_member_provinces
-				value = 0
-			}
-			set_variable = {
-				which = hussite_hre_member_provinces
-				value = 0
-			}
-			set_variable = {
-				which = hussite_others_member_provinces_ratio
-				value = 0
-			}
-			# }}}
+	option = {
+		name = "religious_leagues.9.a"
+		tooltip = { 
+			set_hre_religion_locked = yes 
+		}
+	}
+}
+
+# The Emperor Triumphant (Hussite)
+country_event = {
+	id = religious_leagues.11
+	title = "religious_leagues.11.t"
+	desc = "religious_leagues.11.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = hussite
+	}
+	
+	immediate = {
+		hidden_effect = {
+			set_hre_religion_locked = yes
+		}
+	}
+
+	option = {
+		name = "religious_leagues.11.a"
+		tooltip = { 
+			set_hre_religion_locked = yes 
+		}
+	}
+}
+
+# The Emperor Triumphant (Anglican)
+country_event = {
+	id = religious_leagues.10
+	title = "religious_leagues.10.t"
+	desc = "religious_leagues.10.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = anglican
+	}
+	
+	immediate = {
+		hidden_effect = {
+			set_hre_religion_locked = yes
+		}
+	}
+
+	option = {
+		name = "religious_leagues.10.a"
+		tooltip = { 
+			set_hre_religion_locked = yes 
+		}
+	}
+}
+
+# The Emperor Triumphant (Gaelic)
+country_event = {
+	id = religious_leagues.12
+	title = "religious_leagues.12.t"
+	desc = "religious_leagues.12.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = gaelic_ab
+	}
+	
+	immediate = {
+		hidden_effect = {
+			set_hre_religion_locked = yes
+		}
+	}
+
+	option = {
+		name = "religious_leagues.12.a"
+		tooltip = { 
+			set_hre_religion_locked = yes 
+		}
+	}
+}
+
+# The Emperor Triumphant (Orthodox)
+country_event = {
+	id = religious_leagues.13
+	title = "religious_leagues.13.t"
+	desc = "religious_leagues.13.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = orthodox
+	}
+	
+	immediate = {
+		hidden_effect = {
+			set_hre_religion_locked = yes
+		}
+	}
+
+	option = {
+		name = "religious_leagues.13.a"
+		tooltip = { 
+			set_hre_religion_locked = yes 
+		}
+	}
+}
+
+# The Emperor Triumphant (Coptic)
+country_event = {
+	id = religious_leagues.14
+	title = "religious_leagues.14.t"
+	desc = "religious_leagues.14.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = coptic
+	}
+	
+	immediate = {
+		hidden_effect = {
+			set_hre_religion_locked = yes
+		}
+	}
+
+	option = {
+		name = "religious_leagues.14.a"
+		tooltip = { 
+			set_hre_religion_locked = yes 
+		}
+	}
+}
+
+# The Emperor Triumphant (Nestorian)
+country_event = {
+	id = religious_leagues.15
+	title = "religious_leagues.15.t"
+	desc = "religious_leagues.15.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = nestorian
+	}
+	
+	immediate = {
+		hidden_effect = {
+			set_hre_religion_locked = yes
+		}
+	}
+
+	option = {
+		name = "religious_leagues.15.a"
+		tooltip = { 
+			set_hre_religion_locked = yes 
 		}
 	}
 }
@@ -542,7 +279,13 @@ country_event = {
 	
 	trigger = {
 		has_dlc = "Art of War"
-		hre_religion = protestant
+		OR = {
+			hre_religion = protestant
+			hre_religion = reformed
+			hre_religion = anglican
+			hre_religion = hussite
+			hre_religion = gaelic_ab
+		}
 		OR = {
 			NOT = { has_country_flag = hre_religion_changed }
 			had_country_flag = { flag = hre_religion_changed days = 30 }
@@ -554,17 +297,375 @@ country_event = {
 		hidden_effect = {
 			set_hre_heretic_religion = protestant
 			set_hre_religion = catholic
-			set_hre_religion_locked = yes			
+			set_hre_religion_locked = yes
 		}
 	}
 
 	option = {
 		name = "religious_leagues.3.a"
 		tooltip = { 
-			set_hre_heretic_religion = protestant	
+			set_hre_heretic_religion = protestant
 			set_hre_religion = catholic
 			set_hre_religion_locked = yes
 		}
+	}
+}
+
+# Victory of the Protestant League
+country_event = {
+	id = religious_leagues.2
+	title = "religious_leagues.2.t"
+	desc = "religious_leagues.2.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = catholic
+		hre_heretic_religion = protestant
+		OR = {
+			NOT = { has_country_flag = hre_religion_changed }
+			had_country_flag = { flag = hre_religion_changed days = 30 }
+		}
+	}
+	
+	immediate = {
+		set_country_flag = hre_religion_changed
+		hidden_effect = {
+			set_hre_religion_treaty = yes
+			set_hre_heretic_religion = catholic
+			set_hre_religion = protestant
+
+			set_hre_religion_locked = yes
+
+		}
+	}
+
+	option = {
+		name = "religious_leagues.2.a"
+		tooltip = { 
+			set_hre_heretic_religion = catholic
+			set_hre_religion = protestant	
+			set_hre_religion_locked = yes			
+		}
+
+		set_hre_religion = protestant
+	}
+}
+
+# Victory of the Calvinist League
+country_event = {
+	id = religious_leagues.27
+	title = "religious_leagues.27.t"
+	desc = "religious_leagues.27.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = catholic
+		hre_heretic_religion = reformed
+		OR = {
+			NOT = { has_country_flag = hre_religion_changed }
+			had_country_flag = { flag = hre_religion_changed days = 30 }
+		}
+	}
+	
+	immediate = {
+		set_country_flag = hre_religion_changed
+		hidden_effect = {
+			#set to treaty first so we can set everything else without elections being called at the wrong time
+			set_hre_religion_treaty = yes
+			set_hre_heretic_religion = catholic
+			set_hre_religion = reformed
+
+			#now set it to locked once we've completed the tasks
+			set_hre_religion_locked = yes
+		}
+	}
+
+	option = {
+		name = "religious_leagues.27.a"
+		tooltip = { 
+			set_hre_heretic_religion = catholic
+			set_hre_religion = reformed
+			set_hre_religion_locked = yes			
+		}
+
+		# this should elect a new emperor
+		set_hre_religion = reformed
+	}
+}
+
+# Victory of the Hussite League
+country_event = {
+	id = religious_leagues.28
+	title = "religious_leagues.28.t"
+	desc = "religious_leagues.28.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = catholic
+		hre_heretic_religion = hussite
+		OR = {
+			NOT = { has_country_flag = hre_religion_changed }
+			had_country_flag = { flag = hre_religion_changed days = 30 }
+		}
+	}
+	
+	immediate = {
+		set_country_flag = hre_religion_changed
+		hidden_effect = {
+			#set to treaty first so we can set everything else without elections being called at the wrong time
+			set_hre_religion_treaty = yes
+			set_hre_heretic_religion = catholic
+			set_hre_religion = hussite
+
+			#now set it to locked once we've completed the tasks
+			set_hre_religion_locked = yes
+		}
+	}
+
+	option = {
+		name = "religious_leagues.30.a"
+		tooltip = { 
+			set_hre_heretic_religion = catholic
+			set_hre_religion = hussite
+			set_hre_religion_locked = yes			
+		}
+
+		# this should elect a new emperor
+		set_hre_religion = hussite
+	}
+}
+
+# Victory of the Anglican League
+country_event = {
+	id = religious_leagues.29
+	title = "religious_leagues.29.t"
+	desc = "religious_leagues.29.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = catholic
+		hre_heretic_religion = anglican
+		OR = {
+			NOT = { has_country_flag = hre_religion_changed }
+			had_country_flag = { flag = hre_religion_changed days = 30 }
+		}
+	}
+	
+	immediate = {
+		set_country_flag = hre_religion_changed
+		hidden_effect = {
+			#set to treaty first so we can set everything else without elections being called at the wrong time
+			set_hre_religion_treaty = yes
+			set_hre_heretic_religion = catholic
+			set_hre_religion = anglican
+
+			#now set it to locked once we've completed the tasks
+			set_hre_religion_locked = yes
+		}
+	}
+
+	option = {
+		name = "religious_leagues.29.a"
+		tooltip = { 
+			set_hre_heretic_religion = catholic
+			set_hre_religion = anglican
+			set_hre_religion_locked = yes			
+		}
+
+		# this should elect a new emperor
+		set_hre_religion = anglican
+	}
+}
+
+# Victory of the Gaelic League
+country_event = {
+	id = religious_leagues.30
+	title = "religious_leagues.30.t"
+	desc = "religious_leagues.30.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = catholic
+		hre_heretic_religion = gaelic_ab
+		OR = {
+			NOT = { has_country_flag = hre_religion_changed }
+			had_country_flag = { flag = hre_religion_changed days = 30 }
+		}
+	}
+	
+	immediate = {
+		set_country_flag = hre_religion_changed
+		hidden_effect = {
+			set_hre_religion_treaty = yes
+			set_hre_heretic_religion = catholic
+			set_hre_religion = gaelic_ab
+
+			set_hre_religion_locked = yes
+
+		}
+	}
+
+	option = {
+		name = "religious_leagues.30.a"
+		tooltip = { 
+			set_hre_heretic_religion = catholic
+			set_hre_religion = gaelic_ab	
+			set_hre_religion_locked = yes			
+		}
+
+		set_hre_religion = gaelic_ab
+	}
+}
+
+# Victory of the Orthodox League
+country_event = {
+	id = religious_leagues.31
+	title = "religious_leagues.31.t"
+	desc = "religious_leagues.31.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = catholic
+		hre_heretic_religion = orthodox
+		OR = {
+			NOT = { has_country_flag = hre_religion_changed }
+			had_country_flag = { flag = hre_religion_changed days = 30 }
+		}
+	}
+	
+	immediate = {
+		set_country_flag = hre_religion_changed
+		hidden_effect = {
+			set_hre_religion_treaty = yes
+			set_hre_heretic_religion = catholic
+			set_hre_religion = orthodox
+
+			set_hre_religion_locked = yes
+
+		}
+	}
+
+	option = {
+		name = "religious_leagues.31.a"
+		tooltip = { 
+			set_hre_heretic_religion = catholic
+			set_hre_religion = orthodox	
+			set_hre_religion_locked = yes			
+		}
+
+		set_hre_religion = orthodox
+	}
+}
+
+# Victory of the Coptic League
+country_event = {
+	id = religious_leagues.32
+	title = "religious_leagues.32.t"
+	desc = "religious_leagues.32.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = catholic
+		hre_heretic_religion = coptic
+		OR = {
+			NOT = { has_country_flag = hre_religion_changed }
+			had_country_flag = { flag = hre_religion_changed days = 30 }
+		}
+	}
+	
+	immediate = {
+		set_country_flag = hre_religion_changed
+		hidden_effect = {
+			set_hre_religion_treaty = yes
+			set_hre_heretic_religion = catholic
+			set_hre_religion = coptic
+
+			set_hre_religion_locked = yes
+
+		}
+	}
+
+	option = {
+		name = "religious_leagues.32.a"
+		tooltip = { 
+			set_hre_heretic_religion = catholic
+			set_hre_religion = coptic	
+			set_hre_religion_locked = yes			
+		}
+
+		set_hre_religion = coptic
+	}
+}
+
+# Victory of the Nestorian League
+country_event = {
+	id = religious_leagues.33
+	title = "religious_leagues.33.t"
+	desc = "religious_leagues.33.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+
+	is_triggered_only = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		hre_religion = catholic
+		hre_heretic_religion = nestorian
+		OR = {
+			NOT = { has_country_flag = hre_religion_changed }
+			had_country_flag = { flag = hre_religion_changed days = 30 }
+		}
+	}
+	
+	immediate = {
+		set_country_flag = hre_religion_changed
+		hidden_effect = {
+			set_hre_religion_treaty = yes
+			set_hre_heretic_religion = catholic
+			set_hre_religion = nestorian
+
+			set_hre_religion_locked = yes
+
+		}
+	}
+
+	option = {
+		name = "religious_leagues.33.a"
+		tooltip = { 
+			set_hre_heretic_religion = catholic
+			set_hre_religion = nestorian	
+			set_hre_religion_locked = yes			
+		}
+
+		set_hre_religion = nestorian
 	}
 }
 
@@ -596,58 +697,6 @@ country_event = {
 	}
 }
 
-# The Evangelical Union
-country_event = {
-	id = religious_leagues.5
-	title = "religious_leagues.5.t"
-	desc = "religious_leagues.5.d"
-	picture = RELIGIOUS_WARS_eventPicture
-	major = yes
-	fire_only_once = yes
-	
-	trigger = {
-		has_dlc = "Art of War"
-		NOT = { has_global_flag = evangelical_union_happened }
-		hre_leagues_enabled = no
-		hre_religion_locked = no
-		hre_religion_treaty = no
-		is_emperor = yes		
-		is_year = 1550
-		religion = catholic
-		has_global_flag = counter_reformation
-		any_known_country = {
-			is_elector = yes
-			OR = {
-				religion = protestant
-				religion = reformed
-				religion = anglican
-				religion = hussite
-			}
-			is_free_or_tributary_trigger = yes
-		}
-		NOT = { hre_reform_passed = erbkaisertum }
-		NOT = { has_global_flag = great_peasants_war_flag }
-	}
-	
-	mean_time_to_happen = {
-		months = 120
-		modifier = {
-			factor = 0.5
-			is_year = 1575
-		}
-		modifier = {
-			factor = 0.1
-			is_year = 1600
-		}		
-	}
-
-	option = {
-		name = "religious_leagues.5.a"
-		enable_hre_leagues = yes
-		set_global_flag = evangelical_union_happened
-	}
-}
-
 # The Imperial Diet (Catholic)
 country_event = {
 	id = religious_leagues.6
@@ -665,8 +714,8 @@ country_event = {
 			any_known_country = {
 				is_in_league_war = yes
 			}
-		}		
-		has_regency = no	
+		}
+		has_regency = no
 		hre_religion_locked = no
 		hre_religion_treaty = no
 		religion = catholic
@@ -681,10 +730,12 @@ country_event = {
 					any_known_country = {
 						is_elector = yes
 						OR = {
+							religion = catholic
 							religion = protestant
 							religion = reformed
 							religion = anglican
 							religion = hussite
+							religion = gaelic_ab
 						}
 						is_league_enemy = ROOT
 						truce_with = ROOT
@@ -708,7 +759,7 @@ country_event = {
 	}
 }
 
-# The Imperial Diet (Protestant)
+# The Imperial Diet (Lutheran)
 country_event = {
 	id = religious_leagues.7
 	title = "religious_leagues.7.t"
@@ -763,31 +814,1056 @@ country_event = {
 	}
 }
 
-# The Emperor Triumphant (Protestant)
+# The Imperial Diet (Calvinist)
 country_event = {
-	id = religious_leagues.8
-	title = "religious_leagues.8.t"
-	desc = "religious_leagues.8.d"
+	id = religious_leagues.45
+	title = "religious_leagues.45.t"
+	desc = "religious_leagues.45.d"
 	picture = RELIGIOUS_WARS_eventPicture
 	major = yes
-
-	is_triggered_only = yes
+	fire_only_once = yes
 	
 	trigger = {
 		has_dlc = "Art of War"
-		hre_religion = protestant
+		is_emperor = yes
+		is_at_war = no
+		NOT = {
+			any_known_country = {
+				is_in_league_war = yes
+			}
+		}		
+		has_regency = no	
+		hre_religion_locked = no
+		hre_religion_treaty = no
+		religion = reformed
+		OR = {
+			AND = {
+				hre_leagues_enabled = yes
+				had_global_flag = {
+					flag = evangelical_union_happened
+					days = 10950
+				}		
+				NOT = {
+					any_known_country = {
+						is_elector = yes
+						religion = catholic
+						is_league_enemy = ROOT
+						truce_with = ROOT
+					}		
+				}
+			}
+			AND = {
+				NOT = { has_global_flag = evangelical_union_happened }
+				is_year = 1625
+			}
+		}
 	}
 	
-	immediate = {
-		hidden_effect = {
-			set_hre_religion_locked = yes
-		}
+	mean_time_to_happen = {
+		months = 60
 	}
 
 	option = {
-		name = "religious_leagues.8.a"
-		tooltip = { 
-			set_hre_religion_locked = yes 
+		name = "religious_leagues.45.a"
+		set_hre_religion_locked = yes
+	}
+}
+
+# The Imperial Diet (Hussite)
+country_event = {
+	id = religious_leagues.46
+	title = "religious_leagues.46.t"
+	desc = "religious_leagues.46.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		is_emperor = yes
+		is_at_war = no
+		NOT = {
+			any_known_country = {
+				is_in_league_war = yes
+			}
+		}		
+		has_regency = no	
+		hre_religion_locked = no
+		hre_religion_treaty = no
+		religion = hussite
+		OR = {
+			AND = {
+				hre_leagues_enabled = yes
+				had_global_flag = {
+					flag = evangelical_union_happened
+					days = 10950
+				}		
+				NOT = {
+					any_known_country = {
+						is_elector = yes
+						religion = catholic
+						is_league_enemy = ROOT
+						truce_with = ROOT
+					}		
+				}
+			}
+			AND = {
+				NOT = { has_global_flag = evangelical_union_happened }
+				is_year = 1625
+			}
 		}
 	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = "religious_leagues.46.a"
+		set_hre_religion_locked = yes
+	}
+}
+
+# The Imperial Diet (Anglican)
+country_event = {
+	id = religious_leagues.47
+	title = "religious_leagues.47.t"
+	desc = "religious_leagues.47.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		is_emperor = yes
+		is_at_war = no
+		NOT = {
+			any_known_country = {
+				is_in_league_war = yes
+			}
+		}		
+		has_regency = no	
+		hre_religion_locked = no
+		hre_religion_treaty = no
+		religion = anglican
+		OR = {
+			AND = {
+				hre_leagues_enabled = yes
+				had_global_flag = {
+					flag = evangelical_union_happened
+					days = 10950
+				}		
+				NOT = {
+					any_known_country = {
+						is_elector = yes
+						religion = catholic
+						is_league_enemy = ROOT
+						truce_with = ROOT
+					}		
+				}
+			}
+			AND = {
+				NOT = { has_global_flag = evangelical_union_happened }
+				is_year = 1625
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = "religious_leagues.47.a"
+		set_hre_religion_locked = yes
+	}
+}
+
+# The Imperial Diet (Gaelic)
+country_event = {
+	id = religious_leagues.48
+	title = "religious_leagues.48.t"
+	desc = "religious_leagues.48.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		is_emperor = yes
+		is_at_war = no
+		NOT = {
+			any_known_country = {
+				is_in_league_war = yes
+			}
+		}		
+		has_regency = no	
+		hre_religion_locked = no
+		hre_religion_treaty = no
+		religion = gaelic_ab
+		OR = {
+			AND = {
+				hre_leagues_enabled = yes
+				had_global_flag = {
+					flag = evangelical_union_happened
+					days = 10950
+				}		
+				NOT = {
+					any_known_country = {
+						is_elector = yes
+						religion = catholic
+						is_league_enemy = ROOT
+						truce_with = ROOT
+					}		
+				}
+			}
+			AND = {
+				NOT = { has_global_flag = evangelical_union_happened }
+				is_year = 1625
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = "religious_leagues.48.a"
+		set_hre_religion_locked = yes
+	}
+}
+
+# The Imperial Diet (Orthodox)
+country_event = {
+	id = religious_leagues.49
+	title = "religious_leagues.49.t"
+	desc = "religious_leagues.49.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		is_emperor = yes
+		is_at_war = no
+		NOT = {
+			any_known_country = {
+				is_in_league_war = yes
+			}
+		}		
+		has_regency = no	
+		hre_religion_locked = no
+		hre_religion_treaty = no
+		religion = orthodox
+		OR = {
+			AND = {
+				hre_leagues_enabled = yes
+				had_global_flag = {
+					flag = evangelical_union_happened
+					days = 10950
+				}		
+				NOT = {
+					any_known_country = {
+						is_elector = yes
+						religion = catholic
+						is_league_enemy = ROOT
+						truce_with = ROOT
+					}		
+				}
+			}
+			AND = {
+				NOT = { has_global_flag = evangelical_union_happened }
+				is_year = 1625
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = "religious_leagues.49.a"
+		set_hre_religion_locked = yes
+	}
+}
+
+# The Imperial Diet (Coptic)
+country_event = {
+	id = religious_leagues.50
+	title = "religious_leagues.50.t"
+	desc = "religious_leagues.50.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		is_emperor = yes
+		is_at_war = no
+		NOT = {
+			any_known_country = {
+				is_in_league_war = yes
+			}
+		}		
+		has_regency = no	
+		hre_religion_locked = no
+		hre_religion_treaty = no
+		religion = coptic
+		OR = {
+			AND = {
+				hre_leagues_enabled = yes
+				had_global_flag = {
+					flag = evangelical_union_happened
+					days = 10950
+				}		
+				NOT = {
+					any_known_country = {
+						is_elector = yes
+						religion = catholic
+						is_league_enemy = ROOT
+						truce_with = ROOT
+					}		
+				}
+			}
+			AND = {
+				NOT = { has_global_flag = evangelical_union_happened }
+				is_year = 1625
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = "religious_leagues.50.a"
+		set_hre_religion_locked = yes
+	}
+}
+
+# The Imperial Diet (Nestorian)
+country_event = {
+	id = religious_leagues.51
+	title = "religious_leagues.51.t"
+	desc = "religious_leagues.51.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		is_emperor = yes
+		is_at_war = no
+		NOT = {
+			any_known_country = {
+				is_in_league_war = yes
+			}
+		}		
+		has_regency = no	
+		hre_religion_locked = no
+		hre_religion_treaty = no
+		religion = nestorian
+		OR = {
+			AND = {
+				hre_leagues_enabled = yes
+				had_global_flag = {
+					flag = evangelical_union_happened
+					days = 10950
+				}		
+				NOT = {
+					any_known_country = {
+						is_elector = yes
+						religion = catholic
+						is_league_enemy = ROOT
+						truce_with = ROOT
+					}		
+				}
+			}
+			AND = {
+				NOT = { has_global_flag = evangelical_union_happened }
+				is_year = 1625
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = "religious_leagues.51.a"
+		set_hre_religion_locked = yes
+	}
+}
+
+# The Evangelical Union (Enable leagues to form and decide them)
+country_event = {
+	id = religious_leagues.5
+	title = "religious_leagues.5.t"
+	desc = "religious_leagues.5.d"
+	picture = RELIGIOUS_WARS_eventPicture
+	major = yes
+	fire_only_once = yes
+	
+	trigger = {
+		has_dlc = "Art of War"
+		NOT = { has_global_flag = evangelical_union_happened }
+		hre_leagues_enabled = no
+		hre_religion_locked = no
+		hre_religion_treaty = no
+		is_emperor = yes		
+		is_year = 1550
+		religion = catholic
+		has_global_flag = counter_reformation
+		any_known_country = {
+			is_elector = yes
+			OR = {
+				religion = protestant
+				religion = reformed
+				religion = hussite
+				religion = anglican
+				religion = gaelic_ab
+				religion = orthodox
+				religion = coptic
+				religion = nestorian
+			}
+			is_free_or_tributary_trigger = yes
+		}
+		NOT = { hre_reform_passed = erbkaisertum }
+		NOT = { has_global_flag = great_peasants_war_flag }
+	}
+	
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.5
+			is_year = 1575
+		}
+		modifier = {
+			factor = 0.1
+			is_year = 1600
+		}		
+	}
+
+	immediate = {
+
+		# Get protestant provinces
+		while = {
+			limit = {
+				any_province = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = protestant
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_protestant_owned }
+				}
+			}
+
+			1 = { #Stockholm is the global variable substitute
+				change_variable = {
+					which = protestant_hre_member_provinces
+					value = 1
+				}
+			}
+
+			random_province = {
+				limit = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = protestant
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_protestant_owned }
+				}
+				set_province_flag = hre_post_leaguewar_protestant_owned
+			}
+		}
+
+		every_province = {
+			limit = {
+				is_part_of_hre = yes
+			}
+			clr_province_flag = hre_post_leaguewar_protestant_owned
+		}
+
+		# Get reformed provinces
+		while = {
+			limit = {
+				any_province = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = reformed
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_reformed_owned }
+				}
+			}
+
+			1 = { #Stockholm is the global variable substitute
+				change_variable = {
+					which = reformed_hre_member_provinces
+					value = 1
+				}
+			}
+
+			random_province = {
+				limit = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = reformed
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_reformed_owned }
+				}
+				set_province_flag = hre_post_leaguewar_reformed_owned
+			}
+		}
+
+		every_province = {
+			limit = {
+				is_part_of_hre = yes
+			}
+			clr_province_flag = hre_post_leaguewar_reformed_owned
+		}
+
+		# Get hussite provinces
+		while = {
+			limit = {
+				any_province = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = hussite
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_hussite_owned }
+				}
+			}
+
+			1 = { #Stockholm is the global variable substitute
+				change_variable = {
+					which = hussite_hre_member_provinces
+					value = 1
+				}
+			}
+
+			random_province = {
+				limit = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = hussite
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_hussite_owned }
+				}
+				set_province_flag = hre_post_leaguewar_hussite_owned
+			}
+		}
+
+		every_province = {
+			limit = {
+				is_part_of_hre = yes
+			}
+			clr_province_flag = hre_post_leaguewar_hussite_owned
+		}
+
+		# Get anglican provinces
+		while = {
+			limit = {
+				any_province = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = anglican
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_anglican_owned }
+				}
+			}
+
+			1 = { #Stockholm is the global variable substitute
+				change_variable = {
+					which = anglican_hre_member_provinces
+					value = 1
+				}
+			}
+
+			random_province = {
+				limit = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = anglican
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_anglican_owned }
+				}
+				set_province_flag = hre_post_leaguewar_anglican_owned
+			}
+		}
+
+		every_province = {
+			limit = {
+				is_part_of_hre = yes
+			}
+			clr_province_flag = hre_post_leaguewar_anglican_owned
+		}
+
+		# Get gaelic provinces
+		while = {
+			limit = {
+				any_province = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = gaelic_ab
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_gaelic_owned }
+				}
+			}
+
+			1 = { #Stockholm is the global variable substitute
+				change_variable = {
+					which = gaelic_hre_member_provinces
+					value = 1
+				}
+			}
+
+			random_province = {
+				limit = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = gaelic_ab
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_gaelic_owned }
+				}
+				set_province_flag = hre_post_leaguewar_gaelic_owned
+			}
+		}
+
+		every_province = {
+			limit = {
+				is_part_of_hre = yes
+			}
+			clr_province_flag = hre_post_leaguewar_gaelic_owned
+		}
+
+		# Get orthodox provinces
+		while = {
+			limit = {
+				any_province = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = orthodox
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_orthodox_owned }
+				}
+			}
+
+			1 = { #Stockholm is the global variable substitute
+				change_variable = {
+					which = orthodox_hre_member_provinces
+					value = 1
+				}
+			}
+
+			random_province = {
+				limit = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = orthodox
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_orthodox_owned }
+				}
+				set_province_flag = hre_post_leaguewar_orthodox_owned
+			}
+		}
+
+		every_province = {
+			limit = {
+				is_part_of_hre = yes
+			}
+			clr_province_flag = hre_post_leaguewar_orthodox_owned
+		}
+
+		# Get coptic provinces
+		while = {
+			limit = {
+				any_province = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = coptic
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_coptic_owned }
+				}
+			}
+
+			1 = { #Stockholm is the global variable substitute
+				change_variable = {
+					which = coptic_hre_member_provinces
+					value = 1
+				}
+			}
+
+			random_province = {
+				limit = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = gaelic_ab
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_coptic_owned }
+				}
+				set_province_flag = hre_post_leaguewar_coptic_owned
+			}
+		}
+
+		every_province = {
+			limit = {
+				is_part_of_hre = yes
+			}
+			clr_province_flag = hre_post_leaguewar_coptic_owned
+		}
+
+		# Get nestorian provinces
+		while = {
+			limit = {
+				any_province = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = nestorian
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_nestorian_owned }
+				}
+			}
+
+			1 = { #Stockholm is the global variable substitute
+				change_variable = {
+					which = nestorian_hre_member_provinces
+					value = 1
+				}
+			}
+
+			random_province = {
+				limit = {
+					is_part_of_hre = yes
+					owner = {
+						is_part_of_hre = yes
+						religion = gaelic_ab
+					}
+					NOT = { has_province_flag = hre_post_leaguewar_nestorian_owned }
+				}
+				set_province_flag = hre_post_leaguewar_nestorian_owned
+			}
+		}
+
+		every_province = {
+			limit = {
+				is_part_of_hre = yes
+			}
+			clr_province_flag = hre_post_leaguewar_nestorian_owned
+		}
+
+		# Determining the dominant heresy 
+		1 = {
+
+			#Compare all faiths to protestant (1)
+			if = {
+                limit = {
+                    check_variable = {
+                        which = protestant_hre_member_provinces
+                        which = reformed_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = protestant_hre_member_provinces
+                        which = hussite_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = protestant_hre_member_provinces
+                        which = anglican_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = protestant_hre_member_provinces
+                        which = gaelic_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = protestant_hre_member_provinces
+                        which = orthodox_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = protestant_hre_member_provinces
+                        which = coptic_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = protestant_hre_member_provinces
+                        which = nestorian_hre_member_provinces
+                    }
+                }
+				ROOT = {
+					set_hre_heretic_religion = protestant
+				}
+            }
+
+            #Compare all faiths to reformed (2)
+            else_if = {
+                limit = {
+                    check_variable = {
+                        which = reformed_hre_member_provinces
+                        which = hussite_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = reformed_hre_member_provinces
+                        which = anglican_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = reformed_hre_member_provinces
+                        which = gaelic_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = reformed_hre_member_provinces
+                        which = orthodox_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = reformed_hre_member_provinces
+                        which = coptic_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = reformed_hre_member_provinces
+                        which = nestorian_hre_member_provinces
+                    }
+                }
+				ROOT = {
+					set_hre_heretic_religion = reformed
+				}
+            }
+
+            #Compare all faiths to hussite (3)
+            else_if = {
+                limit = {
+                    check_variable = {
+                        which = hussite_hre_member_provinces
+                        which = anglican_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = hussite_hre_member_provinces
+                        which = gaelic_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = hussite_hre_member_provinces
+                        which = orthodox_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = hussite_hre_member_provinces
+                        which = coptic_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = hussite_hre_member_provinces
+                        which = nestorian_hre_member_provinces
+                    }
+                }
+                ROOT = {
+					set_hre_heretic_religion = hussite
+				}
+            }
+
+            #Compare all faiths to anglican (4)
+            else_if = {
+                limit = {
+                    check_variable = {
+                        which = anglican_hre_member_provinces
+                        which = gaelic_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = anglican_hre_member_provinces
+                        which = orthodox_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = anglican_hre_member_provinces
+                        which = coptic_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = anglican_hre_member_provinces
+                        which = nestorian_hre_member_provinces
+                    }
+                }
+                ROOT = {
+					set_hre_heretic_religion = anglican
+				}
+            }
+
+            #Compare all faiths to gaelic (5)
+            else_if = {
+                limit = {
+                    check_variable = {
+                        which = gaelic_hre_member_provinces
+                        which = orthodox_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = gaelic_hre_member_provinces
+                        which = coptic_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = gaelic_hre_member_provinces
+                        which = nestorian_hre_member_provinces
+                    }
+                }
+                ROOT = {
+					set_hre_heretic_religion = gaelic_ab
+				}
+            }
+
+            #Compare all faiths to orthodox (6)
+            else_if = {
+                limit = {
+                    check_variable = {
+                        which = orthodox_hre_member_provinces
+                        which = coptic_hre_member_provinces
+                    }
+                    check_variable = {
+                        which = orthodox_hre_member_provinces
+                        which = nestorian_hre_member_provinces
+                    }
+                }
+                ROOT = {
+					set_hre_heretic_religion = orthodox
+				}
+            }
+
+
+            #Compare all faiths to coptic (7)
+            else_if = {
+                limit = {
+                    check_variable = {
+                        which = coptic_hre_member_provinces
+                        which = nestorian_hre_member_provinces
+                    }
+                }
+                ROOT = {
+					set_hre_heretic_religion = coptic
+				}
+            }
+
+            #Compare all faiths to nestorian (8)
+            else = {
+                ROOT = {
+					set_hre_heretic_religion = nestorian
+				}
+            }
+		}
+	}
+
+	#Enable religious leagues and indicate the new heretic league
+	option = {
+		name = "religious_leagues.5.a"
+		set_global_flag = evangelical_union_happened
+		
+		if = {
+			limit = {
+				hre_heretic_religion = protestant
+			}
+			custom_tooltip = protestant_league_tt
+		}
+
+		else_if = {
+			limit = {
+				hre_heretic_religion = reformed
+			}
+			custom_tooltip = reformed_league_tt
+		}
+
+		else_if = {
+			limit = {
+				hre_heretic_religion = hussite
+			}
+			custom_tooltip = hussite_league_tt
+		}
+
+		else_if = {
+			limit = {
+				hre_heretic_religion = anglican
+			}
+			custom_tooltip = anglican_league_tt
+		}
+
+		else_if = {
+			limit = {
+				hre_heretic_religion = gaelic_ab
+			}
+			custom_tooltip = gaelic_league_tt
+		}
+
+		else_if = {
+			limit = {
+				hre_heretic_religion = orthodox
+			}
+			custom_tooltip = orthodox_league_tt
+		}
+
+		else_if = {
+			limit = {
+				hre_heretic_religion = coptic
+			}
+			custom_tooltip = coptic_league_tt
+		}
+
+		else_if = {
+			limit = {
+				hre_heretic_religion = nestorian
+			}
+			custom_tooltip = nestorian_league_tt
+		}
+
+		enable_hre_leagues = yes
+	}
+
+	#Clean up variables
+	after = {
+		1 = {
+			set_variable = {
+				which = protestant_hre_member_provinces
+				value = 0
+			}
+
+			set_variable = {
+				which = reformed_hre_member_provinces
+				value = 0
+			}
+
+			set_variable = {
+				which = hussite_hre_member_provinces
+				value = 0
+			}
+
+			set_variable = {
+				which = anglican_hre_member_provinces
+				value = 0
+			}
+
+			set_variable = {
+				which = gaelic_hre_member_provinces
+				value = 0
+			}
+
+			set_variable = {
+				which = orthodox_hre_member_provinces
+				value = 0
+			}
+
+			set_variable = {
+				which = coptic_hre_member_provinces
+				value = 0
+			}
+
+			set_variable = {
+				which = nestorian_hre_member_provinces
+				value = 0
+			}
+		}
+	}	
 }

@@ -1,0 +1,181 @@
+namespace = roman_republic
+normal_or_historical_nations = yes
+
+# Revival of the Republic - Check
+country_event = {
+	id = roman_republic.0
+	title = "roman_republic.0.t"
+	desc = "roman_republic.0.d"
+	picture = ST_PETERS_CHURCH_eventPicture
+
+	hidden = yes
+	is_triggered_only = yes
+	
+	option = {
+		name = "roman_republic.0.a"
+		if = {
+			limit = {
+				NOT = { has_global_flag = AB_FORMED_RMR }
+				culture_group = latin
+				owns_core_province = 118
+				government = republic
+				current_age = age_of_discovery
+			}
+			if = {
+				limit = {
+					is_at_war = no
+				}
+				country_event = {
+					id = roman_republic.1
+				}
+			}
+			else = {
+				country_event = {
+					id = roman_republic.0 # Try until at peace
+					days = 30
+				}
+			}
+		}
+	}
+}
+
+# Revival of the Republic
+country_event = {
+	id = roman_republic.1
+	title = "roman_republic.1.t"
+	desc = "roman_republic.1.d"
+	picture = ST_PETERS_CHURCH_eventPicture
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "roman_republic.1.a"
+		set_global_flag = AB_FORMED_RMR
+		add_stability = -4
+		add_republican_tradition = -50
+		change_tag = RMR
+		swap_free_idea_group = yes
+		swap_non_generic_missions = yes
+		set_capital = 118
+		add_historical_rival = PAP
+		PAP = {
+			add_historical_rival = RMR
+		}
+		add_government_reform = ab_roman_republic
+		custom_tooltip = RMR_OPINION_MODIFIER
+		add_country_modifier = { 
+			name = rmr_political_outcast
+			duration = -1  
+			desc = rmr_removed_via_missions
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					OR = {
+						AND = {
+							has_opinion = {
+								who = PAP
+								value = 1
+							}
+							religion = catholic
+						}
+						alliance_with = PAP
+					}
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = opinion_enemy_of_christendom
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "roman_republic.1.b"
+		ai_chance = {
+			factor = 90
+		}
+		add_prestige = 10
+		add_legitimacy = 10
+	}
+}
+
+#Faith of Our Ancestors
+country_event = {
+	id = roman_republic.2
+	title = "roman_republic.2.t"
+	desc = "roman_republic.2.d"
+	picture = ATHENS_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		OR = {
+			tag = RMR
+			was_tag = RMR
+		}
+		NOT = {
+			religion = hellenic
+		}
+		current_age = age_of_reformation
+	}
+	
+	mean_time_to_happen = {
+		months = 200
+	}
+
+	option = {
+		name = roman_republic.2.a
+		add_stability = -4
+		change_religion = hellenic
+		capital_scope = {
+			change_religion = hellenic
+		}
+		add_country_modifier = {
+			name = "gh_conversion"
+			duration = 3650
+		}
+		hidden_effect = {
+			set_ruler_religion = hellenic
+			set_consort_religion = hellenic
+			set_heir_religion = hellenic
+		}
+	}
+	
+	option = {
+		name = roman_republic.2.b
+		add_stability_or_adm_power = yes
+	}
+}
+
+#Roman Culture
+province_event = {
+	id = roman_republic.3
+	title = roman_republic.3.t
+	desc = roman_republic.3.d
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
+	
+	hidden = yes
+	
+	mean_time_to_happen = {
+		months = 100
+	}
+	
+	trigger = {
+		owner = {
+			has_country_flag = rmr_roman_culture_spread
+		}
+		has_owner_accepted_culture = yes
+		NOT = {
+			culture = roman
+		}
+		any_friendly_coast_border_province = {
+			culture = roman
+		}
+	}
+	
+	option = {
+		name = roman_republic.3.a
+		change_culture = roman
+	}
+}

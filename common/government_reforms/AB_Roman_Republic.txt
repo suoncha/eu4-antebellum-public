@@ -1,0 +1,67 @@
+ab_roman_republic = {
+	icon = "restoration_of_the_senate_reform"
+	allow_normal_conversion = no
+	nation_designer_trigger = {
+		primary_culture = roman
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 100
+	potential = {
+		OR = {
+			tag = RMR
+			was_tag = RMR
+		}
+	}
+	modifiers = {
+		governing_capacity = 100
+		culture_conversion_cost = -0.25
+		culture_conversion_time = -0.1
+		num_of_parliament_issues = 1
+	}
+	conditional = {
+		allow = {
+			OR = {
+				has_dlc = "Common Sense"
+				has_dlc = "Domination"
+			}
+		}
+		has_parliament = yes
+		custom_attributes = {
+			gain_rt_from_parliament = yes
+		}
+	}
+	
+	factions = {
+		RMR_optimates
+		RMR_populares
+		RMR_bellatores
+	}
+
+	custom_attributes = {
+		enables_plutocratic_idea_group = yes
+		enables_aristocratic_idea_group = no
+	}
+	duration = 5
+}
+
+ab_roman_provinces = {
+	icon = "war_map"
+	allow_normal_conversion = no
+	potential = {
+		OR = {
+			tag = RMR
+			was_tag = RMR
+		}
+	}
+	valid_for_nation_designer = yes
+	nation_designer_cost = 60
+	modifiers = {
+		reduced_liberty_desire = 10
+		vassal_forcelimit_bonus = 0.5
+		diplomatic_upkeep = 3
+	}
+	
+	custom_attributes = {
+		MAY_free_diplo_annexation = yes
+	}
+}

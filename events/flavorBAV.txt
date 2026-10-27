@@ -1,0 +1,1164 @@
+########################################
+# Events for Bavaria
+#
+# written by Johan Andersson
+########################################
+
+namespace = flavor_bav
+normal_or_historical_nations = yes
+
+#Cologne goes with Bavarian Archbishop
+country_event = {
+	id = flavor_bav.2
+	title = flavor_bav.2.t
+	desc = flavor_bav.2.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {	
+		name = flavor_bav.2.a	
+			
+		KOL = {
+			add_opinion = {
+				who = root
+				modifier = kol_bavarian_archbishop
+			}				
+		}
+		add_papal_influence = 5
+	}
+}
+
+########################################
+# More Events for Bavaria
+#
+# by Pierre du Plessis
+########################################
+
+namespace = new_flavour_bav
+
+#Transfer the Palatine Electorate to Bavaria
+country_event = {
+	id = new_flavour_bav.10
+	title = new_flavour_bav.10.t
+	desc = {
+		desc = new_flavour_bav.10.d
+		trigger = { NOT = { tag = from } }
+	}
+	desc = {
+		desc = new_flavour_bav.10.d.bav
+		trigger = { tag = from }
+	}
+	picture = HRE_eventPicture
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = { #transfer the electorate
+		name = new_flavour_bav.10.a	
+		
+		trigger = { NOT = { tag = from } }
+
+		PAL = {
+			tooltip = { elector = no }
+			add_opinion = {
+				who = root
+				modifier = opinion_bav_repealed_electorate
+			}
+		}
+
+		from = {
+			hidden_effect = { country_event = { id = new_flavour_bav.101 } }
+			tooltip = { elector = yes }
+			add_opinion = {
+				who = root
+				modifier = opinion_bav_gave_electorate
+			}
+		}
+
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = {
+					NOT = {
+						has_opinion = {
+							who = from
+							value = 0
+						}
+					}
+					ai_attitude = {
+						who = from
+						attitude = attitude_threatened
+					}
+					ai_attitude = {
+						who = from
+						attitude = attitude_hostile
+					}
+					ai_attitude = {
+						who = from
+						attitude = attitude_outraged
+					}
+					ai_attitude = {
+						who = from
+						attitude = attitude_rivalry
+					}
+				}
+			}
+		}
+	}
+	option = { #transfer the electorate
+		name = new_flavour_bav.10.a2
+		
+		trigger = { tag = from }
+
+		PAL = {
+			elector = no
+			add_opinion = {
+				who = root
+				modifier = opinion_bav_repealed_electorate
+			}
+			add_liberty_desire = 50
+		}
+
+		elector = yes
+
+		ai_chance = {
+			factor = 1
+		}
+	}
+	option = { #don't transfer the electorate
+		name = new_flavour_bav.10.b
+		
+		trigger = { NOT = { tag = from } }
+
+		from = {
+			hidden_effect = { country_event = { id = new_flavour_bav.102 } }
+			add_opinion = {
+				who = root
+				modifier = opinion_bav_refused_to_transfer_electorate
+			}
+		}
+		
+		custom_tooltip = legitimate_subject_elector_tt
+		hidden_effect = {
+			PAL = {
+				add_country_modifier = {
+					hidden = yes
+					name = "legitimate_subject_elector_modifer"
+					duration = -1
+				}
+			}
+		}
+
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0.1
+				OR = {
+					alliance_with = from
+					has_opinion = {
+						who = from
+						value = 120
+					}
+				}
+			}
+			modifier = {
+				factor = 0.5
+				has_opinion = {
+					who = from
+					value = 60
+				}
+			}
+			modifier = {
+				factor = 2
+				OR = {
+					NOT = {
+						has_opinion = {
+							who = from
+							value = 60
+						}
+					}
+					AND = {
+						NOT = {
+							ai_attitude = {
+								who = from
+								attitude = attitude_allied
+							}
+						}
+						NOT = {
+							ai_attitude = {
+								who = from
+								attitude = attitude_friendly
+							}
+						}
+						NOT = {
+							ai_attitude = {
+								who = from
+								attitude = attitude_protective
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	option = { #don't transfer the electorate
+		name = new_flavour_bav.10.b2
+		
+		trigger = { tag = from }
+
+		custom_tooltip = legitimate_subject_elector_tt
+		hidden_effect = {
+			PAL = {
+				add_country_modifier = {
+					hidden = yes
+					name = "legitimate_subject_elector_modifer"
+					duration = -1
+				}
+			}
+		}
+
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#For Bavaria: They said yes
+country_event = {
+	id = new_flavour_bav.101
+	title = new_flavour_bav.101.name
+	desc = new_flavour_bav.101.desc
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.101.option
+		
+		PAL = {
+			elector = no
+		}
+		elector = yes
+	}
+}
+
+#For Bavaria: They said no
+country_event = {
+	id = new_flavour_bav.102
+	title = new_flavour_bav.102.name
+	desc = new_flavour_bav.102.desc
+	picture = HRE_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.102.option
+	}
+}
+
+
+#The Cologne Secundogeniture
+country_event = {
+	id = new_flavour_bav.11
+	title = new_flavour_bav.11.t
+	desc = new_flavour_bav.11.d
+	picture = PRINCE_BISHOP_RESIGN_eventPicture
+
+	is_triggered_only = yes
+	
+	option = { #do it
+		name = new_flavour_bav.11.a	
+
+		KOL = {
+			custom_tooltip = new_flavour_bav.11.A.tooltip
+			set_country_flag = KOL_secondogeniture_of_BAV
+			if = {
+				limit = {
+					religion = root
+				}
+				add_liberty_desire = 25
+			}
+			else = {
+				change_religion = root
+				add_liberty_desire = 75
+			}
+			hidden_effect = {
+				add_country_modifier = {
+					hidden = yes
+					name = "legitimate_subject_elector_modifer"
+					duration = -1
+				}
+			}
+
+			define_ruler = {
+				dynasty = ROOT
+				culture = ROOT
+				religion = ROOT
+			}
+			if = {
+				limit = {
+					has_heir = yes
+				}
+				hidden_effect = {
+					kill_heir = {}
+				}
+			}
+			if = {
+				limit = { ai = no }
+				country_event = { id = new_flavour_bav.110 }
+			}
+		}
+
+		ai_chance = {
+			factor = 1
+		}
+	}
+	option = { #don't do it
+		name = new_flavour_bav.11.b
+
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#The Cologne Secundogeniture - notify Cologne
+country_event = {
+	id = new_flavour_bav.110
+	title = new_flavour_bav.110.t
+	desc = new_flavour_bav.110.d
+	picture = PRINCE_BISHOP_RESIGN_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = UNFORTUNATE
+		custom_tooltip = new_flavour_bav.110.A.tooltip
+	}
+}
+
+
+
+#Startup Event: The Bavarian Succession
+country_event = {
+	id = new_flavour_bav.13
+	title = new_flavour_bav.13.name
+	desc = new_flavour_bav.13.desc
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	trigger = {
+		exists = UBV
+		exists = LBV
+		exists = ING
+	}
+	
+	option = {	
+		name = new_flavour_bav.13.opt
+
+		if = {
+			limit = {
+				NOT = { tag = UBV }
+			}
+			add_casus_belli = {
+				type = cb_restore_personal_union
+				target = UBV
+				months = 1200
+			}
+		}
+		if = {
+			limit = {
+				NOT = { tag = LBV }
+			}
+			add_casus_belli = {
+				type = cb_restore_personal_union
+				target = LBV
+				months = 1200
+			}
+		}
+		if = {
+			limit = {
+				NOT = { tag = ING }
+			}
+			add_casus_belli = {
+				type = cb_restore_personal_union
+				target = ING
+				months = 1200
+			}
+		}
+	}
+}
+
+
+
+#The Death of Ludwig VIII - Ingolstadt
+country_event = {
+	id = new_flavour_bav.15
+	title = new_flavour_bav.15.name
+	desc = new_flavour_bav.15.desc
+	picture = DEATH_OF_HEIR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.15.opt
+		tooltip = { from = { create_union = root } }
+	}
+}
+
+
+#The Death of Ludwig VIII - Munich
+country_event = {
+	id = new_flavour_bav.16
+	title = new_flavour_bav.16.name
+	desc = new_flavour_bav.16.desc
+	picture = DEATH_OF_HEIR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.16.opt
+		tooltip = { from = { create_union = ING } }
+	}
+}
+
+#The Death of Ludwig VIII - Ansbach
+country_event = {
+	id = new_flavour_bav.17
+	title = new_flavour_bav.17.name
+	desc = new_flavour_bav.17.desc
+	picture = DEATH_OF_HEIR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.17.A
+		
+		add_years_of_income = 2.5
+
+		ai_chance = { factor = 5 }
+	}
+
+	option = {
+		name = new_flavour_bav.17.B
+		
+		ING = {
+			every_owned_province = {
+				add_claim = root
+			}
+		}
+
+		ai_chance = {
+			factor = 0.5 #useless
+		}
+	}
+
+	option = {
+		name = new_flavour_bav.17.C
+		
+		add_years_of_income = -2.5
+
+		ING = {
+			every_owned_province = {
+				add_core = root
+			}
+		}
+
+		hidden_effect = {
+			from = { #Landshut
+				country_event = { id = new_flavour_bav.171 }
+			}
+		}
+
+		ai_chance = {
+			factor = 1.5
+
+			modifier = {
+				factor = 0
+				NOT = {
+					years_of_income = 1.5
+				}
+			}
+			modifier = {
+				factor = 2
+				years_of_income = 3
+			}
+		}
+	}
+}
+
+#Landshut told that Ansbach has purchased the claims to the crown
+country_event = {
+	id = new_flavour_bav.171
+	title = new_flavour_bav.171.name
+	desc = new_flavour_bav.171.desc
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.171.A
+
+		tooltip = {
+			ING = {
+				every_owned_province = {
+					add_core = from
+				}
+			}
+		}
+	}
+}
+
+#Wittelsbachs Can Pay
+country_event = {
+	id = new_flavour_bav.23
+	title = new_flavour_bav.23.name
+	desc = new_flavour_bav.23.desc
+	picture = CITY_VIEW_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.23.A
+		custom_tooltip = new_flavour_bav.23.A.tooltip
+		tooltip = {
+			add_treasury = -200
+	
+			REG = {
+				every_owned_province = {
+					add_core = root
+					cede_province = root
+					if = {
+						limit = {
+							NOT = { is_claim = HAB }
+							NOT = { is_core = HAB }
+						}
+						add_claim = HAB
+					}
+				}
+			}
+	
+			HAB = {
+				add_treasury = 200
+				add_opinion = {
+					who = root
+					modifier = opinion_stole_free_city
+				}
+			}
+		}
+
+		set_country_flag = wittelsbach_will_pay_for_regensburg
+
+		REG = { country_event = { id = new_flavour_bav.24 } }
+
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = {
+					num_of_loans = 5
+					NOT = { treasury = 150 }
+				}
+			}
+			modifier = {
+				factor = 0.5
+				NOT = { treasury = 200 }
+			}
+			modifier = {
+				factor = 1.5
+				treasury = 250
+			}
+			modifier = {
+				factor = 2
+				REG = {
+					has_opinion = {
+						who = root
+						value = 80
+					}
+				}
+			}
+			modifier = {
+				factor = 0.5
+				REG = {
+					NOT = {
+						has_opinion = {
+							who = root
+							value = 0
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0.5
+				REG = {
+					NOT = {
+						has_opinion = {
+							who = root
+							value = -40
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0.5
+				HAB = {
+					alliance_with = root
+				}
+			}
+		}
+	}
+	option = {
+		name = new_flavour_bav.23.B #No
+		custom_tooltip = new_flavour_bav.23.B.tooltip
+
+		hidden_effect = {
+			if = {
+				limit = { tag = BAV }
+				if = {
+					limit = {
+						exists = UBV
+						UBV = {
+							is_subject = no
+							dynasty = "von Wittelsbach"
+							NOT = { is_rival = REG }
+							NOT = { REG = { is_rival = prev } }
+						}
+					}
+					UBV = {
+						country_event = { id = new_flavour_bav.23 }
+					}
+				}
+				else_if = {
+					limit = {
+						exists = LBV
+						LBV = {
+							is_subject = no
+							dynasty = "von Wittelsbach"
+							NOT = { is_rival = REG }
+							NOT = { REG = { is_rival = prev } }
+						}
+					}
+					LBV = {
+						country_event = { id = new_flavour_bav.23 }
+					}
+				}
+				else_if = {
+					limit = {
+						exists = ING
+						ING = {
+							is_subject = no
+							dynasty = "von Wittelsbach"
+							NOT = { is_rival = REG }
+							NOT = { REG = { is_rival = prev } }
+						}
+					}
+					ING = {
+						country_event = { id = new_flavour_bav.23 }
+					}
+				}
+				else_if = {
+					limit = {
+						exists = PAL
+						PAL = {
+							is_subject = no
+							dynasty = "von Wittelsbach"
+							NOT = { is_rival = REG }
+							NOT = { REG = { is_rival = prev } }
+						}
+					}
+					PAL = {
+						country_event = { id = new_flavour_bav.23 }
+					}
+				}
+				else = { REG = { country_event = { id = new_flavour_bav.24 } } }
+			}
+			else_if = {
+				limit = { tag = UBV }
+				if = {
+					limit = {
+						exists = LBV
+						LBV = {
+							is_subject = no
+							dynasty = "von Wittelsbach"
+							NOT = { is_rival = REG }
+							NOT = { REG = { is_rival = prev } }
+						}
+					}
+					LBV = {
+						country_event = { id = new_flavour_bav.23 }
+					}
+				}
+				else_if = {
+					limit = {
+						exists = ING
+						ING = {
+							is_subject = no
+							dynasty = "von Wittelsbach"
+							NOT = { is_rival = REG }
+							NOT = { REG = { is_rival = prev } }
+						}
+					}
+					ING = {
+						country_event = { id = new_flavour_bav.23 }
+					}
+				}
+				else_if = {
+					limit = {
+						exists = PAL
+						PAL = {
+							is_subject = no
+							dynasty = "von Wittelsbach"
+							NOT = { is_rival = REG }
+							NOT = { REG = { is_rival = prev } }
+						}
+					}
+					PAL = {
+						country_event = { id = new_flavour_bav.23 }
+					}
+				}
+				else = { REG = { country_event = { id = new_flavour_bav.24 } } }
+			}
+			else_if = {
+				limit = { tag = LBV }
+				if = {
+					limit = {
+						exists = ING
+						ING = {
+							is_subject = no
+							dynasty = "von Wittelsbach"
+							NOT = { is_rival = REG }
+							NOT = { REG = { is_rival = prev } }
+						}
+					}
+					ING = {
+						country_event = { id = new_flavour_bav.23 }
+					}
+				}
+				else_if = {
+					limit = {
+						exists = PAL
+						PAL = {
+							is_subject = no
+							dynasty = "von Wittelsbach"
+							NOT = { is_rival = REG }
+							NOT = { REG = { is_rival = prev } }
+						}
+					}
+					PAL = {
+						country_event = { id = new_flavour_bav.23 }
+					}
+				}
+				else = { REG = { country_event = { id = new_flavour_bav.24 } } }
+			}
+			else_if = {
+				limit = { tag = ING }
+				if = {
+					limit = {
+						exists = PAL
+						PAL = {
+							is_subject = no
+							dynasty = "von Wittelsbach"
+							NOT = { is_rival = REG }
+							NOT = { REG = { is_rival = prev } }
+						}
+					}
+					PAL = {
+						country_event = { id = new_flavour_bav.23 }
+					}
+				}
+				else = { REG = { country_event = { id = new_flavour_bav.24 } } }
+			}
+			else = { REG = { country_event = { id = new_flavour_bav.24 } } }
+		}
+		tooltip = { REG = { country_event = { id = new_flavour_bav.24 } } }
+
+
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 2
+				NOT = {
+					REG = {
+						has_opinion = {
+							who = root
+							value = 0
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					has_opinion = {
+						who = HAB
+						value = 0
+					}
+				}
+			}
+		}
+	}
+}
+
+
+#Regensburg Pays or Not
+country_event = {
+	id = new_flavour_bav.24
+	title = new_flavour_bav.24.name
+	desc = {
+		desc = new_flavour_bav.24.desc.default
+		trigger = { NOT = { FROM = { has_country_flag = wittelsbach_will_pay_for_regensburg } } }
+	}
+	desc = {
+		desc = new_flavour_bav.24.desc.wittelsbach
+		trigger = { FROM = { has_country_flag = wittelsbach_will_pay_for_regensburg } }
+	}
+	picture = HRE_eventPicture
+
+	fire_only_once = yes #just in case
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = { set_country_flag = REG_pay_demanded }
+	}
+
+	option = { #Pay
+		name = new_flavour_bav.24.A
+		
+		add_treasury = -200
+		HAB = {
+			tooltip = { add_treasury = 200 }
+			add_opinion = {
+				who = root
+				modifier = opinion_regensburg_paid
+			}
+			hidden_effect = { country_event = { id = new_flavour_bav.2401 } }
+		}
+
+		if = {
+			limit = {
+				from = { has_country_flag = wittelsbach_will_pay_for_regensburg }
+			}
+			hidden_effect = { from = { country_event = { id = new_flavour_bav.2402 } } }
+		}
+
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = {
+					NOT = { treasury = 150 }
+					num_of_loans = 5
+				}
+			}
+		}
+	}
+
+	option = { #Default
+		name = new_flavour_bav.24.B
+		custom_tooltip = new_flavour_bav.24.B.tooltip
+		
+		change_government = theocracy
+		add_government_reform = leading_clergy_reform
+
+		add_stability = -3
+		add_prestige = -100
+
+		HAB = {
+			add_opinion = {
+				who = root
+				modifier = opinion_regensburg_defaulted
+			}
+			hidden_effect = { country_event = { id = new_flavour_bav.2403 } }
+		}
+		add_opinion = {
+			who = HAB
+			modifier = opinion_regensburg_demand_too_much
+		}
+
+		if = {
+			limit = {
+				from = { has_country_flag = wittelsbach_will_pay_for_regensburg }
+			}
+			hidden_effect = { from = { country_event = { id = new_flavour_bav.2404 } } }
+		}
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				OR = {
+					AND = {
+						treasury = 150
+						NOT = { num_of_loans = 5 }
+					}
+					AND = {
+						from = { has_country_flag = wittelsbach_will_pay_for_regensburg }
+						has_opinion = {
+							who = from
+							value = 80
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0.5
+				from = { has_country_flag = wittelsbach_will_pay_for_regensburg }
+			}
+		}
+	}
+
+	option = { #Wittelsbach Bailout
+		name = new_flavour_bav.24.C
+
+		trigger = {
+			from = { has_country_flag = wittelsbach_will_pay_for_regensburg }
+		}
+		
+		if = {
+			limit = { ai = no }
+			custom_tooltip = new_flavour_bav.24.C.player_warning_tooltip
+		}
+
+		from = {
+			tooltip = { add_treasury = -200 }
+			hidden_effect = {
+				save_event_target_as = regensburg_fromfrom
+				country_event = { id = new_flavour_bav.2406 days = 1 }
+			}
+		}
+
+		tooltip = {
+			every_owned_province = {
+				add_core = from
+				cede_province = from
+				if = {
+					limit = {
+						NOT = { is_claim = HAB }
+						NOT = { is_core = HAB }
+					}
+					add_claim = HAB
+				}
+			}
+		}
+
+		HAB = {
+			tooltip = {
+				add_treasury = 200
+				add_opinion = {
+					who = from
+					modifier = opinion_stole_free_city
+				}
+			}
+			hidden_effect = { country_event = { id = new_flavour_bav.2405 } }
+		}
+
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				AND = {
+					treasury = 150
+					NOT = { num_of_loans = 5 }
+				}
+			}
+			modifier = {
+				factor = 0.5
+				NOT = {
+					has_opinion = {
+						who = from
+						value = 0
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				NOT = {
+					has_opinion = {
+						who = from
+						value = -50
+					}
+				}
+			}
+			modifier = {
+				factor = 1.5
+				has_opinion = {
+					who = from
+					value = 50
+				}
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					has_opinion = {
+						who = HAB
+						value = 0
+					}
+				}
+			}
+			modifier = {
+				factor = 0.5
+				has_opinion = {
+					who = HAB
+					value = 100
+				}
+			}
+		}
+	}
+}
+
+#Emperor: They paid
+country_event = {
+	id = new_flavour_bav.2401
+	title = new_flavour_bav.2401.name
+	desc = new_flavour_bav.2401.desc
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.2401.opt
+		add_treasury = 200
+	}
+}
+
+#Bavarians: They paid
+country_event = {
+	id = new_flavour_bav.2402
+	title = new_flavour_bav.2401.name
+	desc = new_flavour_bav.2402.desc
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.2402.opt
+	}
+}
+
+#Emperor: They defaulted
+country_event = {
+	id = new_flavour_bav.2403
+	title = new_flavour_bav.2403.name
+	desc = new_flavour_bav.2403.desc
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.2403.opt
+		tooltip = {
+			REG = {
+				change_government = theocracy
+				add_government_reform = leading_clergy_reform
+		
+				add_stability = -3
+				add_prestige = -100
+			}
+		}
+	}
+}
+
+#Bavarians: They defaulted
+country_event = {
+	id = new_flavour_bav.2404
+	title = new_flavour_bav.2403.name
+	desc = new_flavour_bav.2404.desc
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.2404.opt
+		tooltip = {
+			REG = {
+				change_government = theocracy
+				add_government_reform = leading_clergy_reform
+		
+				add_stability = -3
+				add_prestige = -100
+			}
+		}
+	}
+}
+
+#Emperor: They get ceded to Bavaria
+country_event = {
+	id = new_flavour_bav.2405
+	title = new_flavour_bav.2405.name
+	desc = new_flavour_bav.2405.desc
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.2405.opt
+		add_treasury = 200
+		tooltip = {
+			from = {
+				every_owned_province = {
+					add_core = event_target:regensburg_fromfrom
+					cede_province = event_target:regensburg_fromfrom
+					if = {
+						limit = {
+							NOT = { is_claim = HAB }
+							NOT = { is_core = HAB }
+						}
+						add_claim = HAB
+					}
+				}
+			}
+		}
+	}
+}
+
+#Bavarians: They get ceded to us
+country_event = {
+	id = new_flavour_bav.2406
+	title = new_flavour_bav.2405.name
+	desc = new_flavour_bav.2406.desc
+	picture = HRE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.2406.opt
+		add_treasury = -200
+		HAB = {
+			tooltip = { add_treasury = 200 }
+			add_opinion = {
+				who = root
+				modifier = opinion_stole_free_city
+			}
+		}
+		from = {
+			every_owned_province = {
+				add_core = root
+				cede_province = root
+				if = {
+					limit = {
+						NOT = { is_claim = HAB }
+						NOT = { is_core = HAB }
+					}
+					add_claim = HAB
+				}
+			}
+		}
+	}
+}
+
+
+#Money not demanded
+country_event = {
+	id = new_flavour_bav.26
+	title = new_flavour_bav.26.name
+	desc = new_flavour_bav.26.desc
+	picture = CITY_VIEW_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = new_flavour_bav.26.A
+	}
+}

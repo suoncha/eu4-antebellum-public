@@ -1,0 +1,77 @@
+########################################
+# Events for Malacca
+#
+# written by Henrik Lohmander
+########################################
+
+namespace = flavor_mlc
+normal_or_historical_nations = yes
+
+country_event = {
+	id = flavor_mlc.8
+	title = flavor_mlc.8.t
+	desc = flavor_mlc.8.d
+	picture = ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+	
+	
+	option = {
+		name = flavor_mlc.8.a #Ok.
+		ai_chance = { factor = 10 }
+		tooltip = {
+			add_casus_belli = {
+				target = MLC
+				type = cb_trade_war_triggered
+				months = 24 #Not displayed in tooltip.
+			}
+		}
+	}
+}
+
+# Pick a name and capital for Malaya
+country_event = {
+	id = flavor_mlc.9
+	title = flavor_mlc.9.t
+	desc = flavor_mlc.9.desc
+	picture = ANGRY_MOB_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_mlc.9.a
+		trigger = {
+			dynasty = "Srivijaya"
+		}
+		override_country_name = SRIVIJAYA
+		set_country_flag = is_srijivaya_flag
+		ai_chance = {
+			factor = 1000
+		}
+	}
+	option = {
+		name = flavor_mlc.9.b
+		trigger = {
+			primary_culture = javanese
+		}
+		override_country_name = MAJAPAHIT_EMPIRE
+		set_country_flag = is_majapahit_empire_flag
+		ai_chance = {
+			factor = 100
+		}
+	}
+	option = {
+		name = flavor_mlc.9.c
+		override_country_name = NUSANTARA
+		set_country_flag = is_nusantara_flag
+		ai_chance = {
+			factor = 5
+		}
+	}
+	option = {
+		name = flavor_mlc.9.d
+		ai_chance = {
+			factor = 1
+		}
+	}
+}

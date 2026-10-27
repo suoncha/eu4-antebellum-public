@@ -1,21 +1,6 @@
 namespace = ab_jerusalem
 normal_or_historical_nations = yes
 
-
-country_event = {
-	id = ab_jerusalem.1
-	title = ab_jerusalem.1.t
-	desc = ab_jerusalem.1.d
-	picture = AB_BYZANTIUM_eventPicture
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = ab_jerusalem.1.a
-		set_government_rank = 3
-	}
-}
-
 #Timed Mission Unlock
 country_event = {
 	id = ab_jerusalem.2
@@ -44,15 +29,9 @@ country_event = {
 	fire_only_once = yes
 	
 	trigger = {
-		is_year = 1455
-		OR = {
-			tag = KOJ
-			was_tag = KOJ
-		}
 		has_country_flag = koj_mission_unlocked
-		NOT = {
-			mission_completed = koj_triumph_cross
-		}
+		is_year = 1455
+		NOT = { mission_completed = koj_triumph_cross }
 	}
 	
 	immediate = {
@@ -73,7 +52,7 @@ province_event = {
 	id = ab_jerusalem.4
 	title = ab_jerusalem.4.t
 	desc = ab_jerusalem.4.d
-	picture = AB_BYZFALL_eventPicture
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
 	
 	hidden = yes
 	
@@ -113,7 +92,7 @@ country_event = {
 	id = ab_jerusalem.5
 	title = ab_jerusalem.5.t
 	desc = ab_jerusalem.5.d
-	picture = AB_BYZFALL_eventPicture
+	picture = BYZ_BYZANTINE_EAGLE_eventPicture
 	
 	is_triggered_only = yes
 	
@@ -205,6 +184,52 @@ country_event = {
 		add_country_modifier = {
 			name = koj_safeguard_holy_places
 			duration = -1
+		}
+	}
+}
+
+# "Enzo 'The Pious' Guillaume"
+country_event = {
+	id = ab_jerusalem.7
+	title = ab_jerusalem.7.t
+	desc = ab_jerusalem.7.d
+	picture = RELIGIOUS_WARS_eventPicture
+
+	is_triggered_only = yes
+ 
+	option = {
+		name = ab_jerusalem.7.a
+		define_general = {
+			name = "Enzo 'The Pious' Guillaume"
+			shock = 6
+			fire = 3
+			manuever = 4
+			siege = 5
+		}
+	}  
+
+	option = {
+		name = ab_jerusalem.7.b
+		define_advisor = {
+			type = artist
+			name = "Enzo 'The Pious' Guillaume"
+			culture = dutch
+			discount = yes
+			location = 379
+			skill = 3
+		}
+	}
+
+	option = {
+        name = ab_jerusalem.7.c
+        define_heir  = {
+			name = "Enzo 'The Pious'"
+			dynasty = Guillaume
+			adm = 6
+			dip = 5
+			mil = 6
+			claim = 50
+			age = 20
 		}
 	}
 }

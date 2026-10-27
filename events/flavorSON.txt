@@ -1,0 +1,350 @@
+########################################
+# More events for Songhai
+#
+# written by Ogulcan Yildirim
+########################################
+namespace = flavor_son
+
+# The direction of Songhai
+country_event = {
+	id = flavor_son.5
+	title = flavor_son.5.t
+	desc = flavor_son.5.d
+	picture = MUSLIM_PAGAN_DISPUTE_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			set_country_flag = son_had_focus_event
+		}
+	}
+
+	option = {	#Modern Islam focus
+		name = flavor_son.5.a
+		custom_tooltip = flavor_son.5.a.tt
+		hidden_effect = {
+			set_country_flag = son_islamic_focus
+			clr_country_flag = son_tolerance_focus
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 10
+		}
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = -10
+		}
+		add_estate_loyalty = {
+			estate = estate_dhimmi
+			loyalty = -10
+		}
+
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 10
+				has_ruler_flag = son_askia_the_great
+			}
+			modifier = {
+				factor = 0
+				has_idea_group = humanist_ideas
+			}
+			modifier = {
+				factor = 2
+				has_idea_group = religious_ideas
+			}
+		}
+	}
+
+	option = {	#Traditional Fetishist focus
+		name = flavor_son.5.b
+		custom_tooltip = flavor_son.5.b.tt
+		hidden_effect = {
+			set_country_flag = son_tolerance_focus
+			clr_country_flag = son_islamic_focus
+		}
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = -10
+		}
+		add_estate_loyalty = {
+			estate = estate_nobles
+			loyalty = 10
+		}
+		add_estate_loyalty = {
+			estate = estate_dhimmi
+			loyalty = 10
+		}
+
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0.1
+				has_ruler_flag = son_askia_the_great
+			}
+			modifier = {
+				factor = 0
+				has_idea_group = religious_ideas
+			}
+			modifier = {
+				factor = 2
+				has_idea_group = humanist_ideas
+			}
+		}
+	}
+
+	after = {
+		swap_non_generic_missions = yes
+	}
+}
+
+# Songhai becomes massive threat to Mali
+country_event = {
+	id = flavor_son.7
+	title = flavor_son.7.t
+	desc = flavor_son.7.d
+	picture = ASKIA_eventPicture
+	major = yes
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_son.7.a
+		add_stability = -2
+		if = {
+			limit = {
+				government_rank = 3
+			}
+			set_government_rank = 2
+		}
+
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+# Askia's army reformation
+country_event = {
+	id = flavor_son.8
+	title = flavor_son.8.t
+	desc = flavor_son.8.d
+	picture = TUAREG_OTTOMAN_eventPicture
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_son.8.a
+		add_ruler_modifier = {
+			name = son_professional_songhaian_army
+			duration = -1
+		}
+		
+		ai_chance = {
+			factor = 1
+		}
+	}
+
+	option = {
+		name = flavor_son.8.b
+		add_mil_power = 200
+		
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+# The surrender of Djenne
+country_event = {
+	id = flavor_son.10
+	title = flavor_son.10.t
+	desc = flavor_son.10.d
+	picture = AFRICAN_BATTLE_eventPicture
+	goto = 1134
+	fire_only_once = yes
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_son.10.a
+		white_peace = FROM
+		create_marriage = FROM
+		vassalize = FROM
+		if = {
+			limit = {
+				has_dlc = "Rights of Man"
+				NOT = { has_reform = iqta }
+			}
+			define_consort = {
+				culture = bozo
+				religion = sunni
+				female = yes
+				country_of_origin = FROM
+			}
+		}
+
+		ai_chance = {
+			factor = 1
+		}
+	}
+
+	option = {
+		name = flavor_son.10.b
+		add_prestige = 10
+
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+# Glory of the Great Mosque of Djenne
+country_event = {
+	id = flavor_son.11
+	title = flavor_son.11.t
+	desc = flavor_son.11.d
+	picture = MOSQUE_eventPicture
+	goto = 1134
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_son.11.a
+		add_piety = 0.33
+		add_ruler_modifier = {
+			name = son_embrace_legalism
+			duration = 9125
+		}
+
+		ai_chance = {
+			factor = 1
+		}
+	}
+
+	option = {
+		name = flavor_son.11.b
+		add_piety = -0.33
+		add_ruler_modifier = {
+			name = son_embrace_mysticism
+			duration = 9125
+		}
+
+		ai_chance = {
+			factor = 1
+		}
+	}
+}
+
+# Return to the Roots?
+country_event = {
+	id = flavor_son.12
+	title = flavor_son.12.t
+	desc = flavor_son.12.d
+	picture = FETISHIST_FIRE_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_son.12.a
+		custom_tooltip = son_fetishism_as_secondary_religion_tt
+		hidden_effect = {
+			add_country_modifier = {
+				name = son_fetishism_as_secondary_religion
+				duration = -1
+				desc = son_fetishism_as_secondary_religion_desc
+			}
+			every_owned_province = {
+				limit = {
+					religion = shamanism
+				}
+				add_province_modifier = {
+					name = son_fetishism_as_secondary_religion_province
+					duration = -1
+					desc = son_fetishism_as_secondary_religion_province_desc
+				}
+			}
+		}
+
+		ai_chance = {
+			factor = 1
+		}
+	}
+
+	option = {
+		name = flavor_son.12.b
+		change_religion = shamanism
+		custom_tooltip = flavor_son.12.b.tt
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					religion = sunni
+				}
+				change_religion = shamanism
+			}
+		}
+		enable_cult_for_heirs_mission = yes
+		unlock_cult = islam_cult
+
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+# The surrender of Djenne - Ruler dies!
+country_event = {
+	id = flavor_son.13
+	title = flavor_son.13.t
+	desc = flavor_son.13.d
+	picture = AFRICAN_BATTLE_eventPicture
+	fire_only_once = yes
+	is_triggered_only = yes
+	
+	immediate = { kill_ruler = yes }
+
+	option = {	#Offer the Songhain a marriage!
+		name = flavor_son.13.a
+		tooltip = {
+			white_peace = SON
+			create_marriage = SON
+			SON = {
+				vassalize = JNN
+			}
+		}
+		hidden_effect = {
+			SON = {
+				country_event = {
+					id = flavor_son.10
+				}
+			}
+		}
+
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				war_score_against = {
+					who = SON
+					value = 30
+				}
+			}
+		}
+	}
+
+	option = {	#We will never submit!
+		name = flavor_son.13.b
+		add_prestige = 15
+		add_war_exhaustion = 1
+
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 0
+				NOT = {
+					war_score_against = {
+						who = SON
+						value = 30
+					}
+				}
+			}
+		}
+	}
+}

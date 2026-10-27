@@ -2,86 +2,122 @@ country_decisions = {
 	become_pirates_decision = {
 		major = yes
 		potential = {
-			is_subject = no
-			has_dlc = "Golden Century"
-			NOT = { has_reform = pirate_republic_reform }
-			NOT = { has_reform = merchants_reform }
-			NOT = { has_reform = dutch_republic }
+			OR = {
+				has_dlc = "Golden Century"
+				has_dlc = "Lions of the North"
+			}
+			OR = {
+				AND = {
+					NOT = { has_reform = pirate_republic_reform }
+					NOT = { has_reform = merchants_reform }
+					NOT = { has_reform = veche_republic }
+					NOT = { has_reform = merchants_reform }
+					NOT = { has_reform = venice_merchants_reform }
+					is_subject = no
+					OR = {
+						government = monarchy
+						government = republic
+					}
+					NOT = { num_of_cities = 7 }
+					NOT = {
+						any_owned_province = {
+							NOT = {
+								AND = {
+									has_port = yes
+									OR = {
+										region = maghreb_region
+										province_is_on_an_island = yes
+									}
+								}
+							}
+						}
+					}
+				}
+				AND = {
+					NOT = { has_reform = pirate_republic_reform }
+					overlord = {
+						has_government_attribute = vassals_can_hoist_the_black_flag
+					}
+				}
+			}
+			NOT = { has_government_attribute = has_dutch_election }
 			NOT = { has_reform = colonial_government }
 			NOT = { has_reform = shogunate }
 			NOT = { has_reform = elective_monarchy }
 			NOT = { has_reform = celestial_empire }
-			NOT = { has_reform = MIN_celestial_empire }
 			NOT = { has_reform = daimyo }
-			NOT = { has_reform = revolutionary_republic_reform }
+			NOT = { is_revolutionary_republic_trigger = yes }
 			NOT = { has_reform = revolutionary_empire_reform }
 			NOT = { has_reform = american_republic }
 			NOT = { has_reform = trading_city }
 			NOT = { has_reform = free_city }
 			NOT = { has_reform = federal_republic }
-			NOT = { has_reform = veche_republic }
-			NOT = { has_reform = merchants_reform }
-			NOT = { has_reform = venice_merchants_reform }
 			NOT = { tag = PAP } # just no
 			is_emperor = no
-			OR = {
-				government = monarchy
-				government = republic
-			}
-			OR = {
-				NOT = { num_of_cities = 7 }
-				tag = CBR
-			}
-			NOT = {
-				any_owned_province = {
-					NOT = {
-						AND = {
-							has_port = yes
-							OR = {
-								region = maghreb_region
-								province_is_on_an_island = yes
-							}
+		}
+		allow = {
+			if = {
+				limit = {
+					OR = {
+						is_subject = no
+						overlord = {
+							NOT = { has_government_attribute = vassals_can_hoist_the_black_flag }
 						}
 					}
 				}
-			}
-		}
-		allow = {
-			stability = 2
-			navy_size_percentage = 0.9
-			NOT = { num_of_subjects = 1 }
-			home_trade_node = {
-				privateer_power = {
-					country = ROOT
-					share = 10
+				stability = 2
+				home_trade_node = {
+					privateer_power = {
+						country = ROOT
+						share = 10
+					}
 				}
+				navy_size_percentage = 0.9
+				NOT = { num_of_subjects = 1 }
+				NOT = { num_of_cities = 7 }
 			}
 			is_bankrupt = no
 			is_at_war = no
 		}
 		effect = {
 			add_stability = -2
+			change_government_to_republic = yes
+			add_government_reform = pirate_republic_reform
+			add_republican_tradition = 20
 			if = {
 				limit = {
-					has_dlc = "Dharma"
+					OR = {
+						technology_group = western
+						technology_group = eastern
+					}
 				}
-				change_government = republic
-				add_government_reform = pirate_republic_reform
+				apply_sprite_pack = dlc098_nss_sprite_pack
 			}
-			else = {
-				set_legacy_government = pirate_republic
+			if = {
+				limit = {
+					OR = {
+						technology_group = muslim
+						technology_group = ottoman
+					}
+				}
+				apply_sprite_pack = dlc098_sle_sprite_pack
 			}
-			add_republican_tradition = 20
 		}
 		ai_will_do = {
-			factor = 0
+			factor = 100
+			modifier = {
+				factor = 0
+				is_subject = no
+			}
 		}
 	}
 	pirate_king_decision = {
 		major = yes
 		potential = {
+			always = no
 			has_reform = pirate_republic_reform
 			NOT = { has_dlc = "Dharma" }
+			NOT = { has_dlc = "Emperor" }
 		}
 		allow = {
 			adm_tech = 12
@@ -95,7 +131,7 @@ country_decisions = {
 			}
 		}
 		effect = {
-			set_legacy_government = pirate_kingdom
+			#set_legacy_government = pirate_kingdom
 			add_stability = -1
 			set_country_flag = recently_changed_government_flag
 		}
@@ -106,8 +142,10 @@ country_decisions = {
 	black_market_consortium_decision = {
 		major = yes
 		potential = {
+			always = no
 			has_reform = pirate_republic_reform
 			NOT = { has_dlc = "Dharma" }
+			NOT = { has_dlc = "Emperor" }
 		}
 		allow = {
 			adm_tech = 12
@@ -122,7 +160,7 @@ country_decisions = {
 			}
 		}
 		effect = {
-			set_legacy_government = black_market_consortium_government
+			#set_legacy_government = black_market_consortium_government
 			add_stability = -1
 			set_country_flag = recently_changed_government_flag
 		}
@@ -133,8 +171,10 @@ country_decisions = {
 	war_against_the_world_decision = {
 		major = yes
 		potential = {
+			always = no
 			has_reform = pirate_republic_reform
 			NOT = { has_dlc = "Dharma" }
+			NOT = { has_dlc = "Emperor" }
 		}
 		allow = {
 			adm_tech = 12
@@ -150,7 +190,7 @@ country_decisions = {
 		}
 		effect = {
 			add_stability = -1
-			set_legacy_government = war_against_the_world_government
+			#set_legacy_government = war_against_the_world_government
 			abolish_slavery_effect = yes
 			set_country_flag = recently_changed_government_flag
 		}
@@ -161,8 +201,10 @@ country_decisions = {
 	lower_black_flag_decision = {
 		major = yes
 		potential = {
+			always = no
 			has_reform = pirate_republic_reform
 			NOT = { has_dlc = "Dharma" }
+			NOT = { has_dlc = "Emperor" }
 		}
 		allow = {
 			stability = 1
@@ -176,7 +218,7 @@ country_decisions = {
 		}
 		effect = {
 			add_stability = -1
-			set_legacy_government = oligarchic_republic
+			#set_legacy_government = oligarchic_republic
 			set_country_flag = recently_changed_government_flag
 		}
 		ai_will_do = {

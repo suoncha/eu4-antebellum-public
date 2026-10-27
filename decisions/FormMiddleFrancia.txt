@@ -3,34 +3,11 @@ country_decisions = {
 	form_middle_francia = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			NOT = { has_country_flag = formed_middle_francia_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			NOT = { exists = MFC }
-			NOT = { tag = PAP }
-			NOT = { tag = HLR }
 			OR = {
 				tag = LOT
 				tag = ARS
 			}
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 15
-				}
-			}
-			is_colonial_nation = no
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
-				}
-			}
+			NOT = { exists = MFC }
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -54,10 +31,10 @@ country_decisions = {
 			}
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_at_war = no
-			legitimacy = 100
-			prestige = 100
+			OR = {
+				tag = LOT
+				tag = ARS
+			}
 			OR = {
 				dynasty = "Carolingian"
 				is_emperor = yes
@@ -74,6 +51,8 @@ country_decisions = {
 			owns_core_province = 104
 			owns_core_province = 108
 			owns_core_province = 2980
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
 			if = {
@@ -95,8 +74,16 @@ country_decisions = {
 			}
 			change_tag = MFC
 			add_prestige = 25
-			set_country_flag = formed_middle_francia_flag
 			custom_tooltip = cosmetic_tag_info
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					exists = FRC
+				}
+				FRC = {
+					override_country_name = RENAME_WFRANCIA
+				}
+			}
 		}
 		ai_will_do = {
 			factor = 1

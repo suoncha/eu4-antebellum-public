@@ -1,0 +1,66 @@
+royalists_vs_peasants_french_mechanic = {
+    available = {
+	}
+
+	powers = {
+		royalistsvpeasants = {
+			gui = royalists_vs_peasants_french_gov_mech
+			max = 100
+			min = -100
+			base_monthly_growth = 0
+			scaled_modifier = {
+				trigger = {
+					has_government_power = { 
+						mechanic_type = royalists_vs_peasants_french_mechanic
+						power_type = royalistsvpeasants
+						value = 0
+					}
+				}
+				modifier = {
+					morale_damage_received = -0.10
+                    global_autonomy = -0.05
+                    harsh_treatment_cost = -0.2	
+                    election_cycle = 2
+                    max_absolutism = 10
+                    max_absolutism_effect = 0.1
+				}
+				start_value = 0
+				end_value = 100	
+			}
+			reverse_scaled_modifier = {
+				trigger = {
+					NOT = {
+						has_government_power = { 
+							mechanic_type = royalists_vs_peasants_french_mechanic
+							power_type = royalistsvpeasants
+							value = 0
+						}
+					}
+				}
+				modifier = {
+					morale_damage = 0.10
+                    global_autonomy = 0.05
+                    harsh_treatment_cost = 0.2
+					candidate_random_bonus = 1
+					republican_tradition = 0.25
+                    max_absolutism = -10
+				}
+				start_value = -100
+				end_value = 0
+			}
+			on_max_reached = {
+				set_country_flag = fra_dictatorship_achieved
+				country_event = {
+					id = ab_france.5
+				}	
+			}
+			on_min_reached = {
+				set_country_flag = fra_republic_saved
+				country_event = {
+					id = ab_france.6
+				}
+			}
+		}
+	
+	}
+}

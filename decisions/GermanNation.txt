@@ -3,26 +3,20 @@ country_decisions = {
 	german_nation = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			# AB [[[ Make major German tags more aggressive and minor German tags less aggressive in claiming Germany
-			ab_not_german_regional_tag_trigger = no
-			# ]]]
-			NOT = { has_country_flag = formed_germany_flag }
+			culture_group = germanic
 			OR = {
-				ai = no
-				is_playing_custom_nation = no
+				tag = PRU
+				tag = SAX
+				tag = HLV
+				tag = HAS
+				tag = BAV
+				tag = SWA
+				tag = FKN
+				tag = RHL
+				tag = HAB
 			}
 			NOT = { exists = GER }
-			NOT = { tag = PAP }
-			NOT = { tag = HLR }
-			NOT = { tag = ROM }
-			NOT = {
-				OR = {
-					tag = BOH
-					was_tag = BOH
-				}
-			}
-			culture_group = germanic
+			NOT = { was_tag = GER }
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -35,44 +29,49 @@ country_decisions = {
 				province_id = 70
 				province_id = 1874
 			}
-			NOT = { country_or_non_sovereign_subject_holds = ROOT }	
+			NOT = { owned_by = ROOT }
+			NOT = { is_core = ROOT }
 		}
 		
 		allow = {
+			culture_group = germanic
 			adm_tech = 10
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
-			is_at_war = no
-			owns_core_province = 57	# Brunswick
-			owns_core_province = 65	# M�nchen
+			owns_core_province = 57
+			owns_core_province = 65
 			owns_core_province = 67
 			owns_core_province = 85
 			owns_core_province = 63
 			owns_core_province = 1876
 			owns_core_province = 70
 			owns_core_province = 1874
-
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
-			add_prestige_or_monarch_power = { amount = 25 } 
+			add_prestige_or_monarch_power = { amount = 25 }
 			change_tag = GER
 			on_change_tag_effect = yes
-			emperor = {
-				add_opinion = {
-					who = ROOT
-					modifier = opinion_left_empire
+			if = {
+				limit = {
+					is_part_of_hre = yes
+					is_elector = no
+					is_emperor = no
+				}
+				emperor = {
+					add_opinion = {
+						who = ROOT
+						modifier = opinion_left_empire
+					}
+				}
+				set_in_empire = no
+				emperor = {
+					country_event = { id = hre_event.5 }
 				}
 			}
-			set_in_empire = no
-			emperor = {
-				country_event = { id = hre_event.5 }
-			}
-			# set_government_rank = 2		
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
 			}
-			set_country_flag = formed_germany_flag
 			if = {
 				limit = {
 					has_custom_ideas = no
@@ -87,6 +86,12 @@ country_decisions = {
 						has_country_modifier = bra_confederation
 					}
 					remove_country_modifier = bra_confederation
+				}
+				country_event = {
+					id = ab_achiev.14
+				}
+				country_event = {
+					id = ab_achiev.37
 				}
 			}
 			if = {
@@ -121,10 +126,6 @@ country_decisions = {
 		}
 		ai_will_do = {
 			factor = 1
-			modifier = {
-				factor = 0
-				tag = HAB
-			}
 		}
 	}
 }

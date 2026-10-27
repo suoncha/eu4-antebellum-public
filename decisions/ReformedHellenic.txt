@@ -17,36 +17,46 @@ country_decisions = {
 				province_id = 320
 				province_id = 5152
 			}
+			NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			has_discovered = ROOT
 		}
 		allow = {
-			full_idea_group = religious_ideas
-			any_owned_province = {
-				has_great_project = {
-					type = apollo
-					tier = 1
+			IF = {
+				limit = {
+					tag = RMR
 				}
+				has_idea = rmr_fifth
 			}
-			owns = 146
-			owns = 148
-			owns = 151
-			owns = 317
-			owns = 2313
-			owns = 358
-			owns = 2982
-			owns = 320
-			owns = 5152
+			else = {
+				full_idea_group = religious_ideas
+				5152 = {
+					owned_by = ROOT
+					has_great_project = {
+						type = apollo
+						tier = 1
+					}
+				}
+				owns_or_non_sovereign_subject_of = 146
+				owns_or_non_sovereign_subject_of = 148
+				owns_or_non_sovereign_subject_of = 151
+				owns_or_non_sovereign_subject_of = 317
+				owns_or_non_sovereign_subject_of = 2313
+				owns_or_non_sovereign_subject_of = 358
+				owns_or_non_sovereign_subject_of = 2982
+				owns_or_non_sovereign_subject_of = 320
+			}
 		}
+
 		effect = {
+			ab_mpf_consolidate_rites_effect = yes
 			add_stability = -2
 			change_religion = reformed_hellenic
-			capital_scope = {
-				change_religion = reformed_hellenic
-			}
 			add_country_modifier = {
-				name = "wee_conversion_zeal"
+				name = wee_conversion_zeal
 				duration = 3650
-			}	
+			}
 			custom_tooltip = reform_hellenic_subjects_switch_too
+			custom_tooltip = NCI_HELLENIC_CHANGE_TO_REFORMED_HELLENIC
 			hidden_effect = {
 				every_subject_country = {
 					limit = {
@@ -54,18 +64,59 @@ country_decisions = {
 						NOT = { is_subject_of_type = tributary_state }
 					}
 					change_religion = reformed_hellenic
-					capital_scope = {
-						change_religion = reformed_hellenic
+				}
+				every_province = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+						religion = hellenic
 					}
-					add_country_modifier = {
-						name = wee_conversion_zeal
-						duration = 3650
-					}
+					change_religion = reformed_hellenic
 				}
 			}
+			custom_tooltip = AB_EMPTY
 		}
+		
 		ai_will_do = {
 			factor = 1
+		}
+	}
+
+	dedicate_jerusalem_to_zeus = {
+		major = yes
+		potential = {
+			OR = {
+				religion = hellenic
+				religion = reformed_hellenic
+			}
+			379 = {
+				NOT = { has_province_flag = ab_mpf_zeus_jerusalem }
+			}
+			mission_completed = nicene_secure_jerusalem
+		}
+		provinces_to_highlight = {
+			province_id = 379
+			has_discovered = ROOT
+		}
+		allow = {
+			religion = reformed_hellenic
+			owns_core_province = 379
+			379 = {
+				religion = reformed_hellenic
+			}
+			church_power = 150
+		}
+		effect = {
+			country_event = {
+				id = ab_mpf.8
+			}
+			custom_tooltip = AB_EMPTY
+			add_church_power = -150
+			custom_tooltip = ab_mpf_temple_of_zeus_tt
+			hidden_effect = {
+				379 = {
+					set_province_flag = ab_mpf_zeus_jerusalem
+				}
+			}
 		}
 	}
 }

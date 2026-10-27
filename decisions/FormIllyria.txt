@@ -3,37 +3,11 @@ country_decisions = {
 	form_illyria = {
 		major = yes
 		potential = {
-			normal_or_historical_nations = yes
-			
-			NOT = { has_country_flag = formed_illyria_flag }
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
-			NOT = { exists = ILR }
-			NOT = { tag = PAP }
-			NOT = { tag = HLR }
-			NOT = { tag = ALB } # Have their own rename
 			NOT = { has_global_flag = albania_formed_illyria }
-			OR = {
-				culture_group = south_slavic
-				primary_culture = sclavinian
-			}
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					num_of_cities = 3
-				}
-			}
+			culture_group = south_slavic
 			is_colonial_nation = no
-			OR = {
-				is_former_colonial_nation = no
-				AND = {
-					is_former_colonial_nation = yes
-					ai = no
-				}
-			}
+			NOT = { exists = ILR }
+			NOT = { was_tag = ILR }
 		}
 		provinces_to_highlight = {
 			OR = {
@@ -55,10 +29,7 @@ country_decisions = {
 			}
 		}
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
-			is_at_war = no
-			adm_tech = 10
+			culture_group = south_slavic
 			owns_core_province = 4704
 			owns_core_province = 1765
 			owns_core_province = 4780
@@ -70,6 +41,8 @@ country_decisions = {
 			owns_core_province = 131
 			owns_core_province = 4752
 			owns_core_province = 129
+			is_at_war = no
+			is_subject = no
 		}
 		effect = {
 			add_prestige = 25
@@ -86,7 +59,6 @@ country_decisions = {
 				}
 				set_government_rank = 2
 			}
-			set_country_flag = formed_illyria_flag
 			add_country_modifier = {
 				name = "centralization_modifier"
 				duration = 7300
@@ -97,6 +69,9 @@ country_decisions = {
 						has_country_flag = renamed_sclavinia
 					}
 					clr_country_flag = renamed_sclavinia
+				}
+				country_event = {
+					id = ab_achiev.28
 				}
 			}
 		}

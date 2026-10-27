@@ -3,57 +3,33 @@ country_decisions = {
 	colonize_egyptian_oases = {
 		major = yes
 		potential = {
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
 			NOT = { has_global_flag = colonized_egyptian_oases_flag }
-			has_dlc = "Third Rome"
-			4983 = {
-				is_empty = yes
-			}
-			4984 = {
-				is_empty = yes
-			}
-			4985 = {
-				is_empty = yes
-			}
-			4986 = {
+			saharan_oases = {
 				is_empty = yes
 			}
 			OR = {
-				capital_scope = {
-					region = egypt_region
-				}
-				num_of_owned_provinces_with = {
-					value = 10
-					region = egypt_region
-				}
+				owns = 4980
+				owns = 4323
+				owns = 1228
 			}
 		}
 		provinces_to_highlight = {
+			area = saharan_oases
 			OR = {
-				province_id = 4983
-				province_id = 4984
-				province_id = 4985
-				province_id = 4986
-			}
+				NOT = { owned_by = ROOT }
+				NOT = { is_core = ROOT }
+			}			
 		}
 		allow = {
-			adm_power = 200
-			is_free_or_tributary_trigger = yes
+			owns_core_province = 4980
+			owns_core_province = 4323
+			owns_core_province = 2322
+			owns_core_province = 1228			
+			adm_power = 100
 			is_at_war = no
-			egypt_region = {
-				type = all
-				owned_by = ROOT
-			}
-			dongola_area = {
-				type = all
-				owned_by = ROOT
-			}
 		}
 		effect = {
-			add_adm_power = -200
+			add_adm_power = -100
 			4983 = {
 				add_siberian_construction = 1
 			}
@@ -69,13 +45,8 @@ country_decisions = {
 			set_global_flag = colonized_egyptian_oases_flag
 		}
 		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0
-				NOT = { adm_power = 800 }
-			}
+			factor = 100
 		}
 		ai_importance = 1
 	}
-	
 }

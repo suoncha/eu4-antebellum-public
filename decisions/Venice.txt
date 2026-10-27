@@ -1,0 +1,67 @@
+country_decisions = {
+
+	confirm_thalassocracy = {
+		potential = {
+			full_idea_group = trade_ideas
+			NOT = { has_country_modifier = thalassocracy }
+		}
+		allow = {
+			full_idea_group = trade_ideas
+			monthly_income = 250
+		}
+		effect = {
+			add_country_modifier = {
+				name = thalassocracy
+				duration = -1
+			}
+			unlock_government_reform = {
+				government_reform = thalassocracy_reform
+			}
+			change_government_reform_progress = 50
+		}
+		
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	replenish_mercenary_ranks = {
+		major = yes
+		potential = {
+			has_country_flag = ven_condottieri_flag
+			owns = 112
+		} 
+		allow = {
+			ai = no
+			mil_power_cost = 20
+			years_of_income = 0.1
+			custom_trigger_tooltip = {
+				tooltip = ROOT_5_YEAR_CD_TT
+				NOT = { has_country_modifier = ven_merc_refill_timer }
+			}
+			any_hired_mercenary_company = {
+				NOT = { has_company_manpower = 0.75 }
+				location = {
+					province_id = 112
+				}
+			}
+		}
+		effect = {
+			hidden_effect = {
+				add_country_modifier = {
+					name = ven_merc_refill_timer
+					duration = 1825
+					hidden = yes
+				}
+			}
+			random_hired_mercenary_company = {
+				limit = {
+					location = { province_id = 112 } 
+				}
+				add_company_manpower = 0.5
+			}
+			mil_power_cost = 20
+			add_years_of_income = -0.1
+		}
+	}
+}

@@ -16,13 +16,25 @@ country_decisions = {
 				province_id = 370
 				province_id = 245
 			}
+			NOT = { owned_by = ROOT }
 		}
 		allow = {
 			full_idea_group = religious_ideas
-			any_owned_province = {
-				has_great_project = {
-					type = mead
-					tier = 1
+			4144 = {
+				owned_by = ROOT
+				if = {
+					limit = {
+						ROOT = {
+							OR = {
+								has_mission = dan_unite_norse
+								has_mission = norway_unite_norse
+							}
+						}
+					}
+					has_great_project = {
+						type = mead
+						tier = 1
+					}
 				}
 			}
 			owns = 20
@@ -35,16 +47,15 @@ country_decisions = {
 			owns = 245
 		}
 		effect = {
+			ab_mpf_consolidate_rites_effect = yes
 			add_stability = -2
 			change_religion = reformed_norse
-			capital_scope = {
-				change_religion = reformed_norse
-			}
 			add_country_modifier = {
-				name = "wee_conversion_zeal"
+				name = wee_conversion_zeal
 				duration = 3650
-			}	
+			}
 			custom_tooltip = reform_norse_subjects_switch_too
+			custom_tooltip = ab_mpf_reform_norse_provinces
 			hidden_effect = {
 				every_subject_country = {
 					limit = {
@@ -52,15 +63,16 @@ country_decisions = {
 						NOT = { is_subject_of_type = tributary_state }
 					}
 					change_religion = reformed_norse
-					capital_scope = {
-						change_religion = reformed_norse
+				}
+				every_province = {
+					limit = {
+						country_or_non_sovereign_subject_holds = ROOT
+						religion = norse_pagan_reformed
 					}
-					add_country_modifier = {
-						name = wee_conversion_zeal
-						duration = 3650
-					}
+					change_religion = reformed_norse
 				}
 			}
+			custom_tooltip = AB_EMPTY
 		}
 		ai_will_do = {
 			factor = 1

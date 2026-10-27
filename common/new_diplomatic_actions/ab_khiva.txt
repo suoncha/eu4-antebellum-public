@@ -1,0 +1,88 @@
+khiva_gain_rebellion_support = {
+	category = relation
+
+	require_acceptance = yes
+
+	is_visible = {
+		has_country_flag = ab_mnk_unlocks_plant_rebellion
+        FROM = {
+            OR = {
+                tag = QQT
+                culture = oirats
+            }
+        }
+	}
+
+	is_allowed = {
+		FROM = {
+            OR = {
+                tag = QQT
+                culture = oirats
+            }
+        }
+		custom_trigger_tooltip = {
+			tooltip = ab_mnk_already_in_rebellion
+			FROM = {
+				NOT = {
+					has_country_flag = ab_mnk_will_join_rebellion
+				}
+			}
+		}
+	}
+
+	on_accept = {
+		FROM = {
+            set_country_flag = ab_mnk_will_join_rebellion
+        }
+	}
+
+	ai_will_do = {
+		always = no
+	}
+	
+	ai_acceptance = {
+		add_entry = {
+            name = DIPLO_OPPINION
+			export_to_variable = {
+				variable_name = ai_value
+				value = opinion
+				who = FROM
+				with = ROOT
+			}
+			multiply_variable = {
+				which = ai_value 
+				value = 0.125
+			}
+        }
+		add_entry = {
+			name = AI_TRUST_TOWARDS_ROOT
+			export_to_variable = {
+				variable_name = ai_value
+				value = trust
+				who = FROM
+				with = ROOT
+			}			
+			subtract_variable = { 
+				which = ai_value
+				value = 50
+			}
+			#1 trust = +4 ai points
+			multiply_variable = {
+				which = ai_value
+				value = 0.4
+			}
+		}
+		add_entry = {
+			name = AI_DIPLOMATIC_REPUTATION
+			export_to_variable = {
+				variable_name = ai_value
+				value = trigger_value:diplomatic_reputation
+			}
+			#1 rep = 3
+			multiply_variable = {
+				which = ai_value
+				value = 3
+			}
+		}
+	}
+}

@@ -4,31 +4,11 @@ yuainward = {
 	allow_normal_conversion = no
 	lock_level_when_selected = yes
 	potential = {
-		NOT = {
-			has_country_flag = abandoned_inward
-		}
+		NOT = { has_country_flag = abandoned_inward }
 		OR = {
-			has_mission = yua_china_tiger
-			has_mission = yua_nest_tiger
-			AND = {
-				has_mission = mch_china_great_wall
-				has_mission = mch_china_metropolis
-				has_mission = mch_china_tiger
-			}
-			AND = {
-				has_mission = lio_china_great_wall
-				has_mission = lio_china_metropolis
-				has_mission = lio_china_tiger
-			}
-			AND = {
-				has_mission = jsn_seoul
-				has_mission = jsn_industry
-				has_mission = jsn_koreana
-			}
-			AND = {
-				has_mission = china_dragon
-				has_mission = china_tiger
-			}
+			is_emperor_of_china = yes
+			culture_group = east_asian
+			culture_group = korean_g
 		}
 	}
 	custom_attributes = {
@@ -36,6 +16,47 @@ yuainward = {
 	}
 	modifiers = {
 		stability_cost_to_declare_war = 2
+	}
+	effect = {
+		hidden_effect = {
+			if = {
+				limit = {
+					has_mission = jsn_koreana
+				}
+				every_owned_province = {
+					limit = {
+						region = korea_region
+						NOT = { development = 25 }
+					}
+					add_province_modifier = {
+						name = ab_inward_development
+						duration = -1
+					}
+				}
+			}
+			else = {
+				every_owned_province = {
+					limit = {
+						superregion = china_superregion
+						NOT = { development = 20 }
+					}
+					add_province_modifier = {
+						name = ab_inward_development
+						duration = -1
+					}
+				}
+			}
+		}
+	}
+	removed_effect = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					has_province_modifier = ab_inward_development
+				}
+				remove_province_modifier = ab_inward_development
+			}
+		}
 	}
 	ai = {
 		factor = 0

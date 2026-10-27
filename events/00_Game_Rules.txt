@@ -1,0 +1,84 @@
+namespace = ab_game_rules_event
+normal_or_historical_nations = yes
+
+# Setup
+country_event = {
+	id = ab_game_rules_event.0
+	title = ab_game_rules_event.0.t
+	desc = ab_game_rules_event.0.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+
+	hidden = yes
+
+	option = {
+		name = ab_game_rules_event.0.a
+		add_country_modifier = {
+			name = ab_set_gamerule_timer
+			duration = 1
+			hidden = yes
+		}
+	}
+}
+
+# AI Earlier Colonization Buff
+country_event = {
+	id = ab_game_rules_event.1
+	title = ab_game_rules_event.1.t
+	desc = ab_game_rules_event.1.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+
+	is_triggered_only = yes
+
+	hidden = yes
+
+	option = {
+		name = ab_game_rules_event.1.a
+		create_explorer = { tradition = 100 }
+		add_country_modifier = {
+			name = ab_earlier_ai_colonization
+			duration = 12775
+		}
+		carribeans_region = {
+			ROOT = {
+				discover_province = PREV
+			}
+		}
+		macaronesia_area = {
+			ROOT = {
+				discover_province = PREV
+			}
+		}
+		greenland_area = {
+			ROOT = {
+				discover_province = PREV
+			}
+		}
+		newfoundland_area = {
+			ROOT = {
+				discover_province = PREV
+			}
+		}
+	}
+}
+
+# AI Earlier Colonization Buff - Anti Cheat
+country_event = {
+	id = ab_game_rules_event.2
+	title = ab_game_rules_event.2.t
+	desc = ab_game_rules_event.2.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+
+	hidden = yes
+
+	trigger = {
+		ai = no
+		has_country_modifier = ab_earlier_ai_colonization
+	}
+
+	option = {
+		name = ab_game_rules_event.2.a
+		remove_country_modifier = ab_earlier_ai_colonization
+	}
+}

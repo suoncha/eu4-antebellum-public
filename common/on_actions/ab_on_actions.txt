@@ -1,9 +1,6 @@
-on_startup = {
-	ab_on_startup_effect = yes
-}
-
 on_monarch_death = {
 	ab_on_monarch_death_effect = yes
+	ab_jap_on_monarch_death = yes
 }
 
 on_integrate = {
@@ -49,14 +46,9 @@ on_mandate_of_heaven_gained = {
 # When a nation loses the Mandate of Heaven
 # FROM = New Emperor, ROOT = Old Emperor
 on_mandate_of_heaven_lost = {
-	if = {
-		limit = {
-			has_dlc = "Mandate of Heaven"
-		}
-		remove_faction = temples
-		remove_faction = enuchs
-		remove_faction = bureaucrats
-	}
+	remove_faction = temples
+	remove_faction = enuchs
+	remove_faction = bureaucrats
 	# Remove the Mandate-of-Heaven related missions
 	if = {
 		limit = {
@@ -83,7 +75,7 @@ on_raid_coast = {
 	# Triggers an event wherein we can react to it
 	random_list = {
 		20 = { 
-			province_event = { id = ire_flavor.4 }
+			province_event = { id = ab_ireland.4 }
 		}
 		80 = { }
 	}
@@ -176,20 +168,20 @@ on_province_owner_change = {
 					is_subject = yes
 				}
 				overlord = {
-					country_event = { id = hk_ire.16 } # Foreign power exiles HK
-					country_event = { id = hk_ire.18 } # Irish minor exiles HK
+					country_event = { id = ab_ireland.26 } # Foreign power exiles HK
+					country_event = { id = ab_ireland.28 } # Irish minor exiles HK
 				}
 			}
 			else = {
-				country_event = { id = hk_ire.16 } # Foreign power exiles HK
-				country_event = { id = hk_ire.18 } # Irish minor exiles HK
+				country_event = { id = ab_ireland.26 } # Foreign power exiles HK
+				country_event = { id = ab_ireland.28 } # Irish minor exiles HK
 			}
 		}
 	}
 	ab_on_province_owner_change_update_modifiers_effect = yes
 	# This will fire only once
 	owner = {
-		country_event = { id = ab_rome.1 }
+		country_event = { id = ab_papal.17 }
 	}
 }
 
@@ -776,7 +768,7 @@ on_harmonized_reformed_pagan = {
 	on_harmonized_effect = yes
 	on_harmonized_religion_estate_privileges_effect = yes
 	events = {
-		confucian_events.1
+		ab_china.6
 	}	
 }
 

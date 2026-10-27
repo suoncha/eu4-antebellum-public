@@ -3,27 +3,26 @@ country_decisions = {
 	form_caliphate = {
 		major = yes
 		potential = {
-			NOT = { has_country_flag = formed_caliphate_flag }
+			ai = no
 			religion_group = muslim
-			OR = {
-				ai = no
-				is_playing_custom_nation = no
-			}
 			NOT = { exists = TCL }
-			is_colonial_nation = no
 		}
+
 		allow = {
-			is_free_or_tributary_trigger = yes
-			is_nomad = no
-			is_at_war = no
-			prestige = 100
-			legitimacy = 100
 			custom_trigger_tooltip = {
 				tooltip = AB_UNIFIED_ISLAM
-				has_country_flag = unified_islam
+				has_country_flag = has_unified_islam
 			}
+			is_at_war = no
+			is_subject = no
+			prestige = 90
+			legitimacy = 90
 		}
+
 		effect = {
+			hidden_effect = {
+				save_global_event_target_as = ab_formertag_tcl
+			}
 			change_tag = TCL
 			override_country_name = TCL
 			if = {
@@ -38,22 +37,20 @@ country_decisions = {
 				}
 				set_government_rank = 3
 			}
-			if = {
-				limit = {
-					government = monarchy
-					NOT = {
-						has_reform = caliphate_reform
-					}
-					is_revolutionary = no
+			hidden_effect = {
+				# Color Choice
+				country_event = {
+					id = ab_revert_formertag.1
 				}
-				add_government_reform = caliphate_reform
+				# Name Choice
+				country_event = {
+					id = ab_revert_formertag.2
+				}
 			}
-			set_country_flag = formed_caliphate_flag
 		}
 		ai_will_do = {
 			factor = 1
 		}
 		ai_importance = 400
 	}	
-	
 }

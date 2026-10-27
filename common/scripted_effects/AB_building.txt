@@ -1,0 +1,770 @@
+ab_add_or_upgrade_road_building = {
+	custom_tooltip = ab_add_or_upgrade_road_building_tooltip
+	hidden_effect = {
+		if = {
+			limit = {
+				has_building = early_road
+			}
+			add_building = gravel_road
+		}
+		else_if = {
+			limit = {
+				has_building = gravel_road
+			}
+			add_building = royal_road
+		}
+		else_if = {
+			limit = {
+				has_building = royal_road
+			}
+			add_building = macadam_road
+		}
+		else_if = {
+			limit = {
+				has_building = macadam_road
+			}
+			add_building = rail_road
+		}
+		else_if = {
+			limit = {
+				has_building = rail_road
+			}
+			add_base_production = 1
+		}
+		else = {
+			add_building = early_road
+		}
+	}
+}
+
+ab_upgrade_road_building = {
+	custom_tooltip = ab_upgrade_road_building_tooltip
+	hidden_effect = {
+		if = {
+			limit = {
+				has_building = early_road
+			}
+			add_building = gravel_road
+		}
+		else_if = {
+			limit = {
+				has_building = gravel_road
+			}
+			add_building = royal_road
+		}
+		else_if = {
+			limit = {
+				has_building = royal_road
+			}
+			add_building = macadam_road
+		}
+		else_if = {
+			limit = {
+				has_building = macadam_road
+			}
+			add_building = rail_road
+		}
+		else_if = {
+			limit = {
+				has_building = rail_road
+			}
+			add_base_production = 1
+		}
+	}
+}
+
+ab_building_trade_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = has_trade_building_grant_dip
+			}
+		}
+		add_base_production = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = arb_dhf_building_trade
+			}
+		}
+		add_province_modifier = {
+			name = arb_trade_grant_production
+			duration = -1
+		}
+	}
+}
+
+ab_removing_trade_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = has_trade_building_grant_dip
+			}
+		}
+		add_base_production = -1
+	}
+	if = {
+		limit = {
+			has_province_modifier = arb_trade_grant_production
+		}
+		remove_province_modifier = arb_trade_grant_production
+	}
+}
+
+ab_building_tax_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = norway_mead_halls
+			}
+			OR = {
+				religion = norse_pagan_reformed
+				religion = reformed_norse
+			}
+		}
+		add_base_production = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = pol_building_temple
+			}
+			OR = {
+				religion = slavic_pagan
+				religion = reformed_slavic
+			}
+		}
+		add_province_modifier = {
+			name = pol_slavic_holy_grounds
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = sel_tax_buff
+			}
+		}
+		add_province_modifier = {
+			name = sel_mosque_renovation
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_fra_church_upgrade
+			}
+		}
+		add_base_tax = 1
+		add_base_manpower = 1
+	}
+}
+
+ab_removing_tax_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = norway_mead_halls
+			}
+			OR = {
+				religion = norse_pagan_reformed
+				religion = reformed_norse
+			}
+		}
+		add_base_production = -1
+	}
+	if = {
+		limit = {
+			has_province_modifier = pol_slavic_holy_grounds
+		}
+		remove_province_modifier = pol_slavic_holy_grounds
+	}
+	if = {
+		limit = {
+			has_province_modifier = sel_mosque_renovation
+		}
+		remove_province_modifier = sel_mosque_renovation
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_fra_church_upgrade
+			}
+		}
+		add_base_tax = -1
+		add_base_manpower = -1
+	}
+}
+
+ab_building_production_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_reform = scottish_lawmaker_2_AB
+			}
+		}
+		add_base_production = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = sel_build_production
+			}
+		}
+		add_province_modifier = {
+			name = sel_production_build_prov
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = nnv_building_production
+			}
+		}
+		add_province_modifier = {
+			name = nnv_building_prod_mod
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = arb_ybr_building_production
+			}
+		}
+		add_province_modifier = {
+			name = arb_ybr_prod_mod
+			duration = -1
+		}
+	}
+}
+
+ab_removing_production_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_reform = scottish_lawmaker_2_AB
+			}
+			NOT = {
+				nationalism = 0
+			}
+		}
+		add_base_production = -1
+	}
+	if = {
+		limit = {
+			has_province_modifier = sel_production_build_prov
+		}
+		remove_province_modifier = sel_production_build_prov
+	}
+	if = {
+		limit = {
+			has_province_modifier = nnv_building_prod_mod
+		}
+		remove_province_modifier = nnv_building_prod_mod
+	}
+	if = {
+		limit = {
+			has_province_modifier = arb_ybr_prod_mod
+		}
+		remove_province_modifier = arb_ybr_prod_mod
+	}
+}
+
+ab_building_courthouse_effect = {
+	if = { 
+		limit = { 
+			FROM = {
+				has_country_flag = fra_courthouse_bonus_flag
+			}
+		}
+		add_province_modifier = {
+			name = fra_improved_court_houses_modifier
+			duration = -1 
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_reform = scottish_lawmaker_1_AB
+			}
+		}
+		add_nationalism = -2
+	}
+    if = {
+        limit = {
+            FROM = {
+                has_country_flag = pap_courthouse_bonus
+            }
+        }
+        add_base_tax = 1
+    }
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = arb_building_courthouse
+			}
+		}
+		add_province_modifier = {
+			name = arb_egyptian_adm_mod
+			duration = -1
+		}
+	}
+	if = {
+        limit = {
+            FROM = {
+                has_country_flag = ab_france_absolutism_courthouse
+            }
+        }
+        add_absolutism = 0.2
+    }
+}
+
+ab_removing_courthouse_effect = {
+	if = {
+		limit = {
+			has_province_modifier = fra_improved_court_houses_modifier
+		}
+		remove_province_modifier = fra_improved_court_houses_modifier
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_reform = scottish_lawmaker_1_AB
+			}
+			NOT = {
+				nationalism = 0
+			}
+		}
+		add_nationalism = 2
+	}
+    if = {
+        limit = {
+            FROM = {
+                has_country_flag = pap_courthouse_bonus
+            }
+        }
+        add_base_tax = -1
+    }
+	if = {
+		limit = {
+			has_province_modifier = arb_egyptian_adm_mod
+		}
+		remove_province_modifier = arb_egyptian_adm_mod
+	}
+	if = {
+        limit = {
+            FROM = {
+                has_country_flag = ab_france_absolutism_courthouse
+            }
+        }
+        add_absolutism = -0.2
+    }
+}
+
+ab_building_manpower_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = jap_building_manpower
+			}
+		}
+		add_army_professionalism = 0.001
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_barrack_grant_extra_manpower_flag
+			}
+		}
+		add_province_modifier = {
+			name = ivr_extra_manpower_1
+			duration = -1
+		}
+	}
+}
+
+ab_removing_manpower_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = jap_building_manpower
+			}
+		}
+		add_army_professionalism = -0.001
+	}
+	if = {
+		limit = {
+			has_province_modifier = ivr_extra_manpower_1
+		}
+		remove_province_modifier = ivr_extra_manpower_1
+	}
+}
+
+ab_building_forcelimit_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = jap_building_manpower
+			}
+		}
+		add_army_professionalism = 0.001
+	}
+}
+
+ab_removing_forcelimit_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = jap_building_manpower
+			}
+		}
+		add_army_professionalism = -0.001
+	}
+}
+
+ab_building_forcelimit_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = jap_building_manpower
+			}
+		}
+		add_army_professionalism = 0.001
+	}
+}
+
+ab_removing_forcelimit_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = jap_building_manpower
+			}
+		}
+		add_army_professionalism = -0.001
+	}
+}
+
+ab_building_shipyard_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_shipyard_grant_dip
+			}
+		}
+		add_base_production = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = est_building_shipyard
+			}
+		}
+		add_base_manpower = 1
+	}
+}
+
+ab_removing_shipyard_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_shipyard_grant_dip
+			}
+		}
+		add_base_production = -1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = est_building_shipyard
+			}
+		}
+		add_base_manpower = -1
+	}
+}
+
+ab_building_fort_effect = {
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_country_modifier = eng_improved_infrastructure
+					has_country_flag = rhl_building_fort
+				}
+			}
+		}
+		add_base_manpower = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_ger_great_wall_bonus
+			}
+		}
+		add_province_modifier = {
+			name = ger_great_wall_fort_grant_slot
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_tus_forts_grant_armyprof
+			}
+		}
+		FROM = {
+			add_army_professionalism = 0.01
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = hab_forts_buffs_flag
+			}
+		}
+		add_province_modifier = {
+			name = hab_buffed_forts_modifier
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			owner = {
+				has_country_flag = ned_buffed_forts_flag
+				NOT = {
+					full_idea_group = defensive_ideas
+				}
+			}
+			region = low_countries_region
+		}
+		add_province_modifier = {
+			name = ned_low_countries_fort_buff
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = {
+			owner = {
+				has_country_flag = ned_buffed_forts_flag
+				full_idea_group = defensive_ideas
+			}
+			region = low_countries_region
+		}
+		add_province_modifier = {
+			name = ned_low_countries_fort_buff_buffed
+			duration = -1
+		}
+	}
+}
+
+ab_removing_fort_effect = {
+	if = {
+		limit = {
+			FROM = {
+				OR = {
+					has_country_modifier = eng_improved_infrastructure
+					has_country_flag = rhl_building_fort
+				}
+			}
+		}
+		add_base_manpower = -1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_province_modifier = ger_great_wall_fort_grant_slot
+			}
+		}
+		remove_province_modifier = ger_great_wall_fort_grant_slot
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_tus_forts_grant_armyprof
+			}
+		}
+		FROM = {
+			add_army_professionalism = -0.01
+		}
+	}
+	if = {
+		limit = {
+			has_province_modifier = hab_buffed_forts_modifier
+		}
+		remove_province_modifier = hab_buffed_forts_modifier
+	}
+	if = {
+		limit = {
+			has_province_modifier = ned_low_countries_fort_buff
+		}
+		remove_province_modifier = ned_low_countries_fort_buff
+	}
+	if = {
+		limit = {
+			has_province_modifier = ned_low_countries_fort_buff_buffed
+		}
+		remove_province_modifier = ned_low_countries_fort_buff_buffed
+	}
+}
+
+ab_building_university_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ars_uni_grant_adm
+			}
+		}
+		add_base_tax = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = rmg_uni_grant_dip
+			}
+		}
+		add_base_production = 1
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_tus_university_bonus
+			}
+		}
+		add_province_modifier = {
+			name = tus_university_buff
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = nnv_building_uni
+			}
+		}
+		add_province_modifier = {
+			name = nnv_higher_education
+			duration = -1
+		}
+	}
+}
+
+ab_removing_university_effect = {
+	if = {
+		limit = {
+			FROM = { has_country_flag = ars_uni_grant_adm }
+		}
+		add_base_tax = -1
+	}
+	if = {
+		limit = {
+			FROM = { has_country_flag = rmg_uni_grant_dip }
+		}
+		add_base_production = -1
+	}
+	if = {
+		limit = {
+			has_province_modifier = tus_university_buff
+		}
+		remove_province_modifier = tus_university_buff
+	}
+	if = {
+		limit = {
+			has_province_modifier = nnv_higher_education
+		}
+		remove_province_modifier = nnv_higher_education
+	}
+}
+
+ab_building_road_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = ab_swa_building_roads_bonus
+			}
+		}
+		add_province_modifier = {
+			name = swa_imperial_builders_province
+			duration = -1
+		}
+	}
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = nnv_building_roads
+			}
+		}
+		add_province_modifier = {
+			name = nnv_assimilating_population
+			duration = -1
+		}
+	}
+}
+
+ab_removing_road_effect = {
+	if = {
+		limit = {
+			has_province_modifier = swa_imperial_builders_province
+		}
+		remove_province_modifier = swa_imperial_builders_province
+	}
+	if = {
+		limit = {
+			has_province_modifier = nnv_assimilating_population
+		}
+		remove_province_modifier = nnv_assimilating_population
+	}
+}
+
+ab_building_dock_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = est_building_shipyard
+			}
+		}
+		add_base_manpower = 1
+	}
+}
+
+ab_removing_dock_effect = {
+	if = {
+		limit = {
+			FROM = {
+				has_country_flag = est_building_shipyard
+			}
+		}
+		add_base_manpower = -1
+	}
+}
+
+ab_building_coastal_defence_effect = {
+	if = { 
+		limit = { 
+			FROM = {
+				has_country_flag = ab_upgrade_coastal
+			}
+		}
+		add_province_modifier = {
+			name = ab_upgraded_coastal
+			duration = -1 
+		}
+	}
+}
+
+ab_removing_coastal_defence_effect = {
+	if = {
+		limit = {
+			has_province_modifier = ab_upgraded_coastal
+		}
+		remove_province_modifier = ab_upgraded_coastal
+	}
+}
+
+ab_building_soldier_households_effect = {
+}
+
+ab_removing_soldier_households_effect = {
+}

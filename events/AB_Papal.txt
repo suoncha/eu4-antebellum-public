@@ -32,66 +32,70 @@ country_event = {
 		tag = PAP
 		exists = SIC
 		is_at_war = no
-		NOT = {
-			truce_with = SIC
-		}
+		NOT = { truce_with = SIC }
 		is_part_of_hre = no
 	}
 
 	option = {
 		name = ab_papal.1.a
-		ai_chance = {
-			factor = 10
-		}
+		ai_chance = { factor = 10 }
 		emperor = {
-			country_event = { id = ab_papal.2 days = 20 }
-		}
-		custom_tooltip = PAP_JOIN_EMPIRE
-		tooltip = {
-			add_country_modifier = {
-				name = "pap_bent_knee"
-				duration = -1
+			country_event = {
+				id = ab_papal.2
+				days = 20
 			}
 		}
-		custom_tooltip = PAP_DISMANTLE_HRE_MODIFIER
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = PAP_JOIN_EMPIRE
+		tooltip = {
+			set_in_empire = yes
+			add_reform_desire = 0.1
+			add_country_modifier = {
+				name = pap_bent_knee
+				duration = -1
+				desc = POPE_REMOVE_MODIFIER_HRE
+			}
+		}
 	}
 	
 	option = {
 		name = ab_papal.1.b
-		ai_chance = {
-			factor = 90
-		}
+		ai_chance = { factor = 90 }
 		add_prestige = 10
 	}
 }
 
-#The Holy See Requests to Join the Empire
+# The Holy See Requests to Join the Empire
 country_event = {
 	id = ab_papal.2
 	title = ab_papal.2.t
 	desc = ab_papal.2.d
 	picture = ST_PETERS_CHURCH_eventPicture
 	
-	is_triggered_only = yes
-	
 	major = yes
+
+	is_triggered_only = yes
 
 	option = {
 		name = ab_papal.2.a
+		ai_chance = { factor = 100 }
 		add_prestige = 15
 		add_legitimacy = 15
-		ai_chance = {
-			factor = 100
+		hidden_effect = {
+			PAP = {
+				country_event = {
+					id = ab_papal.3
+				}
+			}
 		}
-		PAP = {
-			country_event = { id = ab_papal.3 }
-		}
-		custom_tooltip = EMPEROR_ACCEPT_POPE
 		tooltip = {
 			PAP = {
+				set_in_empire = yes
+				add_reform_desire = 0.1
 				add_country_modifier = {
-					name = "pap_bent_knee"
+					name = pap_bent_knee
 					duration = -1
+					desc = POPE_REMOVE_MODIFIER_HRE
 				}
 			}
 		}
@@ -99,42 +103,41 @@ country_event = {
 	
 	option = {
 		name = ab_papal.2.b
-		ai_chance = {
-			factor = 0
+		ai_chance = { factor = 0 }
+		hidden_effect = {
+			PAP = {
+				country_event = {
+					id = ab_papal.4
+				}
+			}
 		}
-		PAP = {
-			country_event = { id = ab_papal.4 }
-		}
-		custom_tooltip = EMPEROR_REJECT_POPE
 	}
 }
 
-#The Holy See Joins the HRE
+# The Holy See Joins the HRE
 country_event = {
 	id = ab_papal.3
 	title = ab_papal.3.t
 	desc = ab_papal.3.d
 	picture = HRE_eventPicture
+
+	major = yes
 	
 	is_triggered_only = yes
 
 	option = {
 		name = ab_papal.3.a
-		PAP = {
-			set_in_empire = yes
-		}
+		set_in_empire = yes
 		add_reform_desire = 0.1
 		add_country_modifier = {
-			name = "pap_bent_knee"
+			name = pap_bent_knee
 			duration = -1
+			desc = POPE_REMOVE_MODIFIER_HRE
 		}
-		custom_tooltip = POPE_REMOVE_MODIFIER_HRE
 	}
-	
-
 }
 
-#The Emperor Rejects
+# The Emperor Rejects
 country_event = {
 	id = ab_papal.4
 	title = ab_papal.4.t
@@ -146,130 +149,816 @@ country_event = {
 	option = {
 		name = ab_papal.4.a
 	}
-	
-
 }
 
-#Fate of Constantinople
+# Fate of Constantinople
 country_event = {
-	id = ab_papal.7
-	title = ab_papal.7.t
-	desc = ab_papal.7.d
+	id = ab_papal.5
+	title = ab_papal.5.t
+	desc = ab_papal.5.d
 	picture = BYZANTINE_EMPEROR_eventPicture
 	
 	is_triggered_only = yes
 	
-	
 	option = {
-		name = ab_papal.7.a
-	}
-	
-	option = {
-		name = ab_papal.7.b
-		custom_tooltip = PAP_LAT_CITY
-		hidden_effect = {
-		151 = {
-			cede_province = LAT
-		}
-		vassalize = LAT
-		151 = {
-			add_core = LAT
-		}
-		LAT = {
-			set_country_flag = lat_cant_trigger_events
-		}
-		}
-		custom_tooltip = PAP_ONLY_OWN_PROVINCE
-	}
-	
-	option = {
-		name = ab_papal.7.c
-		custom_tooltip = PAP_LAT_THRACE
-		hidden_effect = {
-		every_owned_province = {
+		name = ab_papal.5.a
+		if = {
 			limit = {
-				area = thrace_area
+				tag = PAP
 			}
-			cede_province = LAT
-			add_core = LAT
-		}
-		vassalize = LAT
-		LAT = {
-			set_country_flag = lat_cant_trigger_events
-		}
-		}
-		custom_tooltip = PAP_ONLY_OWN_PROVINCE
-	}
-	
-	option = {
-		name = ab_papal.7.e
-		custom_tooltip = PAP_LAT_GREECE
-		hidden_effect = {
-		every_owned_province = {
-			limit = {
-				OR = {
-					area = thrace_area
-					area = macedonia_area 
-					area = morea_area
-					area = aegean_archipelago_area
-					area = northern_greece_area
+			151 = {
+				add_province_modifier = {
+					name = pap_rule_constantinople
+					duration = -1
 				}
 			}
-			cede_province = LAT
-			add_core = LAT
 		}
-		vassalize = LAT
-		LAT = {
-			set_country_flag = lat_cant_trigger_events
+		else = {
+			151 = {
+				add_province_modifier = {
+					name = ven_rule_constantinople
+					duration = -1
+				}
+			}
 		}
-		}
-		custom_tooltip = PAP_ONLY_OWN_PROVINCE
 	}
 	
+	option = {
+		name = ab_papal.5.b
+		add_country_modifier = {
+			name = koj_crown_romans
+			duration = -1
+		}
+		custom_tooltip = PAP_LAT_CITY
+		hidden_effect = {
+			151 = {
+				add_core = LAT
+				cede_province = LAT
+			}
+			vassalize = LAT
+			LAT = {
+				set_country_flag = lat_cant_trigger_events
+			}
+		}
+	}
+	
+	option = {
+		name = ab_papal.5.c
+		add_country_modifier = {
+			name = koj_crown_romans
+			duration = -1
+		}
+		custom_tooltip = PAP_LAT_THRACE
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					area = thrace_area
+				}
+				add_core = LAT
+				cede_province = LAT
+			}
+			vassalize = LAT
+			LAT = {
+				set_country_flag = lat_cant_trigger_events
+			}
+		}
+	}
+	
+	option = {
+		name = ab_papal.5.e
+		add_country_modifier = {
+			name = koj_crown_romans
+			duration = -1
+		}
+		custom_tooltip = PAP_LAT_GREECE
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					OR = {
+						area = thrace_area
+						area = macedonia_area 
+						area = morea_area
+						area = aegean_archipelago_area
+						area = northern_greece_area
+						area = ionian_islands_area
+					}
+				}
+				add_core = LAT
+				cede_province = LAT
+			}
+			vassalize = LAT
+			LAT = {
+				set_country_flag = lat_cant_trigger_events
+			}
+		}
+	}
 }
 
 # The Swiss Guard
 country_event = {
-	id = ab_papal.8
-	title = ab_papal.8.t
-	desc = ab_papal.8.d
+	id = ab_papal.6
+	title = ab_papal.6.t
+	desc = ab_papal.6.d
 	picture = RELIGION_eventPicture
 	
-	fire_only_once = yes
-	
-	is_triggered_only = yes
-	
+	is_triggered_only = yes	
 	
 	option = {
-		name = ab_papal.8.a
+		name = ab_papal.6.a
+		define_general = {
+			name = "Kaspar von Silenen"
+			fire = 3
+			shock = 4
+			manuever = 5
+			siege = 2
+			trait = defensive_planner_personality
+		}
 		add_country_modifier = {
-			name = "pap_ab_swiss_guard"
-			duration = 7300
+			name = pap_ab_swiss_guard
+			duration = -1
+		}
+		custom_tooltip = AB_EMPTY
+		unlock_merc_company = {
+			merc_company = ab_merc_swiss_home_guards
 		}
 	}
 }
 
-#The Return of Tiepolo
+# The Return of Tiepolo
+country_event = {
+	id = ab_papal.7
+	title = ab_papal.7.t
+	desc = ab_papal.7.d
+	picture = AB_Tiepolo_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_papal.7.a
+		define_general = {
+			name = "Giordano Tiepolo"
+			fire = 3
+			shock = 5
+			manuever = 2
+			siege = 3
+			trait = master_of_arms_personality
+		}
+	}
+}
+
+# Restoration of the Papacy
+country_event = {
+	id = ab_papal.8
+	title = ab_papal.8.t
+	desc = ab_papal.8.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_papal.8.a
+		change_tag = PAP
+		swap_free_idea_group = yes
+		swap_non_generic_missions = yes
+		custom_tooltip = AB_EMPTY
+		add_reform_desire = -0.1
+		add_country_modifier = {
+			name = pap_new_papacy
+			duration = 7300
+		}
+		change_government = theocracy
+		add_government_reform = papacy_reform
+		hidden_effect = {
+			if = {
+				limit = {
+					has_country_modifier = the_statue_in_restraint_of_appeals
+				}
+				remove_country_modifier = the_statue_in_restraint_of_appeals
+			}
+		}
+	}
+}
+
+# Kingdom of God
+country_event = {
+	id = ab_papal.9
+	title = ab_papal.9.t
+	desc = ab_papal.9.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_papal.9.a
+		override_country_name = KINGDOM_OF_GOD
+		custom_tooltip = AB_EMPTY
+		set_country_flag = unlock_ab_kingdom_of_god
+		add_government_reform = ab_kingdom_of_god
+	}
+}
+
+# Conversion of China
 country_event = {
 	id = ab_papal.10
 	title = ab_papal.10.t
 	desc = ab_papal.10.d
-	picture = AB_Tiepolo_eventPicture
-	
-	fire_only_once = yes
+	picture = POPE_PREACHING_eventPicture
 	
 	is_triggered_only = yes
 	
 	option = {
 		name = ab_papal.10.a
-			define_general = {
-				name = "Giordano Tiepolo"
-				fire = 3
-				shock = 5
-				manuever = 2
-				siege = 3
-				trait = master_of_arms_personality
+		ai_chance = { factor = 100 }
+		set_country_flag = pap_christianization_china_flag
+		change_religion = catholic
+		capital_scope = {
+			change_religion = catholic
+		}
+		add_papal_influence = 100
+		add_country_modifier = {
+			name = gh_conversion
+			duration = 10950
+		}
+		hidden_effect = {
+			PAP = {
+				country_event = {
+					id = ab_papal.12
+				}
 			}
+		}
+	}
+
+	option = {
+		name = ab_papal.10.b
+		ai_chance = { factor = 0 }
+		hidden_effect = {
+			PAP = {
+				country_event = {
+					id = ab_papal.13
+				}
+			}
+		}
+	}
+}
+
+# Conversion of Japan
+country_event = {
+	id = ab_papal.11
+	title = ab_papal.11.t
+	desc = ab_papal.11.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_papal.11.a
+		ai_chance = { factor = 100 }
+		set_country_flag = pap_christianization_japan_flag
+		change_religion = catholic
+		capital_scope = {
+			change_religion = catholic
+		}
+		add_papal_influence = 100
+		add_country_modifier = {
+			name = gh_conversion
+			duration = 10950
+		}
+		hidden_effect = {
+			PAP = {
+				country_event = {
+					id = ab_papal.12
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_papal.11.b
+		ai_chance = { factor = 0 }
+		hidden_effect = {
+			PAP = {
+				country_event = {
+					id = ab_papal.13
+				}
+			}
+		}
+	}
+}
+
+# [From.GetName] Converts to Christianity
+country_event = {
+	id = ab_papal.12
+	title = ab_papal.12.t
+	desc = ab_papal.12.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_papal.12.a
+		if = {
+			limit = {
+				FROM = {
+					culture_group = east_asian
+				}
+			}
+			add_country_modifier = {
+				name = pap_christianization_of_china
+				duration = -1
+				desc = "for as long as we are allied to them"
+			}
+		}
+		else = {
+			add_country_modifier = {
+				name = pap_christianization_of_japan
+				duration = -1
+				desc = "for as long as we are allied to them"
+			}
+		}
+	}
+}
+
+# [From.GetName] Rejects Conversion
+country_event = {
+	id = ab_papal.13
+	title = ab_papal.13.t
+	desc = ab_papal.13.d
+	picture = POPE_PREACHING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_papal.13.a
+		add_prestige = -10
+	}
+}
+
+# Fate of Islam
+country_event = {
+	id = ab_papal.14
+	title = ab_papal.14.t
+	desc = ab_papal.14.d
+	picture = MECCA_eventPicture
+
+	major = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_papal.14.a
+		set_global_flag = AB_FATE_OF_ISLAM_DESTRUCTION
+		384 = {
+			add_base_tax = -10
+			add_base_production = -10
+			add_base_manpower = -10
+		}
+		385 = {
+			add_base_tax = -10
+			add_base_production = -10
+			add_base_manpower = -10
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = PAP_EVERY_MUSLIM
+		tooltip = {
+			add_country_modifier = {
+				name = pap_fall_of_islam
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					religion_group = muslim
+				}
+				add_country_modifier = {
+					name = pap_fall_of_islam
+					duration = -1
+				}
+			}
+		}
+	}
+
+	option = {
+		name = ab_papal.14.b
+		set_global_flag = AB_FATE_OF_ISLAM_TOLERANCE
+		384 = {
+			add_or_upgrade_tax_building = yes
+		}
+		385 = {
+			add_or_upgrade_tax_building = yes
+		}
+		custom_tooltip = AB_EMPTY
+		custom_tooltip = PAP_EVERY_CATHOLIC
+		tooltip = {
+			add_country_modifier = {
+				name = pap_abrahamic_tolerance
+				duration = -1
+			}
+		}
+		hidden_effect = {
+			every_country = {
+				limit = {
+					religion = catholic
+				}
+				add_country_modifier = {
+					name = pap_abrahamic_tolerance
+					duration = -1
+				}
+			}
+		}
+	}
+}
+
+# Europa Crusade - Aftermath
+country_event = {
+	id = ab_papal.15
+	title = ab_papal.15.t
+	desc = ab_papal.15.d
+	picture = CATHOLIC_RULERS_PRAYING_eventPicture
+	
+	is_triggered_only = yes
+
+	immediate = {
+		hidden_effect = {
+			every_owned_province = {
+				limit = {
+					previous_owner = event_target:europa_crusade_target
+				}
+				if = {
+					limit = {
+						region = scandinavia_region
+					}
+					add_core = SWE
+				}
+				else_if = {
+					limit = {
+						region = poland_region
+					}
+					add_core = PLN
+				}
+				else_if = {
+					limit = {
+						region = wendia_region
+					}
+					add_core = NRD
+				}
+				else_if = {
+					limit = {
+						region = baltic_region
+					}
+					add_core = DNZ
+				}
+				else_if = {
+					limit = {
+						region = carpathia_region
+					}
+					add_core = HUN
+				}
+				else_if = {
+					limit = {
+						region = iberia_region
+					}
+					add_core = ASU
+				}
+				else_if = {
+					limit = {
+						OR = {
+							region = ruthenia_region
+							region = russia_region
+							region = crimea_region
+							region = ural_region
+						}
+					}
+					add_core = VOL
+				}
+			}
+			if = {
+				limit = {
+					scandinavia_region = {
+						owned_by = ROOT
+						previous_owner = event_target:europa_crusade_target
+					}
+				}
+				if = {
+					limit = {
+						NOT = { exists = SWE }
+					}
+					release = SWE
+					SWE = {
+						change_religion = catholic
+						change_primary_culture = swedish
+					}
+				}
+				else = {
+					every_owned_province = {
+						limit = {
+							region = scandinavia_region
+							previous_owner = event_target:europa_crusade_target
+						}
+						cede_province = SWE
+					}
+				}
+			}
+			if = {
+				limit = {
+					poland_region = {
+						owned_by = ROOT
+						previous_owner = event_target:europa_crusade_target
+					}
+				}
+				if = {
+					limit = {
+						NOT = { exists = PLN }
+					}
+					release = PLN
+					PLN = {
+						change_religion = catholic
+						change_primary_culture = Polan
+					}
+				}
+				else = {
+					every_owned_province = {
+						limit = {
+							region = poland_region
+							previous_owner = event_target:europa_crusade_target
+						}
+						cede_province = PLN
+					}
+				}
+			}
+			if = {
+				limit = {
+					wendia_region = {
+						owned_by = ROOT
+						previous_owner = event_target:europa_crusade_target
+					}
+				}
+				if = {
+					limit = {
+						NOT = { exists = NRD }
+					}
+					release = NRD
+					NRD = {
+						change_religion = catholic
+						change_primary_culture = saxon
+					}
+				}
+				else = {
+					every_owned_province = {
+						limit = {
+							region = wendia_region
+							previous_owner = event_target:europa_crusade_target
+						}
+						cede_province = NRD
+					}
+				}
+			}
+			if = {
+				limit = {
+					baltic_region = {
+						owned_by = ROOT
+						previous_owner = event_target:europa_crusade_target
+					}
+				}
+				if = {
+					limit = {
+						NOT = { exists = DNZ }
+					}
+					release = DNZ
+					DNZ = {
+						change_religion = catholic
+						change_primary_culture = baltic_german
+					}
+				}
+				else = {
+					every_owned_province = {
+						limit = {
+							region = baltic_region
+							previous_owner = event_target:europa_crusade_target
+						}
+						cede_province = DNZ
+					}
+				}
+			}
+			if = {
+				limit = {
+					carpathia_region = {
+						owned_by = ROOT
+						previous_owner = event_target:europa_crusade_target
+					}
+				}
+				if = {
+					limit = {
+						NOT = { exists = HUN }
+					}
+					release = HUN
+					HUN = {
+						change_religion = catholic
+						change_primary_culture = hungarian
+					}
+				}
+				else = {
+					every_owned_province = {
+						limit = {
+							region = carpathia_region
+							previous_owner = event_target:europa_crusade_target
+						}
+						cede_province = HUN
+					}
+				}
+			}
+			if = {
+				limit = {
+					iberia_region = {
+						owned_by = ROOT
+						previous_owner = event_target:europa_crusade_target
+					}
+				}
+				if = {
+					limit = {
+						NOT = { exists = ASU }
+					}
+					release = ASU
+					ASU = {
+						change_religion = catholic
+						change_primary_culture = Asturian
+					}
+				}
+				else = {
+					every_owned_province = {
+						limit = {
+							region = iberia_region
+							previous_owner = event_target:europa_crusade_target
+						}
+						cede_province = ASU
+					}
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						ruthenia_region = {
+							owned_by = ROOT
+							previous_owner = event_target:europa_crusade_target
+						}
+						russia_region = {
+							owned_by = ROOT
+							previous_owner = event_target:europa_crusade_target
+						}
+						crimea_region = {
+							owned_by = ROOT
+							previous_owner = event_target:europa_crusade_target
+						}
+						ural_region = {
+							owned_by = ROOT
+							previous_owner = event_target:europa_crusade_target
+						}
+					}
+				}
+				if = {
+					limit = {
+						NOT = { exists = VOL }
+					}
+					release = VOL
+					VOL = {
+						change_religion = catholic
+						change_primary_culture = ruthenian
+					}
+				}
+				else = {
+					every_owned_province = {
+						limit = {
+							OR = {
+								region = ruthenia_region
+								region = russia_region
+								region = crimea_region
+								region = ural_region
+							}
+							previous_owner = event_target:europa_crusade_target
+						}
+						cede_province = VOL
+					}
+				}
+			}
+		}
 	}
 	
+	option = {
+		name = ab_papal.15.a
+		custom_tooltip = PAP_RELEASE_CATHOLIC_COUNTRIES
+	}
+}
+
+# Europa Crusade - Join the Crusade
+country_event = {
+	id = ab_papal.16
+	title = ab_papal.16.t
+	desc = ab_papal.16.d
+	picture = CRUSADER_HORDE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_papal.16.a
+		ai_chance = {
+			factor = 50
+			#We like the target
+			modifier = {
+				factor = 0.01
+				ai_attitude = {
+					who = event_target:europa_crusade_target
+					attitude = attitude_friendly
+				}
+			}
+			#We are too poor for that
+			modifier = {
+				factor = 0
+				OR = {
+					is_bankrupt = yes
+					num_of_loans = 4
+				}
+			}
+			#Why should I care?
+			modifier = {
+				factor = 0.25
+				OR = {
+					ruler_has_personality = sinner_personality
+					ruler_has_personality = free_thinker_personality
+					ruler_has_personality = scholar_personality
+					personality = ai_balanced
+				}
+			}
+			#Make peace please!
+			modifier = {
+				factor = 0.01
+				OR = {
+					ruler_has_personality = just_personality
+					personality = ai_diplomat
+				}
+			}
+			#DEUS VULT!
+			modifier = {
+				factor = 2
+				OR = {
+					ruler_has_personality = zealot_personality
+					ruler_has_personality = cruel_personality
+					ruler_has_personality = conqueror_personality
+					personality = ai_militarist
+				}
+			}
+		}
+		join_all_offensive_wars_of = PAP
+	}
+
+	option = {
+		name = ab_papal.16.b
+		ai_chance = { factor = 50 }
+	}
+}
+
+#The Liberation of Rome
+country_event = {
+	id = ab_papal.17
+	title = ab_papal.17.t
+	desc = ab_papal.17.d
+	picture = ST_PETERS_CHURCH_eventPicture
+	
+	fire_only_once = yes
+	is_triggered_only = yes
+	major = yes
+	
+	trigger = {
+		religion = catholic
+		owns = 118
+		118 = {
+			OR = {
+				is_core = SIC
+				is_core = ITL
+			}
+		}
+		118 = {
+			religion_group = muslim
+		}
+		NOT = {
+			has_global_flag = ab_rome_liberated
+		}
+	}
+
+	option = {
+		name = ab_papal.17.a
+		add_papal_influence = 50
+		118 = {
+			change_religion = catholic
+		}
+		118 = {
+			change_culture = umbrian
+		}
+		set_country_flag = general_flag_Rome_flag
+		add_country_modifier = {
+			name = "ab_rome_liberation"
+			duration = -1
+		}
+		custom_tooltip = AB_LIBERATION_ROME
+		set_global_flag = ab_rome_liberated
+	}
 }

@@ -9,16 +9,7 @@ country_event = {
 	desc = ab_capua.1.d
 	picture = BAD_WITH_MONARCH_eventPicture
 	
-	fire_only_once = yes
-	
-	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		has_ruler = "Robert XI"
-	}
-
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_capua.1.a
@@ -36,22 +27,18 @@ country_event = {
 	desc = ab_capua.2.d
 	picture = ST_PETERS_CHURCH_eventPicture
 	
-	fire_only_once = yes
-	
-	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		has_ruler = "Robert XI"
-		owns = 118
-	}
-
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_capua.2.a
 		add_prestige = 20
 		add_legitimacy = 20
+		hidden_effect = {
+			country_event = {
+				id = ab_capua.4
+				days = 180
+			}
+		}
 	}
 }
 
@@ -62,19 +49,7 @@ country_event = {
 	desc = ab_capua.3.d
 	picture = ST_PETERS_CHURCH_eventPicture
 	
-	fire_only_once = yes
-	
-	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		NOT = {
-			has_ruler = "Robert XI"
-		}
-		owns = 118
-	}
-
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_capua.3.a
@@ -90,27 +65,23 @@ country_event = {
 	desc = ab_capua.4.d
 	picture = ST_PETERS_CHURCH_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 5
-	}
+	is_triggered_only = yes
 	
 	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
 		has_ruler = "Robert XI"
-		owns = 118
 	}
-
 	
 	option = {
 		name = ab_capua.4.a
 		add_ruler_modifier = {
 			name = "cap_crimson_king"
 			duration = -1
+		}
+		hidden_effect = {
+			country_event = {
+				id = ab_capua.5
+				days = 300
+			}
 		}
 	}
 }
@@ -122,21 +93,11 @@ country_event = {
 	desc = ab_capua.5.d
 	picture = ST_PETERS_CHURCH_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 10
-	}
+	is_triggered_only = yes
 	
 	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		has_institution = renaissance
-		owns = 118
+		has_ruler = "Robert XI"
 	}
-
 	
 	option = {
 		name = ab_capua.5.a
@@ -154,20 +115,7 @@ country_event = {
 	desc = ab_capua.6.d
 	picture = SHIP_SAILING_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 10
-	}
-	
-	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		is_year = 1450
-	}
-
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_capua.6.a
@@ -182,41 +130,27 @@ country_event = {
 	desc = ab_capua.7.d
 	picture = ADVISOR_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 10
-	}
-	
-	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		is_year = 1450
-		dynasty = "de Hauteville"
-	}
-
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_capua.7.a
-			define_general = {
-				name = "Gaston de Hauteville"
-				fire = 4
-				shock = 5
-				manuever = 3
-				siege = 2
-			}
+		define_general = {
+			name = "Gaston de Hauteville"
+			fire = 4
+			shock = 5
+			manuever = 3
+			siege = 2
+		}
 	}
 	
 	option = {
 		name = ab_capua.7.b
-			define_admiral = {
-				name = "Gaston de Hauteville"
-				fire = 5
-				shock = 5
-				manuever = 3
-			}
+		define_admiral = {
+			name = "Gaston de Hauteville"
+			fire = 5
+			shock = 5
+			manuever = 3
+		}
 	}
 	
 	option = {
@@ -240,30 +174,20 @@ country_event = {
 	desc = ab_capua.8.d
 	picture = ARTWORK_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 10
-	}
-	
-	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		any_owned_province = {  
-			is_institution_origin = renaissance
-		}
-	}
-
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_capua.8.a
-			add_country_modifier = {
-				name = "cap_opera"
-				duration = -1
+		add_country_modifier = {
+			name = "cap_opera"
+			duration = -1
+		}
+		hidden_effect = {
+			country_event = {
+				id = ab_capua.9
+				days = 1500
 			}
-		set_country_flag = cap_turandot
+		}
 	}
 }
 
@@ -274,23 +198,7 @@ country_event = {
 	desc = ab_capua.9.d
 	picture = ADVISOR_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 50
-	}
-	
-	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		any_owned_province = {  
-			is_institution_origin = renaissance
-		}
-		has_country_flag = cap_turandot
-	}
-
+	is_triggered_only = yes
 	
 	option = {
 		name = ab_capua.9.a
@@ -304,26 +212,22 @@ country_event = {
 	desc = ab_capua.10.d
 	picture = BAD_WITH_MONARCH_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 1
-	}
-	
-	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		has_ruler = "Robert XI"
-		is_year = 1454
-	}
+	is_triggered_only = yes
 
+	trigger = {
+		has_ruler = "Robert XI"
+	}
 	
 	option = {
 		name = ab_capua.10.a
 		add_legitimacy = -5
-		set_country_flag = cap_robert1
+		hidden_effect = {
+			country_event = {
+				id = ab_capua.11
+				days = 730
+				random = 90
+			}
+		}
 	}
 }
 
@@ -333,27 +237,22 @@ country_event = {
 	desc = ab_capua.11.d
 	picture = BAD_WITH_MONARCH_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 3
-	}
+	is_triggered_only = yes
 	
 	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
 		has_ruler = "Robert XI"
-		is_year = 1456
-		has_country_flag = cap_robert1
 	}
-
 	
 	option = {
 		name = ab_capua.11.a
 		add_legitimacy = -5
-		set_country_flag = cap_robert2
+		hidden_effect = {
+			country_event = {
+				id = ab_capua.12
+				days = 1460
+				random = 90
+			}
+		}
 	}
 }
 
@@ -363,27 +262,22 @@ country_event = {
 	desc = ab_capua.12.d
 	picture = BAD_WITH_MONARCH_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		has_ruler = "Robert XI"
-		is_year = 1460
-		has_country_flag = cap_robert2
-	}
+	is_triggered_only = yes
 
+	trigger = {
+		has_ruler = "Robert XI"
+	}
 	
 	option = {
 		name = ab_capua.12.a
 		add_legitimacy = -5
-		set_country_flag = cap_robert3
+		hidden_effect = {
+			country_event = {
+				id = ab_capua.13
+				days = 365
+				random = 90
+			}
+		}
 	}
 }
 
@@ -393,27 +287,22 @@ country_event = {
 	desc = ab_capua.13.d
 	picture = BAD_WITH_MONARCH_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 3
-	}
+	is_triggered_only = yes
 	
 	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
 		has_ruler = "Robert XI"
-		is_year = 1461
-		has_country_flag = cap_robert3
 	}
-
 	
 	option = {
 		name = ab_capua.13.a
 		add_legitimacy = -10
-		set_country_flag = cap_robert4
+		hidden_effect = {
+			country_event = {
+				id = ab_capua.14
+				days = 30
+				random = 60
+			}
+		}
 	}
 }
 
@@ -423,21 +312,11 @@ country_event = {
 	desc = ab_capua.14.d
 	picture = BAD_WITH_MONARCH_eventPicture
 	
-	fire_only_once = yes
-	
-	mean_time_to_happen = {
-		months = 1
-	}
+	is_triggered_only = yes
 	
 	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
 		has_ruler = "Robert XI"
-		has_country_flag = cap_robert4
 	}
-
 	
 	option = {
 		name = ab_capua.14.a
@@ -445,7 +324,12 @@ country_event = {
 			remove_ruler_personality = sinner_personality
 		}
 		add_ruler_personality = immortal_personality
-		set_country_flag = cap_robert5
+		hidden_effect = {
+			country_event = {
+				id = ab_capua.15
+				days = 1095
+			}
+		}
 	}
 }
 
@@ -455,30 +339,18 @@ country_event = {
 	desc = ab_capua.15.d
 	picture = BAD_WITH_MONARCH_eventPicture
 	
-	fire_only_once = yes
+	is_triggered_only = yes
 	
+	trigger = {
+		has_ruler = "Robert XI"
+		NOT = { mission_completed = trc_the_mad_dukes_gambit }
+	}
+
 	immediate = {
 		hidden_effect = {
 			kill_ruler = yes
 		}
 	}
-	
-	mean_time_to_happen = {
-		months = 36
-	}
-	
-	trigger = {
-		OR = {
-			tag = CAP
-			was_tag = CAP
-		}
-		has_ruler = "Robert XI"
-		has_country_flag = cap_robert5
-		NOT = {
-			mission_completed = trc_the_mad_dukes_gambit
-		}
-	}
-
 	
 	option = {
 		name = ab_capua.15.a
@@ -494,7 +366,6 @@ country_event = {
 	is_triggered_only = yes
 	
 	major = yes
-
 	
 	option = {
 		name = ab_capua.16.a
@@ -515,5 +386,51 @@ country_event = {
 				change_culture = trinacrian
 			}
 		}
+	}
+}
+
+#Timed Mission Unlock
+country_event = {
+	id = ab_capua.17
+	title = ab_capua.17.t
+	desc = ab_capua.17.d
+	picture = GOOD_WITH_MONARCH_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = ab_lombardy.1.a
+		set_country_flag = trc_mission_unlocked
+		hidden_effect = {
+			swap_non_generic_missions = yes
+		}
+	}
+}
+
+#Timed Mission Fail
+country_event = {
+	id = ab_capua.18
+	title = ab_capua.18.t
+	desc = ab_capua.18.d
+	picture = BAD_WITH_MONARCH_eventPicture
+	
+	fire_only_once = yes
+	
+	trigger = {
+		has_country_flag = trc_mission_unlocked
+		NOT = { mission_completed = trc_the_mad_dukes_gambit }
+		NOT = { has_ruler = "Robert XI" }
+	}
+	
+	immediate = {
+		hidden_effect = {
+			clr_country_flag = trc_mission_unlocked
+			set_country_flag = trc_mission_failed
+			swap_non_generic_missions = yes
+		}
+	}
+	
+	option = {
+		name = ab_capua.18.a
 	}
 }

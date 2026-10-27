@@ -1,0 +1,156 @@
+country_decisions = {
+
+	westrome = {
+		major = yes
+		potential = {
+			ai = no
+			religion_group = christian
+			capital_scope = {
+				superregion = europe_superregion
+			}
+			OR = {
+				tag = BRN
+				culture_group = french
+				culture_group = iberian
+				culture_group = latin
+				culture_group = germanic
+			}
+			NOT = { exists = WRE }
+			NOT = { tag = PAP }
+			NOT = { tag = HLR }
+			NOT = { tag = ROM }
+			NOT = { tag = RMR }
+		}
+
+		provinces_to_highlight = {
+			if = {
+				limit = { 
+					ROOT = { TAG = BRN }
+				}
+				OR = { 	region = italy_region
+						region = france_region
+						region = british_isles_region
+				}
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			}
+			else_if = {
+				limit = { 
+					ROOT = { culture_group = germanic }
+				}
+				OR = { 	region = italy_region
+						region = france_region
+						region = south_german_region
+				}
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			}
+			else = {
+				OR = { 	region = italy_region
+						region = france_region
+						region = iberia_region
+				}
+				NOT = { country_or_non_sovereign_subject_holds = ROOT }
+			}
+			
+		}
+
+		allow = {
+			ai = no
+			capital_scope = {
+				superregion = europe_superregion
+			}
+			if = {
+				limit = {
+					mission_completed = rmg_legacy_of_west_rome
+				}
+				ab_is_italy_tag_trigger = yes
+				151 = {
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				italy_region = {
+					type = all
+					owned_by = ROOT
+				}
+			}
+			else = {
+				religion = catholic
+				if = {
+					limit = {
+						tag = BRN
+					}
+					british_isles_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				else_if = {
+					limit = {
+						culture_group = germanic
+					}
+					south_german_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				else = {
+					iberia_region = {
+						type = all
+						country_or_non_sovereign_subject_holds = ROOT
+					}
+				}
+				france_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+				italy_region = {
+					type = all
+					country_or_non_sovereign_subject_holds = ROOT
+				}
+			}
+			is_at_war = no
+			is_subject = no
+		}
+		effect = {
+			add_prestige = 25
+			set_country_flag = general_flag_Rome_flag
+			change_tag = WRE
+			on_change_tag_effect = yes
+			if = {
+				limit = {
+					NOT = { government_rank = 3 }
+				}
+				set_government_rank = 3
+			}
+			if = {
+				limit = {
+					is_emperor = no
+				}
+				custom_tooltip = AB_EMPTY
+				custom_tooltip = restore_roman_empire_tt
+				hidden_effect = {
+					every_owned_province = {
+						limit = {
+							is_part_of_hre = yes
+						}
+						set_in_empire = no
+					}
+				}
+			}
+			custom_tooltip = AB_EMPTY
+			if = {
+				limit = {
+					has_custom_ideas = no
+				}
+				country_event = {
+					id = ideagroups.1
+				}
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

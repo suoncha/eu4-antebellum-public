@@ -1,0 +1,664 @@
+########################################
+# Events for Ethiopia
+#
+# written by Johan Andersson
+########################################
+
+namespace = flavor_eth
+normal_or_historical_nations = yes
+
+#Prester John?
+country_event = {
+	id = flavor_eth.3
+	title = flavor_eth.3.t
+	desc = flavor_eth.3.d
+	picture = DIPLOMACY_eventPicture
+	is_triggered_only = yes
+	
+	
+	option = { 
+		name = flavor_eth.3.a
+		ai_chance = { factor = 90 }
+		hidden_effect = {
+			ETH = {
+				country_event = {
+					id = flavor_eth.4
+					days = 180
+				}
+			}
+		}
+		add_mil_power = -50
+		add_papal_influence = 10
+		reverse_add_opinion = { who = ETH modifier = opinion_military_aid }
+			
+	}
+	option = {
+		name = flavor_eth.3.b
+		add_prestige = -5
+		hidden_effect = {
+			ETH = {
+				country_event = {
+					id = flavor_eth.5
+					days = 1825
+				}
+			}
+		}
+		reverse_add_opinion = { who = ETH modifier = opinion_refused_military_aid }
+	}
+
+}
+
+# aid given
+country_event = {
+	id = flavor_eth.4
+	title = flavor_eth.4.t
+	desc = flavor_eth.4.d
+	picture = DIPLOMACY_eventPicture
+	is_triggered_only = yes
+	
+	option = { 
+		name = flavor_eth.4.a
+		reverse_add_opinion = { who = POR modifier = opinion_military_aid }
+		add_country_modifier = {
+			name = eth_mil_aid_from_portugal
+			duration = 3650
+		}
+	}
+}
+
+# aid refused
+country_event = {
+	id = flavor_eth.5
+	title = flavor_eth.5.t
+	desc = flavor_eth.5.d
+	picture = DIPLOMACY_eventPicture
+	is_triggered_only = yes
+	
+	option = { 
+		name = flavor_eth.5.a
+		add_legitimacy = -10
+	}
+}
+
+
+########################################
+# DLC Events for Ethiopia
+#
+# written by Ogulcan Yildirim
+########################################
+
+
+#Permanent Cities for Ethiopia
+country_event = {
+	id = flavor_eth.30
+	title = flavor_eth.30.t
+	desc = flavor_eth.30.desc
+	picture = NEGUSA_NAGAST_eventPicture
+
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_eth.30.a
+		if = {
+			limit = {
+				NOT = { government = monarchy }
+			}
+			change_government = monarchy
+		}
+		add_government_reform = solomonic_empire
+		remove_country_modifier = eth_negusa_nagast_issues
+
+		ai_chance = {
+			factor = 1
+		}
+	}
+
+	option = {
+		name = flavor_eth.30.b
+		remove_country_modifier = eth_negusa_nagast_issues
+		capital_scope = {
+			region = {
+				limit = {
+					owned_by = ROOT
+				}
+				add_local_autonomy = -25
+			}
+		}
+
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#The Ark of the Covenant - Depreceated
+country_event = {
+	id = flavor_eth.33
+	title = flavor_eth.33.t
+	desc = flavor_eth.33.desc
+	picture = DEATH_OF_HEIR_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_eth.33.a
+
+		add_country_modifier = {
+			name = eth_blessing_of_kings
+			duration = -1
+		}
+
+		add_stability = 2
+		add_estate_loyalty = {
+			estate = estate_church
+			loyalty = 100
+		}
+	}
+}
+
+#The integration of Damot and Hadiya
+country_event = {
+	id = flavor_eth.35
+	title = flavor_eth.35.t
+	desc = flavor_eth.35.desc
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {	#Integrate the vassals
+		name = flavor_eth.35.a
+		add_country_modifier = {
+			name = eth_better_integration
+			duration = 10950
+		}
+
+		ai_chance = {
+			factor = 100
+		}
+	}
+
+	option = {	#Just demand more tribute instead
+		name = flavor_eth.35.b
+		add_country_modifier = {
+			name = eth_better_vassal_handling
+			duration = 10950
+		}
+
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#Liberation of the Copts
+country_event = {
+	id = flavor_eth.37
+	title = flavor_eth.37.t
+	desc = flavor_eth.37.desc
+	picture = COPTIC_BISHOP_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_eth.37.a
+		1232 = {
+			change_religion = coptic
+			add_base_tax = 2
+			add_base_production = 2
+			add_base_manpower = 1
+		}
+
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Reconstruction of Adulis
+country_event = {
+	id = flavor_eth.38
+	title = flavor_eth.38.t
+	desc = flavor_eth.38.desc
+	picture = COPTIC_CITY_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_eth.38.a
+		1230 = {
+			change_province_name = "Adulis"
+			rename_capital = "Adulis"
+			add_base_tax = 3
+			add_base_production = 3
+			add_base_manpower = 2
+			center_of_trade = 2
+		}
+
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Restore the Aksumite Empire
+country_event = {
+	id = flavor_eth.39
+	title = flavor_eth.39.t
+	desc = flavor_eth.39.desc
+	picture = NEGUSA_NAGAST_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_eth.39.a
+		add_country_modifier = {
+			name = eth_restoration_of_ancient_borders
+			duration = 9125
+		}
+		change_tag = AKS
+		on_change_tag_effect = yes
+		add_prestige = 25
+		if = {
+			limit = {
+				has_custom_ideas = no
+				NOT = { has_idea_group = AKS_ideas }
+			}
+			country_event = { id = ideagroups.1 } #Swap Ideas
+		}
+		set_country_flag = formed_aksumite_empire_flag
+
+		ai_chance = {
+			factor = 100
+		}
+	}
+	
+	option = {
+		name = flavor_eth.39.b
+		add_country_modifier = {
+			name = eth_restoration_of_ancient_borders
+			duration = 9125
+		}
+		custom_tooltip = flavor_eth.39.b.tt
+		hidden_effect = {
+			set_country_flag = eth_can_form_aksumite
+		}
+
+		ai_chance = {
+			factor = 0
+		}
+	}
+}
+
+#Deal with the Beta Israelis
+country_event = {
+	id = flavor_eth.40
+	title = flavor_eth.40.t
+	desc = flavor_eth.40.desc
+	picture = AFRICAN_BATTLE_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {	#Try to convert them
+		name = flavor_eth.40.a
+		add_stability = -2
+		if = {
+			limit = {
+				owns = 1227
+			}
+			1227 = {
+				change_religion = ROOT
+				remove_core = BTI
+			}
+		}
+		if = {
+			limit = {
+				owns = 2771
+			}
+			2771 = {
+				change_religion = ROOT
+				remove_core = BTI
+			}
+		}
+		if = {
+			limit = {
+				owns = 2772
+			}
+			2772 = {
+				change_religion = ROOT
+				remove_core = BTI
+			}
+		}
+
+		ai_chance = {
+			factor = 0
+		}
+	}
+	
+	option = {	#We should not create a bigger rift between our people
+		name = flavor_eth.40.b
+		add_stability = 1
+		if = {
+			limit = {
+				owns = 2771
+			}
+			2771 = {
+				add_province_modifier = {
+					name = eth_accepted_society
+					duration = 9125
+				}
+			}
+		}
+		if = {
+			limit = {
+				owns = 2772
+			}
+			2772 = {
+				add_province_modifier = {
+					name = eth_accepted_society
+					duration = 9125
+				}
+			}
+		}
+		ai_chance = {
+			factor = 100
+		}
+	}
+}
+
+#Sail through the Nil
+country_event = {
+	id = flavor_eth.41
+	title = flavor_eth.41.t
+	desc = flavor_eth.41.desc
+	picture = SHIP_SAILING_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_eth.41.a
+
+		eastern_mediterrenean_area = {
+			discover_country = ROOT
+		}
+
+		hidden_effect = {
+			country_event = {
+				id = flavor_eth.42
+				days = 50	#The actual ingame time needed to reach Rome from Dumyat with galleys
+			}
+		}
+	}
+}
+
+#Reach Italy
+country_event = {
+	id = flavor_eth.42
+	title = flavor_eth.42.t
+	desc = flavor_eth.42.desc
+	picture = SHIP_SAILING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_eth.42.a
+
+		western_mediterrenean_area = {
+			discover_country = ROOT
+		}
+
+		italy_region = {
+			discover_country = ROOT
+		}
+
+		if = {
+			limit = {
+				exists = PAP
+				118 = {
+					owned_by = PAP
+				}
+			}
+			PAP = {
+				country_event = {
+					id = flavor_eth.43
+				}
+				add_opinion = {
+					who = ROOT
+					modifier = eth_restored_contact
+				}
+			}
+		}
+	}
+}
+
+#Pope's contact with Ethiopia
+country_event = {
+	id = flavor_eth.43
+	title = flavor_eth.43.t
+	desc = flavor_eth.43.desc
+	picture = SHIP_SAILING_eventPicture
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = flavor_eth.43.a
+		custom_tooltip = flavor_eth.43.a.tt
+		hidden_effect = {
+			every_province = {
+				limit = {
+					owned_by = FROM
+				}
+				discover_country = ROOT
+			}
+		}
+		add_dip_power = 50
+		reverse_add_opinion = {
+			who = FROM
+			modifier = eth_restored_contact
+		}
+	}
+}
+
+#Alliance with Portugal for Ethiopia
+country_event = {
+	id = flavor_eth.44
+	title = flavor_eth.44.t
+	desc = flavor_eth.44.desc
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {	#Let's try it
+		name = flavor_eth.44.a
+		POR = {
+			country_event = {
+				id = flavor_eth.45
+			}
+		}
+
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				OR = {
+					is_rival = POR
+					POR = {
+						is_rival = ROOT
+					}
+				}
+			}
+		}
+	}
+
+	option = {	#We are better without them
+		name = flavor_eth.44.b
+		add_dip_power = 100
+
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				NOT = { is_rival = POR }
+				POR = {
+					NOT = { is_rival = ROOT }
+				}
+			}
+		}
+	}
+}
+
+#Alliance with Ethiopia for Portugal
+country_event = {
+	id = flavor_eth.45
+	title = flavor_eth.45.t
+	desc = flavor_eth.45.desc
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {	#Accept alliance
+		name = flavor_eth.45.a
+		add_historical_friend = FROM
+		tooltip = {
+			create_alliance = FROM
+			FROM = {
+				add_historical_friend = ROOT
+			}
+		}
+		if = {
+			limit = {
+				exists = ADA
+			}
+			custom_tooltip = flavor_eth.45.a.at
+		}
+		custom_tooltip = flavor_eth.43.a.tt
+		hidden_effect = {
+			FROM = {
+				country_event = {
+					id = flavor_eth.46
+				}
+			}
+			every_province = {
+				limit = {
+					owned_by = FROM
+				}
+				discover_country = ROOT
+			}
+		}
+		add_mil_power = -50
+		add_dip_power = 50
+
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				OR = {
+					FROM = {
+						NOT = { religion_group = ROOT }
+					}
+					FROM = {
+						is_rival = ROOT
+					}
+					is_rival = FROM
+				}
+			}
+		}
+	}
+
+	option = {	#Refuse alliance
+		name = flavor_eth.45.b
+		hidden_effect = {
+			FROM = {
+				country_event = {
+					id = flavor_eth.47
+				}
+			}
+		}
+		add_mil_power = 50
+		add_dip_power = -50
+
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 0
+				FROM = {
+					religion_group = ROOT
+					NOT = { is_rival = ROOT }
+				}
+				NOT = { is_rival = FROM }
+			}
+		}
+	}
+}
+
+#Portugal accepts alliance
+country_event = {
+	id = flavor_eth.46
+	title = flavor_eth.46.t
+	desc = flavor_eth.46.desc
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_eth.46.a
+		custom_tooltip = flavor_eth.43.a.tt
+		if = {
+			limit = {
+				exists = ADA
+			}
+			custom_tooltip = flavor_eth.46.a.at
+		}
+		create_alliance = FROM
+		add_historical_friend = FROM
+		tooltip = {
+			FROM = {
+				add_historical_friend = ROOT
+			}
+		}
+		hidden_effect = {
+			set_country_flag = portuguese_embassy
+			set_country_flag = eth_portuguese_help
+			every_province = {
+				limit = {
+					owned_by = FROM
+				}
+				discover_country = ROOT
+			}
+		}
+	}
+}
+
+#Portugal refuses alliance
+country_event = {
+	id = flavor_eth.47
+	title = flavor_eth.47.t
+	desc = flavor_eth.47.desc
+	picture = DIPLOMACY_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_eth.47.a
+	}
+}
+
+#Westernize your troops
+country_event = {
+	id = flavor_eth.48
+	title = flavor_eth.48.t
+	desc = flavor_eth.48.desc
+	picture = MILITARY_CAMP_eventPicture
+	
+	is_triggered_only = yes
+
+	option = {
+		name = flavor_eth.48.a
+		change_technology_group = western
+		change_unit_type = western
+		add_country_modifier = {
+			name = eth_modernized_army
+			duration = 9125
+		}
+		add_mil_power = -200
+	}
+}

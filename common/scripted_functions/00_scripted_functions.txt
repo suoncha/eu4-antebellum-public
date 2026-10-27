@@ -21,17 +21,6 @@ can_harsh_treatment = {
 }
 
 can_reduce_war_exhaustion = {
-	condition = {
-		tooltip = "MAY_CANNOT_REDUCE_WAR_EXHAUSTION_OR_AUTONOMY"
-		potential = {
-			has_country_modifier = MAY_mayan_reform
-		}
-		allow = {
-			NOT = {
-				has_country_modifier = MAY_mayan_reform
-			}
-		}
-	}
 }
 
 can_reduce_inflation = {
@@ -67,38 +56,9 @@ can_add_province_to_hre = {
 
 #ROOT = province, FROM = country
 can_remove_province_from_hre = {
-	condition = {
-		potential = {
-			owner = {
-				ai = yes
-			}
-		}
-		allow = {
-			owner = {
-				NOT = {
-					has_country_flag = permanently_left_hre_flag
-				}
-			}
-		}
-	}
 }
 
 can_increase_autonomy = {
-	condition = {
-		tooltip = "MAY_CANNOT_REDUCE_WAR_EXHAUSTION_OR_AUTONOMY"
-		potential = {
-			owner = {
-				has_country_modifier = MAY_mayan_reform
-			}
-		}
-		allow = {
-			owner = {
-				NOT = {
-					has_country_modifier = MAY_mayan_reform
-				}
-			}
-		}
-	}
 }
 
 can_decrease_autonomy = {
@@ -132,17 +92,6 @@ can_exploit_manpower = {
 }
 
 can_change_culture = {
-    condition = {
-        tooltip = BRIT_CULTURE_RESTRICT
-        potential = {
-            FROM = {
-                has_country_modifier = brit_culture
-            }
-        }
-        allow = {
-            always = no
-        }
-    }
 }
 
 can_move_capital = {
@@ -189,7 +138,6 @@ can_colonize_province = {
 		allow = {
 			OR = {
 				FROM = { dip_tech = 33 }
-				FROM = { mission_completed = ab_eng_scramble }
 				FROM = { has_country_modifier = dan_scramble }
 				FROM = { has_idea = domination_second }
 				FROM = { has_country_flag = ab_inland_africa_colonizable }
@@ -199,25 +147,6 @@ can_colonize_province = {
 }
 
 can_colonize_province_siberian_frontier = {
-	#condition = {
-	#	tooltip = "MAY_COLONIZE_ONCE_EVERY_5_YEARS"
-	#	potential = {
-	#		FROM = {
-	#			has_country_modifier = MAY_american_frontiers
-	#		}
-	#	}
-	#	allow = {
-	#		FROM = {
-	#			OR = {
-	#				NOT = { has_country_flag = MAY_american_frontier_cooldown }
-	#				had_country_flag = {
-	#					flag = MAY_american_frontier_cooldown
-	#					days = 1825
-	#				}
-	#			}
-	#		}
-	#	}
-	#}
 }
 
 can_add_seat_in_parliament = {
@@ -286,19 +215,19 @@ can_join_hre = {
 	condition = {
 		tooltip = "PERMANENTLY_LEFT_HRE"
 		potential = {
+			has_country_flag = permanently_left_hre_flag
 		}
 		allow = {
-			NOT = {
-				has_country_flag = permanently_left_hre_flag
-			}
+			always = no
 		}
 	}
 	condition = {
 		tooltip = "PAP_CANT_JOIN_HRE"
 		potential = {
+			tag = PAP
 		}
 		allow = {
-			NOT = { tag = PAP }
+			always = no
 		}
 	}
 }
